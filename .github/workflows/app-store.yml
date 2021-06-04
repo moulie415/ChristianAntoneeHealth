@@ -1,0 +1,72 @@
+name: app-store
+
+on:
+  push:
+    branches: [ test-flight, master ]
+    tags: [ v* ]
+
+jobs:
+  deploy:
+    runs-on: macos-latest
+
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '12.3.0'
+      - name: Checkout project
+        uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          yarn
+      - name: Set environment variables from project settings
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        run: |
+          exec .github/scripts/set-env-from-xcodeproj.sh
+      - name: Import signing certificate
+        env:
+          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          #SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          exec .github/scripts/import-certificate.sh
+      - name: Import provisioning profile
+        env:
+          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+        run: |
+          exec .github/scripts/import-profile.sh
+      - name: Set up prod environment
+        env:
+          GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
+        run: |
+          exec .github/scripts/setup-env.sh
+      - uses: yanamura/ios-bump-version@v1
+        with:
+          build-number: ${{github.run_number}}
+          project-path: ios #Example for React Native project
+      - name: Build app
+        run: |
+          cd ios
+          pod install
+          fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement"
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build.log
+          path: ~/Library/Logs/gym/*.log
+
+      - name: Upload release assets
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ios/${{ env.PRODUCT_NAME }}.ipa
+            ios/${{ env.PRODUCT_NAME }}.app.dSYM.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload app to App Store Connect
+        env:
+          APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
+          APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
+        run: |
+          xcrun altool --upload-app -t ios -f "ios/$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"

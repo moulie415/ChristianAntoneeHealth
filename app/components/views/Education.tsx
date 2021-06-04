@@ -1,0 +1,84 @@
+import {ListItem} from '@ui-kitten/components';
+import React, {FunctionComponent} from 'react';
+import {View} from 'react-native';
+import Image from 'react-native-fast-image';
+import colors from '../../constants/colors';
+import styles from '../../styles/views/Education';
+import EducationProps from '../../types/views/Education';
+
+const Education: FunctionComponent<EducationProps> = ({navigation}) => {
+  return (
+    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+      <ListItem
+        style={{backgroundColor: colors.appBlack}}
+        accessoryLeft={() => (
+          <Image
+            source={require('../../images/article1.webp')}
+            style={{height: 100, width: 100}}
+          />
+        )}
+        title="Strawberry and Cacao Kefir Smoothie"
+        description="9 Feb 2021"
+        onPress={() =>
+          navigation.navigate('EducationWebView', {
+            url:
+              'https://healthandmovement.co.uk/education/f/strawberry-and-cacao-kefir-smoothie',
+          })
+        }
+      />
+      <ListItem
+        style={{backgroundColor: colors.appBlack}}
+        accessoryLeft={() => (
+          <Image
+            source={require('../../images/article2.webp')}
+            style={{height: 100, width: 100}}
+          />
+        )}
+        title="Cross-Training For Runners"
+        description="9 Feb 2021"
+        onPress={() =>
+          navigation.navigate('EducationWebView', {
+            url:
+              'https://healthandmovement.co.uk/education/f/cross-training-for-runners',
+          })
+        }
+      />
+      <ListItem
+        style={{backgroundColor: colors.appBlack}}
+        accessoryLeft={() => (
+          <Image
+            source={require('../../images/article3.webp')}
+            style={{height: 100, width: 100}}
+          />
+        )}
+        title="Lifting Heavy Weights Improves Running Performance"
+        description="9 Feb 2021"
+        onPress={() =>
+          navigation.navigate('EducationWebView', {
+            url:
+              'https://healthandmovement.co.uk/education/f/lifting-heavy-weights-improves-running-performance',
+          })
+        }
+      />
+      <ListItem
+        style={{backgroundColor: colors.appBlack}}
+        accessoryLeft={() => (
+          <Image
+            source={require('../../images/article4.webp')}
+            style={{height: 100, width: 100}}
+          />
+        )}
+        title="A Simple Blueprint For Every Workout"
+        description="9 Feb 2021"
+        onPress={() =>
+          navigation.navigate('EducationWebView', {
+            url:
+              'https://healthandmovement.co.uk/education/f/a-simple-blueprint-for-every-workout',
+          })
+        }
+      />
+    </View>
+  );
+};
+
+export default Education;
