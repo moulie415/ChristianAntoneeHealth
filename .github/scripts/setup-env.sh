@@ -1,6 +1,4 @@
 #!/bin/bash
 
-cd ios
+cd ios/HealthAndMovement
 echo $GOOGLE_SERVICE_INFO >> GoogleService-Info.plist
-ls 
-cat GoogleService-Info.plist
