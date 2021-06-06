@@ -24,11 +24,12 @@ jobs:
           cd android/app
           echo ${{ secrets.GOOGLE_SERVICES_JSON }} >> google-services.json
           cd ..
+          chmod +x gradlew
           ./gradlew assembleRelease
-      - name: upload artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
-        with:
-          appId: ${{secrets.FIREBASE_ANDROID_ID}}
-          token: ${{secrets.FIREBASE_TOKEN}}
-          groups: internal
-          file: android/app/build/outputs/apk/release/app-release.apk
+      # - name: upload artifact to Firebase App Distribution
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
+      #   with:
+      #     appId: ${{secrets.FIREBASE_ANDROID_ID}}
+      #     token: ${{secrets.FIREBASE_TOKEN}}
+      #     groups: internal
+      #     file: android/app/build/outputs/apk/release/app-release.apk
