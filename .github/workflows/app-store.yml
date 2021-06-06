@@ -70,3 +70,6 @@ jobs:
           APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
         run: |
           xcrun altool --upload-app -t ios -f "ios/$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
+      - name: Upload dSYM to Firebase
+        run: /
+          exec .github/scripts/upload-dsym.sh

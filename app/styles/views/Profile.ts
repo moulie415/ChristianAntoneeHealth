@@ -1,20 +1,17 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
 
 export default StyleSheet.create({
   title: {
-    fontSize: 24,
-    marginVertical: 20,
+    color: '#fff',
   },
-  titleContainer: {
+  container: {
     flex: 1,
-    alignItems: 'center',
+    backgroundColor: colors.appBlack,
   },
   avatar: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     borderRadius: 50,
-    borderWidth: 2,
-    borderColor: colors.appBlue,
-  }
+  },
 });

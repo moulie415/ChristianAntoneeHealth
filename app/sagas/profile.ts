@@ -13,6 +13,8 @@ import {
   GET_SAMPLES,
   setMonthlyStepSamples,
   setWeeklySteps,
+  UPDATE_PROFILE,
+  UpdateProfileAction,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -31,6 +33,7 @@ import {
   saveHeight,
   saveWeight,
 } from '../helpers/biometrics';
+import Snackbar from 'react-native-snackbar';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -57,6 +60,49 @@ function onAuthStateChanged() {
     });
     return subscriber;
   });
+}
+
+function* updateProfile(action: UpdateProfileAction) {
+  const {
+    dob,
+    weight,
+    weightMetric,
+    height,
+    heightMetric,
+    gender,
+  } = action.payload;
+
+  try {
+    const enabled: boolean = yield call(isEnabled);
+    if (enabled) {
+      yield call(saveWeight, weight, weightMetric);
+      yield call(saveHeight, height, heightMetric);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  const {profile} = yield select((state: MyRootState) => state.profile);
+  yield call(api.updateUser, {
+    ...profile,
+    dob,
+    weight,
+    weightMetric,
+    height,
+    heightMetric,
+    gender,
+  });
+  yield put(
+    setProfile({
+      ...profile,
+      dob,
+      weight,
+      weightMetric,
+      height,
+      heightMetric,
+      gender,
+    }),
+  );
+  yield call(Snackbar.show, {text: 'Profile updated'});
 }
 
 function* signUp(action: SignUpAction) {
@@ -142,6 +188,7 @@ export default function* profileSaga() {
   yield all([
     takeEvery(SIGN_UP, signUp),
     takeEvery(GET_SAMPLES, getSamplesWorker),
+    takeEvery(UPDATE_PROFILE, updateProfile),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

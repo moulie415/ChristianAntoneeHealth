@@ -9,6 +9,7 @@ export const GET_SAMPLES = 'GET_SAMPLES';
 export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
 export const SET_MONTHLY_STEP_SAMPLES = 'SET_MONTHLY_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -40,9 +41,23 @@ export interface SignUpPayload {
   email: string;
 }
 
+export interface UpdateProfilePayload {
+  dob: string;
+  weight: number;
+  weightMetric: WeightMetric;
+  height: number;
+  heightMetric: HeightMetric;
+  gender: Gender;
+}
+
 export interface SignUpAction {
   type: typeof SIGN_UP;
   payload: SignUpPayload;
+}
+
+export interface UpdateProfileAction {
+  type: typeof UPDATE_PROFILE;
+  payload: UpdateProfilePayload;
 }
 
 export interface GetSamplesAction {
@@ -72,11 +87,19 @@ export type ProfileActionTypes =
   | SetMonthlyWeightSamplesAction
   | GetSamplesAction
   | SetMonthlyStepSamplesAction
-  | SetWeeklyStepsAction;
+  | SetWeeklyStepsAction
+  | UpdateProfileAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
   profile,
+});
+
+export const updateProfile = (
+  payload: UpdateProfilePayload,
+): UpdateProfileAction => ({
+  type: UPDATE_PROFILE,
+  payload,
 });
 
 export const setLoggedIn = (loggedIn: boolean): SetLoggedInAction => ({
