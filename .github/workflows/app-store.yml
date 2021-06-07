@@ -53,7 +53,6 @@ jobs:
         with:
           name: build.log
           path: ~/Library/Logs/gym/*.log
-
       - name: Upload release assets
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v1
@@ -72,4 +71,8 @@ jobs:
           xcrun altool --upload-app -t ios -f "ios/$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
       - name: Upload dSYM to Firebase
         run: /
-          exec .github/scripts/upload-dsym.sh
+          ls
+          DSYM=$(find ~/Library/Developer/Xcode/Archives/ -name "*.dSYM")
+          echo $DSYM
+          ls
+          ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/HealthAndMovement/GoogleService-Info.plist -p ios $DSYM
