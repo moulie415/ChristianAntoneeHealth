@@ -5,6 +5,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
 import VideoPlayer from 'react-native-video-controls';
+import convertToProxyURL from 'react-native-video-cache';
 import Video from 'react-native-video';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
@@ -13,6 +14,7 @@ import {MyRootState} from '../../types/Shared';
 import StartWorkoutProps from '../../types/views/StartWorkout';
 import ViewMore from '../commons/ViewMore';
 import {setExerciseNote} from '../../actions/exercises';
+import { SAMPLE_VIDEO_LINK } from '../../constants/strings';
 
 const StartWorkout: FunctionComponent<StartWorkoutProps> = ({
   workout,
@@ -75,10 +77,7 @@ const StartWorkout: FunctionComponent<StartWorkoutProps> = ({
               <>
                 {Platform.OS === 'ios' ? (
                   <Video
-                    source={{
-                      uri:
-                        'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
-                    }}
+                    source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
                     controls
                     style={{height: 250, marginBottom: 10}}
                     repeat
@@ -89,10 +88,7 @@ const StartWorkout: FunctionComponent<StartWorkoutProps> = ({
                     disableVolume
                     disableBack
                     repeat
-                    source={{
-                      uri:
-                        'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
-                    }}
+                    source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
                   />
                 )}
                 {workout[index + 1] && (

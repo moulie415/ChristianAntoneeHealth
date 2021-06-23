@@ -33,3 +33,6 @@ export const googleFitOptions = {
     Scopes.FITNESS_HEART_RATE_READ,
   ],
 };
+
+export const SAMPLE_VIDEO_LINK =
+  'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4';

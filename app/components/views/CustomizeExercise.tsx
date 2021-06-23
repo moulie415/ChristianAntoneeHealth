@@ -4,6 +4,7 @@ import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-controls';
 import Picker from '@gregfrench/react-native-wheel-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import convertToProxyURL from 'react-native-video-cache';
 import Snackbar from 'react-native-snackbar';
 import {Platform, ScrollView, View} from 'react-native';
 import colors from '../../constants/colors';
@@ -14,6 +15,7 @@ import {MyRootState} from '../../types/Shared';
 import {setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
 import ViewMore from '../commons/ViewMore';
+import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
 
 const REPS = [5, 10, 15, 20, 25, 30];
 const SETS = [1, 2, 3, 4, 5, 6];
@@ -53,10 +55,7 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
       </Text>
       {Platform.OS === 'ios' ? (
         <Video
-          source={{
-            uri:
-              'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
-          }}
+          source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
           controls
           style={{height: 250, marginBottom: 10}}
           repeat
@@ -67,10 +66,7 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
           disableVolume
           disableBack
           repeat
-          source={{
-            uri:
-              'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
-          }}
+          source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
         />
       )}
       <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
