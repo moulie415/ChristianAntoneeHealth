@@ -14,7 +14,7 @@ import {MyRootState} from '../../types/Shared';
 import StartWorkoutProps from '../../types/views/StartWorkout';
 import ViewMore from '../commons/ViewMore';
 import {setExerciseNote} from '../../actions/exercises';
-import { SAMPLE_VIDEO_LINK } from '../../constants/strings';
+import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
 
 const StartWorkout: FunctionComponent<StartWorkoutProps> = ({
   workout,

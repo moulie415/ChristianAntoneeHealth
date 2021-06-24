@@ -1,4 +1,4 @@
-import {Button, List, ListItem, Text} from '@ui-kitten/components';
+import {Modal, Card, Button, List, ListItem, Text} from '@ui-kitten/components';
 import React, {
   FunctionComponent,
   useEffect,
@@ -39,6 +39,7 @@ const ExerciseList: FunctionComponent<ExerciseListProps> = ({
   const [selectedExercise, setSelectedExercise] = useState<Exercise>();
   const [reps, setReps] = useState(15);
   const [sets, setSets] = useState(3);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getExercisesAction(level, goals, strengthArea);
@@ -82,6 +83,7 @@ const ExerciseList: FunctionComponent<ExerciseListProps> = ({
           />
           <CustomDivider />
           <ListItem
+            onPress={() => setModalVisible(true)}
             title="View similar exercises"
             style={{backgroundColor: colors.appBlack}}
             accessoryLeft={() => <Icon name="sync" color="#fff" />}
@@ -231,6 +233,15 @@ const ExerciseList: FunctionComponent<ExerciseListProps> = ({
         renderContent={renderContent}
         renderHeader={renderHeader}
       />
+      <Modal
+        visible={modalVisible}
+        backdropStyle={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
+        onBackdropPress={() => setModalVisible(false)}>
+        <Card disabled={true}>
+          <Text>Welcome to UI Kitten 😻</Text>
+          <Button onPress={() => setModalVisible(false)}>DISMISS</Button>
+        </Card>
+      </Modal>
     </View>
   );
 };
