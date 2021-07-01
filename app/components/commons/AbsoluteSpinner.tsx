@@ -1,9 +1,9 @@
 import {Spinner} from '@ui-kitten/components';
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import globalStyles from '../../styles/globalStyles';
 
-const AbsoluteSpinner: FunctionComponent<{loading: boolean}> = ({loading}) => {
+const AbsoluteSpinner: React.FC<{loading: boolean}> = ({loading}) => {
   if (loading) {
     return (
       <View style={globalStyles.spinner}>

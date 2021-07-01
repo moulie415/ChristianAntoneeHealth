@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import styles from '../../styles/views/FitnessTesting';
 import FitnessTestingProps from '../../types/views/FitnessTesting';
 import {TouchableOpacity, View, Image} from 'react-native';
@@ -9,7 +9,7 @@ import {Text} from '@ui-kitten/components';
 import globalStyles from '../../styles/globalStyles';
 import ImageLoader from '../commons/ImageLoader';
 
-const FitnessTesting: FunctionComponent<FitnessTestingProps> = ({
+const FitnessTesting: React.FC<FitnessTestingProps> = ({
   navigation,
   tests,
 }) => {

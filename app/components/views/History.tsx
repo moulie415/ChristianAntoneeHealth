@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
 import HistoryProps from '../../types/views/History';
 
-const History: FunctionComponent<HistoryProps> = () => {
+const History: React.FC<HistoryProps> = () => {
   return (
     <View>
       <Text />

@@ -7,12 +7,7 @@ import {
   SelectItem,
   Button,
 } from '@ui-kitten/components';
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Alert, Text, Platform} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import moment from 'moment';
@@ -28,7 +23,7 @@ import {
 import FitnessInfoProps from '../../types/views/FitnessInfo';
 import AbsoluteSpinner from '../commons/AbsoluteSpinner';
 
-const FitnessInfo: FunctionComponent<FitnessInfoProps> = ({
+const FitnessInfo: React.FC<FitnessInfoProps> = ({
   height,
   setHeight,
   weight,

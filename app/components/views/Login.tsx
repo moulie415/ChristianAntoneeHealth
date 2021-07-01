@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   View,
@@ -30,7 +30,7 @@ GoogleSignin.configure({
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
 });
 
-const Login: FunctionComponent<LoginProps> = ({navigation}) => {
+const Login: React.FC<LoginProps> = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import styles from '../../styles/views/Workout';
 import {View, Image, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
@@ -7,11 +7,9 @@ import {Text, Button, CheckBox} from '@ui-kitten/components';
 import {Goal, Level, StrengthArea} from '../../types/Shared';
 import {setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
+import ImageOverlay from '../commons/ImageOverlay';
 
-const Workout: FunctionComponent<WorkoutProps> = ({
-  navigation,
-  setWorkoutAction,
-}) => {
+const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
   const [selectedArea, setSelectedArea] = useState<StrengthArea>(
     StrengthArea.FULL,
   );
@@ -24,100 +22,14 @@ const Workout: FunctionComponent<WorkoutProps> = ({
       setGoals([...goals, goal]);
     }
   };
+  const areaDisabled =
+    goals.includes(Goal.CARDIO) ||
+    goals.includes(Goal.FLEXIBILITY) ||
+    goals.includes(Goal.BALANCE);
+
   return (
     <View style={{backgroundColor: colors.appBlack, flex: 1}}>
-      <Text category="h5" style={{margin: 10}}>
-        Select an area of the body
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-        }}>
-        <TouchableOpacity
-          onPress={() => setSelectedArea(StrengthArea.FULL)}
-          style={{marginHorizontal: 10, flex: 1}}>
-          <Image
-            style={{height: 100, width: '100%'}}
-            resizeMode="cover"
-            source={require('../../images/full_body.jpeg')}
-          />
-          <Text
-            style={{
-              backgroundColor:
-                selectedArea === StrengthArea.FULL ? colors.appBlue : '#3d3d3d',
-              padding: 5,
-              textAlign: 'center',
-            }}>
-            Full body
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setSelectedArea(StrengthArea.UPPER)}
-          style={{marginHorizontal: 10, flex: 1}}>
-          <Image
-            style={{height: 100, width: '100%'}}
-            resizeMode="cover"
-            source={require('../../images/upper_body.jpeg')}
-          />
-          <Text
-            style={{
-              backgroundColor:
-                selectedArea === StrengthArea.UPPER
-                  ? colors.appBlue
-                  : '#3d3d3d',
-              padding: 5,
-              textAlign: 'center',
-            }}>
-            Upper body
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setSelectedArea(StrengthArea.LOWER)}
-          style={{marginHorizontal: 10, flex: 1}}>
-          <Image
-            style={{height: 100, width: '100%'}}
-            resizeMode="cover"
-            source={require('../../images/lower_body.jpeg')}
-          />
-          <Text
-            style={{
-              backgroundColor:
-                selectedArea === StrengthArea.LOWER
-                  ? colors.appBlue
-                  : '#3d3d3d',
-              padding: 5,
-              textAlign: 'center',
-            }}>
-            Lower body
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <Text category="h5" style={{margin: 10}}>
-        Select your experience
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-        }}>
-        <Button
-          onPress={() => setSelectedLevel(Level.BEGINNER)}
-          status={selectedLevel === Level.BEGINNER ? 'primary' : 'basic'}>
-          Beginner
-        </Button>
-        <Button
-          onPress={() => setSelectedLevel(Level.INTERMEDIATE)}
-          status={selectedLevel === Level.INTERMEDIATE ? 'primary' : 'basic'}>
-          Intermediate
-        </Button>
-        <Button
-          onPress={() => setSelectedLevel(Level.ADVANCED)}
-          status={selectedLevel === Level.ADVANCED ? 'primary' : 'basic'}>
-          Advanced
-        </Button>
-      </View>
-      <Text category="h5" style={{margin: 10}}>
+      <Text category="h5" style={{margin: 10, marginBottom: 0}}>
         Select your goal(s)
       </Text>
       <CheckBox
@@ -144,6 +56,107 @@ const Workout: FunctionComponent<WorkoutProps> = ({
         style={{margin: 10}}>
         Cardiovascular fitness
       </CheckBox>
+
+      <Text category="h5" style={{margin: 10}}>
+        Select your experience
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+        }}>
+        <Button
+          disabled={goals.includes(Goal.FLEXIBILITY)}
+          onPress={() => setSelectedLevel(Level.BEGINNER)}
+          status={selectedLevel === Level.BEGINNER ? 'primary' : 'basic'}>
+          Beginner
+        </Button>
+        <Button
+          disabled={goals.includes(Goal.FLEXIBILITY)}
+          onPress={() => setSelectedLevel(Level.INTERMEDIATE)}
+          status={selectedLevel === Level.INTERMEDIATE ? 'primary' : 'basic'}>
+          Intermediate
+        </Button>
+        <Button
+          disabled={goals.includes(Goal.FLEXIBILITY)}
+          onPress={() => setSelectedLevel(Level.ADVANCED)}
+          status={selectedLevel === Level.ADVANCED ? 'primary' : 'basic'}>
+          Advanced
+        </Button>
+      </View>
+      <Text category="h5" style={{margin: 10}}>
+        Select an area of the body
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          marginBottom: 10,
+        }}>
+        <TouchableOpacity
+          disabled={areaDisabled}
+          onPress={() => setSelectedArea(StrengthArea.FULL)}
+          style={{marginHorizontal: 10, flex: 1}}>
+          <ImageOverlay
+            containerStyle={{height: 100, width: '100%'}}
+            overlayAlpha={areaDisabled ? 0.7 : 0}
+            source={require('../../images/full_body.jpeg')}
+          />
+          <Text
+            style={{
+              backgroundColor:
+                selectedArea === StrengthArea.FULL && !areaDisabled
+                  ? colors.appBlue
+                  : '#3d3d3d',
+              padding: 5,
+              textAlign: 'center',
+            }}>
+            Full body
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          disabled={areaDisabled}
+          onPress={() => setSelectedArea(StrengthArea.UPPER)}
+          style={{marginHorizontal: 10, flex: 1}}>
+          <ImageOverlay
+            containerStyle={{height: 100, width: '100%'}}
+            overlayAlpha={areaDisabled ? 0.7 : 0}
+            source={require('../../images/upper_body.jpeg')}
+          />
+          <Text
+            style={{
+              backgroundColor:
+                selectedArea === StrengthArea.UPPER && !areaDisabled
+                  ? colors.appBlue
+                  : '#3d3d3d',
+              padding: 5,
+              textAlign: 'center',
+            }}>
+            Upper body
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          disabled={areaDisabled}
+          onPress={() => setSelectedArea(StrengthArea.LOWER)}
+          style={{marginHorizontal: 10, flex: 1}}>
+          <ImageOverlay
+            containerStyle={{height: 100, width: '100%'}}
+            overlayAlpha={areaDisabled ? 0.7 : 0}
+            source={require('../../images/lower_body.jpeg')}
+          />
+          <Text
+            style={{
+              backgroundColor:
+                selectedArea === StrengthArea.LOWER && !areaDisabled
+                  ? colors.appBlue
+                  : '#3d3d3d',
+              padding: 5,
+              textAlign: 'center',
+            }}>
+            Lower body
+          </Text>
+        </TouchableOpacity>
+      </View>
       <Button
         disabled={goals.length === 0}
         onPress={() => {

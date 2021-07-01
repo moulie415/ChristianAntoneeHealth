@@ -1,5 +1,5 @@
 import {ListItem, Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-controls';
 import Picker from '@gregfrench/react-native-wheel-picker';
@@ -22,7 +22,7 @@ const SETS = [1, 2, 3, 4, 5, 6];
 
 const PickerItem = Picker.Item;
 
-const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
+const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
   workout,
   setWorkoutAction,
@@ -50,9 +50,6 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
   };
   return (
     <ScrollView style={{backgroundColor: colors.appBlack, flex: 1}}>
-      <Text category="h5" style={{margin: 10}}>
-        Customise exercise
-      </Text>
       {Platform.OS === 'ios' ? (
         <Video
           source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
@@ -72,12 +69,9 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
       <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
         {exercise.name}
       </Text>
+
       <CustomDivider />
-      <ListItem
-        title="View similar exercises"
-        style={{backgroundColor: colors.appBlack}}
-        accessoryLeft={() => <Icon name="sync" color="#fff" />}
-      />
+      <ViewMore text={exercise.description} />
       <CustomDivider />
       <ListItem
         onPress={selectExercise}
@@ -94,46 +88,6 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
           />
         )}
       />
-      <CustomDivider />
-      <ViewMore text={exercise.description} />
-
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginBottom: 10,
-        }}>
-        <View>
-          <Text category="s1" style={{textAlign: 'center'}}>
-            Repetitions
-          </Text>
-          <Picker
-            style={{width: 150, height: 180}}
-            selectedValue={reps}
-            itemStyle={{color: 'white', fontSize: 26}}
-            lineColor="#fff"
-            onValueChange={setReps}>
-            {REPS.map(value => (
-              <PickerItem label={value.toString()} value={value} key={value} />
-            ))}
-          </Picker>
-        </View>
-        <View>
-          <Text category="s1" style={{textAlign: 'center'}}>
-            Sets
-          </Text>
-          <Picker
-            style={{width: 150, height: 180}}
-            selectedValue={sets}
-            lineColor="#fff"
-            itemStyle={{color: 'white', fontSize: 26}}
-            onValueChange={setSets}>
-            {SETS.map(value => (
-              <PickerItem label={value.toString()} value={value} key={value} />
-            ))}
-          </Picker>
-        </View>
-      </View>
     </ScrollView>
   );
 };

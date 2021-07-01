@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Text} from '@ui-kitten/components';
 import {View, Image, TouchableOpacity} from 'react-native';
 import styles from '../../styles/views/Home';
@@ -9,7 +9,7 @@ import HomeWelcome from './HomeWelcome';
 import colors from '../../constants/colors';
 import globalStyles from '../../styles/globalStyles';
 
-const Home: FunctionComponent<HomeProps> = ({
+const Home: React.FC<HomeProps> = ({
   navigation,
   profile,
   hasViewedWelcome,

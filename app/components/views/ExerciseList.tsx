@@ -1,11 +1,5 @@
-import {Button, List, ListItem, Text} from '@ui-kitten/components';
-import React, {
-  FunctionComponent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import {List, ListItem, Text} from '@ui-kitten/components';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Picker from '@gregfrench/react-native-wheel-picker';
@@ -14,7 +8,7 @@ import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import Exercise from '../../types/Exercise';
-import {MyRootState} from '../../types/Shared';
+import {Goal, MyRootState} from '../../types/Shared';
 import ExerciseListProps from '../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../actions/exercises';
 import {truncate} from '../../helpers';
@@ -26,7 +20,7 @@ const SETS = [1, 2, 3, 4, 5, 6];
 
 const PickerItem = Picker.Item;
 
-const ExerciseList: FunctionComponent<ExerciseListProps> = ({
+const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
   route,
   navigation,
@@ -173,8 +167,14 @@ const ExerciseList: FunctionComponent<ExerciseListProps> = ({
     () =>
       Object.values(exercises).filter(exercise => {
         return (
-          (exercise.area === strengthArea || !exercise.area) &&
-          exercise.level === level &&
+          (exercise.area === strengthArea ||
+            (goals.includes(Goal.FLEXIBILITY) &&
+              exercise.type === Goal.FLEXIBILITY) ||
+            (goals.includes(Goal.CARDIO) && exercise.type === Goal.CARDIO) ||
+            (goals.includes(Goal.BALANCE) && exercise.type === Goal.BALANCE)) &&
+          (exercise.level === level ||
+            (goals.includes(Goal.FLEXIBILITY) &&
+              exercise.type === Goal.FLEXIBILITY)) &&
           goals.includes(exercise.type)
         );
       }),

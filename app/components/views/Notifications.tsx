@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
 import NotificationsProps from '../../types/views/Notifications';
 
-const Notifications: FunctionComponent<NotificationsProps> = () => {
+const Notifications: React.FC<NotificationsProps> = () => {
   return (
     <View>
       <Text />

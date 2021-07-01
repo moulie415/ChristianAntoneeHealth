@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/lib/integration/react';
@@ -176,7 +176,7 @@ const Tabs = () => {
   );
 };
 
-const App: FunctionComponent = () => {
+const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>

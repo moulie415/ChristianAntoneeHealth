@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import {Text, ScrollView} from 'react-native';
 import {
   DataTable,
@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import TestResultProps from '../../types/views/TestResult';
 import styles from '../../styles/views/TestResult';
 
-const TestResult: FunctionComponent<TestResultProps> = ({route, tests}) => {
+const TestResult: React.FC<TestResultProps> = ({route, tests}) => {
   const [text, setText] = useState('');
   const [page, setPage] = useState(0);
   const [pageWomen, setPageWomen] = useState(0);

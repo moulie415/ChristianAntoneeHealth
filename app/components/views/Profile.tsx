@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {View, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import {LineChart} from 'react-native-chart-kit';
@@ -23,7 +23,7 @@ import {Gender, HeightMetric, WeightMetric} from '../../types/Profile';
 import {equals} from 'ramda';
 import {getSamples, updateProfile} from '../../actions/profile';
 
-const Profile: FunctionComponent<ProfileProps> = ({
+const Profile: React.FC<ProfileProps> = ({
   profile,
   weightSamples,
   navigation,

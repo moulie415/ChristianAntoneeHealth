@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import InAppReview from 'react-native-in-app-review';
 import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -13,7 +13,7 @@ import {Divider, List, ListItem} from '@ui-kitten/components';
 import {resetToLogin} from '../../RootNavigation';
 import {MyRootState} from '../../types/Shared';
 
-const More: FunctionComponent<MoreProps> = ({
+const More: React.FC<MoreProps> = ({
   navigation,
   setLoggedInAction,
   profile,

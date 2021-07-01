@@ -1,5 +1,5 @@
 import {Button, List, ListItem, Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity, View} from 'react-native';
 import DraggableFlatList, {
@@ -24,7 +24,7 @@ const SETS = [1, 2, 3, 4, 5, 6];
 
 const PickerItem = Picker.Item;
 
-const ReviewExercises: FunctionComponent<ReviewExercisesProps> = ({
+const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,
   setWorkoutAction,
   navigation,

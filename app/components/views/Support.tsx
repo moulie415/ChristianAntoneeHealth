@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
 import SupportProps from '../../types/views/Support';
 
-const Support: FunctionComponent<SupportProps> = () => {
+const Support: React.FC<SupportProps> = () => {
   return (
     <View>
       <Text />

@@ -1,10 +1,10 @@
 import {Button, Input, Layout, Text} from '@ui-kitten/components';
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import {getProfileImage} from '../../helpers/images';
 import AccountDetailsProps from '../../types/views/AccountDetails';
 
-const AccountDetails: FunctionComponent<AccountDetailsProps> = ({
+const AccountDetails: React.FC<AccountDetailsProps> = ({
   setStep,
   dry,
   password,

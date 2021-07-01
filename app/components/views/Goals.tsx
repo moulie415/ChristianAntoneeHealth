@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../../styles/views/Goals';
 import GoalsProps from '../../types/views/Goals';
@@ -18,7 +18,7 @@ interface PurposeItem {
   purpose: Purpose;
 }
 
-const Goals: FunctionComponent<GoalsProps> = ({
+const Goals: React.FC<GoalsProps> = ({
   selectedGoals,
   setSelectedGoals,
   workoutFrequency,

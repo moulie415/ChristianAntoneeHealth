@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {Circle} from 'react-native-progress';
 import moment from 'moment';
@@ -47,7 +47,7 @@ const chartConfig = {
   },
   barPercentage: 0.7,
 };
-const WeeklyActivity: FunctionComponent<WeeklyActivityProps> = ({
+const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
   weightSamples,
   profile,
 }) => {
