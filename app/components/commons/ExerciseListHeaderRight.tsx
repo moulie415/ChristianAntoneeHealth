@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
@@ -6,7 +6,7 @@ import ExerciseListHeaderRightProps from '../../types/commons/ExerciseListHeader
 import {Text} from '@ui-kitten/components';
 import colors from '../../constants/colors';
 
-const ExerciseListHeaderRight: FunctionComponent<ExerciseListHeaderRightProps> = ({
+const ExerciseListHeaderRight: React.FC<ExerciseListHeaderRightProps> = ({
   workout,
   navigation,
 }) => {

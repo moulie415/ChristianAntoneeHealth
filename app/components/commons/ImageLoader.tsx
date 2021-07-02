@@ -1,8 +1,8 @@
-import React, {FunctionComponent, useRef} from 'react';
+import React, {useRef} from 'react';
 import {Animated} from 'react-native';
 import ImageLoaderProps from '../../types/commons/ImageLoader';
 
-const ImageLoader: FunctionComponent<ImageLoaderProps> = props => {
+const ImageLoader: React.FC<ImageLoaderProps> = props => {
   const opacity = useRef(new Animated.Value(0));
 
   const onLoad = () => {

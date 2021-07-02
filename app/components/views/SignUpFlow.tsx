@@ -1,5 +1,5 @@
 import {Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import {Image, KeyboardAvoidingView} from 'react-native';
 import {Bar} from 'react-native-progress';
 import {connect} from 'react-redux';
@@ -14,7 +14,7 @@ import FitnessInfo from './FitnessInfo';
 import Goals from './Goals';
 import {signUp} from '../../actions/profile';
 
-const SignUpFlow: FunctionComponent<SignUpFlowProps> = ({
+const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
   route,
   profile,

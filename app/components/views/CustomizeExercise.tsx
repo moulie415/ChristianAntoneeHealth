@@ -1,28 +1,23 @@
-import {ListItem, Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useState} from 'react';
+import {ListItem, Text, Button} from '@ui-kitten/components';
+import React, {useState} from 'react';
 import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-controls';
-import Picker from '@gregfrench/react-native-wheel-picker';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Body from 'react-native-body-highlighter';
 import convertToProxyURL from 'react-native-video-cache';
 import Snackbar from 'react-native-snackbar';
 import {Platform, ScrollView, View} from 'react-native';
 import colors from '../../constants/colors';
 import CustomizeExerciseProps from '../../types/views/CustomExercise';
 import CustomDivider from '../commons/CustomDivider';
-import Exercise from '../../types/Exercise';
+import Exercise, {MuscleHighlight} from '../../types/Exercise';
 import {MyRootState} from '../../types/Shared';
 import {setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
 import ViewMore from '../commons/ViewMore';
 import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
+import {mapMuscleToHighlight} from '../../helpers/exercises';
 
-const REPS = [5, 10, 15, 20, 25, 30];
-const SETS = [1, 2, 3, 4, 5, 6];
-
-const PickerItem = Picker.Item;
-
-const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
+const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
   workout,
   setWorkoutAction,
@@ -48,11 +43,13 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
     }
     navigation.goBack();
   };
+  const muscles: {slug: MuscleHighlight; intensity: number}[] = exercise.muscles
+    ? mapMuscleToHighlight(exercise.muscles).map(m => {
+        return {slug: m, intensity: 1};
+      })
+    : [];
   return (
     <ScrollView style={{backgroundColor: colors.appBlack, flex: 1}}>
-      <Text category="h5" style={{margin: 10}}>
-        Customise exercise
-      </Text>
       {Platform.OS === 'ios' ? (
         <Video
           source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
@@ -72,68 +69,20 @@ const CustomizeExercise: FunctionComponent<CustomizeExerciseProps> = ({
       <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
         {exercise.name}
       </Text>
-      <CustomDivider />
-      <ListItem
-        title="View similar exercises"
-        style={{backgroundColor: colors.appBlack}}
-        accessoryLeft={() => <Icon name="sync" color="#fff" />}
-      />
-      <CustomDivider />
-      <ListItem
-        onPress={selectExercise}
-        title={
-          workout.find(e => e.id === exercise.id)
-            ? 'Remove exercise'
-            : 'Add exercise'
-        }
-        style={{backgroundColor: colors.appBlack}}
-        accessoryLeft={() => (
-          <Icon
-            name={workout.find(e => e.id === exercise.id) ? 'trash' : 'plus'}
-            color="#fff"
-          />
-        )}
-      />
+
       <CustomDivider />
       <ViewMore text={exercise.description} />
-
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginBottom: 10,
-        }}>
-        <View>
-          <Text category="s1" style={{textAlign: 'center'}}>
-            Repetitions
-          </Text>
-          <Picker
-            style={{width: 150, height: 180}}
-            selectedValue={reps}
-            itemStyle={{color: 'white', fontSize: 26}}
-            lineColor="#fff"
-            onValueChange={setReps}>
-            {REPS.map(value => (
-              <PickerItem label={value.toString()} value={value} key={value} />
-            ))}
-          </Picker>
+      <CustomDivider />
+      {!!muscles && !!muscles.length && (
+        <View style={{alignItems: 'center', marginVertical: 20}}>
+          <Body scale={1} data={muscles} />
         </View>
-        <View>
-          <Text category="s1" style={{textAlign: 'center'}}>
-            Sets
-          </Text>
-          <Picker
-            style={{width: 150, height: 180}}
-            selectedValue={sets}
-            lineColor="#fff"
-            itemStyle={{color: 'white', fontSize: 26}}
-            onValueChange={setSets}>
-            {SETS.map(value => (
-              <PickerItem label={value.toString()} value={value} key={value} />
-            ))}
-          </Picker>
-        </View>
-      </View>
+      )}
+      <Button style={{margin: 10}} onPress={selectExercise}>
+        {workout.find(e => e.id === exercise.id)
+          ? 'Remove exercise'
+          : 'Add exercise'}
+      </Button>
     </ScrollView>
   );
 };

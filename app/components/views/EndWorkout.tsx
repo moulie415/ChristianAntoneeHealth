@@ -1,10 +1,10 @@
 import {Button, Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
 import {resetToTabs} from '../../RootNavigation';
 
-const EndWorkout: FunctionComponent = () => {
+const EndWorkout: React.FC = () => {
   const [difficulty, setDifficulty] = useState(1);
   return (
     <View style={{backgroundColor: colors.appBlack, flex: 1}}>

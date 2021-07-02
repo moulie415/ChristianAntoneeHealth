@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {Circle} from 'react-native-progress';
 import {StackedBarChart, LineChart} from 'react-native-chart-kit';
@@ -57,7 +57,7 @@ const chartConfig = {
   barPercentage: 0.7,
 };
 
-const MonthlyActivity: FunctionComponent<MonthlyActivityProps> = () => {
+const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
   return (
     <ScrollView style={{flex: 1}}>
       <Text category="s1" style={{textAlign: 'center', marginVertical: 20}}>

@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
 import TermsProps from '../../types/views/Terms';
 
-const Terms: FunctionComponent<TermsProps> = () => {
+const Terms: React.FC<TermsProps> = () => {
   return (
     <View>
       <Text />

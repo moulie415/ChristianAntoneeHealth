@@ -1,5 +1,5 @@
 import {Button, Input, Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, ScrollView, Platform, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -16,7 +16,7 @@ import ViewMore from '../commons/ViewMore';
 import {setExerciseNote} from '../../actions/exercises';
 import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
 
-const StartWorkout: FunctionComponent<StartWorkoutProps> = ({
+const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
   navigation,
   exerciseNotes,

@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {View, Dimensions, ImageSourcePropType, Platform} from 'react-native';
 import Carousel, {
   AdditionalParallaxProps,
@@ -43,7 +43,7 @@ const items: CarouselItem[] = [
 ];
 
 const {width} = Dimensions.get('screen');
-const HomeWelcome: FunctionComponent<{setHasViewedWelcome: () => void}> = ({
+const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
   setHasViewedWelcome,
 }) => {
   return (

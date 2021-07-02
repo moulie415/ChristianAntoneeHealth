@@ -1,12 +1,12 @@
 import {ListItem} from '@ui-kitten/components';
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import Image from 'react-native-fast-image';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/Education';
 import EducationProps from '../../types/views/Education';
 
-const Education: FunctionComponent<EducationProps> = ({navigation}) => {
+const Education: React.FC<EducationProps> = ({navigation}) => {
   return (
     <View style={{backgroundColor: colors.appBlack, flex: 1}}>
       <ListItem

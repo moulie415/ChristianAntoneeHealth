@@ -33,16 +33,31 @@ export const createUser = async (
   }
 };
 
-export const getExercises = async (
-  level: Level,
-  goals: Goal[],
-  area?: StrengthArea,
-) => {
-  const snapshot = await db()
+const getExercisesQuery = (level: Level, goals: Goal[], area: StrengthArea) => {
+  if (goals.includes(Goal.FLEXIBILITY)) {
+    return db().collection('exercises').where('type', 'in', goals).get();
+  }
+  if (goals.includes(Goal.BALANCE) || goals.includes(Goal.CARDIO)) {
+    return db()
+      .collection('exercises')
+      .where('level', '==', level)
+      .where('type', 'in', goals)
+      .get();
+  }
+  return db()
     .collection('exercises')
     .where('level', '==', level)
     .where('type', 'in', goals)
+    .where('area', '==', area)
     .get();
+};
+
+export const getExercises = async (
+  level: Level,
+  goals: Goal[],
+  area: StrengthArea,
+) => {
+  const snapshot = await getExercisesQuery(level, goals, area);
   return snapshot.docs.reduce((acc: {[id: string]: Exercise}, curr) => {
     const exercise: any = curr.data();
     acc[curr.id] = {...exercise, id: curr.id};

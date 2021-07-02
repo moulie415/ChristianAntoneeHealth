@@ -1,11 +1,11 @@
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { Level } from '../../types/Shared';
 import colors from '../../constants/colors';
 import LevelIconProps from '../../types/commons/LevelIcon';
 
-const LevelIcon: FunctionComponent<LevelIconProps> = ({ level, size }) => {
+const LevelIcon: React.FC<LevelIconProps> = ({ level, size }) => {
   const star = <Icon name="star" solid color={colors.appBlue} size={size || 12} />;
   if (!level || (level !== Level.BEGINNER && level !== Level.INTERMEDIATE && level !== Level.ADVANCED)) {
     return null;

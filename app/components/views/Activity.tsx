@@ -1,5 +1,5 @@
 import {Text} from '@ui-kitten/components';
-import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import colors from '../../constants/colors';
@@ -12,7 +12,7 @@ import {getSamples} from '../../actions/profile';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 
-const Activity: FunctionComponent<ActivityProps> = ({
+const Activity: React.FC<ActivityProps> = ({
   getSamplesAction,
   weightSamples,
   stepSamples,

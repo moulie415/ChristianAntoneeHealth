@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styles from '../../styles/commons/SearchButton';
 import SearchButtonProps from '../../types/commons/SearchButton';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const SearchButton: FunctionComponent<SearchButtonProps> = ({ navigation }) => {
+const SearchButton: React.FC<SearchButtonProps> = ({ navigation }) => {
   return (
     <TouchableOpacity
       onPress={() =>

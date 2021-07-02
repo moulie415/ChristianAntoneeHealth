@@ -1,10 +1,10 @@
+import React from 'react';
 import {Text} from '@ui-kitten/components';
-import React, {FunctionComponent} from 'react';
 import {Linking, ScrollView, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import AboutProps from '../../types/views/About';
 
-const About: FunctionComponent<AboutProps> = () => {
+const About: React.FC<AboutProps> = () => {
   return (
     <ScrollView style={{backgroundColor: colors.appBlack, flex: 1}}>
       <TouchableOpacity

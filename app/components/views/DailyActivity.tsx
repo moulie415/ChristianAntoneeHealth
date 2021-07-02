@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import moment, {Moment} from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -16,9 +16,7 @@ interface Item {
   day: Moment;
 }
 
-const DailyActivity: FunctionComponent<DailyActivityProps> = ({
-  weeklySteps,
-}) => {
+const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
   const listItems: Item[] = useMemo(() => {
     const items = [];
     for (let i = 0; i < 7; i++) {

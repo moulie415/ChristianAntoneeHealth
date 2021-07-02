@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   Image,
@@ -22,7 +22,7 @@ import colors from '../../constants/colors';
 import sStyles from '../../styles/views/More';
 import SignUpProps from '../../types/views/SignUp';
 
-const SignUp: FunctionComponent<SignUpProps> = ({navigation}) => {
+const SignUp: React.FC<SignUpProps> = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
