@@ -1,9 +1,8 @@
-import {List, ListItem, Text, Button} from '@ui-kitten/components';
+import {List, ListItem} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
-import Picker from '@gregfrench/react-native-wheel-picker';
-import {TouchableOpacity, View, ScrollView} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
@@ -12,12 +11,7 @@ import {Goal, MyRootState} from '../../types/Shared';
 import ExerciseListProps from '../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../actions/exercises';
 import {truncate} from '../../helpers';
-
-const REPS = [5, 10, 15, 20, 25, 30];
-const SETS = [1, 2, 3, 4, 5, 6];
-const RESISTANCE = [...Array(300).keys()];
-
-const PickerItem = Picker.Item;
+import ExerciseBottomSheet from '../commons/ExerciseBottomSheet';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -46,124 +40,14 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         ...workout,
         {
           ...exercise,
-          reps: Number(reps),
-          sets: Number(sets),
+          reps,
+          sets,
+          resistance,
         },
       ]);
     }
   };
 
-  const renderContent = () => {
-    if (selectedExercise) {
-      return (
-        <View
-          style={{
-            paddingBottom: 50,
-            backgroundColor: colors.appBlack,
-          }}>
-          <Text category="h5" style={{textAlign: 'center'}}>
-            {selectedExercise.name}
-          </Text>
-          <Image
-            style={{
-              height: 150,
-              width: '100%',
-              alignSelf: 'center',
-              margin: 10,
-            }}
-            source={require('../../images/old_man_stretching.jpeg')}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-            }}>
-            <View>
-              <Text category="s1" style={{textAlign: 'center'}}>
-                Repetitions
-              </Text>
-              <Picker
-                style={{width: 120, height: 180}}
-                selectedValue={reps}
-                lineColor="#fff"
-                itemStyle={{color: 'white', fontSize: 26}}
-                onValueChange={setReps}>
-                {REPS.map(value => (
-                  <PickerItem
-                    label={value.toString()}
-                    value={value}
-                    key={value}
-                  />
-                ))}
-              </Picker>
-            </View>
-            <View>
-              <Text category="s1" style={{textAlign: 'center'}}>
-                Sets
-              </Text>
-              <Picker
-                style={{width: 120, height: 180}}
-                selectedValue={sets}
-                lineColor="#fff"
-                itemStyle={{color: 'white', fontSize: 26}}
-                onValueChange={setSets}>
-                {SETS.map(value => (
-                  <PickerItem
-                    label={value.toString()}
-                    value={value}
-                    key={value}
-                  />
-                ))}
-              </Picker>
-            </View>
-            {(selectedExercise.type === Goal.BALANCE ||
-              selectedExercise.type === Goal.STRENGTH) && (
-              <View>
-                <Text category="s1" style={{textAlign: 'center'}}>
-                  Resistance
-                </Text>
-                <Picker
-                  style={{width: 120, height: 180}}
-                  selectedValue={resistance}
-                  lineColor="#fff"
-                  itemStyle={{color: 'white', fontSize: 15}}
-                  onValueChange={setResistance}>
-                  {RESISTANCE.map(value => (
-                    <PickerItem
-                      label={
-                        value === 0 ? 'Bodyweight' : `${value.toString()} kg`
-                      }
-                      value={value}
-                      key={value}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            )}
-          </View>
-          <Button
-            style={{margin: 10, marginTop: 30}}
-            onPress={() => {
-              selectExercise(selectedExercise);
-              bottomSheetRef.current.snapTo(1);
-            }}>
-            {workout.find(e => e.id === selectedExercise.id)
-              ? 'Remove exercise'
-              : 'Add exercise'}
-          </Button>
-        </View>
-      );
-    }
-    return null;
-  };
-
-  const renderHeader = () => {
-    return (
-      <View style={{backgroundColor: colors.appBlack, alignItems: 'center'}}>
-        <Icon color="#ffff" name="minus" size={30} />
-      </View>
-    );
-  };
 
   const filtered = useMemo(
     () =>
@@ -225,13 +109,15 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         }}
       />
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={['65%', 0]}
-        borderRadius={10}
-        initialSnap={1}
-        renderContent={renderContent}
-        renderHeader={renderHeader}
+      <ExerciseBottomSheet
+        selectedExercise={selectedExercise}
+        bottomSheetRef={bottomSheetRef}
+        reps={reps}
+        sets={sets}
+        resistance={resistance}
+        setSets={setSets}
+        setReps={setReps}
+        setResistance={setResistance}
       />
     </View>
   );

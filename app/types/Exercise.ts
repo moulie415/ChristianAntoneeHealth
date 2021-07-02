@@ -14,6 +14,7 @@ export default interface Exercise {
   premium?: boolean;
   reps?: number;
   sets?: number;
+  resistance?: number;
 }
 
 export type Muscle =
