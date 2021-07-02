@@ -1,4 +1,4 @@
-import {List, ListItem, Text} from '@ui-kitten/components';
+import {List, ListItem, Text, Button} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -12,11 +12,10 @@ import {Goal, MyRootState} from '../../types/Shared';
 import ExerciseListProps from '../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../actions/exercises';
 import {truncate} from '../../helpers';
-import CustomDivider from '../commons/CustomDivider';
-import ViewMore from '../commons/ViewMore';
 
 const REPS = [5, 10, 15, 20, 25, 30];
 const SETS = [1, 2, 3, 4, 5, 6];
+const RESISTANCE = [...Array(300).keys()];
 
 const PickerItem = Picker.Item;
 
@@ -33,6 +32,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   const [selectedExercise, setSelectedExercise] = useState<Exercise>();
   const [reps, setReps] = useState(15);
   const [sets, setSets] = useState(3);
+  const [resistance, setResistance] = useState(0);
 
   useEffect(() => {
     getExercisesAction(level, goals, strengthArea);
@@ -58,7 +58,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
       return (
         <View
           style={{
-            padding: 10,
             paddingBottom: 50,
             backgroundColor: colors.appBlack,
           }}>
@@ -68,43 +67,12 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           <Image
             style={{
               height: 150,
-              width: 200,
+              width: '100%',
               alignSelf: 'center',
               margin: 10,
             }}
             source={require('../../images/old_man_stretching.jpeg')}
           />
-          <CustomDivider />
-          <ListItem
-            title="View similar exercises"
-            style={{backgroundColor: colors.appBlack}}
-            accessoryLeft={() => <Icon name="sync" color="#fff" />}
-          />
-          <CustomDivider />
-          <ListItem
-            onPress={() => {
-              selectExercise(selectedExercise);
-              bottomSheetRef.current.snapTo(1);
-            }}
-            title={
-              workout.find(e => e.id === selectedExercise.id)
-                ? 'Remove exercise'
-                : 'Add exercise'
-            }
-            style={{backgroundColor: colors.appBlack}}
-            accessoryLeft={() => (
-              <Icon
-                name={
-                  workout.find(e => e.id === selectedExercise.id)
-                    ? 'trash'
-                    : 'plus'
-                }
-                color="#fff"
-              />
-            )}
-          />
-          <CustomDivider />
-          <ViewMore text={selectedExercise.description} />
           <View
             style={{
               flexDirection: 'row',
@@ -115,7 +83,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 Repetitions
               </Text>
               <Picker
-                style={{width: 150, height: 180}}
+                style={{width: 120, height: 180}}
                 selectedValue={reps}
                 lineColor="#fff"
                 itemStyle={{color: 'white', fontSize: 26}}
@@ -134,7 +102,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 Sets
               </Text>
               <Picker
-                style={{width: 150, height: 180}}
+                style={{width: 120, height: 180}}
                 selectedValue={sets}
                 lineColor="#fff"
                 itemStyle={{color: 'white', fontSize: 26}}
@@ -148,7 +116,41 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 ))}
               </Picker>
             </View>
+            {(selectedExercise.type === Goal.BALANCE ||
+              selectedExercise.type === Goal.STRENGTH) && (
+              <View>
+                <Text category="s1" style={{textAlign: 'center'}}>
+                  Resistance
+                </Text>
+                <Picker
+                  style={{width: 120, height: 180}}
+                  selectedValue={resistance}
+                  lineColor="#fff"
+                  itemStyle={{color: 'white', fontSize: 15}}
+                  onValueChange={setResistance}>
+                  {RESISTANCE.map(value => (
+                    <PickerItem
+                      label={
+                        value === 0 ? 'Bodyweight' : `${value.toString()} kg`
+                      }
+                      value={value}
+                      key={value}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            )}
           </View>
+          <Button
+            style={{margin: 10, marginTop: 30}}
+            onPress={() => {
+              selectExercise(selectedExercise);
+              bottomSheetRef.current.snapTo(1);
+            }}>
+            {workout.find(e => e.id === selectedExercise.id)
+              ? 'Remove exercise'
+              : 'Add exercise'}
+          </Button>
         </View>
       );
     }
@@ -225,7 +227,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 
       <BottomSheet
         ref={bottomSheetRef}
-        snapPoints={['70%', 0]}
+        snapPoints={['65%', 0]}
         borderRadius={10}
         initialSnap={1}
         renderContent={renderContent}
