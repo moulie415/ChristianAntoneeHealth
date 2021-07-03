@@ -18,6 +18,9 @@ jobs:
       - name: Install npm dependencies
         run: |
           yarn
+      - name: Run tests
+        run: |
+          yarn test
       - name: Set environment variables from project settings
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true

@@ -11,9 +11,9 @@ jobs:
       - name: Install npm dependencies
         run: |
           yarn
-      # - name: Run tests
-        # run: |
-        #   npm test
+       - name: Run tests
+        run: |
+          yarn test
       - name: Bump version
         uses: chkfung/android-version-actions@v1.1
         with:
