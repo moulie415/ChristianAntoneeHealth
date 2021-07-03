@@ -34,6 +34,8 @@ import {
   saveWeight,
 } from '../helpers/biometrics';
 import Snackbar from 'react-native-snackbar';
+import {HealthValue} from 'react-native-health';
+import {ActivitySampleResponse} from 'react-native-google-fit';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -50,7 +52,12 @@ function* getSamplesWorker() {
   const weightSamples: Sample[] = yield call(getWeightSamples, weightMetric);
   yield put(setMonthlyWeightSamples(weightSamples, month));
 
-  const activitySamples = yield call(getActivitySamples);
+  const activitySamples: HealthValue[] | ActivitySampleResponse[] = yield call(
+    getActivitySamples,
+  );
+
+  if (activitySamples) {
+  }
 }
 
 function onAuthStateChanged() {

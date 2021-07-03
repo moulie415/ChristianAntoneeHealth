@@ -4,6 +4,7 @@ import {View, ScrollView, Platform, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
+// @ts-ignore
 import VideoPlayer from 'react-native-video-controls';
 import convertToProxyURL from 'react-native-video-cache';
 import Video from 'react-native-video';

@@ -14,6 +14,7 @@ import {
 import Exercise from '../types/Exercise';
 import * as api from '../helpers/api';
 import {MyRootState} from '../types/Shared';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goals, area} = action.payload;
@@ -37,7 +38,10 @@ export function* deleteExercise(action: DeleteExerciseAction) {
 
 export function* addExercise(action: AddExerciseAction) {
   const exercise = action.payload;
-  const ref = yield call(api.addExercise, exercise);
+  const ref: FirebaseFirestoreTypes.DocumentReference = yield call(
+    api.addExercise,
+    exercise,
+  );
   const {id} = ref;
   const {exercises} = yield select((state: MyRootState) => state.exercises);
 
@@ -50,7 +54,6 @@ export function* updateExercise(action: UpdateExerciseAction) {
   yield call(api.updateExercise, exercise);
   // const exercises = { ...getState().exercises.exercises, [exercise.id]: exercise };
   // dispatch(setExercises(exercises));
-  yield call(getExercises);
   Snackbar.show({text: 'Exercise updated'});
 }
 

@@ -11,8 +11,8 @@ import Snackbar from 'react-native-snackbar';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../actions/exercises';
 
-const REPS = [5, 10, 15, 20, 25, 30];
-const SETS = [1, 2, 3, 4, 5, 6];
+const REPS = [...Array(101).keys()];
+const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const RESISTANCE = [...Array(301).keys()];
 
 const PickerItem = Picker.Item;
@@ -104,37 +104,40 @@ const ExerciseBottomSheet: React.FC<{
           />
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <View>
-              <Text category="s1" style={{textAlign: 'center'}}>
-                Repetitions
-              </Text>
               <Picker
                 style={{width: 120, height: 180}}
                 selectedValue={reps}
                 lineColor="#fff"
-                itemStyle={{color: 'white', fontSize: 26}}
+                itemStyle={{color: 'white', fontSize: 15}}
                 onValueChange={setReps}>
-                {REPS.map(value => (
-                  <PickerItem
-                    label={value.toString()}
-                    value={value}
-                    key={value}
-                  />
-                ))}
+                {REPS.map(value => {
+                  if (value === 0) {
+                    return null;
+                  }
+                  return (
+                    <PickerItem
+                      label={`${value.toString()} ${
+                        value === 1 ? 'rep' : 'reps'
+                      }`}
+                      value={value}
+                      key={value}
+                    />
+                  );
+                })}
               </Picker>
             </View>
             <View>
-              <Text category="s1" style={{textAlign: 'center'}}>
-                Sets
-              </Text>
               <Picker
                 style={{width: 120, height: 180}}
                 selectedValue={sets}
                 lineColor="#fff"
-                itemStyle={{color: 'white', fontSize: 26}}
+                itemStyle={{color: 'white', fontSize: 15}}
                 onValueChange={setSets}>
                 {SETS.map(value => (
                   <PickerItem
-                    label={value.toString()}
+                    label={`${value.toString()} ${
+                      value === 1 ? 'set' : 'sets'
+                    }`}
                     value={value}
                     key={value}
                   />
@@ -144,9 +147,6 @@ const ExerciseBottomSheet: React.FC<{
             {(selectedExercise.type === Goal.BALANCE ||
               selectedExercise.type === Goal.STRENGTH) && (
               <View>
-                <Text category="s1" style={{textAlign: 'center'}}>
-                  Resistance
-                </Text>
                 <Picker
                   style={{width: 120, height: 180}}
                   selectedValue={resistance}

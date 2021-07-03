@@ -1,7 +1,9 @@
 import {ListItem, Text, Button} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import Video from 'react-native-video';
+// @ts-ignore
 import VideoPlayer from 'react-native-video-controls';
+// @ts-ignore
 import Body from 'react-native-body-highlighter';
 import convertToProxyURL from 'react-native-video-cache';
 import Snackbar from 'react-native-snackbar';

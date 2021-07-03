@@ -1,11 +1,11 @@
-import {Level, Type, StrengthArea, Location, FlexibilityArea} from './Shared';
+import {Level, Goal, StrengthArea, Location, FlexibilityArea} from './Shared';
 
 export default interface Exercise {
   id?: string;
   name: string;
   description: string;
   level: Level;
-  type: Type;
+  type: Goal;
   area?: StrengthArea;
   flexibilityArea?: FlexibilityArea;
   location: Location;

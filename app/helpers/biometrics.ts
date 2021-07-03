@@ -267,6 +267,7 @@ export const getSex = (): Promise<Gender | undefined> => {
         if (e) {
           reject(e);
         }
+        // @ts-ignore
         if (result.value === 'male' || result.value === 'female') {
           resolve(result.value);
         } else {

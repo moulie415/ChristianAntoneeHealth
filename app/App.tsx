@@ -26,18 +26,15 @@ import SignUp from './components/views/SignUp';
 import Welcome from './components/views/Welcome';
 import colors from './constants/colors';
 import Profile from './components/views/Profile';
-import HistoryButton from './components/commons/HistoryButton';
-import History from './components/views/History';
 import Notifications from './components/views/Notifications';
 import Premium from './components/views/Premium';
 import Support from './components/views/Support';
 import Terms from './components/views/Terms';
 import Settings from './components/views/Settings';
 import About from './components/views/About';
-import AddExerciseButton from './components/commons/AddExersiseButton';
-import TestResult from './components/views/TestResult';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
+// @ts-ignore
 import {default as theme} from './custom-theme.json';
 import SignUpFlow from './components/views/SignUpFlow';
 import SplashScreen from 'react-native-splash-screen';
@@ -89,7 +86,6 @@ export type StackParamList = {
   ReviewExercises: undefined;
   StartWorkout: undefined;
   EndWorkout: undefined;
-  TestResult: {id: string};
   Education: undefined;
   EducationWebView: {url: string};
   Settings: undefined;
@@ -254,14 +250,12 @@ const App: React.FC = () => {
                 })}
               />
               <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="History" component={History} />
               <Stack.Screen name="Notifications" component={Notifications} />
               <Stack.Screen name="Premium" component={Premium} />
               <Stack.Screen name="Support" component={Support} />
               <Stack.Screen name="Terms" component={Terms} />
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="About" component={About} />
-              <Stack.Screen name="TestResult" component={TestResult} />
               <Stack.Screen name="Education" component={Education} />
               <Stack.Screen
                 name="EducationWebView"

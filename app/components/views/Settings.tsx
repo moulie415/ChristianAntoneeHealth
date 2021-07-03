@@ -1,4 +1,4 @@
-import {Text, Toggle} from '@ui-kitten/components';
+import {Datepicker, Text, Toggle} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
@@ -11,9 +11,15 @@ const Settings: React.FC<SettingsProps> = () => {
       <Text style={{margin: 10}} category="h5">
         Notifications
       </Text>
-      <View style={{flexDirection: 'row'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 10,
+        }}>
         <Text>Workout reminders</Text>
-        <Toggle />
+        <Toggle checked={workoutReminders} onChange={setWorkoutReminders} />
       </View>
     </View>
   );
