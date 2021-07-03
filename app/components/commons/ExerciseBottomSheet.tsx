@@ -28,6 +28,8 @@ const ExerciseBottomSheet: React.FC<{
   setReps: (reps: number) => void;
   setResistance: (resistance: number) => void;
   setWorkoutAction: (workout: Exercise[]) => void;
+  setOpen: (open: boolean) => void;
+  open: boolean;
 }> = ({
   bottomSheetRef,
   selectedExercise,
@@ -39,6 +41,8 @@ const ExerciseBottomSheet: React.FC<{
   setSets,
   setReps,
   setResistance,
+  setOpen,
+  open,
 }) => {
   const selected = workout.find(e => e.id === selectedExercise?.id);
   const selectExercise = () => {
@@ -77,7 +81,6 @@ const ExerciseBottomSheet: React.FC<{
       Snackbar.show({text: 'Exercise saved'});
     }, 500);
   };
-
 
   const renderContent = () => {
     if (selectedExercise) {
@@ -169,6 +172,7 @@ const ExerciseBottomSheet: React.FC<{
                 onPress={() => {
                   saveExercise();
                   bottomSheetRef.current.snapTo(1);
+                  setOpen(false);
                 }}
                 style={{margin: 10}}>
                 Save exercise
@@ -179,6 +183,7 @@ const ExerciseBottomSheet: React.FC<{
               onPress={() => {
                 selectExercise();
                 bottomSheetRef.current.snapTo(1);
+                setOpen(false);
               }}>
               {workout.find(e => e.id === selectedExercise.id)
                 ? 'Remove exercise'
@@ -199,14 +204,29 @@ const ExerciseBottomSheet: React.FC<{
     );
   };
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      snapPoints={[selected ? '70%' : '65%', 0]}
-      borderRadius={10}
-      initialSnap={1}
-      renderContent={renderContent}
-      renderHeader={renderHeader}
-    />
+    <>
+      {open && (
+        <View
+          style={{
+            position: 'absolute',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
+      )}
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={[selected ? '70%' : '65%', 0]}
+        borderRadius={10}
+        initialSnap={1}
+        onCloseStart={() => setOpen(false)}
+        renderContent={renderContent}
+        renderHeader={renderHeader}
+      />
+    </>
   );
 };
 

@@ -27,6 +27,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   const [reps, setReps] = useState(15);
   const [sets, setSets] = useState(3);
   const [resistance, setResistance] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     getExercisesAction(level, goals, strengthArea);
@@ -47,7 +48,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
       ]);
     }
   };
-
 
   const filtered = useMemo(
     () =>
@@ -100,6 +100,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                     onPress={() => {
                       setSelectedExercise(item);
                       bottomSheetRef.current.snapTo(0);
+                      setModalOpen(true);
                     }}
                   />
                 </TouchableOpacity>
@@ -108,7 +109,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           );
         }}
       />
-
       <ExerciseBottomSheet
         selectedExercise={selectedExercise}
         bottomSheetRef={bottomSheetRef}
@@ -118,6 +118,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         setSets={setSets}
         setReps={setReps}
         setResistance={setResistance}
+        setOpen={setModalOpen}
+        open={modalOpen}
       />
     </View>
   );

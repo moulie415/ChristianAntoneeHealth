@@ -27,6 +27,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   const [reps, setReps] = useState(15);
   const [sets, setSets] = useState(3);
   const [resistance, setResistance] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const renderItem = useCallback(
     ({item, index, drag, isActive}: RenderItemParams<Exercise>) => {
@@ -51,6 +52,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                 onPress={() => {
                   setSelectedExercise(item);
                   bottomSheetRef.current?.snapTo(0);
+                  setModalOpen(true);
                 }}
               />
             </TouchableOpacity>
@@ -117,6 +119,8 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         setSets={setSets}
         setReps={setReps}
         setResistance={setResistance}
+        open={modalOpen}
+        setOpen={setModalOpen}
       />
     </View>
   );
