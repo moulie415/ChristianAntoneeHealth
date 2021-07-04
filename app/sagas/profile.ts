@@ -22,7 +22,7 @@ import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, resetToTabs} from '../RootNavigation';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
   getStepSamples,
@@ -41,7 +41,25 @@ function* getSamplesWorker() {
   const month = moment().month();
 
   const weeklySteps: StepSample[] = yield call(getWeeklySteps);
-  yield put(setWeeklySteps(weeklySteps));
+  if (Platform.OS === 'ios') {
+    const aggregatedWeeklySteps = Object.values(
+      weeklySteps.reduce(
+        (acc: {[key: string]: {date: string; value: number}}, cur) => {
+          const date = moment(cur.date).format('YYYY-MM-DD');
+          if (acc[date]) {
+            acc[date] = {date, value: acc[date].value + cur.value};
+          } else {
+            acc[date] = {date, value: cur.value};
+          }
+          return acc;
+        },
+        {},
+      ),
+    );
+    yield put(setWeeklySteps(aggregatedWeeklySteps));
+  } else {
+    yield put(setWeeklySteps(weeklySteps));
+  }
 
   const stepSamples: StepSample[] = yield call(getStepSamples);
   yield put(setMonthlyStepSamples(stepSamples, month));
