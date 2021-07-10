@@ -10,6 +10,8 @@ export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
 export const SET_MONTHLY_STEP_SAMPLES = 'SET_MONTHLY_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+export const SET_WORKOUT_REMINDERS_DISABLED = 'TOGGLE_WORKOUT_REMINDERS';
+export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -79,6 +81,16 @@ export interface SetWeeklyStepsAction {
   payload: StepSample[];
 }
 
+export interface SetWorkoutRemindersDisabledAction {
+  type: typeof SET_WORKOUT_REMINDERS_DISABLED;
+  payload: boolean;
+}
+
+export interface SetWorkoutReminderTimeAction {
+  type: typeof SET_WORKOUT_REMINDER_TIME;
+  payload: number;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -88,7 +100,9 @@ export type ProfileActionTypes =
   | GetSamplesAction
   | SetMonthlyStepSamplesAction
   | SetWeeklyStepsAction
-  | UpdateProfileAction;
+  | UpdateProfileAction
+  | SetWorkoutRemindersDisabledAction
+  | SetWorkoutReminderTimeAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -139,4 +153,18 @@ export const setMonthlyStepSamples = (
 export const setWeeklySteps = (steps: StepSample[]): SetWeeklyStepsAction => ({
   type: SET_WEEKLY_STEPS,
   payload: steps,
+});
+
+export const setWorkoutRemindersDisabled = (
+  payload: boolean,
+): SetWorkoutRemindersDisabledAction => ({
+  type: SET_WORKOUT_REMINDERS_DISABLED,
+  payload,
+});
+
+export const setWorkoutReminderTime = (
+  payload: number,
+): SetWorkoutReminderTimeAction => ({
+  type: SET_WORKOUT_REMINDER_TIME,
+  payload,
 });

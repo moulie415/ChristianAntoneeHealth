@@ -1,9 +1,20 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import PushNotification from 'react-native-push-notification';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
 import moment from 'moment';
-import {take, call, select, put, all, takeEvery} from 'redux-saga/effects';
+import {
+  take,
+  call,
+  select,
+  put,
+  all,
+  takeEvery,
+  takeLatest,
+  fork,
+} from 'redux-saga/effects';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   setLoggedIn,
   setProfile,
@@ -15,6 +26,12 @@ import {
   setWeeklySteps,
   UPDATE_PROFILE,
   UpdateProfileAction,
+  SET_WORKOUT_REMINDERS_DISABLED,
+  SetWorkoutRemindersDisabledAction,
+  setWorkoutRemindersDisabled,
+  SET_WORKOUT_REMINDER_TIME,
+  SetWorkoutReminderTimeAction,
+  setWorkoutReminderTime,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -156,6 +173,7 @@ function* signUp(action: SignUpAction) {
     } catch (e) {
       console.log(e);
     }
+    yield fork(getWorkoutReminders);
     if (dry) {
       yield call(api.createUser, email, password, {
         signedUp: true,
@@ -209,11 +227,94 @@ function* signUp(action: SignUpAction) {
   }
 }
 
+const WORKOUT_REMINDERS_KEY = '@workoutReminders';
+const WORKOUT_REMINDER_TIME_KEY = '@workoutRemindersTime';
+
+function* getWorkoutReminders() {
+  const disabled: string = yield call(
+    AsyncStorage.getItem,
+    WORKOUT_REMINDERS_KEY,
+  );
+
+  const timeString: string = yield call(
+    AsyncStorage.getItem,
+    WORKOUT_REMINDER_TIME_KEY,
+  );
+  const {workoutReminderTime} = yield select(
+    (state: MyRootState) => state.profile,
+  );
+  const time = timeString ? Number(timeString) : workoutReminderTime;
+
+  PushNotification.createChannel(
+    {
+      channelId: WORKOUT_REMINDERS_KEY,
+      channelName: 'Workout reminders',
+      channelDescription: 'Daily reminders to workout',
+    },
+    created => console.log('channel created', created),
+  );
+
+  yield put(setWorkoutReminderTime(time));
+  if (disabled) {
+    yield put(setWorkoutRemindersDisabled(true));
+  } else {
+    yield put(setWorkoutRemindersDisabled(false));
+  }
+}
+
+function* setWorkoutRemindersWorker(action: SetWorkoutRemindersDisabledAction) {
+  const disabled = action.payload;
+  const {workoutReminderTime} = yield select(
+    (state: MyRootState) => state.profile,
+  )
+  // const date = moment.unix(workoutReminderTime).toDate();
+  const date = moment().add({ seconds: 15 }).toDate();
+
+  if (disabled) {
+    yield call(AsyncStorage.setItem, WORKOUT_REMINDERS_KEY, 'true');
+    PushNotification.cancelLocalNotifications({id: `${1}`});
+  } else {
+    yield call(AsyncStorage.removeItem, WORKOUT_REMINDERS_KEY);
+    
+    PushNotification.scheduleLocalNotification({
+    //   id: 1,
+      channelId: WORKOUT_REMINDERS_KEY,
+      message: 'Reminder to workout',
+      repeatType: 'day',
+      date,
+      allowWhileIdle: true,
+    });
+  }
+}
+
+function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
+  const time = action.payload;
+  const {workoutRemindersDisabled} = yield select(
+    (state: MyRootState) => state.profile,
+  );
+  yield call(AsyncStorage.setItem, WORKOUT_REMINDER_TIME_KEY, time.toString());
+  // const date = moment.unix(time).toDate();
+  const date = moment().add({ seconds: 15 }).toDate();
+
+  if (!workoutRemindersDisabled) {
+    PushNotification.scheduleLocalNotification({
+     //  id: 1,
+      channelId: WORKOUT_REMINDERS_KEY,
+      message: 'Reminder to workout',
+      repeatType: 'day',
+      date,
+      allowWhileIdle: true,
+    });
+  }
+}
+
 export default function* profileSaga() {
   yield all([
     takeEvery(SIGN_UP, signUp),
     takeEvery(GET_SAMPLES, getSamplesWorker),
     takeEvery(UPDATE_PROFILE, updateProfile),
+    takeLatest(SET_WORKOUT_REMINDERS_DISABLED, setWorkoutRemindersWorker),
+    takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

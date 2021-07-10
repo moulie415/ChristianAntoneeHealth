@@ -1533,6 +1533,11 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
+"@types/react-native-push-notification@^7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-7.3.1.tgz#32e06bf685b4058a5c5b8f9abc8e34f600e205f6"
+  integrity sha512-6oEj6E73geW5L5QgZytM8zVBD+VDZgDn0vDQXDF6bqSWxWRRU4ow6zJAU2M5ElssoVwo9Ne7z/4+GpslS+p/SA==
+
 "@types/react-native-snap-carousel@^3.8.3":
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/@types/react-native-snap-carousel/-/react-native-snap-carousel-3.8.3.tgz#f3005e6ac7e84865ea9cfa9210e6056cea2f1041"

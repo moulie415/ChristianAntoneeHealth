@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -6,6 +7,8 @@ import {
   SET_MONTHLY_WEIGHT_SAMPLES,
   SET_MONTHLY_STEP_SAMPLES,
   SET_WEEKLY_STEPS,
+  SET_WORKOUT_REMINDERS_DISABLED,
+  SET_WORKOUT_REMINDER_TIME,
 } from '../actions/profile';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
@@ -18,6 +21,8 @@ export interface ProfileState {
   weightSamples: {[key: number]: Sample[]};
   stepSamples: {[key: number]: StepSample[]};
   weeklySteps: StepSample[];
+  workoutRemindersDisabled: boolean;
+  workoutReminderTime: number;
 }
 
 const initialState: ProfileState = {
@@ -28,6 +33,8 @@ const initialState: ProfileState = {
   weightSamples: {},
   stepSamples: {},
   weeklySteps: [],
+  workoutRemindersDisabled: false,
+  workoutReminderTime: moment().set({hour: 9, minute: 0, second: 0}).unix(),
 };
 
 const reducer = (
@@ -72,6 +79,16 @@ const reducer = (
       return {
         ...state,
         weeklySteps: action.payload,
+      };
+    case SET_WORKOUT_REMINDERS_DISABLED:
+      return {
+        ...state,
+        workoutRemindersDisabled: action.payload,
+      };
+    case SET_WORKOUT_REMINDER_TIME:
+      return {
+        ...state,
+        workoutReminderTime: action.payload,
       };
     default:
       return state;
