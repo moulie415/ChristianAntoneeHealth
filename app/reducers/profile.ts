@@ -39,7 +39,7 @@ const initialState: ProfileState = {
   workoutReminderTime: new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
-    new Date().getDate(),
+    new Date().getDate() + 1,
     9,
     0,
     0,

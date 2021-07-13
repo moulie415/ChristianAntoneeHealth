@@ -49,24 +49,23 @@ const Settings: React.FC<SettingsProps> = ({
           margin: 10,
         }}>
         <Text style={{flex: 1}}>Time of reminder</Text>
-        {show ||
-          (Platform.OS === 'ios' && (
-            <DateTimePicker
-              disabled={!workoutReminders}
-              style={{width: 100}}
-              testID="dateTimePicker"
-              value={new Date(workoutReminderTime)}
-              mode="time"
-              is24Hour={true}
-              display="default"
-              onChange={(_: Event, d: Date) => {
-                if (d) {
-                  setWorkoutReminderTimeAction(d);
-                }
-                setShow(Platform.OS === 'ios');
-              }}
-            />
-          ))}
+        {(show || Platform.OS === 'ios') && (
+          <DateTimePicker
+            disabled={!workoutReminders}
+            style={{width: 100}}
+            testID="dateTimePicker"
+            value={new Date(workoutReminderTime)}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onChange={(_: Event, d: Date) => {
+              if (d) {
+                setWorkoutReminderTimeAction(d);
+              }
+              setShow(Platform.OS === 'ios');
+            }}
+          />
+        )}
         {Platform.OS === 'android' && (
           <TouchableOpacity onPress={() => setShow(true)}>
             <Text>{moment(workoutReminderTime).format('HH:mm')}</Text>
