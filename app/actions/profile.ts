@@ -88,7 +88,7 @@ export interface SetWorkoutRemindersDisabledAction {
 
 export interface SetWorkoutReminderTimeAction {
   type: typeof SET_WORKOUT_REMINDER_TIME;
-  payload: number;
+  payload: Date;
 }
 
 export type ProfileActionTypes =
@@ -163,7 +163,7 @@ export const setWorkoutRemindersDisabled = (
 });
 
 export const setWorkoutReminderTime = (
-  payload: number,
+  payload: Date,
 ): SetWorkoutReminderTimeAction => ({
   type: SET_WORKOUT_REMINDER_TIME,
   payload,

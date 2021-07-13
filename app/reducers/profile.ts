@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -22,7 +21,7 @@ export interface ProfileState {
   stepSamples: {[key: number]: StepSample[]};
   weeklySteps: StepSample[];
   workoutRemindersDisabled: boolean;
-  workoutReminderTime: number;
+  workoutReminderTime: string;
 }
 
 const initialState: ProfileState = {
@@ -34,7 +33,14 @@ const initialState: ProfileState = {
   stepSamples: {},
   weeklySteps: [],
   workoutRemindersDisabled: false,
-  workoutReminderTime: moment().set({hour: 9, minute: 0, second: 0}).unix(),
+  workoutReminderTime: new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate(),
+    9,
+    0,
+    0,
+  ).toISOString(),
 };
 
 const reducer = (
@@ -88,7 +94,7 @@ const reducer = (
     case SET_WORKOUT_REMINDER_TIME:
       return {
         ...state,
-        workoutReminderTime: action.payload,
+        workoutReminderTime: action.payload.toISOString(),
       };
     default:
       return state;

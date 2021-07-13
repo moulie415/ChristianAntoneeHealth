@@ -1,5 +1,5 @@
 import {Text, Toggle} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import React from 'react';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
@@ -48,13 +48,11 @@ const Settings: React.FC<SettingsProps> = ({
           disabled={workoutRemindersDisabled}
           style={{width: 100}}
           testID="dateTimePicker"
-          value={moment.unix(workoutReminderTime).toDate()}
+          value={new Date(workoutReminderTime)}
           mode="time"
           is24Hour={true}
           display="default"
-          onChange={(_: Event, d: Date) =>
-            setWorkoutReminderTimeAction(moment(d).unix())
-          }
+          onChange={(_: Event, d: Date) => setWorkoutReminderTimeAction(d)}
         />
       </View>
     </View>

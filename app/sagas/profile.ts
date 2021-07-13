@@ -53,6 +53,7 @@ import {
 import Snackbar from 'react-native-snackbar';
 import {HealthValue} from 'react-native-health';
 import {ActivitySampleResponse} from 'react-native-google-fit';
+import {scheduleLocalNotification} from '../helpers';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -173,7 +174,6 @@ function* signUp(action: SignUpAction) {
     } catch (e) {
       console.log(e);
     }
-    yield fork(getWorkoutReminders);
     if (dry) {
       yield call(api.createUser, email, password, {
         signedUp: true,
@@ -227,63 +227,41 @@ function* signUp(action: SignUpAction) {
   }
 }
 
-const WORKOUT_REMINDERS_KEY = '@workoutReminders';
-const WORKOUT_REMINDER_TIME_KEY = '@workoutRemindersTime';
+const WORKOUT_REMINDERS_ID = 1;
+const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
 
 function* getWorkoutReminders() {
-  const disabled: string = yield call(
-    AsyncStorage.getItem,
-    WORKOUT_REMINDERS_KEY,
-  );
-
-  const timeString: string = yield call(
-    AsyncStorage.getItem,
-    WORKOUT_REMINDER_TIME_KEY,
-  );
   const {workoutReminderTime} = yield select(
     (state: MyRootState) => state.profile,
   );
-  const time = timeString ? Number(timeString) : workoutReminderTime;
 
   PushNotification.createChannel(
     {
-      channelId: WORKOUT_REMINDERS_KEY,
+      channelId: WORKOUT_REMINDERS_CHANNEL_ID,
       channelName: 'Workout reminders',
       channelDescription: 'Daily reminders to workout',
     },
     created => console.log('channel created', created),
   );
 
-  yield put(setWorkoutReminderTime(time));
-  if (disabled) {
-    yield put(setWorkoutRemindersDisabled(true));
-  } else {
-    yield put(setWorkoutRemindersDisabled(false));
-  }
+  yield put(setWorkoutReminderTime(new Date(workoutReminderTime)));
 }
 
 function* setWorkoutRemindersWorker(action: SetWorkoutRemindersDisabledAction) {
   const disabled = action.payload;
   const {workoutReminderTime} = yield select(
     (state: MyRootState) => state.profile,
-  )
-  // const date = moment.unix(workoutReminderTime).toDate();
-  const date = moment().add({ seconds: 15 }).toDate();
+  );
 
   if (disabled) {
-    yield call(AsyncStorage.setItem, WORKOUT_REMINDERS_KEY, 'true');
-    PushNotification.cancelLocalNotifications({id: `${1}`});
+    PushNotification.cancelLocalNotifications({id: `${WORKOUT_REMINDERS_ID}`});
   } else {
-    yield call(AsyncStorage.removeItem, WORKOUT_REMINDERS_KEY);
-    
-    PushNotification.scheduleLocalNotification({
-    //   id: 1,
-      channelId: WORKOUT_REMINDERS_KEY,
-      message: 'Reminder to workout',
-      repeatType: 'day',
-      date,
-      allowWhileIdle: true,
-    });
+    scheduleLocalNotification(
+      'Reminder to workout',
+      workoutReminderTime,
+      WORKOUT_REMINDERS_ID,
+      WORKOUT_REMINDERS_CHANNEL_ID,
+    );
   }
 }
 
@@ -292,19 +270,14 @@ function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
   const {workoutRemindersDisabled} = yield select(
     (state: MyRootState) => state.profile,
   );
-  yield call(AsyncStorage.setItem, WORKOUT_REMINDER_TIME_KEY, time.toString());
-  // const date = moment.unix(time).toDate();
-  const date = moment().add({ seconds: 15 }).toDate();
 
   if (!workoutRemindersDisabled) {
-    PushNotification.scheduleLocalNotification({
-     //  id: 1,
-      channelId: WORKOUT_REMINDERS_KEY,
-      message: 'Reminder to workout',
-      repeatType: 'day',
-      date,
-      allowWhileIdle: true,
-    });
+    scheduleLocalNotification(
+      'Reminder to workout',
+      time,
+      WORKOUT_REMINDERS_ID,
+      WORKOUT_REMINDERS_CHANNEL_ID,
+    );
   }
 }
 
@@ -350,6 +323,7 @@ export default function* profileSaga() {
         }
         yield put(setLoggedIn(true));
         yield put(getTests());
+        yield fork(getWorkoutReminders);
       } else if (user) {
         Alert.alert(
           'Account not verified',
