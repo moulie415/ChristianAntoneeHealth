@@ -5,8 +5,10 @@ type SettingsNavigationProp = StackNavigationProp<StackParamList, 'Settings'>;
 
 export default interface SettingsProps {
   navigation: SettingsNavigationProp;
-  workoutRemindersDisabled: boolean;
+  workoutReminders: boolean;
   workoutReminderTime: string;
-  setWorkoutReminderDisabledAction: (disabled: boolean) => void;
+  setWorkoutRemindersAction: (disabled: boolean) => void;
   setWorkoutReminderTimeAction: (date: Date) => void;
+  monthlyTestReminders: boolean;
+  setMonthlyTestRemindersAction: (enabled: boolean) => void;
 };

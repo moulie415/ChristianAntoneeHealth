@@ -1,4 +1,3 @@
-import moment from 'moment';
 import PushNotification from 'react-native-push-notification';
 
 export const truncate = (str: string, n: number) => {
@@ -13,16 +12,15 @@ export const scheduleLocalNotification = (
   date: Date,
   id: number,
   channel: string,
+  repeatType = 'day',
 ) => {
-  const NOTIFICATION_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
-
-  //schedule the notification
   try {
     PushNotification.localNotificationSchedule({
       message,
       date,
       id,
-      repeatType: 'day',
+      // @ts-ignore
+      repeatType,
       channelId: channel,
     });
   } catch (e) {

@@ -6,8 +6,9 @@ import {
   SET_MONTHLY_WEIGHT_SAMPLES,
   SET_MONTHLY_STEP_SAMPLES,
   SET_WEEKLY_STEPS,
-  SET_WORKOUT_REMINDERS_DISABLED,
+  SET_WORKOUT_REMINDERS,
   SET_WORKOUT_REMINDER_TIME,
+  SET_MONTHLY_TEST_REMINDERS,
 } from '../actions/profile';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
@@ -20,8 +21,10 @@ export interface ProfileState {
   weightSamples: {[key: number]: Sample[]};
   stepSamples: {[key: number]: StepSample[]};
   weeklySteps: StepSample[];
-  workoutRemindersDisabled: boolean;
+  workoutReminders: boolean;
   workoutReminderTime: string;
+  monthlyTestReminders: boolean;
+  monthlyTestReminderTime: string;
 }
 
 const initialState: ProfileState = {
@@ -32,12 +35,21 @@ const initialState: ProfileState = {
   weightSamples: {},
   stepSamples: {},
   weeklySteps: [],
-  workoutRemindersDisabled: false,
+  workoutReminders: true,
   workoutReminderTime: new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
     new Date().getDate(),
     9,
+    0,
+    0,
+  ).toISOString(),
+  monthlyTestReminders: true,
+  monthlyTestReminderTime: new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1,
+    new Date().getDate(),
+    new Date().getHours(),
     0,
     0,
   ).toISOString(),
@@ -86,15 +98,20 @@ const reducer = (
         ...state,
         weeklySteps: action.payload,
       };
-    case SET_WORKOUT_REMINDERS_DISABLED:
+    case SET_WORKOUT_REMINDERS:
       return {
         ...state,
-        workoutRemindersDisabled: action.payload,
+        workoutReminders: action.payload,
       };
     case SET_WORKOUT_REMINDER_TIME:
       return {
         ...state,
         workoutReminderTime: action.payload.toISOString(),
+      };
+    case SET_MONTHLY_TEST_REMINDERS:
+      return {
+        ...state,
+        monthlyTestReminders: action.payload,
       };
     default:
       return state;

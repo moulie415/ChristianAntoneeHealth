@@ -10,8 +10,9 @@ export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
 export const SET_MONTHLY_STEP_SAMPLES = 'SET_MONTHLY_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
-export const SET_WORKOUT_REMINDERS_DISABLED = 'TOGGLE_WORKOUT_REMINDERS';
+export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
 export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
+export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -81,14 +82,19 @@ export interface SetWeeklyStepsAction {
   payload: StepSample[];
 }
 
-export interface SetWorkoutRemindersDisabledAction {
-  type: typeof SET_WORKOUT_REMINDERS_DISABLED;
+export interface SetWorkoutRemindersAction {
+  type: typeof SET_WORKOUT_REMINDERS;
   payload: boolean;
 }
 
 export interface SetWorkoutReminderTimeAction {
   type: typeof SET_WORKOUT_REMINDER_TIME;
   payload: Date;
+}
+
+export interface SetMonthlyTestRemindersAction {
+  type: typeof SET_MONTHLY_TEST_REMINDERS;
+  payload: boolean;
 }
 
 export type ProfileActionTypes =
@@ -101,8 +107,9 @@ export type ProfileActionTypes =
   | SetMonthlyStepSamplesAction
   | SetWeeklyStepsAction
   | UpdateProfileAction
-  | SetWorkoutRemindersDisabledAction
-  | SetWorkoutReminderTimeAction;
+  | SetWorkoutRemindersAction
+  | SetWorkoutReminderTimeAction
+  | SetMonthlyTestRemindersAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -155,10 +162,10 @@ export const setWeeklySteps = (steps: StepSample[]): SetWeeklyStepsAction => ({
   payload: steps,
 });
 
-export const setWorkoutRemindersDisabled = (
+export const setWorkoutReminders = (
   payload: boolean,
-): SetWorkoutRemindersDisabledAction => ({
-  type: SET_WORKOUT_REMINDERS_DISABLED,
+): SetWorkoutRemindersAction => ({
+  type: SET_WORKOUT_REMINDERS,
   payload,
 });
 
@@ -166,5 +173,12 @@ export const setWorkoutReminderTime = (
   payload: Date,
 ): SetWorkoutReminderTimeAction => ({
   type: SET_WORKOUT_REMINDER_TIME,
+  payload,
+});
+
+export const setMonthlyTestReminders = (
+  payload: boolean,
+): SetMonthlyTestRemindersAction => ({
+  type: SET_MONTHLY_TEST_REMINDERS,
   payload,
 });

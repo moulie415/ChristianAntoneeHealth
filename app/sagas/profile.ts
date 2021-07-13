@@ -14,7 +14,6 @@ import {
   takeLatest,
   fork,
 } from 'redux-saga/effects';
-import AsyncStorage from '@react-native-community/async-storage';
 import {
   setLoggedIn,
   setProfile,
@@ -26,12 +25,15 @@ import {
   setWeeklySteps,
   UPDATE_PROFILE,
   UpdateProfileAction,
-  SET_WORKOUT_REMINDERS_DISABLED,
-  SetWorkoutRemindersDisabledAction,
-  setWorkoutRemindersDisabled,
+  SET_WORKOUT_REMINDERS,
+  SetWorkoutRemindersAction,
+  setWorkoutReminders,
   SET_WORKOUT_REMINDER_TIME,
   SetWorkoutReminderTimeAction,
   setWorkoutReminderTime,
+  SET_MONTHLY_TEST_REMINDERS,
+  SetMonthlyTestRemindersAction,
+  setMonthlyTestReminders,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -228,10 +230,12 @@ function* signUp(action: SignUpAction) {
 }
 
 const WORKOUT_REMINDERS_ID = 1;
+const MONTHLY_TEST_REMINDERS_ID = 2;
 const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
+const MONTHLY_TEST_REMINDERS_CHANNEL_ID = 'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
 
 function* getWorkoutReminders() {
-  const {workoutReminderTime} = yield select(
+  const {workoutReminderTime, monthlyTestReminders} = yield select(
     (state: MyRootState) => state.profile,
   );
 
@@ -244,34 +248,44 @@ function* getWorkoutReminders() {
     created => console.log('channel created', created),
   );
 
+  PushNotification.createChannel(
+    {
+      channelId: MONTHLY_TEST_REMINDERS_CHANNEL_ID,
+      channelName: 'Monthly reminders',
+      channelDescription: 'Monthly reminders to take a fitness test',
+    },
+    created => console.log('channel created', created),
+  );
+
   yield put(setWorkoutReminderTime(new Date(workoutReminderTime)));
+  yield put(setMonthlyTestReminders(monthlyTestReminders));
 }
 
-function* setWorkoutRemindersWorker(action: SetWorkoutRemindersDisabledAction) {
-  const disabled = action.payload;
+function* setWorkoutRemindersWorker(action: SetWorkoutRemindersAction) {
+  const enabled = action.payload;
   const {workoutReminderTime} = yield select(
     (state: MyRootState) => state.profile,
   );
 
-  if (disabled) {
-    PushNotification.cancelLocalNotifications({id: `${WORKOUT_REMINDERS_ID}`});
-  } else {
+  if (enabled) {
     scheduleLocalNotification(
       'Reminder to workout',
       workoutReminderTime,
       WORKOUT_REMINDERS_ID,
       WORKOUT_REMINDERS_CHANNEL_ID,
     );
+  } else {
+    PushNotification.cancelLocalNotifications({id: `${WORKOUT_REMINDERS_ID}`});
   }
 }
 
 function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
   const time = action.payload;
-  const {workoutRemindersDisabled} = yield select(
+  const {workoutReminders} = yield select(
     (state: MyRootState) => state.profile,
   );
 
-  if (!workoutRemindersDisabled) {
+  if (workoutReminders) {
     scheduleLocalNotification(
       'Reminder to workout',
       time,
@@ -281,13 +295,34 @@ function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
   }
 }
 
+function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
+  const {monthlyTestReminderTime} = yield select(
+    (state: MyRootState) => state.profile,
+  );
+  const enabled = action.payload;
+  if (enabled) {
+    scheduleLocalNotification(
+      'Monthly fitness test reminder',
+      new Date(monthlyTestReminderTime),
+      MONTHLY_TEST_REMINDERS_ID,
+      MONTHLY_TEST_REMINDERS_CHANNEL_ID,
+      'month',
+    );
+  } else {
+    PushNotification.cancelLocalNotifications({
+      id: `${MONTHLY_TEST_REMINDERS_ID}`,
+    });
+  }
+}
+
 export default function* profileSaga() {
   yield all([
     takeEvery(SIGN_UP, signUp),
     takeEvery(GET_SAMPLES, getSamplesWorker),
     takeEvery(UPDATE_PROFILE, updateProfile),
-    takeLatest(SET_WORKOUT_REMINDERS_DISABLED, setWorkoutRemindersWorker),
+    takeLatest(SET_WORKOUT_REMINDERS, setWorkoutRemindersWorker),
     takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
+    takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

@@ -4,19 +4,21 @@ import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
 import SettingsProps from '../../types/views/Settings';
-import moment from 'moment';
 import {MyRootState} from '../../types/Shared';
 import {
-  setWorkoutRemindersDisabled,
+  setMonthlyTestReminders,
+  setWorkoutReminders,
   setWorkoutReminderTime,
 } from '../../actions/profile';
 import {connect} from 'react-redux';
 
 const Settings: React.FC<SettingsProps> = ({
-  workoutRemindersDisabled,
-  setWorkoutReminderDisabledAction,
+  workoutReminders,
+  setWorkoutRemindersAction,
   workoutReminderTime,
   setWorkoutReminderTimeAction,
+  monthlyTestReminders,
+  setMonthlyTestRemindersAction,
 }) => {
   return (
     <View style={{backgroundColor: colors.appBlack, flex: 1}}>
@@ -32,8 +34,8 @@ const Settings: React.FC<SettingsProps> = ({
         }}>
         <Text>Workout reminders</Text>
         <Toggle
-          checked={!workoutRemindersDisabled}
-          onChange={value => setWorkoutReminderDisabledAction(!value)}
+          checked={workoutReminders}
+          onChange={setWorkoutRemindersAction}
         />
       </View>
       <View
@@ -45,7 +47,7 @@ const Settings: React.FC<SettingsProps> = ({
         }}>
         <Text style={{flex: 1}}>Time of reminder</Text>
         <DateTimePicker
-          disabled={workoutRemindersDisabled}
+          disabled={!workoutReminders}
           style={{width: 100}}
           testID="dateTimePicker"
           value={new Date(workoutReminderTime)}
@@ -55,18 +57,33 @@ const Settings: React.FC<SettingsProps> = ({
           onChange={(_: Event, d: Date) => setWorkoutReminderTimeAction(d)}
         />
       </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 10,
+        }}>
+        <Text>Monthly Fitness test reminder</Text>
+        <Toggle
+          checked={monthlyTestReminders}
+          onChange={setMonthlyTestRemindersAction}
+        />
+      </View>
     </View>
   );
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
-  workoutRemindersDisabled: profile.workoutRemindersDisabled,
+  workoutReminders: profile.workoutReminders,
   workoutReminderTime: profile.workoutReminderTime,
+  monthlyTestReminders: profile.monthlyTestReminders,
 });
 
 const mapDispatchToProps = {
-  setWorkoutReminderDisabledAction: setWorkoutRemindersDisabled,
+  setWorkoutRemindersAction: setWorkoutReminders,
   setWorkoutReminderTimeAction: setWorkoutReminderTime,
+  setMonthlyTestRemindersAction: setMonthlyTestReminders,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
