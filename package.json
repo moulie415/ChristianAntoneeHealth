@@ -36,7 +36,7 @@
     "react-native-body-highlighter": "https://github.com/moulie415/react-native-body-highlighter.git",
     "react-native-chart-kit": "^6.11.0",
     "react-native-draggable-flatlist": "^2.6.2",
-    "react-native-fast-image": "^8.3.4",
+    "react-native-fast-image": "^8.3.6",
     "react-native-fbsdk": "^3.0.0",
     "react-native-flipper": "^0.88.0",
     "react-native-gesture-handler": "^1.10.3",
