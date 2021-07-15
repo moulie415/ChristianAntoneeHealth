@@ -2,7 +2,6 @@ import {Layout, Text, Toggle} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform, View} from 'react-native';
-import colors from '../../constants/colors';
 import SettingsProps from '../../types/views/Settings';
 import {MyRootState} from '../../types/Shared';
 import {

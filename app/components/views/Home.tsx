@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import {Button, Layout, Text} from '@ui-kitten/components';
-import {View, Image, TouchableOpacity} from 'react-native';
-import styles from '../../styles/views/Home';
+import {Layout, Text} from '@ui-kitten/components';
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeWelcome from './HomeWelcome';
-import colors from '../../constants/colors';
-import globalStyles from '../../styles/globalStyles';
+import HomeCard from '../commons/HomeCard';
+import InAppReview from 'react-native-in-app-review';
 
 const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
@@ -21,54 +19,63 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
       {!hasViewedWelcome && <HomeWelcome />}
       {hasViewedWelcome && (
         <Layout style={{flex: 1}}>
-          <TouchableOpacity style={{flex: 1, marginVertical: 5}}>
-            <Image
-              style={{width: '100%', flex: 1}}
-              resizeMode="cover"
-              source={require('../../images/old_man_yoga.jpeg')}
+          <Layout
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginBottom: 20,
+            }}>
+            <HomeCard
+              title="New Workout"
+              subtitle="Start a new workout now"
+              image={require('../../images/old_man_stretching.jpeg')}
+              onPress={() => navigation.navigate('Workout')}
             />
-            <Layout style={{position: 'absolute', bottom: 0, margin: 5}}>
-              <Text category="h5" style={globalStyles.textShadow}>
-                Recommended exercises
-              </Text>
-              <Text category="s1" style={globalStyles.textShadow}>
-                Based on your most recent workout
-              </Text>
-            </Layout>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, marginVertical: 5}}>
-            <Image
-              style={{width: '100%', flex: 1}}
-              resizeMode="cover"
-              source={require('../../images/yoga_mat.jpeg')}
+            <HomeCard
+              title="Fitness tests"
+              subtitle="Track your fitness overtime"
+              image={require('../../images/flexibility.jpeg')}
+              onPress={() => navigation.navigate('Fitness')}
             />
-            <Layout style={{position: 'absolute', bottom: 0, margin: 5}}>
-              <Text category="h5" style={globalStyles.textShadow}>
-                No gym required
-              </Text>
-              <Text category="s1" style={globalStyles.textShadow}>
-                Equipment free workouts
-              </Text>
-            </Layout>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, marginVertical: 5}}>
-            <Image
-              style={{width: '100%', flex: 1}}
-              resizeMode="cover"
-              source={require('../../images/old_man_machine.jpeg')}
+          </Layout>
+          <Layout
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginBottom: 20,
+            }}>
+            <HomeCard
+              title="Education"
+              subtitle="Health and nutrition articles"
+              image={require('../../images/education.jpeg')}
+              onPress={() => navigation.navigate('Education')}
             />
-            <Layout
-              style={{position: 'absolute', bottom: 0, right: 0, margin: 5}}>
-              <Text category="h5" style={globalStyles.textShadow}>
-                Track your fitness
-              </Text>
-              <Text
-                category="s1"
-                style={{backgroundColor: colors.appBlue, padding: 5}}>
-                Last fitness test 4 weeks ago
-              </Text>
-            </Layout>
-          </TouchableOpacity>
+            <HomeCard
+              title="Saved routines"
+              subtitle="Start a saved workout"
+              image={require('../../images/yoga_mat.jpeg')}
+              onPress={() => 0}
+            />
+          </Layout>
+          <Layout
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginBottom: 20,
+            }}>
+            <HomeCard
+              title="Rate the app"
+              subtitle="Tell us what you think"
+              image={require('../../images/dumbell.png')}
+              onPress={InAppReview.RequestInAppReview}
+            />
+            <HomeCard
+              title="Activity log"
+              subtitle="Track you daily activity"
+              image={require('../../images/activity_log.jpeg')}
+              onPress={() => navigation.navigate('Activity')}
+            />
+          </Layout>
         </Layout>
       )}
     </Layout>

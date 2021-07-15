@@ -9,7 +9,6 @@ import ProfileProps from '../../types/views/Profile';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import {
-  Datepicker,
   IndexPath,
   Input,
   Icon,
@@ -23,6 +22,8 @@ import colors from '../../constants/colors';
 import {Gender, HeightMetric, WeightMetric} from '../../types/Profile';
 import {equals} from 'ramda';
 import {getSamples, updateProfile} from '../../actions/profile';
+import DatePicker, {Event} from '@react-native-community/datetimepicker';
+import {Platform} from 'react-native';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -31,6 +32,7 @@ const Profile: React.FC<ProfileProps> = ({
   updateProfileAction,
   getSamplesAction,
 }) => {
+  const [show, setShow] = useState(false);
   const [gender, setGender] = useState<Gender>(profile.gender);
   const [weight, setWeight] = useState<number>(profile.weight);
   const [dob, setDob] = useState(profile.dob);
@@ -162,15 +164,40 @@ const Profile: React.FC<ProfileProps> = ({
           <Text category="h5">{profile.name}</Text>
         </Layout>
         <Layout style={{margin: 20}}>
-          <Datepicker
-            style={{width: '65%', marginBottom: 10}}
-            date={moment(dob).toDate()}
-            onSelect={date => setDob(date.toISOString())}
-            label="Date of Birth"
-            max={new Date()}
-            min={moment().subtract(200, 'years').toDate()}
-            accessoryRight={props => <Icon {...props} name="calendar" />}
-          />
+          <Text style={{color: colors.textGrey}} category="label">
+            Date of Birth
+          </Text>
+          {(show || Platform.OS === 'ios') && (
+            <DatePicker
+              style={{width: '100%', marginVertical: 5}}
+              testID="datePicker"
+              value={moment(dob).toDate()}
+              mode="date"
+              display="default"
+              onChange={(_: Event, d: Date) => {
+                if (d) {
+                  setDob(d.toISOString());
+                }
+                setShow(Platform.OS === 'ios');
+              }}
+            />
+          )}
+          {Platform.OS === 'android' && (
+            <TouchableOpacity
+              style={{
+                width: '40%',
+                marginVertical: 5,
+                borderWidth: 1,
+                padding: 7,
+                borderRadius: 3,
+                borderColor: '#ebebeb',
+                backgroundColor: '#fafafa',
+              }}
+              onPress={() => setShow(true)}>
+              <Text>{moment(dob).format('DD/MM/YYYY')}</Text>
+            </TouchableOpacity>
+          )}
+
           <Layout style={{flexDirection: 'row', marginBottom: 10}}>
             <Input
               value={weight?.toString()}

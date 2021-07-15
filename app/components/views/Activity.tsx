@@ -47,7 +47,7 @@ const Activity: React.FC<ActivityProps> = ({
           <Text
             style={{
               textAlign: 'center',
-              color: index === 0 ? '#fff' : undefined,
+              color: index === 0 ? '#fff' : '#000',
             }}>
             Day
           </Text>
@@ -64,7 +64,7 @@ const Activity: React.FC<ActivityProps> = ({
           <Text
             style={{
               textAlign: 'center',
-              color: index === 1 ? '#fff' : undefined,
+              color: index === 1 ? '#fff' : '#000',
             }}>
             Week
           </Text>
@@ -81,7 +81,7 @@ const Activity: React.FC<ActivityProps> = ({
           <Text
             style={{
               textAlign: 'center',
-              color: index === 2 ? '#fff' : undefined,
+              color: index === 2 ? '#fff' : '#000',
             }}>
             Month
           </Text>

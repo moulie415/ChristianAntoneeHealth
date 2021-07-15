@@ -47,7 +47,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             <TouchableOpacity style={{padding: 10}}>
               <Icon
                 name="ellipsis-h"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 onPress={() => {
                   setSelectedExercise(item);

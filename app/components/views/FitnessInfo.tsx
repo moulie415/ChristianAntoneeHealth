@@ -1,17 +1,17 @@
 import {
-  Datepicker,
-  Icon,
   IndexPath,
   Input,
   Select,
   SelectItem,
   Button,
   Layout,
+  Text,
 } from '@ui-kitten/components';
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Alert, Text, Platform} from 'react-native';
+import {Alert, Platform, TouchableOpacity} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import moment from 'moment';
+import DatePicker, {Event} from '@react-native-community/datetimepicker';
 import {
   getDateOfBirth,
   getHeight,
@@ -23,6 +23,7 @@ import {
 } from '../../helpers/biometrics';
 import FitnessInfoProps from '../../types/views/FitnessInfo';
 import AbsoluteSpinner from '../commons/AbsoluteSpinner';
+import colors from '../../constants/colors';
 
 const FitnessInfo: React.FC<FitnessInfoProps> = ({
   height,
@@ -39,6 +40,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
   setWeightMetric,
   setStep,
 }) => {
+  const [show, setShow] = useState(false);
   const init = useCallback(async () => {
     setLoading(true);
     const available = await isAvailable();
@@ -90,15 +92,39 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
   const [loading, setLoading] = useState(false);
   return (
     <Layout style={{marginHorizontal: 20}}>
-      <Datepicker
-        style={{width: '65%'}}
-        date={moment(dob).toDate()}
-        onSelect={date => setDob(date.toISOString())}
-        label="Date of Birth"
-        max={new Date()}
-        min={moment().subtract(200, 'years').toDate()}
-        accessoryRight={props => <Icon {...props} name="calendar" />}
-      />
+      <Text style={{color: colors.textGrey}} category="label">
+        Date of Birth
+      </Text>
+      {(show || Platform.OS === 'ios') && (
+        <DatePicker
+          style={{width: '100%', marginVertical: 5}}
+          testID="datePicker"
+          value={moment(dob).toDate()}
+          mode="date"
+          display="default"
+          onChange={(_: Event, d: Date) => {
+            if (d) {
+              setDob(d.toISOString());
+            }
+            setShow(Platform.OS === 'ios');
+          }}
+        />
+      )}
+      {Platform.OS === 'android' && (
+        <TouchableOpacity
+          style={{
+            width: '40%',
+            marginVertical: 5,
+            borderWidth: 1,
+            padding: 7,
+            borderRadius: 3,
+            borderColor: '#ebebeb',
+            backgroundColor: '#fafafa'
+          }}
+          onPress={() => setShow(true)}>
+          <Text>{moment(dob).format('DD/mm/yyyy')}</Text>
+        </TouchableOpacity>
+      )}
       <Layout style={{flexDirection: 'row'}}>
         <Input
           value={weight?.toString()}

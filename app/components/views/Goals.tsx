@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import styles from '../../styles/views/Goals';
 import GoalsProps from '../../types/views/Goals';
 import {Goal, Purpose} from '../../types/Shared';
@@ -10,6 +10,7 @@ import {
   Input,
   IndexPath,
   Layout,
+  Text,
 } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
@@ -50,7 +51,7 @@ const Goals: React.FC<GoalsProps> = ({
   };
   return (
     <Layout style={{margin: 20}}>
-      <Text style={{color: '#fff', marginTop: 30, marginBottom: 10}}>
+      <Text style={{marginTop: 30, marginBottom: 10}}>
         What is your main purpose for using this app?
       </Text>
       <Select
@@ -79,7 +80,7 @@ const Goals: React.FC<GoalsProps> = ({
           );
         })}
       </Select>
-      <Text style={{color: '#fff', marginTop: 30, marginBottom: 10}}>
+      <Text style={{marginTop: 30, marginBottom: 10}}>
         What is your main purpose for using this app?
       </Text>
       <Layout
@@ -139,7 +140,7 @@ const Goals: React.FC<GoalsProps> = ({
           Cardiovascular
         </Button>
       </Layout>
-      <Text style={{color: '#fff', marginTop: 30, marginBottom: 20}}>
+      <Text style={{marginTop: 30, marginBottom: 20}}>
         How many times a week do you want to workout?
       </Text>
       <Layout

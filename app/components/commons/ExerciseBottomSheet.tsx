@@ -89,6 +89,9 @@ const ExerciseBottomSheet: React.FC<{
           style={{
             paddingBottom: 50,
           }}>
+          <Layout style={{alignItems: 'center'}}>
+            <Icon color="#000" name="minus" size={30} />
+          </Layout>
           <Text category="h5" style={{textAlign: 'center'}}>
             {selectedExercise.name}
           </Text>
@@ -101,13 +104,14 @@ const ExerciseBottomSheet: React.FC<{
             }}
             source={require('../../images/old_man_stretching.jpeg')}
           />
-          <Layout style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <Layout
+            style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <Layout>
               <Picker
                 style={{width: 120, height: 180}}
                 selectedValue={reps}
                 lineColor="#fff"
-                itemStyle={{color: 'white', fontSize: 15}}
+                itemStyle={{fontSize: 15}}
                 onValueChange={setReps}>
                 {REPS.map(value => {
                   if (value === 0) {
@@ -130,7 +134,7 @@ const ExerciseBottomSheet: React.FC<{
                 style={{width: 120, height: 180}}
                 selectedValue={sets}
                 lineColor="#fff"
-                itemStyle={{color: 'white', fontSize: 15}}
+                itemStyle={{fontSize: 15}}
                 onValueChange={setSets}>
                 {SETS.map(value => (
                   <PickerItem
@@ -150,7 +154,7 @@ const ExerciseBottomSheet: React.FC<{
                   style={{width: 120, height: 180}}
                   selectedValue={resistance}
                   lineColor="#fff"
-                  itemStyle={{color: 'white', fontSize: 15}}
+                  itemStyle={{fontSize: 15}}
                   onValueChange={setResistance}>
                   {RESISTANCE.map(value => (
                     <PickerItem
@@ -223,7 +227,7 @@ const ExerciseBottomSheet: React.FC<{
         initialSnap={1}
         onCloseStart={() => setOpen(false)}
         renderContent={renderContent}
-        renderHeader={renderHeader}
+        // renderHeader={renderHeader}
       />
     </>
   );
