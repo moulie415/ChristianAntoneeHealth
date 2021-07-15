@@ -34,8 +34,6 @@ import Settings from './components/views/Settings';
 import About from './components/views/About';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
-// @ts-ignore
-import {default as theme} from './custom-theme.json';
 import SignUpFlow from './components/views/SignUpFlow';
 import SplashScreen from 'react-native-splash-screen';
 import Activity from './components/views/Activity';
@@ -109,9 +107,7 @@ const Tabs = () => {
       tabBarOptions={{
         activeTintColor: '#fff',
         inactiveTintColor: '#7c7c7c',
-        style: {
-          backgroundColor: colors.appBlack,
-        },
+        style: {},
       }}>
       <Tab.Screen
         options={{
@@ -177,7 +173,7 @@ const App: React.FC = () => {
     <PersistGate persistor={persistor}>
       <Provider store={store}>
         <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={{...eva.dark, ...theme}}>
+        <ApplicationProvider {...eva} theme={eva.light}>
           <NavigationContainer ref={navigationRef} onReady={SplashScreen.hide}>
             <Stack.Navigator
               initialRouteName="Welcome"

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, ImageBackground} from 'react-native';
-import {Button, Text} from '@ui-kitten/components';
+import {Button, Layout, Text} from '@ui-kitten/components';
 import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import styles from '../../styles/views/Welcome';
@@ -18,7 +18,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
       <Text category="h4" style={{color: '#000', textAlign: 'center'}}>
         Welcome to Health and Movement!
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
@@ -34,7 +34,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
           onPress={() => navigation.navigate('SignUp')}>
           Sign Up
         </Button>
-      </View>
+      </Layout>
       <Text
         style={
           styles.versionNumber

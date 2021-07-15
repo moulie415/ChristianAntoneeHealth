@@ -1,4 +1,4 @@
-import {ListItem} from '@ui-kitten/components';
+import {Layout, ListItem} from '@ui-kitten/components';
 import React from 'react';
 import {View} from 'react-native';
 import Image from 'react-native-fast-image';
@@ -8,9 +8,9 @@ import EducationProps from '../../types/views/Education';
 
 const Education: React.FC<EducationProps> = ({navigation}) => {
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <Layout style={{flex: 1}}>
       <ListItem
-        style={{backgroundColor: colors.appBlack}}
+        style={{}}
         accessoryLeft={() => (
           <Image
             source={require('../../images/article1.webp')}
@@ -27,7 +27,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         }
       />
       <ListItem
-        style={{backgroundColor: colors.appBlack}}
+        style={{}}
         accessoryLeft={() => (
           <Image
             source={require('../../images/article2.webp')}
@@ -44,7 +44,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         }
       />
       <ListItem
-        style={{backgroundColor: colors.appBlack}}
+        style={{}}
         accessoryLeft={() => (
           <Image
             source={require('../../images/article3.webp')}
@@ -61,7 +61,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         }
       />
       <ListItem
-        style={{backgroundColor: colors.appBlack}}
+        style={{}}
         accessoryLeft={() => (
           <Image
             source={require('../../images/article4.webp')}
@@ -77,7 +77,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
           })
         }
       />
-    </View>
+    </Layout>
   );
 };
 

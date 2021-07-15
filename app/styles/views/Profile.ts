@@ -7,7 +7,6 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.appBlack,
   },
   avatar: {
     width: 50,

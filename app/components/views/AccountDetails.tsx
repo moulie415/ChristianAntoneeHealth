@@ -18,7 +18,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
 }) => {
   const disabled = (dry && (!password || !confirmPassword)) || !email || !name;
   return (
-    <View style={{margin: 20}}>
+    <Layout style={{margin: 20}}>
       <Input label="Name" value={name} onChangeText={setName} />
       <Input
         label="Email"
@@ -36,12 +36,12 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
           onChangeText={setConfirmPassword}
         />
       )}
-      <View style={{flexDirection: 'row', marginVertical: 20}}>
+      <Layout style={{flexDirection: 'row', marginVertical: 20}}>
         <Text>
           By signing up you agree to the terms and conditions in our{' '}
           <Text>Privacy Policy</Text>
         </Text>
-      </View>
+      </Layout>
       <Button
         disabled={disabled}
         onPress={() => {
@@ -49,7 +49,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
         }}>
         Continue
       </Button>
-    </View>
+    </Layout>
   );
 };
 

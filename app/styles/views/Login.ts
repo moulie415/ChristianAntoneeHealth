@@ -4,7 +4,6 @@ import colors from '../../constants/colors';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.appBlack,
   },
   welcome: {
     fontSize: 20,

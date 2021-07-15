@@ -5,7 +5,7 @@ import {StackedBarChart, LineChart} from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/Activity';
-import {Divider, Text} from '@ui-kitten/components';
+import {Divider, Layout, Text} from '@ui-kitten/components';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import MonthlyActivityProps from '../../types/views/MonthlyActivity';
@@ -72,7 +72,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
         color={colors.appBlue}
         borderWidth={0}
         unfilledColor={colors.appGrey}>
-        <View
+        <Layout
           style={{
             position: 'absolute',
             top: 70,
@@ -81,7 +81,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           <Text style={{textAlign: 'center'}} category="h2">
             52h 14m
           </Text>
-          <View
+          <Layout
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -93,11 +93,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
               name="arrow-down"
             />
             <Text>4h 30m last month</Text>
-          </View>
-        </View>
+          </Layout>
+        </Layout>
       </Circle>
-      <View style={{flexDirection: 'row', marginVertical: 20}}>
-        <View
+      <Layout style={{flexDirection: 'row', marginVertical: 20}}>
+        <Layout
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
@@ -115,7 +115,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             borderWidth={0}
             size={circleSize}
             unfilledColor={colors.appGrey}>
-            <View style={styles.circleSmallText}>
+            <Layout style={styles.circleSmallText}>
               <Icon
                 name="shoe-prints"
                 color="#fff"
@@ -123,11 +123,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
                 style={{marginBottom: 5}}
               />
               <Text>1 h 03 min</Text>
-            </View>
+            </Layout>
           </Circle>
           <Text style={{textAlign: 'center'}}>4500 Kcal</Text>
-        </View>
-        <View
+        </Layout>
+        <Layout
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
@@ -144,7 +144,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             borderWidth={0}
             size={circleSize}
             unfilledColor={colors.appGrey}>
-            <View style={styles.circleSmallText}>
+            <Layout style={styles.circleSmallText}>
               <Icon
                 name="chart-area"
                 color="#fff"
@@ -152,11 +152,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
                 style={{marginBottom: 5}}
               />
               <Text>1 h 03 min</Text>
-            </View>
+            </Layout>
           </Circle>
           <Text style={{textAlign: 'center'}}>3700 Kcal</Text>
-        </View>
-        <View
+        </Layout>
+        <Layout
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
@@ -173,7 +173,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             borderWidth={0}
             size={circleSize}
             unfilledColor={colors.appGrey}>
-            <View style={styles.circleSmallText}>
+            <Layout style={styles.circleSmallText}>
               <Icon
                 name="stopwatch"
                 color="#fff"
@@ -181,11 +181,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
                 style={{marginBottom: 5}}
               />
               <Text>1 h 03 min</Text>
-            </View>
+            </Layout>
           </Circle>
           <Text style={{textAlign: 'center'}}>6500 Kcal</Text>
-        </View>
-      </View>
+        </Layout>
+      </Layout>
       <Text category="s1" style={{textAlign: 'center', marginBottom: 20}}>
         Activity breakdown per day
       </Text>
@@ -201,18 +201,18 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
         chartConfig={chartConfig}
         hideLegend
       />
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           marginBottom: 20,
         }}>
-        <View
+        <Layout
           style={{
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <View
+          <Layout
             style={{
               height: 10,
               width: 10,
@@ -222,13 +222,13 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             }}
           />
           <Text>Easy</Text>
-        </View>
-        <View
+        </Layout>
+        <Layout
           style={{
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <View
+          <Layout
             style={{
               height: 10,
               width: 10,
@@ -238,13 +238,13 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             }}
           />
           <Text>Moderate</Text>
-        </View>
-        <View
+        </Layout>
+        <Layout
           style={{
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <View
+          <Layout
             style={{
               height: 10,
               width: 10,
@@ -254,13 +254,13 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             }}
           />
           <Text>Hard</Text>
-        </View>
-        <View
+        </Layout>
+        <Layout
           style={{
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <View
+          <Layout
             style={{
               height: 10,
               width: 10,
@@ -270,8 +270,8 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             }}
           />
           <Text>Very Hard</Text>
-        </View>
-      </View>
+        </Layout>
+      </Layout>
       <Divider style={{backgroundColor: colors.borderColor}} />
       <Text category="s1" style={{textAlign: 'center', marginVertical: 20}}>
         Weight tracking

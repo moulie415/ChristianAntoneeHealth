@@ -6,7 +6,7 @@ import AboutProps from '../../types/views/About';
 
 const About: React.FC<AboutProps> = () => {
   return (
-    <ScrollView style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       <TouchableOpacity
         onPress={() => Linking.openURL('https://healthandmovement.co.uk/')}>
         <Text

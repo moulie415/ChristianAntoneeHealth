@@ -5,17 +5,14 @@ import {TouchableOpacity, View, Image} from 'react-native';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
-import {Text} from '@ui-kitten/components';
+import {Layout, Text} from '@ui-kitten/components';
 import globalStyles from '../../styles/globalStyles';
 import ImageLoader from '../commons/ImageLoader';
 
-const FitnessTesting: React.FC<FitnessTestingProps> = ({
-  navigation,
-  tests,
-}) => {
+const FitnessTesting: React.FC<FitnessTestingProps> = ({navigation, tests}) => {
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
-      <View style={{flex: 1}}>
+    <Layout style={{flex: 1}}>
+      <Layout style={{flex: 1}}>
         <TouchableOpacity style={{flex: 1, marginVertical: 5}}>
           <ImageLoader
             style={{width: '100%', flex: 1}}
@@ -23,7 +20,9 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
             source={require('../../images/strength.jpeg')}
           />
           <View style={{position: 'absolute', bottom: 0, margin: 5}}>
-            <Text category="h5" style={globalStyles.textShadow}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
               Strength
             </Text>
           </View>
@@ -36,7 +35,9 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
             source={require('../../images/balance.jpeg')}
           />
           <View style={{position: 'absolute', bottom: 0, right: 0, margin: 5}}>
-            <Text category="h5" style={globalStyles.textShadow}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
               Balance
             </Text>
           </View>
@@ -49,7 +50,9 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
             source={require('../../images/cardio.jpeg')}
           />
           <View style={{position: 'absolute', bottom: 0, margin: 5}}>
-            <Text category="h5" style={globalStyles.textShadow}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
               Cardio
             </Text>
           </View>
@@ -62,13 +65,15 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
             source={require('../../images/flexibility.jpeg')}
           />
           <View style={{position: 'absolute', bottom: 0, right: 0, margin: 5}}>
-            <Text category="h5" style={globalStyles.textShadow}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
               Flexibility
             </Text>
           </View>
         </TouchableOpacity>
-      </View>
-    </View>
+      </Layout>
+    </Layout>
   );
 };
 

@@ -1,4 +1,4 @@
-import {List, ListItem} from '@ui-kitten/components';
+import {Layout, List, ListItem} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -67,9 +67,9 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     [exercises, goals, level, strengthArea],
   );
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <Layout style={{flex: 1}}>
       <List
-        style={{backgroundColor: colors.appBlack, flex: 1}}
+        style={{flex: 1}}
         data={filtered}
         keyExtractor={(item: Exercise) => item.id}
         renderItem={({item}: {item: Exercise}) => {
@@ -121,7 +121,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         setOpen={setModalOpen}
         open={modalOpen}
       />
-    </View>
+    </Layout>
   );
 };
 

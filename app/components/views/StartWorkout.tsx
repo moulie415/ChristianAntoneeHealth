@@ -1,4 +1,4 @@
-import {Button, Input, Text} from '@ui-kitten/components';
+import {Button, Input, Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {View, ScrollView, Platform, TouchableOpacity} from 'react-native';
 import moment from 'moment';
@@ -48,8 +48,8 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     return () => clearInterval(intervalID);
   }, []);
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
-      <View
+    <Layout style={{ flex: 1}}>
+      <Layout
         style={{
           flexDirection: 'row',
           margin: 10,
@@ -57,13 +57,13 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           alignItems: 'center',
         }}>
         <Text category="h5">{`Exercise ${index + 1}/${workout.length}`}</Text>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <Layout style={{flexDirection: 'row', justifyContent: 'center'}}>
           <Icon name="stopwatch" size={25} color="#fff" />
           <Text style={{marginLeft: 10, width: 70}} category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
-        </View>
-      </View>
+        </Layout>
+      </Layout>
 
       <PagerView
         ref={pagerRef}
@@ -119,7 +119,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   </TouchableOpacity>
                 )}
               </>
-              <View
+              <Layout
                 style={{
                   marginHorizontal: 10,
                   flexDirection: 'row',
@@ -129,11 +129,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 <Text style={{flex: 4}} category="h6">
                   {exercise.name}
                 </Text>
-                <View style={{flex: 2, alignItems: 'flex-end'}}>
+                <Layout style={{flex: 2, alignItems: 'flex-end'}}>
                   <Text>{`${exercise.reps} repetitions`}</Text>
                   <Text>{`x${exercise.sets} sets`}</Text>
-                </View>
-              </View>
+                </Layout>
+              </Layout>
               <ViewMore text={exercise.description} />
               <TouchableOpacity
                 onPress={() =>
@@ -179,7 +179,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 />
               )}
               {workout[index + 1] && (
-                <View style={{margin: 10}}>
+                <Layout style={{margin: 10}}>
                   <Text category="h6" style={{marginBottom: 10}}>
                     Up next
                   </Text>
@@ -193,7 +193,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       style={{height: 70, width: 80}}
                       source={require('../../images/old_man_stretching.jpeg')}
                     />
-                    <View
+                    <Layout
                       style={{
                         marginLeft: 20,
                         justifyContent: 'space-evenly',
@@ -203,9 +203,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       <Text>{`${workout[index + 1].reps} repetitions x${
                         workout[index + 1].sets
                       } sets`}</Text>
-                    </View>
+                    </Layout>
                   </TouchableOpacity>
-                </View>
+                </Layout>
               )}
               <Button
                 onPress={() => navigation.navigate('EndWorkout')}
@@ -216,7 +216,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           );
         })}
       </PagerView>
-    </View>
+    </Layout>
   );
 };
 

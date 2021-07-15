@@ -17,6 +17,7 @@ import {
   SelectItem,
   Text,
   Button,
+  Layout,
 } from '@ui-kitten/components';
 import colors from '../../constants/colors';
 import {Gender, HeightMetric, WeightMetric} from '../../types/Profile';
@@ -141,7 +142,7 @@ const Profile: React.FC<ProfileProps> = ({
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{flexDirection: 'row', margin: 20, alignItems: 'center'}}>
+      <Layout style={{flexDirection: 'row', margin: 20, alignItems: 'center'}}>
         <TouchableOpacity style={{marginRight: 20}}>
           {profile.avatar ? (
             <Image style={styles.avatar} source={{uri: profile.avatar}} />
@@ -157,8 +158,8 @@ const Profile: React.FC<ProfileProps> = ({
           )}
         </TouchableOpacity>
         <Text category="h5">{profile.name}</Text>
-      </View>
-      <View style={{margin: 20}}>
+      </Layout>
+      <Layout style={{margin: 20}}>
         <Datepicker
           style={{width: '65%', marginBottom: 10}}
           date={moment(dob).toDate()}
@@ -168,7 +169,7 @@ const Profile: React.FC<ProfileProps> = ({
           min={moment().subtract(200, 'years').toDate()}
           accessoryRight={props => <Icon {...props} name="calendar" />}
         />
-        <View style={{flexDirection: 'row', marginBottom: 10}}>
+        <Layout style={{flexDirection: 'row', marginBottom: 10}}>
           <Input
             value={weight?.toString()}
             returnKeyType="done"
@@ -191,8 +192,8 @@ const Profile: React.FC<ProfileProps> = ({
             <SelectItem selected={weightMetric === 'kg'} title="kg" />
             <SelectItem selected={weightMetric === 'lbs'} title="lbs" />
           </Select>
-        </View>
-        <View style={{flexDirection: 'row', marginBottom: 10}}>
+        </Layout>
+        <Layout style={{flexDirection: 'row', marginBottom: 10}}>
           <Input
             value={height?.toString()}
             returnKeyType="done"
@@ -215,7 +216,7 @@ const Profile: React.FC<ProfileProps> = ({
             <SelectItem selected={heightMetric === 'cm'} title="cm" />
             <SelectItem selected={heightMetric === 'inches'} title="inches" />
           </Select>
-        </View>
+        </Layout>
         <Select
           style={{width: '65%', marginBottom: 10}}
           selectedIndex={selectedGenderIndex}
@@ -230,7 +231,7 @@ const Profile: React.FC<ProfileProps> = ({
           <SelectItem selected={gender === 'male'} title="male" />
           <SelectItem selected={gender === 'female'} title="female" />
         </Select>
-      </View>
+      </Layout>
       <Text category="h6" style={{margin: 20}}>
         Weight tracking
       </Text>

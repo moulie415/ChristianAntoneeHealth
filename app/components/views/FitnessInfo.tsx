@@ -6,6 +6,7 @@ import {
   Select,
   SelectItem,
   Button,
+  Layout,
 } from '@ui-kitten/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Alert, Text, Platform} from 'react-native';
@@ -88,7 +89,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
 
   const [loading, setLoading] = useState(false);
   return (
-    <View style={{marginHorizontal: 20}}>
+    <Layout style={{marginHorizontal: 20}}>
       <Datepicker
         style={{width: '65%'}}
         date={moment(dob).toDate()}
@@ -98,7 +99,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         min={moment().subtract(200, 'years').toDate()}
         accessoryRight={props => <Icon {...props} name="calendar" />}
       />
-      <View style={{flexDirection: 'row'}}>
+      <Layout style={{flexDirection: 'row'}}>
         <Input
           value={weight?.toString()}
           returnKeyType="done"
@@ -121,8 +122,8 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
           <SelectItem selected={weightMetric === 'kg'} title="kg" />
           <SelectItem selected={weightMetric === 'lbs'} title="lbs" />
         </Select>
-      </View>
-      <View style={{flexDirection: 'row'}}>
+      </Layout>
+      <Layout style={{flexDirection: 'row'}}>
         <Input
           value={height?.toString()}
           returnKeyType="done"
@@ -145,7 +146,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
           <SelectItem selected={heightMetric === 'cm'} title="cm" />
           <SelectItem selected={heightMetric === 'inches'} title="inches" />
         </Select>
-      </View>
+      </Layout>
       <Select
         style={{width: '65%'}}
         selectedIndex={selectedGenderIndex}
@@ -170,7 +171,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         Continue
       </Button>
       <AbsoluteSpinner loading={loading} />
-    </View>
+    </Layout>
   );
 };
 

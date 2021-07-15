@@ -132,7 +132,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       <Text style={{textAlign: 'center', marginBottom: 50}} category="h4">
         Welcome back!
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -144,9 +144,9 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             SIGN UP
           </Text>
         </TouchableOpacity>
-      </View>
+      </Layout>
       <Text style={{textAlign: 'center', marginBottom: 20}}>Login with</Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -213,7 +213,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             )
           }
         />
-      </View>
+      </Layout>
       <Text style={{textAlign: 'center', marginBottom: 20}}>or</Text>
       <Input
         style={styles.input}

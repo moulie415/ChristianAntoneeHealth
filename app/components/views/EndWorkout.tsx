@@ -1,4 +1,4 @@
-import {Button, Text} from '@ui-kitten/components';
+import {Button, Layout, Text} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
@@ -7,7 +7,7 @@ import {resetToTabs} from '../../RootNavigation';
 const EndWorkout: React.FC = () => {
   const [difficulty, setDifficulty] = useState(1);
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <Layout style={{flex: 1}}>
       <Text
         category="h5"
         style={{textAlign: 'center', margin: 10, marginTop: 20}}>
@@ -23,7 +23,7 @@ const EndWorkout: React.FC = () => {
       <Button style={{margin: 10}} onPress={resetToTabs}>
         Save & Continue
       </Button>
-    </View>
+    </Layout>
   );
 };
 

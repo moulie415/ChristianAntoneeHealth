@@ -1,4 +1,4 @@
-import {Button, ListItem, Text} from '@ui-kitten/components';
+import {Button, Layout, ListItem, Text} from '@ui-kitten/components';
 import React, {useCallback, useRef, useState} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity, View} from 'react-native';
@@ -64,7 +64,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   );
 
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <Layout style={{flex: 1}}>
       <Text style={{margin: 10, marginBottom: 0}} category="h5">
         Review exercises
       </Text>
@@ -73,14 +73,14 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       </Text>
       <DraggableFlatList
         data={workout}
-        style={{backgroundColor: colors.appBlack, flex: 1}}
+        style={{flex: 1}}
         ItemSeparatorComponent={() => <CustomDivider />}
         renderItem={renderItem}
         ListFooterComponent={() => (
           <TouchableOpacity
             style={{flexDirection: 'row'}}
             onPress={navigation.goBack}>
-            <View
+            <Layout
               style={{
                 height: 50,
                 width: 75,
@@ -90,7 +90,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                 justifyContent: 'center',
               }}>
               <Icon name="plus" size={25} />
-            </View>
+            </Layout>
             <Text
               category="s1"
               style={{
@@ -122,7 +122,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         open={modalOpen}
         setOpen={setModalOpen}
       />
-    </View>
+    </Layout>
   );
 };
 

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Exercise from '../../types/Exercise';
 import colors from '../../constants/colors';
-import {Text, Button} from '@ui-kitten/components';
+import {Text, Button, Layout} from '@ui-kitten/components';
 import {Goal, MyRootState} from '../../types/Shared';
 import Snackbar from 'react-native-snackbar';
 import {connect} from 'react-redux';
@@ -85,10 +85,9 @@ const ExerciseBottomSheet: React.FC<{
   const renderContent = () => {
     if (selectedExercise) {
       return (
-        <View
+        <Layout
           style={{
             paddingBottom: 50,
-            backgroundColor: colors.appBlack,
           }}>
           <Text category="h5" style={{textAlign: 'center'}}>
             {selectedExercise.name}
@@ -102,8 +101,8 @@ const ExerciseBottomSheet: React.FC<{
             }}
             source={require('../../images/old_man_stretching.jpeg')}
           />
-          <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <View>
+          <Layout style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+            <Layout>
               <Picker
                 style={{width: 120, height: 180}}
                 selectedValue={reps}
@@ -125,8 +124,8 @@ const ExerciseBottomSheet: React.FC<{
                   );
                 })}
               </Picker>
-            </View>
-            <View>
+            </Layout>
+            <Layout>
               <Picker
                 style={{width: 120, height: 180}}
                 selectedValue={sets}
@@ -143,10 +142,10 @@ const ExerciseBottomSheet: React.FC<{
                   />
                 ))}
               </Picker>
-            </View>
+            </Layout>
             {(selectedExercise.type === Goal.BALANCE ||
               selectedExercise.type === Goal.STRENGTH) && (
-              <View>
+              <Layout>
                 <Picker
                   style={{width: 120, height: 180}}
                   selectedValue={resistance}
@@ -163,10 +162,10 @@ const ExerciseBottomSheet: React.FC<{
                     />
                   ))}
                 </Picker>
-              </View>
+              </Layout>
             )}
-          </View>
-          <View style={{marginTop: 30}}>
+          </Layout>
+          <Layout style={{marginTop: 30}}>
             {selected && (
               <Button
                 onPress={() => {
@@ -189,8 +188,8 @@ const ExerciseBottomSheet: React.FC<{
                 ? 'Remove exercise'
                 : 'Add exercise'}
             </Button>
-          </View>
-        </View>
+          </Layout>
+        </Layout>
       );
     }
     return null;
@@ -198,15 +197,15 @@ const ExerciseBottomSheet: React.FC<{
 
   const renderHeader = () => {
     return (
-      <View style={{backgroundColor: colors.appBlack, alignItems: 'center'}}>
+      <Layout style={{alignItems: 'center'}}>
         <Icon color="#ffff" name="minus" size={30} />
-      </View>
+      </Layout>
     );
   };
   return (
     <>
       {open && (
-        <View
+        <Layout
           style={{
             position: 'absolute',
             backgroundColor: 'rgba(0, 0, 0, 0.7)',

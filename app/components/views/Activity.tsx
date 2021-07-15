@@ -1,4 +1,4 @@
-import {Text} from '@ui-kitten/components';
+import {Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import PagerView from 'react-native-pager-view';
@@ -27,8 +27,8 @@ const Activity: React.FC<ActivityProps> = ({
     pagerRef.current.setPage(page);
   };
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
-      <View
+    <Layout style={{flex: 1}}>
+      <Layout
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -68,7 +68,7 @@ const Activity: React.FC<ActivityProps> = ({
           }}>
           <Text style={{textAlign: 'center'}}>Month</Text>
         </TouchableOpacity>
-      </View>
+      </Layout>
       <PagerView
         ref={pagerRef}
         onPageSelected={e => setIndex(e.nativeEvent.position)}
@@ -77,7 +77,7 @@ const Activity: React.FC<ActivityProps> = ({
         <WeeklyActivity />
         <MonthlyActivity />
       </PagerView>
-    </View>
+    </Layout>
   );
 };
 

@@ -5,7 +5,7 @@ import Carousel, {
   Pagination,
   ParallaxImage,
 } from 'react-native-snap-carousel';
-import {Button, Text} from '@ui-kitten/components';
+import {Button, Layout, Text} from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import {viewedWelcome} from '../../actions/profile';
@@ -47,7 +47,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
   setHasViewedWelcome,
 }) => {
   return (
-    <View style={{flex: 1, marginTop: '20%'}}>
+    <Layout style={{flex: 1, marginTop: '20%'}}>
       <Carousel
         layoutCardOffset={18}
         data={items}
@@ -59,7 +59,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
           parallaxProps?: AdditionalParallaxProps,
         ) => {
           return (
-            <View
+            <Layout
               style={{
                 width: width - 50,
                 height: width,
@@ -80,14 +80,14 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                 {...parallaxProps}
               />
               <Pagination activeDotIndex={index} dotsLength={items.length} />
-              <View
+              <Layout
                 style={{
                   padding: 10,
                   backgroundColor: colors.appGrey,
                   borderBottomLeftRadius: 8,
                   borderBottomRightRadius: 8,
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Icon
                     size={20}
                     name={item.icon}
@@ -95,7 +95,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                     style={{marginRight: 10}}
                   />
                   <Text category="h4">{item.title}</Text>
-                </View>
+                </Layout>
                 <Text>{item.description}</Text>
                 {index === items.length - 1 && (
                   <Button
@@ -105,12 +105,12 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                     Finish
                   </Button>
                 )}
-              </View>
-            </View>
+              </Layout>
+            </Layout>
           );
         }}
       />
-    </View>
+    </Layout>
   );
 };
 

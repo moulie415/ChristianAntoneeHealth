@@ -11,5 +11,4 @@ updates:
       - dependency-name: "@react-native-firebase/auth"
       - dependency-name: "@react-native-firebase/crashlytics"
       - dependency-name: "@react-native-firebase/firestore"
-      - dependency-name: "react-native-fast-image"
     target-branch: "dev"

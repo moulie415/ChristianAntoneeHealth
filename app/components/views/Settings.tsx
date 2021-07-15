@@ -1,4 +1,4 @@
-import {Text, Toggle} from '@ui-kitten/components';
+import {Layout, Text, Toggle} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform, View} from 'react-native';
@@ -24,11 +24,11 @@ const Settings: React.FC<SettingsProps> = ({
 }) => {
   const [show, setShow] = useState(false);
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <Layout style={{flex: 1}}>
       <Text style={{margin: 10}} category="h5">
         Notifications
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -40,8 +40,8 @@ const Settings: React.FC<SettingsProps> = ({
           checked={workoutReminders}
           onChange={setWorkoutRemindersAction}
         />
-      </View>
-      <View
+      </Layout>
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -71,8 +71,8 @@ const Settings: React.FC<SettingsProps> = ({
             <Text>{moment(workoutReminderTime).format('HH:mm')}</Text>
           </TouchableOpacity>
         )}
-      </View>
-      <View
+      </Layout>
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -84,8 +84,8 @@ const Settings: React.FC<SettingsProps> = ({
           checked={monthlyTestReminders}
           onChange={setMonthlyTestRemindersAction}
         />
-      </View>
-    </View>
+      </Layout>
+    </Layout>
   );
 };
 

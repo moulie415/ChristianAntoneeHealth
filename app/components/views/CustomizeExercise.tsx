@@ -1,4 +1,4 @@
-import {ListItem, Text, Button} from '@ui-kitten/components';
+import {ListItem, Text, Button, Layout} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import Video from 'react-native-video';
 // @ts-ignore
@@ -51,7 +51,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       })
     : [];
   return (
-    <ScrollView style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       {Platform.OS === 'ios' ? (
         <Video
           source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
@@ -76,9 +76,9 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       <ViewMore text={exercise.description} />
       <CustomDivider />
       {!!muscles && !!muscles.length && (
-        <View style={{alignItems: 'center', marginVertical: 20}}>
+        <Layout style={{alignItems: 'center', marginVertical: 20}}>
           <Body scale={1} data={muscles} />
-        </View>
+        </Layout>
       )}
       <Button style={{margin: 10}} onPress={selectExercise}>
         {workout.find(e => e.id === exercise.id)

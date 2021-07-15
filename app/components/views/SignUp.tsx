@@ -113,7 +113,7 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
       <Text style={{textAlign: 'center', marginBottom: 50}} category="h4">
         Welcome back!
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -125,11 +125,11 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
             LOG IN
           </Text>
         </TouchableOpacity>
-      </View>
+      </Layout>
       <Text style={{textAlign: 'center', marginBottom: 20}}>
         Get started with
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -196,7 +196,7 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
             )
           }
         />
-      </View>
+      </Layout>
       <Text style={{textAlign: 'center', marginBottom: 20}}>or</Text>
 
       <Button

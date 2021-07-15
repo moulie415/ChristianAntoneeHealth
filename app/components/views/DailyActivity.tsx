@@ -4,7 +4,7 @@ import moment, {Moment} from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/Activity';
-import {List, Text} from '@ui-kitten/components';
+import {Layout, List, Text} from '@ui-kitten/components';
 import {getSamples} from '../../actions/profile';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
@@ -31,16 +31,16 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
   }, [weeklySteps]);
   return (
     <List
-      style={{backgroundColor: colors.appBlack, flex: 1}}
+      style={{flex: 1}}
       data={listItems}
       renderItem={({item}: {item: Item}) => {
         return (
-          <View>
+          <Layout>
             <Text category="h5" style={{padding: 5}}>
               {item.day.format('dddd')}
             </Text>
             <CustomDivider />
-            <View
+            <Layout
               style={{
                 flexDirection: 'row',
                 backgroundColor: '#303030',
@@ -48,7 +48,7 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Icon
                   size={20}
                   style={{margin: 5}}
@@ -56,11 +56,11 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
                   color={colors.appBlue}
                 />
                 <Text>Steps</Text>
-              </View>
+              </Layout>
               <Text>{item.steps}</Text>
-            </View>
+            </Layout>
             <CustomDivider />
-          </View>
+          </Layout>
         );
       }}
     />

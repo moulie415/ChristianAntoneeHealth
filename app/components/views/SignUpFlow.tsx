@@ -73,7 +73,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   return (
     <KeyboardAvoidingView
       behavior="position"
-      style={{flex: 1, backgroundColor: colors.appBlack}}>
+      style={{flex: 1, }}>
       <Image
         style={styles.logo}
         source={require('../../images/health_and_movement_logo_colour_centred.png')}

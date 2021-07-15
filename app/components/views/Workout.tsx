@@ -3,7 +3,7 @@ import styles from '../../styles/views/Workout';
 import {View, Image, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import WorkoutProps from '../../types/views/Workout';
-import {Text, Button, CheckBox} from '@ui-kitten/components';
+import {Text, Button, CheckBox, Layout} from '@ui-kitten/components';
 import {Goal, Level, StrengthArea} from '../../types/Shared';
 import {setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
@@ -28,7 +28,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
     goals.includes(Goal.BALANCE);
 
   return (
-    <View style={{backgroundColor: colors.appBlack, flex: 1}}>
+    <Layout style={{flex: 1}}>
       <Text category="h5" style={{margin: 10, marginBottom: 0}}>
         Select your goal(s)
       </Text>
@@ -60,7 +60,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
       <Text category="h5" style={{margin: 10}}>
         Select your experience
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
@@ -83,11 +83,11 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
           status={selectedLevel === Level.ADVANCED ? 'primary' : 'basic'}>
           Advanced
         </Button>
-      </View>
+      </Layout>
       <Text category="h5" style={{margin: 10}}>
         Select an area of the body
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
@@ -156,7 +156,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
             Lower body
           </Text>
         </TouchableOpacity>
-      </View>
+      </Layout>
       <Button
         disabled={goals.length === 0}
         onPress={() => {
@@ -170,7 +170,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
         style={{margin: 10}}>
         Continue
       </Button>
-    </View>
+    </Layout>
   );
 };
 

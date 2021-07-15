@@ -9,6 +9,7 @@ import {
   Button,
   Input,
   IndexPath,
+  Layout,
 } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
@@ -48,7 +49,7 @@ const Goals: React.FC<GoalsProps> = ({
     ) : null;
   };
   return (
-    <View style={{margin: 20}}>
+    <Layout style={{margin: 20}}>
       <Text style={{color: '#fff', marginTop: 30, marginBottom: 10}}>
         What is your main purpose for using this app?
       </Text>
@@ -81,7 +82,7 @@ const Goals: React.FC<GoalsProps> = ({
       <Text style={{color: '#fff', marginTop: 30, marginBottom: 10}}>
         What is your main purpose for using this app?
       </Text>
-      <View
+      <Layout
         style={{
           flexDirection: 'row',
           flexWrap: 'wrap',
@@ -137,11 +138,11 @@ const Goals: React.FC<GoalsProps> = ({
           }}>
           Cardiovascular
         </Button>
-      </View>
+      </Layout>
       <Text style={{color: '#fff', marginTop: 30, marginBottom: 20}}>
         How many times a week do you want to workout?
       </Text>
-      <View
+      <Layout
         style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
         <TouchableOpacity
           onPress={() => {
@@ -170,11 +171,11 @@ const Goals: React.FC<GoalsProps> = ({
           onPress={() => setWorkoutFrequency(workoutFrequency + 1)}>
           <Icon name="plus" color={colors.appBlue} size={25} />
         </TouchableOpacity>
-      </View>
+      </Layout>
       <Button disabled={!purpose} onPress={signUp}>
         Create Account
       </Button>
-    </View>
+    </Layout>
   );
 };
 

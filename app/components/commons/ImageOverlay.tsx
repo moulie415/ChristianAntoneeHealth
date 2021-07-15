@@ -1,3 +1,4 @@
+import { Layout } from '@ui-kitten/components';
 import React, {ReactElement} from 'react';
 import {
   Dimensions,
@@ -62,7 +63,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({
         containerStyle,
       ]}
       blurRadius={blurRadius}>
-      <View
+      <Layout
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: overlayColor,
