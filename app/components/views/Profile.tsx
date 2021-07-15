@@ -141,125 +141,128 @@ const Profile: React.FC<ProfileProps> = ({
   }, [getSamplesAction]);
 
   return (
-    <ScrollView style={styles.container}>
-      <Layout style={{flexDirection: 'row', margin: 20, alignItems: 'center'}}>
-        <TouchableOpacity style={{marginRight: 20}}>
-          {profile.avatar ? (
-            <Image style={styles.avatar} source={{uri: profile.avatar}} />
-          ) : (
-            <TouchableOpacity
-              style={{
-                backgroundColor: colors.appGrey,
-                padding: 15,
-                borderRadius: 45,
-              }}>
-              <FIcon name="user" solid size={25} color="#fff" />
-            </TouchableOpacity>
-          )}
-        </TouchableOpacity>
-        <Text category="h5">{profile.name}</Text>
-      </Layout>
-      <Layout style={{margin: 20}}>
-        <Datepicker
-          style={{width: '65%', marginBottom: 10}}
-          date={moment(dob).toDate()}
-          onSelect={date => setDob(date.toISOString())}
-          label="Date of Birth"
-          max={new Date()}
-          min={moment().subtract(200, 'years').toDate()}
-          accessoryRight={props => <Icon {...props} name="calendar" />}
+    <Layout style={{flex: 1}}>
+      <ScrollView style={styles.container}>
+        <Layout
+          style={{flexDirection: 'row', margin: 20, alignItems: 'center'}}>
+          <TouchableOpacity style={{marginRight: 20}}>
+            {profile.avatar ? (
+              <Image style={styles.avatar} source={{uri: profile.avatar}} />
+            ) : (
+              <TouchableOpacity
+                style={{
+                  backgroundColor: colors.appGrey,
+                  padding: 15,
+                  borderRadius: 45,
+                }}>
+                <FIcon name="user" solid size={25} color="#fff" />
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+          <Text category="h5">{profile.name}</Text>
+        </Layout>
+        <Layout style={{margin: 20}}>
+          <Datepicker
+            style={{width: '65%', marginBottom: 10}}
+            date={moment(dob).toDate()}
+            onSelect={date => setDob(date.toISOString())}
+            label="Date of Birth"
+            max={new Date()}
+            min={moment().subtract(200, 'years').toDate()}
+            accessoryRight={props => <Icon {...props} name="calendar" />}
+          />
+          <Layout style={{flexDirection: 'row', marginBottom: 10}}>
+            <Input
+              value={weight?.toString()}
+              returnKeyType="done"
+              style={{width: '30%', marginRight: 20}}
+              onChangeText={val => setWeight(Number(val))}
+              label="Weight"
+              keyboardType="numeric"
+            />
+            <Select
+              label=" "
+              style={{width: '30%'}}
+              selectedIndex={selectedWeightMetricIndex}
+              onSelect={index => {
+                setSelectedWeightMetricIndex(index as IndexPath);
+                if ('row' in index) {
+                  setWeightMetric(index.row === 0 ? 'kg' : 'lbs');
+                }
+              }}
+              value={weightMetric}>
+              <SelectItem selected={weightMetric === 'kg'} title="kg" />
+              <SelectItem selected={weightMetric === 'lbs'} title="lbs" />
+            </Select>
+          </Layout>
+          <Layout style={{flexDirection: 'row', marginBottom: 10}}>
+            <Input
+              value={height?.toString()}
+              returnKeyType="done"
+              style={{width: '30%', marginRight: 20}}
+              onChangeText={val => setHeight(Number(val))}
+              label="Height"
+              keyboardType="numeric"
+            />
+            <Select
+              label=" "
+              style={{width: '30%'}}
+              selectedIndex={selectedHeightMetricIndex}
+              onSelect={index => {
+                setSelectedHeightMetricIndex(index as IndexPath);
+                if ('row' in index) {
+                  setHeightMetric(index.row === 0 ? 'cm' : 'inches');
+                }
+              }}
+              value={heightMetric}>
+              <SelectItem selected={heightMetric === 'cm'} title="cm" />
+              <SelectItem selected={heightMetric === 'inches'} title="inches" />
+            </Select>
+          </Layout>
+          <Select
+            style={{width: '65%', marginBottom: 10}}
+            selectedIndex={selectedGenderIndex}
+            onSelect={index => {
+              setSelectedGenderIndex(index as IndexPath);
+              if ('row' in index) {
+                setGender(index.row === 0 ? 'male' : 'female');
+              }
+            }}
+            value={gender || 'Select gender'}
+            label="Gender">
+            <SelectItem selected={gender === 'male'} title="male" />
+            <SelectItem selected={gender === 'female'} title="female" />
+          </Select>
+        </Layout>
+        <Text category="h6" style={{margin: 20}}>
+          Weight tracking
+        </Text>
+        <LineChart
+          data={weightData}
+          width={Dimensions.get('screen').width * 0.9}
+          height={200}
+          chartConfig={chartConfig}
+          withVerticalLines={false}
+          withShadow={false}
         />
-        <Layout style={{flexDirection: 'row', marginBottom: 10}}>
-          <Input
-            value={weight?.toString()}
-            returnKeyType="done"
-            style={{width: '30%', marginRight: 20}}
-            onChangeText={val => setWeight(Number(val))}
-            label="Weight"
-            keyboardType="numeric"
-          />
-          <Select
-            label=" "
-            style={{width: '30%'}}
-            selectedIndex={selectedWeightMetricIndex}
-            onSelect={index => {
-              setSelectedWeightMetricIndex(index as IndexPath);
-              if ('row' in index) {
-                setWeightMetric(index.row === 0 ? 'kg' : 'lbs');
-              }
-            }}
-            value={weightMetric}>
-            <SelectItem selected={weightMetric === 'kg'} title="kg" />
-            <SelectItem selected={weightMetric === 'lbs'} title="lbs" />
-          </Select>
-        </Layout>
-        <Layout style={{flexDirection: 'row', marginBottom: 10}}>
-          <Input
-            value={height?.toString()}
-            returnKeyType="done"
-            style={{width: '30%', marginRight: 20}}
-            onChangeText={val => setHeight(Number(val))}
-            label="Height"
-            keyboardType="numeric"
-          />
-          <Select
-            label=" "
-            style={{width: '30%'}}
-            selectedIndex={selectedHeightMetricIndex}
-            onSelect={index => {
-              setSelectedHeightMetricIndex(index as IndexPath);
-              if ('row' in index) {
-                setHeightMetric(index.row === 0 ? 'cm' : 'inches');
-              }
-            }}
-            value={heightMetric}>
-            <SelectItem selected={heightMetric === 'cm'} title="cm" />
-            <SelectItem selected={heightMetric === 'inches'} title="inches" />
-          </Select>
-        </Layout>
-        <Select
-          style={{width: '65%', marginBottom: 10}}
-          selectedIndex={selectedGenderIndex}
-          onSelect={index => {
-            setSelectedGenderIndex(index as IndexPath);
-            if ('row' in index) {
-              setGender(index.row === 0 ? 'male' : 'female');
-            }
+        <Button
+          onPress={() => {
+            navigation.goBack();
+            updateProfileAction({
+              gender,
+              dob,
+              height,
+              weight,
+              weightMetric,
+              heightMetric,
+            });
           }}
-          value={gender || 'Select gender'}
-          label="Gender">
-          <SelectItem selected={gender === 'male'} title="male" />
-          <SelectItem selected={gender === 'female'} title="female" />
-        </Select>
-      </Layout>
-      <Text category="h6" style={{margin: 20}}>
-        Weight tracking
-      </Text>
-      <LineChart
-        data={weightData}
-        width={Dimensions.get('screen').width * 0.9}
-        height={200}
-        chartConfig={chartConfig}
-        withVerticalLines={false}
-        withShadow={false}
-      />
-      <Button
-        onPress={() => {
-          navigation.goBack();
-          updateProfileAction({
-            gender,
-            dob,
-            height,
-            weight,
-            weightMetric,
-            heightMetric,
-          });
-        }}
-        disabled={!dob || !height || !weight || !gender || equal}
-        style={{margin: 10}}>
-        Save
-      </Button>
-    </ScrollView>
+          disabled={!dob || !height || !weight || !gender || equal}
+          style={{margin: 10}}>
+          Save
+        </Button>
+      </ScrollView>
+    </Layout>
   );
 };
 

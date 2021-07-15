@@ -81,7 +81,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
               }
               onLongPress={() => selectExercise(item)}
               style={{
-                backgroundColor: selected ? colors.appBlue : colors.appBlack,
+                backgroundColor: selected ? colors.appBlue : undefined,
               }}
               title={item.name}
               description={truncate(item.description, 75)}
@@ -95,7 +95,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 <TouchableOpacity style={{padding: 10}}>
                   <Icon
                     name="ellipsis-h"
-                    color="#fff"
+                    color={selected ? '#fff' : colors.appBlue}
                     size={20}
                     onPress={() => {
                       setSelectedExercise(item);

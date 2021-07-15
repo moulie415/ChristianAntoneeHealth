@@ -33,7 +33,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
     ({item, index, drag, isActive}: RenderItemParams<Exercise>) => {
       return (
         <ListItem
-          style={{backgroundColor: isActive ? colors.appBlue : colors.appBlack}}
+          style={{backgroundColor: isActive ? colors.appBlue : undefined}}
           onLongPress={drag}
           title={item.name}
           description={truncate(item.description, 75)}

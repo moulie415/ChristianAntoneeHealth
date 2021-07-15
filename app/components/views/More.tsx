@@ -88,19 +88,12 @@ const More: React.FC<MoreProps> = ({
     <List
       style={{}}
       data={listItems}
-      ItemSeparatorComponent={() => (
-        <Divider
-          style={{
-            backgroundColor: colors.borderColor,
-            height: StyleSheet.hairlineWidth,
-          }}
-        />
-      )}
+      ItemSeparatorComponent={() => <Divider />}
       renderItem={({item}) => (
         <ListItem
           title={item.title}
           accessoryLeft={() => (
-            <Icon size={20} color="#fff" solid name={item.icon} />
+            <Icon size={20} color={colors.appBlack} solid name={item.icon} />
           )}
           onPress={item.onPress}
         />

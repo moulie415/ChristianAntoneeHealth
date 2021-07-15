@@ -17,4 +17,11 @@ export default StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10,
   },
+  boxShadow: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 });

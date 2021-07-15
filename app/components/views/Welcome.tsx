@@ -18,7 +18,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
       <Text category="h4" style={{color: '#000', textAlign: 'center'}}>
         Welcome to Health and Movement!
       </Text>
-      <Layout
+      <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
@@ -34,7 +34,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
           onPress={() => navigation.navigate('SignUp')}>
           Sign Up
         </Button>
-      </Layout>
+      </View>
       <Text
         style={
           styles.versionNumber

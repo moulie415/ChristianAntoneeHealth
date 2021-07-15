@@ -5,11 +5,12 @@ import Carousel, {
   Pagination,
   ParallaxImage,
 } from 'react-native-snap-carousel';
-import {Button, Layout, Text} from '@ui-kitten/components';
+import {Button, Divider, Layout, Text} from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import {viewedWelcome} from '../../actions/profile';
 import {connect} from 'react-redux';
+import globalStyles from '../../styles/globalStyles';
 
 interface CarouselItem {
   title: string;
@@ -60,12 +61,15 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
         ) => {
           return (
             <Layout
-              style={{
-                width: width - 50,
-                height: width,
-                backgroundColor: '#fff',
-                borderRadius: 8,
-              }}>
+              style={[
+                {
+                  width: width - 50,
+                  height: width,
+                  backgroundColor: '#fff',
+                  borderRadius: 8,
+                },
+                globalStyles.boxShadow,
+              ]}>
               <ParallaxImage
                 containerStyle={{
                   flex: 1,
@@ -80,10 +84,10 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                 {...parallaxProps}
               />
               <Pagination activeDotIndex={index} dotsLength={items.length} />
+              <Divider />
               <Layout
                 style={{
                   padding: 10,
-                  backgroundColor: colors.appGrey,
                   borderBottomLeftRadius: 8,
                   borderBottomRightRadius: 8,
                 }}>
@@ -100,7 +104,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                 {index === items.length - 1 && (
                   <Button
                     onPress={setHasViewedWelcome}
-                    status="control"
+                    // status="control"
                     style={{alignSelf: 'flex-end', margin: 5}}>
                     Finish
                   </Button>

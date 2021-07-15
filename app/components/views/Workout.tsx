@@ -110,6 +110,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
                   : '#3d3d3d',
               padding: 5,
               textAlign: 'center',
+              color: '#fff'
             }}>
             Full body
           </Text>
@@ -131,6 +132,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
                   : '#3d3d3d',
               padding: 5,
               textAlign: 'center',
+              color: '#fff'
             }}>
             Upper body
           </Text>
@@ -152,6 +154,7 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
                   : '#3d3d3d',
               padding: 5,
               textAlign: 'center',
+              color: '#fff'
             }}>
             Lower body
           </Text>

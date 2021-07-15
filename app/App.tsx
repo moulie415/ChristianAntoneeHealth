@@ -105,7 +105,7 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#fff',
+        activeTintColor: colors.appBlue,
         inactiveTintColor: '#7c7c7c',
         style: {},
       }}>
@@ -185,11 +185,7 @@ const App: React.FC = () => {
                 component={Welcome}
                 options={{headerShown: false}}
               />
-              <Stack.Screen
-                name="Login"
-                component={Login}
-                options={{headerShown: false}}
-              />
+              <Stack.Screen name="Login" component={Login} />
               <Stack.Screen
                 name="SignUp"
                 component={SignUp}

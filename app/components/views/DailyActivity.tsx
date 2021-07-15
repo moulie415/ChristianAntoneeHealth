@@ -43,7 +43,6 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
             <Layout
               style={{
                 flexDirection: 'row',
-                backgroundColor: '#303030',
                 padding: 5,
                 justifyContent: 'space-between',
                 alignItems: 'center',

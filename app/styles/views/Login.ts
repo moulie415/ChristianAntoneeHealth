@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
   icon: {
     marginRight: 10,
-    color: '#fff',
+    color: colors.appBlue,
   },
   logo: {
     margin: 10,

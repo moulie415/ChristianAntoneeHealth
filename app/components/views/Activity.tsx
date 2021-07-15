@@ -44,7 +44,13 @@ const Activity: React.FC<ActivityProps> = ({
             borderWidth: StyleSheet.hairlineWidth,
             backgroundColor: index === 0 ? colors.appBlue : undefined,
           }}>
-          <Text style={{textAlign: 'center'}}>Day</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: index === 0 ? '#fff' : undefined,
+            }}>
+            Day
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setPage(1)}
@@ -55,7 +61,13 @@ const Activity: React.FC<ActivityProps> = ({
             borderWidth: StyleSheet.hairlineWidth,
             backgroundColor: index === 1 ? colors.appBlue : undefined,
           }}>
-          <Text style={{textAlign: 'center'}}>Week</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: index === 1 ? '#fff' : undefined,
+            }}>
+            Week
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setPage(2)}
@@ -66,7 +78,13 @@ const Activity: React.FC<ActivityProps> = ({
             borderWidth: StyleSheet.hairlineWidth,
             backgroundColor: index === 2 ? colors.appBlue : undefined,
           }}>
-          <Text style={{textAlign: 'center'}}>Month</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: index === 2 ? '#fff' : undefined,
+            }}>
+            Month
+          </Text>
         </TouchableOpacity>
       </Layout>
       <PagerView
