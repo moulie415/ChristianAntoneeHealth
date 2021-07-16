@@ -1,5 +1,5 @@
 import React, {MutableRefObject} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Platform} from 'react-native';
 import Picker from '@gregfrench/react-native-wheel-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {setWorkout} from '../../actions/exercises';
 
 const REPS = [...Array(101).keys()];
+REPS.shift();
 const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const RESISTANCE = [...Array(301).keys()];
 
@@ -111,12 +112,12 @@ const ExerciseBottomSheet: React.FC<{
                 style={{width: 120, height: 180}}
                 selectedValue={reps}
                 lineColor="#fff"
-                itemStyle={{fontSize: 15}}
+                itemStyle={{
+                  fontSize: 15,
+                  color: Platform.OS === 'android' ? '#000' : undefined,
+                }}
                 onValueChange={setReps}>
                 {REPS.map(value => {
-                  if (value === 0) {
-                    return null;
-                  }
                   return (
                     <PickerItem
                       label={`${value.toString()} ${
@@ -134,7 +135,10 @@ const ExerciseBottomSheet: React.FC<{
                 style={{width: 120, height: 180}}
                 selectedValue={sets}
                 lineColor="#fff"
-                itemStyle={{fontSize: 15}}
+                itemStyle={{
+                  fontSize: 15,
+                  color: Platform.OS === 'android' ? '#000' : undefined,
+                }}
                 onValueChange={setSets}>
                 {SETS.map(value => (
                   <PickerItem
@@ -154,7 +158,10 @@ const ExerciseBottomSheet: React.FC<{
                   style={{width: 120, height: 180}}
                   selectedValue={resistance}
                   lineColor="#fff"
-                  itemStyle={{fontSize: 15}}
+                  itemStyle={{
+                    fontSize: 15,
+                    color: Platform.OS === 'android' ? '#000' : undefined,
+                  }}
                   onValueChange={setResistance}>
                   {RESISTANCE.map(value => (
                     <PickerItem
