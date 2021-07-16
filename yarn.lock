@@ -1253,30 +1253,30 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-firebase/app@^12.1.0":
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.1.0.tgz#fa2c989af2bd876ed83f792c0152067184a7db27"
-  integrity sha512-goulw5PFGo2NIqqZXpv7kyv0XPKWQT2G/2ZXEFMdgDnxZGRyiAH82gR/v9rAMCww1lFVTeMZdphU5WFN/qdptg==
+"@react-native-firebase/app@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.2.0.tgz#03b1e11b0d2fb90db368f2b331002e4733908951"
+  integrity sha512-3VGR5N3WtCW6/Bn/P2AqT8lHlpbUpFHpNg7gld/cN/YlRazGMl+OyMwdFXh28yE8IrWpYvcwrcE/X+O/U7AIzQ==
   dependencies:
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^12.1.0":
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.1.0.tgz#1897714d7650f49946611f932e3c6119482e49e9"
-  integrity sha512-9/peQaPYl5M2q4q/06Sih3z+BL9wOlmXgPex7jqbF99DN6IUigEq6eOt0sR3/g0ftS/IRDG7BfbIN5MtuY1vbg==
+"@react-native-firebase/auth@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.2.0.tgz#782742e517b1867ee747feec9e2df9edc1d4781b"
+  integrity sha512-8dloi7I+hR2bgVvjzoCp9Nh/Vno21KUns1Wc9okekEZ3vs2+8s3PZJLl4wvvgw4fkMkNtlTdVEcPPNjJMGPR4g==
 
-"@react-native-firebase/crashlytics@^12.1.0":
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-12.1.0.tgz#e9f15a4c5a090ddf587ae67ed7726936aaf928a8"
-  integrity sha512-QTYv0ezKEsmPRCTT9eqS+hZj7H9D8WAvBOV2McG7osQ2VMWl1LMeyYVY4DXJ7NUErprJUMIoA1FU1nk/D5xwIQ==
+"@react-native-firebase/crashlytics@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-12.2.0.tgz#7e35b68aec73da319a88b8716559be62d5501ec3"
+  integrity sha512-dzJgbk+pdaBCpzBbLR3HAJbCSiXl1LUcJHkEZwV4Po4r0tC9olnJz3C42N8MhiAbhbQ0loBafO7fGuW4TlOvrQ==
   dependencies:
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/firestore@^12.1.0":
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.1.0.tgz#079d1c01ec72b2f3602eacdaace4da5b285a6c26"
-  integrity sha512-SyiqRAQRS0C0Gh5gOZBp9UM0FFOF555uqJK+3NzO2GHGYM7ofLONyhnhZEJGWk9iDog/TnRjlAHC3C1zsDe+1w==
+"@react-native-firebase/firestore@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.2.0.tgz#a03260117692268b8150365534ff210b7fa5ed12"
+  integrity sha512-poI05EROeotcy4ddfNVPgbAv6e2WgTUJvjcrT90H6+fDP3xMtC01w92W7uoANjObfFYpaoydXBR6gKNRd7nKUA==
 
 "@react-native-picker/picker@^1.16.3":
   version "1.16.3"
