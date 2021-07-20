@@ -14,11 +14,7 @@ import {
 } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
-
-interface PurposeItem {
-  title: string;
-  purpose: Purpose;
-}
+import {purposeItems} from '../../constants';
 
 const Goals: React.FC<GoalsProps> = ({
   selectedGoals,
@@ -29,11 +25,6 @@ const Goals: React.FC<GoalsProps> = ({
   setPurpose,
   signUp,
 }) => {
-  const purposeItems: PurposeItem[] = [
-    {title: 'Increase exercise and activity', purpose: Purpose.EXERCISE},
-    {title: 'Burn calories', purpose: Purpose.CALORIES},
-    {title: 'Improve fitness', purpose: Purpose.FITNESS},
-  ];
   const selectGoal = (goal: Goal) => {
     selectedGoals.includes(goal)
       ? setSelectedGoals(selectedGoals.filter(t => t !== goal))

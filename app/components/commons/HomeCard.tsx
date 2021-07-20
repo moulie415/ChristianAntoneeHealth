@@ -18,17 +18,17 @@ const HomeCard: React.FC<{
   return (
     <TouchableHighlight
       style={[
-        {flex: 1, marginHorizontal: 10, borderRadius: 10},
+        {flex: 1, marginHorizontal: 10, borderRadius: 25},
         globalStyles.boxShadow,
       ]}
       onPress={onPress}>
-      <Layout style={{flex: 1, borderRadius: 10}}>
+      <Layout style={{flex: 1, borderRadius: 25}}>
         <ImageOverlay
           overlayAlpha={0.4}
           containerStyle={{
             flex: 1,
             width: '100%',
-            borderRadius: 10,
+            borderRadius: 25,
           }}
           source={image}
         />
@@ -52,10 +52,14 @@ const HomeCard: React.FC<{
             {title}
           </Text>
           <Text
-            category="s1"
+            category="s2"
             style={[
               globalStyles.textShadow,
-              {color: '#fff', textAlign: 'center'},
+              {
+                color: '#fff',
+                opacity: 0.7,
+                textAlign: 'center',
+              },
             ]}>
             {subtitle}
           </Text>
