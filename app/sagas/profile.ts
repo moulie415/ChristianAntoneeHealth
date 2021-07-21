@@ -1,5 +1,6 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import crashlytics from '@react-native-firebase/crashlytics';
 import PushNotification from 'react-native-push-notification';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
@@ -35,6 +36,9 @@ import {
   SetMonthlyTestRemindersAction,
   setMonthlyTestReminders,
   setStep,
+  HandleAuthAction,
+  HANDLE_AUTH,
+  handleAuth,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -319,6 +323,52 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
   }
 }
 
+function* handleAuthWorker(action: HandleAuthAction) {
+  const user = action.payload;
+  try {
+    if (user && user.emailVerified) {
+      const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
+        api.getUser,
+        user,
+      );
+      if (doc.exists) {
+        yield put(setProfile(doc.data() as Profile));
+      } else {
+        const avatar = getProfileImage(user);
+        const userObj = {
+          uid: user.uid,
+          email: user.email,
+          avatar,
+          name: user.displayName,
+        };
+        yield put(setProfile(userObj));
+        yield call(api.setUser, userObj);
+      }
+
+      if (doc.exists && doc.data().signedUp) {
+        yield call(initBiometrics);
+        resetToTabs();
+      } else {
+        navigate('SignUpFlow');
+        yield put(setStep(0));
+      }
+      yield put(setLoggedIn(true));
+      yield put(getTests());
+      yield fork(getWorkoutReminders);
+    } else if (user) {
+      Alert.alert(
+        'Account not verified',
+        'Please verify your account using the link we sent to your email address',
+      );
+    } else {
+      yield put(setLoggedIn(false));
+    }
+  } catch (e) {
+    crashlytics().recordError(e);
+    console.log(e);
+  }
+}
+
 export default function* profileSaga() {
   yield all([
     takeEvery(SIGN_UP, signUp),
@@ -327,6 +377,7 @@ export default function* profileSaga() {
     takeLatest(SET_WORKOUT_REMINDERS, setWorkoutRemindersWorker),
     takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
     takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
+    takeLatest(HANDLE_AUTH, handleAuthWorker),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(
@@ -334,46 +385,6 @@ export default function* profileSaga() {
   );
   while (true) {
     const {user}: {user: FirebaseAuthTypes.User} = yield take(channel);
-    try {
-      if (user && user.emailVerified) {
-        const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
-          api.getUser,
-          user,
-        );
-        if (doc.exists) {
-          yield put(setProfile(doc.data() as Profile));
-        } else {
-          const avatar = getProfileImage(user);
-          const userObj = {
-            uid: user.uid,
-            email: user.email,
-            avatar,
-            name: user.displayName,
-          };
-          yield put(setProfile(userObj));
-          yield call(api.setUser, userObj);
-        }
-
-        if (doc.exists && doc.data().signedUp) {
-          yield call(initBiometrics);
-          resetToTabs();
-        } else {
-          navigate('SignUpFlow');
-          yield put(setStep(0));
-        }
-        yield put(setLoggedIn(true));
-        yield put(getTests());
-        yield fork(getWorkoutReminders);
-      } else if (user) {
-        Alert.alert(
-          'Account not verified',
-          'Please verify your account using the link we sent to your email address',
-        );
-      } else {
-        yield put(setLoggedIn(false));
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    yield put(handleAuth(user));
   }
 }

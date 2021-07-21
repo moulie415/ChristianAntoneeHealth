@@ -17,13 +17,17 @@ import {MyRootState} from '../../types/Shared';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-community/google-signin';
+import {handleAuth} from '../../actions/profile';
 
 GoogleSignin.configure({
   webClientId:
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
 });
 
-const Login: React.FC<LoginProps> = ({navigation}) => {
+const Login: React.FC<LoginProps> = ({
+  navigation,
+  handleAuth: handleAuthAction,
+}) => {
   const [spinner, setSpinner] = useState(false);
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -254,6 +258,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                   'Sorry',
                   'You must first verify your email using the link we sent you before logging in',
                 );
+              } else {
+                handleAuthAction(user);
               }
             } else {
               Alert.alert(
@@ -276,4 +282,8 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   loggedIn: profile.loggedIn,
 });
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = {
+  handleAuth,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

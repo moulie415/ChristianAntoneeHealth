@@ -1,3 +1,4 @@
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import Profile, {Gender, Unit} from '../types/Profile';
 import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
 
@@ -14,6 +15,7 @@ export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
 export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
 export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
 export const SET_STEP = 'SET_STEP';
+export const HANDLE_AUTH = 'HANDLE_AUTH';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -104,6 +106,11 @@ export interface SetMonthlyTestRemindersAction {
   payload: boolean;
 }
 
+export interface HandleAuthAction {
+  type: typeof HANDLE_AUTH;
+  payload: FirebaseAuthTypes.User;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -117,7 +124,8 @@ export type ProfileActionTypes =
   | SetWorkoutRemindersAction
   | SetWorkoutReminderTimeAction
   | SetMonthlyTestRemindersAction
-  | SetStepAction;
+  | SetStepAction
+  | HandleAuthAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -194,4 +202,9 @@ export const setMonthlyTestReminders = (
 export const setStep = (step: number): SetStepAction => ({
   type: SET_STEP,
   payload: step,
+});
+
+export const handleAuth = (user: FirebaseAuthTypes.User) => ({
+  type: HANDLE_AUTH,
+  payload: user,
 });
