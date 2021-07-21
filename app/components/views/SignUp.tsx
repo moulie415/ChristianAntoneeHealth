@@ -1,14 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Alert,
-  Image,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, Image, Platform, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {Spinner, Layout, Button, Text} from '@ui-kitten/components';
@@ -21,9 +12,12 @@ import styles from '../../styles/views/SignUp';
 import colors from '../../constants/colors';
 import sStyles from '../../styles/views/More';
 import SignUpProps from '../../types/views/SignUp';
+import {setStep} from '../../actions/profile';
 
-const SignUp: React.FC<SignUpProps> = ({navigation}) => {
-  const [spinner, setSpinner] = useState(false);
+const SignUp: React.FC<SignUpProps> = ({
+  navigation,
+  setStep: setStepAction,
+}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
@@ -119,7 +113,7 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
           justifyContent: 'center',
           marginBottom: 30,
         }}>
-        <Text>Not a member? </Text>
+        <Text>Already a member? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>
             LOG IN
@@ -202,8 +196,8 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
       <Button
         onPress={async () => {
           navigation.navigate('SignUpFlow', {dry: true});
+          setStepAction(0);
         }}
-        accessoryLeft={() => (spinner ? <Spinner /> : null)}
         style={styles.button}>
         Sign up with email
       </Button>
@@ -211,4 +205,8 @@ const SignUp: React.FC<SignUpProps> = ({navigation}) => {
   );
 };
 
-export default connect()(SignUp);
+const mapDispatchToProps = {
+  setStep,
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);

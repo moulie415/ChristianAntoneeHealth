@@ -1,4 +1,4 @@
-import Profile, {Gender, HeightMetric, WeightMetric} from '../types/Profile';
+import Profile, {Gender, Unit} from '../types/Profile';
 import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
 
 export const SET_PROFILE = 'SET_PROFILE';
@@ -13,6 +13,7 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
 export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
 export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
+export const SET_STEP = 'SET_STEP';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -28,14 +29,18 @@ interface ViewedWelcomeAction {
   type: typeof SET_HAS_VIEWED_WELCOME;
 }
 
+export interface SetStepAction {
+  type: typeof SET_STEP;
+  payload: number;
+}
+
 export interface SignUpPayload {
   dry?: boolean;
   name: string;
   dob: string;
   weight: number;
-  weightMetric: WeightMetric;
   height: number;
-  heightMetric: HeightMetric;
+  unit: Unit;
   gender: Gender;
   goals: Goal[];
   workoutFrequency: number;
@@ -45,12 +50,14 @@ export interface SignUpPayload {
 }
 
 export interface UpdateProfilePayload {
-  dob: string;
-  weight: number;
-  weightMetric: WeightMetric;
-  height: number;
-  heightMetric: HeightMetric;
-  gender: Gender;
+  dob?: string;
+  weight?: number;
+  height?: number;
+  gender?: Gender;
+  unit?: Unit;
+  goals?: Goal[];
+  workoutFrequency?: number;
+  purpose?: Purpose;
 }
 
 export interface SignUpAction {
@@ -109,7 +116,8 @@ export type ProfileActionTypes =
   | UpdateProfileAction
   | SetWorkoutRemindersAction
   | SetWorkoutReminderTimeAction
-  | SetMonthlyTestRemindersAction;
+  | SetMonthlyTestRemindersAction
+  | SetStepAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -181,4 +189,9 @@ export const setMonthlyTestReminders = (
 ): SetMonthlyTestRemindersAction => ({
   type: SET_MONTHLY_TEST_REMINDERS,
   payload,
+});
+
+export const setStep = (step: number): SetStepAction => ({
+  type: SET_STEP,
+  payload: step,
 });

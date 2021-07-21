@@ -19,13 +19,14 @@ import {
   setMonthlyTestReminders,
   setWorkoutReminders,
   setWorkoutReminderTime,
+  updateProfile,
 } from '../../actions/profile';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
 import {purposeItems} from '../../constants';
-import { equals } from 'ramda';
+import {equals} from 'ramda';
 
 const Settings: React.FC<SettingsProps> = ({
   workoutReminders,
@@ -35,6 +36,8 @@ const Settings: React.FC<SettingsProps> = ({
   monthlyTestReminders,
   setMonthlyTestRemindersAction,
   profile,
+  navigation,
+  updateProfileAction,
 }) => {
   const [show, setShow] = useState(false);
   const [goalReminder, setGoalReminder] = useState(true);
@@ -70,10 +73,10 @@ const Settings: React.FC<SettingsProps> = ({
   };
 
   const equal = equals(newProfile, profile);
-  console.log(equal)
+  console.log(equal);
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView>
+      <ScrollView style={{marginBottom: 20}}>
         <Text style={{margin: 10}} category="h5">
           Notifications
         </Text>
@@ -104,6 +107,7 @@ const Settings: React.FC<SettingsProps> = ({
               style={{width: 100}}
               testID="dateTimePicker"
               value={new Date(workoutReminderTime)}
+              placeholderText="Select date"
               mode="time"
               is24Hour={true}
               display="default"
@@ -282,6 +286,22 @@ const Settings: React.FC<SettingsProps> = ({
           </Layout>
         </Layout>
       </ScrollView>
+      <Button
+        onPress={() => {
+          navigation.goBack();
+          updateProfileAction(newProfile);
+        }}
+        disabled={equal}
+        style={{
+          margin: 10,
+          marginBottom: 20,
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}>
+        Save
+      </Button>
     </Layout>
   );
 };
@@ -297,6 +317,7 @@ const mapDispatchToProps = {
   setWorkoutRemindersAction: setWorkoutReminders,
   setWorkoutReminderTimeAction: setWorkoutReminderTime,
   setMonthlyTestRemindersAction: setMonthlyTestReminders,
+  updateProfileAction: updateProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

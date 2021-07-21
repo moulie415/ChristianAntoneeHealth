@@ -48,7 +48,7 @@ const chartConfig = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: 'transparent',
   backgroundGradientToOpacity: 0,
-  color: (opacity = 1) => '#fff',
+  color: (opacity = 1) => colors.appBlue,
   strokeWidth: 2, // optional, default 3
   useShadowColorFromDataset: false, // optional
   propsForBackgroundLines: {
@@ -89,7 +89,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             <Icon
               style={{marginRight: 5}}
               size={15}
-              color="#fff"
+              color={colors.appBlue}
               name="arrow-down"
             />
             <Text>4h 30m last month</Text>
@@ -118,7 +118,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             <Layout style={styles.circleSmallText}>
               <Icon
                 name="shoe-prints"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 style={{marginBottom: 5}}
               />
@@ -147,7 +147,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             <Layout style={styles.circleSmallText}>
               <Icon
                 name="chart-area"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 style={{marginBottom: 5}}
               />
@@ -176,7 +176,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
             <Layout style={styles.circleSmallText}>
               <Icon
                 name="stopwatch"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 style={{marginBottom: 5}}
               />
@@ -282,6 +282,8 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
         height={220}
         chartConfig={chartConfig}
         withVerticalLines={false}
+        withShadow={false}
+
       />
     </ScrollView>
   );

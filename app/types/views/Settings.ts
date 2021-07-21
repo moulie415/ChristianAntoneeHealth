@@ -1,4 +1,5 @@
 import {StackNavigationProp} from '@react-navigation/stack';
+import {UpdateProfilePayload} from '../../actions/profile';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 
@@ -13,4 +14,5 @@ export default interface SettingsProps {
   monthlyTestReminders: boolean;
   setMonthlyTestRemindersAction: (enabled: boolean) => void;
   profile: Profile;
-};
+  updateProfileAction: (payload: UpdateProfilePayload) => void;
+}

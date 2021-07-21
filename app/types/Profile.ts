@@ -2,9 +2,7 @@ import {Goal, Purpose} from './Shared';
 
 export type Gender = 'male' | 'female';
 
-export type WeightMetric = 'kg' | 'lbs';
-
-export type HeightMetric = 'cm' | 'inches';
+export type Unit = 'metric' | 'imperial';
 
 export default interface Profile {
   email: string;
@@ -15,8 +13,7 @@ export default interface Profile {
   weight?: number;
   height?: number;
   purpose?: Purpose;
-  weightMetric?: WeightMetric;
-  heightMetric?: HeightMetric;
+  unit?: Unit;
   workoutFrequency?: number;
   goals?: Goal[];
   dob?: string;

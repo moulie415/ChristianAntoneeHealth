@@ -15,4 +15,6 @@ export default interface SignUpFlowProps {
   route: SignUpFlowRouteProp;
   profile: Profile;
   signUp: (payload: SignUpPayload) => void;
+  setStep: (step: number) => void;
+  step: number;
 }

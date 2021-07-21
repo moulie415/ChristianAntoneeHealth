@@ -39,7 +39,7 @@ const chartConfig = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: 'transparent',
   backgroundGradientToOpacity: 0,
-  color: (opacity = 1) => '#fff',
+  color: (opacity = 1) => colors.appBlue,
   strokeWidth: 2, // optional, default 3
   useShadowColorFromDataset: false, // optional
   propsForBackgroundLines: {
@@ -140,7 +140,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
             <Icon
               style={{marginRight: 5}}
               size={15}
-              color="#fff"
+              color={colors.appBlue}
               name="arrow-down"
             />
             <Text>Goal: 4h 30m</Text>
@@ -169,7 +169,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
             <Layout style={styles.circleSmallText}>
               <Icon
                 name="shoe-prints"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 style={{marginBottom: 5}}
               />
@@ -198,7 +198,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
             <Layout style={styles.circleSmallText}>
               <Icon
                 name="chart-area"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 style={{marginBottom: 5}}
               />
@@ -227,7 +227,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
             <Layout style={styles.circleSmallText}>
               <Icon
                 name="stopwatch"
-                color="#fff"
+                color={colors.appBlue}
                 size={20}
                 style={{marginBottom: 5}}
               />

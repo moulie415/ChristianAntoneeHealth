@@ -3,7 +3,7 @@ import AppleHealthKit from 'react-native-health';
 import GoogleFit from 'react-native-google-fit';
 import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
-import {Gender, HeightMetric, WeightMetric} from '../types/Profile';
+import {Gender, Unit} from '../types/Profile';
 import {StepSample} from '../types/Shared';
 
 export const isAvailable = () => {
@@ -130,7 +130,7 @@ export const getWeight = async (): Promise<number | undefined> => {
   }
 };
 
-export const getWeightSamples = async (unit: WeightMetric, months = 1) => {
+export const getWeightSamples = async (unit: Unit, months = 1) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getWeightSamples(
@@ -148,7 +148,7 @@ export const getWeightSamples = async (unit: WeightMetric, months = 1) => {
             reject(err);
           } else {
             resolve(
-              unit === 'lbs'
+              unit === 'imperial'
                 ? results
                 : results.map(result => {
                     return {...result, value: result.value / 1000};
@@ -162,7 +162,7 @@ export const getWeightSamples = async (unit: WeightMetric, months = 1) => {
   const response = await GoogleFit.getWeightSamples({
     startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
-    unit: unit === 'lbs' ? 'pound' : 'kg',
+    unit: unit === 'imperial' ? 'pound' : 'kg',
   });
   return response;
 };
@@ -292,11 +292,11 @@ export const getDateOfBirth = (): Promise<string | undefined> => {
   }
 };
 
-export const saveWeight = async (value: number, metric: WeightMetric) => {
+export const saveWeight = async (value: number, unit: Unit) => {
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
       AppleHealthKit.saveWeight(
-        {value: metric === 'kg' ? value * 2.20462 : value},
+        {value: unit === 'metric' ? value * 2.20462 : value},
         (e, result) => {
           if (e) {
             reject(e);
@@ -308,7 +308,7 @@ export const saveWeight = async (value: number, metric: WeightMetric) => {
     } else {
       GoogleFit.saveWeight(
         {
-          value: metric === 'kg' ? value * 2.20462 : value,
+          value: unit === 'metric' ? value * 2.20462 : value,
           date: new Date().toISOString(),
           unit: 'pound',
         },
@@ -324,11 +324,11 @@ export const saveWeight = async (value: number, metric: WeightMetric) => {
   });
 };
 
-export const saveHeight = async (value: number, metric: HeightMetric) => {
+export const saveHeight = async (value: number, unit: Unit) => {
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
       AppleHealthKit.saveHeight(
-        {value: metric === 'cm' ? value * 0.393701 : value},
+        {value: unit === 'metric' ? value * 0.393701 : value},
         (e, result) => {
           if (e) {
             reject(e);
@@ -340,7 +340,7 @@ export const saveHeight = async (value: number, metric: HeightMetric) => {
     } else {
       GoogleFit.saveHeight(
         {
-          value: metric === 'cm' ? value / 100 : value * 0.0254,
+          value: unit === 'metric' ? value / 100 : value * 0.0254,
           date: new Date().toISOString(),
         },
         (err, res) => {

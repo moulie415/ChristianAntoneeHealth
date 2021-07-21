@@ -1,34 +1,30 @@
 import {Layout, Text} from '@ui-kitten/components';
 import React, {useState} from 'react';
-import {Image, KeyboardAvoidingView} from 'react-native';
+import {Image, KeyboardAvoidingView, Platform} from 'react-native';
 import {Bar} from 'react-native-progress';
 import {connect} from 'react-redux';
-import moment from 'moment';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/SignUpFlow';
-import {Gender, HeightMetric, WeightMetric} from '../../types/Profile';
+import {Gender, Unit} from '../../types/Profile';
 import {Goal, MyRootState, Purpose} from '../../types/Shared';
 import SignUpFlowProps from '../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
 import FitnessInfo from './FitnessInfo';
 import Goals from './Goals';
-import {signUp} from '../../actions/profile';
+import {signUp, setStep} from '../../actions/profile';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
   route,
   profile,
   signUp: signUpAction,
+  setStep: setStepAction,
+  step,
 }) => {
-  const [step, setStep] = useState(0);
   const [dob, setDob] = useState(profile.dob);
   const [weight, setWeight] = useState<number>(profile.weight);
-  const [weightMetric, setWeightMetric] = useState<WeightMetric>(
-    profile.weightMetric || 'kg',
-  );
-  const [heightMetric, setHeightMetric] = useState<HeightMetric>(
-    profile.heightMetric || 'cm',
-  );
+  const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
+
   const [height, setHeight] = useState<number>(profile.height);
   const [gender, setGender] = useState<Gender>(profile.gender);
   const [selectedGoals, setSelectedGoals] = useState<Goal[]>(
@@ -59,20 +55,23 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       name,
       dob,
       weight,
-      weightMetric,
       height,
-      heightMetric,
+      unit,
       gender,
       goals: selectedGoals,
       workoutFrequency,
       purpose,
       email,
+      dry,
+      password,
     });
   };
 
   return (
     <Layout style={{flex: 1}}>
-      <KeyboardAvoidingView behavior="position" style={{flex: 1}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
+        style={{flex: 1}}>
         <Image
           style={styles.logo}
           source={require('../../images/health_and_movement_logo_colour_centred.png')}
@@ -91,7 +90,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         </Text>
         {step === 0 && (
           <AccountDetails
-            setStep={setStep}
+            setStep={setStepAction}
             dry={dry}
             email={email}
             setEmail={setEmail}
@@ -113,11 +112,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
             setGender={setGender}
             dob={dob}
             setDob={setDob}
-            heightMetric={heightMetric}
-            setHeightMetric={setHeightMetric}
-            weightMetric={weightMetric}
-            setWeightMetric={setWeightMetric}
-            setStep={setStep}
+            setStep={setStepAction}
+            unit={unit}
+            setUnit={setUnit}
           />
         )}
         {step === 2 && (
@@ -138,10 +135,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
+  step: profile.step,
 });
 
 const mapDispatchToProps = {
   signUp,
+  setStep,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpFlow);

@@ -34,10 +34,8 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
   setGender,
   dob,
   setDob,
-  heightMetric,
-  setHeightMetric,
-  weightMetric,
-  setWeightMetric,
+  unit,
+  setUnit,
   setStep,
 }) => {
   const [show, setShow] = useState(false);
@@ -82,11 +80,8 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
   const [selectedGenderIndex, setSelectedGenderIndex] = useState(
     new IndexPath(gender && gender === 'female' ? 1 : 0),
   );
-  const [selectedHeightMetricIndex, setSelectedHeightMetricIndex] = useState(
-    new IndexPath(heightMetric && heightMetric === 'inches' ? 1 : 0),
-  );
-  const [selectedWeightMetricIndex, setSelectedWeightMetricIndex] = useState(
-    new IndexPath(weightMetric && weightMetric === 'lbs' ? 1 : 0),
+  const [selectedUnitIndex, setSelectedUnitIndex] = useState(
+    new IndexPath(unit && unit === 'imperial' ? 1 : 0),
   );
 
   const [loading, setLoading] = useState(false);
@@ -101,6 +96,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
           testID="datePicker"
           value={moment(dob).toDate()}
           mode="date"
+          placeholderText="Select date"
           display="default"
           onChange={(_: Event, d: Date) => {
             if (d) {
@@ -119,62 +115,44 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
             padding: 7,
             borderRadius: 3,
             borderColor: '#ebebeb',
-            backgroundColor: '#fafafa'
+            backgroundColor: '#fafafa',
           }}
           onPress={() => setShow(true)}>
           <Text>{moment(dob).format('DD/mm/yyyy')}</Text>
         </TouchableOpacity>
       )}
-      <Layout style={{flexDirection: 'row'}}>
-        <Input
-          value={weight?.toString()}
-          returnKeyType="done"
-          style={{width: '30%', marginRight: 20}}
-          onChangeText={val => setWeight(Number(val))}
-          label="Weight"
-          keyboardType="numeric"
-        />
-        <Select
-          label=" "
-          style={{width: '30%'}}
-          selectedIndex={selectedWeightMetricIndex}
-          onSelect={index => {
-            setSelectedWeightMetricIndex(index as IndexPath);
-            if ('row' in index) {
-              setWeightMetric(index.row === 0 ? 'kg' : 'lbs');
-            }
-          }}
-          value={weightMetric}>
-          <SelectItem selected={weightMetric === 'kg'} title="kg" />
-          <SelectItem selected={weightMetric === 'lbs'} title="lbs" />
-        </Select>
-      </Layout>
-      <Layout style={{flexDirection: 'row'}}>
-        <Input
-          value={height?.toString()}
-          returnKeyType="done"
-          style={{width: '30%', marginRight: 20}}
-          onChangeText={val => setHeight(Number(val))}
-          label="Height"
-          keyboardType="numeric"
-        />
-        <Select
-          label=" "
-          style={{width: '30%'}}
-          selectedIndex={selectedHeightMetricIndex}
-          onSelect={index => {
-            setSelectedHeightMetricIndex(index as IndexPath);
-            if ('row' in index) {
-              setHeightMetric(index.row === 0 ? 'cm' : 'inches');
-            }
-          }}
-          value={heightMetric}>
-          <SelectItem selected={heightMetric === 'cm'} title="cm" />
-          <SelectItem selected={heightMetric === 'inches'} title="inches" />
-        </Select>
-      </Layout>
       <Select
         style={{width: '65%'}}
+        selectedIndex={selectedUnitIndex}
+        onSelect={index => {
+          setSelectedUnitIndex(index as IndexPath);
+          if ('row' in index) {
+            setUnit(index.row === 0 ? 'metric' : 'imperial');
+          }
+        }}
+        value={unit || 'Select unit'}
+        label="Unit">
+        <SelectItem selected={unit === 'metric'} title="metric" />
+        <SelectItem selected={unit === 'imperial'} title="imperial" />
+      </Select>
+      <Input
+        value={weight?.toString()}
+        returnKeyType="done"
+        style={{width: '30%', marginRight: 20, marginTop: 10}}
+        onChangeText={val => setWeight(Number(val))}
+        label={`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}
+        keyboardType="numeric"
+      />
+      <Input
+        value={height?.toString()}
+        returnKeyType="done"
+        style={{width: '30%', marginRight: 20, marginTop: 10}}
+        onChangeText={val => setHeight(Number(val))}
+        label={`Height (${unit === 'metric' ? 'cm' : 'inches'})`}
+        keyboardType="numeric"
+      />
+      <Select
+        style={{width: '65%', marginTop: 10}}
         selectedIndex={selectedGenderIndex}
         onSelect={index => {
           setSelectedGenderIndex(index as IndexPath);

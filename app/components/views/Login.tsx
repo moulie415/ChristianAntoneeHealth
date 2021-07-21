@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
-  View,
   TouchableOpacity,
   Image,
   Platform,
@@ -13,14 +12,8 @@ import auth from '@react-native-firebase/auth';
 import {Layout} from '@ui-kitten/components';
 import {connect} from 'react-redux';
 import styles from '../../styles/views/Login';
-import sStyles from '../../styles/views/More';
-import colors from '../../constants/colors';
 import LoginProps from '../../types/views/Login';
-import str from '../../constants/strings';
-import {setProfile} from '../../actions/profile';
-import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
-import {CommonActions} from '@react-navigation/native';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -220,7 +213,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           style={styles.input}
           placeholder="Email"
           onChangeText={u => setUsername(u)}
-          placeholderTextColor="#fff"
           accessoryLeft={() => (
             <Icon size={25} name="envelope" style={styles.icon} solid />
           )}
@@ -233,7 +225,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           style={styles.input}
           placeholder="Password"
           secureTextEntry={secure}
-          placeholderTextColor="#fff"
           onChangeText={p => setPass(p)}
           autoCorrect={false}
           accessoryLeft={() => (

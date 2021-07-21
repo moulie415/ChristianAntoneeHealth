@@ -1,4 +1,4 @@
-import {Gender, HeightMetric, WeightMetric} from '../Profile';
+import {Gender, Unit} from '../Profile';
 
 export default interface FitnessInfoProps {
   height?: number;
@@ -9,9 +9,7 @@ export default interface FitnessInfoProps {
   setGender: (gender: Gender) => void;
   dob: string;
   setDob: (dob: string) => void;
-  heightMetric: HeightMetric;
-  setHeightMetric: (metric: HeightMetric) => void;
-  weightMetric: WeightMetric;
-  setWeightMetric: (metric: WeightMetric) => void;
+  unit: Unit;
+  setUnit: (unit: Unit) => void;
   setStep: (step: number) => void;
 };

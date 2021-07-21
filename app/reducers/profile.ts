@@ -9,11 +9,13 @@ import {
   SET_WORKOUT_REMINDERS,
   SET_WORKOUT_REMINDER_TIME,
   SET_MONTHLY_TEST_REMINDERS,
+  SET_STEP,
 } from '../actions/profile';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
 
 export interface ProfileState {
+  step: number;
   profile: Profile;
   loggedIn: boolean;
   hasViewedWelcome: boolean;
@@ -28,6 +30,7 @@ export interface ProfileState {
 }
 
 const initialState: ProfileState = {
+  step: 0,
   profile: {email: '', uid: ''},
   loggedIn: false,
   hasViewedWelcome: false,
@@ -60,6 +63,11 @@ const reducer = (
   action: ProfileActionTypes,
 ): ProfileState => {
   switch (action.type) {
+    case SET_STEP:
+      return {
+        ...state,
+        step: action.payload,
+      };
     case SET_PROFILE:
       return {
         ...state,

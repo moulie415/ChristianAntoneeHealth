@@ -34,6 +34,7 @@ import {
   SET_MONTHLY_TEST_REMINDERS,
   SetMonthlyTestRemindersAction,
   setMonthlyTestReminders,
+  setStep,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -109,19 +110,20 @@ function onAuthStateChanged() {
 
 function* updateProfile(action: UpdateProfileAction) {
   const {
-    dob,
     weight,
-    weightMetric,
     height,
-    heightMetric,
+    unit,
+    dob,
+    goals,
     gender,
+    workoutFrequency,
+    purpose,
   } = action.payload;
-
   try {
     const enabled: boolean = yield call(isEnabled);
-    if (enabled) {
-      yield call(saveWeight, weight, weightMetric);
-      yield call(saveHeight, height, heightMetric);
+    if (enabled && weight && height && unit) {
+      yield call(saveWeight, weight, unit);
+      yield call(saveHeight, height, unit);
     }
   } catch (e) {
     console.log(e);
@@ -129,22 +131,26 @@ function* updateProfile(action: UpdateProfileAction) {
   const {profile} = yield select((state: MyRootState) => state.profile);
   yield call(api.updateUser, {
     ...profile,
-    dob,
-    weight,
-    weightMetric,
-    height,
-    heightMetric,
-    gender,
+    ...(dob ? {dob} : {}),
+    ...(weight ? {weight} : {}),
+    ...(height ? {height} : {}),
+    ...(unit ? {unit} : {}),
+    ...(gender ? {gender} : {}),
+    ...(goals ? {goals} : {}),
+    ...(workoutFrequency ? {workoutFrequency} : {}),
+    ...(purpose ? {purpose} : {}),
   });
   yield put(
     setProfile({
       ...profile,
-      dob,
-      weight,
-      weightMetric,
-      height,
-      heightMetric,
-      gender,
+      ...(dob ? {dob} : {}),
+      ...(weight ? {weight} : {}),
+      ...(height ? {height} : {}),
+      ...(unit ? {unit} : {}),
+      ...(gender ? {gender} : {}),
+      ...(goals ? {goals} : {}),
+      ...(workoutFrequency ? {workoutFrequency} : {}),
+      ...(purpose ? {purpose} : {}),
     }),
   );
   yield call(Snackbar.show, {text: 'Profile updated'});
@@ -156,9 +162,8 @@ function* signUp(action: SignUpAction) {
     name,
     dob,
     weight,
-    weightMetric,
+    unit,
     height,
-    heightMetric,
     gender,
     goals,
     workoutFrequency,
@@ -170,8 +175,8 @@ function* signUp(action: SignUpAction) {
     try {
       const enabled: boolean = yield call(isEnabled);
       if (enabled) {
-        yield call(saveWeight, weight, weightMetric);
-        yield call(saveHeight, height, heightMetric);
+        yield call(saveWeight, weight, unit);
+        yield call(saveHeight, height, unit);
       }
     } catch (e) {
       console.log(e);
@@ -182,15 +187,15 @@ function* signUp(action: SignUpAction) {
         name,
         dob,
         weight,
-        weightMetric,
         height,
-        heightMetric,
+        unit,
         gender,
         goals,
         workoutFrequency,
         purpose,
       });
       goBack();
+      navigate('Login');
     } else {
       const {profile} = yield select((state: MyRootState) => state.profile);
       yield call(api.updateUser, {
@@ -199,9 +204,8 @@ function* signUp(action: SignUpAction) {
         name,
         dob,
         weight,
-        weightMetric,
+        unit,
         height,
-        heightMetric,
         gender,
         goals,
         workoutFrequency,
@@ -213,9 +217,8 @@ function* signUp(action: SignUpAction) {
           name,
           dob,
           weight,
-          weightMetric,
           height,
-          heightMetric,
+          unit,
           gender,
           goals,
           workoutFrequency,
@@ -225,8 +228,9 @@ function* signUp(action: SignUpAction) {
       resetToTabs();
     }
   } catch (e) {
-    Alert.alert('Error', e.message);
+    Alert.alert('Error', e.nativeErrorMessage || e.message);
   }
+  yield put(setStep(0));
 }
 
 const WORKOUT_REMINDERS_ID = 1;
@@ -355,6 +359,7 @@ export default function* profileSaga() {
           resetToTabs();
         } else {
           navigate('SignUpFlow');
+          yield put(setStep(0));
         }
         yield put(setLoggedIn(true));
         yield put(getTests());
