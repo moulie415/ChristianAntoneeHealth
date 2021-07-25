@@ -295,6 +295,7 @@ function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
   );
 
   if (workoutReminders) {
+    PushNotification.cancelLocalNotifications({id: `${WORKOUT_REMINDERS_ID}`});
     scheduleLocalNotification(
       'Reminder to workout',
       time,
