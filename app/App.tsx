@@ -2,6 +2,7 @@ import React from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/lib/integration/react';
+import Shake from '@shakebugs/react-native-shake';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -169,6 +170,7 @@ const Tabs = () => {
 };
 
 const App: React.FC = () => {
+  Shake.setInvokeShakeOnShakeDeviceEvent(false);
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>

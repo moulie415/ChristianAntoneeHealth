@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import moment from 'moment';
 
 export const truncate = (str: string, n: number) => {
   if (!str) {
@@ -15,9 +16,19 @@ export const scheduleLocalNotification = (
   repeatType = 'day',
 ) => {
   try {
+    const fixedDate = moment().isBefore(date)
+      ? date
+      : new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate() + 1,
+          date.getMinutes(),
+          0,
+          0,
+        );
     PushNotification.localNotificationSchedule({
       message,
-      date,
+      date: fixedDate,
       id,
       // @ts-ignore
       repeatType,

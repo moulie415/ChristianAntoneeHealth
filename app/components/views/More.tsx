@@ -1,6 +1,7 @@
 import React from 'react';
 import InAppReview from 'react-native-in-app-review';
 import auth from '@react-native-firebase/auth';
+import Shake from '@shakebugs/react-native-shake';
 import crashlytics from '@react-native-firebase/crashlytics';
 import {connect} from 'react-redux';
 import MoreProps from '../../types/views/More';
@@ -72,6 +73,11 @@ const More: React.FC<MoreProps> = ({
       title: 'Rate the app',
       icon: 'star',
       onPress: InAppReview.RequestInAppReview,
+    },
+    {
+      title: 'Report a problem',
+      icon: 'bug',
+      onPress: () => Shake.show(),
     },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
   ];
