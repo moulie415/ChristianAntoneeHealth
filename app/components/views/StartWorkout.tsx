@@ -48,7 +48,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     return () => clearInterval(intervalID);
   }, []);
   return (
-    <Layout style={{ flex: 1}}>
+    <Layout style={{flex: 1}}>
       <Layout
         style={{
           flexDirection: 'row',
@@ -186,11 +186,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   <TouchableOpacity
                     onPress={() => pagerRef.current.setPage(index + 1)}
                     style={{
-                      backgroundColor: colors.appGrey,
                       flexDirection: 'row',
+                      flex: 1,
+                      backgroundColor: colors.button,
                     }}>
                     <Image
-                      style={{height: 70, width: 80}}
+                      style={{height: 70, width: 90}}
                       source={require('../../images/old_man_stretching.jpeg')}
                     />
                     <Layout
@@ -198,6 +199,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                         marginLeft: 20,
                         justifyContent: 'space-evenly',
                         flex: 1,
+                        backgroundColor: colors.button,
                       }}>
                       <Text>{workout[index + 1].name}</Text>
                       <Text>{`${workout[index + 1].reps} repetitions x${

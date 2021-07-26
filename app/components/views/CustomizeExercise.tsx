@@ -76,7 +76,12 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       <ViewMore text={exercise.description} />
       <CustomDivider />
       {!!muscles && !!muscles.length && (
-        <Layout style={{alignItems: 'center', marginVertical: 20}}>
+        <Layout
+          style={{
+            alignItems: 'center',
+            marginVertical: 20,
+            backgroundColor: 'transparent',
+          }}>
           <Body scale={1} data={muscles} />
         </Layout>
       )}
