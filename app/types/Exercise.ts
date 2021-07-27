@@ -1,5 +1,15 @@
 import {Level, Goal, StrengthArea, Location, FlexibilityArea} from './Shared';
 
+
+export interface Thumbnail {
+  src: string;
+  title: string;
+}
+
+export interface Video {
+  src: string;
+  title: string;
+}
 export default interface Exercise {
   id?: string;
   name: string;
@@ -15,6 +25,8 @@ export default interface Exercise {
   reps?: number;
   sets?: number;
   resistance?: number;
+  thumbnail?: Thumbnail;
+  video?: Video;
 }
 
 export type Muscle =

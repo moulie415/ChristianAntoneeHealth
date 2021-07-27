@@ -2,7 +2,7 @@ import {Layout, List, ListItem} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
-import {TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
@@ -12,6 +12,8 @@ import ExerciseListProps from '../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../actions/exercises';
 import {truncate} from '../../helpers';
 import ExerciseBottomSheet from '../commons/ExerciseBottomSheet';
+import globalStyles from '../../styles/globalStyles';
+import AbsoluteSpinner from '../commons/AbsoluteSpinner';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -88,7 +90,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
               accessoryLeft={() => (
                 <Image
                   style={{height: 50, width: 75}}
-                  source={require('../../images/old_man_stretching.jpeg')}
+                  source={
+                    item.thumbnail
+                      ? {uri: item.thumbnail.src}
+                      : require('../../images/old_man_stretching.jpeg')
+                  }
                 />
               )}
               accessoryRight={() => (
@@ -109,6 +115,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           );
         }}
       />
+      <AbsoluteSpinner loading={!(filtered && filtered.length > 0)} />
       <ExerciseBottomSheet
         selectedExercise={selectedExercise}
         bottomSheetRef={bottomSheetRef}

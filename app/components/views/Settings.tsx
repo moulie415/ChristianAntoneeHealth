@@ -76,7 +76,7 @@ const Settings: React.FC<SettingsProps> = ({
   console.log(equal);
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView style={{marginBottom: 20}}>
+      <ScrollView contentContainerStyle={{paddingBottom: 100}}>
         <Text style={{margin: 10}} category="h5">
           Notifications
         </Text>

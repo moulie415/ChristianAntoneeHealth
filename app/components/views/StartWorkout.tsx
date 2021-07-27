@@ -1,4 +1,4 @@
-import {Button, Input, Layout, Text} from '@ui-kitten/components';
+import {Button, Input, Layout, Spinner, Text} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {View, ScrollView, Platform, TouchableOpacity} from 'react-native';
 import moment from 'moment';
@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
 // @ts-ignore
 import VideoPlayer from 'react-native-video-controls';
-import convertToProxyURL from 'react-native-video-cache';
 import Video from 'react-native-video';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
@@ -14,14 +13,17 @@ import colors from '../../constants/colors';
 import {MyRootState} from '../../types/Shared';
 import StartWorkoutProps from '../../types/views/StartWorkout';
 import ViewMore from '../commons/ViewMore';
-import {setExerciseNote} from '../../actions/exercises';
+import {downloadVideo, setExerciseNote} from '../../actions/exercises';
 import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
+import ExerciseVideo from '../commons/ExerciseVideo';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
   navigation,
   exerciseNotes,
   setExerciseNoteAction,
+  downloadVideoAction,
+  videos,
 }) => {
   const [index, setIndex] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -39,6 +41,10 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
       inputRefs.current[key].focus();
     }
   }, [showNoteInput]);
+
+  useEffect(() => {
+    downloadVideoAction(workout[index].id);
+  }, [index, workout, downloadVideoAction]);
 
   useEffect(() => {
     const start = moment().unix();
@@ -73,24 +79,24 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
         }}
         style={{flex: 1}}>
         {workout.map((exercise, index) => {
+          const video: {src: string; path: string} | undefined =
+            videos[exercise.id];
+          const next = workout[index + 1];
           return (
             <ScrollView key={exercise.id}>
               <>
-                {Platform.OS === 'ios' ? (
-                  <Video
-                    source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
-                    controls
-                    style={{height: 250, marginBottom: 10}}
-                    repeat
-                  />
+                {video && exercise.video && video.src === exercise.video.src ? (
+                  <ExerciseVideo path={video.path} />
                 ) : (
-                  <VideoPlayer
-                    style={{height: 250, marginBottom: 10}}
-                    disableVolume
-                    disableBack
-                    repeat
-                    source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
-                  />
+                  <Layout
+                    style={{
+                      height: 250,
+                      marginBottom: 10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Spinner />
+                  </Layout>
                 )}
                 {workout[index + 1] && (
                   <TouchableOpacity
@@ -178,7 +184,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   }
                 />
               )}
-              {workout[index + 1] && (
+              {next && (
                 <Layout style={{margin: 10}}>
                   <Text category="h6" style={{marginBottom: 10}}>
                     Up next
@@ -192,7 +198,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     }}>
                     <Image
                       style={{height: 70, width: 90}}
-                      source={require('../../images/old_man_stretching.jpeg')}
+                      source={
+                        next.thumbnail
+                          ? {uri: next.thumbnail.src}
+                          : require('../../images/old_man_stretching.jpeg')
+                      }
                     />
                     <Layout
                       style={{
@@ -201,10 +211,8 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                         flex: 1,
                         backgroundColor: colors.button,
                       }}>
-                      <Text>{workout[index + 1].name}</Text>
-                      <Text>{`${workout[index + 1].reps} repetitions x${
-                        workout[index + 1].sets
-                      } sets`}</Text>
+                      <Text>{next.name}</Text>
+                      <Text>{`${next.reps} repetitions x${next.sets} sets`}</Text>
                     </Layout>
                   </TouchableOpacity>
                 </Layout>
@@ -225,10 +233,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
 const mapStateToProps = ({exercises}: MyRootState) => ({
   workout: exercises.workout,
   exerciseNotes: exercises.exerciseNotes,
+  videos: exercises.videos,
 });
 
 const mapDispatchToProps = {
   setExerciseNoteAction: setExerciseNote,
+  downloadVideoAction: downloadVideo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);

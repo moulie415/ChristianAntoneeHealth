@@ -3,6 +3,7 @@ import {
   ExercisesActions,
   SET_WORKOUT,
   SET_EXERCISE_NOTE,
+  SET_VIDEO,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 
@@ -11,6 +12,7 @@ export interface ExercisesState {
   workout: Exercise[];
   exerciseNotes: {[key: string]: string};
   workoutNotes: {[key: string]: string};
+  videos: {[key: string]: {src: string; path: string}};
 }
 
 const initialState: ExercisesState = {
@@ -18,6 +20,7 @@ const initialState: ExercisesState = {
   workout: [],
   exerciseNotes: {},
   workoutNotes: {},
+  videos: {},
 };
 
 const reducer = (
@@ -41,6 +44,17 @@ const reducer = (
         exerciseNotes: {
           ...state.exerciseNotes,
           [action.payload.exercise]: action.payload.note,
+        },
+      };
+    case SET_VIDEO:
+      return {
+        ...state,
+        videos: {
+          ...state.videos,
+          [action.payload.id]: {
+            src: action.payload.src,
+            path: action.payload.path,
+          },
         },
       };
     default:

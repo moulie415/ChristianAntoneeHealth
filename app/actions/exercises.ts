@@ -9,6 +9,8 @@ export const UPDATE_EXERCISE = 'UPDATE_EXERCISE';
 export const SET_WORKOUT = 'SET_WORKOUT';
 export const SET_EXERCISE_NOTE = 'SET_EXERCISE_NOTE';
 export const SET_WORKOUT_NOTE = 'SET_WORKOUT_NOTE';
+export const DOWNLOAD_VIDEO = 'DOWNLOAD_VIDEO';
+export const SET_VIDEO = 'SET_VIDEO';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -47,6 +49,16 @@ export interface SetExerciseNoteAction {
 export interface SetWorkoutNoteAction {
   type: typeof SET_WORKOUT_NOTE;
   payload: {workout: string; note: string};
+}
+
+export interface DownloadVideoAction {
+  type: typeof DOWNLOAD_VIDEO;
+  payload: string;
+}
+
+export interface SetVideoAction {
+  type: typeof SET_VIDEO;
+  payload: {id: string; src: string; path: string};
 }
 
 export const getExercises = (
@@ -91,9 +103,25 @@ export const setExerciseNote = (
   payload: {exercise, note},
 });
 
+export const downloadVideo = (id: string): DownloadVideoAction => ({
+  type: DOWNLOAD_VIDEO,
+  payload: id,
+});
+
+export const setVideo = (
+  id: string,
+  src: string,
+  path: string,
+): SetVideoAction => ({
+  type: SET_VIDEO,
+  payload: {id, src, path},
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
   | SetWorkoutAction
   | SetExerciseNoteAction
-  | SetWorkoutNoteAction;
+  | SetWorkoutNoteAction
+  | DownloadVideoAction
+  | SetVideoAction;

@@ -1,33 +1,40 @@
-import {ListItem, Text, Button, Layout} from '@ui-kitten/components';
+import {Text, Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import Video from 'react-native-video';
 // @ts-ignore
 import VideoPlayer from 'react-native-video-controls';
 // @ts-ignore
 import Body from 'react-native-body-highlighter';
-import convertToProxyURL from 'react-native-video-cache';
 import Snackbar from 'react-native-snackbar';
-import {Platform, ScrollView, View} from 'react-native';
-import colors from '../../constants/colors';
+import {Alert, Platform, ScrollView} from 'react-native';
 import CustomizeExerciseProps from '../../types/views/CustomExercise';
 import CustomDivider from '../commons/CustomDivider';
 import Exercise, {MuscleHighlight} from '../../types/Exercise';
 import {MyRootState} from '../../types/Shared';
-import {setWorkout} from '../../actions/exercises';
+import {downloadVideo, setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
 import ViewMore from '../commons/ViewMore';
-import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
 import {mapMuscleToHighlight} from '../../helpers/exercises';
+import {useEffect} from 'react';
+import ExerciseVideo from '../commons/ExerciseVideo';
 
 const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
   workout,
   setWorkoutAction,
   navigation,
+  downloadVideoAction,
+  videos,
 }) => {
   const {exercise} = route.params;
   const [reps, setReps] = useState(15);
   const [sets, setSets] = useState(3);
+  const video: {src: string; path: string} | undefined = videos[exercise.id];
+
+  useEffect(() => {
+    downloadVideoAction(exercise.id);
+  }, [downloadVideoAction, exercise.id]);
+
   const selectExercise = () => {
     if (workout.find(e => e.id === exercise.id)) {
       setWorkoutAction(workout.filter(e => e.id !== exercise.id));
@@ -52,21 +59,18 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
     : [];
   return (
     <ScrollView style={{flex: 1}}>
-      {Platform.OS === 'ios' ? (
-        <Video
-          source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
-          controls
-          style={{height: 250, marginBottom: 10}}
-          repeat
-        />
+      {video && exercise.video && video.src === exercise.video.src ? (
+        <ExerciseVideo path={video.path} />
       ) : (
-        <VideoPlayer
-          style={{height: 250, marginBottom: 10}}
-          disableVolume
-          disableBack
-          repeat
-          source={{uri: convertToProxyURL(SAMPLE_VIDEO_LINK)}}
-        />
+        <Layout
+          style={{
+            height: 250,
+            marginBottom: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Spinner />
+        </Layout>
       )}
       <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
         {exercise.name}
@@ -96,10 +100,12 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
 
 const mapStateToProps = ({exercises}: MyRootState) => ({
   workout: exercises.workout,
+  videos: exercises.videos,
 });
 
 const mapDispatchToProps = {
   setWorkoutAction: setWorkout,
+  downloadVideoAction: downloadVideo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomizeExercise);

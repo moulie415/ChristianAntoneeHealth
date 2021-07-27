@@ -5,6 +5,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import PushNotification from 'react-native-push-notification';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
+import RNFetchBlob, {FetchBlobResponse} from 'rn-fetch-blob';
 import moment from 'moment';
 import {
   take,
@@ -62,6 +63,12 @@ import Snackbar from 'react-native-snackbar';
 import {HealthValue} from 'react-native-health';
 import {ActivitySampleResponse} from 'react-native-google-fit';
 import {scheduleLocalNotification} from '../helpers';
+import {
+  DownloadVideoAction,
+  DOWNLOAD_VIDEO,
+  setVideo,
+} from '../actions/exercises';
+import Exercise from '../types/Exercise';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -159,6 +166,46 @@ function* updateProfile(action: UpdateProfileAction) {
     }),
   );
   yield call(Snackbar.show, {text: 'Profile updated'});
+}
+
+function* downloadVideoWorker(action: DownloadVideoAction) {
+  const id = action.payload;
+  const {exercises, videos} = yield select(
+    (state: MyRootState) => state.exercises,
+  );
+  const exercise: Exercise = exercises[id];
+  const video: {src: string; path: string} | undefined = videos[id];
+  if (exercise.video) {
+    if (!video || video.src !== exercise.video.src) {
+      try {
+        const dirs = RNFetchBlob.fs.dirs;
+        const response: FetchBlobResponse = yield call(
+          RNFetchBlob.config({
+            fileCache: true,
+            path: `${dirs.DocumentDir}/${id}${
+              Platform.OS === 'ios' ? '.mp4' : ''
+            }`,
+          }).fetch,
+          'GET',
+          exercise.video.src,
+        );
+        const path = response.path();
+        yield put(setVideo(id, exercise.video.src, path));
+      } catch (e) {
+        yield call(
+          Alert.alert,
+          'Error',
+          `Error downloading video: ${e.message}`,
+        );
+      }
+    }
+  } else {
+    yield call(
+      Alert.alert,
+      'Sorry',
+      'Video has not yet been uploaded for this exercise',
+    );
+  }
 }
 
 function* signUp(action: SignUpAction) {
@@ -381,6 +428,7 @@ export default function* profileSaga() {
     takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
     takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
     takeLatest(HANDLE_AUTH, handleAuthWorker),
+    takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

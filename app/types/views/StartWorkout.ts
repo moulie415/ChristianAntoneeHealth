@@ -12,4 +12,6 @@ export default interface StartWorkoutProps {
   setExerciseNoteAction: (exercise: string, note: string) => void;
   exerciseNotes: {[key: string]: string};
   navigation: StartWorkoutNavigationProp;
+  downloadVideoAction: (id: string) => void;
+  videos: {[key: string]: {src: string; path: string}};
 };

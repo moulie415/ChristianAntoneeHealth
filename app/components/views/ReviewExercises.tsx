@@ -40,7 +40,11 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           accessoryLeft={() => (
             <Image
               style={{height: 50, width: 75}}
-              source={require('../../images/old_man_stretching.jpeg')}
+              source={
+                item.thumbnail
+                  ? {uri: item.thumbnail.src}
+                  : require('../../images/old_man_stretching.jpeg')
+              }
             />
           )}
           accessoryRight={() => (

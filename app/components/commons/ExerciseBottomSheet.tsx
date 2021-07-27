@@ -1,5 +1,5 @@
 import React, {MutableRefObject} from 'react';
-import {View, Image, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import Picker from '@gregfrench/react-native-wheel-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -10,6 +10,7 @@ import {Goal, MyRootState} from '../../types/Shared';
 import Snackbar from 'react-native-snackbar';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../actions/exercises';
+import Image from 'react-native-fast-image'
 
 const REPS = [...Array(101).keys()];
 REPS.shift();
@@ -103,7 +104,11 @@ const ExerciseBottomSheet: React.FC<{
               alignSelf: 'center',
               margin: 10,
             }}
-            source={require('../../images/old_man_stretching.jpeg')}
+            source={
+              selectedExercise.thumbnail
+                ? {uri: selectedExercise.thumbnail.src}
+                : require('../../images/old_man_stretching.jpeg')
+            }
           />
           <Layout
             style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
