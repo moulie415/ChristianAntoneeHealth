@@ -24,6 +24,8 @@ import {equals} from 'ramda';
 import {getSamples, updateProfile} from '../../actions/profile';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform} from 'react-native';
+import {getWeightItems} from '../../helpers';
+import {weightChartConfig} from '../../constants';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -62,49 +64,14 @@ const Profile: React.FC<ProfileProps> = ({
     data: number[];
     minMax: number[];
   } = useMemo(() => {
-    const labels = [];
-    const data = [];
-    let prevWeight;
-    let lowest = profile.weight || 0;
-    let highest = profile.weight || 0;
-    for (let i = 7; i > 0; i--) {
-      const day = moment().add(i, 'days');
-      const dayOfYear = day.dayOfYear();
-      const sample =
-        monthlyWeightSamples &&
-        monthlyWeightSamples.find(
-          s => moment(s.startDate).dayOfYear() === dayOfYear,
-        )?.value;
-      if (i === 7) {
-        const weight = sample || profile.weight || 0;
-        if (weight > highest) {
-          highest = weight;
-        }
-        if (weight < lowest) {
-          lowest = weight;
-        }
-        data.push(weight);
-        prevWeight = weight;
-      } else {
-        const weight = sample ?? prevWeight;
-        data.push(weight);
-        if (weight > highest) {
-          highest = weight;
-        }
-        if (weight < lowest) {
-          lowest = weight;
-        }
-      }
-      labels.push(day.format('dd'));
-    }
-
-    return {data, labels, minMax: [lowest - 5, highest + 5]};
+    return getWeightItems(profile, monthlyWeightSamples);
   }, [monthlyWeightSamples, profile]);
+
   const weightData = {
-    labels: weightItems.labels.reverse(),
+    labels: weightItems.labels,
     datasets: [
       {
-        data: weightItems.data.reverse(),
+        data: weightItems.data,
         color: (opacity = 1) => colors.appBlue, // optional
         strokeWidth: 4, // optional
       },
@@ -113,20 +80,6 @@ const Profile: React.FC<ProfileProps> = ({
         color: () => 'rgba(0, 0, 0, 0)',
       },
     ],
-  };
-
-  const chartConfig = {
-    backgroundGradientFrom: 'transparent',
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: 'transparent',
-    backgroundGradientToOpacity: 0,
-    color: (opacity = 1) => colors.appBlue,
-    strokeWidth: 2, // optional, default 3
-    useShadowColorFromDataset: false, // optional
-    propsForBackgroundLines: {
-      strokeWidth: 1,
-    },
-    barPercentage: 0.7,
   };
 
   useEffect(() => {
@@ -244,7 +197,7 @@ const Profile: React.FC<ProfileProps> = ({
           data={weightData}
           width={Dimensions.get('screen').width * 0.9}
           height={200}
-          chartConfig={chartConfig}
+          chartConfig={weightChartConfig}
           // withVerticalLines={false}
           withShadow={false}
         />

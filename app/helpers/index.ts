@@ -1,5 +1,7 @@
 import PushNotification from 'react-native-push-notification';
 import moment from 'moment';
+import Profile from '../types/Profile';
+import {Sample} from '../types/Shared';
 
 export const truncate = (str: string, n: number) => {
   if (!str) {
@@ -37,4 +39,47 @@ export const scheduleLocalNotification = (
   } catch (e) {
     console.log(e.message);
   }
+};
+
+export const getWeightItems = (
+  profile: Profile,
+  monthlyWeightSamples: Sample[],
+) => {
+  const labels = [];
+  const data = [];
+  let prevWeight;
+  let lowest = profile.weight || 0;
+  let highest = profile.weight || 0;
+  for (let i = 7; i > 0; i--) {
+    const day = moment().add(i, 'days');
+    const dayOfYear = day.dayOfYear();
+    const sample =
+      monthlyWeightSamples &&
+      monthlyWeightSamples.find(
+        s => moment(s.startDate).dayOfYear() === dayOfYear,
+      )?.value;
+    if (i === 7) {
+      const weight = sample || profile.weight || 0;
+      if (weight > highest) {
+        highest = weight;
+      }
+      if (weight < lowest) {
+        lowest = weight;
+      }
+      data.push(weight);
+      prevWeight = weight;
+    } else {
+      const weight = sample ?? prevWeight;
+      data.push(weight);
+      if (weight > highest) {
+        highest = weight;
+      }
+      if (weight < lowest) {
+        lowest = weight;
+      }
+    }
+    labels.push(day.format('dd'));
+  }
+
+  return {data, labels, minMax: [lowest - 5, highest + 5]};
 };
