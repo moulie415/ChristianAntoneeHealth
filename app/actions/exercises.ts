@@ -1,5 +1,6 @@
 import Exercise from '../types/Exercise';
 import {Goal, Level, StrengthArea} from '../types/Shared';
+import { SetLoggedInAction } from './profile';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
 export const SET_EXERCISES = 'SET_EXERCISES';

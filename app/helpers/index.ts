@@ -28,6 +28,7 @@ export const scheduleLocalNotification = (
           0,
           0,
         );
+    PushNotification.cancelLocalNotifications({id: `${id}`});
     PushNotification.localNotificationSchedule({
       message,
       date: fixedDate,
@@ -50,15 +51,15 @@ export const getWeightItems = (
   let prevWeight;
   let lowest = profile.weight || 0;
   let highest = profile.weight || 0;
-  for (let i = 7; i > 0; i--) {
-    const day = moment().add(i, 'days');
+  for (let i = 6; i >= 0; i--) {
+    const day = moment().subtract(i, 'days');
     const dayOfYear = day.dayOfYear();
     const sample =
       monthlyWeightSamples &&
       monthlyWeightSamples.find(
         s => moment(s.startDate).dayOfYear() === dayOfYear,
       )?.value;
-    if (i === 7) {
+    if (i === 6) {
       const weight = sample || profile.weight || 0;
       if (weight > highest) {
         highest = weight;
@@ -80,6 +81,5 @@ export const getWeightItems = (
     }
     labels.push(day.format('dd'));
   }
-
   return {data, labels, minMax: [lowest - 5, highest + 5]};
 };

@@ -5,6 +5,7 @@ import {
   SET_EXERCISE_NOTE,
   SET_VIDEO,
 } from '../actions/exercises';
+import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
 
 export interface ExercisesState {

@@ -9,6 +9,7 @@ import {Divider, Layout, Text} from '@ui-kitten/components';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import MonthlyActivityProps from '../../types/views/MonthlyActivity';
+import {weightChartConfig} from '../../constants';
 
 const {width} = Dimensions.get('screen');
 const circleSize = width * 0.268;
@@ -41,20 +42,6 @@ const weightData = {
       strokeWidth: 4, // optional
     },
   ],
-};
-
-const chartConfig = {
-  backgroundGradientFrom: 'transparent',
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: 'transparent',
-  backgroundGradientToOpacity: 0,
-  color: (opacity = 1) => colors.appBlue,
-  strokeWidth: 2, // optional, default 3
-  useShadowColorFromDataset: false, // optional
-  propsForBackgroundLines: {
-    strokeWidth: 1,
-  },
-  barPercentage: 0.7,
 };
 
 const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
@@ -198,7 +185,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
         width={Dimensions.get('screen').width * 0.9}
         style={{alignSelf: 'center'}}
         height={220}
-        chartConfig={chartConfig}
+        chartConfig={weightChartConfig}
         hideLegend
       />
       <Layout
@@ -280,10 +267,9 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
         data={weightData}
         width={Dimensions.get('screen').width * 0.9}
         height={220}
-        chartConfig={chartConfig}
+        chartConfig={weightChartConfig}
         withVerticalLines={false}
         withShadow={false}
-
       />
     </ScrollView>
   );

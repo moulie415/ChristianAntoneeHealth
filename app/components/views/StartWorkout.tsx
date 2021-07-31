@@ -1,6 +1,12 @@
 import {Button, Input, Layout, Spinner, Text} from '@ui-kitten/components';
-import React, {useEffect, useRef, useState} from 'react';
-import {View, ScrollView, Platform, TouchableOpacity} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import GoogleFit from 'react-native-google-fit';
+import {
+  ScrollView,
+  Platform,
+  TouchableOpacity,
+  NativeAppEventEmitter,
+} from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
@@ -14,7 +20,6 @@ import {MyRootState} from '../../types/Shared';
 import StartWorkoutProps from '../../types/views/StartWorkout';
 import ViewMore from '../commons/ViewMore';
 import {downloadVideo, setExerciseNote} from '../../actions/exercises';
-import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
 import ExerciseVideo from '../commons/ExerciseVideo';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
@@ -53,6 +58,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     }, 1000);
     return () => clearInterval(intervalID);
   }, []);
+
   return (
     <Layout style={{flex: 1}}>
       <Layout
@@ -166,10 +172,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
               </TouchableOpacity>
               {(showNoteInput[exercise.id] || !!exerciseNotes[exercise.id]) && (
                 <Input
-                  numberOfLines={3}
                   style={{margin: 10}}
-                  textAlignVertical="top"
-                  textAlign="left"
+                  textStyle={{minHeight: 50}}
+                  multiline
                   ref={element => (inputRefs.current[exercise.id] = element)}
                   disabled={!showNoteInput[exercise.id]}
                   value={exerciseNotes[exercise.id]}
