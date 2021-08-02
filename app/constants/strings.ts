@@ -19,6 +19,7 @@ export const healthKitOptions: HealthKitPermissions = {
       PERMS.Steps,
       PERMS.StepCount,
       PERMS.BiologicalSex,
+      PERMS.Workout,
     ],
     write: [PERMS.Weight],
   },
@@ -36,3 +37,7 @@ export const googleFitOptions = {
 
 export const SAMPLE_VIDEO_LINK =
   'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4';
+
+export const WORKOUT_LISTENER_SETUP = 'healthKit:Workout:setup:success';
+export const WORKOUT_LISTENER_SETUP_FAILURE = 'healthKit:Workout:setup:failure';
+export const WORKOUT_LISTENER = 'healthKit:Workout:new';

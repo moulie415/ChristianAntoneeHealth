@@ -1,18 +1,16 @@
 import {Button, Input, Layout, Spinner, Text} from '@ui-kitten/components';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import GoogleFit from 'react-native-google-fit';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  ScrollView,
+  Alert,
   Platform,
+  ScrollView,
   TouchableOpacity,
   NativeAppEventEmitter,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import GoogleFit from 'react-native-google-fit';
 import Image from 'react-native-fast-image';
-// @ts-ignore
-import VideoPlayer from 'react-native-video-controls';
-import Video from 'react-native-video';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
@@ -21,6 +19,11 @@ import StartWorkoutProps from '../../types/views/StartWorkout';
 import ViewMore from '../commons/ViewMore';
 import {downloadVideo, setExerciseNote} from '../../actions/exercises';
 import ExerciseVideo from '../commons/ExerciseVideo';
+import {
+  WORKOUT_LISTENER_SETUP,
+  WORKOUT_LISTENER_SETUP_FAILURE,
+} from '../../constants/strings';
+import appleHealthKit from 'react-native-health';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -46,6 +49,25 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
       inputRefs.current[key].focus();
     }
   }, [showNoteInput]);
+
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      NativeAppEventEmitter.addListener('healthKit:Workout:setup:failure', () =>
+        console.log('setup failed'),
+      );
+
+      NativeAppEventEmitter.addListener('healthKit:Workout:setup:success', () =>
+        console.log('setup success'),
+      );
+    } else {
+      GoogleFit.startRecording(
+        data => {
+          console.log(data);
+        },
+        ['activity', 'step'],
+      );
+    }
+  }, []);
 
   useEffect(() => {
     downloadVideoAction(workout[index].id);
@@ -223,7 +245,17 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 </Layout>
               )}
               <Button
-                onPress={() => navigation.navigate('EndWorkout')}
+                onPress={() => {
+                  Alert.alert('End Workout', 'Are you sure?', [
+                    {text: 'No', style: 'cancel'},
+                    {
+                      text: 'Yes',
+                      onPress: () => {
+                        navigation.navigate('EndWorkout', {seconds});
+                      },
+                    },
+                  ]);
+                }}
                 style={{margin: 10}}>
                 End workout
               </Button>

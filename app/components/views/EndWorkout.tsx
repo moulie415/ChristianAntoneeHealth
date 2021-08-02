@@ -1,13 +1,67 @@
 import {Button, Input, Layout, Text} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import GoogleFit from 'react-native-google-fit';
+import AppleHealthKit, {HealthObserver} from 'react-native-health';
+import {Platform, View} from 'react-native';
 import colors from '../../constants/colors';
 import {resetToTabs} from '../../RootNavigation';
 import {useMemo} from 'react';
+import EndWorkoutProps from '../../types/views/EndWorkout';
+import {useEffect} from 'react';
+import moment from 'moment';
+import {Alert} from 'react-native';
 
-const EndWorkout: React.FC = () => {
+const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
   const [difficulty, setDifficulty] = useState(1);
+  const [calories, setCalories] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const {seconds} = route.params;
+  console.log({seconds});
+  useEffect(() => {
+    const getSamples = async () => {
+      setLoading(true);
+      try {
+        if (Platform.OS === 'ios') {
+          AppleHealthKit.getSamples(
+            {
+              startDate: moment().subtract(seconds, 'seconds').toISOString(),
+              endDate: moment().toISOString(),
+              type: AppleHealthKit.Constants.Observers.Workout,
+            },
+            (err, results) => {
+              if (err) {
+                return Alert.alert('Error', err);
+              }
+              const newCalories = results.reduce(
+                // @ts-ignore
+                (acc, cur) => acc + (cur.calories || 0),
+                0,
+              );
+              setCalories(newCalories);
+              setLoading(false);
+            },
+          );
+        } else {
+          const samples = await GoogleFit.getActivitySamples({
+            startDate: moment().subtract(seconds, 'seconds').toISOString(),
+            endDate: moment().toISOString(),
+            bucketUnit: 'MINUTE',
+          });
+          const newCalories = samples.reduce(
+            (acc, cur) => acc + (cur.calories || 0),
+            0,
+          );
+          setCalories(newCalories);
+          setLoading(false);
+        }
+      } catch (e) {
+        Alert.alert('Error', e.message);
+        setLoading(false);
+      }
+    };
+    getSamples();
+  }, [seconds]);
   const emoji = useMemo(() => {
     if (difficulty === 0) {
       return '😊';
@@ -73,7 +127,7 @@ const EndWorkout: React.FC = () => {
         multiline
         placeholder="Add details about your workout"
       />
-      <Button style={{margin: 10}} onPress={resetToTabs}>
+      <Button disabled={loading} style={{margin: 10}} onPress={() => 0}>
         Save & Continue
       </Button>
     </Layout>

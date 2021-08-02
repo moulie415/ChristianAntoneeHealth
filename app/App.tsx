@@ -47,6 +47,7 @@ import ExerciseListHeaderRight from './components/commons/ExerciseListHeaderRigh
 import ReviewExercises from './components/views/ReviewExercises';
 import StartWorkout from './components/views/StartWorkout';
 import EndWorkout from './components/views/EndWorkout';
+import WorkoutSummary from './components/views/WorkoutSummary';
 
 const composeEnhancers =
   // @ts-ignore
@@ -84,7 +85,8 @@ export type StackParamList = {
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
   StartWorkout: undefined;
-  EndWorkout: undefined;
+  EndWorkout: {seconds: number};
+  WorkoutSummary: {seconds: number; calories: number};
   Education: undefined;
   EducationWebView: {url: string};
   Settings: undefined;
@@ -241,6 +243,15 @@ const App: React.FC = () => {
                 component={EndWorkout}
                 options={({navigation}) => ({
                   headerTitle: 'Workout',
+                  headerLeft: null,
+                })}
+              />
+              <Stack.Screen
+                name="WorkoutSummary"
+                component={WorkoutSummary}
+                options={({navigation}) => ({
+                  headerTitle: 'Workout',
+                  headerLeft: null,
                 })}
               />
               <Stack.Screen name="Profile" component={Profile} />
