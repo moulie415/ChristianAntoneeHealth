@@ -44,6 +44,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-google-fit": "^0.17.0",
     "react-native-health": "^1.9.0",
+    "react-native-image-picker": "^4.0.6",
     "react-native-in-app-review": "^3.2.2",
     "react-native-pager-view": "^5.4.0",
     "react-native-progress": "^4.1.2",

@@ -127,7 +127,12 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
         multiline
         placeholder="Add details about your workout"
       />
-      <Button disabled={loading} style={{margin: 10}} onPress={() => 0}>
+      <Button
+        disabled={loading}
+        style={{margin: 10}}
+        onPress={() =>
+          navigation.navigate('WorkoutSummary', {calories, seconds, difficulty})
+        }>
         Save & Continue
       </Button>
     </Layout>

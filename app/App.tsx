@@ -86,7 +86,7 @@ export type StackParamList = {
   ReviewExercises: undefined;
   StartWorkout: undefined;
   EndWorkout: {seconds: number};
-  WorkoutSummary: {seconds: number; calories: number};
+  WorkoutSummary: {seconds: number; calories: number; difficulty: number};
   Education: undefined;
   EducationWebView: {url: string};
   Settings: undefined;
