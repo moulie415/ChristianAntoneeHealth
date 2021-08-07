@@ -1,18 +1,30 @@
 import {Button, Input, Layout, Text} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import GoogleFit from 'react-native-google-fit';
-import AppleHealthKit, {HealthObserver} from 'react-native-health';
+import AppleHealthKit, {
+  HealthActivity,
+  HealthObserver,
+} from 'react-native-health';
 import {Platform, View} from 'react-native';
-import colors from '../../constants/colors';
-import {resetToTabs} from '../../RootNavigation';
-import {useMemo} from 'react';
 import EndWorkoutProps from '../../types/views/EndWorkout';
 import {useEffect} from 'react';
 import moment from 'moment';
 import {Alert} from 'react-native';
+import {MyRootState} from '../../types/Shared';
+import {connect} from 'react-redux';
+import {
+  difficultyToMET,
+  getCaloriesBurned,
+  getDifficultyEmoji,
+  getDifficultyText,
+} from '../../helpers/exercises';
 
-const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
+const EndWorkout: React.FC<EndWorkoutProps> = ({
+  route,
+  navigation,
+  profile,
+}) => {
   const [difficulty, setDifficulty] = useState(1);
   const [calories, setCalories] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -20,13 +32,22 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
   console.log({seconds});
   useEffect(() => {
     const getSamples = async () => {
+      const startDate = moment().subtract(seconds, 'seconds').toISOString();
+      const endDate = moment().toISOString();
+      const MET = difficultyToMET(difficulty);
+      const calorieEstimate = getCaloriesBurned(
+        seconds,
+        MET,
+        profile.weight,
+        profile.unit,
+      );
       setLoading(true);
       try {
         if (Platform.OS === 'ios') {
           AppleHealthKit.getSamples(
             {
-              startDate: moment().subtract(seconds, 'seconds').toISOString(),
-              endDate: moment().toISOString(),
+              startDate,
+              endDate,
               type: AppleHealthKit.Constants.Observers.Workout,
             },
             (err, results) => {
@@ -38,21 +59,42 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
                 (acc, cur) => acc + (cur.calories || 0),
                 0,
               );
-              setCalories(newCalories);
-              setLoading(false);
+              const validCalories =
+                newCalories > 0 ? newCalories : calorieEstimate;
+              setCalories(validCalories);
+              AppleHealthKit.saveWorkout(
+                {
+                  type: AppleHealthKit.Constants.Activities.MixedCardio,
+                  startDate,
+                  endDate,
+                  // @ts-ignore
+                  energyBurned: validCalories,
+                  energyBurnedUnit: 'calorie',
+                },
+                (e: Error, res) => {
+                  setLoading(false);
+                  if (e) {
+                    Alert.alert('Error saving workout', e.message);
+                    console.log(e)
+                    return;
+                  }
+                  console.log(res);
+                  // workout successfully saved
+                },
+              );
             },
           );
         } else {
           const samples = await GoogleFit.getActivitySamples({
-            startDate: moment().subtract(seconds, 'seconds').toISOString(),
-            endDate: moment().toISOString(),
+            startDate,
+            endDate,
             bucketUnit: 'MINUTE',
           });
           const newCalories = samples.reduce(
             (acc, cur) => acc + (cur.calories || 0),
             0,
           );
-          setCalories(newCalories);
+          setCalories(newCalories > 0 ? newCalories : calorieEstimate);
           setLoading(false);
         }
       } catch (e) {
@@ -61,34 +103,27 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
       }
     };
     getSamples();
-  }, [seconds]);
-  const emoji = useMemo(() => {
-    if (difficulty === 0) {
-      return '😊';
-    }
-    if (difficulty === 1) {
-      return '😐';
-    }
-    if (difficulty === 2) {
-      return '😰';
-    }
-    return '🤢';
-  }, [difficulty]);
+  }, [seconds, difficulty, profile.unit, profile.weight]);
+  const emoji = useMemo(() => getDifficultyEmoji(difficulty), [difficulty]);
 
   const {text, subtext} = useMemo(() => {
+    const difficultyText = getDifficultyText(difficulty);
     if (difficulty === 0) {
-      return {text: 'Easy', subtext: 'I could do this all day'};
+      return {text: difficultyText, subtext: 'I could do this all day'};
     }
     if (difficulty === 1) {
       return {
-        text: 'Moderate',
+        text: difficultyText,
         subtext: 'That was uncomfortable, but I can still talk easily',
       };
     }
     if (difficulty === 2) {
-      return {text: 'Hard', subtext: "I can't breath or talk, my muscles burn"};
+      return {
+        text: difficultyText,
+        subtext: "I can't breath or talk, my muscles burn",
+      };
     }
-    return {text: 'Very Hard', subtext: 'I might die'};
+    return {text: difficultyText, subtext: 'I might die'};
   }, [difficulty]);
   return (
     <Layout style={{flex: 1}}>
@@ -139,4 +174,8 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({route, navigation}) => {
   );
 };
 
-export default EndWorkout;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(EndWorkout);

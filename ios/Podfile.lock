@@ -427,6 +427,11 @@ PODS:
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.180)
   - PromisesObjC (2.0.0)
+  - Purchases (3.12.2):
+    - PurchasesCoreSwift (= 3.12.2)
+  - PurchasesCoreSwift (3.12.2)
+  - PurchasesHybridCommon (1.8.0):
+    - Purchases (= 3.12.2)
   - RCT-Folly (2020.01.13.00):
     - boost-for-react-native
     - DoubleConversion
@@ -657,7 +662,7 @@ PODS:
     - React
   - react-native-pager-view (5.4.0):
     - React-Core
-  - react-native-safe-area-context (3.2.0):
+  - react-native-safe-area-context (3.3.0):
     - React-Core
   - react-native-shake (14.1.3):
     - React
@@ -673,7 +678,7 @@ PODS:
     - react-native-video/Video (= 5.1.1)
   - react-native-video/Video (5.1.1):
     - React-Core
-  - react-native-webview (11.6.5):
+  - react-native-webview (11.6.6):
     - React-Core
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
@@ -751,7 +756,7 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPicker (1.16.3):
+  - RNCPicker (1.16.5):
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
@@ -780,6 +785,9 @@ PODS:
     - React-Core
   - RNGoogleSignin (5.0.0):
     - GoogleSignIn (~> 5.0.0)
+    - React-Core
+  - RNPurchases (4.3.0):
+    - PurchasesHybridCommon (= 1.8.0)
     - React-Core
   - RNReanimated (2.0.0):
     - DoubleConversion
@@ -810,7 +818,7 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.4.0):
+  - RNScreens (3.5.0):
     - React-Core
     - React-RCTImage
   - RNSnackbar (2.4.0):
@@ -911,6 +919,7 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-community/google-signin`)"
+  - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
@@ -956,6 +965,9 @@ SPEC REPOS:
     - nanopb
     - OpenSSL-Universal
     - PromisesObjC
+    - Purchases
+    - PurchasesCoreSwift
+    - PurchasesHybridCommon
     - SDWebImage
     - SDWebImageWebPCoder
     - Shake
@@ -1072,6 +1084,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-community/google-signin"
+  RNPurchases:
+    :path: "../node_modules/react-native-purchases"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1126,6 +1140,9 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Purchases: 3e20881892483ab6ca17cb86a89af4c6d1731562
+  PurchasesCoreSwift: e614645840af49d465dee1918011f784365d79a6
+  PurchasesHybridCommon: f87cfd2fb1a55df8daa2a996a1d19d48e5bfbf4f
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: 6d3e854f0e7260a648badd0d44fc364bc9da9728
   RCTTypeSafety: c1f31d19349c6b53085766359caac425926fafaa
@@ -1142,13 +1159,13 @@ SPEC CHECKSUMS:
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-in-app-review: 00a66a085c61dbd4474041dc14e7bfee81a86130
   react-native-pager-view: 54970cc27fdef14db2dcfedadb091d711e88065d
-  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-shake: 8048c196ab884399df8397d7a9e9e48b3f2996ff
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
-  react-native-webview: 2e8fe70dc32b50d3231c23043f8e8b5a5525d346
+  react-native-webview: e6eddf2722f5e7220eae7229b516efabb1ed0acd
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -1167,7 +1184,7 @@ SPEC CHECKSUMS:
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: 6724ab5fcca83c34fe1f18a89baa13e9885f0393
+  RNCPicker: 28e41a58b79cd82cc639391bb99ca1b2489a3ea9
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNFastImage: a7384db75df352500261e8e8f1ac2026def26102
@@ -1177,8 +1194,9 @@ SPEC CHECKSUMS:
   RNFBFirestore: 9ff0a5bac2c5acddb8de7a64d4d8eb38c49604bf
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
+  RNPurchases: e067a4eb18561125d119de8148f27aa0bae2f9db
   RNReanimated: 64f6c5789f82818c07ba3c71864b73619cb23c76
-  RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4

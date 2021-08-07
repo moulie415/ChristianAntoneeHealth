@@ -1,4 +1,9 @@
-import Exercise, {allMuscleHighlights, Muscle, MuscleHighlight} from '../types/Exercise';
+import Exercise, {
+  allMuscleHighlights,
+  Muscle,
+  MuscleHighlight,
+} from '../types/Exercise';
+import {Unit} from '../types/Profile';
 import {Level} from '../types/Shared';
 
 const levelMapping = {
@@ -95,4 +100,57 @@ export const mapMuscleToHighlight = (muscles: Muscle[]): MuscleHighlight[] => {
     }
   });
   return muscleArr;
+};
+
+// based off of https://www.omicsonline.org/articles-images/2157-7595-6-220-t003.html
+export const difficultyToMET = (difficulty: number): number => {
+  switch (difficulty) {
+    case 1:
+      return 4;
+    case 2:
+      return 7;
+    case 3:
+      return 10;
+    default:
+      return 2;
+  }
+};
+
+export const getCaloriesBurned = (
+  duration: number,
+  MET: number,
+  weight: number,
+  unit: Unit,
+) => {
+  return (
+    ((duration / 60) *
+      (MET * 3.5 * (unit === 'metric' ? weight : weight / 2.205))) /
+    200
+  );
+};
+
+export const getDifficultyEmoji = (difficulty: number) => {
+  if (difficulty === 0) {
+    return '😊';
+  }
+  if (difficulty === 1) {
+    return '😐';
+  }
+  if (difficulty === 2) {
+    return '😰';
+  }
+  return '🤢';
+};
+
+export const getDifficultyText = (difficulty: number) => {
+  if (difficulty === 0) {
+    return 'Easy';
+  }
+  if (difficulty === 1) {
+    return 'Moderate';
+  }
+  if (difficulty === 2) {
+    return 'Hard';
+  }
+  return 'Very Hard';
 };

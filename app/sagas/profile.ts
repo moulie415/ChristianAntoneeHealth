@@ -97,10 +97,8 @@ function* getSamplesWorker() {
   const stepSamples: StepSample[] = yield call(getStepSamples);
   yield put(setMonthlyStepSamples(stepSamples, month));
 
-  const {weightMetric} = yield select(
-    (state: MyRootState) => state.profile.profile,
-  );
-  const weightSamples: Sample[] = yield call(getWeightSamples, weightMetric);
+  const {unit} = yield select((state: MyRootState) => state.profile.profile);
+  const weightSamples: Sample[] = yield call(getWeightSamples, unit);
   yield put(setMonthlyWeightSamples(weightSamples, month));
 
   const activitySamples: HealthValue[] | ActivitySampleResponse[] = yield call(

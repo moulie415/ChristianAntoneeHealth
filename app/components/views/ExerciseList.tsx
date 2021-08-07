@@ -2,7 +2,7 @@ import {Layout, List, ListItem} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
-import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';

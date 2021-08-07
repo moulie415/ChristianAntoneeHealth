@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Layout, Text} from '@ui-kitten/components';
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';

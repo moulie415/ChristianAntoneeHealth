@@ -36,6 +36,9 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           style={{backgroundColor: isActive ? colors.appBlue : undefined}}
           onLongPress={drag}
           title={item.name}
+          onPress={() =>
+            navigation.navigate('CustomizeExercise', {exercise: item})
+          }
           description={truncate(item.description, 75)}
           accessoryLeft={() => (
             <Image

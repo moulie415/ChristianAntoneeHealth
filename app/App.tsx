@@ -107,10 +107,9 @@ const Tab = createBottomTabNavigator<StackParamList>();
 const Tabs = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: colors.appBlue,
-        inactiveTintColor: '#7c7c7c',
-        style: {},
+      screenOptions={{
+        tabBarActiveTintColor: colors.appBlue,
+        tabBarInactiveTintColor: '#7c7c7c',
       }}>
       <Tab.Screen
         options={{
@@ -134,7 +133,7 @@ const Tabs = () => {
         key="Workout"
         component={Workout}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         options={{
           tabBarLabel: 'Activity',
           tabBarIcon: ({color, size}) => (
@@ -144,7 +143,7 @@ const Tabs = () => {
         key="Activity"
         name="Activity"
         component={Activity}
-      />
+      /> */}
       <Tab.Screen
         options={{
           tabBarLabel: 'Fitness',
@@ -204,7 +203,7 @@ const App: React.FC = () => {
                 name="Tabs"
                 component={Tabs}
                 options={({navigation, route}) => ({
-                  headerTitle: getFocusedRouteNameFromRoute(route) ?? 'Home',
+                  headerShown: false,
                 })}
               />
               <Stack.Screen
