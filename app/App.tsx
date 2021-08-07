@@ -1,15 +1,13 @@
 import React from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
+import Purchases from 'react-native-purchases';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import Shake from '@shakebugs/react-native-shake';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {
-  getFocusedRouteNameFromRoute,
-  NavigationContainer,
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -48,6 +46,7 @@ import ReviewExercises from './components/views/ReviewExercises';
 import StartWorkout from './components/views/StartWorkout';
 import EndWorkout from './components/views/EndWorkout';
 import WorkoutSummary from './components/views/WorkoutSummary';
+import {useEffect} from 'react';
 
 const composeEnhancers =
   // @ts-ignore
@@ -171,6 +170,11 @@ const Tabs = () => {
 };
 
 const App: React.FC = () => {
+  useEffect(() => {
+    Shake.setInvokeShakeOnShakeDeviceEvent(false);
+    Purchases.setDebugLogsEnabled(true);
+    Purchases.setup('qyiMfgjJHVvhxXVRPnXgECYFkphIJwhb');
+  }, []);
   Shake.setInvokeShakeOnShakeDeviceEvent(false);
   return (
     <PersistGate persistor={persistor}>
