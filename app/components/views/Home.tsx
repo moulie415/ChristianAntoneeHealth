@@ -1,11 +1,14 @@
 import React from 'react';
 import {Layout, Text} from '@ui-kitten/components';
+import {Linking, Platform} from 'react-native';
+import GoogleFit from 'react-native-google-fit';
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeWelcome from './HomeWelcome';
 import HomeCard from '../commons/HomeCard';
 import InAppReview from 'react-native-in-app-review';
+import {linkToGoogleFit} from '../../helpers/biometrics';
 
 const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
@@ -70,10 +73,22 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               onPress={InAppReview.RequestInAppReview}
             />
             <HomeCard
-              title="Activity log"
+              title="View Activity"
               subtitle="Track you daily activity"
               image={require('../../images/activity_log.jpeg')}
-              onPress={() => navigation.navigate('Activity')}
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  Linking.openURL('x-apple-health://');
+                } else {
+                  GoogleFit.isAvailable((err, res) => {
+                    if (err) {
+                      return linkToGoogleFit();
+                    } else {
+                      res ? GoogleFit.openFit() : linkToGoogleFit();
+                    }
+                  });
+                }
+              }}
             />
           </Layout>
         </Layout>

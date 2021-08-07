@@ -2,10 +2,7 @@ import {Button, Input, Layout, Text} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useMemo, useState} from 'react';
 import GoogleFit from 'react-native-google-fit';
-import AppleHealthKit, {
-  HealthActivity,
-  HealthObserver,
-} from 'react-native-health';
+import AppleHealthKit from 'react-native-health';
 import {Platform, View} from 'react-native';
 import EndWorkoutProps from '../../types/views/EndWorkout';
 import {useEffect} from 'react';
@@ -28,6 +25,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [difficulty, setDifficulty] = useState(1);
   const [calories, setCalories] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [note, setNote] = useState('');
   const {seconds} = route.params;
   console.log({seconds});
   useEffect(() => {
@@ -75,7 +73,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
                   setLoading(false);
                   if (e) {
                     Alert.alert('Error saving workout', e.message);
-                    console.log(e)
+                    console.log(e);
                     return;
                   }
                   console.log(res);
@@ -161,6 +159,8 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
         style={{margin: 10, marginTop: 0}}
         multiline
         placeholder="Add details about your workout"
+        value={note}
+        onChangeText={setNote}
       />
       <Button
         disabled={loading}
