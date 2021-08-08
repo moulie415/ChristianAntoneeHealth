@@ -10,6 +10,10 @@
 		00E356F31AD99517003FC87E /* HealthAndMovementTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HealthAndMovementTests.m */; };
 		0A24F535261784EB00859CAB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A24F534261784EB00859CAB /* HealthKit.framework */; };
 		0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */; };
+		0A701BC126BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
+		0A701BC226BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
+		0A701BC326BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
+		0A701BC426BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
 		0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABF7D9925FCF2D0008BB70F /* File.swift */; };
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
@@ -83,6 +87,8 @@
 		0A058F9F242FC8D0006B658E /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		0A24F534261784EB00859CAB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HealthAndMovement/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A701BC026BF219A00EB809A /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		0A701BC526BF232800EB809A /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		0ABF7D9825FCF2D0008BB70F /* HealthAndMovement-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HealthAndMovement-Bridging-Header.h"; sourceTree = "<group>"; };
 		0ABF7D9925FCF2D0008BB70F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		0AC9281126BEBEE20027F8AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -249,6 +255,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0A701BC026BF219A00EB809A /* Configuration.storekit */,
+				0A701BC526BF232800EB809A /* StoreKitTestCertificate.cer */,
 				0ABF7D9925FCF2D0008BB70F /* File.swift */,
 				0A058F51242FC5E1006B658E /* Fonts */,
 				0A058F8F242FC8D0006B658E /* Fonts */,
@@ -426,6 +434,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A701BC226BF219A00EB809A /* Configuration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				0A701BC126BF219A00EB809A /* Configuration.storekit in Resources */,
 				0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */,
 				0AF814EB2436B16D0056E3CD /* oap_training.png in Resources */,
 				0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */,
@@ -446,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
+				0A701BC326BF219A00EB809A /* Configuration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A701BC426BF219A00EB809A /* Configuration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -861,7 +873,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 27RJG57PEM;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -896,7 +908,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 27RJG57PEM;
 				INFOPLIST_FILE = HealthAndMovement/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
