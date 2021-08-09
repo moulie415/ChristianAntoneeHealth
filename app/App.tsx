@@ -175,7 +175,6 @@ const App: React.FC = () => {
     Purchases.setDebugLogsEnabled(true);
     Purchases.setup('qyiMfgjJHVvhxXVRPnXgECYFkphIJwhb');
   }, []);
-  Shake.setInvokeShakeOnShakeDeviceEvent(false);
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>

@@ -2,7 +2,7 @@ name: Deploy android to firebase
 on:
   push:
     branches:
-      - master
+      - firebase
 jobs:
   install-and-deploy:
     runs-on: ubuntu-latest
