@@ -34,7 +34,7 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT_JSON}}
           packageName: com.healthandmovement
-          releaseFile: android/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app/build/outputs/bundle/release/*.aab
           track: alpha
           #userFraction: 0.33
           whatsNewDirectory: whatsnew
