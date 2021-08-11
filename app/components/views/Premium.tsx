@@ -1,24 +1,28 @@
 import {Layout, Text, Button} from '@ui-kitten/components';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Purchases from 'react-native-purchases';
+import crashlytics from '@react-native-firebase/crashlytics';
+import Purchases, {PurchasesPackage} from 'react-native-purchases';
 import Image from 'react-native-fast-image';
 import PremiumProps from '../../types/views/Premium';
 import colors from '../../constants/colors';
-import {Platform, View} from 'react-native';
+import {ActivityIndicator, Platform, View} from 'react-native';
 
 const Premium: React.FC<PremiumProps> = () => {
+  const [pkg, setPackage] = useState<PurchasesPackage>();
   useEffect(() => {
     const getOfferings = async () => {
       try {
+        const purchaserInfo = await Purchases.getPurchaserInfo();
+        console.log(purchaserInfo);
         const offerings = await Purchases.getOfferings();
-        console.log(offerings);
         if (
           offerings.current !== null &&
           offerings.current.availablePackages.length !== 0
         ) {
-          console.log(offerings.current);
-          // Display packages for sale
+          // console.log(offerings.current.availablePackages[0].product);
+          setPackage(offerings.current.availablePackages[0]);
+          // Display packages for sale;
         }
       } catch (e) {
         console.log(e);
@@ -80,11 +84,46 @@ const Premium: React.FC<PremiumProps> = () => {
           </View>
         </View>
       </View>
-      <Button style={{marginHorizontal: 40, marginBottom: 5}}>
-        Start a 1-Week free trial
-      </Button>
-
-      <Text style={{textAlign: 'center'}}>£9.99/month after</Text>
+      {pkg ? (
+        <>
+          <Button
+            style={{marginHorizontal: 40, marginBottom: 5}}
+            onPress={async () => {
+              try {
+                const {
+                  purchaserInfo,
+                  productIdentifier,
+                } = await Purchases.purchasePackage(pkg);
+                if (
+                  typeof purchaserInfo.entitlements.active.Premium !==
+                  'undefined'
+                ) {
+                  // Unlock that great "pro" content
+                  console.log('Premium');
+                }
+                if (
+                  typeof purchaserInfo.entitlements.active.premium !==
+                  'undefined'
+                ) {
+                  // Unlock that great "pro" content
+                  console.log('premium');
+                }
+              } catch (e) {
+                if (!e.userCancelled) {
+                  crashlytics().recordError(e);
+                }
+              }
+            }}>
+            Start a 1-Week free trial
+          </Button>
+          <Text
+            style={{
+              textAlign: 'center',
+            }}>{`${pkg.product.price_string}/month after`}</Text>
+        </>
+      ) : (
+        <ActivityIndicator />
+      )}
     </Layout>
   );
 };
