@@ -41,6 +41,7 @@ import {
   HandleAuthAction,
   HANDLE_AUTH,
   handleAuth,
+  setPremium,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -69,6 +70,7 @@ import {
   setVideo,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
+import Purchases, {PurchaserInfo} from 'react-native-purchases';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -392,7 +394,12 @@ function* handleAuthWorker(action: HandleAuthAction) {
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);
       }
-
+      const purchaserInfo: PurchaserInfo = yield call(
+        Purchases.getPurchaserInfo,
+      );
+      if (purchaserInfo.entitlements.active.Premium) {
+        yield put(setPremium(true));
+      }
       if (doc.exists && doc.data().signedUp) {
         yield call(initBiometrics);
         resetToTabs();

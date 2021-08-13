@@ -16,6 +16,7 @@ export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
 export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
 export const SET_STEP = 'SET_STEP';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
+export const SET_PREMIUM = 'SET_PREMIUM';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -111,6 +112,11 @@ export interface HandleAuthAction {
   payload: FirebaseAuthTypes.User;
 }
 
+export interface SetPremiumAction {
+  type: typeof SET_PREMIUM;
+  payload: boolean;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -125,7 +131,8 @@ export type ProfileActionTypes =
   | SetWorkoutReminderTimeAction
   | SetMonthlyTestRemindersAction
   | SetStepAction
-  | HandleAuthAction;
+  | HandleAuthAction
+  | SetPremiumAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -207,4 +214,9 @@ export const setStep = (step: number): SetStepAction => ({
 export const handleAuth = (user: FirebaseAuthTypes.User) => ({
   type: HANDLE_AUTH,
   payload: user,
+});
+
+export const setPremium = (premium: boolean): SetPremiumAction => ({
+  type: SET_PREMIUM,
+  payload: premium,
 });

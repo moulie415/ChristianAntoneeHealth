@@ -2,30 +2,43 @@ import {Layout, Text, Button} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import crashlytics from '@react-native-firebase/crashlytics';
-import Purchases, {PurchasesPackage} from 'react-native-purchases';
+import Purchases, {
+  PurchaserInfo,
+  PurchasesPackage,
+} from 'react-native-purchases';
 import Image from 'react-native-fast-image';
 import PremiumProps from '../../types/views/Premium';
 import colors from '../../constants/colors';
-import {ActivityIndicator, Platform, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Linking,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {setPremium} from '../../actions/profile';
+import {connect} from 'react-redux';
+import Snackbar from 'react-native-snackbar';
 
-const Premium: React.FC<PremiumProps> = () => {
+const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
   const [pkg, setPackage] = useState<PurchasesPackage>();
+  const [info, setInfo] = useState<PurchaserInfo>();
   useEffect(() => {
     const getOfferings = async () => {
       try {
         const purchaserInfo = await Purchases.getPurchaserInfo();
-        console.log(purchaserInfo);
+        setInfo(purchaserInfo);
         const offerings = await Purchases.getOfferings();
         if (
           offerings.current !== null &&
           offerings.current.availablePackages.length !== 0
         ) {
-          // console.log(offerings.current.availablePackages[0].product);
           setPackage(offerings.current.availablePackages[0]);
-          // Display packages for sale;
         }
       } catch (e) {
-        console.log(e);
+        Alert.alert('Error fetching Premium offerings', e.message);
+        crashlytics().recordError(e);
       }
     };
     getOfferings();
@@ -86,40 +99,55 @@ const Premium: React.FC<PremiumProps> = () => {
       </View>
       {pkg ? (
         <>
-          <Button
-            style={{marginHorizontal: 40, marginBottom: 5}}
-            onPress={async () => {
-              try {
-                const {
-                  purchaserInfo,
-                  productIdentifier,
-                } = await Purchases.purchasePackage(pkg);
-                if (
-                  typeof purchaserInfo.entitlements.active.Premium !==
-                  'undefined'
-                ) {
-                  // Unlock that great "pro" content
-                  console.log('Premium');
-                }
-                if (
-                  typeof purchaserInfo.entitlements.active.premium !==
-                  'undefined'
-                ) {
-                  // Unlock that great "pro" content
-                  console.log('premium');
-                }
-              } catch (e) {
-                if (!e.userCancelled) {
-                  crashlytics().recordError(e);
-                }
-              }
-            }}>
-            Start a 1-Week free trial
-          </Button>
-          <Text
-            style={{
-              textAlign: 'center',
-            }}>{`${pkg.product.price_string}/month after`}</Text>
+          {info && info.activeSubscriptions[0] ? (
+            <View style={{alignItems: 'center'}}>
+              <Text category="h3" style={{textAlign: 'center'}}>
+                🎉 Premium active 🎉
+              </Text>
+              <TouchableOpacity
+                onPress={() => Linking.openURL(info.managementURL)}>
+                <Text
+                  category="s1"
+                  style={{textAlign: 'center'}}
+                  status="primary">
+                  Manage subscription
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <>
+              <Button
+                style={{marginHorizontal: 40, marginBottom: 5}}
+                onPress={async () => {
+                  try {
+                    const {
+                      purchaserInfo,
+                      productIdentifier,
+                    } = await Purchases.purchasePackage(pkg);
+                    if (
+                      typeof purchaserInfo.entitlements.active.Premium !==
+                      'undefined'
+                    ) {
+                      navigation.goBack();
+                      setPremiumAction(true);
+                      Snackbar.show({text: 'Premium activated'});
+                    }
+                  } catch (e) {
+                    if (!e.userCancelled) {
+                      crashlytics().recordError(e);
+                      Alert.alert('Error', e.message);
+                    }
+                  }
+                }}>
+                Start a 1-Week free trial
+              </Button>
+
+              <Text
+                style={{
+                  textAlign: 'center',
+                }}>{`${pkg.product.price_string}/month after`}</Text>
+            </>
+          )}
         </>
       ) : (
         <ActivityIndicator />
@@ -128,4 +156,8 @@ const Premium: React.FC<PremiumProps> = () => {
   );
 };
 
-export default Premium;
+const mapDispatchToProps = {
+  setPremiumAction: setPremium,
+};
+
+export default connect(null, mapDispatchToProps)(Premium);

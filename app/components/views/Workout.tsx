@@ -4,12 +4,16 @@ import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
 import colors from '../../constants/colors';
 import WorkoutProps from '../../types/views/Workout';
 import {Text, Button, CheckBox, Layout} from '@ui-kitten/components';
-import {Goal, Level, StrengthArea} from '../../types/Shared';
+import {Goal, Level, MyRootState, StrengthArea} from '../../types/Shared';
 import {setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
 import ImageOverlay from '../commons/ImageOverlay';
 
-const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
+const Workout: React.FC<WorkoutProps> = ({
+  navigation,
+  setWorkoutAction,
+  profile,
+}) => {
   const [selectedArea, setSelectedArea] = useState<StrengthArea>(
     StrengthArea.FULL,
   );
@@ -164,12 +168,16 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
         <Button
           disabled={goals.length === 0}
           onPress={() => {
-            setWorkoutAction([]);
-            navigation.navigate('ExerciseList', {
-              strengthArea: selectedArea,
-              level: selectedLevel,
-              goals,
-            });
+            if (profile.premium) {
+              setWorkoutAction([]);
+              navigation.navigate('ExerciseList', {
+                strengthArea: selectedArea,
+                level: selectedLevel,
+                goals,
+              });
+            } else {
+              navigation.navigate('Premium');
+            }
           }}
           style={{margin: 10}}>
           Continue
@@ -179,8 +187,12 @@ const Workout: React.FC<WorkoutProps> = ({navigation, setWorkoutAction}) => {
   );
 };
 
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
 const mapDispatchToProps = {
   setWorkoutAction: setWorkout,
 };
 
-export default connect(null, mapDispatchToProps)(Workout);
+export default connect(mapStateToProps, mapDispatchToProps)(Workout);

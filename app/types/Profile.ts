@@ -19,4 +19,5 @@ export default interface Profile {
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;
+  premium?: boolean;
 };

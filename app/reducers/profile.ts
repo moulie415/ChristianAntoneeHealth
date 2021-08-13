@@ -10,6 +10,7 @@ import {
   SET_WORKOUT_REMINDER_TIME,
   SET_MONTHLY_TEST_REMINDERS,
   SET_STEP,
+  SET_PREMIUM,
 } from '../actions/profile';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
@@ -120,6 +121,11 @@ const reducer = (
       return {
         ...state,
         monthlyTestReminders: action.payload,
+      };
+    case SET_PREMIUM:
+      return {
+        ...state,
+        profile: {...state.profile, premium: action.payload},
       };
     default:
       return state;

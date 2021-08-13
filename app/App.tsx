@@ -186,89 +186,93 @@ const App: React.FC = () => {
               screenOptions={({route, navigation}) => ({
                 headerBackTitle: null,
               })}>
-              <Stack.Screen
-                name="Welcome"
-                component={Welcome}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen
-                name="SignUp"
-                component={SignUp}
-                options={{headerTitle: 'Sign up'}}
-              />
-              <Stack.Screen
-                name="SignUpFlow"
-                component={SignUpFlow}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="Tabs"
-                component={Tabs}
-                options={({navigation, route}) => ({
-                  headerShown: false,
-                })}
-              />
-              <Stack.Screen
-                name="ExerciseList"
-                component={ExerciseList}
-                options={({navigation}) => ({
-                  headerTitle: 'Workout',
-                  headerRight: () => (
-                    <ExerciseListHeaderRight navigation={navigation} />
-                  ),
-                })}
-              />
-              <Stack.Screen
-                name="ReviewExercises"
-                component={ReviewExercises}
-                options={({navigation}) => ({
-                  headerTitle: 'Workout',
-                })}
-              />
-              <Stack.Screen
-                name="CustomizeExercise"
-                component={CustomizeExercise}
-                options={() => ({
-                  headerTitle: 'Workout',
-                })}
-              />
-              <Stack.Screen
-                name="StartWorkout"
-                component={StartWorkout}
-                options={({navigation}) => ({
-                  headerTitle: 'Workout',
-                })}
-              />
-              <Stack.Screen
-                name="EndWorkout"
-                component={EndWorkout}
-                options={({navigation}) => ({
-                  headerTitle: 'Workout',
-                  headerLeft: null,
-                })}
-              />
-              <Stack.Screen
-                name="WorkoutSummary"
-                component={WorkoutSummary}
-                options={({navigation}) => ({
-                  headerTitle: 'Workout',
-                  headerLeft: null,
-                })}
-              />
-              <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="Notifications" component={Notifications} />
-              <Stack.Screen name="Premium" component={Premium} />
-              <Stack.Screen name="Support" component={Support} />
-              <Stack.Screen name="Terms" component={Terms} />
-              <Stack.Screen name="Settings" component={Settings} />
-              <Stack.Screen name="About" component={About} />
-              <Stack.Screen name="Education" component={Education} />
-              <Stack.Screen
-                name="EducationWebView"
-                component={EducationWebView}
-                options={{headerTitle: ''}}
-              />
+              <Stack.Group>
+                <Stack.Screen
+                  name="Welcome"
+                  component={Welcome}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUp}
+                  options={{headerTitle: 'Sign up'}}
+                />
+                <Stack.Screen
+                  name="SignUpFlow"
+                  component={SignUpFlow}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="Tabs"
+                  component={Tabs}
+                  options={({navigation, route}) => ({
+                    headerShown: false,
+                  })}
+                />
+                <Stack.Screen
+                  name="ExerciseList"
+                  component={ExerciseList}
+                  options={({navigation}) => ({
+                    headerTitle: 'Workout',
+                    headerRight: () => (
+                      <ExerciseListHeaderRight navigation={navigation} />
+                    ),
+                  })}
+                />
+                <Stack.Screen
+                  name="ReviewExercises"
+                  component={ReviewExercises}
+                  options={({navigation}) => ({
+                    headerTitle: 'Workout',
+                  })}
+                />
+                <Stack.Screen
+                  name="CustomizeExercise"
+                  component={CustomizeExercise}
+                  options={() => ({
+                    headerTitle: 'Workout',
+                  })}
+                />
+                <Stack.Screen
+                  name="StartWorkout"
+                  component={StartWorkout}
+                  options={({navigation}) => ({
+                    headerTitle: 'Workout',
+                  })}
+                />
+                <Stack.Screen
+                  name="EndWorkout"
+                  component={EndWorkout}
+                  options={({navigation}) => ({
+                    headerTitle: 'Workout',
+                    headerLeft: null,
+                  })}
+                />
+                <Stack.Screen
+                  name="WorkoutSummary"
+                  component={WorkoutSummary}
+                  options={({navigation}) => ({
+                    headerTitle: 'Workout',
+                    headerLeft: null,
+                  })}
+                />
+                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="Notifications" component={Notifications} />
+                <Stack.Screen name="Support" component={Support} />
+                <Stack.Screen name="Terms" component={Terms} />
+                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="About" component={About} />
+                <Stack.Screen name="Education" component={Education} />
+                <Stack.Screen
+                  name="EducationWebView"
+                  component={EducationWebView}
+                  options={{headerTitle: ''}}
+                />
+              </Stack.Group>
+              <Stack.Group screenOptions={{presentation: 'modal'}}>
+                <Stack.Screen name="Premium" component={Premium} />
+              </Stack.Group>
             </Stack.Navigator>
           </NavigationContainer>
         </ApplicationProvider>
