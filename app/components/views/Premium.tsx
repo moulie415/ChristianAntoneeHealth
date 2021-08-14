@@ -43,6 +43,8 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
     };
     getOfferings();
   }, []);
+  const premiumActive = info && info.activeSubscriptions[0];
+  const hasUsedTrial = info && info.entitlements.all[0];
   return (
     <Layout level="4" style={{flex: 1}}>
       <Text category="h3" style={{margin: 40}}>
@@ -99,7 +101,7 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
       </View>
       {pkg ? (
         <>
-          {info && info.activeSubscriptions[0] ? (
+          {premiumActive ? (
             <View style={{alignItems: 'center'}}>
               <Text category="h3" style={{textAlign: 'center'}}>
                 🎉 Premium active 🎉
@@ -139,13 +141,17 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
                     }
                   }
                 }}>
-                Start a 1-Week free trial
+                {hasUsedTrial
+                  ? `${pkg.product.price_string}/month`
+                  : 'Start a 1-Week free trial'}
               </Button>
 
-              <Text
-                style={{
-                  textAlign: 'center',
-                }}>{`${pkg.product.price_string}/month after`}</Text>
+              {!hasUsedTrial && (
+                <Text
+                  style={{
+                    textAlign: 'center',
+                  }}>{`${pkg.product.price_string}/month after`}</Text>
+              )}
             </>
           )}
         </>

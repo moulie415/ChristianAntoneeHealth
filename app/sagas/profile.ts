@@ -71,6 +71,7 @@ import {
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import Purchases, {PurchaserInfo} from 'react-native-purchases';
+import {setUserAttributes} from '../helpers/profile';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -166,6 +167,16 @@ function* updateProfile(action: UpdateProfileAction) {
     }),
   );
   yield call(Snackbar.show, {text: 'Profile updated'});
+  setUserAttributes({
+    birthday: dob,
+    weight: weight?.toString(),
+    height: height?.toString(),
+    unit,
+    gender,
+    goals: goals?.toString(),
+    workoutFrequency: workoutFrequency?.toString(),
+    purpose,
+  });
 }
 
 function* downloadVideoWorker(action: DownloadVideoAction) {
@@ -279,6 +290,17 @@ function* signUp(action: SignUpAction) {
       );
       resetToTabs();
     }
+    setUserAttributes({
+      name,
+      birthday: dob,
+      weight: weight?.toString(),
+      height: height?.toString(),
+      unit,
+      gender,
+      goals: goals.toString(),
+      workoutFrequency: workoutFrequency.toString(),
+      purpose,
+    });
   } catch (e) {
     Alert.alert('Error', e.nativeErrorMessage || e.message);
   }
@@ -390,19 +412,32 @@ function* handleAuthWorker(action: HandleAuthAction) {
           email: user.email,
           avatar,
           name: user.displayName,
+          providerId: user.providerData[0].providerId,
         };
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);
       }
-      const purchaserInfo: PurchaserInfo = yield call(
-        Purchases.getPurchaserInfo,
-      );
+
+      const {purchaserInfo, created} = yield call(Purchases.logIn, user.uid);
+      crashlytics().setUserId(user.uid);
+
       if (purchaserInfo.entitlements.active.Premium) {
         yield put(setPremium(true));
       }
+
+      setUserAttributes({
+        email: user.email,
+        emailVerified: String(user.emailVerified),
+        providerId: user.providerData[0].providerId,
+        premium: purchaserInfo.entitlements.active.Premium ? 'true' : 'false',
+      });
       if (doc.exists && doc.data().signedUp) {
         yield call(initBiometrics);
         resetToTabs();
+        const {profile} = yield select((state: MyRootState) => state.profile);
+        if (!profile.premium) {
+          navigate('Premium');
+        }
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));

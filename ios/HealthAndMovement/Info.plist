@@ -112,5 +112,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>NSCameraUsageDescription</key>
+	<string>So you can save workouts with a photo</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+	<string>So you can save wrokouts with a image from your library</string>
 </dict>
 </plist>

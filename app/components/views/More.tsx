@@ -13,6 +13,7 @@ import colors from '../../constants/colors';
 import {Divider, List, ListItem} from '@ui-kitten/components';
 import {resetToLogin} from '../../RootNavigation';
 import {MyRootState} from '../../types/Shared';
+import Purchases from 'react-native-purchases';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -27,6 +28,7 @@ const More: React.FC<MoreProps> = ({
         onPress: async () => {
           resetToLogin();
           await auth().signOut();
+          Purchases.logOut();
           setLoggedInAction(false);
         },
       },
