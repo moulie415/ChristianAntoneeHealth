@@ -1,12 +1,11 @@
 import React from 'react';
-import InAppReview from 'react-native-in-app-review';
 import auth from '@react-native-firebase/auth';
 import Shake from '@shakebugs/react-native-shake';
 import crashlytics from '@react-native-firebase/crashlytics';
 import {connect} from 'react-redux';
 import MoreProps from '../../types/views/More';
 import styles from '../../styles/views/More';
-import {Alert, Share, StyleSheet} from 'react-native';
+import {Alert, Platform, Share, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLoggedIn} from '../../actions/profile';
 import colors from '../../constants/colors';
@@ -14,6 +13,8 @@ import {Divider, List, ListItem} from '@ui-kitten/components';
 import {resetToLogin} from '../../RootNavigation';
 import {MyRootState} from '../../types/Shared';
 import Purchases from 'react-native-purchases';
+import {STORE_LINK} from '../../constants';
+import {rateApp} from '../../helpers';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -69,12 +70,17 @@ const More: React.FC<MoreProps> = ({
     {
       title: 'Share the app',
       icon: 'share-alt',
-      onPress: () => Share.share({title: 'Share', url: ''}),
+      onPress: () =>
+        Share.share({
+          title: 'Health and Movement',
+          url: STORE_LINK,
+          message: STORE_LINK,
+        }),
     },
     {
       title: 'Rate the app',
       icon: 'star',
-      onPress: InAppReview.RequestInAppReview,
+      onPress: rateApp,
     },
     {
       title: 'Report a problem',

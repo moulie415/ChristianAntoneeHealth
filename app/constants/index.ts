@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import {Purpose} from '../types/Shared';
 import colors from './colors';
 
@@ -25,3 +26,8 @@ export const weightChartConfig = {
   },
   barPercentage: 0.7,
 };
+
+export const STORE_LINK =
+  Platform.OS === 'ios'
+    ? 'https://apps.apple.com/us/app/health-and-movement/id1506679389'
+    : 'https://play.google.com/store/apps/details?id=com.healthandmovement';

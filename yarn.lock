@@ -1291,6 +1291,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-3.0.3.tgz#830167fd757ba70ac638747ba3169b2dbae60330"
   integrity sha512-8IeHfDwJ9/CTUwFs6x90VlobV3BfuPgNLjTgC6dRZovfCWigaZwVNIFFJnHBakK3pW2xErAPwhdvNR4JeNoYbw==
 
+"@react-native-firebase/analytics@^12.5.0":
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.5.0.tgz#805e6ddcae8f653cc249b0b77cee76aed80e2205"
+  integrity sha512-GIhFrn7Gr9jZUGEQj0BPdOjYPOtqyRvj8Dn6OfqEvTyHNecYRaWhAtGtroMcrGGEGYbMKl4Xn9b2miRYkL8esg==
+
 "@react-native-firebase/app@^12.4.0":
   version "12.4.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.4.0.tgz#879ce26be46a8d3e40fbd371eacdef28c608c59e"
@@ -6338,11 +6343,6 @@ react-native-image-picker@^4.0.6:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.6.tgz#0dfa5bb83bcf6ff58635ebb9201a185c2271e8cc"
   integrity sha512-Pp3UWKUADuMG1mz12m6dSO/R2KnvXVEd77bldrfTMFpz4PFc4iVKo+bHeS79It0mUBezfzDMgfesg/OPLSugvQ==
 
-react-native-in-app-review@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-in-app-review/-/react-native-in-app-review-3.2.2.tgz#3f433c0d8f8578160f47614550b3a6beef015db9"
-  integrity sha512-dCIVA8InJGJ4MoQiIM/uVs3Qi6pLlplkMSxqdY433GoUAPutU+/4wM7kQzLx3GAsXemiGHJINNNLDK94X0dqEA==
-
 react-native-pager-view@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.0.tgz#8e30a391a68da26e59f4ae724341b9208924b2ee"
@@ -6365,6 +6365,11 @@ react-native-push-notification@^7.4.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.4.0.tgz#81192356eddfee8eeaf72a9a696c7c90bf5b0ece"
   integrity sha512-Ac3Ep71e2D8Q/Vy0OHBAO5JwhsFsNSuf9knkpXQWS0B9488nIZJLEMuTpF8610xPvGw7XxVrL/q0oZO5F1pOzw==
+
+react-native-rate@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/react-native-rate/-/react-native-rate-1.2.6.tgz#85c817caf0feac459bf9d4eb8fd9a245932b0f4d"
+  integrity sha512-sCAwNo9DxM7TA6Dwc81WXboPu+UppXkkUiAxKuh31KF+VXbknhwKNw5sUzCaJUJ3M5PKV+WKgfYrAPoByQRVww==
 
 react-native-reanimated@2.0.0:
   version "2.0.0"

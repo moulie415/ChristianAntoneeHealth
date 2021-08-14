@@ -7,8 +7,8 @@ import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeWelcome from './HomeWelcome';
 import HomeCard from '../commons/HomeCard';
-import InAppReview from 'react-native-in-app-review';
 import {linkToGoogleFit} from '../../helpers/biometrics';
+import {rateApp} from '../../helpers';
 
 const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
@@ -70,7 +70,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               title="Rate the app"
               subtitle="Tell us what you think"
               image={require('../../images/dumbell.png')}
-              onPress={InAppReview.RequestInAppReview}
+              onPress={rateApp}
             />
             <HomeCard
               title="View Activity"

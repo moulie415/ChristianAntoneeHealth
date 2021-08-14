@@ -1,5 +1,7 @@
 import PushNotification from 'react-native-push-notification';
 import moment from 'moment';
+import Rate, {AndroidMarket} from 'react-native-rate';
+import analytics from '@react-native-firebase/analytics';
 import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
 
@@ -82,4 +84,19 @@ export const getWeightItems = (
     labels.push(day.format('dd'));
   }
   return {data, labels, minMax: [lowest - 5, highest + 5]};
+};
+
+export const rateApp = () => {
+  Rate.rate(
+    {
+      AppleAppID: '1506679389',
+      GooglePackageName: 'com.healthandmovement',
+      preferredAndroidMarket: AndroidMarket.Google,
+      preferInApp: true,
+      openAppStoreIfInAppFails: true,
+    },
+    success => {
+      analytics().logEvent('user_rating', {success});
+    },
+  );
 };
