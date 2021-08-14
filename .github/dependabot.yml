@@ -11,5 +11,6 @@ updates:
       - dependency-name: "@react-native-firebase/auth"
       - dependency-name: "@react-native-firebase/crashlytics"
       - dependency-name: "@react-native-firebase/firestore"
+      - dependency-name: "@react-native-firebase/analytics"
       - dependency-name: "@shakebugs/react-native-shake"
     target-branch: "dev"
