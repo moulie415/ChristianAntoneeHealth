@@ -66,7 +66,11 @@ const More: React.FC<MoreProps> = ({
       icon: 'question-circle',
       onPress: () => navigation.navigate('Support'),
     },
-    {title: 'Policies', icon: 'check-circle', onPress: () => 0},
+    {
+      title: 'Policies',
+      icon: 'check-circle',
+      onPress: () => navigation.navigate('Policies'),
+    },
     {
       title: 'Share the app',
       icon: 'share-alt',

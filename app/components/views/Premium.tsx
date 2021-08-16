@@ -14,6 +14,7 @@ import {
   Alert,
   Linking,
   Platform,
+  ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -47,117 +48,121 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
   const hasUsedTrial = info && info.entitlements.all[0];
   return (
     <Layout level="4" style={{flex: 1}}>
-      <Text category="h3" style={{margin: 40}}>
-        Health and Movement Premium
-      </Text>
-      <View style={{marginHorizontal: 40, marginBottom: 40}}>
-        <View style={{flexDirection: 'row', marginBottom: 20}}>
-          <Icon
-            style={{width: 75, textAlign: 'center'}}
-            size={30}
-            color={colors.appBlue}
-            name="dumbbell"
-          />
-          <View style={{flex: 1}}>
-            <Text category="s1">Workouts</Text>
-            <Text>
-              Access to an extensive library of customisable exercises allowing
-              you to build your own workout routines
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginBottom: 20}}>
-          <Icon
-            style={{width: 75, textAlign: 'center'}}
-            size={30}
-            color={colors.appBlue}
-            name="heartbeat"
-          />
-          <View style={{flex: 1}}>
-            <Text category="s1">Fitness tests</Text>
-            <Text>Measure your progress through a range of fitness tests</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginBottom: 20}}>
-          <View style={{width: 75, alignItems: 'center'}}>
-            <Image
-              style={{width: 40, height: 40}}
-              source={
-                Platform.OS === 'ios'
-                  ? require('../../images/apple_health.png')
-                  : require('../../images/fit.png')
-              }
+      <ScrollView style={{flex: 1}}>
+        <Text category="h3" style={{margin: 40}}>
+          Health and Movement Premium
+        </Text>
+        <View style={{marginHorizontal: 40, marginBottom: 40}}>
+          <View style={{flexDirection: 'row', marginBottom: 20}}>
+            <Icon
+              style={{width: 75, textAlign: 'center'}}
+              size={30}
+              color={colors.appBlue}
+              name="dumbbell"
             />
+            <View style={{flex: 1}}>
+              <Text category="s1">Workouts</Text>
+              <Text>
+                Access to an extensive library of customisable exercises
+                allowing you to build your own workout routines
+              </Text>
+            </View>
           </View>
-          <View style={{flex: 1}}>
-            <Text category="s1">
-              {Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'}
-            </Text>
-            <Text>{`Track your activity by connecting with ${
-              Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
-            }`}</Text>
+          <View style={{flexDirection: 'row', marginBottom: 20}}>
+            <Icon
+              style={{width: 75, textAlign: 'center'}}
+              size={30}
+              color={colors.appBlue}
+              name="heartbeat"
+            />
+            <View style={{flex: 1}}>
+              <Text category="s1">Fitness tests</Text>
+              <Text>
+                Measure your progress through a range of fitness tests
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginBottom: 20}}>
+            <View style={{width: 75, alignItems: 'center'}}>
+              <Image
+                style={{width: 40, height: 40}}
+                source={
+                  Platform.OS === 'ios'
+                    ? require('../../images/apple_health.png')
+                    : require('../../images/fit.png')
+                }
+              />
+            </View>
+            <View style={{flex: 1}}>
+              <Text category="s1">
+                {Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'}
+              </Text>
+              <Text>{`Track your activity by connecting with ${
+                Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+              }`}</Text>
+            </View>
           </View>
         </View>
-      </View>
-      {pkg ? (
-        <>
-          {premiumActive ? (
-            <View style={{alignItems: 'center'}}>
-              <Text category="h3" style={{textAlign: 'center'}}>
-                🎉 Premium active 🎉
-              </Text>
-              <TouchableOpacity
-                onPress={() => Linking.openURL(info.managementURL)}>
-                <Text
-                  category="s1"
-                  style={{textAlign: 'center'}}
-                  status="primary">
-                  Manage subscription
+        {pkg ? (
+          <>
+            {premiumActive ? (
+              <View style={{alignItems: 'center'}}>
+                <Text category="h3" style={{textAlign: 'center'}}>
+                  🎉 Premium active 🎉
                 </Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <>
-              <Button
-                style={{marginHorizontal: 40, marginBottom: 5}}
-                onPress={async () => {
-                  try {
-                    const {
-                      purchaserInfo,
-                      productIdentifier,
-                    } = await Purchases.purchasePackage(pkg);
-                    if (
-                      typeof purchaserInfo.entitlements.active.Premium !==
-                      'undefined'
-                    ) {
-                      navigation.goBack();
-                      setPremiumAction(true);
-                      Snackbar.show({text: 'Premium activated'});
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(info.managementURL)}>
+                  <Text
+                    category="s1"
+                    style={{textAlign: 'center'}}
+                    status="primary">
+                    Manage subscription
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <>
+                <Button
+                  style={{marginHorizontal: 40, marginBottom: 5}}
+                  onPress={async () => {
+                    try {
+                      const {
+                        purchaserInfo,
+                        productIdentifier,
+                      } = await Purchases.purchasePackage(pkg);
+                      if (
+                        typeof purchaserInfo.entitlements.active.Premium !==
+                        'undefined'
+                      ) {
+                        navigation.goBack();
+                        setPremiumAction(true);
+                        Snackbar.show({text: 'Premium activated'});
+                      }
+                    } catch (e) {
+                      if (!e.userCancelled) {
+                        crashlytics().recordError(e);
+                        Alert.alert('Error', e.message);
+                      }
                     }
-                  } catch (e) {
-                    if (!e.userCancelled) {
-                      crashlytics().recordError(e);
-                      Alert.alert('Error', e.message);
-                    }
-                  }
-                }}>
-                {hasUsedTrial
-                  ? `${pkg.product.price_string}/month`
-                  : 'Start a 1-Week free trial'}
-              </Button>
+                  }}>
+                  {hasUsedTrial
+                    ? `${pkg.product.price_string}/month`
+                    : 'Start a 1-Week free trial'}
+                </Button>
 
-              {!hasUsedTrial && (
-                <Text
-                  style={{
-                    textAlign: 'center',
-                  }}>{`${pkg.product.price_string}/month after`}</Text>
-              )}
-            </>
-          )}
-        </>
-      ) : (
-        <ActivityIndicator />
-      )}
+                {!hasUsedTrial && (
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                    }}>{`${pkg.product.price_string}/month after`}</Text>
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <ActivityIndicator />
+        )}
+      </ScrollView>
     </Layout>
   );
 };

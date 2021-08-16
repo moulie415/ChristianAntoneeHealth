@@ -47,6 +47,7 @@ import StartWorkout from './components/views/StartWorkout';
 import EndWorkout from './components/views/EndWorkout';
 import WorkoutSummary from './components/views/WorkoutSummary';
 import {useEffect} from 'react';
+import Policies from './components/views/Policies';
 
 const composeEnhancers =
   // @ts-ignore
@@ -98,6 +99,7 @@ export type StackParamList = {
   Terms: undefined;
   Workout: undefined;
   About: undefined;
+  Policies: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -269,6 +271,7 @@ const App: React.FC = () => {
                   component={EducationWebView}
                   options={{headerTitle: ''}}
                 />
+                <Stack.Screen name="Policies" component={Policies} />
               </Stack.Group>
               <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen name="Premium" component={Premium} />
