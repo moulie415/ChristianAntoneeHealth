@@ -56,6 +56,7 @@ import {
   getWeeklySteps,
   getWeightSamples,
   initBiometrics,
+  isAvailable,
   isEnabled,
   saveHeight,
   saveWeight,
@@ -432,8 +433,8 @@ function* handleAuthWorker(action: HandleAuthAction) {
         premium: purchaserInfo.entitlements.active.Premium ? 'true' : 'false',
       });
       if (doc.exists && doc.data().signedUp) {
-        const enabled: boolean = yield call(isEnabled);
-        if (enabled) {
+        const available: boolean = yield call(isAvailable);
+        if (available) {
           yield call(initBiometrics);
         }
         resetToTabs();
