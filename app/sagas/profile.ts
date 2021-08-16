@@ -432,7 +432,10 @@ function* handleAuthWorker(action: HandleAuthAction) {
         premium: purchaserInfo.entitlements.active.Premium ? 'true' : 'false',
       });
       if (doc.exists && doc.data().signedUp) {
-        yield call(initBiometrics);
+        const enabled: boolean = yield call(isEnabled);
+        if (enabled) {
+          yield call(initBiometrics);
+        }
         resetToTabs();
         const {profile} = yield select((state: MyRootState) => state.profile);
         if (!profile.premium) {
