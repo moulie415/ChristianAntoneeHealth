@@ -96,7 +96,7 @@ const More: React.FC<MoreProps> = ({
 
   if (profile.admin) {
     listItems.push({
-      title: 'Force crash',
+      title: 'Force crash (admin)',
       icon: 'car-crash',
       onPress: crashlytics().crash,
     });

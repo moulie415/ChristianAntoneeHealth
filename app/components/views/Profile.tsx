@@ -26,6 +26,7 @@ import DatePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform} from 'react-native';
 import {getWeightItems} from '../../helpers';
 import {weightChartConfig} from '../../constants';
+import {isAvailable, isEnabled} from '../../helpers/biometrics';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -83,7 +84,12 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   useEffect(() => {
-    getSamplesAction();
+    const init = async () => {
+      if (await isEnabled()) {
+        getSamplesAction();
+      }
+    };
+    init();
   }, [getSamplesAction]);
 
   return (

@@ -4,6 +4,7 @@ import {Platform} from 'react-native';
 import VideoPlayer from 'react-native-video-controls';
 import Video from 'react-native-video';
 import {Alert} from 'react-native';
+import {getVideoHeight} from '../../helpers';
 
 const ExerciseVideo: React.FC<{path: string}> = ({path}) => {
   return (
@@ -13,13 +14,13 @@ const ExerciseVideo: React.FC<{path: string}> = ({path}) => {
           source={{uri: path}}
           controls
           onError={e => Alert.alert('error', JSON.stringify(e))}
-          style={{height: 250, marginBottom: 10}}
+          style={{height: getVideoHeight(), marginBottom: 10}}
           repeat
         />
       ) : (
         <VideoPlayer
           source={{uri: `file://${path}`}}
-          style={{height: 250, marginBottom: 10}}
+          style={{height: getVideoHeight(), marginBottom: 10}}
           disableVolume
           disableBack
           repeat

@@ -1,9 +1,12 @@
 import PushNotification from 'react-native-push-notification';
 import moment from 'moment';
+import {Dimensions, Platform, PlatformColor} from 'react-native';
 import Rate, {AndroidMarket} from 'react-native-rate';
 import analytics from '@react-native-firebase/analytics';
 import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
+
+const {height} = Dimensions.get('window');
 
 export const truncate = (str: string, n: number) => {
   if (!str) {
@@ -99,4 +102,8 @@ export const rateApp = () => {
       analytics().logEvent('user_rating', {success});
     },
   );
+};
+
+export const getVideoHeight = () => {
+  return Platform.OS === 'ios' ? height / 2.17 : height / 1.935;
 };

@@ -1,5 +1,5 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import db from '@react-native-firebase/firestore';
+import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Exercise from '../types/Exercise';
 import Profile from '../types/Profile';
@@ -84,4 +84,10 @@ export const getTests = async () => {
     acc[curr.id] = {...test, id: curr.id};
     return acc;
   }, {});
+};
+
+export const isAdmin = async (uid: string) => {
+  const admins = await db().collection('admins').get();
+  const keys = admins.docs.map(doc => doc.id);
+  return keys.includes(uid);
 };

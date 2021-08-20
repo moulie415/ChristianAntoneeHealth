@@ -11,7 +11,10 @@ import {
   SET_MONTHLY_TEST_REMINDERS,
   SET_STEP,
   SET_PREMIUM,
+  SET_NAVIGATION_ACTION,
+  SET_ADMIN,
 } from '../actions/profile';
+import {StackParamList} from '../App';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
 
@@ -28,6 +31,7 @@ export interface ProfileState {
   workoutReminderTime: string;
   monthlyTestReminders: boolean;
   monthlyTestReminderTime: string;
+  navigationAction?: keyof StackParamList;
 }
 
 const initialState: ProfileState = {
@@ -126,6 +130,17 @@ const reducer = (
       return {
         ...state,
         profile: {...state.profile, premium: action.payload},
+      };
+
+    case SET_NAVIGATION_ACTION:
+      return {
+        ...state,
+        navigationAction: action.payload,
+      };
+    case SET_ADMIN:
+      return {
+        ...state,
+        profile: {...state.profile, admin: action.payload},
       };
     default:
       return state;

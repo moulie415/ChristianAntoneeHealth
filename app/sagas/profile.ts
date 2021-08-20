@@ -42,6 +42,7 @@ import {
   HANDLE_AUTH,
   handleAuth,
   setPremium,
+  setAdmin,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -404,6 +405,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         api.getUser,
         user,
       );
+
       if (doc.exists) {
         yield put(setProfile(doc.data() as Profile));
       } else {
@@ -421,8 +423,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
 
       const {purchaserInfo, created} = yield call(Purchases.logIn, user.uid);
       crashlytics().setUserId(user.uid);
-
-      if (purchaserInfo.entitlements.active.Premium) {
+      const isAdmin: boolean = yield call(api.isAdmin, user.uid);
+      yield put(setAdmin(isAdmin));
+      if (purchaserInfo.entitlements.active.Premium || isAdmin) {
         yield put(setPremium(true));
       }
 
@@ -456,8 +459,10 @@ function* handleAuthWorker(action: HandleAuthAction) {
       );
     } else {
       yield put(setLoggedIn(false));
+      navigate('Welcome');
     }
   } catch (e) {
+    navigate('Welcome');
     crashlytics().recordError(e);
     console.log(e);
   }

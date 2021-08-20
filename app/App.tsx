@@ -32,7 +32,7 @@ import Terms from './components/views/Terms';
 import Settings from './components/views/Settings';
 import About from './components/views/About';
 import rootSaga from './sagas';
-import {navigationRef} from './RootNavigation';
+import {navigate, navigationRef} from './RootNavigation';
 import SignUpFlow from './components/views/SignUpFlow';
 import SplashScreen from 'react-native-splash-screen';
 import Activity from './components/views/Activity';
@@ -48,6 +48,8 @@ import EndWorkout from './components/views/EndWorkout';
 import WorkoutSummary from './components/views/WorkoutSummary';
 import {useEffect} from 'react';
 import Policies from './components/views/Policies';
+import Loading from './components/views/Loading';
+import {setNavigationAction} from './actions/profile';
 
 const composeEnhancers =
   // @ts-ignore
@@ -61,7 +63,7 @@ if (__DEV__) {
   middlewares.push(createDebugger());
 }
 
-const store = createStore(
+export const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(...middlewares)),
 );
@@ -100,6 +102,7 @@ export type StackParamList = {
   Workout: undefined;
   About: undefined;
   Policies: undefined;
+  Loading: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -182,13 +185,27 @@ const App: React.FC = () => {
       <Provider store={store}>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={eva.light}>
-          <NavigationContainer ref={navigationRef} onReady={SplashScreen.hide}>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              SplashScreen.hide();
+              const action = store.getState().profile.navigationAction;
+              if (action) {
+                navigate(action);
+                store.dispatch(setNavigationAction(undefined));
+              }
+            }}>
             <Stack.Navigator
-              initialRouteName="Welcome"
+              initialRouteName="Loading"
               screenOptions={({route, navigation}) => ({
                 headerBackTitle: null,
               })}>
               <Stack.Group>
+                <Stack.Screen
+                  name="Loading"
+                  component={Loading}
+                  options={{headerShown: false}}
+                />
                 <Stack.Screen
                   name="Welcome"
                   component={Welcome}

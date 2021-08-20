@@ -17,6 +17,7 @@ import ViewMore from '../commons/ViewMore';
 import {mapMuscleToHighlight} from '../../helpers/exercises';
 import {useEffect} from 'react';
 import ExerciseVideo from '../commons/ExerciseVideo';
+import { getVideoHeight } from '../../helpers';
 
 const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
@@ -64,7 +65,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       ) : (
         <Layout
           style={{
-            height: 250,
+            height: getVideoHeight(),
             marginBottom: 10,
             alignItems: 'center',
             justifyContent: 'center',
@@ -72,7 +73,9 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
           <Spinner />
         </Layout>
       )}
-      <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
+      <Text
+        category="h5"
+        style={{textAlign: 'center', marginBottom: 10, marginHorizontal: 10}}>
         {exercise.name}
       </Text>
 

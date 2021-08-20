@@ -1,4 +1,5 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {StackParamList} from '../App';
 import Profile, {Gender, Unit} from '../types/Profile';
 import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
 
@@ -17,6 +18,8 @@ export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
 export const SET_STEP = 'SET_STEP';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
 export const SET_PREMIUM = 'SET_PREMIUM';
+export const SET_NAVIGATION_ACTION = 'SET_NAVIGATION_ACTION';
+export const SET_ADMIN = 'SET_ADMIN';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -117,6 +120,16 @@ export interface SetPremiumAction {
   payload: boolean;
 }
 
+export interface SetNavigationAction {
+  type: typeof SET_NAVIGATION_ACTION;
+  payload?: keyof StackParamList;
+}
+
+export interface SetAdminAction {
+  type: typeof SET_ADMIN;
+  payload: boolean;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -132,7 +145,9 @@ export type ProfileActionTypes =
   | SetMonthlyTestRemindersAction
   | SetStepAction
   | HandleAuthAction
-  | SetPremiumAction;
+  | SetPremiumAction
+  | SetNavigationAction
+  | SetAdminAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -219,4 +234,16 @@ export const handleAuth = (user: FirebaseAuthTypes.User) => ({
 export const setPremium = (premium: boolean): SetPremiumAction => ({
   type: SET_PREMIUM,
   payload: premium,
+});
+
+export const setNavigationAction = (
+  route?: keyof StackParamList,
+): SetNavigationAction => ({
+  type: SET_NAVIGATION_ACTION,
+  payload: route,
+});
+
+export const setAdmin = (payload: boolean): SetAdminAction => ({
+  type: SET_ADMIN,
+  payload,
 });

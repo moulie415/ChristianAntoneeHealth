@@ -24,6 +24,7 @@ import {
   WORKOUT_LISTENER_SETUP_FAILURE,
 } from '../../constants/strings';
 import appleHealthKit from 'react-native-health';
+import {getVideoHeight} from '../../helpers';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -118,7 +119,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 ) : (
                   <Layout
                     style={{
-                      height: 250,
+                      height: getVideoHeight(),
                       marginBottom: 10,
                       alignItems: 'center',
                       justifyContent: 'center',
