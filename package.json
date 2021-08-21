@@ -38,6 +38,7 @@
     "react-native": "0.64.2",
     "react-native-body-highlighter": "https://github.com/moulie415/react-native-body-highlighter.git",
     "react-native-chart-kit": "^6.11.0",
+    "react-native-device-info": "^8.3.1",
     "react-native-draggable-flatlist": "^2.6.2",
     "react-native-fast-image": "^8.3.7",
     "react-native-fbsdk": "^3.0.0",

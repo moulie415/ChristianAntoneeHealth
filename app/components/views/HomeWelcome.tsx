@@ -43,12 +43,12 @@ const items: CarouselItem[] = [
   },
 ];
 
-const {width} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
   setHasViewedWelcome,
 }) => {
   return (
-    <Layout style={{flex: 1, marginTop: '20%'}}>
+    <Layout style={{flex: 1, marginVertical: '10%'}}>
       <Carousel
         layoutCardOffset={18}
         data={items}
@@ -64,7 +64,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
               style={[
                 {
                   width: width - 50,
-                  height: width,
+                  height: height/2,
                   backgroundColor: '#fff',
                   borderRadius: 8,
                 },
