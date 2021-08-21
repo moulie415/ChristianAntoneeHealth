@@ -3,8 +3,8 @@ import {Platform} from 'react-native';
 // @ts-ignore
 import VideoPlayer from 'react-native-video-controls';
 import Video from 'react-native-video';
-import {Alert} from 'react-native';
 import {getVideoHeight} from '../../helpers';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const ExerciseVideo: React.FC<{path: string}> = ({path}) => {
   return (
@@ -13,7 +13,7 @@ const ExerciseVideo: React.FC<{path: string}> = ({path}) => {
         <Video
           source={{uri: path}}
           controls
-          onError={e => Alert.alert('error', JSON.stringify(e))}
+          onError={e => crashlytics().log(e.error.errorString)}
           style={{height: getVideoHeight(), marginBottom: 10}}
           repeat
         />
@@ -23,6 +23,7 @@ const ExerciseVideo: React.FC<{path: string}> = ({path}) => {
           style={{height: getVideoHeight(), marginBottom: 10}}
           disableVolume
           disableBack
+          onError={(e: Error) => crashlytics().log(e.message)}
           repeat
         />
       )}

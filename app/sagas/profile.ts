@@ -6,6 +6,7 @@ import PushNotification from 'react-native-push-notification';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
 import RNFetchBlob, {FetchBlobResponse} from 'rn-fetch-blob';
+import analytics from '@react-native-firebase/analytics';
 import moment from 'moment';
 import {
   take,
@@ -189,21 +190,24 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
   const exercise: Exercise = exercises[id];
   const video: {src: string; path: string} | undefined = videos[id];
   if (exercise.video) {
-    if (!video || video.src !== exercise.video.src) {
+    let exists = true;
+    if (Platform.OS === 'ios') {
+      exists = yield call(RNFetchBlob.fs.exists, video.path);
+    }
+
+    if (!exists && video) {
+      const {uid} = yield select((state: MyRootState) => state.profile.profile);
+      analytics().logEvent('redownload_video', {os: Platform.OS, uid});
+    }
+    if (!video || video.src !== exercise.video.src || !exists) {
       try {
-        const dirs = RNFetchBlob.fs.dirs;
         const response: FetchBlobResponse = yield call(
-          RNFetchBlob.config({
-            fileCache: true,
-            path: `${dirs.DocumentDir}/${id}${
-              Platform.OS === 'ios' ? '.mp4' : ''
-            }`,
-          }).fetch,
+          RNFetchBlob.config({fileCache: true, appendExt: 'mp4'}).fetch,
           'GET',
           exercise.video.src,
         );
-        const path = response.path();
-        yield put(setVideo(id, exercise.video.src, path));
+
+        yield put(setVideo(id, exercise.video.src, response.path()));
       } catch (e) {
         yield call(
           Alert.alert,

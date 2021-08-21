@@ -1,13 +1,12 @@
 import PushNotification from 'react-native-push-notification';
 import moment from 'moment';
-import {Dimensions, Platform, PlatformColor} from 'react-native';
+import {Dimensions} from 'react-native';
 import Rate, {AndroidMarket} from 'react-native-rate';
 import analytics from '@react-native-firebase/analytics';
 import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
-import DeviceInfo from 'react-native-device-info';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 export const truncate = (str: string, n: number) => {
   if (!str) {
@@ -106,9 +105,6 @@ export const rateApp = () => {
 };
 
 export const getVideoHeight = () => {
-  const isTablet = DeviceInfo.isTablet();
-  if (isTablet) {
-    return height / 1.335;
-  }
-  return Platform.OS === 'ios' ? height / 2.17 : height / 1.935;
+  const screenRatio = height / width;
+  return height / screenRatio;
 };

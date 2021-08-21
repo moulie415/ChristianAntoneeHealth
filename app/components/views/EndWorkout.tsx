@@ -42,57 +42,29 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       setLoading(true);
       try {
         if (Platform.OS === 'ios') {
-          AppleHealthKit.getSamples(
+          AppleHealthKit.saveWorkout(
             {
+              type: AppleHealthKit.Constants.Activities.MixedCardio,
               startDate,
               endDate,
-              type: AppleHealthKit.Constants.Observers.Workout,
+              // @ts-ignore
+              energyBurned: calorieEstimate,
+              energyBurnedUnit: 'calorie',
             },
-            (err, results) => {
-              if (err) {
-                return Alert.alert('Error', err);
+            (e: Error, res) => {
+              setLoading(false);
+              if (e) {
+                Alert.alert('Error saving workout', e.message);
+                console.log(e);
+                return;
               }
-              const newCalories = results.reduce(
-                // @ts-ignore
-                (acc, cur) => acc + (cur.calories || 0),
-                0,
-              );
-              const validCalories =
-                newCalories > 0 ? newCalories : calorieEstimate;
-              setCalories(validCalories);
-              AppleHealthKit.saveWorkout(
-                {
-                  type: AppleHealthKit.Constants.Activities.MixedCardio,
-                  startDate,
-                  endDate,
-                  // @ts-ignore
-                  energyBurned: validCalories,
-                  energyBurnedUnit: 'calorie',
-                },
-                (e: Error, res) => {
-                  setLoading(false);
-                  if (e) {
-                    Alert.alert('Error saving workout', e.message);
-                    console.log(e);
-                    return;
-                  }
-                  console.log(res);
-                  // workout successfully saved
-                },
-              );
+              console.log(res);
+              // workout successfully saved
             },
           );
         } else {
-          const samples = await GoogleFit.getActivitySamples({
-            startDate,
-            endDate,
-            bucketUnit: 'MINUTE',
-          });
-          const newCalories = samples.reduce(
-            (acc, cur) => acc + (cur.calories || 0),
-            0,
-          );
-          setCalories(newCalories > 0 ? newCalories : calorieEstimate);
+          // TODO: save session https://developers.google.com/fit/android/using-sessions#insert-sessions-in-fitness
+          setCalories(calorieEstimate);
           setLoading(false);
         }
       } catch (e) {
