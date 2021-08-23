@@ -1,4 +1,4 @@
-import {Linking, Platform} from 'react-native';
+import {Alert, Linking, Platform} from 'react-native';
 import AppleHealthKit from 'react-native-health';
 import GoogleFit from 'react-native-google-fit';
 import moment from 'moment';
@@ -353,4 +353,47 @@ export const saveHeight = async (value: number, unit: Unit) => {
       );
     }
   });
+};
+
+export const saveWorkout = (
+  startDate: string,
+  endDate: string,
+  calories: number,
+  name: string,
+  id: string,
+  description: string,
+) => {
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.saveWorkout(
+        {
+          type: AppleHealthKit.Constants.Activities.FunctionalStrengthTraining,
+          startDate,
+          endDate,
+          // @ts-ignore
+          energyBurned: calories,
+          energyBurnedUnit: 'calorie',
+        },
+        (e: Error, res) => {
+          if (e) {
+            console.log(e);
+            reject(e);
+            return;
+          }
+          resolve(res);
+          console.log(res);
+          // workout successfully saved
+        },
+      );
+    });
+  } else {
+    return GoogleFit.saveWorkout(
+      name,
+      id,
+      description,
+      startDate,
+      endDate,
+      calories,
+    );
+  }
 };

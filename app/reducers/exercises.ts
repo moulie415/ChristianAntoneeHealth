@@ -4,6 +4,7 @@ import {
   SET_WORKOUT,
   SET_EXERCISE_NOTE,
   SET_VIDEO,
+  SET_VIDEO_LOADING,
 } from '../actions/exercises';
 import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
@@ -14,6 +15,7 @@ export interface ExercisesState {
   exerciseNotes: {[key: string]: string};
   workoutNotes: {[key: string]: string};
   videos: {[key: string]: {src: string; path: string}};
+  videoLoading: boolean;
 }
 
 const initialState: ExercisesState = {
@@ -22,6 +24,7 @@ const initialState: ExercisesState = {
   exerciseNotes: {},
   workoutNotes: {},
   videos: {},
+  videoLoading: false,
 };
 
 const reducer = (
@@ -57,6 +60,11 @@ const reducer = (
             path: action.payload.path,
           },
         },
+      };
+    case SET_VIDEO_LOADING:
+      return {
+        ...state,
+        videoLoading: action.payload,
       };
     default:
       return state;

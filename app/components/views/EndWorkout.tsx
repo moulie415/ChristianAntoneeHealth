@@ -1,9 +1,6 @@
 import {Button, Input, Layout, Text} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useMemo, useState} from 'react';
-import GoogleFit from 'react-native-google-fit';
-import AppleHealthKit from 'react-native-health';
-import {Platform, View} from 'react-native';
 import EndWorkoutProps from '../../types/views/EndWorkout';
 import {useEffect} from 'react';
 import moment from 'moment';
@@ -16,11 +13,13 @@ import {
   getDifficultyEmoji,
   getDifficultyText,
 } from '../../helpers/exercises';
+import {saveWorkout} from '../../helpers/biometrics';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
   navigation,
   profile,
+  workout,
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [calories, setCalories] = useState(0);
@@ -41,39 +40,24 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       );
       setLoading(true);
       try {
-        if (Platform.OS === 'ios') {
-          AppleHealthKit.saveWorkout(
-            {
-              type: AppleHealthKit.Constants.Activities.MixedCardio,
-              startDate,
-              endDate,
-              // @ts-ignore
-              energyBurned: calorieEstimate,
-              energyBurnedUnit: 'calorie',
-            },
-            (e: Error, res) => {
-              setLoading(false);
-              if (e) {
-                Alert.alert('Error saving workout', e.message);
-                console.log(e);
-                return;
-              }
-              console.log(res);
-              // workout successfully saved
-            },
-          );
-        } else {
-          // TODO: save session https://developers.google.com/fit/android/using-sessions#insert-sessions-in-fitness
-          setCalories(calorieEstimate);
-          setLoading(false);
-        }
+        await saveWorkout(
+          startDate,
+          endDate,
+          calorieEstimate,
+          'Health and Movement Workout',
+          startDate,
+          workout.map(e => e.name).join(', '),
+        );
+        // TODO: save session https://developers.google.com/fit/android/using-sessions#insert-sessions-in-fitness
+        setCalories(calorieEstimate);
+        setLoading(false);
       } catch (e) {
-        Alert.alert('Error', e.message);
+        Alert.alert('Error saving workout', e.message);
         setLoading(false);
       }
     };
     getSamples();
-  }, [seconds, difficulty, profile.unit, profile.weight]);
+  }, [seconds, difficulty, profile.unit, profile.weight, workout]);
   const emoji = useMemo(() => getDifficultyEmoji(difficulty), [difficulty]);
 
   const {text, subtext} = useMemo(() => {
@@ -146,8 +130,9 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: MyRootState) => ({
   profile: profile.profile,
+  workout: exercises.workout,
 });
 
 export default connect(mapStateToProps)(EndWorkout);

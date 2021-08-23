@@ -1,15 +1,12 @@
 import {Text, Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useState} from 'react';
-import Video from 'react-native-video';
-// @ts-ignore
-import VideoPlayer from 'react-native-video-controls';
 // @ts-ignore
 import Body from 'react-native-body-highlighter';
 import Snackbar from 'react-native-snackbar';
-import {Alert, Platform, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import CustomizeExerciseProps from '../../types/views/CustomExercise';
 import CustomDivider from '../commons/CustomDivider';
-import Exercise, {MuscleHighlight} from '../../types/Exercise';
+import {MuscleHighlight} from '../../types/Exercise';
 import {MyRootState} from '../../types/Shared';
 import {downloadVideo, setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
@@ -17,7 +14,7 @@ import ViewMore from '../commons/ViewMore';
 import {mapMuscleToHighlight} from '../../helpers/exercises';
 import {useEffect} from 'react';
 import ExerciseVideo from '../commons/ExerciseVideo';
-import { getVideoHeight } from '../../helpers';
+import {getVideoHeight} from '../../helpers';
 
 const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
@@ -26,6 +23,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   navigation,
   downloadVideoAction,
   videos,
+  loading,
 }) => {
   const {exercise} = route.params;
   const [reps, setReps] = useState(15);
@@ -60,7 +58,10 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
     : [];
   return (
     <ScrollView style={{flex: 1}}>
-      {video && exercise.video && video.src === exercise.video.src ? (
+      {!loading &&
+      video &&
+      exercise.video &&
+      video.src === exercise.video.src ? (
         <ExerciseVideo path={video.path} />
       ) : (
         <Layout
@@ -104,6 +105,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
 const mapStateToProps = ({exercises}: MyRootState) => ({
   workout: exercises.workout,
   videos: exercises.videos,
+  loading: exercises.videoLoading,
 });
 
 const mapDispatchToProps = {

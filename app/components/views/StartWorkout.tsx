@@ -21,6 +21,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   setExerciseNoteAction,
   downloadVideoAction,
   videos,
+  loading,
 }) => {
   const [index, setIndex] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -83,7 +84,10 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           return (
             <ScrollView key={exercise.id}>
               <>
-                {video && exercise.video && video.src === exercise.video.src ? (
+                {!loading &&
+                video &&
+                exercise.video &&
+                video.src === exercise.video.src ? (
                   <ExerciseVideo path={video.path} />
                 ) : (
                   <Layout
@@ -102,7 +106,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       position: 'absolute',
                       right: 5,
-                      top: 100,
+                      top: '25%',
                       zIndex: 9,
                       padding: 10,
                     }}>
@@ -115,7 +119,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       position: 'absolute',
                       left: 5,
-                      top: 100,
+                      top: '25%',
                       zIndex: 9,
                       padding: 10,
                     }}>
@@ -241,6 +245,7 @@ const mapStateToProps = ({exercises}: MyRootState) => ({
   workout: exercises.workout,
   exerciseNotes: exercises.exerciseNotes,
   videos: exercises.videos,
+  loading: exercises.videoLoading,
 });
 
 const mapDispatchToProps = {

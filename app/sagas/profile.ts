@@ -71,6 +71,7 @@ import {
   DownloadVideoAction,
   DOWNLOAD_VIDEO,
   setVideo,
+  setVideoLoading,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import Purchases, {PurchaserInfo} from 'react-native-purchases';
@@ -190,31 +191,31 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
   const exercise: Exercise = exercises[id];
   const video: {src: string; path: string} | undefined = videos[id];
   if (exercise.video) {
-    let exists = true;
-    if (Platform.OS === 'ios') {
-      exists = yield call(RNFetchBlob.fs.exists, video.path);
-    }
-
-    if (!exists && video) {
-      const {uid} = yield select((state: MyRootState) => state.profile.profile);
-      analytics().logEvent('redownload_video', {os: Platform.OS, uid});
-    }
-    if (!video || video.src !== exercise.video.src || !exists) {
-      try {
+    try {
+      let exists = true;
+      if (video && video.path && Platform.OS === 'ios') {
+        exists = yield call(RNFetchBlob.fs.exists, video.path);
+      }
+      if (!exists && video) {
+        const {uid} = yield select(
+          (state: MyRootState) => state.profile.profile,
+        );
+        analytics().logEvent('redownload_video', {os: Platform.OS, uid});
+      }
+      if (!video || video.src !== exercise.video.src || !exists) {
+        yield put(setVideoLoading(true));
         const response: FetchBlobResponse = yield call(
-          RNFetchBlob.config({fileCache: true, appendExt: 'mp4'}).fetch,
+          RNFetchBlob.config({
+            fileCache: true,
+            appendExt: 'mp4',
+          }).fetch,
           'GET',
           exercise.video.src,
         );
-
         yield put(setVideo(id, exercise.video.src, response.path()));
-      } catch (e) {
-        yield call(
-          Alert.alert,
-          'Error',
-          `Error downloading video: ${e.message}`,
-        );
       }
+    } catch (e) {
+      yield call(Alert.alert, 'Error', `Error downloading video: ${e.message}`);
     }
   } else {
     yield call(
@@ -223,6 +224,7 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
       'Video has not yet been uploaded for this exercise',
     );
   }
+  yield put(setVideoLoading(false));
 }
 
 function* signUp(action: SignUpAction) {

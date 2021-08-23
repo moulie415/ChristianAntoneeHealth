@@ -14,4 +14,5 @@ export default interface StartWorkoutProps {
   navigation: StartWorkoutNavigationProp;
   downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
+  loading: boolean;
 };

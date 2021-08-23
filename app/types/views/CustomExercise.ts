@@ -20,4 +20,5 @@ export default interface CustomizeExerciseProps {
   navigation: CustomizeExerciseNavigationProp;
   downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
+  loading: boolean;
 }
