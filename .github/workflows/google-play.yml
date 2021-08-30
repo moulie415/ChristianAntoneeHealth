@@ -1,0 +1,41 @@
+name: Deploy android to Google Play
+on:
+  push:
+    branches:
+      - master
+jobs:
+  install-and-deploy:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          yarn
+      - name: Run tests
+        run: |
+          yarn test
+      - name: Bump version
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{github.run_number}}
+      - name: Build android aab
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          MYAPP_UPLOAD_KEY_ALIAS: ${{ secrets.MYAPP_UPLOAD_KEY_ALIAS }}
+          MYAPP_UPLOAD_STORE_FILE: ${{ secrets.MYAPP_UPLOAD_STORE_FILE }}
+          MYAPP_UPLOAD_STORE_PASSWORD: ${{ secrets.MYAPP_UPLOAD_STORE_PASSWORD }}
+          MYAPP_UPLOAD_KEY_PASSWORD: ${{ secrets.MYAPP_UPLOAD_KEY_PASSWORD }}
+          KEYSTORE_DATA: ${{ secrets.KEYSTORE_DATA }}
+        run: |
+          exec .github/scripts/bundle-release.sh
+      - name: upload bundle to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT_JSON}}
+          packageName: com.healthandmovement
+          releaseFiles: android/app/build/outputs/bundle/release/*.aab
+          track: alpha
+          #userFraction: 0.33
+          whatsNewDirectory: whatsnew
+          #mappingFile: /app/build/outputs/mapping/release/mapping.txt

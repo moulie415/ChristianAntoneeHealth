@@ -1,0 +1,16 @@
+version: 2
+updates:
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-name: "@react-native-firebase/app"
+      - dependency-name: "@react-native-firebase/auth"
+      - dependency-name: "@react-native-firebase/crashlytics"
+      - dependency-name: "@react-native-firebase/firestore"
+      - dependency-name: "@react-native-firebase/analytics"
+      - dependency-name: "@shakebugs/react-native-shake"
+    target-branch: "dev"
