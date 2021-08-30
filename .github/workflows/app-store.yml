@@ -21,6 +21,11 @@ jobs:
       - name: Run tests
         run: |
           yarn test
+            - name: Create sentry files
+        env:
+          SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
+        run: |
+          exec .github/scripts/create-sentry-files.sh
       - name: Set environment variables from project settings
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
