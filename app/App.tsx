@@ -51,6 +51,7 @@ import {useEffect} from 'react';
 import Policies from './components/views/Policies';
 import Loading from './components/views/Loading';
 import {setNavigationAction} from './actions/profile';
+import Test from './components/views/Test';
 
 const composeEnhancers =
   // @ts-ignore
@@ -294,6 +295,7 @@ const App: React.FC = () => {
                   options={{headerTitle: ''}}
                 />
                 <Stack.Screen name="Policies" component={Policies} />
+                <Stack.Screen name="Test" component={Test} />
               </Stack.Group>
               <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen name="Premium" component={Premium} />

@@ -1,13 +1,35 @@
 export default interface Test {
   id: string;
   name: string;
-  purpose: string;
-  description: string;
-  riskZone: string;
-  scores?: Scores;
-};
+  summary: string;
+  how: string[];
+  improve: string;
+  why: string;
+  mens?: Table;
+  womens?: Table;
+}
 
-interface Scores {
-  men: { [key: string]: string };
-  women: { [key: string]: string };
+export interface Table {
+  age: Row;
+  excellent?: Row;
+  good?: Row;
+  aboveAverage?: Row;
+  average?: Row;
+  belowAverage?: Row;
+  poor?: Row;
+  veryPoor?: Row;
+}
+
+interface Row {
+  col1?: Cell;
+  col2?: Cell;
+  col3?: Cell;
+  col4?: Cell;
+  col5?: Cell;
+  col6?: Cell;
+}
+
+interface Cell {
+  higher?: number;
+  lower?: number;
 }
