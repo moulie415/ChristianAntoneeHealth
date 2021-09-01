@@ -1600,37 +1600,37 @@
   dependencies:
     flow-bin "0.113.0"
 
-"@react-native-firebase/analytics@^12.7.3":
-  version "12.7.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.7.3.tgz#5f3245bb812d5f2b50304ca7dbc9358291b762dc"
-  integrity sha512-X0Wzk6Q7YFS1vgHlTxywuN3jVBp5Lr+zeexQqKZ+r+POHfkDSQC0XEuKe9LXBfOmrks4WP0jy3F+FdXfPZ8Vcw==
+"@react-native-firebase/analytics@^12.7.4":
+  version "12.7.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.7.4.tgz#48bac327afad129246cb0b86b679f1c576a9a202"
+  integrity sha512-dYQf03bxqB/ODZ4jvVaALHTr85hAdQaoiM4hKxk8+dlw9rGODYBFgZ9CWuDLLvfpb2vHDfKY7Gnb43i8f6Z+YQ==
 
-"@react-native-firebase/app@^12.7.3":
-  version "12.7.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.7.3.tgz#80c1519380abc26dbbf170c916529fe6689e04b4"
-  integrity sha512-dp4lbLM0xJsR8mT5PHrCGSoCMCZ0KrXFIt69pAsjaQ22AEr2ETeBrCxbwHQjXylfPrg1PudqADzMIifS44Qq9g==
+"@react-native-firebase/app@^12.7.4":
+  version "12.7.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.7.4.tgz#aa41a8b68881c7ced3a9b9125306bc3935b12fb6"
+  integrity sha512-ao8jSyevNItQ1sFhn2yAS7BIMGChbQVfJj5/9bsJ7OdS2gQx6vczh6N0QB7AlGfzpYT/w+4xebJvnBs21V3jpg==
   dependencies:
     "@expo/config-plugins" "^3.0.7"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^12.7.3":
-  version "12.7.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.7.3.tgz#ff225a8661a6197a562ca99bc5451f0e80e202b7"
-  integrity sha512-BksvXxIJLxxnAY0v476XxIZA9F46p+wRCX5VMpLBnfXN7BThpT1nl0aqTs1Da4pIEmYTOuGcV+afbs46uklQ4A==
+"@react-native-firebase/auth@^12.7.4":
+  version "12.7.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.7.4.tgz#92a475f50a8239b7f1d6070bbf3b7851746fa003"
+  integrity sha512-EBhg9Sddu6ljOx/iWUe7z9Ie5zK1ejnRWdkiTueEItmRxGgF6BTvbqx4yxcZ2RaxrAXXXCvgYFLVIl0+PH6Bpg==
 
-"@react-native-firebase/crashlytics@^12.7.3":
-  version "12.7.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-12.7.3.tgz#c2cf930b93abdd32682b929f9da2ad95e0613f0e"
-  integrity sha512-4IQs7Oo1uaT6xqrA+hlreminePO1kISIBfdIDqdoBmnOJcsVwwU+ghZ2QB15wd3c/xM06MNezFBH/b/5SmBXTg==
+"@react-native-firebase/crashlytics@^12.7.4":
+  version "12.7.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-12.7.4.tgz#ab70702144e14a9cf387dac41672da4ec67ffe70"
+  integrity sha512-G1fAnoj0PibtmUr8T70ijQZk9lUNX+Tnaa4vOBP4/A2WDIY09f4rXXSSRDB86sCqyo5NYMTUoOWhNWhtRZoIvg==
   dependencies:
     "@expo/config-plugins" "^3.0.7"
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/firestore@^12.7.3":
-  version "12.7.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.7.3.tgz#00fde58d22f20e2e917b99f80e8b2aef946037e8"
-  integrity sha512-5nLOFf5bZlqzjivJ3asrsD2vQQ/GcdPLvXIq2/FurV977tdVmNyfvXSSX0qILn4YJXSFJ2jsRbXkGIZT327uHw==
+"@react-native-firebase/firestore@^12.7.4":
+  version "12.7.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.7.4.tgz#a4b3bc894e36289ff720896b4b33c005e7e04ab4"
+  integrity sha512-UOyBNxV5Lj2aIK1jFY/ZpPLpp0iSVTerVvTW6rOBOnNlyzrTmvVrMXoMhus454IDRzS+5X5pUt2oRP7ruSM16Q==
 
 "@react-native-picker/picker@^1.16.7":
   version "1.16.7"
