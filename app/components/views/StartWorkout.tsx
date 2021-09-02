@@ -68,7 +68,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
         }}>
         <Text category="h5">{`Exercise ${index + 1}/${workout.length}`}</Text>
         <Layout style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Icon name="stopwatch" size={25} color="#fff" />
+          <Icon name="stopwatch" size={25} color={colors.darkBlue} />
           <Text style={{marginLeft: 10, width: 70}} category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>

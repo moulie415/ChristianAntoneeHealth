@@ -36,7 +36,7 @@ export const googleFitOptions = {
 };
 
 export const SAMPLE_VIDEO_LINK =
-  'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4';
+  'https://cdn.videvo.net/videvo_files/video/free/2014-08/large_watermarked/Earth_Zoom_In_preview.mp4';
 
 export const WORKOUT_LISTENER_SETUP = 'healthKit:Workout:setup:success';
 export const WORKOUT_LISTENER_SETUP_FAILURE = 'healthKit:Workout:setup:failure';

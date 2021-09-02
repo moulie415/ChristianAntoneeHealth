@@ -1,13 +1,15 @@
 export default interface Test {
   id: string;
   name: string;
+  type: 'countdown' | 'countup' | 'untimed';
+  time?: number;
   summary: string;
   how: string[];
   improve: string;
   why: string;
   mens?: Table;
   womens?: Table;
-}
+};
 
 export interface Table {
   age: Row;
@@ -20,7 +22,7 @@ export interface Table {
   veryPoor?: Row;
 }
 
-interface Row {
+export interface Row {
   col1?: Cell;
   col2?: Cell;
   col3?: Cell;

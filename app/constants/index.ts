@@ -1,4 +1,4 @@
-import {ImageSourcePropType, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import {Purpose} from '../types/Shared';
 import colors from './colors';
 
