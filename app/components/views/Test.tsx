@@ -1,16 +1,8 @@
 import {Button, Divider, Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-} from 'react-native-table-component';
-import {Table as TableType, Row as RowType} from '../../types/Test';
 import moment from 'moment';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import TestProps from '../../types/views/Test';
@@ -19,76 +11,31 @@ import {SAMPLE_VIDEO_LINK} from '../../constants/strings';
 import colors from '../../constants/colors';
 import Countdown from '../commons/Countdown';
 import ViewMore from '../commons/ViewMore';
-
-const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
-  header: {height: 50, backgroundColor: '#537791'},
-  text: {textAlign: 'center', fontWeight: '100'},
-  dataWrapper: {marginTop: -1},
-  row: {height: 40, backgroundColor: '#E7E6E1'},
-});
+import Table from '../commons/Table';
 
 const Test: React.FC<TestProps> = ({route, tests, profile}) => {
   const {id} = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(test.time || 0);
   const [showCountdown, setShowCountdown] = useState(false);
 
-  const getTable = (table: TableType) => {
-    const getRowArr = (row: RowType) => {
-      return Object.values(row)
-        .reverse()
-        .map(col => `${col.lower || ''} - ${col.higher || ''}`);
-    };
-    const tableHead = ['', ...getRowArr(table.age)];
-    const tableTitle = [];
-    const tableData = [];
-
-    table.excellent &&
-      tableData.push(getRowArr(table.excellent)) &&
-      tableTitle.push('Excellent');
-
-    table.good &&
-      tableData.push(getRowArr(table.good)) &&
-      tableTitle.push('Good');
-
-    table.aboveAverage &&
-      tableData.push(getRowArr(table.aboveAverage)) &&
-      tableTitle.push('Above average');
-
-    table.average &&
-      tableData.push(getRowArr(table.average)) &&
-      tableTitle.push('Average');
-
-    table.belowAverage &&
-      tableData.push(getRowArr(table.belowAverage)) &&
-      tableTitle.push('Below average');
-
-    table.poor &&
-      tableData.push(getRowArr(table.poor)) &&
-      tableTitle.push('Poor');
-
-    table.poor &&
-      tableData.push(getRowArr(table.poor)) &&
-      tableTitle.push('Very poor');
-    return {
-      tableHead,
-      tableTitle,
-      tableData,
-    };
-  };
-  const mensTable = test.mens && getTable(test.mens);
-  const womensTable = test.womens && getTable(test.womens);
   useEffect(() => {
-    if (testStarted) {
+    if (testStarted && (test.type === 'countdown' || test.type === 'countup')) {
       const start = moment().unix();
+      const startCountdown = moment().unix() + seconds;
       const intervalID = setInterval(() => {
-        setSeconds(Math.floor(moment().unix() - start));
+        if (test.type === 'countup') {
+          setSeconds(Math.floor(moment().unix() - start));
+        } else {
+          if (seconds > 0) {
+            setSeconds(Math.floor(startCountdown - moment().unix()));
+          }
+        }
       }, 1000);
       return () => clearInterval(intervalID);
     }
-  }, [testStarted]);
+  }, [testStarted, test.type, seconds]);
 
   return (
     <Layout style={{flex: 1}}>
@@ -128,7 +75,17 @@ const Test: React.FC<TestProps> = ({route, tests, profile}) => {
           Why is this test important
         </Text>
         <ViewMore text={test.why} />
-
+        <Divider />
+        {test.mens && (profile.gender === 'male' || !profile.gender) && (
+          <Table table={test.mens} metric={test.metric} title="Mens table" />
+        )}
+        {test.womens && (profile.gender === 'female' || !profile.gender) && (
+          <Table
+            table={test.womens}
+            metric={test.metric}
+            title="Womens table"
+          />
+        )}
       </ScrollView>
       <Button
         onPress={() => setShowCountdown(true)}

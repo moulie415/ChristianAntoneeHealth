@@ -7,6 +7,7 @@ export default interface Test {
   how: string[];
   improve: string;
   why: string;
+  metric?: string;
   mens?: Table;
   womens?: Table;
 };
