@@ -63,4 +63,4 @@ google-services.json
 GoogleService-Info.plist
 
 
-sentry.properties
+#sentry.properties
