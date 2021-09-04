@@ -15,17 +15,17 @@ jobs:
           xcode-version: '12.4.0'
       - name: Checkout project
         uses: actions/checkout@v2
+      - name: Create sentry files
+        env:
+          SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
+        run: |
+          exec .github/scripts/create-sentry-files.sh
       - name: Install npm dependencies
         run: |
           yarn
       - name: Run tests
         run: |
           yarn test
-      - name: Create sentry files
-        env:
-          SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
-        run: |
-          exec .github/scripts/create-sentry-files.sh
       - name: Set environment variables from project settings
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
