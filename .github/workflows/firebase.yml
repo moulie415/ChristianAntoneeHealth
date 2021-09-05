@@ -16,7 +16,7 @@ jobs:
           yarn test
       - name: Create sentry files
         env:
-          SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
+          SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
         run: |
           exec .github/scripts/create-sentry-files.sh
       - name: Bump version

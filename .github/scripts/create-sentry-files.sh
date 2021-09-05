@@ -1,7 +1,4 @@
 #!/bin/bash
 
-echo $SENTRY_PROPERTIES >> android/sentry.properties
-echo $SENTRY_PROPERTIES >> ios/sentry.properties
-cat ios/sentry.properties
-ls ios
-
+echo $SENTRY_TOKEN >> android/sentry.properties
+echo $SENTRY_TOKEN >> ios/sentry.properties
