@@ -125,7 +125,7 @@ const Profile: React.FC<ProfileProps> = ({
               testID="datePicker"
               value={moment(dob).toDate()}
               mode="date"
-              display="default"
+              display="compact"
               onChange={(_: Event, d: Date) => {
                 if (d) {
                   setDob(d.toISOString());

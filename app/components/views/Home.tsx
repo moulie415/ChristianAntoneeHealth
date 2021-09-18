@@ -8,7 +8,6 @@ import {MyRootState} from '../../types/Shared';
 import HomeWelcome from './HomeWelcome';
 import HomeCard from '../commons/HomeCard';
 import {linkToGoogleFit} from '../../helpers/biometrics';
-import {rateApp} from '../../helpers';
 
 const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
@@ -67,10 +66,10 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               marginBottom: 20,
             }}>
             <HomeCard
-              title="Rate the app"
-              subtitle="Tell us what you think"
+              title="Quick routines"
+              subtitle="View premade routines"
               image={require('../../images/dumbell.png')}
-              onPress={rateApp}
+              onPress={() => 0}
             />
             <HomeCard
               title="View Activity"
