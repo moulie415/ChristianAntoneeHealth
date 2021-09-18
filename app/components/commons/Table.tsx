@@ -1,7 +1,7 @@
 import {Text} from '@ui-kitten/components';
 import React, {useMemo} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {Table as TableType} from '../../types/Test';
+import {Cell, Table as TableType} from '../../types/Test';
 import {Row as RowType} from '../../types/Test';
 
 const CELL_WIDTH = 100;
@@ -13,9 +13,13 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
 }) => {
   const {tableHead, tableData} = useMemo(() => {
     const getRowArr = (row: RowType, showMetric = true) => {
-      return Object.values(row)
-        .reverse()
-        .map(col => {
+      return Object.keys(row)
+        .sort((a, b) => {
+          return Number(a[3]) - Number(b[3]);
+        })
+        .map(key => {
+          // @ts-ignore
+          const col = row[key];
           const metricStr = showMetric && metric ? metric : '';
           if (col.lower && col.higher) {
             return `${col.lower} - ${col.higher}${metricStr}`;
@@ -57,12 +61,14 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
           {title}
         </Text>
       )}
-      <ScrollView horizontal style={{paddingVertical: 10, marginHorizontal: 10}}>
+      <ScrollView
+        horizontal
+        style={{paddingVertical: 10, marginHorizontal: 10}}>
         <View>
           <View style={{flexDirection: 'row'}}>
             {tableHead.map(cell => (
               <Text
-                key={cell}
+                key={Math.random()}
                 style={{
                   padding: 2,
                   borderWidth: StyleSheet.hairlineWidth,
@@ -80,7 +86,7 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
               <View key={row[0]} style={{flexDirection: 'row'}}>
                 {row.map((cell, index) => (
                   <Text
-                    key={cell}
+                    key={Math.random()}
                     style={{
                       padding: 2,
                       borderWidth: StyleSheet.hairlineWidth,

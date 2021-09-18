@@ -32,7 +32,7 @@ export interface Row {
   col6?: Cell;
 }
 
-interface Cell {
+export interface Cell {
   higher?: number;
   lower?: number;
 }
