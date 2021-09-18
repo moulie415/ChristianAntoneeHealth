@@ -15,11 +15,11 @@ jobs:
           xcode-version: '12.4.0'
       - name: Checkout project
         uses: actions/checkout@v2
-          - name: Create sentry files
-          env:
+      - name: Create sentry files
+        env:
           SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
-          run: |
-          :exec .github/scripts/create-sentry-files.sh
+        run: |
+          exec .github/scripts/create-sentry-files.sh
       - name: Install npm dependencies
         run: |
           yarn
