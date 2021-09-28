@@ -69,7 +69,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               title="Quick routines"
               subtitle="View premade routines"
               image={require('../../images/dumbell.png')}
-              onPress={() => 0}
+              onPress={() => navigation.navigate('QuickRoutines')}
             />
             <HomeCard
               title="View Activity"

@@ -121,7 +121,10 @@ const Profile: React.FC<ProfileProps> = ({
           </Text>
           {(show || Platform.OS === 'ios') && (
             <DatePicker
-              style={{width: '100%', marginVertical: 5}}
+              style={{
+                marginVertical: 5,
+                width: 125,
+              }}
               testID="datePicker"
               value={moment(dob).toDate()}
               mode="date"
