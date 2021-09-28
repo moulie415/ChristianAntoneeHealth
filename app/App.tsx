@@ -53,6 +53,8 @@ import Loading from './components/views/Loading';
 import {setNavigationAction} from './actions/profile';
 import Test from './components/views/Test';
 import QuickRoutines from './components/views/QuickRoutines';
+import QuickRoutinesList from './components/views/QuickRoutinesList';
+import {Area, Equipment, Focus} from './types/QuickRoutines';
 
 const composeEnhancers =
   // @ts-ignore
@@ -107,6 +109,7 @@ export type StackParamList = {
   Policies: undefined;
   Loading: undefined;
   QuickRoutines: undefined;
+  QuickRoutinesList: {area?: Area; equipment?: Equipment; focus?: Focus};
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -298,7 +301,20 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen name="Policies" component={Policies} />
                 <Stack.Screen name="Test" component={Test} />
-                <Stack.Screen name="QuickRoutines" component={QuickRoutines} />
+                <Stack.Screen
+                  name="QuickRoutines"
+                  component={QuickRoutines}
+                  options={({navigation}) => ({
+                    headerTitle: 'Quick Routines',
+                  })}
+                />
+                <Stack.Screen
+                  name="QuickRoutinesList"
+                  component={QuickRoutinesList}
+                  options={({navigation}) => ({
+                    headerTitle: 'Quick Routines',
+                  })}
+                />
               </Stack.Group>
               <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen name="Premium" component={Premium} />

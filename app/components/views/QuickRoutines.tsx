@@ -1,5 +1,5 @@
 import {Divider, Layout, Text} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {
   View,
   ImageSourcePropType,
@@ -8,31 +8,51 @@ import {
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import globalStyles from '../../styles/globalStyles';
+import {Area, Equipment, Focus} from '../../types/QuickRoutines';
+import QuickRoutinesProps from '../../types/views/QuickRoutines';
 import ImageLoader from '../commons/ImageLoader';
 
 const sections: {
   title: string;
+  key: string;
   image: ImageSourcePropType;
-  items: string[];
+  items: {id: Area | Focus | Equipment; name: string}[];
 }[] = [
   {
     title: 'Body part',
-    items: ['Upper body', 'Lower body', 'Abs and core', 'Full body'],
+    key: 'area',
+    items: [
+      {id: 'upper', name: 'Upper body'},
+      {id: 'lower', name: 'Lower body'},
+      {id: 'full', name: 'Full body'},
+      {id: 'core', name: 'Abs and core'},
+    ],
     image: require('../../images/flexibility.jpeg'),
   },
   {
     title: 'Training focus',
-    items: ['strength', 'mobility', 'balance', 'high intensity'],
+    key: 'focus',
+    items: [
+      {id: 'strength', name: 'Strength'},
+      {id: 'mobility', name: 'Mobility'},
+      {id: 'balance', name: 'Balance'},
+      {id: 'intensity', name: 'Hight intensity'},
+    ],
     image: require('../../images/lower_body.jpeg'),
   },
   {
     title: 'Equipment',
-    items: ['full equipment', 'minimal equipment', 'no equipment'],
+    key: 'equipment',
+    items: [
+      {id: 'full', name: 'Full equipment'},
+      {id: 'minimal', name: 'Minimal equipment'},
+      {id: 'none', name: 'No equipment'},
+    ],
     image: require('../../images/dumbell.png'),
   },
 ];
 
-const QuickRoutines: React.FC = ({navigation}) => {
+const QuickRoutines: React.FC<QuickRoutinesProps> = ({navigation}) => {
   const [itemsCollapsed, setItemsCollapsed] = useState<{
     [key: number]: boolean;
   }>(
@@ -43,9 +63,9 @@ const QuickRoutines: React.FC = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Layout style={{flex: 1}}>
-        {sections.map(({title, image, items}, index) => {
+        {sections.map(({title, image, items, key}, index) => {
           return (
-            <>
+            <Fragment key={key}>
               <TouchableOpacity
                 onPress={() =>
                   setItemsCollapsed({
@@ -77,21 +97,23 @@ const QuickRoutines: React.FC = ({navigation}) => {
                 </View>
               </TouchableOpacity>
               <Collapsible collapsed={itemsCollapsed[index]}>
-                {items.map(item => {
+                {items.map(({id, name}) => {
                   return (
-                    <>
+                    <Fragment key={id}>
                       <TouchableOpacity
                         style={{padding: 20}}
-                        key={item}
-                        onPress={() => 0}>
-                        <Text>{item}</Text>
+                        key={id}
+                        onPress={() =>
+                          navigation.navigate('QuickRoutinesList', {[key]: id})
+                        }>
+                        <Text>{name}</Text>
                       </TouchableOpacity>
                       <Divider />
-                    </>
+                    </Fragment>
                   );
                 })}
               </Collapsible>
-            </>
+            </Fragment>
           );
         })}
       </Layout>

@@ -1,7 +1,7 @@
 import {Button, Layout, ListItem, Text} from '@ui-kitten/components';
 import React, {useCallback, useRef, useState} from 'react';
 import Image from 'react-native-fast-image';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';

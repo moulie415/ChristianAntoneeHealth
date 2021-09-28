@@ -5,6 +5,7 @@ import Exercise from '../types/Exercise';
 import Profile from '../types/Profile';
 import Test from '../types/Test';
 import {Goal, Level, StrengthArea} from '../types/Shared';
+import QuickRoutine from '../types/QuickRoutines';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -82,6 +83,15 @@ export const getTests = async () => {
   return snapshot.docs.reduce((acc: {[id: string]: Test}, curr) => {
     const test: any = curr.data();
     acc[curr.id] = {...test, id: curr.id};
+    return acc;
+  }, {});
+};
+
+export const getQuickRoutines = async () => {
+  const snapshot = await db().collection('quickRoutines').get();
+  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, curr) => {
+    const quickRoutine: any = curr.data();
+    acc[curr.id] = {...quickRoutine, id: curr.id};
     return acc;
   }, {});
 };
