@@ -1,5 +1,7 @@
+import {CompositeNavigationProp} from '@react-navigation/core';
+import {MaterialTopTabNavigationProp} from '@react-navigation/material-top-tabs';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackParamList} from '../../App';
+import {StackParamList, TopTabsParamsList} from '../../App';
 
 type QuickRoutinesNavigationProp = StackNavigationProp<
   StackParamList,
@@ -8,4 +10,5 @@ type QuickRoutinesNavigationProp = StackNavigationProp<
 
 export default interface QuickRoutinesProps {
   navigation: QuickRoutinesNavigationProp;
+  getQuickRoutinesAction: () => void;
 }

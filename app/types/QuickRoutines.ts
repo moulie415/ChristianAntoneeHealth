@@ -5,6 +5,7 @@ export type Equipment = 'full' | 'minimal' | 'none';
 export type Focus = 'strength' | 'mobility' | 'balance' | 'intensity';
 
 export default interface QuickRoutine {
+  id: string;
   name: string;
   area: Area;
   duration: number;

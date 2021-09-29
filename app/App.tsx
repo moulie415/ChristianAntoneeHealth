@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import Purchases from 'react-native-purchases';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import Shake from '@shakebugs/react-native-shake';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -53,8 +54,11 @@ import Loading from './components/views/Loading';
 import {setNavigationAction} from './actions/profile';
 import Test from './components/views/Test';
 import QuickRoutines from './components/views/QuickRoutines';
-import QuickRoutinesList from './components/views/QuickRoutinesList';
 import {Area, Equipment, Focus} from './types/QuickRoutines';
+import UpperBody from './components/views/UpperBody';
+import LowerBody from './components/views/LowerBody';
+import AbsAndCore from './components/views/AbsAndCore';
+import FullBody from './components/views/FullBody';
 
 const composeEnhancers =
   // @ts-ignore
@@ -109,7 +113,7 @@ export type StackParamList = {
   Policies: undefined;
   Loading: undefined;
   QuickRoutines: undefined;
-  QuickRoutinesList: {area?: Area; equipment?: Equipment; focus?: Focus};
+  QuickRoutinesTabs: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -178,6 +182,59 @@ const Tabs = () => {
         component={More}
       />
     </Tab.Navigator>
+  );
+};
+
+export type TopTabsParamsList = {
+  UpperBody: {area?: Area; equipment?: Equipment; focus?: Focus};
+  LowerBody: {area?: Area; equipment?: Equipment; focus?: Focus};
+  AbsAndCore: {area?: Area; equipment?: Equipment; focus?: Focus};
+  FullBody: {area?: Area; equipment?: Equipment; focus?: Focus};
+};
+
+const QuickRoutineTab = createMaterialTopTabNavigator<TopTabsParamsList>();
+
+// @ts-ignore
+const QuickRoutinesTabs = ({route}) => {
+  return (
+    <QuickRoutineTab.Navigator>
+      <QuickRoutineTab.Screen
+        name="UpperBody"
+        options={{
+          tabBarLabel: 'Upper Body',
+          tabBarLabelStyle: {textTransform: 'none'},
+        }}
+        component={UpperBody}
+        initialParams={route.params}
+      />
+      <QuickRoutineTab.Screen
+        name="LowerBody"
+        options={{
+          tabBarLabel: 'Lower Body',
+          tabBarLabelStyle: {textTransform: 'none'},
+        }}
+        component={LowerBody}
+        initialParams={route.params}
+      />
+      <QuickRoutineTab.Screen
+        name="AbsAndCore"
+        options={{
+          tabBarLabel: 'Abs and Core',
+          tabBarLabelStyle: {textTransform: 'none'},
+        }}
+        component={AbsAndCore}
+        initialParams={route.params}
+      />
+      <QuickRoutineTab.Screen
+        name="FullBody"
+        options={{
+          tabBarLabel: 'Full Body',
+          tabBarLabelStyle: {textTransform: 'none'},
+        }}
+        component={FullBody}
+        initialParams={route.params}
+      />
+    </QuickRoutineTab.Navigator>
   );
 };
 
@@ -309,8 +366,8 @@ const App: React.FC = () => {
                   })}
                 />
                 <Stack.Screen
-                  name="QuickRoutinesList"
-                  component={QuickRoutinesList}
+                  name="QuickRoutinesTabs"
+                  component={QuickRoutinesTabs}
                   options={({navigation}) => ({
                     headerTitle: 'Quick Routines',
                   })}

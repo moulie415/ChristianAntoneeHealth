@@ -1,5 +1,5 @@
 import {Divider, Layout, Text} from '@ui-kitten/components';
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
   View,
   ImageSourcePropType,
@@ -7,6 +7,8 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import {connect} from 'react-redux';
+import {getQuickRoutines} from '../../actions/quickRoutines';
 import globalStyles from '../../styles/globalStyles';
 import {Area, Equipment, Focus} from '../../types/QuickRoutines';
 import QuickRoutinesProps from '../../types/views/QuickRoutines';
@@ -14,7 +16,7 @@ import ImageLoader from '../commons/ImageLoader';
 
 const sections: {
   title: string;
-  key: string;
+  key: 'area' | 'focus' | 'equipment';
   image: ImageSourcePropType;
   items: {id: Area | Focus | Equipment; name: string}[];
 }[] = [
@@ -52,7 +54,10 @@ const sections: {
   },
 ];
 
-const QuickRoutines: React.FC<QuickRoutinesProps> = ({navigation}) => {
+const QuickRoutines: React.FC<QuickRoutinesProps> = ({
+  navigation,
+  getQuickRoutinesAction,
+}) => {
   const [itemsCollapsed, setItemsCollapsed] = useState<{
     [key: number]: boolean;
   }>(
@@ -60,6 +65,11 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({navigation}) => {
       return {...acc, [index]: true};
     }, {}),
   );
+
+  useEffect(() => {
+    getQuickRoutinesAction();
+  }, [getQuickRoutinesAction]);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Layout style={{flex: 1}}>
@@ -103,9 +113,36 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({navigation}) => {
                       <TouchableOpacity
                         style={{padding: 20}}
                         key={id}
-                        onPress={() =>
-                          navigation.navigate('QuickRoutinesList', {[key]: id})
-                        }>
+                        onPress={() => {
+                          if (key === 'area') {
+                            if (id === 'full') {
+                              // @ts-ignore
+                              return navigation.navigate('QuickRoutinesTabs', {
+                                screen: 'FullBody',
+                                [key]: id,
+                              });
+                            }
+                            if (id === 'lower') {
+                              // @ts-ignore
+                              return navigation.navigate('QuickRoutinesTabs', {
+                                screen: 'LowerBody',
+                                params: {[key]: id},
+                              });
+                            }
+                            if (id === 'core') {
+                              // @ts-ignore
+                              return navigation.navigate('QuickRoutinesTabs', {
+                                screen: 'AbsAndCore',
+                                params: {[key]: id},
+                              });
+                            }
+                          }
+                          // @ts-ignore
+                          return navigation.navigate('QuickRoutinesTabs', {
+                            screen: 'UpperBody',
+                            params: {[key]: id},
+                          });
+                        }}>
                         <Text>{name}</Text>
                       </TouchableOpacity>
                       <Divider />
@@ -121,4 +158,8 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({navigation}) => {
   );
 };
 
-export default QuickRoutines;
+const mapDispatchToProps = {
+  getQuickRoutinesAction: getQuickRoutines,
+};
+
+export default connect(null, mapDispatchToProps)(QuickRoutines);
