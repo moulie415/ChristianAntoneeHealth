@@ -1,6 +1,6 @@
 # HealthAndMovement
 
-### Setup
+## Setup
 
 ```bash
 yarn
