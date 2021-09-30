@@ -6,12 +6,12 @@ import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import MoreProps from '../../types/views/More';
 import styles from '../../styles/views/More';
-import {Alert, Platform, Share, StyleSheet} from 'react-native';
+import {Alert, Share} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLoggedIn} from '../../actions/profile';
 import colors from '../../constants/colors';
 import {Divider, List, ListItem} from '@ui-kitten/components';
-import {resetToLogin} from '../../RootNavigation';
+import {resetToWelcome} from '../../RootNavigation';
 import {MyRootState} from '../../types/Shared';
 import Purchases from 'react-native-purchases';
 import {STORE_LINK} from '../../constants';
@@ -28,7 +28,7 @@ const More: React.FC<MoreProps> = ({
       {
         text: 'OK',
         onPress: async () => {
-          resetToLogin();
+          resetToWelcome();
           await auth().signOut();
           Purchases.logOut();
           setLoggedInAction(false);

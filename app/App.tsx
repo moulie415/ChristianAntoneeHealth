@@ -33,11 +33,10 @@ import Terms from './components/views/Terms';
 import Settings from './components/views/Settings';
 import About from './components/views/About';
 import rootSaga from './sagas';
-import {navigate, navigationRef} from './RootNavigation';
+import {navigationRef} from './RootNavigation';
 import SignUpFlow from './components/views/SignUpFlow';
 import SplashScreen from 'react-native-splash-screen';
 import * as Sentry from '@sentry/react-native';
-import Activity from './components/views/Activity';
 import {Goal, Level, StrengthArea} from './types/Shared';
 import ExerciseList from './components/views/ExerciseList';
 import ExerciseType from './types/Exercise';
@@ -51,7 +50,6 @@ import WorkoutSummary from './components/views/WorkoutSummary';
 import {useEffect} from 'react';
 import Policies from './components/views/Policies';
 import Loading from './components/views/Loading';
-import {setNavigationAction} from './actions/profile';
 import Test from './components/views/Test';
 import QuickRoutines from './components/views/QuickRoutines';
 import QuickRoutine, {Area, Equipment, Focus} from './types/QuickRoutines';
@@ -77,8 +75,6 @@ export const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(...middlewares)),
 );
-
-sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
 
@@ -259,11 +255,7 @@ const App: React.FC = () => {
             ref={navigationRef}
             onReady={() => {
               SplashScreen.hide();
-              const action = store.getState().profile.navigationAction;
-              if (action) {
-                navigate(action);
-                store.dispatch(setNavigationAction(undefined));
-              }
+              sagaMiddleware.run(rootSaga);
             }}>
             <Stack.Navigator
               initialRouteName="Loading"
