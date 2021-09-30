@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Dimensions, ImageSourcePropType, Platform} from 'react-native';
 import Carousel, {
-  AdditionalParallaxProps,
   Pagination,
   ParallaxImage,
+  // @ts-ignore
+  AdditionalParallaxProps,
 } from 'react-native-snap-carousel';
 import {Button, Divider, Layout, Text} from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -55,6 +56,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
         sliderWidth={width}
         itemWidth={width - 50}
         hasParallaxImages
+        // @ts-ignore
         renderItem={(
           {item, index}: {item: CarouselItem; index: number},
           parallaxProps?: AdditionalParallaxProps,
