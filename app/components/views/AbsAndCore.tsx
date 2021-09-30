@@ -12,7 +12,6 @@ const AbsAndCore: React.FC<QuickRoutinesListProps> = ({
 }) => {
   // @ts-ignore
   const {area, focus, equipment} = route.params.params;
-  console.log(focus, equipment);
   const [focusFilter, setFocusFilter] = useState(focus);
   const [equipmentFilter, setEquipmentFilter] = useState(equipment);
 

@@ -1,13 +1,14 @@
-import {Layout, Text, Spinner} from '@ui-kitten/components';
+import {Layout, Text, Spinner, Divider, ListItem} from '@ui-kitten/components';
 import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {downloadRoutineVideo} from '../../actions/quickRoutines';
 import {getVideoHeight} from '../../helpers';
-import QuickRoutine from '../../types/QuickRoutines';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../types/Shared';
 import QuickRoutineProps from '../../types/views/QuickRoutine';
 import ExerciseVideo from '../commons/ExerciseVideo';
+import colors from '../../constants/colors';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -20,8 +21,28 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
     downloadVideoAction(routine.id);
   }, [downloadVideoAction, routine]);
   const video: {src: string; path: string} | undefined = videos[routine.id];
+
   return (
     <Layout style={{flex: 1}}>
+      <Layout
+        style={{
+          flexDirection: 'row',
+          margin: 10,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Layout
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+          }}>
+          <Icon name="stopwatch" size={25} color={colors.darkBlue} />
+          <Text style={{marginLeft: 10}} category="h5">
+            {`Under ${routine.duration} minutes`}
+          </Text>
+        </Layout>
+      </Layout>
       <ScrollView>
         <>
           {!loading &&
@@ -33,7 +54,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             <Layout
               style={{
                 height: getVideoHeight(),
-                marginBottom: 10,
+
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -41,20 +62,16 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             </Layout>
           )}
         </>
-        <Layout
-          style={{
-            marginHorizontal: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <Text style={{flex: 4}} category="h6">
+        <Layout>
+          <Text style={{margin: 10, marginTop: 0}} category="h6">
             {routine.name}
           </Text>
-          <Layout style={{flex: 2, alignItems: 'flex-end'}}>
-            {/* <Text>{`${exercise.reps} repetitions`}</Text>
-            <Text>{`x${exercise.sets} sets`}</Text> */}
-          </Layout>
+          <Divider />
+          <ListItem title="Focus" description={routine.focus} />
+          <Divider />
+          <ListItem title="Equipment" description={routine.equipment} />
+          <Divider />
+          <ListItem title="Level" description={routine.level} />
         </Layout>
       </ScrollView>
     </Layout>

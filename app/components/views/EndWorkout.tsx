@@ -26,7 +26,6 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
   const {seconds} = route.params;
-  console.log({seconds});
   useEffect(() => {
     const getSamples = async () => {
       const startDate = moment().subtract(seconds, 'seconds').toISOString();
