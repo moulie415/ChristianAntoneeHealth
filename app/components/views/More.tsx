@@ -2,6 +2,7 @@ import React from 'react';
 import auth from '@react-native-firebase/auth';
 import Shake from '@shakebugs/react-native-shake';
 import crashlytics from '@react-native-firebase/crashlytics';
+import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import MoreProps from '../../types/views/More';
 import styles from '../../styles/views/More';
@@ -35,7 +36,7 @@ const More: React.FC<MoreProps> = ({
       },
     ]);
   };
-  const listItems: {title: string; icon: string; onPress: () => void}[] = [
+  const listItems: {title: string; icon: string; onPress?: () => void}[] = [
     {
       title: 'Education',
       icon: 'book-open',
@@ -92,6 +93,10 @@ const More: React.FC<MoreProps> = ({
       onPress: () => Shake.show(),
     },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
+    {
+      title: `v${VersionNumber.appVersion} (${VersionNumber.buildVersion})`,
+      icon: 'code',
+    },
   ];
 
   if (profile.admin) {

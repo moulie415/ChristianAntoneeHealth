@@ -4,7 +4,6 @@ import * as api from '../helpers/api';
 import QuickRoutine from '../types/QuickRoutines';
 
 export function* getQuickRoutines() {
-  console.log('test')
   const tests: {[key: string]: QuickRoutine} = yield call(api.getQuickRoutines);
   yield put(setQuickRoutines(tests));
 }

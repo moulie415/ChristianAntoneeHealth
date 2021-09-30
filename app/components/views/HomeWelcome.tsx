@@ -64,7 +64,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
               style={[
                 {
                   width: width - 50,
-                  height: height/2,
+                  height: height / 2,
                   backgroundColor: '#fff',
                   borderRadius: 8,
                 },
@@ -98,7 +98,9 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                     color="#fff"
                     style={{marginRight: 10}}
                   />
-                  <Text category="h4" style={{flex: 1, textAlign: 'center'}}>{item.title}</Text>
+                  <Text category="h4" style={{flex: 1, textAlign: 'center'}}>
+                    {item.title}
+                  </Text>
                 </Layout>
                 <Text>{item.description}</Text>
                 {index === items.length - 1 && (
