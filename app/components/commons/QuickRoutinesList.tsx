@@ -6,6 +6,7 @@ import QuickRoutine, {Equipment, Focus} from '../../types/QuickRoutines';
 import colors from '../../constants/colors';
 import {Level} from '../../types/Shared';
 import ImageOverlay from './ImageOverlay';
+import {QuickRoutinesListNavigationProp} from '../../types/views/QuickRoutinesList';
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -40,7 +41,10 @@ const getLevelString = (level: Level) => {
   return 'Advanced';
 };
 
-const QuickRoutineList: React.FC<{routines: QuickRoutine[]}> = ({routines}) => {
+const QuickRoutinesList: React.FC<{
+  routines: QuickRoutine[];
+  navigation: QuickRoutinesListNavigationProp;
+}> = ({routines, navigation}) => {
   return (
     <Layout style={{flex: 1}}>
       <Text appearance="hint" style={{padding: 10}}>
@@ -54,7 +58,9 @@ const QuickRoutineList: React.FC<{routines: QuickRoutine[]}> = ({routines}) => {
         renderItem={({item}) => {
           return (
             <ListItem
-              onPress={() => 0}
+              onPress={() =>
+                navigation.navigate('QuickRoutine', {routine: item})
+              }
               title={item.name}
               description={`${getLevelString(
                 item.level,
@@ -99,4 +105,4 @@ const QuickRoutineList: React.FC<{routines: QuickRoutine[]}> = ({routines}) => {
   );
 };
 
-export default QuickRoutineList;
+export default QuickRoutinesList;

@@ -2,12 +2,13 @@ import {Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
-import QuickRoutineList from '../commons/QuickRoutineList';
+import QuickRoutineList from '../commons/QuickRoutinesList';
 import QuickRoutinesListProps from '../../types/views/QuickRoutinesList';
 
 const AbsAndCore: React.FC<QuickRoutinesListProps> = ({
   route,
   quickRoutines,
+  navigation,
 }) => {
   // @ts-ignore
   const {area, focus, equipment} = route.params.params;
@@ -22,7 +23,7 @@ const AbsAndCore: React.FC<QuickRoutinesListProps> = ({
       (!equipmentFilter || equipmentFilter === routine.equipment)
     );
   });
-  return <QuickRoutineList routines={filtered} />;
+  return <QuickRoutineList routines={filtered} navigation={navigation} />;
 };
 
 const mapStateToProps = ({quickRoutines}: MyRootState) => ({

@@ -54,11 +54,12 @@ import Loading from './components/views/Loading';
 import {setNavigationAction} from './actions/profile';
 import Test from './components/views/Test';
 import QuickRoutines from './components/views/QuickRoutines';
-import {Area, Equipment, Focus} from './types/QuickRoutines';
+import QuickRoutine, {Area, Equipment, Focus} from './types/QuickRoutines';
 import UpperBody from './components/views/UpperBody';
 import LowerBody from './components/views/LowerBody';
 import AbsAndCore from './components/views/AbsAndCore';
 import FullBody from './components/views/FullBody';
+import QuickRoutineView from './components/views/QuickRoutine';
 
 const composeEnhancers =
   // @ts-ignore
@@ -114,6 +115,7 @@ export type StackParamList = {
   Loading: undefined;
   QuickRoutines: undefined;
   QuickRoutinesTabs: undefined;
+  QuickRoutine: {routine: QuickRoutine};
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -370,6 +372,13 @@ const App: React.FC = () => {
                   component={QuickRoutinesTabs}
                   options={({navigation}) => ({
                     headerTitle: 'Quick Routines',
+                  })}
+                />
+                <Stack.Screen
+                  name="QuickRoutine"
+                  component={QuickRoutineView}
+                  options={({navigation}) => ({
+                    headerTitle: 'Quick Routine',
                   })}
                 />
               </Stack.Group>

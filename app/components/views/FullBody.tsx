@@ -3,9 +3,13 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import QuickRoutinesListProps from '../../types/views/QuickRoutinesList';
-import QuickRoutineList from '../commons/QuickRoutineList';
+import QuickRoutineList from '../commons/QuickRoutinesList';
 
-const FullBody: React.FC<QuickRoutinesListProps> = ({route, quickRoutines}) => {
+const FullBody: React.FC<QuickRoutinesListProps> = ({
+  route,
+  quickRoutines,
+  navigation,
+}) => {
   // @ts-ignore
   const {area, focus, equipment} = route.params.params;
   const [focusFilter, setFocusFilter] = useState(focus);
@@ -18,7 +22,7 @@ const FullBody: React.FC<QuickRoutinesListProps> = ({route, quickRoutines}) => {
       (!equipmentFilter || equipmentFilter === routine.equipment)
     );
   });
-  return <QuickRoutineList routines={filtered} />;
+  return <QuickRoutineList routines={filtered} navigation={navigation} />;
 };
 
 const mapStateToProps = ({quickRoutines}: MyRootState) => ({
