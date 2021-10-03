@@ -38,7 +38,7 @@ const sections: {
       {id: 'strength', name: 'Strength'},
       {id: 'mobility', name: 'Mobility'},
       {id: 'balance', name: 'Balance'},
-      {id: 'intensity', name: 'Hight intensity'},
+      {id: 'intensity', name: 'High intensity'},
     ],
     image: require('../../images/lower_body.jpeg'),
   },
@@ -114,34 +114,46 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                         style={{padding: 20}}
                         key={id}
                         onPress={() => {
-                          if (key === 'area') {
-                            if (id === 'full') {
-                              // @ts-ignore
-                              return navigation.navigate('QuickRoutinesTabs', {
-                                screen: 'FullBody',
-                                [key]: id,
-                              });
-                            }
-                            if (id === 'lower') {
-                              // @ts-ignore
-                              return navigation.navigate('QuickRoutinesTabs', {
-                                screen: 'LowerBody',
-                                params: {[key]: id},
-                              });
-                            }
-                            if (id === 'core') {
-                              // @ts-ignore
-                              return navigation.navigate('QuickRoutinesTabs', {
-                                screen: 'AbsAndCore',
-                                params: {[key]: id},
-                              });
-                            }
+                          if (
+                            id === 'upper' ||
+                            id === 'strength' ||
+                            (id === 'full' && key === 'equipment')
+                          ) {
+                            // @ts-ignore
+                            return navigation.navigate('QuickRoutinesTabs', {
+                              screen: 'Tab1',
+                              key,
+                            });
                           }
-                          // @ts-ignore
-                          return navigation.navigate('QuickRoutinesTabs', {
-                            screen: 'UpperBody',
-                            params: {[key]: id},
-                          });
+                          if (
+                            id === 'lower' ||
+                            id === 'mobility' ||
+                            id === 'minimal'
+                          ) {
+                            // @ts-ignore
+                            return navigation.navigate('QuickRoutinesTabs', {
+                              screen: 'Tab2',
+                              key,
+                            });
+                          }
+                          if (
+                            (id === 'full' && key === 'area') ||
+                            id === 'balance' ||
+                            id === 'none'
+                          ) {
+                            // @ts-ignore
+                            return navigation.navigate('QuickRoutinesTabs', {
+                              screen: 'Tab3',
+                              key,
+                            });
+                          }
+                          if (id === 'core' || id === 'intensity') {
+                            // @ts-ignore
+                            return navigation.navigate('QuickRoutinesTabs', {
+                              screen: 'Tab4',
+                              key,
+                            });
+                          }
                         }}>
                         <Text>{name}</Text>
                       </TouchableOpacity>

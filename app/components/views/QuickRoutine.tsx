@@ -54,7 +54,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             <Layout
               style={{
                 height: getVideoHeight(),
-
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -67,11 +66,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             {routine.name}
           </Text>
           <Divider />
-          <ListItem title="Focus" description={routine.focus} />
-          <Divider />
-          <ListItem title="Equipment" description={routine.equipment} />
-          <Divider />
-          <ListItem title="Level" description={routine.level} />
+          <Text style={{margin: 10}}>test</Text>
         </Layout>
       </ScrollView>
     </Layout>

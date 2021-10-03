@@ -53,11 +53,12 @@ import Loading from './components/views/Loading';
 import Test from './components/views/Test';
 import QuickRoutines from './components/views/QuickRoutines';
 import QuickRoutine, {Area, Equipment, Focus} from './types/QuickRoutines';
-import UpperBody from './components/views/UpperBody';
-import LowerBody from './components/views/LowerBody';
-import AbsAndCore from './components/views/AbsAndCore';
-import FullBody from './components/views/FullBody';
+import Tab1 from './components/views/Tab1';
+import Tab2 from './components/views/Tab2';
+import Tab3 from './components/views/Tab3';
+import Tab4 from './components/views/Tab4';
 import QuickRoutineView from './components/views/QuickRoutine';
+import {quickRoutineTabString} from './helpers';
 
 const composeEnhancers =
   // @ts-ignore
@@ -184,54 +185,58 @@ const Tabs = () => {
 };
 
 export type TopTabsParamsList = {
-  UpperBody: {area?: Area; equipment?: Equipment; focus?: Focus};
-  LowerBody: {area?: Area; equipment?: Equipment; focus?: Focus};
-  AbsAndCore: {area?: Area; equipment?: Equipment; focus?: Focus};
-  FullBody: {area?: Area; equipment?: Equipment; focus?: Focus};
+  Tab1: {key: 'area' | 'focus' | 'equipment'};
+  Tab2: {key: 'area' | 'focus' | 'equipment'};
+  Tab3: {key: 'area' | 'focus' | 'equipment'};
+  Tab4: {key: 'area' | 'focus' | 'equipment'};
 };
 
 const QuickRoutineTab = createMaterialTopTabNavigator<TopTabsParamsList>();
 
 // @ts-ignore
 const QuickRoutinesTabs = ({route}) => {
+  // @ts-ignore
+  const key: 'area' | 'focus' | 'equipment' = route.params.key;
   return (
     <QuickRoutineTab.Navigator>
       <QuickRoutineTab.Screen
-        name="UpperBody"
+        name="Tab1"
         options={{
-          tabBarLabel: 'Upper Body',
+          tabBarLabel: quickRoutineTabString(1, key),
           tabBarLabelStyle: {textTransform: 'none'},
         }}
-        component={UpperBody}
+        component={Tab1}
         initialParams={route.params}
       />
       <QuickRoutineTab.Screen
-        name="LowerBody"
+        name="Tab2"
         options={{
-          tabBarLabel: 'Lower Body',
+          tabBarLabel: quickRoutineTabString(2, key),
           tabBarLabelStyle: {textTransform: 'none'},
         }}
-        component={LowerBody}
+        component={Tab2}
         initialParams={route.params}
       />
       <QuickRoutineTab.Screen
-        name="AbsAndCore"
+        name="Tab3"
         options={{
-          tabBarLabel: 'Abs and Core',
+          tabBarLabel: quickRoutineTabString(3, key),
           tabBarLabelStyle: {textTransform: 'none'},
         }}
-        component={AbsAndCore}
+        component={Tab3}
         initialParams={route.params}
       />
-      <QuickRoutineTab.Screen
-        name="FullBody"
-        options={{
-          tabBarLabel: 'Full Body',
-          tabBarLabelStyle: {textTransform: 'none'},
-        }}
-        component={FullBody}
-        initialParams={route.params}
-      />
+      {key !== 'equipment' && (
+        <QuickRoutineTab.Screen
+          name="Tab4"
+          options={{
+            tabBarLabel: quickRoutineTabString(4, key),
+            tabBarLabelStyle: {textTransform: 'none'},
+          }}
+          component={Tab4}
+          initialParams={route.params}
+        />
+      )}
     </QuickRoutineTab.Navigator>
   );
 };

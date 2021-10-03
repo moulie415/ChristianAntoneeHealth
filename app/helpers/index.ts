@@ -108,3 +108,48 @@ export const getVideoHeight = () => {
   const screenRatio = height / width;
   return height / screenRatio;
 };
+
+export const quickRoutineTabString = (
+  tab: number,
+  key: 'area' | 'focus' | 'equipment',
+) => {
+  if (tab === 1) {
+    if (key === 'area') {
+      return 'Upper Body';
+    }
+    if (key === 'focus') {
+      return 'Strength';
+    }
+    if (key === 'equipment') {
+      return 'Full Equipment';
+    }
+  }
+  if (tab === 2) {
+    if (key === 'area') {
+      return 'Lower Body';
+    }
+    if (key === 'focus') {
+      return 'Mobility';
+    }
+    if (key === 'equipment') {
+      return 'Minimal equipment';
+    }
+  }
+  if (tab === 3) {
+    if (key === 'area') {
+      return 'Full body';
+    }
+    if (key === 'focus') {
+      return 'Balance';
+    }
+    if (key === 'equipment') {
+      return 'No equipment';
+    }
+  }
+  if (key === 'area') {
+    return 'Abs and core';
+  }
+  if (key === 'focus') {
+    return 'High intensity';
+  }
+};
