@@ -66,7 +66,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             {routine.name}
           </Text>
           <Divider />
-          <Text style={{margin: 10}}>test</Text>
+          <Text style={{margin: 10}}>{routine.description}</Text>
         </Layout>
       </ScrollView>
     </Layout>
