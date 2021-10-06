@@ -59,6 +59,7 @@ import Tab3 from './components/views/Tab3';
 import Tab4 from './components/views/Tab4';
 import QuickRoutineView from './components/views/QuickRoutine';
 import {quickRoutineTabString} from './helpers';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 const composeEnhancers =
   // @ts-ignore
@@ -131,6 +132,7 @@ const Tabs = () => {
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="home" />
           ),
+          headerShown: false,
         }}
         name="Home"
         key="Home"
@@ -142,6 +144,7 @@ const Tabs = () => {
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="dumbbell" />
           ),
+          headerShown: false,
         }}
         name="Workout"
         key="Workout"
@@ -164,6 +167,7 @@ const Tabs = () => {
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="heartbeat" />
           ),
+          headerShown: false,
         }}
         key="Fitness"
         name="Fitness"
@@ -175,6 +179,7 @@ const Tabs = () => {
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="ellipsis-h" />
           ),
+          headerShown: false,
         }}
         key="More"
         name="More"
