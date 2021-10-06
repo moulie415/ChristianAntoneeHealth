@@ -14,6 +14,7 @@ import {downloadVideo, setExerciseNote} from '../../actions/exercises';
 import ExerciseVideo from '../commons/ExerciseVideo';
 import {getVideoHeight} from '../../helpers';
 import Countdown from '../commons/Countdown';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -62,14 +63,20 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
       <Layout
         style={{
           flexDirection: 'row',
-          margin: 10,
+          margin: DevicePixels[10],
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
         <Text category="h5">{`Exercise ${index + 1}/${workout.length}`}</Text>
         <Layout style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Icon name="stopwatch" size={25} color={colors.darkBlue} />
-          <Text style={{marginLeft: 10, width: 70}} category="h5">
+          <Icon
+            name="stopwatch"
+            size={DevicePixels[25]}
+            color={colors.darkBlue}
+          />
+          <Text
+            style={{marginLeft: DevicePixels[10], width: DevicePixels[70]}}
+            category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
         </Layout>
@@ -98,7 +105,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   <Layout
                     style={{
                       height: getVideoHeight(),
-                      marginBottom: 10,
+                      marginBottom: DevicePixels[10],
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
@@ -110,12 +117,16 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     onPress={() => pagerRef.current.setPage(index + 1)}
                     style={{
                       position: 'absolute',
-                      right: 5,
+                      right: DevicePixels[5],
                       top: '25%',
                       zIndex: 9,
-                      padding: 10,
+                      padding: DevicePixels[10],
                     }}>
-                    <Icon name="chevron-right" size={30} color="#fff" />
+                    <Icon
+                      name="chevron-right"
+                      size={DevicePixels[30]}
+                      color="#fff"
+                    />
                   </TouchableOpacity>
                 )}
                 {workout[index - 1] && (
@@ -123,18 +134,22 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     onPress={() => pagerRef.current.setPage(index - 1)}
                     style={{
                       position: 'absolute',
-                      left: 5,
+                      left: DevicePixels[5],
                       top: '25%',
                       zIndex: 9,
-                      padding: 10,
+                      padding: DevicePixels[10],
                     }}>
-                    <Icon name="chevron-left" size={30} color="#fff" />
+                    <Icon
+                      name="chevron-left"
+                      size={DevicePixels[30]}
+                      color="#fff"
+                    />
                   </TouchableOpacity>
                 )}
               </>
               <Layout
                 style={{
-                  marginHorizontal: 10,
+                  marginHorizontal: DevicePixels[10],
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -158,14 +173,15 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  margin: 10,
+                  margin: DevicePixels[10],
                 }}>
                 <Icon
                   name={exerciseNotes[exercise.id] ? 'edit' : 'file'}
                   color={colors.appBlue}
-                  size={25}
+                  size={DevicePixels[25]}
                 />
-                <Text style={{color: colors.appBlue, marginLeft: 10}}>
+                <Text
+                  style={{color: colors.appBlue, marginLeft: DevicePixels[10]}}>
                   {`${
                     exerciseNotes[exercise.id] ? 'Edit' : 'Add'
                   } exercise note`}
@@ -173,8 +189,8 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
               </TouchableOpacity>
               {(showNoteInput[exercise.id] || !!exerciseNotes[exercise.id]) && (
                 <Input
-                  style={{margin: 10}}
-                  textStyle={{minHeight: 50}}
+                  style={{margin: DevicePixels[10]}}
+                  textStyle={{minHeight: DevicePixels[50]}}
                   multiline
                   ref={element => (inputRefs.current[exercise.id] = element)}
                   disabled={!showNoteInput[exercise.id]}
@@ -191,8 +207,8 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 />
               )}
               {next && (
-                <Layout style={{margin: 10}}>
-                  <Text category="h6" style={{marginBottom: 10}}>
+                <Layout style={{margin: DevicePixels[10]}}>
+                  <Text category="h6" style={{marginBottom: DevicePixels[10]}}>
                     Up next
                   </Text>
                   <TouchableOpacity
@@ -203,7 +219,10 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       backgroundColor: colors.button,
                     }}>
                     <Image
-                      style={{height: 70, width: 90}}
+                      style={{
+                        height: DevicePixels[70],
+                        width: DevicePixels[90],
+                      }}
                       source={
                         next.thumbnail
                           ? {uri: next.thumbnail.src}
@@ -212,7 +231,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     />
                     <Layout
                       style={{
-                        marginLeft: 20,
+                        marginLeft: DevicePixels[20],
                         justifyContent: 'space-evenly',
                         flex: 1,
                         backgroundColor: colors.button,
@@ -235,7 +254,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     },
                   ]);
                 }}
-                style={{margin: 10}}>
+                style={{margin: DevicePixels[10]}}>
                 End workout
               </Button>
             </ScrollView>

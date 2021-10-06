@@ -12,6 +12,7 @@ import colors from '../../constants/colors';
 import Countdown from '../commons/Countdown';
 import ViewMore from '../commons/ViewMore';
 import Table from '../commons/Table';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Test: React.FC<TestProps> = ({route, tests, profile}) => {
   const {id} = route.params;
@@ -43,7 +44,7 @@ const Test: React.FC<TestProps> = ({route, tests, profile}) => {
       <Layout
         style={{
           flexDirection: 'row',
-          margin: 10,
+          margin: DevicePixels[10],
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
@@ -53,25 +54,31 @@ const Test: React.FC<TestProps> = ({route, tests, profile}) => {
             flexDirection: 'row',
             justifyContent: 'flex-end',
           }}>
-          <Icon name="stopwatch" size={25} color={colors.darkBlue} />
-          <Text style={{marginLeft: 10, width: 70}} category="h5">
+          <Icon
+            name="stopwatch"
+            size={DevicePixels[25]}
+            color={colors.darkBlue}
+          />
+          <Text
+            style={{marginLeft: DevicePixels[10], width: DevicePixels[70]}}
+            category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
         </Layout>
       </Layout>
-      <ScrollView contentContainerStyle={{paddingBottom: 100}}>
+      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
         <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} />
-        <Text category="h6" style={{marginHorizontal: 10}}>
+        <Text category="h6" style={{marginHorizontal: DevicePixels[10]}}>
           {test.name}
         </Text>
-        <Text style={{margin: 10}}>{test.summary}</Text>
+        <Text style={{margin: DevicePixels[10]}}>{test.summary}</Text>
         <Divider />
-        <Text style={{margin: 10}} category="s1">
+        <Text style={{margin: DevicePixels[10]}} category="s1">
           How to perform this test
         </Text>
         <ViewMore text={test.how.map(step => `• ${step} \n\n`).join('')} />
         <Divider />
-        <Text style={{margin: 10}} category="s1">
+        <Text style={{margin: DevicePixels[10]}} category="s1">
           Why is this test important
         </Text>
         <ViewMore text={test.why} />
@@ -90,8 +97,8 @@ const Test: React.FC<TestProps> = ({route, tests, profile}) => {
       <Button
         onPress={() => setShowCountdown(true)}
         style={{
-          margin: 10,
-          marginBottom: 20,
+          margin: DevicePixels[10],
+          marginBottom: DevicePixels[20],
           position: 'absolute',
           left: 0,
           right: 0,

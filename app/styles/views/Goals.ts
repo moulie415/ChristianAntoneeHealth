@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   title: {
-    fontSize: 36,
+    fontSize: DevicePixels[36],
   },
   row: {
     flex: 1,
@@ -19,12 +20,12 @@ export default StyleSheet.create({
   category: {
     flex: 5,
     //textAlign: 'center',
-    fontSize: 21,
+    fontSize: DevicePixels[21],
     //marginLeft: '-10%',
   },
   image: {
-    marginHorizontal: 30,
+    marginHorizontal: DevicePixels[30],
     flex: 1,
-    textAlign: 'center'
+    textAlign: 'center',
   },
 });

@@ -14,6 +14,7 @@ import {
   getDifficultyText,
 } from '../../helpers/exercises';
 import {saveWorkout} from '../../helpers/biometrics';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
@@ -82,16 +83,26 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     <Layout style={{flex: 1}}>
       <Text
         category="h5"
-        style={{textAlign: 'center', margin: 10, marginTop: 20}}>
+        style={{
+          textAlign: 'center',
+          margin: DevicePixels[10],
+          marginTop: DevicePixels[20],
+        }}>
         Workout Complete!
       </Text>
-      <Text style={{margin: 10}}>
+      <Text style={{margin: DevicePixels[10]}}>
         Rate your performance to help us understand your fitness level
       </Text>
-      <Text style={{fontSize: 100, textAlign: 'center'}}>{emoji}</Text>
+      <Text style={{fontSize: DevicePixels[100], textAlign: 'center'}}>
+        {emoji}
+      </Text>
 
       <Slider
-        style={{height: 40, flexDirection: 'row', margin: 10}}
+        style={{
+          height: DevicePixels[40],
+          flexDirection: 'row',
+          margin: DevicePixels[10],
+        }}
         minimumValue={0}
         maximumValue={3}
         step={1}
@@ -101,8 +112,8 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       <Text
         style={{
           fontWeight: 'bold',
-          margin: 10,
-          height: 50,
+          margin: DevicePixels[10],
+          height: DevicePixels[50],
           textAlign: 'center',
         }}>
         {text}
@@ -110,8 +121,8 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       </Text>
       <Input
         label="Workout note"
-        textStyle={{minHeight: 50}}
-        style={{margin: 10, marginTop: 0}}
+        textStyle={{minHeight: DevicePixels[50]}}
+        style={{margin: DevicePixels[10], marginTop: 0}}
         multiline
         placeholder="Add details about your workout"
         value={note}
@@ -119,7 +130,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       />
       <Button
         disabled={loading}
-        style={{margin: 10}}
+        style={{margin: DevicePixels[10]}}
         onPress={() =>
           navigation.navigate('WorkoutSummary', {calories, seconds, difficulty})
         }>

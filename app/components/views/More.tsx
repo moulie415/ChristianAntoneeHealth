@@ -16,6 +16,7 @@ import {MyRootState} from '../../types/Shared';
 import Purchases from 'react-native-purchases';
 import {STORE_LINK} from '../../constants';
 import {rateApp} from '../../helpers';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -119,7 +120,7 @@ const More: React.FC<MoreProps> = ({
               title={item.title}
               accessoryLeft={() => (
                 <Icon
-                  size={20}
+                  size={DevicePixels[20]}
                   color={colors.appBlack}
                   solid
                   name={item.icon}

@@ -21,6 +21,7 @@ import {
 import {setPremium} from '../../actions/profile';
 import {connect} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
   const [pkg, setPackage] = useState<PurchasesPackage>();
@@ -49,14 +50,18 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
   return (
     <Layout level="4" style={{flex: 1}}>
       <ScrollView style={{flex: 1}}>
-        <Text category="h3" style={{margin: 40}}>
+        <Text category="h3" style={{margin: DevicePixels[40]}}>
           Health and Movement Premium
         </Text>
-        <View style={{marginHorizontal: 40, marginBottom: 40}}>
-          <View style={{flexDirection: 'row', marginBottom: 20}}>
+        <View
+          style={{
+            marginHorizontal: DevicePixels[40],
+            marginBottom: DevicePixels[40],
+          }}>
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
             <Icon
-              style={{width: 75, textAlign: 'center'}}
-              size={30}
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
               color={colors.appBlue}
               name="dumbbell"
             />
@@ -68,10 +73,10 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', marginBottom: 20}}>
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
             <Icon
-              style={{width: 75, textAlign: 'center'}}
-              size={30}
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
               color={colors.appBlue}
               name="heartbeat"
             />
@@ -82,10 +87,10 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', marginBottom: 20}}>
-            <View style={{width: 75, alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
+            <View style={{width: DevicePixels[75], alignItems: 'center'}}>
               <Image
-                style={{width: 40, height: 40}}
+                style={{width: DevicePixels[40], height: DevicePixels[40]}}
                 source={
                   Platform.OS === 'ios'
                     ? require('../../images/apple_health.png')
@@ -123,7 +128,10 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
             ) : (
               <>
                 <Button
-                  style={{marginHorizontal: 40, marginBottom: 5}}
+                  style={{
+                    marginHorizontal: DevicePixels[40],
+                    marginBottom: DevicePixels[5],
+                  }}
                   onPress={async () => {
                     try {
                       const {

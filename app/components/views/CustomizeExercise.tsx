@@ -15,6 +15,7 @@ import {mapMuscleToHighlight} from '../../helpers/exercises';
 import {useEffect} from 'react';
 import ExerciseVideo from '../commons/ExerciseVideo';
 import {getVideoHeight} from '../../helpers';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
@@ -67,7 +68,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         <Layout
           style={{
             height: getVideoHeight(),
-            marginBottom: 10,
+            marginBottom: DevicePixels[10],
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -76,7 +77,11 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       )}
       <Text
         category="h5"
-        style={{textAlign: 'center', marginBottom: 10, marginHorizontal: 10}}>
+        style={{
+          textAlign: 'center',
+          marginBottom: DevicePixels[10],
+          marginHorizontal: DevicePixels[10],
+        }}>
         {exercise.name}
       </Text>
 
@@ -87,13 +92,13 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         <Layout
           style={{
             alignItems: 'center',
-            marginVertical: 20,
+            marginVertical: DevicePixels[20],
             backgroundColor: 'transparent',
           }}>
           <Body scale={1} data={muscles} />
         </Layout>
       )}
-      <Button style={{margin: 10}} onPress={selectExercise}>
+      <Button style={{margin: DevicePixels[10]}} onPress={selectExercise}>
         {workout.find(e => e.id === exercise.id)
           ? 'Remove exercise'
           : 'Add exercise'}

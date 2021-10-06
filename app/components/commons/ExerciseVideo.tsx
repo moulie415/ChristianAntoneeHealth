@@ -5,6 +5,7 @@ import VideoPlayer from 'react-native-video-controls';
 import Video from 'react-native-video';
 import {getVideoHeight} from '../../helpers';
 import crashlytics from '@react-native-firebase/crashlytics';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const ExerciseVideo: React.FC<{path: string; paused?: boolean}> = ({
   path,
@@ -17,14 +18,14 @@ const ExerciseVideo: React.FC<{path: string; paused?: boolean}> = ({
           source={{uri: path}}
           controls
           onError={e => crashlytics().log(e.error.errorString)}
-          style={{height: getVideoHeight(), marginBottom: 10}}
+          style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
           repeat
           paused={paused}
         />
       ) : (
         <VideoPlayer
           source={{uri: `file://${path}`}}
-          style={{height: getVideoHeight(), marginBottom: 10}}
+          style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
           disableVolume
           disableBack
           onError={(e: Error) => crashlytics().log(e.message)}

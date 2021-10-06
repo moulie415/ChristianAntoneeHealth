@@ -14,6 +14,7 @@ import {truncate} from '../../helpers';
 import ExerciseBottomSheet from '../commons/ExerciseBottomSheet';
 import globalStyles from '../../styles/globalStyles';
 import AbsoluteSpinner from '../commons/AbsoluteSpinner';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -89,7 +90,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
               description={truncate(item.description, 75)}
               accessoryLeft={() => (
                 <Image
-                  style={{height: 50, width: 75}}
+                  style={{height: DevicePixels[50], width: DevicePixels[75]}}
                   source={
                     item.thumbnail
                       ? {uri: item.thumbnail.src}
@@ -98,11 +99,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 />
               )}
               accessoryRight={() => (
-                <TouchableOpacity style={{padding: 10}}>
+                <TouchableOpacity style={{padding: DevicePixels[10]}}>
                   <Icon
                     name="ellipsis-h"
                     color={selected ? '#fff' : colors.appBlue}
-                    size={20}
+                    size={DevicePixels[20]}
                     onPress={() => {
                       setSelectedExercise(item);
                       bottomSheetRef.current.snapTo(0);

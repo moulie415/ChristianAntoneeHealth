@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   title: {
-    fontSize: 24,
+    fontSize: DevicePixels[24],
   },
 });

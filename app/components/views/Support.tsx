@@ -1,6 +1,7 @@
 import {Button, Layout} from '@ui-kitten/components';
 import React from 'react';
 import {View, Text, Linking} from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 import SupportProps from '../../types/views/Support';
 
 const Support: React.FC<SupportProps> = () => {
@@ -12,7 +13,7 @@ const Support: React.FC<SupportProps> = () => {
           onPress={() =>
             Linking.openURL('https://healthandmovement.co.uk/contact')
           }
-          style={{margin: 10, marginBottom: 20}}>
+          style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
           Contact Us
         </Button>
       </View>

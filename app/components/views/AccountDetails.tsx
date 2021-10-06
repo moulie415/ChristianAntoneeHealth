@@ -5,6 +5,7 @@ import {useState} from 'react';
 import styles from '../../styles/views/SignUpFlow';
 import {Keyboard, TouchableOpacity} from 'react-native';
 import AccountDetailsProps from '../../types/views/AccountDetails';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({
   setStep,
@@ -25,7 +26,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
   const [secure, setSecure] = useState(true);
   const [secureConfirm, setSecureConfirm] = useState(true);
   return (
-    <Layout style={{margin: 20}}>
+    <Layout style={{margin: DevicePixels[20]}}>
       <Input
         style={styles.input}
         label="Name"
@@ -42,7 +43,12 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
         autoCapitalize="none"
         autoCorrect={false}
         accessoryLeft={() => (
-          <Icon style={styles.icon} size={25} name="envelope" solid />
+          <Icon
+            style={styles.icon}
+            size={DevicePixels[25]}
+            name="envelope"
+            solid
+          />
         )}
       />
       {dry && (
@@ -53,16 +59,20 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
           onChangeText={setPassword}
           autoCapitalize="none"
           secureTextEntry={secure}
-          blurOnSubmit={false}
           autoCorrect={false}
           accessoryLeft={() => (
-            <Icon style={styles.icon} size={25} name="unlock" solid />
+            <Icon
+              style={styles.icon}
+              size={DevicePixels[25]}
+              name="unlock"
+              solid
+            />
           )}
           accessoryRight={() => (
             <TouchableOpacity onPress={() => setSecure(!secure)}>
               <Icon
                 style={styles.icon}
-                size={30}
+                size={DevicePixels[30]}
                 name={secure ? 'eye' : 'eye-slash'}
                 solid
               />
@@ -76,19 +86,23 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
           label="Confirm Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          blurOnSubmit={false}
           autoCapitalize="none"
           secureTextEntry={secureConfirm}
           onSubmitEditing={() => Keyboard.dismiss()}
           autoCorrect={false}
           accessoryLeft={() => (
-            <Icon style={styles.icon} size={25} name="unlock" solid />
+            <Icon
+              style={styles.icon}
+              size={DevicePixels[25]}
+              name="unlock"
+              solid
+            />
           )}
           accessoryRight={() => (
             <TouchableOpacity onPress={() => setSecureConfirm(!secureConfirm)}>
               <Icon
                 style={styles.icon}
-                size={30}
+                size={DevicePixels[30]}
                 name={secureConfirm ? 'eye' : 'eye-slash'}
                 solid
               />
@@ -97,11 +111,11 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
         />
       )}
       {password !== confirmPassword && (
-        <Text style={{marginTop: 10}} status="danger">
+        <Text style={{marginTop: DevicePixels[10]}} status="danger">
           Passwords do not match
         </Text>
       )}
-      <Layout style={{flexDirection: 'row', marginVertical: 20}}>
+      <Layout style={{flexDirection: 'row', marginVertical: DevicePixels[20]}}>
         <Text>
           By signing up you agree to the terms and conditions in our{' '}
           <Text>Privacy Policy</Text>

@@ -11,6 +11,7 @@ import MonthlyActivity from './MonthlyActivity';
 import {getSamples} from '../../actions/profile';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Activity: React.FC<ActivityProps> = ({
   getSamplesAction,
@@ -33,13 +34,13 @@ const Activity: React.FC<ActivityProps> = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: 20,
+          margin: DevicePixels[20],
         }}>
         <TouchableOpacity
           onPress={() => setPage(0)}
           style={{
-            padding: 8,
-            width: 75,
+            padding: DevicePixels[8],
+            width: DevicePixels[75],
             borderColor: colors.borderColor,
             borderWidth: StyleSheet.hairlineWidth,
             backgroundColor: index === 0 ? colors.appBlue : undefined,
@@ -55,8 +56,8 @@ const Activity: React.FC<ActivityProps> = ({
         <TouchableOpacity
           onPress={() => setPage(1)}
           style={{
-            padding: 8,
-            width: 75,
+            padding: DevicePixels[8],
+            width: DevicePixels[75],
             borderColor: colors.borderColor,
             borderWidth: StyleSheet.hairlineWidth,
             backgroundColor: index === 1 ? colors.appBlue : undefined,
@@ -72,8 +73,8 @@ const Activity: React.FC<ActivityProps> = ({
         <TouchableOpacity
           onPress={() => setPage(2)}
           style={{
-            padding: 8,
-            width: 75,
+            padding: DevicePixels[8],
+            width: DevicePixels[75],
             borderColor: colors.borderColor,
             borderWidth: StyleSheet.hairlineWidth,
             backgroundColor: index === 2 ? colors.appBlue : undefined,

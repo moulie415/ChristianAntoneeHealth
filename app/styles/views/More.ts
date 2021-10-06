@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   container: {
@@ -7,13 +8,13 @@ export default StyleSheet.create({
   },
   contact: {
     backgroundColor: '#fff',
-    padding: 10,
+    padding: DevicePixels[10],
     borderBottomWidth: 1,
     borderColor: '#c9c9c9c9',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    minHeight: 50,
+    minHeight: DevicePixels[50],
   },
   spinner: {
     position: 'absolute',
@@ -26,11 +27,11 @@ export default StyleSheet.create({
     zIndex: 9,
   },
   title: {
-    fontSize: 28,
+    fontSize: DevicePixels[28],
   },
   row: {
     flexDirection: 'row',
-    height: 60,
+    height: DevicePixels[60],
     borderTopWidth: 0.4,
     borderBottomWidth: 0.4,
     borderColor: colors.borderColor,
@@ -38,20 +39,20 @@ export default StyleSheet.create({
     flex: 1,
   },
   icon: {
-    fontSize: 25,
+    fontSize: DevicePixels[25],
     color: colors.appBlue,
   },
   iconContainer: {
-    width: 60,
+    width: DevicePixels[60],
     alignItems: 'center',
   },
   text: {
-    fontSize: 16,
+    fontSize: DevicePixels[16],
     flex: 1,
   },
   chevron: {
-    paddingHorizontal: 20,
-    fontSize: 25,
+    paddingHorizontal: DevicePixels[20],
+    fontSize: DevicePixels[25],
     color: colors.textGrey,
   },
 });

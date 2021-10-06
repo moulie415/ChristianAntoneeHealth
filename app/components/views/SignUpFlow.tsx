@@ -1,6 +1,6 @@
 import {Layout, Text} from '@ui-kitten/components';
 import React, {useState} from 'react';
-import {Image, KeyboardAvoidingView, Platform} from 'react-native';
+import {Image, KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
 import {Bar} from 'react-native-progress';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
@@ -12,6 +12,7 @@ import AccountDetails from './AccountDetails';
 import FitnessInfo from './FitnessInfo';
 import Goals from './Goals';
 import {signUp, setStep} from '../../actions/profile';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
@@ -69,66 +70,72 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   return (
     <Layout style={{flex: 1}}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
-        style={{flex: 1}}>
-        <Image
-          style={styles.logo}
-          source={require('../../images/health_and_movement_logo_colour_centred.png')}
-        />
-        <Text category="h4" style={{textAlign: 'center'}}>
-          Sign up with 3 easy steps
-        </Text>
-        <Bar
-          color={colors.appBlue}
-          width={200}
-          style={{alignSelf: 'center', marginVertical: 10}}
-          progress={(step + 1) / 3}
-        />
-        <Text style={{alignSelf: 'center', marginTop: 10}} category="h5">
-          {getTitle()}
-        </Text>
-        {step === 0 && (
-          <AccountDetails
-            setStep={setStepAction}
-            dry={dry}
-            email={email}
-            setEmail={setEmail}
-            name={name}
-            setName={setName}
-            password={password}
-            setPassword={setPassword}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
+      <ScrollView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
+          style={{flex: 1}}>
+          <Image
+            style={styles.logo}
+            source={require('../../images/health_and_movement_logo_colour_centred.png')}
           />
-        )}
-        {step === 1 && (
-          <FitnessInfo
-            weight={weight}
-            setWeight={setWeight}
-            height={height}
-            setHeight={setHeight}
-            gender={gender}
-            setGender={setGender}
-            dob={dob}
-            setDob={setDob}
-            setStep={setStepAction}
-            unit={unit}
-            setUnit={setUnit}
+          <Text
+            category="h4"
+            style={{textAlign: 'center', marginHorizontal: DevicePixels[10]}}>
+            Sign up with 3 easy steps
+          </Text>
+          <Bar
+            color={colors.appBlue}
+            width={DevicePixels[200]}
+            style={{alignSelf: 'center', marginVertical: DevicePixels[10]}}
+            progress={(step + 1) / 3}
           />
-        )}
-        {step === 2 && (
-          <Goals
-            selectedGoals={selectedGoals}
-            setSelectedGoals={setSelectedGoals}
-            workoutFrequency={workoutFrequency}
-            setWorkoutFrequency={setWorkoutFrequency}
-            purpose={purpose}
-            setPurpose={setPurpose}
-            signUp={completeSignUp}
-          />
-        )}
-      </KeyboardAvoidingView>
+          <Text
+            style={{alignSelf: 'center', marginTop: DevicePixels[10]}}
+            category="h5">
+            {getTitle()}
+          </Text>
+          {step === 0 && (
+            <AccountDetails
+              setStep={setStepAction}
+              dry={dry}
+              email={email}
+              setEmail={setEmail}
+              name={name}
+              setName={setName}
+              password={password}
+              setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+            />
+          )}
+          {step === 1 && (
+            <FitnessInfo
+              weight={weight}
+              setWeight={setWeight}
+              height={height}
+              setHeight={setHeight}
+              gender={gender}
+              setGender={setGender}
+              dob={dob}
+              setDob={setDob}
+              setStep={setStepAction}
+              unit={unit}
+              setUnit={setUnit}
+            />
+          )}
+          {step === 2 && (
+            <Goals
+              selectedGoals={selectedGoals}
+              setSelectedGoals={setSelectedGoals}
+              workoutFrequency={workoutFrequency}
+              setWorkoutFrequency={setWorkoutFrequency}
+              purpose={purpose}
+              setPurpose={setPurpose}
+              signUp={completeSignUp}
+            />
+          )}
+        </KeyboardAvoidingView>
+      </ScrollView>
     </Layout>
   );
 };

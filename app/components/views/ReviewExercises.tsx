@@ -16,6 +16,7 @@ import CustomDivider from '../commons/CustomDivider';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ExerciseBottomSheet from '../commons/ExerciseBottomSheet';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,
@@ -42,7 +43,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           description={truncate(item.description, 75)}
           accessoryLeft={() => (
             <Image
-              style={{height: 50, width: 75}}
+              style={{height: DevicePixels[50], width: DevicePixels[75]}}
               source={
                 item.thumbnail
                   ? {uri: item.thumbnail.src}
@@ -51,11 +52,11 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             />
           )}
           accessoryRight={() => (
-            <TouchableOpacity style={{padding: 10}}>
+            <TouchableOpacity style={{padding: DevicePixels[10]}}>
               <Icon
                 name="ellipsis-h"
                 color={colors.appBlue}
-                size={20}
+                size={DevicePixels[20]}
                 onPress={() => {
                   setSelectedExercise(item);
                   bottomSheetRef.current?.snapTo(0);
@@ -67,15 +68,15 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         />
       );
     },
-    [],
+    [navigation],
   );
 
   return (
     <Layout style={{flex: 1}}>
-      <Text style={{margin: 10, marginBottom: 0}} category="h5">
+      <Text style={{margin: DevicePixels[10], marginBottom: 0}} category="h5">
         Review exercises
       </Text>
-      <Text style={{marginHorizontal: 10}} appearance="hint">
+      <Text style={{marginHorizontal: DevicePixels[10]}} appearance="hint">
         (Hold and drag to reorder)
       </Text>
       <DraggableFlatList
@@ -89,20 +90,20 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             onPress={navigation.goBack}>
             <Layout
               style={{
-                height: 50,
-                width: 75,
+                height: DevicePixels[50],
+                width: DevicePixels[75],
                 backgroundColor: colors.appBlue,
-                marginLeft: 7,
+                marginLeft: DevicePixels[7],
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Icon name="plus" size={25} />
+              <Icon name="plus" size={DevicePixels[25]} />
             </Layout>
             <Text
               category="s1"
               style={{
                 alignSelf: 'center',
-                marginLeft: 10,
+                marginLeft: DevicePixels[10],
                 color: colors.appBlue,
               }}>
               Add exercise
@@ -114,7 +115,12 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       />
       <Button
         onPress={() => navigation.navigate('StartWorkout')}
-        style={{position: 'absolute', bottom: 30, left: 10, right: 10}}>
+        style={{
+          position: 'absolute',
+          bottom: DevicePixels[30],
+          left: DevicePixels[10],
+          right: DevicePixels[10],
+        }}>
         Start workout
       </Button>
       <ExerciseBottomSheet

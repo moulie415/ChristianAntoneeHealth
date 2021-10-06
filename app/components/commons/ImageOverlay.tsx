@@ -1,4 +1,4 @@
-import { Layout } from '@ui-kitten/components';
+import {Layout} from '@ui-kitten/components';
 import React, {ReactElement} from 'react';
 import {
   Dimensions,
@@ -10,6 +10,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const {width} = Dimensions.get('window');
 
@@ -32,7 +33,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({
   children,
   containerStyle,
   contentPosition = 'center',
-  height = 300,
+  height = DevicePixels[300],
   overlayAlpha = 0.5,
   overlayColor = '#000000',
   rounded,
@@ -85,10 +86,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    margin: 20,
+    margin: DevicePixels[20],
     color: 'white',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: DevicePixels[16],
   },
 });
 

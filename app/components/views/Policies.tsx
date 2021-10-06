@@ -3,11 +3,14 @@ import React from 'react';
 import {Linking, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Policies = () => {
   return (
     <Layout style={{flex: 1}}>
-      <Text category="h5" style={{textAlign: 'center', marginTop: 20}}>
+      <Text
+        category="h5"
+        style={{textAlign: 'center', marginTop: DevicePixels[20]}}>
         Policies and Terms
       </Text>
       <TouchableOpacity
@@ -17,15 +20,17 @@ const Policies = () => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          marginVertical: 20,
+          marginVertical: DevicePixels[20],
         }}>
         <Icon
-          style={{marginLeft: 20}}
+          style={{marginLeft: DevicePixels[20]}}
           name="file"
           color={colors.appBlue}
-          size={30}
+          size={DevicePixels[30]}
         />
-        <Text category="s1" style={{color: colors.appBlue, marginLeft: 10}}>
+        <Text
+          category="s1"
+          style={{color: colors.appBlue, marginLeft: DevicePixels[10]}}>
           Privacy Policy
         </Text>
       </TouchableOpacity>

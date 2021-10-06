@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   buttonContainer: {
@@ -7,10 +8,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    padding: 20,
-    paddingHorizontal: 40,
+    padding: DevicePixels[20],
+    paddingHorizontal: DevicePixels[40],
   },
   title: {
-    fontSize: 36,
+    fontSize: DevicePixels[36],
   },
 });

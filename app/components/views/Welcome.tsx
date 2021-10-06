@@ -5,6 +5,7 @@ import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import styles from '../../styles/views/Welcome';
 import WelcomeProps from '../../types/views/Welcome';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
   return (
@@ -22,7 +23,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          marginTop: 60,
+          marginTop: DevicePixels[60],
         }}>
         <Button
           style={{width: '40%', backgroundColor: '#000'}}

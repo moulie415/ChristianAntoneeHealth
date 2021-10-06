@@ -7,6 +7,7 @@ import colors from '../../constants/colors';
 import {Level} from '../../types/Shared';
 import ImageOverlay from './ImageOverlay';
 import {QuickRoutinesListNavigationProp} from '../../types/views/QuickRoutinesList';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -47,7 +48,7 @@ const QuickRoutinesList: React.FC<{
 }> = ({routines, navigation}) => {
   return (
     <Layout style={{flex: 1}}>
-      <Text appearance="hint" style={{padding: 10}}>
+      <Text appearance="hint" style={{padding: DevicePixels[10]}}>
         {`${routines.length} ${routines.length === 1 ? 'routine' : 'routines'}`}
       </Text>
 
@@ -69,7 +70,10 @@ const QuickRoutinesList: React.FC<{
               )}`}
               accessoryLeft={() => (
                 <ImageOverlay
-                  containerStyle={{height: 75, width: 75}}
+                  containerStyle={{
+                    height: DevicePixels[75],
+                    width: DevicePixels[75],
+                  }}
                   overlayAlpha={0.4}
                   source={
                     item.thumbnail
@@ -77,22 +81,24 @@ const QuickRoutinesList: React.FC<{
                       : require('../../images/old_man_stretching.jpeg')
                   }>
                   <View style={{alignItems: 'center'}}>
-                    <Text style={{color: '#fff', fontSize: 12}}>
+                    <Text style={{color: '#fff', fontSize: DevicePixels[12]}}>
                       {'Under '}
                     </Text>
                     <Text category="h6" style={{color: '#fff'}}>
                       {item.duration}
                     </Text>
-                    <Text style={{color: '#fff', fontSize: 12}}>mins</Text>
+                    <Text style={{color: '#fff', fontSize: DevicePixels[12]}}>
+                      mins
+                    </Text>
                   </View>
                 </ImageOverlay>
               )}
               accessoryRight={() => (
-                <TouchableOpacity style={{padding: 10}}>
+                <TouchableOpacity style={{padding: DevicePixels[10]}}>
                   <Icon
                     name="ellipsis-h"
                     color={colors.appBlue}
-                    size={20}
+                    size={DevicePixels[20]}
                     onPress={() => 0}
                   />
                 </TouchableOpacity>

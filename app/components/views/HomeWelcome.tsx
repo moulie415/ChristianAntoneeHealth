@@ -12,6 +12,7 @@ import colors from '../../constants/colors';
 import {viewedWelcome} from '../../actions/profile';
 import {connect} from 'react-redux';
 import globalStyles from '../../styles/globalStyles';
+import DevicePixels from '../../helpers/DevicePixels';
 
 interface CarouselItem {
   title: string;
@@ -54,7 +55,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
         layoutCardOffset={18}
         data={items}
         sliderWidth={width}
-        itemWidth={width - 50}
+        itemWidth={width - DevicePixels[50]}
         hasParallaxImages
         // @ts-ignore
         renderItem={(
@@ -65,10 +66,10 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
             <Layout
               style={[
                 {
-                  width: width - 50,
+                  width: width - DevicePixels[50],
                   height: height / 2,
                   backgroundColor: '#fff',
-                  borderRadius: 8,
+                  borderRadius: DevicePixels[8],
                 },
                 globalStyles.boxShadow,
               ]}>
@@ -77,8 +78,8 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                   flex: 1,
                   marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
                   backgroundColor: 'white',
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
+                  borderTopLeftRadius: DevicePixels[8],
+                  borderTopRightRadius: DevicePixels[8],
                 }}
                 style={{resizeMode: 'cover'}}
                 parallaxFactor={0.1}
@@ -89,16 +90,16 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
               <Divider />
               <Layout
                 style={{
-                  padding: 10,
-                  borderBottomLeftRadius: 8,
-                  borderBottomRightRadius: 8,
+                  padding: DevicePixels[10],
+                  borderBottomLeftRadius: DevicePixels[8],
+                  borderBottomRightRadius: DevicePixels[8],
                 }}>
                 <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Icon
-                    size={20}
+                    size={DevicePixels[20]}
                     name={item.icon}
                     color="#fff"
-                    style={{marginRight: 10}}
+                    style={{marginRight: DevicePixels[10]}}
                   />
                   <Text category="h4" style={{flex: 1, textAlign: 'center'}}>
                     {item.title}
@@ -109,7 +110,7 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                   <Button
                     onPress={setHasViewedWelcome}
                     // status="control"
-                    style={{alignSelf: 'flex-end', margin: 5}}>
+                    style={{alignSelf: 'flex-end', margin: DevicePixels[5]}}>
                     Finish
                   </Button>
                 )}

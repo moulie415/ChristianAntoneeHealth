@@ -10,6 +10,7 @@ import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import DailyActivityProps from '../../types/views/DailyActivity';
 import CustomDivider from '../commons/CustomDivider';
+import DevicePixels from '../../helpers/DevicePixels';
 
 interface Item {
   steps?: number;
@@ -36,21 +37,21 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
       renderItem={({item}: {item: Item}) => {
         return (
           <Layout>
-            <Text category="h5" style={{padding: 5}}>
+            <Text category="h5" style={{padding: DevicePixels[5]}}>
               {item.day.format('dddd')}
             </Text>
             <CustomDivider />
             <Layout
               style={{
                 flexDirection: 'row',
-                padding: 5,
+                padding: DevicePixels[5],
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
               <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Icon
-                  size={20}
-                  style={{margin: 5}}
+                  size={DevicePixels[20]}
+                  style={{margin: DevicePixels[5]}}
                   name="shoe-prints"
                   color={colors.appBlue}
                 />

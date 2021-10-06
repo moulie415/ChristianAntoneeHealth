@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import WeeklyActivityProps from '../../types/views/WeeklyActivity';
 import {getWeightItems} from '../../helpers';
 import {weightChartConfig} from '../../constants';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const {width} = Dimensions.get('screen');
 const circleSize = width * 0.268;
@@ -66,13 +67,15 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
 
   return (
     <ScrollView style={{flex: 1}}>
-      <Text category="s1" style={{textAlign: 'center', marginVertical: 20}}>
+      <Text
+        category="s1"
+        style={{textAlign: 'center', marginVertical: DevicePixels[20]}}>
         Total Active Minutes
       </Text>
       <Circle
         strokeCap="round"
         style={{alignSelf: 'center'}}
-        size={200}
+        size={DevicePixels[200]}
         progress={0.7}
         thickness={10}
         color={colors.appBlue}
@@ -81,8 +84,8 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
         <Layout
           style={{
             position: 'absolute',
-            top: 70,
-            left: 45,
+            top: DevicePixels[70],
+            left: DevicePixels[45],
           }}>
           <Text style={{textAlign: 'center'}} category="h2">
             3h 14m
@@ -93,8 +96,8 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
               alignItems: 'center',
             }}>
             <Icon
-              style={{marginRight: 5}}
-              size={15}
+              style={{marginRight: DevicePixels[5]}}
+              size={DevicePixels[15]}
               color={colors.appBlue}
               name="arrow-down"
             />
@@ -102,19 +105,19 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           </Layout>
         </Layout>
       </Circle>
-      <Layout style={{flexDirection: 'row', marginVertical: 20}}>
+      <Layout style={{flexDirection: 'row', marginVertical: DevicePixels[20]}}>
         <Layout
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
-            padding: 10,
+            padding: DevicePixels[10],
             flex: 1,
             alignItems: 'center',
           }}>
           <Text style={{textAlign: 'center'}}>{'Walking \n'}</Text>
           <Circle
             strokeCap="round"
-            style={{marginVertical: 10}}
+            style={{marginVertical: DevicePixels[10]}}
             progress={0.7}
             thickness={7}
             color={colors.appRed}
@@ -125,8 +128,8 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
               <Icon
                 name="shoe-prints"
                 color={colors.appBlue}
-                size={20}
-                style={{marginBottom: 5}}
+                size={DevicePixels[20]}
+                style={{marginBottom: DevicePixels[5]}}
               />
               <Text>1 h 03 min</Text>
             </Layout>
@@ -137,15 +140,15 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
-            padding: 10,
+            padding: DevicePixels[10],
             flex: 1,
           }}>
           <Text style={{textAlign: 'center'}}>Daily Living Activity</Text>
           <Circle
             strokeCap="round"
-            style={{marginVertical: 10}}
+            style={{marginVertical: DevicePixels[10]}}
             progress={0.7}
-            thickness={7}
+            thickness={DevicePixels[7]}
             color={colors.appLightBlue}
             borderWidth={0}
             size={circleSize}
@@ -154,8 +157,8 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
               <Icon
                 name="chart-area"
                 color={colors.appBlue}
-                size={20}
-                style={{marginBottom: 5}}
+                size={DevicePixels[20]}
+                style={{marginBottom: DevicePixels[5]}}
               />
               <Text>1 h 03 min</Text>
             </Layout>
@@ -166,15 +169,15 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
-            padding: 10,
+            padding: DevicePixels[10],
             flex: 1,
           }}>
           <Text style={{textAlign: 'center'}}>Workout Activity</Text>
           <Circle
             strokeCap="round"
-            style={{marginVertical: 10}}
+            style={{marginVertical: DevicePixels[10]}}
             progress={0.7}
-            thickness={7}
+            thickness={DevicePixels[7]}
             color={colors.appGreen}
             borderWidth={0}
             size={circleSize}
@@ -183,8 +186,8 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
               <Icon
                 name="stopwatch"
                 color={colors.appBlue}
-                size={20}
-                style={{marginBottom: 5}}
+                size={DevicePixels[20]}
+                style={{marginBottom: DevicePixels[5]}}
               />
               <Text>1 h 03 min</Text>
             </Layout>
@@ -192,7 +195,9 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           <Text style={{textAlign: 'center'}}>6500 Kcal</Text>
         </Layout>
       </Layout>
-      <Text category="s1" style={{textAlign: 'center', marginBottom: 20}}>
+      <Text
+        category="s1"
+        style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
         Activity breakdown per day
       </Text>
       <StackedBarChart
@@ -203,7 +208,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
         data={data}
         width={Dimensions.get('screen').width * 0.9}
         style={{alignSelf: 'center'}}
-        height={220}
+        height={DevicePixels[220]}
         chartConfig={weightChartConfig}
         hideLegend
       />
@@ -211,7 +216,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          marginBottom: 20,
+          marginBottom: DevicePixels[20],
         }}>
         <Layout
           style={{
@@ -220,11 +225,11 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appLightBlue,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Easy</Text>
@@ -236,11 +241,11 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appBlue,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Moderate</Text>
@@ -252,11 +257,11 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appGreen,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Hard</Text>
@@ -268,24 +273,26 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appRed,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Very Hard</Text>
         </Layout>
       </Layout>
       <Divider style={{backgroundColor: colors.borderColor}} />
-      <Text category="s1" style={{textAlign: 'center', marginVertical: 20}}>
+      <Text
+        category="s1"
+        style={{textAlign: 'center', marginVertical: DevicePixels[20]}}>
         Weight tracking
       </Text>
       <LineChart
         data={weightData}
         width={Dimensions.get('screen').width * 0.9}
-        height={220}
+        height={DevicePixels[220]}
         chartConfig={weightChartConfig}
         withVerticalLines={false}
         withShadow={false}

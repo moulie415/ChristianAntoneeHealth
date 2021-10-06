@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   button: {
-    padding: 15,
+    padding: DevicePixels[15],
     borderWidth: 1,
     borderColor: colors.borderColor,
   },

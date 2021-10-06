@@ -1,6 +1,7 @@
 import {Text} from '@ui-kitten/components';
 import React, {useMemo} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 import {Cell, Table as TableType} from '../../types/Test';
 import {Row as RowType} from '../../types/Test';
 
@@ -57,25 +58,33 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
   return (
     <>
       {title && (
-        <Text style={{marginHorizontal: 10, marginTop: 10}} category="s1">
+        <Text
+          style={{
+            marginHorizontal: DevicePixels[10],
+            marginTop: DevicePixels[10],
+          }}
+          category="s1">
           {title}
         </Text>
       )}
       <ScrollView
         horizontal
-        style={{paddingVertical: 10, marginHorizontal: 10}}>
+        style={{
+          paddingVertical: DevicePixels[10],
+          marginHorizontal: DevicePixels[10],
+        }}>
         <View>
           <View style={{flexDirection: 'row'}}>
             {tableHead.map(cell => (
               <Text
                 key={Math.random()}
                 style={{
-                  padding: 2,
+                  padding: DevicePixels[2],
                   borderWidth: StyleSheet.hairlineWidth,
                   width: CELL_WIDTH,
                   textAlign: 'center',
                   fontWeight: 'bold',
-                  fontSize: 12,
+                  fontSize: DevicePixels[12],
                 }}>
                 {cell}
               </Text>
@@ -88,12 +97,12 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
                   <Text
                     key={Math.random()}
                     style={{
-                      padding: 2,
+                      padding: DevicePixels[2],
                       borderWidth: StyleSheet.hairlineWidth,
                       width: CELL_WIDTH,
                       textAlign: 'center',
                       fontWeight: index === 0 ? 'bold' : 'normal',
-                      fontSize: 12,
+                      fontSize: DevicePixels[12],
                     }}>
                     {cell}
                   </Text>

@@ -10,7 +10,8 @@ import {Goal, MyRootState} from '../../types/Shared';
 import Snackbar from 'react-native-snackbar';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../actions/exercises';
-import Image from 'react-native-fast-image'
+import Image from 'react-native-fast-image';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const REPS = [...Array(101).keys()];
 REPS.shift();
@@ -89,20 +90,20 @@ const ExerciseBottomSheet: React.FC<{
       return (
         <Layout
           style={{
-            paddingBottom: 50,
+            paddingBottom: DevicePixels[50],
           }}>
           <Layout style={{alignItems: 'center'}}>
-            <Icon color="#000" name="minus" size={30} />
+            <Icon color="#000" name="minus" size={DevicePixels[30]} />
           </Layout>
           <Text category="h5" style={{textAlign: 'center'}}>
             {selectedExercise.name}
           </Text>
           <Image
             style={{
-              height: 150,
+              height: DevicePixels[150],
               width: '100%',
               alignSelf: 'center',
-              margin: 10,
+              margin: DevicePixels[10],
             }}
             source={
               selectedExercise.thumbnail
@@ -114,11 +115,11 @@ const ExerciseBottomSheet: React.FC<{
             style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <Layout>
               <Picker
-                style={{width: 120, height: 180}}
+                style={{width: DevicePixels[120], height: DevicePixels[180]}}
                 selectedValue={reps}
                 lineColor="#fff"
                 itemStyle={{
-                  fontSize: 15,
+                  fontSize: DevicePixels[15],
                   color: Platform.OS === 'android' ? '#000' : undefined,
                 }}
                 onValueChange={setReps}>
@@ -137,11 +138,11 @@ const ExerciseBottomSheet: React.FC<{
             </Layout>
             <Layout>
               <Picker
-                style={{width: 120, height: 180}}
+                style={{width: DevicePixels[120], height: DevicePixels[180]}}
                 selectedValue={sets}
                 lineColor="#fff"
                 itemStyle={{
-                  fontSize: 15,
+                  fontSize: DevicePixels[15],
                   color: Platform.OS === 'android' ? '#000' : undefined,
                 }}
                 onValueChange={setSets}>
@@ -160,11 +161,11 @@ const ExerciseBottomSheet: React.FC<{
               selectedExercise.type === Goal.STRENGTH) && (
               <Layout>
                 <Picker
-                  style={{width: 120, height: 180}}
+                  style={{width: DevicePixels[120], height: DevicePixels[180]}}
                   selectedValue={resistance}
                   lineColor="#fff"
                   itemStyle={{
-                    fontSize: 15,
+                    fontSize: DevicePixels[15],
                     color: Platform.OS === 'android' ? '#000' : undefined,
                   }}
                   onValueChange={setResistance}>
@@ -181,7 +182,7 @@ const ExerciseBottomSheet: React.FC<{
               </Layout>
             )}
           </Layout>
-          <Layout style={{marginTop: 30}}>
+          <Layout style={{marginTop: DevicePixels[30]}}>
             {selected && (
               <Button
                 onPress={() => {
@@ -189,12 +190,12 @@ const ExerciseBottomSheet: React.FC<{
                   bottomSheetRef.current.snapTo(1);
                   setOpen(false);
                 }}
-                style={{margin: 10}}>
+                style={{margin: DevicePixels[10]}}>
                 Save exercise
               </Button>
             )}
             <Button
-              style={{margin: 10}}
+              style={{margin: DevicePixels[10]}}
               onPress={() => {
                 selectExercise();
                 bottomSheetRef.current.snapTo(1);
@@ -214,7 +215,7 @@ const ExerciseBottomSheet: React.FC<{
   const renderHeader = () => {
     return (
       <Layout style={{alignItems: 'center'}}>
-        <Icon color="#ffff" name="minus" size={30} />
+        <Icon color="#ffff" name="minus" size={DevicePixels[30]} />
       </Layout>
     );
   };

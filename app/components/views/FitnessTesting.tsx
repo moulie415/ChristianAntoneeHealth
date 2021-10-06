@@ -9,6 +9,7 @@ import {Layout, Text} from '@ui-kitten/components';
 import globalStyles from '../../styles/globalStyles';
 import ImageLoader from '../commons/ImageLoader';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const getImage = (name: string): ImageSourcePropType => {
   const lower = name.toLowerCase();
@@ -38,36 +39,36 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({navigation, tests}) => {
     : [];
   return (
     <Layout style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
-        {items.map(({name, image, id}, index) => {
-          return (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Test', {id})}
-              key={name}
-              style={{flex: 1}}>
-              <ImageLoader
-                style={{width: '100%', flex: 1}}
-                delay={index * 200}
-                resizeMode="cover"
-                source={image}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  ...(index % 2 == 0 ? {right: 0} : {}),
-                  margin: 1,
-                }}>
-                <Text
-                  category="h6"
-                  style={[globalStyles.textShadow, {color: '#fff'}]}>
-                  {name}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </SafeAreaView>
+      {/* <SafeAreaView style={{flex: 1}}> */}
+      {items.map(({name, image, id}, index) => {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Test', {id})}
+            key={name}
+            style={{flex: 1}}>
+            <ImageLoader
+              style={{width: '100%', flex: 1}}
+              delay={index * 200}
+              resizeMode="cover"
+              source={image}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                ...(index % 2 == 0 ? {right: 0} : {}),
+                margin: DevicePixels[1],
+              }}>
+              <Text
+                category="h6"
+                style={[globalStyles.textShadow, {color: '#fff'}]}>
+                {name}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+      {/* </SafeAreaView> */}
     </Layout>
   );
 };

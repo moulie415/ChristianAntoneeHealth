@@ -1,19 +1,20 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
   },
   welcome: {
-    fontSize: 20,
+    fontSize: DevicePixels[20],
     textAlign: 'center',
-    margin: 10,
+    margin: DevicePixels[10],
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: DevicePixels[5],
   },
   input: {
     color: '#fff',
@@ -22,28 +23,28 @@ export default StyleSheet.create({
   inputGrp: {
     flexDirection: 'row',
     backgroundColor: '#0005',
-    marginBottom: 20,
+    marginBottom: DevicePixels[20],
     borderWidth: 0,
     borderColor: 'transparent',
-    marginLeft: 20,
-    marginRight: 20,
-    paddingLeft: 10,
-    borderRadius: 5,
-    height: 50,
+    marginLeft: DevicePixels[20],
+    marginRight: DevicePixels[20],
+    paddingLeft: DevicePixels[10],
+    borderRadius: DevicePixels[5],
+    height: DevicePixels[50],
     alignItems: 'center',
   },
   icon: {
-    marginRight: 10,
+    marginRight: DevicePixels[10],
     color: '#fff',
   },
   logo: {
-    margin: 10,
-    marginTop: 60,
-    height: 75,
-    width: 75,
+    margin: DevicePixels[10],
+    marginTop: DevicePixels[60],
+    height: DevicePixels[75],
+    width: DevicePixels[75],
     alignSelf: 'center',
   },
   button: {
-    margin: 10,
+    margin: DevicePixels[10],
   },
 });

@@ -8,6 +8,7 @@ import {MyRootState} from '../../types/Shared';
 import HomeWelcome from './HomeWelcome';
 import HomeCard from '../commons/HomeCard';
 import {linkToGoogleFit} from '../../helpers/biometrics';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
@@ -17,7 +18,8 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
           category="h3"
           style={{
             textAlign: 'center',
-            padding: 20,
+            padding: DevicePixels[20],
+            marginTop: DevicePixels[10]
           }}>{`Welcome ${profile.name || 'user'}!`}</Text>
         {!hasViewedWelcome && <HomeWelcome />}
         {hasViewedWelcome && (
@@ -26,7 +28,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                marginBottom: 20,
+                marginBottom: DevicePixels[20],
               }}>
               <HomeCard
                 title="New Workout"
@@ -45,7 +47,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                marginBottom: 20,
+                marginBottom: DevicePixels[20],
               }}>
               <HomeCard
                 title="Education"
@@ -64,7 +66,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                marginBottom: 20,
+                marginBottom: DevicePixels[20],
               }}>
               <HomeCard
                 title="Quick routines"

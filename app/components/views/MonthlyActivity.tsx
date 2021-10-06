@@ -10,6 +10,7 @@ import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import MonthlyActivityProps from '../../types/views/MonthlyActivity';
 import {weightChartConfig} from '../../constants';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const {width} = Dimensions.get('screen');
 const circleSize = width * 0.268;
@@ -53,17 +54,17 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
       <Circle
         strokeCap="round"
         style={{alignSelf: 'center'}}
-        size={200}
+        size={DevicePixels[200]}
         progress={0.7}
-        thickness={10}
+        thickness={DevicePixels[10]}
         color={colors.appBlue}
         borderWidth={0}
         unfilledColor={colors.appGrey}>
         <Layout
           style={{
             position: 'absolute',
-            top: 70,
-            left: 25,
+            top: DevicePixels[70],
+            left: DevicePixels[25],
           }}>
           <Text style={{textAlign: 'center'}} category="h2">
             52h 14m
@@ -74,8 +75,8 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
               alignItems: 'center',
             }}>
             <Icon
-              style={{marginRight: 5}}
-              size={15}
+              style={{marginRight: DevicePixels[5]}}
+              size={DevicePixels[15]}
               color={colors.appBlue}
               name="arrow-down"
             />
@@ -83,19 +84,19 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           </Layout>
         </Layout>
       </Circle>
-      <Layout style={{flexDirection: 'row', marginVertical: 20}}>
+      <Layout style={{flexDirection: 'row', marginVertical: DevicePixels[20]}}>
         <Layout
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
-            padding: 10,
+            padding: DevicePixels[10],
             flex: 1,
             alignItems: 'center',
           }}>
           <Text style={{textAlign: 'center'}}>{'Walking \n'}</Text>
           <Circle
             strokeCap="round"
-            style={{marginVertical: 10}}
+            style={{marginVertical: DevicePixels[10]}}
             progress={0.7}
             thickness={7}
             color={colors.appRed}
@@ -106,8 +107,8 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
               <Icon
                 name="shoe-prints"
                 color={colors.appBlue}
-                size={20}
-                style={{marginBottom: 5}}
+                size={DevicePixels[20]}
+                style={{marginBottom: DevicePixels[5]}}
               />
               <Text>1 h 03 min</Text>
             </Layout>
@@ -118,13 +119,13 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
-            padding: 10,
+            padding: DevicePixels[10],
             flex: 1,
           }}>
           <Text style={{textAlign: 'center'}}>Daily Living Activity</Text>
           <Circle
             strokeCap="round"
-            style={{marginVertical: 10}}
+            style={{marginVertical: DevicePixels[10]}}
             progress={0.7}
             thickness={7}
             color={colors.appLightBlue}
@@ -135,8 +136,8 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
               <Icon
                 name="chart-area"
                 color={colors.appBlue}
-                size={20}
-                style={{marginBottom: 5}}
+                size={DevicePixels[20]}
+                style={{marginBottom: DevicePixels[5]}}
               />
               <Text>1 h 03 min</Text>
             </Layout>
@@ -147,13 +148,13 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.borderColor,
-            padding: 10,
+            padding: DevicePixels[10],
             flex: 1,
           }}>
           <Text style={{textAlign: 'center'}}>Workout Activity</Text>
           <Circle
             strokeCap="round"
-            style={{marginVertical: 10}}
+            style={{marginVertical: DevicePixels[10]}}
             progress={0.7}
             thickness={7}
             color={colors.appGreen}
@@ -164,8 +165,8 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
               <Icon
                 name="stopwatch"
                 color={colors.appBlue}
-                size={20}
-                style={{marginBottom: 5}}
+                size={DevicePixels[20]}
+                style={{marginBottom: DevicePixels[5]}}
               />
               <Text>1 h 03 min</Text>
             </Layout>
@@ -173,7 +174,9 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           <Text style={{textAlign: 'center'}}>6500 Kcal</Text>
         </Layout>
       </Layout>
-      <Text category="s1" style={{textAlign: 'center', marginBottom: 20}}>
+      <Text
+        category="s1"
+        style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
         Activity breakdown per day
       </Text>
       <StackedBarChart
@@ -192,7 +195,7 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          marginBottom: 20,
+          marginBottom: DevicePixels[20],
         }}>
         <Layout
           style={{
@@ -201,11 +204,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appLightBlue,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Easy</Text>
@@ -217,11 +220,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appBlue,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Moderate</Text>
@@ -233,11 +236,11 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appGreen,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Hard</Text>
@@ -249,24 +252,26 @@ const MonthlyActivity: React.FC<MonthlyActivityProps> = () => {
           }}>
           <Layout
             style={{
-              height: 10,
-              width: 10,
-              borderRadius: 5,
+              height: DevicePixels[10],
+              width: DevicePixels[10],
+              borderRadius: DevicePixels[5],
               backgroundColor: colors.appRed,
-              marginRight: 5,
+              marginRight: DevicePixels[5],
             }}
           />
           <Text>Very Hard</Text>
         </Layout>
       </Layout>
       <Divider style={{backgroundColor: colors.borderColor}} />
-      <Text category="s1" style={{textAlign: 'center', marginVertical: 20}}>
+      <Text
+        category="s1"
+        style={{textAlign: 'center', marginVertical: DevicePixels[20]}}>
         Weight tracking
       </Text>
       <LineChart
         data={weightData}
         width={Dimensions.get('screen').width * 0.9}
-        height={220}
+        height={DevicePixels[220]}
         chartConfig={weightChartConfig}
         withVerticalLines={false}
         withShadow={false}

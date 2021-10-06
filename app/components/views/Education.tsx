@@ -3,6 +3,7 @@ import React from 'react';
 import {View} from 'react-native';
 import Image from 'react-native-fast-image';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 import styles from '../../styles/views/Education';
 import EducationProps from '../../types/views/Education';
 
@@ -14,7 +15,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         accessoryLeft={() => (
           <Image
             source={require('../../images/article1.webp')}
-            style={{height: 100, width: 100}}
+            style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
         title="Strawberry and Cacao Kefir Smoothie"
@@ -31,7 +32,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         accessoryLeft={() => (
           <Image
             source={require('../../images/article2.webp')}
-            style={{height: 100, width: 100}}
+            style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
         title="Cross-Training For Runners"
@@ -48,7 +49,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         accessoryLeft={() => (
           <Image
             source={require('../../images/article3.webp')}
-            style={{height: 100, width: 100}}
+            style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
         title="Lifting Heavy Weights Improves Running Performance"
@@ -65,7 +66,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         accessoryLeft={() => (
           <Image
             source={require('../../images/article4.webp')}
-            style={{height: 100, width: 100}}
+            style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
         title="A Simple Blueprint For Every Workout"

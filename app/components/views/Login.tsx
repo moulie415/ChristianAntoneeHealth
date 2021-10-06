@@ -5,6 +5,7 @@ import {
   Image,
   Platform,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Spinner, Input, Button, Text} from '@ui-kitten/components';
@@ -18,6 +19,7 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {handleAuth} from '../../actions/profile';
+import DevicePixels from '../../helpers/DevicePixels';
 
 GoogleSignin.configure({
   webClientId:
@@ -122,158 +124,185 @@ const Login: React.FC<LoginProps> = ({
 
   return (
     <Layout style={{flex: 1}}>
-      <KeyboardAvoidingView behavior="position" style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={require('../../images/health_and_movement_logo_colour_centred.png')}
-        />
-        <Text style={{textAlign: 'center', marginBottom: 50}} category="h4">
-          Welcome back!
-        </Text>
-        <Layout
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
-          <Text>Not a member? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>
-              SIGN UP
-            </Text>
-          </TouchableOpacity>
-        </Layout>
-        <Text style={{textAlign: 'center', marginBottom: 20}}>Login with</Text>
-        <Layout
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 20,
-          }}>
-          {Platform.OS === 'ios' && (
+      <ScrollView>
+        <KeyboardAvoidingView behavior="position" style={styles.container}>
+          <Image
+            style={styles.logo}
+            source={require('../../images/health_and_movement_logo_colour_centred.png')}
+          />
+          <Text
+            style={{textAlign: 'center', marginBottom: DevicePixels[50]}}
+            category="h4">
+            Welcome back!
+          </Text>
+          <Layout
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: DevicePixels[30],
+            }}>
+            <Text>Not a member? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+              <Text
+                style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>
+                SIGN UP
+              </Text>
+            </TouchableOpacity>
+          </Layout>
+          <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+            Login with
+          </Text>
+          <Layout
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: DevicePixels[20],
+            }}>
+            {Platform.OS === 'ios' && (
+              <Button
+                onPress={async () => {
+                  setAppleLoading(true);
+                  await appleSignIn();
+                  setAppleLoading(false);
+                }}
+                style={{
+                  backgroundColor: '#fff',
+                  alignSelf: 'center',
+                  width: DevicePixels[75],
+                  height: DevicePixels[50],
+                  marginHorizontal: DevicePixels[10],
+                }}
+                accessoryLeft={() =>
+                  appleLoading ? (
+                    <Spinner />
+                  ) : (
+                    <Icon name="apple" size={DevicePixels[20]} />
+                  )
+                }
+              />
+            )}
             <Button
               onPress={async () => {
-                setAppleLoading(true);
-                await appleSignIn();
-                setAppleLoading(false);
+                setFacebookLoading(true);
+                await facebookSignIn();
+                setFacebookLoading(false);
               }}
               style={{
                 backgroundColor: '#fff',
                 alignSelf: 'center',
-                width: 75,
-                height: 50,
-                marginHorizontal: 10,
+                width: DevicePixels[75],
+                height: DevicePixels[50],
+                marginHorizontal: DevicePixels[10],
               }}
               accessoryLeft={() =>
-                appleLoading ? <Spinner /> : <Icon name="apple" size={20} />
+                facebookLoading ? (
+                  <Spinner />
+                ) : (
+                  <Icon
+                    color="#3b5998"
+                    name="facebook-f"
+                    size={DevicePixels[20]}
+                  />
+                )
               }
             />
-          )}
-          <Button
-            onPress={async () => {
-              setFacebookLoading(true);
-              await facebookSignIn();
-              setFacebookLoading(false);
-            }}
-            style={{
-              backgroundColor: '#fff',
-              alignSelf: 'center',
-              width: 75,
-              height: 50,
-              marginHorizontal: 10,
-            }}
-            accessoryLeft={() =>
-              facebookLoading ? (
-                <Spinner />
-              ) : (
-                <Icon color="#3b5998" name="facebook-f" size={20} />
-              )
-            }
-          />
-          <Button
-            onPress={async () => {
-              setGoogleLoading(true);
-              await googleSignIn();
-              setGoogleLoading(false);
-            }}
-            style={{
-              backgroundColor: '#fff',
-              alignSelf: 'center',
-              width: 75,
-              height: 50,
-              marginHorizontal: 10,
-            }}
-            accessoryLeft={() =>
-              googleLoading ? (
-                <Spinner />
-              ) : (
-                <Icon color="#ea4335" name="google" size={20} />
-              )
-            }
-          />
-        </Layout>
-        <Text style={{textAlign: 'center', marginBottom: 20}}>or</Text>
-        <Input
-          style={styles.input}
-          placeholder="Email"
-          onChangeText={u => setUsername(u)}
-          accessoryLeft={() => (
-            <Icon size={25} name="envelope" style={styles.icon} solid />
-          )}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-        />
-
-        <Input
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry={secure}
-          onChangeText={p => setPass(p)}
-          autoCorrect={false}
-          accessoryLeft={() => (
-            <Icon size={25} name="unlock" solid style={styles.icon} />
-          )}
-          accessoryRight={() => (
-            <TouchableOpacity onPress={() => setSecure(!secure)}>
+            <Button
+              onPress={async () => {
+                setGoogleLoading(true);
+                await googleSignIn();
+                setGoogleLoading(false);
+              }}
+              style={{
+                backgroundColor: '#fff',
+                alignSelf: 'center',
+                width: DevicePixels[75],
+                height: DevicePixels[50],
+                marginHorizontal: DevicePixels[10],
+              }}
+              accessoryLeft={() =>
+                googleLoading ? (
+                  <Spinner />
+                ) : (
+                  <Icon color="#ea4335" name="google" size={DevicePixels[20]} />
+                )
+              }
+            />
+          </Layout>
+          <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+            or
+          </Text>
+          <Input
+            style={styles.input}
+            placeholder="Email"
+            onChangeText={u => setUsername(u)}
+            accessoryLeft={() => (
               <Icon
-                size={30}
-                name={secure ? 'eye' : 'eye-slash'}
+                size={DevicePixels[25]}
+                name="envelope"
+                style={styles.icon}
+                solid
+              />
+            )}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+          />
+
+          <Input
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry={secure}
+            onChangeText={p => setPass(p)}
+            autoCorrect={false}
+            accessoryLeft={() => (
+              <Icon
+                size={DevicePixels[25]}
+                name="unlock"
                 solid
                 style={styles.icon}
               />
-            </TouchableOpacity>
-          )}
-          autoCapitalize="none"
-        />
+            )}
+            accessoryRight={() => (
+              <TouchableOpacity onPress={() => setSecure(!secure)}>
+                <Icon
+                  size={DevicePixels[30]}
+                  name={secure ? 'eye' : 'eye-slash'}
+                  solid
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
+            )}
+            autoCapitalize="none"
+          />
 
-        <Button
-          onPress={async () => {
-            if (username && pass) {
-              setSpinner(true);
-              setSecure(true);
-              const {user} = await signIn(username, pass);
-              if (!user.emailVerified) {
+          <Button
+            onPress={async () => {
+              if (username && pass) {
+                setSpinner(true);
+                setSecure(true);
+                const {user} = await signIn(username, pass);
+                if (!user.emailVerified) {
+                  Alert.alert(
+                    'Sorry',
+                    'You must first verify your email using the link we sent you before logging in',
+                  );
+                } else {
+                  handleAuthAction(user);
+                }
+              } else {
                 Alert.alert(
                   'Sorry',
-                  'You must first verify your email using the link we sent you before logging in',
+                  'Please enter both your email and your password',
                 );
-              } else {
-                handleAuthAction(user);
               }
-            } else {
-              Alert.alert(
-                'Sorry',
-                'Please enter both your email and your password',
-              );
-            }
-            setSpinner(false);
-          }}
-          accessoryLeft={() => (spinner ? <Spinner /> : null)}
-          style={styles.button}>
-          Log in
-        </Button>
-      </KeyboardAvoidingView>
+              setSpinner(false);
+            }}
+            accessoryLeft={() => (spinner ? <Spinner /> : null)}
+            style={styles.button}>
+            Log in
+          </Button>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </Layout>
   );
 };

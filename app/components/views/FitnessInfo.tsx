@@ -24,6 +24,7 @@ import {
 import FitnessInfoProps from '../../types/views/FitnessInfo';
 import AbsoluteSpinner from '../commons/AbsoluteSpinner';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const FitnessInfo: React.FC<FitnessInfoProps> = ({
   height,
@@ -86,18 +87,18 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
 
   const [loading, setLoading] = useState(false);
   return (
-    <Layout style={{marginHorizontal: 20}}>
+    <Layout style={{marginHorizontal: DevicePixels[20]}}>
       <Text style={{color: colors.textGrey}} category="label">
         Date of Birth
       </Text>
       {(show || Platform.OS === 'ios') && (
         <DatePicker
-          style={{width: '100%', marginVertical: 5}}
+          style={{width: '100%', marginVertical: DevicePixels[5]}}
           testID="datePicker"
           value={moment(dob).toDate()}
           mode="date"
-          placeholderText="Select date"
-          display="default"
+          // placeholderText="Select date"
+          display="compact"
           onChange={(_: Event, d: Date) => {
             if (d) {
               setDob(d.toISOString());
@@ -110,10 +111,10 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         <TouchableOpacity
           style={{
             width: '40%',
-            marginVertical: 5,
-            borderWidth: 1,
-            padding: 7,
-            borderRadius: 3,
+            marginVertical: DevicePixels[5],
+            borderWidth: DevicePixels[1],
+            padding: DevicePixels[7],
+            borderRadius: DevicePixels[3],
             borderColor: '#ebebeb',
             backgroundColor: '#fafafa',
           }}
@@ -138,7 +139,11 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
       <Input
         value={weight?.toString()}
         returnKeyType="done"
-        style={{width: '30%', marginRight: 20, marginTop: 10}}
+        style={{
+          width: '30%',
+          marginRight: DevicePixels[20],
+          marginTop: DevicePixels[10],
+        }}
         onChangeText={val => setWeight(Number(val))}
         label={`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}
         keyboardType="numeric"
@@ -146,13 +151,17 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
       <Input
         value={height?.toString()}
         returnKeyType="done"
-        style={{width: '30%', marginRight: 20, marginTop: 10}}
+        style={{
+          width: '30%',
+          marginRight: DevicePixels[20],
+          marginTop: DevicePixels[10],
+        }}
         onChangeText={val => setHeight(Number(val))}
         label={`Height (${unit === 'metric' ? 'cm' : 'inches'})`}
         keyboardType="numeric"
       />
       <Select
-        style={{width: '65%', marginTop: 10}}
+        style={{width: '65%', marginTop: DevicePixels[10]}}
         selectedIndex={selectedGenderIndex}
         onSelect={index => {
           setSelectedGenderIndex(index as IndexPath);
@@ -165,7 +174,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         <SelectItem selected={gender === 'male'} title="male" />
         <SelectItem selected={gender === 'female'} title="female" />
       </Select>
-      <Text style={{color: '#fff', marginVertical: 20}}>
+      <Text style={{color: '#fff', marginVertical: DevicePixels[20]}}>
         This data will help us assess your fitness and exercise requirement. You
         can update this information anytime in your profile.
       </Text>

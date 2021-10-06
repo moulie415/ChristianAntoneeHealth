@@ -13,6 +13,7 @@ import colors from '../../constants/colors';
 import sStyles from '../../styles/views/More';
 import SignUpProps from '../../types/views/SignUp';
 import {setStep} from '../../actions/profile';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const SignUp: React.FC<SignUpProps> = ({
   navigation,
@@ -104,14 +105,16 @@ const SignUp: React.FC<SignUpProps> = ({
         style={styles.logo}
         source={require('../../images/health_and_movement_logo_colour_centred.png')}
       />
-      <Text style={{textAlign: 'center', marginBottom: 50}} category="h4">
+      <Text
+        style={{textAlign: 'center', marginBottom: DevicePixels[50]}}
+        category="h4">
         Welcome back!
       </Text>
       <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          marginBottom: 30,
+          marginBottom: DevicePixels[30],
         }}>
         <Text>Already a member? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -120,14 +123,14 @@ const SignUp: React.FC<SignUpProps> = ({
           </Text>
         </TouchableOpacity>
       </Layout>
-      <Text style={{textAlign: 'center', marginBottom: 20}}>
+      <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
         Get started with
       </Text>
       <Layout
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          marginBottom: 20,
+          marginBottom: DevicePixels[20],
         }}>
         {Platform.OS === 'ios' && (
           <Button
@@ -139,12 +142,16 @@ const SignUp: React.FC<SignUpProps> = ({
             style={{
               backgroundColor: '#fff',
               alignSelf: 'center',
-              width: 75,
-              height: 50,
-              marginHorizontal: 10,
+              width: DevicePixels[75],
+              height: DevicePixels[50],
+              marginHorizontal: DevicePixels[10],
             }}
             accessoryLeft={() =>
-              appleLoading ? <Spinner /> : <Icon name="apple" size={20} />
+              appleLoading ? (
+                <Spinner />
+              ) : (
+                <Icon name="apple" size={DevicePixels[20]} />
+              )
             }
           />
         )}
@@ -157,15 +164,15 @@ const SignUp: React.FC<SignUpProps> = ({
           style={{
             backgroundColor: '#fff',
             alignSelf: 'center',
-            width: 75,
-            height: 50,
-            marginHorizontal: 10,
+            width: DevicePixels[75],
+            height: DevicePixels[50],
+            marginHorizontal: DevicePixels[10],
           }}
           accessoryLeft={() =>
             facebookLoading ? (
               <Spinner />
             ) : (
-              <Icon color="#3b5998" name="facebook-f" size={20} />
+              <Icon color="#3b5998" name="facebook-f" size={DevicePixels[20]} />
             )
           }
         />
@@ -178,20 +185,22 @@ const SignUp: React.FC<SignUpProps> = ({
           style={{
             backgroundColor: '#fff',
             alignSelf: 'center',
-            width: 75,
-            height: 50,
-            marginHorizontal: 10,
+            width: DevicePixels[75],
+            height: DevicePixels[50],
+            marginHorizontal: DevicePixels[10],
           }}
           accessoryLeft={() =>
             googleLoading ? (
               <Spinner />
             ) : (
-              <Icon color="#ea4335" name="google" size={20} />
+              <Icon color="#ea4335" name="google" size={DevicePixels[20]} />
             )
           }
         />
       </Layout>
-      <Text style={{textAlign: 'center', marginBottom: 20}}>or</Text>
+      <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+        or
+      </Text>
 
       <Button
         onPress={async () => {

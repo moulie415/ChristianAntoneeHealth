@@ -9,6 +9,7 @@ import {
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
 import {getQuickRoutines} from '../../actions/quickRoutines';
+import DevicePixels from '../../helpers/DevicePixels';
 import globalStyles from '../../styles/globalStyles';
 import {Area, Equipment, Focus} from '../../types/QuickRoutines';
 import QuickRoutinesProps from '../../types/views/QuickRoutines';
@@ -84,7 +85,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                   })
                 }
                 key={title}
-                style={{flex: 1, paddingBottom: 5}}>
+                style={{flex: 1, paddingBottom: DevicePixels[5]}}>
                 <ImageLoader
                   style={{width: '100%', flex: 1}}
                   delay={index * 200}
@@ -96,7 +97,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                     position: 'absolute',
                     bottom: 0,
                     top: 0,
-                    left: 20,
+                    left: DevicePixels[20],
                     justifyContent: 'center',
                   }}>
                   <Text
@@ -111,7 +112,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                   return (
                     <Fragment key={id}>
                       <TouchableOpacity
-                        style={{padding: 20}}
+                        style={{padding: DevicePixels[20]}}
                         key={id}
                         onPress={() => {
                           if (

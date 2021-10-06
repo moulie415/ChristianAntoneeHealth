@@ -8,6 +8,7 @@ import {Goal, Level, MyRootState, StrengthArea} from '../../types/Shared';
 import {setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
 import ImageOverlay from '../commons/ImageOverlay';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
@@ -35,35 +36,37 @@ const Workout: React.FC<WorkoutProps> = ({
     <Layout style={{flex: 1}}>
       <SafeAreaView>
         <ScrollView>
-          <Text category="h5" style={{margin: 10, marginBottom: 0}}>
+          <Text
+            category="h5"
+            style={{margin: DevicePixels[10], marginBottom: 0}}>
             Select your goal(s)
           </Text>
           <CheckBox
             onChange={checked => selectGoal(Goal.FLEXIBILITY, checked)}
             checked={goals.includes(Goal.FLEXIBILITY)}
-            style={{margin: 10}}>
+            style={{margin: DevicePixels[10]}}>
             Flexibility
           </CheckBox>
           <CheckBox
             onChange={checked => selectGoal(Goal.STRENGTH, checked)}
             checked={goals.includes(Goal.STRENGTH)}
-            style={{margin: 10}}>
+            style={{margin: DevicePixels[10]}}>
             Strength
           </CheckBox>
           <CheckBox
             onChange={checked => selectGoal(Goal.BALANCE, checked)}
             checked={goals.includes(Goal.BALANCE)}
-            style={{margin: 10}}>
+            style={{margin: DevicePixels[10]}}>
             Balance
           </CheckBox>
           <CheckBox
             onChange={checked => selectGoal(Goal.CARDIO, checked)}
             checked={goals.includes(Goal.CARDIO)}
-            style={{margin: 10}}>
+            style={{margin: DevicePixels[10]}}>
             Cardiovascular fitness
           </CheckBox>
 
-          <Text category="h5" style={{margin: 10}}>
+          <Text category="h5" style={{margin: DevicePixels[10]}}>
             Select your experience
           </Text>
           <Layout
@@ -92,21 +95,21 @@ const Workout: React.FC<WorkoutProps> = ({
               Advanced
             </Button>
           </Layout>
-          <Text category="h5" style={{margin: 10}}>
+          <Text category="h5" style={{margin: DevicePixels[10]}}>
             Select an area of the body
           </Text>
           <Layout
             style={{
               flexDirection: 'row',
               justifyContent: 'space-evenly',
-              marginBottom: 10,
+              marginBottom: DevicePixels[10],
             }}>
             <TouchableOpacity
               disabled={areaDisabled}
               onPress={() => setSelectedArea(StrengthArea.FULL)}
-              style={{marginHorizontal: 10, flex: 1}}>
+              style={{marginHorizontal: DevicePixels[10], flex: 1}}>
               <ImageOverlay
-                containerStyle={{height: 100, width: '100%'}}
+                containerStyle={{height: DevicePixels[100], width: '100%'}}
                 overlayAlpha={areaDisabled ? 0.7 : 0}
                 source={require('../../images/full_body.jpeg')}
               />
@@ -116,7 +119,7 @@ const Workout: React.FC<WorkoutProps> = ({
                     selectedArea === StrengthArea.FULL && !areaDisabled
                       ? colors.appBlue
                       : '#3d3d3d',
-                  padding: 5,
+                  padding: DevicePixels[5],
                   textAlign: 'center',
                   color: '#fff',
                 }}>
@@ -126,9 +129,9 @@ const Workout: React.FC<WorkoutProps> = ({
             <TouchableOpacity
               disabled={areaDisabled}
               onPress={() => setSelectedArea(StrengthArea.UPPER)}
-              style={{marginHorizontal: 10, flex: 1}}>
+              style={{marginHorizontal: DevicePixels[10], flex: 1}}>
               <ImageOverlay
-                containerStyle={{height: 100, width: '100%'}}
+                containerStyle={{height: DevicePixels[100], width: '100%'}}
                 overlayAlpha={areaDisabled ? 0.7 : 0}
                 source={require('../../images/upper_body.jpeg')}
               />
@@ -138,7 +141,7 @@ const Workout: React.FC<WorkoutProps> = ({
                     selectedArea === StrengthArea.UPPER && !areaDisabled
                       ? colors.appBlue
                       : '#3d3d3d',
-                  padding: 5,
+                  padding: DevicePixels[5],
                   textAlign: 'center',
                   color: '#fff',
                 }}>
@@ -148,9 +151,9 @@ const Workout: React.FC<WorkoutProps> = ({
             <TouchableOpacity
               disabled={areaDisabled}
               onPress={() => setSelectedArea(StrengthArea.LOWER)}
-              style={{marginHorizontal: 10, flex: 1}}>
+              style={{marginHorizontal: DevicePixels[10], flex: 1}}>
               <ImageOverlay
-                containerStyle={{height: 100, width: '100%'}}
+                containerStyle={{height: DevicePixels[100], width: '100%'}}
                 overlayAlpha={areaDisabled ? 0.7 : 0}
                 source={require('../../images/lower_body.jpeg')}
               />
@@ -160,7 +163,7 @@ const Workout: React.FC<WorkoutProps> = ({
                     selectedArea === StrengthArea.LOWER && !areaDisabled
                       ? colors.appBlue
                       : '#3d3d3d',
-                  padding: 5,
+                  padding: DevicePixels[5],
                   textAlign: 'center',
                   color: '#fff',
                 }}>
@@ -182,7 +185,7 @@ const Workout: React.FC<WorkoutProps> = ({
                 navigation.navigate('Premium');
               }
             }}
-            style={{margin: 10}}>
+            style={{margin: DevicePixels[10]}}>
             Continue
           </Button>
         </ScrollView>

@@ -6,6 +6,7 @@ import {
   ImageSourcePropType,
   TouchableHighlight,
 } from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 import globalStyles from '../../styles/globalStyles';
 import ImageOverlay from './ImageOverlay';
 
@@ -18,17 +19,21 @@ const HomeCard: React.FC<{
   return (
     <TouchableHighlight
       style={[
-        {flex: 1, marginHorizontal: 10, borderRadius: 25},
+        {
+          flex: 1,
+          marginHorizontal: DevicePixels[10],
+          borderRadius: DevicePixels[25],
+        },
         globalStyles.boxShadow,
       ]}
       onPress={onPress}>
-      <Layout style={{flex: 1, borderRadius: 25}}>
+      <Layout style={{flex: 1, borderRadius: DevicePixels[25]}}>
         <ImageOverlay
           overlayAlpha={0.4}
           containerStyle={{
             flex: 1,
             width: '100%',
-            borderRadius: 25,
+            borderRadius: DevicePixels[25],
           }}
           source={image}
         />
@@ -39,7 +44,7 @@ const HomeCard: React.FC<{
             top: 0,
             left: 0,
             right: 0,
-            padding: 5,
+            padding: DevicePixels[5],
             alignItems: 'center',
             justifyContent: 'center',
           }}>

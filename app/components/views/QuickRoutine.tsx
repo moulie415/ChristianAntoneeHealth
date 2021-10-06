@@ -9,6 +9,7 @@ import {MyRootState} from '../../types/Shared';
 import QuickRoutineProps from '../../types/views/QuickRoutine';
 import ExerciseVideo from '../commons/ExerciseVideo';
 import colors from '../../constants/colors';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -27,7 +28,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       <Layout
         style={{
           flexDirection: 'row',
-          margin: 10,
+          margin: DevicePixels[10],
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
@@ -37,8 +38,12 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             flexDirection: 'row',
             justifyContent: 'flex-end',
           }}>
-          <Icon name="stopwatch" size={25} color={colors.darkBlue} />
-          <Text style={{marginLeft: 10}} category="h5">
+          <Icon
+            name="stopwatch"
+            size={DevicePixels[25]}
+            color={colors.darkBlue}
+          />
+          <Text style={{marginLeft: DevicePixels[10]}} category="h5">
             {`Under ${routine.duration} minutes`}
           </Text>
         </Layout>
@@ -62,11 +67,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           )}
         </>
         <Layout>
-          <Text style={{margin: 10, marginTop: 0}} category="h6">
+          <Text style={{margin: DevicePixels[10], marginTop: 0}} category="h6">
             {routine.name}
           </Text>
           <Divider />
-          <Text style={{margin: 10}}>{routine.description}</Text>
+          <Text style={{margin: DevicePixels[10]}}>{routine.description}</Text>
         </Layout>
       </ScrollView>
     </Layout>

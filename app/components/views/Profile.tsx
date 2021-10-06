@@ -27,6 +27,7 @@ import {Platform} from 'react-native';
 import {getWeightItems} from '../../helpers';
 import {weightChartConfig} from '../../constants';
 import {isAvailable, isEnabled} from '../../helpers/biometrics';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -96,34 +97,38 @@ const Profile: React.FC<ProfileProps> = ({
     <Layout style={{flex: 1}}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={{paddingBottom: 100}}>
+        contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
         <Layout
-          style={{flexDirection: 'row', margin: 20, alignItems: 'center'}}>
-          <TouchableOpacity style={{marginRight: 20}}>
+          style={{
+            flexDirection: 'row',
+            margin: DevicePixels[20],
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity style={{marginRight: DevicePixels[20]}}>
             {profile.avatar ? (
               <Image style={styles.avatar} source={{uri: profile.avatar}} />
             ) : (
               <TouchableOpacity
                 style={{
                   backgroundColor: colors.appGrey,
-                  padding: 15,
-                  borderRadius: 45,
+                  padding: DevicePixels[15],
+                  borderRadius: DevicePixels[45],
                 }}>
-                <FIcon name="user" solid size={25} color="#fff" />
+                <FIcon name="user" solid size={DevicePixels[25]} color="#fff" />
               </TouchableOpacity>
             )}
           </TouchableOpacity>
           <Text category="h5">{profile.name}</Text>
         </Layout>
-        <Layout style={{margin: 20}}>
+        <Layout style={{margin: DevicePixels[20]}}>
           <Text style={{color: colors.textGrey}} category="label">
             Date of Birth
           </Text>
           {(show || Platform.OS === 'ios') && (
             <DatePicker
               style={{
-                marginVertical: 5,
-                width: 125,
+                marginVertical: DevicePixels[5],
+                width: DevicePixels[125],
               }}
               testID="datePicker"
               value={moment(dob).toDate()}
@@ -141,10 +146,10 @@ const Profile: React.FC<ProfileProps> = ({
             <TouchableOpacity
               style={{
                 width: '40%',
-                marginVertical: 5,
-                borderWidth: 1,
-                padding: 7,
-                borderRadius: 3,
+                marginVertical: DevicePixels[5],
+                borderWidth: DevicePixels[1],
+                padding: DevicePixels[7],
+                borderRadius: DevicePixels[3],
                 borderColor: '#ebebeb',
                 backgroundColor: '#fafafa',
               }}
@@ -170,7 +175,11 @@ const Profile: React.FC<ProfileProps> = ({
           <Input
             value={weight?.toString()}
             returnKeyType="done"
-            style={{width: '30%', marginRight: 20, marginTop: 10}}
+            style={{
+              width: '30%',
+              marginRight: DevicePixels[20],
+              marginTop: DevicePixels[10],
+            }}
             onChangeText={val => setWeight(Number(val))}
             label={`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}
             keyboardType="numeric"
@@ -178,14 +187,18 @@ const Profile: React.FC<ProfileProps> = ({
           <Input
             value={height?.toString()}
             returnKeyType="done"
-            style={{width: '30%', marginRight: 20, marginTop: 10}}
+            style={{
+              width: '30%',
+              marginRight: DevicePixels[20],
+              marginTop: DevicePixels[10],
+            }}
             onChangeText={val => setHeight(Number(val))}
             label={`Height (${unit === 'metric' ? 'cm' : 'inches'})`}
             keyboardType="numeric"
           />
 
           <Select
-            style={{width: '65%', marginBottom: 10}}
+            style={{width: '65%', marginBottom: DevicePixels[10]}}
             selectedIndex={selectedGenderIndex}
             onSelect={index => {
               setSelectedGenderIndex(index as IndexPath);
@@ -199,13 +212,13 @@ const Profile: React.FC<ProfileProps> = ({
             <SelectItem selected={gender === 'female'} title="female" />
           </Select>
         </Layout>
-        <Text category="h6" style={{margin: 20, marginTop: 0}}>
+        <Text category="h6" style={{margin: DevicePixels[20], marginTop: 0}}>
           Weight tracking
         </Text>
         <LineChart
           data={weightData}
           width={Dimensions.get('screen').width * 0.9}
-          height={200}
+          height={DevicePixels[200]}
           chartConfig={weightChartConfig}
           // withVerticalLines={false}
           withShadow={false}
@@ -224,8 +237,8 @@ const Profile: React.FC<ProfileProps> = ({
         }}
         disabled={!dob || !height || !weight || !gender || equal}
         style={{
-          margin: 10,
-          marginBottom: 20,
+          margin: DevicePixels[10],
+          marginBottom: DevicePixels[20],
           position: 'absolute',
           left: 0,
           right: 0,

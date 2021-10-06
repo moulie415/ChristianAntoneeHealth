@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import {purposeItems} from '../../constants';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Goals: React.FC<GoalsProps> = ({
   selectedGoals,
@@ -32,17 +33,18 @@ const Goals: React.FC<GoalsProps> = ({
   };
   const CheckIcon = ({goal}: {goal: Goal}) => {
     return selectedGoals.includes(goal) ? (
-      <Icon name="check" size={12} style={{color: '#fff'}} />
+      <Icon name="check" size={DevicePixels[12]} style={{color: '#fff'}} />
     ) : null;
   };
   const CrossIcon = ({goal}: {goal: Goal}) => {
     return selectedGoals.includes(goal) ? (
-      <Icon name="times" size={12} />
+      <Icon name="times" size={DevicePixels[12]} />
     ) : null;
   };
   return (
-    <Layout style={{margin: 20}}>
-      <Text style={{marginTop: 30, marginBottom: 10}}>
+    <Layout style={{margin: DevicePixels[20]}}>
+      <Text
+        style={{marginTop: DevicePixels[30], marginBottom: DevicePixels[10]}}>
         What is your main purpose for using this app?
       </Text>
       <Select
@@ -71,7 +73,8 @@ const Goals: React.FC<GoalsProps> = ({
           );
         })}
       </Select>
-      <Text style={{marginTop: 30, marginBottom: 10}}>
+      <Text
+        style={{marginTop: DevicePixels[30], marginBottom: DevicePixels[10]}}>
         What is your main purpose for using this app?
       </Text>
       <Layout
@@ -89,8 +92,8 @@ const Goals: React.FC<GoalsProps> = ({
             selectedGoals.includes(Goal.FLEXIBILITY) ? 'primary' : 'basic'
           }
           style={{
-            width: 120,
-            marginBottom: 20,
+            width: DevicePixels[120],
+            marginBottom: DevicePixels[20],
           }}>
           Flexibility
         </Button>
@@ -101,8 +104,8 @@ const Goals: React.FC<GoalsProps> = ({
           onPress={() => selectGoal(Goal.STRENGTH)}
           status={selectedGoals.includes(Goal.STRENGTH) ? 'primary' : 'basic'}
           style={{
-            width: 120,
-            marginBottom: 20,
+            width: DevicePixels[120],
+            marginBottom: DevicePixels[20],
           }}>
           Strength
         </Button>
@@ -113,8 +116,8 @@ const Goals: React.FC<GoalsProps> = ({
           onPress={() => selectGoal(Goal.BALANCE)}
           status={selectedGoals.includes(Goal.BALANCE) ? 'primary' : 'basic'}
           style={{
-            width: 120,
-            marginBottom: 20,
+            width: DevicePixels[120],
+            marginBottom: DevicePixels[20],
           }}>
           Balance
         </Button>
@@ -125,27 +128,32 @@ const Goals: React.FC<GoalsProps> = ({
           onPress={() => selectGoal(Goal.CARDIO)}
           status={selectedGoals.includes(Goal.CARDIO) ? 'primary' : 'basic'}
           style={{
-            width: 120,
-            marginBottom: 20,
+            width: DevicePixels[120],
+            marginBottom: DevicePixels[20],
           }}>
           Cardiovascular
         </Button>
       </Layout>
-      <Text style={{marginTop: 30, marginBottom: 20}}>
+      <Text
+        style={{marginTop: DevicePixels[30], marginBottom: DevicePixels[20]}}>
         How many times a week do you want to workout?
       </Text>
       <Layout
-        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: DevicePixels[10],
+        }}>
         <TouchableOpacity
           onPress={() => {
             if (workoutFrequency > 1) {
               setWorkoutFrequency(workoutFrequency - 1);
             }
           }}>
-          <Icon name="minus" color={colors.appBlue} size={25} />
+          <Icon name="minus" color={colors.appBlue} size={DevicePixels[25]} />
         </TouchableOpacity>
         <Input
-          style={{marginHorizontal: 10, width: 70}}
+          style={{marginHorizontal: DevicePixels[10], width: DevicePixels[70]}}
           textAlign="center"
           keyboardType="numeric"
           returnKeyType="done"
@@ -161,7 +169,7 @@ const Goals: React.FC<GoalsProps> = ({
         />
         <TouchableOpacity
           onPress={() => setWorkoutFrequency(workoutFrequency + 1)}>
-          <Icon name="plus" color={colors.appBlue} size={25} />
+          <Icon name="plus" color={colors.appBlue} size={DevicePixels[25]} />
         </TouchableOpacity>
       </Layout>
       <Button disabled={!purpose} onPress={signUp}>
