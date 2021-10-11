@@ -1109,14 +1109,15 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.1.0.tgz#0752ff33c5eab21cf42034a44e79df97f0f867f8"
-  integrity sha512-V5qxaxCAExBM0TXmbU1QKiZcAGP3ecu7KXede8vByT15cro5PkcWu2sSdJCYbHQ/gw6Vf/i8sr8gKlN8V8TSLg==
+"@expo/config-plugins@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.2.tgz#6c83ae373c12a240ccadc2322bd8267e4eb91f7b"
+  integrity sha512-j8IOVH0yL7ZDYcoozdpQb3ZuwUM/4eZ1QWy4icovjlyXGtRFyJvWZitZkA/7HK1+0mS2ZNSW28elp+LVTX3UfA==
   dependencies:
-    "@expo/config-types" "^42.0.0"
+    "@expo/config-types" "^43.0.0"
     "@expo/json-file" "8.2.33"
-    "@expo/plist" "0.0.14"
+    "@expo/plist" "0.0.15"
+    "@react-native/normalize-color" "^2.0.0"
     chalk "^4.1.2"
     debug "^4.3.1"
     find-up "~5.0.0"
@@ -1134,10 +1135,10 @@
   resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-41.0.0.tgz#ffe1444c6c26e0e3a8f7149b4afe486e357536d1"
   integrity sha512-Ax0pHuY5OQaSrzplOkT9DdpdmNzaVDnq9VySb4Ujq7UJ4U4jriLy8u93W98zunOXpcu0iiKubPsqD6lCiq0pig==
 
-"@expo/config-types@^42.0.0":
-  version "42.0.0"
-  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-42.0.0.tgz#3e3e125ec092c0c34dbfaf19be5480402de3d677"
-  integrity sha512-Rj02OMZke2MrGa/1Y/EScmR7VuWbDEHPJyvfFyyLbadUt+Yv6isCdeFzDt71I7gJlPR9T4fzixeYLrtXXOTq0w==
+"@expo/config-types@^43.0.0":
+  version "43.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-43.0.0.tgz#e283a4a1b72a655a6a2a745bd277caef58c8edb0"
+  integrity sha512-GBbEtLdGX40DJ1wTixWtOHseupA5xWclV57KNZ58ebauWAOyK3Fyni7GD2OCOzxTIFi1nSjqgO9JlMp3ayP4Tw==
 
 "@expo/json-file@8.2.30":
   version "8.2.30"
@@ -1167,10 +1168,10 @@
     xmlbuilder "^14.0.0"
     xmldom "~0.5.0"
 
-"@expo/plist@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@expo/plist/-/plist-0.0.14.tgz#a756903bd28aabe0a961222df2e7858a39a218c9"
-  integrity sha512-bb4Ua1M/OdNgS8KiGdSDUjZ/bbPfv3xdPY/lz8Ctp/adlj/QgB8xA7tVPeqSSfJPZqFRwU0qLCnRhpUOnP51VQ==
+"@expo/plist@0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@expo/plist/-/plist-0.0.15.tgz#41ef37b7bbe6b81c48bf4a5c359661c766bb9e90"
+  integrity sha512-LDxiS0KNZAGJu4fIJhbEKczmb+zeftl1NU0LE0tj0mozoMI5HSKdMUchgvnBm35bwBl8ekKkAfJJ0ONxljWQjQ==
   dependencies:
     "@xmldom/xmldom" "~0.7.0"
     base64-js "^1.2.3"
@@ -1610,37 +1611,37 @@
   dependencies:
     flow-bin "0.113.0"
 
-"@react-native-firebase/analytics@^12.9.0":
-  version "12.9.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.9.0.tgz#c1644d2030be6954200e527d89251d68bd12e558"
-  integrity sha512-oHBfGvx/NBQbE3LJhU3amnGgHhZMfMEi+dhMeG6t/L2+47k+eTejGQ+tPtIBT8dX/vsQCNZYPVTYzLaVfje5bg==
+"@react-native-firebase/analytics@^12.9.1":
+  version "12.9.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.9.1.tgz#45dc0390fd7608d17a4bb11b9f5377bf2202718a"
+  integrity sha512-K/2FwRmzvIWIQoW4qo9QL2GnTmfRYAjQdywNepFa8A/W1btiKdPkP41hPHFDJoKA9u1Ni9O6ZEFzY8xQbBmKpA==
 
-"@react-native-firebase/app@^12.9.0":
-  version "12.9.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.9.0.tgz#cf9b5ff47dc6550669733e8da8983c0720581606"
-  integrity sha512-0kJDgkZk+EWK9/XJb/T7NOs2bH9s3R/cSIX//dsYD9I9DtIyq7BPSKZOTgUQPzmDH0NGXjOOXbXvrCahpewzpg==
+"@react-native-firebase/app@^12.9.1":
+  version "12.9.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.9.1.tgz#bfa0f2db4c6158d545dfee2e8b0684cea0742a7b"
+  integrity sha512-AXjEsjx6nJ+3UC5J5mg9uYzzRT0cuHjXvQ1t3aK72C2v/EBKADus8vhhiE33CB8wpFTe7cQmw6ygfK1KblNBaw==
   dependencies:
-    "@expo/config-plugins" "^3.1.0"
+    "@expo/config-plugins" "^4.0.2"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^12.9.0":
-  version "12.9.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.9.0.tgz#578fdc6dff3db40bea8427801aa04140e08df85e"
-  integrity sha512-+2e9jHtpUq2aJoLPUzcRNGyEdBQeEgqim4dVWToMkFcctA+1NqQGnIBRhZIq44ZyBTb+tbyPktnIfm66QJNDyg==
+"@react-native-firebase/auth@^12.9.1":
+  version "12.9.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.9.1.tgz#7a5a6f739703103e0fad052d1e307b938155600c"
+  integrity sha512-YnutHqhYu1ql64+maVQ7YreJpn9QRI7KeknQEdZUR/t6co9nks3FRx26Zm5GHkRYJ/0HVtqlnhmtX5cJ4CZ/gg==
 
-"@react-native-firebase/crashlytics@^12.9.0":
-  version "12.9.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-12.9.0.tgz#7ac222e6bb6f17cb0fe84ec82d51e827c3f41a55"
-  integrity sha512-XnDTN9l5K34/Dj2idVOkgG3ZeshmARWWurux9OKt44pMR/dIS/z48PXFutTR9imMfpFbvwPcGYK6NftFnTbMaQ==
+"@react-native-firebase/crashlytics@^12.9.1":
+  version "12.9.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-12.9.1.tgz#2b0bf089e4bd55fc98ff41d4611abd3347c423bc"
+  integrity sha512-dWnGcYz2ZpPrF0szACFS+epxNmr/lQJt2fLh2a27pl+y6Ij02i32C4zCChvstIHro874PikmjoRHw34+9af3EA==
   dependencies:
-    "@expo/config-plugins" "^3.1.0"
+    "@expo/config-plugins" "^4.0.2"
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/firestore@^12.9.0":
-  version "12.9.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.9.0.tgz#50f538c40a005ceb2e3af847905238b795462679"
-  integrity sha512-w+0q5WJ5kkxcbZv8OX8aGrseznYlhdFFM40JaDYhTayBSsopVwm2dxzo07P1FbNv+c7JzPWKcDW3+jGC539jCg==
+"@react-native-firebase/firestore@^12.9.1":
+  version "12.9.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-12.9.1.tgz#b59ab5bb252bf6c07d55336c3f433f9d9e8ae9e9"
+  integrity sha512-jUjZ5IV8kWCr84XX4fxOgKpBtgyeHX/7L8Pl1PpDPmiF7bWshjV9UR9PNMpIgXICTH3//ijjD5L5bpfxlQz1sQ==
 
 "@react-native-picker/picker@^1.9.4":
   version "1.16.0"
@@ -1661,6 +1662,11 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/normalize-color/-/normalize-color-1.0.0.tgz#c52a99d4fe01049102d47dc45d40cbde4f720ab6"
   integrity sha512-xUNRvNmCl3UGCPbbHvfyFMnpvLPoOjDCcp5bT9m2k+TF/ZBklEQwhPZlkrxRx2NhgFh1X3a5uL7mJ7ZR+8G7Qg==
+
+"@react-native/normalize-color@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native/normalize-color/-/normalize-color-2.0.0.tgz#da955909432474a9a0fe1cbffc66576a0447f567"
+  integrity sha512-Wip/xsc5lw8vsBlmY2MO/gFLp3MvuZ2baBZjDeTjjndMgM0h5sxz7AZR62RDPGgstp8Np7JzjvVqVT7tpFZqsw==
 
 "@react-native/polyfills@2.0.0":
   version "2.0.0"
