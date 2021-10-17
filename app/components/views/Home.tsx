@@ -19,7 +19,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
           style={{
             textAlign: 'center',
             padding: DevicePixels[20],
-            marginTop: DevicePixels[10]
+            marginVertical: DevicePixels[10]
           }}>{`Welcome ${profile.name || 'user'}!`}</Text>
         {!hasViewedWelcome && <HomeWelcome />}
         {hasViewedWelcome && (

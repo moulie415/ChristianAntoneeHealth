@@ -21,8 +21,9 @@ const HomeCard: React.FC<{
       style={[
         {
           flex: 1,
-          marginHorizontal: DevicePixels[10],
+          marginHorizontal: DevicePixels[5],
           borderRadius: DevicePixels[25],
+    
         },
         globalStyles.boxShadow,
       ]}
