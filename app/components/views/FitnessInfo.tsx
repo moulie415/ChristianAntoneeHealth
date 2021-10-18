@@ -98,7 +98,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
           value={moment(dob).toDate()}
           mode="date"
           // placeholderText="Select date"
-          display="compact"
+          display={Platform.OS === 'ios' ? 'compact' : 'default'}
           onChange={(_: Event, d: Date) => {
             if (d) {
               setDob(d.toISOString());

@@ -111,7 +111,7 @@ const Settings: React.FC<SettingsProps> = ({
               // placeholderText="Select date"
               mode="time"
               // is24Hour={true}
-              display="compact"
+              display={Platform.OS === 'ios' ? 'compact' : 'default'}
               onChange={(_: Event, d: Date) => {
                 if (d) {
                   setWorkoutReminderTimeAction(d);
