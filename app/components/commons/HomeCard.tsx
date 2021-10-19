@@ -5,10 +5,17 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import globalStyles from '../../styles/globalStyles';
 import ImageOverlay from './ImageOverlay';
+
+const {height, width} = Dimensions.get('window');
+
+const RATIO = height / width;
+
+const CARD_MARGIN = DevicePixels[5] * RATIO;
 
 const HomeCard: React.FC<{
   title: string;
@@ -21,9 +28,8 @@ const HomeCard: React.FC<{
       style={[
         {
           flex: 1,
-          marginHorizontal: DevicePixels[5],
+          marginHorizontal: CARD_MARGIN,
           borderRadius: DevicePixels[25],
-    
         },
         globalStyles.boxShadow,
       ]}

@@ -59,7 +59,6 @@ import Tab3 from './components/views/Tab3';
 import Tab4 from './components/views/Tab4';
 import QuickRoutineView from './components/views/QuickRoutine';
 import {quickRoutineTabString} from './helpers';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 const composeEnhancers =
   // @ts-ignore

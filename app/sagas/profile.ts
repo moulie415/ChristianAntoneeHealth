@@ -313,10 +313,11 @@ function* signUp(action: SignUpAction) {
     Alert.alert('Error', e.nativeErrorMessage || e.message);
   }
   yield put(setStep(0));
+  yield fork(getWorkoutReminders);
 }
 
-const WORKOUT_REMINDERS_ID = 1;
-const MONTHLY_TEST_REMINDERS_ID = 2;
+const WORKOUT_REMINDERS_ID = '1';
+const MONTHLY_TEST_REMINDERS_ID = '2';
 const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
 const MONTHLY_TEST_REMINDERS_CHANNEL_ID = 'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
 
@@ -372,7 +373,6 @@ function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
   );
 
   if (workoutReminders) {
-    PushNotification.cancelLocalNotification(`${WORKOUT_REMINDERS_ID}`);
     scheduleLocalNotification(
       'Reminder to workout',
       time,
@@ -455,7 +455,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
       }
       yield put(setLoggedIn(true));
       yield put(getTests());
-      yield fork(getWorkoutReminders);
     } else if (user) {
       Alert.alert(
         'Account not verified',

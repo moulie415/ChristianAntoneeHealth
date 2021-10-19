@@ -18,30 +18,28 @@ export const truncate = (str: string, n: number) => {
 export const scheduleLocalNotification = (
   message: string,
   date: Date,
-  id: number,
+  id: string,
   channel: string,
   repeatType = 'day',
 ) => {
   try {
     const fixedDate = moment().isBefore(date)
-      ? date
-      : new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + 1,
-          date.getMinutes(),
-          0,
-          0,
-        );
+      ? moment(date).set('seconds', 0).subtract(1, 'day').utc().toDate()
+      : moment(date).set('seconds', 0).utc().toDate();
+
     PushNotification.cancelLocalNotification(`${id}`);
     PushNotification.localNotificationSchedule({
       message,
       date: fixedDate,
+      // @ts-ignore
       id,
       // @ts-ignore
       repeatType,
       channelId: channel,
     });
+    PushNotification.getScheduledLocalNotifications(callback =>
+      console.log(callback),
+    );
   } catch (e) {
     console.log(e.message);
   }

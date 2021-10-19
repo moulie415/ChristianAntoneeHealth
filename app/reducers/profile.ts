@@ -55,7 +55,7 @@ const initialState: ProfileState = {
     new Date().getMonth() + 1,
     new Date().getDate(),
     new Date().getHours(),
-    0,
+    9,
     0,
   ).toISOString(),
 };

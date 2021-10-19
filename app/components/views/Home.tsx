@@ -1,6 +1,6 @@
 import React from 'react';
 import {Layout, Text} from '@ui-kitten/components';
-import {Linking, Platform, SafeAreaView} from 'react-native';
+import {Dimensions, Linking, Platform, SafeAreaView} from 'react-native';
 import GoogleFit from 'react-native-google-fit';
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
@@ -9,6 +9,12 @@ import HomeWelcome from './HomeWelcome';
 import HomeCard from '../commons/HomeCard';
 import {linkToGoogleFit} from '../../helpers/biometrics';
 import DevicePixels from '../../helpers/DevicePixels';
+
+const {height, width} = Dimensions.get('window');
+
+const RATIO = height / width;
+
+const ROW_MARGIN = DevicePixels[10] * RATIO;
 
 const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
@@ -19,7 +25,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
           style={{
             textAlign: 'center',
             padding: DevicePixels[20],
-            marginVertical: DevicePixels[10]
+            marginVertical: DevicePixels[10],
           }}>{`Welcome ${profile.name || 'user'}!`}</Text>
         {!hasViewedWelcome && <HomeWelcome />}
         {hasViewedWelcome && (
@@ -28,7 +34,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                marginBottom: DevicePixels[20],
+                marginBottom: ROW_MARGIN,
               }}>
               <HomeCard
                 title="New Workout"
@@ -47,7 +53,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                marginBottom: DevicePixels[20],
+                marginBottom: ROW_MARGIN,
               }}>
               <HomeCard
                 title="Education"
@@ -66,7 +72,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                marginBottom: DevicePixels[20],
+                marginBottom: ROW_MARGIN,
               }}>
               <HomeCard
                 title="Quick routines"
