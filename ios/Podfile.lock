@@ -529,7 +529,7 @@ PODS:
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleDataTransport (9.1.0):
+  - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -837,18 +837,18 @@ PODS:
   - react-native-fbsdk/Share (3.0.0):
     - FBSDKShareKit (~> 8.1)
     - React
-  - react-native-flipper (0.114.0):
+  - react-native-flipper (0.115.0):
     - React-Core
-  - react-native-image-picker (4.1.1):
+  - react-native-image-picker (4.1.2):
     - React-Core
-  - react-native-pager-view (5.4.6):
+  - react-native-pager-view (5.4.7):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
-  - react-native-shake (14.1.3):
+  - react-native-shake (15.0.0):
     - React
-    - Shake (~> 14.1.0-rc)
-  - react-native-slider (4.1.8):
+    - Shake (~> 15.0.0-rc)
+  - react-native-slider (4.1.9):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
@@ -861,7 +861,7 @@ PODS:
     - react-native-video/Video (= 5.1.1)
   - react-native-video/Video (5.1.1):
     - React-Core
-  - react-native-webview (11.14.0):
+  - react-native-webview (11.14.1):
     - React-Core
   - React-perflogger (0.66.0)
   - React-RCTActionSheet (0.66.0):
@@ -946,28 +946,28 @@ PODS:
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
-  - RNDeviceInfo (8.4.0):
+  - RNDeviceInfo (8.4.1):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (12.9.0):
+  - RNFBAnalytics (12.9.2):
     - Firebase/Analytics (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (12.9.0):
+  - RNFBApp (12.9.2):
     - Firebase/CoreOnly (= 8.8.0)
     - React-Core
-  - RNFBAuth (12.9.0):
+  - RNFBAuth (12.9.2):
     - Firebase/Auth (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (12.9.0):
+  - RNFBCrashlytics (12.9.2):
     - Firebase/Crashlytics (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (12.9.0):
+  - RNFBFirestore (12.9.2):
     - Firebase/Firestore (= 8.8.0)
     - React-Core
     - RNFBApp
@@ -1036,7 +1036,7 @@ PODS:
   - Sentry (7.3.0):
     - Sentry/Core (= 7.3.0)
   - Sentry/Core (7.3.0)
-  - Shake (14.1.6)
+  - Shake (15.0.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1364,7 +1364,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   GoogleAppMeasurement: 5ba1164e3c844ba84272555e916d0a6d3d977e91
-  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
@@ -1395,17 +1395,17 @@ SPEC CHECKSUMS:
   React-jsinspector: be95ad424ba9f7b817aff22732eb9b1b810a000a
   React-logger: 9a9cd87d4ea681ae929b32ef580638ff1b50fb24
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
-  react-native-flipper: 117dac1f1758346575933a6d62d2c472c847a7b6
-  react-native-image-picker: 92f51a85a62c2d829dcbd0dda5af99e6f988a113
-  react-native-pager-view: b90963d848e777def6714ab7fd40d02fa797e930
+  react-native-flipper: 64bca5153bca1b90cbec7ed49f495aaf1facf14b
+  react-native-image-picker: 9c8a2687b69300ad9e95cec5d38f35ab9d32467d
+  react-native-pager-view: 741e7606ee2f6e399fc7da777f5519454a4b38c5
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  react-native-shake: 8048c196ab884399df8397d7a9e9e48b3f2996ff
-  react-native-slider: 64c2214609cdcd4ca9ac7260007dfa023a1824f6
+  react-native-shake: 2cb54987defd2bcea04ed09f5252ccbfe39914ab
+  react-native-slider: c4bee37b3fe65aaf3b266bb2173d56cb412cb5ae
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
-  react-native-webview: d70bc760daaa0e2667dec569b93014882565819c
+  react-native-webview: db22ab831b8c5f7697957a67f7a7ac1cecfed18d
   React-perflogger: 1f554c2b684e2f484f9edcdfdaeedab039fbaca8
   React-RCTActionSheet: 610d5a5d71ab4808734782c8bca6a12ec3563672
   React-RCTAnimation: ec6ed97370ace32724c253f29f0586cafcab8126
@@ -1427,13 +1427,13 @@ SPEC CHECKSUMS:
   RNCPicker: f7a40b21b915b7a187624d52f52b7bc2f73ea413
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
-  RNDeviceInfo: 8a06046616c6b5c03787b04f265fa3b52b37c80b
+  RNDeviceInfo: 55175b0bd852c1c5d70d76efc04ed77799cef638
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: 3529535d627b4a9b481dac75f2a0c43ede3ae1c0
-  RNFBApp: d11e8ae04b9b6230f3a28b70761f2edd185deaa8
-  RNFBAuth: 5398407c7991175f0f3a8d0a9581ab6d326d3762
-  RNFBCrashlytics: 1b32d35f44bacdeee49c522585037d2ba32e074e
-  RNFBFirestore: 8891f315a65da5ace3c5a70a6f1b33cdc8dac5bd
+  RNFBAnalytics: 1915f2dfaa23de57e390abf064d21dcd30e33992
+  RNFBApp: c679e71262a98a1ec0f4600e6db51ec7fcdaeb5b
+  RNFBAuth: e09605dd868fc1de0c99f1c1efff6510c97fcb1d
+  RNFBCrashlytics: 7d6fa56ffa190535ff07a312f20ef7bfe37347e8
+  RNFBFirestore: 599ce77c1496e4f50979e90ef73980c79f2b018d
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: ef07f897760dd7639c36281a05e1ddbf30abc9f5
@@ -1448,7 +1448,7 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 9a4e621430e2dae4477d791f2f7e905720b6efbf
-  Shake: b5fdaf455492a402285781ad81918808458523eb
+  Shake: db95e422906b43ee1b12fd6fc3e78b74f7ba0410
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
