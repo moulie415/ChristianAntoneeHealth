@@ -325,7 +325,11 @@ function* getWorkoutReminders() {
   const {workoutReminderTime, monthlyTestReminders} = yield select(
     (state: MyRootState) => state.profile,
   );
+  yield put(setWorkoutReminderTime(new Date(workoutReminderTime)));
+  yield put(setMonthlyTestReminders(monthlyTestReminders));
+}
 
+function* createChannels() {
   PushNotification.createChannel(
     {
       channelId: WORKOUT_REMINDERS_CHANNEL_ID,
@@ -343,9 +347,6 @@ function* getWorkoutReminders() {
     },
     created => console.log('channel created', created),
   );
-
-  yield put(setWorkoutReminderTime(new Date(workoutReminderTime)));
-  yield put(setMonthlyTestReminders(monthlyTestReminders));
 }
 
 function* setWorkoutRemindersWorker(action: SetWorkoutRemindersAction) {
@@ -455,6 +456,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
       }
       yield put(setLoggedIn(true));
       yield put(getTests());
+      yield fork(createChannels);
     } else if (user) {
       Alert.alert(
         'Account not verified',
