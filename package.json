@@ -38,7 +38,7 @@
     "moment": "^2.29.1",
     "ramda": "^0.27.1",
     "react": "17.0.2",
-    "react-native": "0.66.0",
+    "react-native": "0.66.1",
     "react-native-body-highlighter": "https://github.com/moulie415/react-native-body-highlighter.git",
     "react-native-chart-kit": "^6.11.0",
     "react-native-collapsible": "^1.6.0",
