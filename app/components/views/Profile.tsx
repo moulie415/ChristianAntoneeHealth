@@ -180,7 +180,7 @@ const Profile: React.FC<ProfileProps> = ({
               marginRight: DevicePixels[20],
               marginTop: DevicePixels[10],
             }}
-            onChangeText={val => setWeight(Number(val))}
+            onChangeText={val => setWeight(Number(val.replace(/[^0-9]/g, '')))}
             label={`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}
             keyboardType="numeric"
           />
@@ -192,7 +192,7 @@ const Profile: React.FC<ProfileProps> = ({
               marginRight: DevicePixels[20],
               marginTop: DevicePixels[10],
             }}
-            onChangeText={val => setHeight(Number(val))}
+            onChangeText={val => setHeight(Number(val.replace(/[^0-9]/g, '')))}
             label={`Height (${unit === 'metric' ? 'cm' : 'inches'})`}
             keyboardType="numeric"
           />

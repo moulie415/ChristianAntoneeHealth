@@ -292,7 +292,7 @@ const Settings: React.FC<SettingsProps> = ({
               value={workoutFrequency.toString()}
               onChangeText={text => {
                 if (!isNaN(Number(text))) {
-                  setWorkoutFrequency(Number(text));
+                  setWorkoutFrequency(Number(text.replace(/[^0-9]/g, '')));
                 }
                 if (!text) {
                   setWorkoutFrequency(1);

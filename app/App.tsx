@@ -59,6 +59,9 @@ import Tab3 from './components/views/Tab3';
 import Tab4 from './components/views/Tab4';
 import QuickRoutineView from './components/views/QuickRoutine';
 import {quickRoutineTabString} from './helpers';
+import TestType from './types/Test';
+import TestResults from './components/views/TestResults';
+
 
 const composeEnhancers =
   // @ts-ignore
@@ -90,6 +93,12 @@ export type StackParamList = {
   Activity: undefined;
   Fitness: undefined;
   Test: {id: string};
+  TestResults: {
+    testResult: number;
+    testNote: string;
+    test: TestType;
+    seconds: number;
+  };
   ExerciseList: {strengthArea: StrengthArea; level: Level; goals: Goal[]};
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
@@ -361,6 +370,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen name="Policies" component={Policies} />
                 <Stack.Screen name="Test" component={Test} />
+                <Stack.Screen name="TestResults" component={TestResults} />
                 <Stack.Screen
                   name="QuickRoutines"
                   component={QuickRoutines}
