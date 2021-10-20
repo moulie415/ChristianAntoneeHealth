@@ -856,12 +856,12 @@ PODS:
     - React
   - react-native-version-number (0.3.6):
     - React
-  - react-native-video (5.1.1):
+  - react-native-video (5.2.0):
     - React-Core
-    - react-native-video/Video (= 5.1.1)
-  - react-native-video/Video (5.1.1):
+    - react-native-video/Video (= 5.2.0)
+  - react-native-video/Video (5.2.0):
     - React-Core
-  - react-native-webview (11.14.0):
+  - react-native-webview (11.14.1):
     - React-Core
   - React-perflogger (0.66.1)
   - React-RCTActionSheet (0.66.1):
@@ -1404,8 +1404,8 @@ SPEC CHECKSUMS:
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
-  react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
-  react-native-webview: d70bc760daaa0e2667dec569b93014882565819c
+  react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
+  react-native-webview: db22ab831b8c5f7697957a67f7a7ac1cecfed18d
   React-perflogger: fcac6090a80e3d967791b4c7f1b1a017f9d4a398
   React-RCTActionSheet: caf5913d9f9e605f5467206cf9d1caa6d47d7ad6
   React-RCTAnimation: 6539e3bf594f6a529cd861985ba6548286ae1ead
