@@ -1604,10 +1604,10 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-community/slider@^4.1.8":
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.1.8.tgz#aa8932fe793f607fde32bef9fbe5a65fbf58f389"
-  integrity sha512-JXU+coasnXh1BtUSNxYvzSVnS1mueFZNTgMMHS6pH6JFy2Ur51Gow5PeVs9cyvYW4YTqwW1tFGHzS8jQ+UbluQ==
+"@react-native-community/slider@^4.1.9":
+  version "4.1.9"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.1.9.tgz#2de4faf74027a0d828854e6e09133cc84ea34101"
+  integrity sha512-alK8CXAeo3d5ZqPeFWoHHEi0hVfcKeCAAahhaAWyTSrt5EoIj2ia15pokepS92nAAmMQKAOStxaDk1fYZCH6hw==
   dependencies:
     flow-bin "0.113.0"
 
@@ -2091,10 +2091,10 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-video@^5.0.9":
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.9.tgz#dc3a862dfdcf263632ffc8562b8ee441cc3b5c8d"
-  integrity sha512-GnFv2eLLK/LW2ZUAw20vhm+I3lMpkgfmYLqM8ZxB0dOw7FBsLw01hvcTJ9jgQGIV7ZOhsNII+RfkK/trglN5Kg==
+"@types/react-native-video@^5.0.10":
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.10.tgz#bd1ecc6fade0b8d37dad711599144942af2e987d"
+  integrity sha512-PmF5h6Co0eM8NaPlQ/MHYeauP6fvroheb6dkAvQ+Lm5hbpCGxRxLNxhrTwG3vRaUd9guj9SpYlriWpY/5rBIJw==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -2123,10 +2123,10 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
-"@types/react-redux@^7.1.18":
-  version "7.1.18"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.18.tgz#2bf8fd56ebaae679a90ebffe48ff73717c438e04"
-  integrity sha512-9iwAsPyJ9DLTRH+OFeIrm9cAbIj1i2ANL3sKQFATqnPWRbg+jEFXyZOKHiQK/N86pNRXbb4HRxAxo0SIX1XwzQ==
+"@types/react-redux@^7.1.19":
+  version "7.1.19"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.19.tgz#477bd0a9b01bae6d6bf809418cdfa7d3c16d4c62"
+  integrity sha512-L37dSCT0aoJnCgpR8Iuginlbxoh7qhWOXiaDqEsxVMrER1CmVhFD+63NxgJeT4pkmEM28oX0NH4S4f+sXHTZjA==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
@@ -6936,10 +6936,10 @@ react-native-countdown-circle-timer@^2.5.4:
   resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-2.5.4.tgz#9e6ff6b2ee22e2025fcd9a845d9ee7f48cdb3cec"
   integrity sha512-wiO+s8EwEMfPt4G16zBWGpIiMwEQQRtSv8shgr7m7QkV69tmKlLrHquesYZjGvLNOQhYRAIZPJSf1ZJNZi1FDA==
 
-react-native-device-info@^8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.0.tgz#c434af5c928c7f8e2c3b1a1ca07061b83d50ccd4"
-  integrity sha512-/ZHDJajkEmjNmjvm52o7pqIpR2uKocD66iH00GMe5QpUdM9u9vDxS2hgcRbgrVaKEfA5IRIBctpalYMrrbQU+Q==
+react-native-device-info@^8.4.1:
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.1.tgz#21d1cf0c7bc8476a20c82f0dde968f1660261674"
+  integrity sha512-O+G0wUXAc3196CUAs/C/ugIvIUvTMPvw7gixStZyXOpOGwGQKWx6if1YV1qLD5oPldxSvg17CdgB91yOLniKEA==
 
 react-native-draggable-flatlist@*, react-native-draggable-flatlist@^2.6.2:
   version "2.6.2"
@@ -6961,10 +6961,10 @@ react-native-fbsdk@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-3.0.0.tgz#07ef41758bb17a0acaff744008af625a45ef9a01"
   integrity sha512-i0JocuzLlGk13J0xFDjm8GlX7SADAL2kh/syE/HOn5HHdW+PFjC31MNj5AtzIw2TicHXpHGO6VPKNfdWFbxboA==
 
-react-native-flipper@^0.114.0:
-  version "0.114.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.114.0.tgz#e68064f6c29caf88b2adf751f4d889033c457f5c"
-  integrity sha512-/D87UlXE0k4elX0Cn3Ip73InBdn3IXx37efqVLzWCxL5cqWU5eUFY9RVvXQgmjS5o9YHzllfZjqvJqtiInKnkA==
+react-native-flipper@^0.116.0:
+  version "0.116.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.116.0.tgz#d85768792907c95f97c7f7e2e3a9db43dd709202"
+  integrity sha512-eOYQn3+23DL5bRXJjdyfEq6ZhyPSmaYGn/tj94qa2PObzOi7VDNhdaQwBe16DFcV8KhT93flZKpGB6ymtFNpCQ==
 
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
@@ -6990,10 +6990,10 @@ react-native-health@^1.10.0:
   dependencies:
     "@expo/config-plugins" "^2.0.0"
 
-react-native-image-picker@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.1.1.tgz#f5b20c77b060e4a8cad4e76ae042e1e45b4743da"
-  integrity sha512-O78kljfaLQkFNzba4yWueqXlAWzDNzYUavqSQloJAf+ISGsOk95WO/a4Tp27E6hck8vPtx7u0GBrvEULyh1XAw==
+react-native-image-picker@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.1.2.tgz#1b4b4980a6878930675396c23dffbaa802cbbcc6"
+  integrity sha512-e4frAekSJkOgEmL9UOLukGhjtPwHSD7qSf3Rmwk+850ofxKqZFfAIfWc9MO3UmCb6G7oB6PkckyTOGOXybrN5A==
 
 react-native-pager-view@^5.4.7:
   version "5.4.7"
