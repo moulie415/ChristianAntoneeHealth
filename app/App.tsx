@@ -62,7 +62,6 @@ import {quickRoutineTabString} from './helpers';
 import TestType from './types/Test';
 import TestResults from './components/views/TestResults';
 
-
 const composeEnhancers =
   // @ts-ignore
   (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -370,7 +369,13 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen name="Policies" component={Policies} />
                 <Stack.Screen name="Test" component={Test} />
-                <Stack.Screen name="TestResults" component={TestResults} />
+                <Stack.Screen
+                  name="TestResults"
+                  component={TestResults}
+                  options={({navigation}) => ({
+                    headerTitle: '',
+                  })}
+                />
                 <Stack.Screen
                   name="QuickRoutines"
                   component={QuickRoutines}
