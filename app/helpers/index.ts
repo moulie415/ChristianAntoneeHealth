@@ -6,7 +6,7 @@ import analytics from '@react-native-firebase/analytics';
 import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
 import colors from '../constants/colors';
-import {Table} from '../types/Test';
+import {PercentileTable, Table} from '../types/Test';
 
 const {height, width} = Dimensions.get('window');
 
@@ -160,8 +160,14 @@ export const getScoreIcon = (category: string) => {
     case 'excellent':
     case 'good':
     case 'aboveAverage':
+    case '90th':
+    case '80th':
+    case '70th':
       return 'arrow-up';
     case 'average':
+    case '60th':
+    case '50th':
+    case '40th':
       return '-';
     default:
       return 'arrow-down';
@@ -186,8 +192,14 @@ export const getCategoryColor = (category: string) => {
     case 'excellent':
     case 'good':
     case 'aboveAverage':
+    case '90th':
+    case '80th':
+    case '70th':
       return colors.appGreen;
     case 'average':
+    case '60th':
+    case '50th':
+    case '40th':
       return colors.appBlue;
     default:
       return colors.appRed;
@@ -244,4 +256,45 @@ export const getTableMax = (table: Table, col: string) => {
 export const getTableAverage = (table: Table, col: string) => {
   // @ts-ignore
   return table.average[col];
+};
+
+export const getPercentile = (table: PercentileTable, score: number) => {
+  let prevPercentile = 'bottom';
+  for (let i = 1; i < 10; i++) {
+    const percentile = `${i}0th`;
+    // @ts-ignore
+    const val = table[percentile];
+    if (score < val) {
+      return prevPercentile;
+    }
+    if (percentile === '90th') {
+      return '90th';
+    }
+    prevPercentile = percentile;
+  }
+};
+
+export const getPercentileFill = (percentile: string) => {
+  switch (percentile) {
+    case '90th':
+      return 100;
+    case '80th':
+      return 90;
+    case '70th':
+      return 80;
+    case '60th':
+      return 70;
+    case '50th':
+      return 60;
+    case '40th':
+      return 50;
+    case '30th':
+      return 40;
+    case '20th':
+      return 30;
+    case '10th':
+      return 20;
+    default:
+      return 10;
+  }
 };

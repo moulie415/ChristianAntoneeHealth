@@ -23,6 +23,7 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
   const [complete, setComplete] = useState(false);
   const [testResult, setTestResult] = useState<number>();
   const [testNote, setTestNote] = useState('');
+  const [start, setStart] = useState(0);
 
   useEffect(() => {
     if (
@@ -30,11 +31,10 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
       !complete &&
       (test.type === 'countdown' || test.type === 'countup')
     ) {
-      const start = moment().unix();
       const startCountdown = moment().unix() + seconds;
       const intervalID = setInterval(() => {
         if (test.type === 'countup') {
-          setSeconds(Math.floor(moment().unix() - start));
+          setSeconds(moment().unix() - start);
         } else {
           if (seconds > 0) {
             setSeconds(Math.floor(startCountdown - moment().unix()));
@@ -45,7 +45,7 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
       }, 1000);
       return () => clearInterval(intervalID);
     }
-  }, [testStarted, test.type, seconds, complete]);
+  }, [testStarted, test.type, seconds, complete, start]);
 
   const getTimeString = () => {
     if (test.type === 'untimed') {
@@ -59,7 +59,14 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
 
   return (
     <Layout style={{flex: 1}}>
-      {showCountdown && <Countdown onComplete={() => setTestStarted(true)} />}
+      {showCountdown && (
+        <Countdown
+          onComplete={() => {
+            setTestStarted(true);
+            setStart(moment().unix());
+          }}
+        />
+      )}
       <Layout
         style={{
           flexDirection: 'row',
@@ -89,7 +96,16 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
             <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
               Test complete!
             </Text>
-            <Text>Enter result of test below</Text>
+            {test.type !== 'countup' ? (
+              <Text>Enter result of test below</Text>
+            ) : (
+              <Text style={{fontSize: 20, marginBottom: 10}}>
+                Your result:{' '}
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                  {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
+                </Text>
+              </Text>
+            )}
             {test.type !== 'countup' && (
               <Input
                 value={testResult?.toString()}
@@ -140,14 +156,17 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
             </Text>
             <ViewMore text={test.why} />
             <Divider />
-            {test.mens && (profile.gender === 'male' || !profile.gender) && (
-              <Table
-                table={test.mens}
-                metric={test.metric}
-                title="Mens table"
-              />
-            )}
+            {test.mens &&
+              'age' in test.mens &&
+              (profile.gender === 'male' || !profile.gender) && (
+                <Table
+                  table={test.mens}
+                  metric={test.metric}
+                  title="Mens table"
+                />
+              )}
             {test.womens &&
+              'age' in test.womens &&
               (profile.gender === 'female' || !profile.gender) && (
                 <Table
                   table={test.womens}

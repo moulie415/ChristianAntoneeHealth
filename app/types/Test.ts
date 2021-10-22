@@ -8,8 +8,8 @@ export default interface Test {
   improve: string;
   why: string;
   metric?: string;
-  mens?: Table;
-  womens?: Table;
+  mens?: Table | PercentileTable;
+  womens?: Table | PercentileTable;
 };
 
 export interface Table {
@@ -35,4 +35,16 @@ export interface Row {
 export interface Cell {
   higher?: string;
   lower?: string;
+}
+
+export interface PercentileTable {
+  '10th': string;
+  '20th': string;
+  '30th': string;
+  '40th': string;
+  '50th': string;
+  '60th': string;
+  '70th': string;
+  '80th': string;
+  '90th': string;
 }

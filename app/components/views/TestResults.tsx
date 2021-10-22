@@ -8,35 +8,42 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import moment from 'moment';
 import colors from '../../constants/colors';
 import {MyRootState} from '../../types/Shared';
+import {Table} from '../../types/Test';
 import {connect} from 'react-redux';
 import {
   capitalizeFirstLetter,
   getCategoryColor,
   getCategoryString,
+  getPercentile,
+  getPercentileFill,
   getScoreIcon,
   getTableAverage,
   getTableCategory,
   getTableColumn,
   getTableMax,
 } from '../../helpers';
-import { resetToTabs } from '../../RootNavigation';
+import {resetToTabs} from '../../RootNavigation';
 
 const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
   const {test, testResult, testNote, seconds} = route.params;
   const table = profile.gender === 'male' ? test.mens : test.womens;
+  const isTable = 'age' in table;
   const age = profile.dob && moment().diff(profile.dob, 'years');
-  const col = getTableColumn(table, age);
+  const col = isTable && getTableColumn(table, age);
   const score = testResult || seconds;
-  const category = getTableCategory(table, col, score);
-  const max = getTableMax(table, col);
-  const average = getTableAverage(table, col);
+  const category = isTable && getTableCategory(table, col, score);
+  const max = isTable && getTableMax(table, col);
+  const average = isTable && getTableAverage(table, col);
+  const percentile = !isTable && getPercentile(table, score);
 
-  const [fill, setFill] = useState((100 / max) * score);
+  const [fill, setFill] = useState(
+    isTable ? (100 / max) * score : getPercentileFill(percentile),
+  );
   return (
-    <Layout style={{flex: 1}}>
+    <Layout style={{flex: 1, padding: 20}}>
       <Text
         category="h4"
-        style={{textAlign: 'center', marginVertical: DevicePixels[10]}}>
+        style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
         Test complete!
       </Text>
 
@@ -46,7 +53,7 @@ const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
         width={DevicePixels[15]}
         backgroundWidth={DevicePixels[5]}
         fill={fill}
-        tintColor={getCategoryColor(category)}
+        tintColor={getCategoryColor(category || percentile)}
         // tintColorSecondary={colors.appBlueFaded}
         backgroundColor={colors.appGrey}
         arcSweepAngle={240}
@@ -60,18 +67,32 @@ const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        {getScoreIcon(category) === '-' ? (
-          <Text
-            style={{fontSize: DevicePixels[30], marginRight: DevicePixels[10]}}>
-            -
-          </Text>
-        ) : (
-          <Icon
-            style={{fontSize: DevicePixels[20], marginRight: DevicePixels[10]}}
-            name={getScoreIcon(category)}
-          />
+        {!percentile && (
+          <>
+            {getScoreIcon(category || percentile) === '-' ? (
+              <Text
+                style={{
+                  fontSize: DevicePixels[30],
+                  marginRight: DevicePixels[10],
+                }}>
+                -
+              </Text>
+            ) : (
+              <Icon
+                style={{
+                  fontSize: DevicePixels[20],
+                  marginRight: DevicePixels[10],
+                }}
+                name={getScoreIcon(category || percentile)}
+              />
+            )}
+          </>
         )}
-        <Text category="h5">{`${getCategoryString(category)} score`}</Text>
+        <Text category="h5">
+          {isTable
+            ? `${getCategoryString(category)} score`
+            : `${capitalizeFirstLetter(percentile)} percentile`}
+        </Text>
       </Layout>
       <Layout
         style={{
@@ -89,15 +110,20 @@ const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
             fontSize: 16,
             flex: 1,
           }}>
-          {'You score is '}
+          {isTable ? 'You score is ' : 'You scored in the '}
           <Text style={{fontWeight: 'bold'}}>
-            {getCategoryString(category)}
+            {isTable ? getCategoryString(category) : `${percentile}`}
           </Text>
-          {` for your age (${age}) and gender! `}
+          {isTable
+            ? ` for your age (${age}) and gender! `
+            : ' percentile for your gender'}
           {average ? (
             <Text>{`The average for your age and gender is between ${average.lower} and ${average.higher}`}</Text>
           ) : null}
         </Text>
+      </Layout>
+
+      <Layout style={{flex: 1, justifyContent: 'flex-end'}}>
         <Button onPress={resetToTabs}>Save result</Button>
       </Layout>
     </Layout>
