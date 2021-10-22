@@ -33,6 +33,6 @@ export interface Row {
 }
 
 export interface Cell {
-  higher?: number;
-  lower?: number;
+  higher?: string;
+  lower?: string;
 }

@@ -5,6 +5,8 @@ import Rate, {AndroidMarket} from 'react-native-rate';
 import analytics from '@react-native-firebase/analytics';
 import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
+import colors from '../constants/colors';
+import {Table} from '../types/Test';
 
 const {height, width} = Dimensions.get('window');
 
@@ -150,4 +152,94 @@ export const quickRoutineTabString = (
   if (key === 'focus') {
     return 'High intensity';
   }
+};
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const getScoreIcon = (category: string) => {
+  switch (category) {
+    case 'excellent':
+    case 'good':
+    case 'aboveAverage':
+      return 'arrow-up';
+    case 'average':
+      return '-';
+    default:
+      return 'arrow-down';
+  }
+};
+
+export const getCategoryString = (category: string) => {
+  if (category === 'aboveAverage') {
+    return 'Above average';
+  }
+  if (category === 'belowAverage') {
+    return 'Below Average';
+  }
+  if (category === 'veryPoor') {
+    return 'Very poor';
+  }
+  return capitalizeFirstLetter(category);
+};
+
+export const getCategoryColor = (category: string) => {
+  switch (category) {
+    case 'excellent':
+    case 'good':
+    case 'aboveAverage':
+      return colors.appGreen;
+    case 'average':
+      return colors.appBlue;
+    default:
+      return colors.appRed;
+  }
+};
+
+export const getTableColumn = (table: Table, age: number) => {
+  return (
+    table &&
+    Object.keys(table.age).find(c => {
+      // @ts-ignore
+      const values: Cell = table.age[c];
+      if (
+        (!values.higher || age <= Number(values.higher)) &&
+        (!values.lower || age >= Number(values.lower))
+      ) {
+        return c;
+      }
+    })
+  );
+};
+
+export const getTableCategory = (table: Table, col: string, score: number) => {
+  return Object.keys(table).find(key => {
+    if (key !== 'age') {
+      // @ts-ignore
+      const values: Cell = table[key][col];
+      if (
+        (!values.higher || score <= Number(values.higher)) &&
+        (!values.lower || score >= Number(values.lower))
+      ) {
+        return key;
+      }
+    }
+  });
+};
+
+export const getTableMax = (table: Table, col: string) => {
+  let max = 0;
+  Object.keys(table).forEach(key => {
+    if (key !== 'age') {
+      // @ts-ignore
+      const values: Cell = table[key][col];
+      if (values.higher && Number(values.higher) > max) {
+        max = Number(values.higher);
+      } else if (values.lower && Number(values.lower) > max) {
+        max = Number(values.lower);
+      }
+    }
+  });
+  return max;
 };
