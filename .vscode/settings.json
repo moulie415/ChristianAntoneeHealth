@@ -45,4 +45,10 @@
     "eslint.lintTask.enable": true,
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
+    "debug.javascript.autoAttachSmartPattern": [
+      "${workspaceFolder}/**",
+      "!**/node_modules/**",
+      "**/$KNOWN_TOOLS$/**",
+      "!**/ios/Pods/**"
+    ],
 }

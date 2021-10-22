@@ -74,7 +74,6 @@ const Settings: React.FC<SettingsProps> = ({
   };
 
   const equal = equals(newProfile, profile);
-  console.log(equal);
   return (
     <Layout style={{flex: 1}}>
       <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[100]}}>

@@ -47,6 +47,16 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
     }
   }, [testStarted, test.type, seconds, complete]);
 
+  const getTimeString = () => {
+    if (test.type === 'untimed') {
+      return 'not timed';
+    }
+    if (test.type === 'countdown' && !(seconds > 0)) {
+      return 'Times up!';
+    }
+    return moment().utc().startOf('day').add({seconds}).format('mm:ss');
+  };
+
   return (
     <Layout style={{flex: 1}}>
       {showCountdown && <Countdown onComplete={() => setTestStarted(true)} />}
@@ -69,9 +79,7 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
             color={colors.darkBlue}
           />
           <Text style={{marginLeft: DevicePixels[10]}} category="h5">
-            {test.type === 'untimed'
-              ? 'not timed'
-              : moment().utc().startOf('day').add({seconds}).format('mm:ss')}
+            {getTimeString()}
           </Text>
         </Layout>
       </Layout>

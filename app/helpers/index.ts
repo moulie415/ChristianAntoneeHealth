@@ -39,9 +39,6 @@ export const scheduleLocalNotification = (
       repeatType,
       channelId: channel,
     });
-    PushNotification.getScheduledLocalNotifications(callback =>
-      console.log(callback),
-    );
   } catch (e) {
     console.log(e.message);
   }
@@ -242,4 +239,9 @@ export const getTableMax = (table: Table, col: string) => {
     }
   });
   return max;
+};
+
+export const getTableAverage = (table: Table, col: string) => {
+  // @ts-ignore
+  return table.average[col];
 };
