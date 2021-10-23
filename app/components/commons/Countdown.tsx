@@ -52,7 +52,7 @@ const Countdown: FunctionComponent<{onComplete?: () => void}> = ({
             setPlaying(false);
             onComplete && onComplete();
           }}
-          duration={10}
+          duration={5}
           children={({remainingTime}) => {
             const seconds = remainingTime % 60;
             return (

@@ -119,7 +119,13 @@ const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
             : ' percentile for your gender'}
           {average ? (
             <Text>{`The average for your age and gender is between ${average.lower} and ${average.higher}`}</Text>
-          ) : null}
+          ) : (
+            <Text>
+              {percentile === 'bottom'
+                ? ''
+                : `This means you scored higher than ${percentile}% of people for your gender`}
+            </Text>
+          )}
         </Text>
       </Layout>
 
