@@ -18,8 +18,6 @@ export enum Level {
 
 export enum Goal {
   STRENGTH = 'strength',
-  BALANCE = 'balance',
-  FLEXIBILITY = 'flexibility',
   CARDIO = 'cardiovascular',
 }
 
@@ -27,6 +25,22 @@ export enum StrengthArea {
   UPPER = 'upper',
   LOWER = 'lower',
   FULL = 'full',
+}
+
+export enum CardioType {
+  HIT = 'hit',
+  SBIT = 'sbit',
+}
+
+export enum WarmUp {
+  CIRCULATORY = 'circulatory',
+  SOFT_TISSUE = 'softTissue',
+  DYNAMIC_STRETCHING = 'dynamicStretching',
+}
+
+export enum CoolDown {
+  CIRCULATORY = 'circulatory',
+  STATIC_STRETCHING = 'staticStretching',
 }
 
 export enum FlexibilityArea {
@@ -55,4 +69,22 @@ export interface Sample {
 export interface StepSample {
   date: string;
   value: number;
+}
+
+export enum Equipment {
+  BARBELLS = 'barbells',
+  DUMBBELLS = 'dumbbells',
+  BENCHES = 'benches',
+  CABLE_MACHINES = 'cableMachines',
+  KETTLEBELLS = 'kettlebells',
+  PULL_UP_BAR = 'pullUpBar',
+  SQUAT_RACK = 'squatRack',
+  EXERCISE_BALL = 'exerciseBall',
+  BOSU_BALL = 'bosuBall',
+  AGILITY_LADDER = 'agilityLadder',
+  PLYOMETRIC_BOX = 'plyometricBox',
+  TRX_SUSPENSION_TRAINER = 'trxSuspensionTrainer',
+  MEDICINE_BALLS = 'medicineBalls',
+  LANDMINE = 'landmine',
+  EXERCISE_STEP = 'exerciseStep',
 }

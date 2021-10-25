@@ -1,5 +1,14 @@
-import {Level, Goal, StrengthArea, Location, FlexibilityArea} from './Shared';
-
+import {Equipment} from './QuickRoutines';
+import {
+  Level,
+  Goal,
+  StrengthArea,
+  Location,
+  FlexibilityArea,
+  CardioType,
+  WarmUp,
+  CoolDown,
+} from './Shared';
 
 export interface Thumbnail {
   src: string;
@@ -17,9 +26,14 @@ export default interface Exercise {
   level: Level;
   type: Goal;
   area?: StrengthArea;
+  cardioType?: CardioType;
   flexibilityArea?: FlexibilityArea;
   location: Location;
+  equipment?: Equipment[];
   muscles?: Muscle[];
+  musclesSecondary?: Muscle[];
+  warmUp?: WarmUp;
+  coolDown?: CoolDown;
   live?: boolean;
   premium?: boolean;
   reps?: number;
