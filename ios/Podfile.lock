@@ -848,7 +848,7 @@ PODS:
   - react-native-shake (15.0.0):
     - React
     - Shake (~> 15.0.0-rc)
-  - react-native-slider (4.1.9):
+  - react-native-slider (4.1.10):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
@@ -952,22 +952,22 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (12.9.2):
+  - RNFBAnalytics (12.9.3):
     - Firebase/Analytics (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (12.9.2):
+  - RNFBApp (12.9.3):
     - Firebase/CoreOnly (= 8.8.0)
     - React-Core
-  - RNFBAuth (12.9.2):
+  - RNFBAuth (12.9.3):
     - Firebase/Auth (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (12.9.2):
+  - RNFBCrashlytics (12.9.3):
     - Firebase/Crashlytics (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (12.9.2):
+  - RNFBFirestore (12.9.3):
     - Firebase/Firestore (= 8.8.0)
     - React-Core
     - RNFBApp
@@ -1025,7 +1025,7 @@ PODS:
     - React-Core
   - RNSVG (12.1.1):
     - React
-  - RNVectorIcons (8.1.0):
+  - RNVectorIcons (9.0.0):
     - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -1400,7 +1400,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: 741e7606ee2f6e399fc7da777f5519454a4b38c5
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-shake: 2cb54987defd2bcea04ed09f5252ccbfe39914ab
-  react-native-slider: c4bee37b3fe65aaf3b266bb2173d56cb412cb5ae
+  react-native-slider: c98f8413776ec1218ec9cd4f8ed32bfd91d428fc
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
@@ -1429,11 +1429,11 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 55175b0bd852c1c5d70d76efc04ed77799cef638
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: 1915f2dfaa23de57e390abf064d21dcd30e33992
-  RNFBApp: c679e71262a98a1ec0f4600e6db51ec7fcdaeb5b
-  RNFBAuth: e09605dd868fc1de0c99f1c1efff6510c97fcb1d
-  RNFBCrashlytics: 7d6fa56ffa190535ff07a312f20ef7bfe37347e8
-  RNFBFirestore: 599ce77c1496e4f50979e90ef73980c79f2b018d
+  RNFBAnalytics: f76bfa164ac235b00505deb9fc1776634056898c
+  RNFBApp: 729c0666395b1953198dc4a1ec6deb8fbe1c302e
+  RNFBAuth: 7718be1152f5d1d0bb970a8d33094d010f1ac21c
+  RNFBCrashlytics: 2061ca863e8e2fa1aae9b12477d7dfa8e88ca0f9
+  RNFBFirestore: eef5fd4cfbe35316af559631db06a34b8391628a
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: ef07f897760dd7639c36281a05e1ddbf30abc9f5
@@ -1444,7 +1444,7 @@ SPEC CHECKSUMS:
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 27e8268bdb0a1f191f219a33267f7e0445e8d62f
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 9a4e621430e2dae4477d791f2f7e905720b6efbf
