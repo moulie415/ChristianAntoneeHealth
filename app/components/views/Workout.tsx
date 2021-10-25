@@ -1,17 +1,10 @@
-import React, {MutableRefObject, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../../styles/views/Workout';
 import {TouchableOpacity, ScrollView, SafeAreaView, View} from 'react-native';
 import colors from '../../constants/colors';
 import WorkoutProps from '../../types/views/Workout';
-import {
-  Text,
-  Button,
-  CheckBox,
-  Layout,
-  ListItem,
-  Divider,
-} from '@ui-kitten/components';
+import {Text, Button, Layout, ListItem, Divider} from '@ui-kitten/components';
 import {
   CardioType,
   CoolDown,
@@ -80,16 +73,18 @@ const Workout: React.FC<WorkoutProps> = ({
     );
   };
 
-  const renderContent = () => (
-    <View
-      style={{
-        backgroundColor: 'white',
-        padding: 16,
-        height: '100%',
-      }}>
-      <Text>Swipe down to close</Text>
-    </View>
-  );
+  const renderContent = () => {
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          padding: 16,
+          height: '100%',
+        }}>
+        <Text>Swipe down to close</Text>
+      </View>
+    );
+  };
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -241,15 +236,15 @@ const Workout: React.FC<WorkoutProps> = ({
             }}
           />
         )}
-        <BottomSheet
-          ref={sheetRef}
-          snapPoints={['80%', 0]}
-          initialSnap={1}
-          onCloseStart={() => setModalOpen(false)}
-          renderContent={renderContent}
-          renderHeader={renderHeader}
-        />
       </SafeAreaView>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={['80%', 0]}
+        initialSnap={1}
+        onCloseStart={() => setModalOpen(false)}
+        renderContent={renderContent}
+        renderHeader={renderHeader}
+      />
     </Layout>
   );
 };
