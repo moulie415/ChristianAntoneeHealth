@@ -1,7 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React, {Fragment, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../../styles/views/Workout';
-import {TouchableOpacity, ScrollView, SafeAreaView, View} from 'react-native';
+import {TouchableOpacity, SafeAreaView, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../constants/colors';
 import WorkoutProps from '../../types/views/Workout';
 import {Text, Button, Layout, ListItem, Divider} from '@ui-kitten/components';
@@ -21,6 +22,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import ImageOverlay from '../commons/ImageOverlay';
 import DevicePixels from '../../helpers/DevicePixels';
 import {capitalizeFirstLetter} from '../../helpers';
+import {equipmentItemReadableString} from '../../helpers/exercises';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
@@ -28,19 +30,79 @@ const Workout: React.FC<WorkoutProps> = ({
   profile,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [level, setLevel] = useState<Level>(Level.BEGINNER);
   const [selectedLevel, setSelectedLevel] = useState<Level>(Level.BEGINNER);
   const [goal, setGoal] = useState<Goal>(Goal.STRENGTH);
+  const [selectedGoal, setSelectedGoal] = useState<Goal>(Goal.STRENGTH);
+  const [area, setArea] = useState<StrengthArea>(StrengthArea.FULL);
   const [selectedArea, setSelectedArea] = useState<StrengthArea>(
     StrengthArea.FULL,
   );
-  const [cardioTYpe, setCardioType] = useState<CardioType>(CardioType.HIT);
+  const [cardioType, setCardioType] = useState<CardioType>(CardioType.HIT);
+  const [selectedCardioType, setSelectedCardioType] = useState<CardioType>(
+    CardioType.HIT,
+  );
   const [settings, setSetting] = useState<
     'goal' | 'experience' | 'equipment' | 'warmup'
   >();
-  const [equipment, setEquipment] = useState<Equipment[]>();
+  const [equipment, setEquipment] = useState<Equipment[]>([]);
+  const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([]);
   const sheetRef = useRef<BottomSheet>(null);
   const [warmUp, setWarmup] = useState<WarmUp>();
+  const [selectedWarmup, setSelectedWarmup] = useState<WarmUp>();
   const [coolDown, setCoolDown] = useState<CoolDown>();
+  const [selectedCoolDown, setSelectedCoolDown] = useState<CoolDown>();
+
+  const getSettingsTitle = () => {
+    switch (settings) {
+      case 'goal':
+        return 'Fitness Goal';
+      case 'experience':
+        return 'Fitness Experience';
+      case 'equipment':
+        return 'Available Equipment';
+      case 'warmup':
+        return 'Warm-up & Cool-down';
+      default:
+        return '';
+    }
+  };
+
+  const onCancel = () => {
+    sheetRef.current.snapTo(1);
+    setModalOpen(false);
+    switch (settings) {
+      case 'goal':
+        return setSelectedGoal(goal);
+      case 'experience':
+        return setSelectedLevel(level);
+      case 'equipment':
+        return setSelectedEquipment(equipment);
+      case 'warmup':
+        setSelectedCoolDown(coolDown);
+        return setSelectedWarmup(warmUp);
+      default:
+        return '';
+    }
+  };
+
+  const onSave = () => {
+    sheetRef.current.snapTo(1);
+    setModalOpen(false);
+    switch (settings) {
+      case 'goal':
+        return setGoal(selectedGoal);
+      case 'experience':
+        return setLevel(selectedLevel);
+      case 'equipment':
+        return setEquipment(selectedEquipment);
+      case 'warmup':
+        setCoolDown(selectedCoolDown);
+        return setWarmup(selectedWarmup);
+      default:
+        return '';
+    }
+  };
 
   const renderHeader = () => {
     return (
@@ -50,24 +112,32 @@ const Workout: React.FC<WorkoutProps> = ({
           justifyContent: 'space-between',
           backgroundColor: colors.button,
           alignItems: 'center',
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5,
+          borderTopLeftRadius: DevicePixels[5],
+          borderTopRightRadius: DevicePixels[5],
         }}>
         <TouchableOpacity>
           <Text
-            onPress={() => {
-              sheetRef.current.snapTo(1);
-              setModalOpen(false);
-            }}
-            style={{color: colors.appBlue, padding: 10}}>
+            onPress={onCancel}
+            style={{
+              color: colors.appBlue,
+              padding: DevicePixels[10],
+              fontWeight: 'bold',
+            }}>
             CANCEL
           </Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text>Test</Text>
+          <Text>{getSettingsTitle()}</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={{color: colors.appBlue, padding: 10}}>SAVE</Text>
+        <TouchableOpacity onPress={onSave}>
+          <Text
+            style={{
+              color: colors.appBlue,
+              padding: DevicePixels[10],
+              fontWeight: 'bold',
+            }}>
+            SAVE
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -75,14 +145,69 @@ const Workout: React.FC<WorkoutProps> = ({
 
   const renderContent = () => {
     return (
-      <View
+      <ScrollView
         style={{
           backgroundColor: 'white',
-          padding: 16,
           height: '100%',
         }}>
-        <Text>Swipe down to close</Text>
-      </View>
+        {settings === 'goal' && (
+          <View>
+            <Text />
+          </View>
+        )}
+        {settings === 'experience' && (
+          <View>
+            <Text />
+          </View>
+        )}
+        {settings === 'equipment' && (
+          <View>
+            {Object.values(Equipment).map(item => {
+              const selected = selectedEquipment.includes(item);
+              return (
+                <Fragment key={item}>
+                  <ListItem
+                    onPress={() => {
+                      selected
+                        ? setSelectedEquipment(
+                            selectedEquipment.filter(i => i !== item),
+                          )
+                        : setSelectedEquipment([...selectedEquipment, item]);
+                    }}
+                    title={() => (
+                      <Text style={{color: selected ? colors.appBlue : '#000'}}>
+                        {equipmentItemReadableString(item)}
+                      </Text>
+                    )}
+                    accessoryRight={() => {
+                      return selected ? (
+                        <Icon
+                          name="check-circle"
+                          size={DevicePixels[20]}
+                          solid
+                          color={colors.appBlue}
+                        />
+                      ) : (
+                        <Icon
+                          name="circle"
+                          size={DevicePixels[20]}
+                          color={colors.appBlue}
+                        />
+                      );
+                    }}
+                  />
+                  <Divider />
+                </Fragment>
+              );
+            })}
+          </View>
+        )}
+        {settings === 'warmup' && (
+          <View>
+            <Text />
+          </View>
+        )}
+      </ScrollView>
     );
   };
   return (
@@ -93,10 +218,11 @@ const Workout: React.FC<WorkoutProps> = ({
         </Text>
         <ListItem
           style={{paddingVertical: DevicePixels[20]}}
-          title="Fitness goals"
+          title="Fitness goal"
           onPress={() => {
             sheetRef.current.snapTo(0);
             setModalOpen(true);
+            setSetting('goal');
           }}
           accessoryRight={() => {
             return (
@@ -125,6 +251,7 @@ const Workout: React.FC<WorkoutProps> = ({
           onPress={() => {
             sheetRef.current.snapTo(0);
             setModalOpen(true);
+            setSetting('experience');
           }}
           accessoryRight={() => {
             return (
@@ -135,7 +262,7 @@ const Workout: React.FC<WorkoutProps> = ({
                     marginRight: DevicePixels[5],
                     fontWeight: 'bold',
                   }}>
-                  {capitalizeFirstLetter(selectedLevel)}
+                  {capitalizeFirstLetter(level)}
                 </Text>
                 <Icon
                   name="chevron-right"
@@ -153,6 +280,7 @@ const Workout: React.FC<WorkoutProps> = ({
           onPress={() => {
             sheetRef.current.snapTo(0);
             setModalOpen(true);
+            setSetting('equipment');
           }}
           accessoryRight={() => {
             return (
@@ -179,10 +307,11 @@ const Workout: React.FC<WorkoutProps> = ({
         <Divider />
         <ListItem
           style={{paddingVertical: DevicePixels[20]}}
-          title="Warm-up & Cool-down options"
+          title="Warm-up & Cool-down"
           onPress={() => {
             sheetRef.current.snapTo(0);
             setModalOpen(true);
+            setSetting('warmup');
           }}
           accessoryRight={() => {
             return (
@@ -212,8 +341,8 @@ const Workout: React.FC<WorkoutProps> = ({
               if (profile.premium) {
                 setWorkoutAction([]);
                 navigation.navigate('ExerciseList', {
-                  strengthArea: selectedArea,
-                  level: selectedLevel,
+                  strengthArea: area,
+                  level: level,
                   goal,
                 });
               } else {
@@ -240,6 +369,7 @@ const Workout: React.FC<WorkoutProps> = ({
       <BottomSheet
         ref={sheetRef}
         snapPoints={['80%', 0]}
+        enabledInnerScrolling
         initialSnap={1}
         onCloseStart={() => setModalOpen(false)}
         renderContent={renderContent}

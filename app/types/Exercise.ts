@@ -1,4 +1,3 @@
-import {Equipment} from './QuickRoutines';
 import {
   Level,
   Goal,
@@ -8,6 +7,7 @@ import {
   CardioType,
   WarmUp,
   CoolDown,
+  Equipment as EquipmentItem,
 } from './Shared';
 
 export interface Thumbnail {
@@ -29,7 +29,7 @@ export default interface Exercise {
   cardioType?: CardioType;
   flexibilityArea?: FlexibilityArea;
   location: Location;
-  equipment?: Equipment[];
+  equipment?: EquipmentItem[];
   muscles?: Muscle[];
   musclesSecondary?: Muscle[];
   warmUp?: WarmUp;
@@ -41,7 +41,7 @@ export default interface Exercise {
   resistance?: number;
   thumbnail?: Thumbnail;
   video?: Video;
-}
+};
 
 export type Muscle =
   | 'chest'

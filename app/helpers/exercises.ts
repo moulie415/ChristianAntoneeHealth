@@ -1,10 +1,11 @@
+import {capitalizeFirstLetter} from '.';
 import Exercise, {
   allMuscleHighlights,
   Muscle,
   MuscleHighlight,
 } from '../types/Exercise';
 import {Unit} from '../types/Profile';
-import {Level} from '../types/Shared';
+import {Equipment, Level} from '../types/Shared';
 
 const levelMapping = {
   null: 0,
@@ -153,4 +154,31 @@ export const getDifficultyText = (difficulty: number) => {
     return 'Hard';
   }
   return 'Very Hard';
+};
+
+export const equipmentItemReadableString = (item: Equipment) => {
+  switch (item) {
+    case Equipment.PLYOMETRIC_BOX:
+      return 'Plyometric box';
+    case Equipment.CABLE_MACHINES:
+      return 'Cable machines';
+    case Equipment.PULL_UP_BAR:
+      return 'Pull up bar';
+    case Equipment.SQUAT_RACK:
+      return 'Squat rack';
+    case Equipment.EXERCISE_BALL:
+      return 'Exercise ball';
+    case Equipment.BOSU_BALL:
+      return 'Bosu ball';
+    case Equipment.AGILITY_LADDER:
+      return 'Agility ladder';
+    case Equipment.TRX_SUSPENSION_TRAINER:
+      return 'TRX suspension trainer';
+    case Equipment.MEDICINE_BALLS:
+      return 'Medicine balls';
+    case Equipment.EXERCISE_STEP:
+      return 'Exercise step';
+    default:
+      return capitalizeFirstLetter(item);
+  }
 };
