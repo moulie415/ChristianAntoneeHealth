@@ -157,8 +157,7 @@ const ExerciseBottomSheet: React.FC<{
                 ))}
               </Picker>
             </Layout>
-            {(selectedExercise.type === Goal.BALANCE ||
-              selectedExercise.type === Goal.STRENGTH) && (
+            {selectedExercise.type === Goal.STRENGTH && (
               <Layout>
                 <Picker
                   style={{width: DevicePixels[120], height: DevicePixels[180]}}

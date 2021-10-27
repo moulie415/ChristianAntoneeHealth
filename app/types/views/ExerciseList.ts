@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
-import {Goal, Level, StrengthArea} from '../Shared';
+import {CardioType, Goal, Level, StrengthArea} from '../Shared';
 
 type ExerciseListNavigationProp = StackNavigationProp<
   StackParamList,
@@ -16,9 +16,11 @@ export default interface ExerciseListProps {
   route: ExerciseListRouteProp;
   getExercisesAction: (
     level: Level,
-    goals: Goal[],
-    area?: StrengthArea,
+    goal: Goal,
+    area: StrengthArea,
+    cardioType: CardioType,
   ) => void;
   workout: Exercise[];
   setWorkoutAction: (workout: Exercise[]) => void;
+  loading: boolean;
 };

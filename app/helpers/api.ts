@@ -1,10 +1,10 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import db from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Exercise from '../types/Exercise';
 import Profile from '../types/Profile';
 import Test from '../types/Test';
-import {Goal, Level, StrengthArea} from '../types/Shared';
+import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
@@ -34,31 +34,35 @@ export const createUser = async (
   }
 };
 
-const getExercisesQuery = (level: Level, goals: Goal[], area: StrengthArea) => {
-  if (goals.includes(Goal.FLEXIBILITY)) {
-    return db().collection('exercises').where('type', 'in', goals).get();
-  }
-  if (goals.includes(Goal.BALANCE) || goals.includes(Goal.CARDIO)) {
+const getExercisesQuery = (
+  level: Level,
+  goal: Goal,
+  area: StrengthArea,
+  cardioType: CardioType,
+) => {
+  if (goal === Goal.STRENGTH) {
     return db()
       .collection('exercises')
+      .where('type', '==', goal)
+      .where('area', '==', area)
       .where('level', '==', level)
-      .where('type', 'in', goals)
       .get();
   }
   return db()
     .collection('exercises')
+    .where('type', '==', goal)
+    .where('cardioType', '==', cardioType)
     .where('level', '==', level)
-    .where('type', 'in', goals)
-    .where('area', '==', area)
     .get();
 };
 
 export const getExercises = async (
   level: Level,
-  goals: Goal[],
+  goal: Goal,
   area: StrengthArea,
+  cardioType: CardioType,
 ) => {
-  const snapshot = await getExercisesQuery(level, goals, area);
+  const snapshot = await getExercisesQuery(level, goal, area, cardioType);
   return snapshot.docs.reduce((acc: {[id: string]: Exercise}, curr) => {
     const exercise: any = curr.data();
     acc[curr.id] = {...exercise, id: curr.id};

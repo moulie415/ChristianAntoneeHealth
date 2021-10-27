@@ -1,5 +1,5 @@
 import Exercise from '../types/Exercise';
-import {Goal, Level, StrengthArea} from '../types/Shared';
+import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import {SetLoggedInAction} from './profile';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
@@ -7,6 +7,7 @@ export const SET_EXERCISES = 'SET_EXERCISES';
 export const ADD_EXERCISE = 'ADD_EXERCISE';
 export const DELETE_EXERCISE = 'DELETE_EXERCISE';
 export const UPDATE_EXERCISE = 'UPDATE_EXERCISE';
+export const SET_LOADING = 'SET_LOADING';
 export const SET_WORKOUT = 'SET_WORKOUT';
 export const SET_EXERCISE_NOTE = 'SET_EXERCISE_NOTE';
 export const SET_WORKOUT_NOTE = 'SET_WORKOUT_NOTE';
@@ -16,7 +17,12 @@ export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
-  payload: {level: Level; goals: Goal[]; area?: StrengthArea};
+  payload: {
+    level: Level;
+    goal: Goal;
+    area: StrengthArea;
+    cardioType: CardioType;
+  };
 }
 
 export interface AddExerciseAction {
@@ -36,6 +42,11 @@ export interface UpdateExerciseAction {
 export interface SetExercisesAction {
   type: typeof SET_EXERCISES;
   exercises: {[key: string]: Exercise};
+}
+
+export interface SetLoadingAction {
+  type: typeof SET_LOADING;
+  loading: boolean;
 }
 
 export interface SetWorkoutAction {
@@ -70,11 +81,12 @@ export interface SetVideoAction {
 
 export const getExercises = (
   level: Level,
-  goals: Goal[],
-  area?: StrengthArea,
+  goal: Goal,
+  area: StrengthArea,
+  cardioType: CardioType,
 ): GetExercisesAction => ({
   type: GET_EXERCISES,
-  payload: {level, goals, area},
+  payload: {level, goal, area, cardioType},
 });
 
 export const addExercise = (exercise: Exercise): AddExerciseAction => ({
@@ -95,6 +107,11 @@ export const setExercises = (exercises: {
 }): SetExercisesAction => ({
   type: SET_EXERCISES,
   exercises,
+});
+
+export const setLoading = (loading: boolean): SetLoadingAction => ({
+  type: SET_LOADING,
+  loading,
 });
 
 export const setWorkout = (payload: Exercise[]): SetWorkoutAction => ({
@@ -137,4 +154,5 @@ export type ExercisesActions =
   | SetWorkoutNoteAction
   | DownloadVideoAction
   | SetVideoAction
-  | SetVideoLoadingAction;
+  | SetVideoLoadingAction
+  | SetLoadingAction;

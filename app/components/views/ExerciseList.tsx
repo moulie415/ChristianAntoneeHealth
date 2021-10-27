@@ -1,4 +1,4 @@
-import {Layout, List, ListItem} from '@ui-kitten/components';
+import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -23,8 +23,17 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   getExercisesAction,
   workout,
   setWorkoutAction,
+  loading,
 }) => {
-  const {strengthArea, level, goals} = route.params;
+  const {
+    strengthArea,
+    level,
+    goal,
+    equipment,
+    cardioType,
+    warmUp,
+    coolDown,
+  } = route.params;
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [selectedExercise, setSelectedExercise] = useState<Exercise>();
   const [reps, setReps] = useState(15);
@@ -33,8 +42,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    getExercisesAction(level, goals, strengthArea);
-  }, [getExercisesAction, level, goals, strengthArea]);
+    getExercisesAction(level, goal, strengthArea, cardioType);
+  }, [getExercisesAction, level, goal, strengthArea, cardioType]);
 
   const selectExercise = (exercise: Exercise) => {
     if (workout.find(e => e.id === exercise.id)) {
@@ -56,18 +65,27 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     () =>
       Object.values(exercises).filter(exercise => {
         return (
-          (exercise.area === strengthArea ||
-            (goals.includes(Goal.FLEXIBILITY) &&
-              exercise.type === Goal.FLEXIBILITY) ||
-            (goals.includes(Goal.CARDIO) && exercise.type === Goal.CARDIO) ||
-            (goals.includes(Goal.BALANCE) && exercise.type === Goal.BALANCE)) &&
-          (exercise.level === level ||
-            (goals.includes(Goal.FLEXIBILITY) &&
-              exercise.type === Goal.FLEXIBILITY)) &&
-          goals.includes(exercise.type)
+          exercise.type === goal &&
+          (strengthArea === exercise.area ||
+            cardioType === exercise.cardioType) &&
+          (!exercise.warmUp?.length || warmUp.includes(exercise.warmUp)) &&
+          (!exercise.coolDown?.length ||
+            coolDown.includes(exercise.coolDown)) &&
+          (!exercise.equipment ||
+            exercise.equipment.every(item => equipment.includes(item))) &&
+          exercise.level === level
         );
       }),
-    [exercises, goals, level, strengthArea],
+    [
+      exercises,
+      goal,
+      level,
+      strengthArea,
+      cardioType,
+      warmUp,
+      coolDown,
+      equipment,
+    ],
   );
   return (
     <Layout style={{flex: 1}}>
@@ -75,6 +93,12 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         style={{flex: 1}}
         data={filtered}
         keyExtractor={(item: Exercise) => item.id}
+        ListEmptyComponent={
+          <Text style={{textAlign: 'center', margin: 20}}>
+            Sorry, no exercises found based on your filter, please try altering
+            your settings like adding any equipment you might have
+          </Text>
+        }
         renderItem={({item}: {item: Exercise}) => {
           const selected = workout.find(e => e.id === item.id);
           return (
@@ -116,7 +140,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           );
         }}
       />
-      <AbsoluteSpinner loading={!(filtered && filtered.length > 0)} />
+      <AbsoluteSpinner loading={!filtered.length && loading} />
       <ExerciseBottomSheet
         selectedExercise={selectedExercise}
         bottomSheetRef={bottomSheetRef}
@@ -136,6 +160,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 const mapStateToProps = ({exercises}: MyRootState) => ({
   exercises: exercises.exercises,
   workout: exercises.workout,
+  loading: exercises.loading,
 });
 
 const mapDispatchToProps = {

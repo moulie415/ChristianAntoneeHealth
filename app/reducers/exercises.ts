@@ -5,12 +5,14 @@ import {
   SET_EXERCISE_NOTE,
   SET_VIDEO,
   SET_VIDEO_LOADING,
+  SET_LOADING,
 } from '../actions/exercises';
 import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
 
 export interface ExercisesState {
   exercises: {[key: string]: Exercise};
+  loading: boolean;
   workout: Exercise[];
   exerciseNotes: {[key: string]: string};
   workoutNotes: {[key: string]: string};
@@ -19,6 +21,7 @@ export interface ExercisesState {
 }
 
 const initialState: ExercisesState = {
+  loading: false,
   exercises: {},
   workout: [],
   exerciseNotes: {},
@@ -36,6 +39,11 @@ const reducer = (
       return {
         ...state,
         exercises: {...state.exercises, ...action.exercises},
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.loading,
       };
     case SET_WORKOUT:
       return {

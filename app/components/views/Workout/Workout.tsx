@@ -1,10 +1,10 @@
 import React, {Fragment, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import styles from '../../styles/views/Workout';
+import styles from '../../../styles/views/Workout';
 import {TouchableOpacity, SafeAreaView, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import colors from '../../constants/colors';
-import WorkoutProps from '../../types/views/Workout';
+import colors from '../../../constants/colors';
+import WorkoutProps from '../../../types/views/Workout';
 import {Text, Button, Layout, ListItem, Divider} from '@ui-kitten/components';
 import {
   CardioType,
@@ -15,14 +15,16 @@ import {
   MyRootState,
   StrengthArea,
   WarmUp,
-} from '../../types/Shared';
-import {setWorkout} from '../../actions/exercises';
+} from '../../../types/Shared';
+import {setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import BottomSheet from 'reanimated-bottom-sheet';
-import ImageOverlay from '../commons/ImageOverlay';
-import DevicePixels from '../../helpers/DevicePixels';
-import {capitalizeFirstLetter} from '../../helpers';
-import {equipmentItemReadableString} from '../../helpers/exercises';
+import DevicePixels from '../../../helpers/DevicePixels';
+import {capitalizeFirstLetter} from '../../../helpers';
+import GoalMenu from './GoalMenu';
+import EquipmentMenu from './EquipmentMenu';
+import ExperienceMenu from './ExperienceMenu';
+import WarmUpCoolDown from './WarmUpCoolDown';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
@@ -34,9 +36,9 @@ const Workout: React.FC<WorkoutProps> = ({
   const [selectedLevel, setSelectedLevel] = useState<Level>(Level.BEGINNER);
   const [goal, setGoal] = useState<Goal>(Goal.STRENGTH);
   const [selectedGoal, setSelectedGoal] = useState<Goal>(Goal.STRENGTH);
-  const [area, setArea] = useState<StrengthArea>(StrengthArea.FULL);
+  const [area, setArea] = useState<StrengthArea>(StrengthArea.UPPER);
   const [selectedArea, setSelectedArea] = useState<StrengthArea>(
-    StrengthArea.FULL,
+    StrengthArea.UPPER,
   );
   const [cardioType, setCardioType] = useState<CardioType>(CardioType.HIT);
   const [selectedCardioType, setSelectedCardioType] = useState<CardioType>(
@@ -48,17 +50,17 @@ const Workout: React.FC<WorkoutProps> = ({
   const [equipment, setEquipment] = useState<Equipment[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([]);
   const sheetRef = useRef<BottomSheet>(null);
-  const [warmUp, setWarmup] = useState<WarmUp>();
-  const [selectedWarmup, setSelectedWarmup] = useState<WarmUp>();
-  const [coolDown, setCoolDown] = useState<CoolDown>();
-  const [selectedCoolDown, setSelectedCoolDown] = useState<CoolDown>();
+  const [warmUp, setWarmup] = useState<WarmUp[]>([]);
+  const [selectedWarmup, setSelectedWarmup] = useState<WarmUp[]>([]);
+  const [coolDown, setCoolDown] = useState<CoolDown[]>([]);
+  const [selectedCoolDown, setSelectedCoolDown] = useState<CoolDown[]>([]);
 
   const getSettingsTitle = () => {
     switch (settings) {
       case 'goal':
         return 'Fitness Goal';
       case 'experience':
-        return 'Fitness Experience';
+        return 'Exercise Experience';
       case 'equipment':
         return 'Available Equipment';
       case 'warmup':
@@ -73,6 +75,8 @@ const Workout: React.FC<WorkoutProps> = ({
     setModalOpen(false);
     switch (settings) {
       case 'goal':
+        setSelectedArea(area);
+        setSelectedCardioType(cardioType);
         return setSelectedGoal(goal);
       case 'experience':
         return setSelectedLevel(level);
@@ -91,6 +95,8 @@ const Workout: React.FC<WorkoutProps> = ({
     setModalOpen(false);
     switch (settings) {
       case 'goal':
+        setArea(selectedArea);
+        setCardioType(selectedCardioType);
         return setGoal(selectedGoal);
       case 'experience':
         return setLevel(selectedLevel);
@@ -106,40 +112,69 @@ const Workout: React.FC<WorkoutProps> = ({
 
   const renderHeader = () => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: colors.button,
-          alignItems: 'center',
-          borderTopLeftRadius: DevicePixels[5],
-          borderTopRightRadius: DevicePixels[5],
-        }}>
-        <TouchableOpacity>
-          <Text
-            onPress={onCancel}
+      <>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            backgroundColor: colors.button,
+            alignItems: 'center',
+            borderTopLeftRadius: DevicePixels[5],
+            borderTopRightRadius: DevicePixels[5],
+          }}>
+          <TouchableOpacity>
+            <Text
+              onPress={onCancel}
+              style={{
+                color: colors.appBlue,
+                padding: DevicePixels[10],
+                fontWeight: 'bold',
+              }}>
+              CANCEL
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text>{getSettingsTitle()}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onSave}>
+            <Text
+              style={{
+                color: colors.appBlue,
+                padding: DevicePixels[10],
+                fontWeight: 'bold',
+              }}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {settings === 'equipment' && (
+          <View
             style={{
-              color: colors.appBlue,
-              padding: DevicePixels[10],
-              fontWeight: 'bold',
+              backgroundColor: '#fff',
             }}>
-            CANCEL
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>{getSettingsTitle()}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onSave}>
-          <Text
-            style={{
-              color: colors.appBlue,
-              padding: DevicePixels[10],
-              fontWeight: 'bold',
-            }}>
-            SAVE
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity
+              style={{padding: DevicePixels[10]}}
+              onPress={() => {
+                selectedEquipment.length === Object.keys(Equipment).length
+                  ? setSelectedEquipment([])
+                  : setSelectedEquipment(Object.values(Equipment));
+              }}>
+              <Text
+                style={{
+                  textAlign: 'right',
+                  fontWeight: 'bold',
+                  // fontSize: DevicePixels[20],
+                  color: colors.appBlue,
+                }}>
+                {selectedEquipment.length === Object.keys(Equipment).length
+                  ? 'Clear all'
+                  : 'Select all'}
+              </Text>
+            </TouchableOpacity>
+            <Divider />
+          </View>
+        )}
+      </>
     );
   };
 
@@ -151,61 +186,34 @@ const Workout: React.FC<WorkoutProps> = ({
           height: '100%',
         }}>
         {settings === 'goal' && (
-          <View>
-            <Text />
-          </View>
+          <GoalMenu
+            selectedGoal={selectedGoal}
+            setSelectedGoal={setSelectedGoal}
+            selectedArea={selectedArea}
+            setSelectedArea={setSelectedArea}
+            selectedCardioType={selectedCardioType}
+            setSelectedCardioType={setSelectedCardioType}
+          />
         )}
         {settings === 'experience' && (
-          <View>
-            <Text />
-          </View>
+          <ExperienceMenu
+            selectedLevel={selectedLevel}
+            setSelectedLevel={setSelectedLevel}
+          />
         )}
         {settings === 'equipment' && (
-          <View>
-            {Object.values(Equipment).map(item => {
-              const selected = selectedEquipment.includes(item);
-              return (
-                <Fragment key={item}>
-                  <ListItem
-                    onPress={() => {
-                      selected
-                        ? setSelectedEquipment(
-                            selectedEquipment.filter(i => i !== item),
-                          )
-                        : setSelectedEquipment([...selectedEquipment, item]);
-                    }}
-                    title={() => (
-                      <Text style={{color: selected ? colors.appBlue : '#000'}}>
-                        {equipmentItemReadableString(item)}
-                      </Text>
-                    )}
-                    accessoryRight={() => {
-                      return selected ? (
-                        <Icon
-                          name="check-circle"
-                          size={DevicePixels[20]}
-                          solid
-                          color={colors.appBlue}
-                        />
-                      ) : (
-                        <Icon
-                          name="circle"
-                          size={DevicePixels[20]}
-                          color={colors.appBlue}
-                        />
-                      );
-                    }}
-                  />
-                  <Divider />
-                </Fragment>
-              );
-            })}
-          </View>
+          <EquipmentMenu
+            selectedEquipment={selectedEquipment}
+            setSelectedEquipment={setSelectedEquipment}
+          />
         )}
         {settings === 'warmup' && (
-          <View>
-            <Text />
-          </View>
+          <WarmUpCoolDown
+            selectedWarmup={selectedWarmup}
+            setSelectedWarmUp={setSelectedWarmup}
+            selectedCoolDown={selectedCoolDown}
+            setSelectedCoolDown={setSelectedCoolDown}
+          />
         )}
       </ScrollView>
     );
@@ -322,7 +330,7 @@ const Workout: React.FC<WorkoutProps> = ({
                     marginRight: DevicePixels[5],
                     fontWeight: 'bold',
                   }}>
-                  {warmUp || coolDown ? 'On' : 'Off'}
+                  {warmUp.length || coolDown.length ? 'On' : 'Off'}
                 </Text>
                 <Icon
                   name="chevron-right"
@@ -338,16 +346,16 @@ const Workout: React.FC<WorkoutProps> = ({
           <Button
             disabled={false}
             onPress={() => {
-              if (profile.premium) {
-                setWorkoutAction([]);
-                navigation.navigate('ExerciseList', {
-                  strengthArea: area,
-                  level: level,
-                  goal,
-                });
-              } else {
-                navigation.navigate('Premium');
-              }
+              setWorkoutAction([]);
+              navigation.navigate('ExerciseList', {
+                strengthArea: area,
+                level: level,
+                goal,
+                equipment,
+                cardioType,
+                warmUp,
+                coolDown,
+              });
             }}
             style={{margin: DevicePixels[10]}}>
             Continue

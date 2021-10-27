@@ -85,20 +85,6 @@ const Goals: React.FC<GoalsProps> = ({
         }}>
         <Button
           size="tiny"
-          accessoryLeft={() => <CheckIcon goal={Goal.FLEXIBILITY} />}
-          accessoryRight={() => <CrossIcon goal={Goal.FLEXIBILITY} />}
-          onPress={() => selectGoal(Goal.FLEXIBILITY)}
-          status={
-            selectedGoals.includes(Goal.FLEXIBILITY) ? 'primary' : 'basic'
-          }
-          style={{
-            width: DevicePixels[120],
-            marginBottom: DevicePixels[20],
-          }}>
-          Flexibility
-        </Button>
-        <Button
-          size="tiny"
           accessoryLeft={() => <CheckIcon goal={Goal.STRENGTH} />}
           accessoryRight={() => <CrossIcon goal={Goal.STRENGTH} />}
           onPress={() => selectGoal(Goal.STRENGTH)}
@@ -108,18 +94,6 @@ const Goals: React.FC<GoalsProps> = ({
             marginBottom: DevicePixels[20],
           }}>
           Strength
-        </Button>
-        <Button
-          size="tiny"
-          accessoryLeft={() => <CheckIcon goal={Goal.BALANCE} />}
-          accessoryRight={() => <CrossIcon goal={Goal.BALANCE} />}
-          onPress={() => selectGoal(Goal.BALANCE)}
-          status={selectedGoals.includes(Goal.BALANCE) ? 'primary' : 'basic'}
-          style={{
-            width: DevicePixels[120],
-            marginBottom: DevicePixels[20],
-          }}>
-          Balance
         </Button>
         <Button
           size="tiny"

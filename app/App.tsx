@@ -18,7 +18,7 @@ import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import 'react-native-gesture-handler';
 import Login from './components/views/Login';
 import Home from './components/views/Home';
-import Workout from './components/views/Workout';
+import Workout from './components/views/Workout/Workout';
 import FitnessTesting from './components/views/FitnessTesting';
 import Education from './components/views/Education';
 import More from './components/views/More';
@@ -37,7 +37,15 @@ import {navigationRef} from './RootNavigation';
 import SignUpFlow from './components/views/SignUpFlow';
 import SplashScreen from 'react-native-splash-screen';
 import * as Sentry from '@sentry/react-native';
-import {Goal, Level, StrengthArea} from './types/Shared';
+import {
+  CardioType,
+  Goal,
+  Level,
+  StrengthArea,
+  Equipment as EquipmentItem,
+  WarmUp,
+  CoolDown,
+} from './types/Shared';
 import ExerciseList from './components/views/ExerciseList';
 import ExerciseType from './types/Exercise';
 import CustomizeExercise from './components/views/CustomizeExercise';
@@ -98,7 +106,15 @@ export type StackParamList = {
     test: TestType;
     seconds: number;
   };
-  ExerciseList: {strengthArea: StrengthArea; level: Level; goals: Goal[]};
+  ExerciseList: {
+    goal: Goal;
+    strengthArea: StrengthArea;
+    level: Level;
+    cardioType: CardioType;
+    equipment: EquipmentItem[];
+    warmUp: WarmUp[];
+    coolDown: CoolDown[];
+  };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
   StartWorkout: undefined;

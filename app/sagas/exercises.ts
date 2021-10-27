@@ -8,6 +8,7 @@ import {
   GetExercisesAction,
   GET_EXERCISES,
   setExercises,
+  setLoading,
   UpdateExerciseAction,
   UPDATE_EXERCISE,
 } from '../actions/exercises';
@@ -17,14 +18,17 @@ import {MyRootState} from '../types/Shared';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 export function* getExercises(action: GetExercisesAction) {
-  const {level, goals, area} = action.payload;
+  const {level, goal, area, cardioType} = action.payload;
+  yield put(setLoading(true));
   const exercises: {[key: string]: Exercise} = yield call(
     api.getExercises,
     level,
-    goals,
+    goal,
     area,
+    cardioType,
   );
   yield put(setExercises(exercises));
+  yield put(setLoading(false));
 }
 
 export function* deleteExercise(action: DeleteExerciseAction) {

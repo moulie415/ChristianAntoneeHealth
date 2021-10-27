@@ -1,5 +1,5 @@
 import {Text, Button, Layout, Spinner} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 // @ts-ignore
 import Body from 'react-native-body-highlighter';
 import Snackbar from 'react-native-snackbar';
@@ -52,11 +52,26 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
     }
     navigation.goBack();
   };
-  const muscles: {slug: MuscleHighlight; intensity: number}[] = exercise.muscles
-    ? mapMuscleToHighlight(exercise.muscles).map(m => {
-        return {slug: m, intensity: 1};
-      })
-    : [];
+
+  const muscles = useMemo(() => {
+    const arr = [];
+    if (exercise.muscles) {
+      arr.push(
+        ...mapMuscleToHighlight(exercise.muscles).map(m => {
+          return {slug: m, intensity: 1};
+        }),
+      );
+    }
+    if (exercise.musclesSecondary) {
+      arr.push(
+        ...mapMuscleToHighlight(exercise.musclesSecondary).map(m => {
+          return {slug: m, intensity: 2};
+        }),
+      );
+    }
+    return arr;
+  }, [exercise.muscles, exercise.musclesSecondary]);
+
   return (
     <ScrollView style={{flex: 1}}>
       {!loading &&
