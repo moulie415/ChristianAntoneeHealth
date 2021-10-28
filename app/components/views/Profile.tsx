@@ -96,6 +96,7 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     <Layout style={{flex: 1}}>
       <ScrollView
+        keyboardShouldPersistTaps="always"
         style={styles.container}
         contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
         <Layout

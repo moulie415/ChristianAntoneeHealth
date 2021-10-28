@@ -124,7 +124,7 @@ const Login: React.FC<LoginProps> = ({
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <KeyboardAvoidingView behavior="position" style={styles.container}>
           <Image
             style={styles.logo}

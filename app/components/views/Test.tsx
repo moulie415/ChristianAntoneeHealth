@@ -90,7 +90,9 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
           </Text>
         </Layout>
       </Layout>
-      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
         {complete ? (
           <Layout style={{margin: 20}}>
             <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>

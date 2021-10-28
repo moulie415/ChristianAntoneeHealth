@@ -76,7 +76,9 @@ const Settings: React.FC<SettingsProps> = ({
   const equal = equals(newProfile, profile);
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
         <Text style={{margin: DevicePixels[10]}} category="h5">
           Notifications
         </Text>

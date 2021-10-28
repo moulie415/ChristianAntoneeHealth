@@ -94,7 +94,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
             videos[exercise.id];
           const next = workout[index + 1];
           return (
-            <ScrollView key={exercise.id}>
+            <ScrollView keyboardShouldPersistTaps="always" key={exercise.id}>
               <>
                 {!loading &&
                 video &&

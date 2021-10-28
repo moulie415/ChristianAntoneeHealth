@@ -70,7 +70,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
           style={{flex: 1}}>

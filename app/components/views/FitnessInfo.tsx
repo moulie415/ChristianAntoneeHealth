@@ -72,6 +72,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         Snackbar.show({text: `Error: ${e.message}`});
       }
     }
+    setLoading(false);
   }, [setDob, setGender, setHeight, setWeight]);
 
   useEffect(() => {
