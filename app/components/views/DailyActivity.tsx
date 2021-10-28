@@ -1,15 +1,13 @@
 import React, {useMemo} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
 import moment, {Moment} from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/Activity';
-import {Layout, List, Text} from '@ui-kitten/components';
+import {Divider, Layout, List, Text} from '@ui-kitten/components';
 import {getSamples} from '../../actions/profile';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import DailyActivityProps from '../../types/views/DailyActivity';
-import CustomDivider from '../commons/CustomDivider';
 import DevicePixels from '../../helpers/DevicePixels';
 
 interface Item {
@@ -40,7 +38,7 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
             <Text category="h5" style={{padding: DevicePixels[5]}}>
               {item.day.format('dddd')}
             </Text>
-            <CustomDivider />
+            <Divider />
             <Layout
               style={{
                 flexDirection: 'row',
@@ -59,7 +57,7 @@ const DailyActivity: React.FC<DailyActivityProps> = ({weeklySteps}) => {
               </Layout>
               <Text>{item.steps}</Text>
             </Layout>
-            <CustomDivider />
+            <Divider />
           </Layout>
         );
       }}

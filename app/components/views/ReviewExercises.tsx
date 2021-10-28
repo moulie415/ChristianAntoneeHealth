@@ -1,4 +1,4 @@
-import {Button, Layout, ListItem, Text} from '@ui-kitten/components';
+import {Button, Divider, Layout, ListItem, Text} from '@ui-kitten/components';
 import React, {useCallback, useRef, useState} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native';
@@ -12,7 +12,6 @@ import {truncate} from '../../helpers';
 import {Goal, MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../actions/exercises';
-import CustomDivider from '../commons/CustomDivider';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ExerciseBottomSheet from '../commons/ExerciseBottomSheet';
@@ -82,7 +81,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       <DraggableFlatList
         data={workout}
         style={{flex: 1}}
-        ItemSeparatorComponent={() => <CustomDivider />}
+        ItemSeparatorComponent={() => <Divider />}
         renderItem={renderItem}
         ListFooterComponent={() => (
           <TouchableOpacity

@@ -1,21 +1,24 @@
-import {Text, Button, Layout, Spinner} from '@ui-kitten/components';
+import {Text, Button, Layout, Spinner, Divider} from '@ui-kitten/components';
 import React, {useMemo, useState} from 'react';
 // @ts-ignore
 import Body from 'react-native-body-highlighter';
 import Snackbar from 'react-native-snackbar';
-import {ScrollView} from 'react-native';
+import {Dimensions, ScrollView} from 'react-native';
 import CustomizeExerciseProps from '../../types/views/CustomExercise';
-import CustomDivider from '../commons/CustomDivider';
+import Carousel from 'react-native-snap-carousel';
 import {MuscleHighlight} from '../../types/Exercise';
 import {MyRootState} from '../../types/Shared';
 import {downloadVideo, setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
-import ViewMore from '../commons/ViewMore';
 import {mapMuscleToHighlight} from '../../helpers/exercises';
 import {useEffect} from 'react';
 import ExerciseVideo from '../commons/ExerciseVideo';
 import {getVideoHeight} from '../../helpers';
 import DevicePixels from '../../helpers/DevicePixels';
+import colors from '../../constants/colors';
+import globalStyles from '../../styles/globalStyles';
+
+const {width, height} = Dimensions.get('screen');
 
 const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   route,
@@ -99,20 +102,58 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         }}>
         {exercise.name}
       </Text>
-
-      <CustomDivider />
-      <ViewMore text={exercise.description} />
-      <CustomDivider />
-      {!!muscles && !!muscles.length && (
-        <Layout
-          style={{
-            alignItems: 'center',
-            marginVertical: DevicePixels[20],
-            backgroundColor: 'transparent',
-          }}>
-          <Body scale={1} data={muscles} />
-        </Layout>
-      )}
+      <Carousel
+        vertical={false}
+        data={[0, 1, 2]}
+        sliderWidth={width}
+        itemWidth={width - DevicePixels[75]}
+        renderItem={({item}: {item: number}) => {
+          return (
+            <Layout
+              style={{
+                marginVertical: DevicePixels[20],
+                borderRadius: 10,
+                ...globalStyles.boxShadow,
+              }}>
+              {item === 0 && !!muscles && !!muscles.length && (
+                <Layout
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    height: DevicePixels[250],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Body scale={1} data={muscles} />
+                </Layout>
+              )}
+              {item === 1 && !!muscles && !!muscles.length && (
+                <Layout
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    height: DevicePixels[250],
+                    padding: DevicePixels[10],
+                  }}>
+                  <Text category="h5">Description</Text>
+                  <Text>{exercise.description}</Text>
+                </Layout>
+              )}
+              {item === 2 && !!muscles && !!muscles.length && (
+                <Layout
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    height: DevicePixels[250],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                />
+              )}
+            </Layout>
+          );
+        }}
+      />
       <Button style={{margin: DevicePixels[10]}} onPress={selectExercise}>
         {workout.find(e => e.id === exercise.id)
           ? 'Remove exercise'
