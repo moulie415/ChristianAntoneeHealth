@@ -417,10 +417,10 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.8.0):
-    - GoogleDataTransport (~> 9.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.9.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Logger (~> 7.6)
     - nanopb (~> 2.30908.0)
   - FirebaseCrashlytics (8.8.0):
     - FirebaseCore (~> 8.0)
@@ -442,10 +442,10 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (8.8.0):
+  - FirebaseInstallations (8.9.0):
     - FirebaseCore (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - GoogleUtilities/UserDefaults (~> 7.4)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
   - Flipper (0.99.0):
     - Flipper-Folly (~> 2.6)
@@ -607,11 +607,11 @@ PODS:
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.180)
   - PromisesObjC (2.0.0)
-  - Purchases (3.12.3):
-    - PurchasesCoreSwift (= 3.12.3)
-  - PurchasesCoreSwift (3.12.3)
-  - PurchasesHybridCommon (1.9.1):
-    - Purchases (= 3.12.3)
+  - Purchases (3.12.8):
+    - PurchasesCoreSwift (= 3.12.8)
+  - PurchasesCoreSwift (3.12.8)
+  - PurchasesHybridCommon (1.9.3):
+    - Purchases (= 3.12.8)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -841,11 +841,11 @@ PODS:
   - react-native-fbsdk/Share (3.0.0):
     - FBSDKShareKit (~> 8.1)
     - React
-  - react-native-flipper (0.116.0):
+  - react-native-flipper (0.117.0):
     - React-Core
   - react-native-image-picker (4.1.2):
     - React-Core
-  - react-native-pager-view (5.4.7):
+  - react-native-pager-view (5.4.8):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -865,7 +865,7 @@ PODS:
     - react-native-video/Video (= 5.2.0)
   - react-native-video/Video (5.2.0):
     - React-Core
-  - react-native-webview (11.14.1):
+  - react-native-webview (11.14.2):
     - React-Core
   - React-perflogger (0.66.1)
   - React-RCTActionSheet (0.66.1):
@@ -953,7 +953,7 @@ PODS:
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
-  - RNDeviceInfo (8.4.1):
+  - RNDeviceInfo (8.4.3):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -983,8 +983,8 @@ PODS:
   - RNGoogleSignin (5.0.0):
     - GoogleSignIn (~> 5.0.0)
     - React-Core
-  - RNPurchases (4.3.1):
-    - PurchasesHybridCommon (= 1.9.1)
+  - RNPurchases (4.3.3):
+    - PurchasesHybridCommon (= 1.9.3)
     - React-Core
   - RNRate (1.2.9):
     - React-Core
@@ -1017,12 +1017,12 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.8.0):
+  - RNScreens (3.9.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (3.1.1):
+  - RNSentry (3.2.1):
     - React-Core
-    - Sentry (= 7.3.0)
+    - Sentry (= 7.4.8)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.1):
@@ -1040,10 +1040,10 @@ PODS:
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.3.0):
-    - Sentry/Core (= 7.3.0)
-  - Sentry/Core (7.3.0)
-  - Shake (15.0.1)
+  - Sentry (7.4.8):
+    - Sentry/Core (= 7.4.8)
+  - Sentry/Core (7.4.8)
+  - Shake (15.0.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1360,10 +1360,10 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 5506ea8b867d8423485a84b4cd612d279f7b0b8a
   FirebaseAuth: bcf0adeff88bda5dcb3beeabe5760f1226ab7b2f
   FirebaseCore: 98b29e3828f0a53651c363937a7f7d92a19f1ba2
-  FirebaseCoreDiagnostics: fe77f42da6329d6d83d21fd9d621a6b704413bfc
+  FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
   FirebaseCrashlytics: 3660c045c8e45cc4276110562a0ef44cf43c8157
   FirebaseFirestore: 29baf05d5e7e0d5003eb34e5805d92b9858b36d4
-  FirebaseInstallations: 2563cb18a723ef9c6ef18318a49519b75dce613c
+  FirebaseInstallations: caa7c8e0d3e2345b8829d2fa9ca1b4dfbf2fcc85
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 57ffbe81ef95306cc9e69c4aa3aeeeeb58a6a28c
@@ -1392,9 +1392,9 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  Purchases: e9839517aea4335136f3946ae228eecf5131cc25
-  PurchasesCoreSwift: dd3fd55a9895abd7906a3842bd36c7f7539a99d1
-  PurchasesHybridCommon: 1d98dd58935a4fa1009c6e17f8b740973147b899
+  Purchases: 4e410d75f18b544aba8aa41ddc4bffbf8e787246
+  PurchasesCoreSwift: 93fa64c1a70e7f493f54aba64e01ff42d1ed9109
+  PurchasesHybridCommon: e975934b55c84123501cde4f9e0e015b037a4320
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 3cc065b52aa18db729268b9bd78a2feffb4d0f91
   RCTTypeSafety: 3c4fc37d5dea452d2ef17324db5504ec2f05083a
@@ -1409,9 +1409,9 @@ SPEC CHECKSUMS:
   React-jsinspector: 8c0517dee5e8c70cd6c3066f20213ff7ce54f176
   React-logger: bfddd3418dc1d45b77b822958f3e31422e2c179b
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
-  react-native-flipper: bc0286688e9bff709f2cf53f0ae9c032fc06afa1
+  react-native-flipper: cd9eabd8917104c1bbdca2621717cdca3b2addef
   react-native-image-picker: 9c8a2687b69300ad9e95cec5d38f35ab9d32467d
-  react-native-pager-view: 741e7606ee2f6e399fc7da777f5519454a4b38c5
+  react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-shake: 2cb54987defd2bcea04ed09f5252ccbfe39914ab
   react-native-slider: c98f8413776ec1218ec9cd4f8ed32bfd91d428fc
@@ -1419,7 +1419,7 @@ SPEC CHECKSUMS:
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
-  react-native-webview: db22ab831b8c5f7697957a67f7a7ac1cecfed18d
+  react-native-webview: cc4ac8f021a832dce2979e1f48c5595341dd2fb5
   React-perflogger: fcac6090a80e3d967791b4c7f1b1a017f9d4a398
   React-RCTActionSheet: caf5913d9f9e605f5467206cf9d1caa6d47d7ad6
   React-RCTAnimation: 6539e3bf594f6a529cd861985ba6548286ae1ead
@@ -1442,7 +1442,7 @@ SPEC CHECKSUMS:
   RNCPicker: f7a40b21b915b7a187624d52f52b7bc2f73ea413
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
-  RNDeviceInfo: 55175b0bd852c1c5d70d76efc04ed77799cef638
+  RNDeviceInfo: 25a16a2a03049e88e800f3f41ca540e645b8a95a
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBAnalytics: f76bfa164ac235b00505deb9fc1776634056898c
   RNFBApp: 729c0666395b1953198dc4a1ec6deb8fbe1c302e
@@ -1451,19 +1451,19 @@ SPEC CHECKSUMS:
   RNFBFirestore: eef5fd4cfbe35316af559631db06a34b8391628a
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
-  RNPurchases: ef07f897760dd7639c36281a05e1ddbf30abc9f5
+  RNPurchases: 286000464b3584ed106da9360f931de97487ca35
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: 0a220d11e97e5de1c552e943a9a3f89b06c2cbf2
-  RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
-  RNSentry: 49abc89b0190b4c8afe0fa5d065f98e36cb53233
+  RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
+  RNSentry: 791f73292501ed1b2e95e62e9388b68fcc13261d
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 27e8268bdb0a1f191f219a33267f7e0445e8d62f
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
-  Sentry: 9a4e621430e2dae4477d791f2f7e905720b6efbf
-  Shake: db95e422906b43ee1b12fd6fc3e78b74f7ba0410
+  Sentry: df92b78ba4ab86cf2a47ff4cdc07758a5ce18f03
+  Shake: 56265204198c497ceb35b614e32d22268af003d0
   Yoga: 2b4a01651f42a32f82e6cef3830a3ba48088237f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
