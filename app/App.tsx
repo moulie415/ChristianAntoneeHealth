@@ -69,6 +69,7 @@ import QuickRoutineView from './components/views/QuickRoutine';
 import {quickRoutineTabString} from './helpers';
 import TestType from './types/Test';
 import TestResults from './components/views/TestResults';
+import AdMob from '@react-native-admob/admob';
 
 const composeEnhancers =
   // @ts-ignore
@@ -278,6 +279,7 @@ const App: React.FC = () => {
       dsn:
         'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
     });
+    AdMob.initialize();
   }, []);
   return (
     <PersistGate persistor={persistor}>

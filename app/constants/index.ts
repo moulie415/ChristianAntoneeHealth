@@ -31,3 +31,8 @@ export const STORE_LINK =
   Platform.OS === 'ios'
     ? 'https://apps.apple.com/us/app/health-and-movement/id1506679389'
     : 'https://play.google.com/store/apps/details?id=com.healthandmovement';
+
+export const UNIT_ID_INTERSTITIAL =
+  Platform.OS === 'ios'
+    ? 'ca-app-pub-7885763333661292/9112335668'
+    : 'ca-app-pub-7885763333661292/2930070695';

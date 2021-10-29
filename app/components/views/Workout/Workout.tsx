@@ -1,8 +1,9 @@
-import React, {Fragment, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../../../styles/views/Workout';
 import {TouchableOpacity, SafeAreaView, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import AdMob from '@react-native-admob/admob';
 import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
 import {Text, Button, Layout, ListItem, Divider} from '@ui-kitten/components';
@@ -31,6 +32,9 @@ const Workout: React.FC<WorkoutProps> = ({
   setWorkoutAction,
   profile,
 }) => {
+  useEffect(() => {
+    AdMob.isTestDevice().then(result => console.log(result));
+  }, []);
   const [modalOpen, setModalOpen] = useState(false);
   const [level, setLevel] = useState<Level>(Level.BEGINNER);
   const [selectedLevel, setSelectedLevel] = useState<Level>(Level.BEGINNER);

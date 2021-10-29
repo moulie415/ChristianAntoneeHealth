@@ -1423,6 +1423,11 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@react-native-admob/admob@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.1.2.tgz#36c0af218306199fbe19d1dd13ce8bd2c5ecd8f2"
+  integrity sha512-G0SiV7gwr60MxhjsyPSJnmRFrHvBUKEL1fjl8YfbDbg/gJiGnKzYltooRuxMtwN0Maftx5d6bZXqPym6WvqVpQ==
+
 "@react-native-community/art@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/art/-/art-1.2.0.tgz#386d95393f6042d9006f9d4bc6063fb898794460"
