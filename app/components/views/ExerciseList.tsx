@@ -2,7 +2,7 @@ import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
@@ -89,16 +89,16 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   );
   return (
     <Layout style={{flex: 1}}>
+      {!loading && !filtered.length && (
+        <Text style={{textAlign: 'center', margin: 20}}>
+          Sorry, no exercises found based on your filter, please try altering
+          your settings like adding any equipment you might have
+        </Text>
+      )}
       <List
         style={{flex: 1}}
         data={filtered}
         keyExtractor={(item: Exercise) => item.id}
-        ListEmptyComponent={
-          <Text style={{textAlign: 'center', margin: 20}}>
-            Sorry, no exercises found based on your filter, please try altering
-            your settings like adding any equipment you might have
-          </Text>
-        }
         renderItem={({item}: {item: Exercise}) => {
           const selected = workout.find(e => e.id === item.id);
           return (

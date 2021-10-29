@@ -3,7 +3,7 @@ import React, {useMemo, useState} from 'react';
 // @ts-ignore
 import Body from 'react-native-body-highlighter';
 import Snackbar from 'react-native-snackbar';
-import {Dimensions, ScrollView} from 'react-native';
+import {Dimensions, ScrollView, View} from 'react-native';
 import CustomizeExerciseProps from '../../types/views/CustomExercise';
 import Carousel from 'react-native-snap-carousel';
 import {MuscleHighlight} from '../../types/Exercise';
@@ -17,6 +17,7 @@ import {getVideoHeight} from '../../helpers';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import globalStyles from '../../styles/globalStyles';
+import Chip from '../commons/Chip';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -115,16 +116,75 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                 borderRadius: 10,
                 ...globalStyles.boxShadow,
               }}>
-              {item === 0 && !!muscles && !!muscles.length && (
+              {item === 0 && !!muscles && (
                 <Layout
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[250],
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    height: DevicePixels[300],
+                    padding: DevicePixels[10],
                   }}>
-                  <Body scale={1} data={muscles} />
+                  <Text category="h5">Muscles worked</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <View>
+                      <Text>Primary:</Text>
+                      <View style={{flexDirection: 'row'}}>
+                        {exercise.muscles.map(muscle => (
+                          <View
+                            style={{
+                              backgroundColor: colors.appBlue,
+                              padding: 2,
+                              paddingHorizontal: 5,
+                              borderRadius: 10,
+                              marginTop: 2,
+                              marginRight: 5
+                            }}>
+                            <Text
+                              style={{
+                                color: '#fff',
+                                fontSize: 10,
+                                textAlign: 'center',
+                              }}>
+                              {muscle.toUpperCase()}
+                            </Text>
+                          </View>
+                        ))}
+                      </View>
+                    </View>
+                    {exercise.musclesSecondary &&
+                      exercise.musclesSecondary.map(muscle => (
+                        <View
+                          style={{
+                            backgroundColor: colors.appBlue,
+                            padding: 2,
+                            paddingHorizontal: 5,
+                            borderRadius: 10,
+                            marginTop: 2,
+                            marginRight: 5
+                          }}>
+                          <Text
+                            style={{
+                              color: '#fff',
+                              fontSize: 10,
+                              textAlign: 'center',
+                            }}>
+                            {muscle.toUpperCase()}
+                          </Text>
+                        </View>
+                      ))}
+                  </View>
+                  <Layout
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: DevicePixels[10],
+                    }}>
+                    <Body
+                      scale={1}
+                      data={muscles}
+                      colors={[colors.appBlue, colors.appLightBlue]}
+                    />
+                  </Layout>
                 </Layout>
               )}
               {item === 1 && !!muscles && !!muscles.length && (
@@ -132,7 +192,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[250],
+                    height: DevicePixels[300],
                     padding: DevicePixels[10],
                   }}>
                   <Text category="h5">Description</Text>
@@ -144,7 +204,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[250],
+                    height: DevicePixels[300],
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}

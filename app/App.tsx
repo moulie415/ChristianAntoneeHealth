@@ -5,6 +5,7 @@ import Purchases from 'react-native-purchases';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import Shake from '@shakebugs/react-native-shake';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {RouteProp} from '@react-navigation/core';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -222,9 +223,9 @@ export type TopTabsParamsList = {
 
 const QuickRoutineTab = createMaterialTopTabNavigator<TopTabsParamsList>();
 
-// @ts-ignore
-const QuickRoutinesTabs = ({route}) => {
-  // @ts-ignore
+const QuickRoutinesTabs: React.FC<{route: RouteProp<TopTabsParamsList>}> = ({
+  route,
+}) => {
   const key: 'area' | 'focus' | 'equipment' = route.params.key;
   return (
     <QuickRoutineTab.Navigator>
