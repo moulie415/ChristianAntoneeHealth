@@ -126,18 +126,19 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   }}>
                   <Text category="h5">Muscles worked</Text>
                   <View style={{flexDirection: 'row'}}>
-                    <View>
+                    <View style={{marginRight: DevicePixels[10]}}>
                       <Text>Primary:</Text>
                       <View style={{flexDirection: 'row'}}>
                         {exercise.muscles.map(muscle => (
                           <View
+                            key={muscle}
                             style={{
                               backgroundColor: colors.appBlue,
                               padding: 2,
                               paddingHorizontal: 5,
                               borderRadius: 10,
                               marginTop: 2,
-                              marginRight: 5
+                              marginRight: 5,
                             }}>
                             <Text
                               style={{
@@ -151,33 +152,40 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                         ))}
                       </View>
                     </View>
-                    {exercise.musclesSecondary &&
-                      exercise.musclesSecondary.map(muscle => (
-                        <View
-                          style={{
-                            backgroundColor: colors.appBlue,
-                            padding: 2,
-                            paddingHorizontal: 5,
-                            borderRadius: 10,
-                            marginTop: 2,
-                            marginRight: 5
-                          }}>
-                          <Text
-                            style={{
-                              color: '#fff',
-                              fontSize: 10,
-                              textAlign: 'center',
-                            }}>
-                            {muscle.toUpperCase()}
-                          </Text>
+                    {exercise.musclesSecondary && (
+                      <View>
+                        <Text>Secondary: </Text>
+                        <View style={{flexDirection: 'row'}}>
+                          {exercise.musclesSecondary.map(muscle => (
+                            <View
+                              key={muscle}
+                              style={{
+                                backgroundColor: colors.appLightBlue,
+                                padding: 2,
+                                paddingHorizontal: 5,
+                                borderRadius: 10,
+                                marginTop: 2,
+                                marginRight: 5,
+                              }}>
+                              <Text
+                                style={{
+                                  color: '#fff',
+                                  fontSize: 10,
+                                  textAlign: 'center',
+                                }}>
+                                {muscle.toUpperCase()}
+                              </Text>
+                            </View>
+                          ))}
                         </View>
-                      ))}
+                      </View>
+                    )}
                   </View>
                   <Layout
                     style={{
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginTop: DevicePixels[10],
+                      marginTop: DevicePixels[20],
                     }}>
                     <Body
                       scale={1}
