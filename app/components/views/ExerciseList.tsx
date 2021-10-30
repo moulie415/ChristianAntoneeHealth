@@ -24,6 +24,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   workout,
   setWorkoutAction,
   loading,
+  profile,
 }) => {
   const {
     strengthArea,
@@ -102,41 +103,70 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         renderItem={({item}: {item: Exercise}) => {
           const selected = workout.find(e => e.id === item.id);
           return (
-            <ListItem
-              onPress={() =>
-                navigation.navigate('CustomizeExercise', {exercise: item})
-              }
-              onLongPress={() => selectExercise(item)}
-              style={{
-                backgroundColor: selected ? colors.appBlue : undefined,
-              }}
-              title={item.name}
-              description={truncate(item.description, 75)}
-              accessoryLeft={() => (
-                <Image
-                  style={{height: DevicePixels[50], width: DevicePixels[75]}}
-                  source={
-                    item.thumbnail
-                      ? {uri: item.thumbnail.src}
-                      : require('../../images/old_man_stretching.jpeg')
-                  }
-                />
-              )}
-              accessoryRight={() => (
-                <TouchableOpacity style={{padding: DevicePixels[10]}}>
-                  <Icon
-                    name="ellipsis-h"
-                    color={selected ? '#fff' : colors.appBlue}
-                    size={DevicePixels[20]}
-                    onPress={() => {
-                      setSelectedExercise(item);
-                      bottomSheetRef.current.snapTo(0);
-                      setModalOpen(true);
-                    }}
-                  />
+            <>
+              <ListItem
+                onPress={() =>
+                  navigation.navigate('CustomizeExercise', {exercise: item})
+                }
+                onLongPress={() => selectExercise(item)}
+                style={{
+                  backgroundColor: selected ? colors.appBlue : undefined,
+                }}
+                title={item.name}
+                description={truncate(item.description, 75)}
+                accessoryLeft={() =>
+                  !item.premium || profile.premium ? (
+                    <Image
+                      style={{
+                        height: DevicePixels[50],
+                        width: DevicePixels[75],
+                      }}
+                      source={
+                        item.thumbnail
+                          ? {uri: item.thumbnail.src}
+                          : require('../../images/old_man_stretching.jpeg')
+                      }
+                    />
+                  ) : (
+                    <View
+                      style={{
+                        height: DevicePixels[50],
+                        width: DevicePixels[75],
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon name="lock" size={DevicePixels[30]} />
+                    </View>
+                  )
+                }
+                accessoryRight={() => (
+                  <TouchableOpacity style={{padding: DevicePixels[10]}}>
+                    <Icon
+                      name="ellipsis-h"
+                      color={selected ? '#fff' : colors.appBlue}
+                      size={DevicePixels[20]}
+                      onPress={() => {
+                        setSelectedExercise(item);
+                        bottomSheetRef.current.snapTo(0);
+                        setModalOpen(true);
+                      }}
+                    />
+                  </TouchableOpacity>
+                )}
+              />
+              {item.premium && !profile.premium && (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Premium')}
+                  style={{
+                    position: 'absolute',
+                    height: DevicePixels[70],
+                    backgroundColor: 'rgba(0,0,0, 0.5)',
+                    width: '100%',
+                  }}>
+                  <Text />
                 </TouchableOpacity>
               )}
-            />
+            </>
           );
         }}
       />
@@ -157,10 +187,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   exercises: exercises.exercises,
   workout: exercises.workout,
   loading: exercises.loading,
+  profile: profile.profile,
 });
 
 const mapDispatchToProps = {

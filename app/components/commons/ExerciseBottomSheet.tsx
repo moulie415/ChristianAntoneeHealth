@@ -95,7 +95,7 @@ const ExerciseBottomSheet: React.FC<{
           <Layout style={{alignItems: 'center'}}>
             <Icon color="#000" name="minus" size={DevicePixels[30]} />
           </Layout>
-          <Text category="h5" style={{textAlign: 'center'}}>
+          <Text category="h5" style={{textAlign: 'center', marginHorizontal: DevicePixels[10]}}>
             {selectedExercise.name}
           </Text>
           <Image

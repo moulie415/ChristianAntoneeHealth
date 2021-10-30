@@ -297,6 +297,7 @@ function* signUp(action: SignUpAction) {
         }),
       );
       resetToTabs();
+      navigate('Premium')
     }
     setUserAttributes({
       name,
@@ -446,10 +447,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(initBiometrics);
         }
         resetToTabs();
-        const {profile} = yield select((state: MyRootState) => state.profile);
-        if (!profile.premium) {
-          navigate('Premium');
-        }
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));
