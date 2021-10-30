@@ -3,11 +3,12 @@ import React, {useMemo, useState} from 'react';
 // @ts-ignore
 import Body from 'react-native-body-highlighter';
 import Snackbar from 'react-native-snackbar';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Dimensions, Platform, ScrollView, View} from 'react-native';
+import Picker from '@gregfrench/react-native-wheel-picker';
 import CustomizeExerciseProps from '../../types/views/CustomExercise';
 import Carousel from 'react-native-snap-carousel';
 import {MuscleHighlight} from '../../types/Exercise';
-import {MyRootState} from '../../types/Shared';
+import {Goal, MyRootState} from '../../types/Shared';
 import {downloadVideo, setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
 import {
@@ -20,7 +21,13 @@ import {getVideoHeight} from '../../helpers';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import globalStyles from '../../styles/globalStyles';
-import Chip from '../commons/Chip';
+
+const REPS = [...Array(101).keys()];
+REPS.shift();
+const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const RESISTANCE = [...Array(301).keys()];
+
+const PickerItem = Picker.Item;
 
 const {width, height} = Dimensions.get('screen');
 
@@ -36,6 +43,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   const {exercise} = route.params;
   const [reps, setReps] = useState(15);
   const [sets, setSets] = useState(3);
+  const [resistance, setResistance] = useState(0);
   const video: {src: string; path: string} | undefined = videos[exercise.id];
 
   useEffect(() => {
@@ -108,7 +116,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       </Text>
       <Carousel
         vertical={false}
-        data={[0, 1, 2]}
+        data={[0, 1, 2, 3, 4]}
         sliderWidth={width}
         itemWidth={width - DevicePixels[75]}
         renderItem={({item}: {item: number}) => {
@@ -218,8 +226,101 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     height: DevicePixels[300],
                     justifyContent: 'center',
                     alignItems: 'center',
-                  }}
-                />
+                  }}>
+                  <Text category="h5">Reps</Text>
+                  <Picker
+                    style={{
+                      width: DevicePixels[200],
+                      height: DevicePixels[200],
+                    }}
+                    selectedValue={reps}
+                    lineColor="#999999"
+                    itemStyle={{
+                      fontSize: DevicePixels[15],
+                      color: Platform.OS === 'android' ? '#000' : undefined,
+                    }}
+                    onValueChange={setReps}>
+                    {REPS.map(value => {
+                      return (
+                        <PickerItem
+                          label={`${value.toString()} ${
+                            value === 1 ? 'rep' : 'reps'
+                          }`}
+                          value={value}
+                          key={value}
+                        />
+                      );
+                    })}
+                  </Picker>
+                </Layout>
+              )}
+              {item === 3 && (
+                <Layout
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    height: DevicePixels[300],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text category="h5">Sets</Text>
+                  <Picker
+                    style={{
+                      width: DevicePixels[200],
+                      height: DevicePixels[200],
+                    }}
+                    selectedValue={sets}
+                    lineColor="#999999"
+                    itemStyle={{
+                      fontSize: DevicePixels[15],
+                      color: Platform.OS === 'android' ? '#000' : undefined,
+                    }}
+                    onValueChange={setSets}>
+                    {SETS.map(value => (
+                      <PickerItem
+                        label={`${value.toString()} ${
+                          value === 1 ? 'set' : 'sets'
+                        }`}
+                        value={value}
+                        key={value}
+                      />
+                    ))}
+                  </Picker>
+                </Layout>
+              )}
+              {item === 4 && exercise.type === Goal.STRENGTH && (
+                <Layout
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    height: DevicePixels[300],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text category="h5">Resistance</Text>
+                  <Picker
+                    style={{
+                      width: DevicePixels[200],
+                      height: DevicePixels[200],
+                    }}
+                    selectedValue={resistance}
+                    lineColor="#999999"
+                    itemStyle={{
+                      fontSize: DevicePixels[15],
+                      color: Platform.OS === 'android' ? '#000' : undefined,
+                    }}
+                    onValueChange={setResistance}>
+                    {RESISTANCE.map(value => (
+                      <PickerItem
+                        label={
+                          value === 0 ? 'Bodyweight' : `${value.toString()} kg`
+                        }
+                        value={value}
+                        key={value}
+                      />
+                    ))}
+                  </Picker>
+                </Layout>
               )}
             </Layout>
           );

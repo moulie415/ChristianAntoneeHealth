@@ -117,7 +117,7 @@ const ExerciseBottomSheet: React.FC<{
               <Picker
                 style={{width: DevicePixels[120], height: DevicePixels[180]}}
                 selectedValue={reps}
-                lineColor="#fff"
+                lineColor="#999999"
                 itemStyle={{
                   fontSize: DevicePixels[15],
                   color: Platform.OS === 'android' ? '#000' : undefined,
@@ -140,7 +140,7 @@ const ExerciseBottomSheet: React.FC<{
               <Picker
                 style={{width: DevicePixels[120], height: DevicePixels[180]}}
                 selectedValue={sets}
-                lineColor="#fff"
+                lineColor="#999999"
                 itemStyle={{
                   fontSize: DevicePixels[15],
                   color: Platform.OS === 'android' ? '#000' : undefined,
@@ -162,7 +162,7 @@ const ExerciseBottomSheet: React.FC<{
                 <Picker
                   style={{width: DevicePixels[120], height: DevicePixels[180]}}
                   selectedValue={resistance}
-                  lineColor="#fff"
+                  lineColor="#999999"
                   itemStyle={{
                     fontSize: DevicePixels[15],
                     color: Platform.OS === 'android' ? '#000' : undefined,
