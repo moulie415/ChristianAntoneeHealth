@@ -103,6 +103,31 @@ export const mapMuscleToHighlight = (muscles: Muscle[]): MuscleHighlight[] => {
   return muscleArr;
 };
 
+export const muscleReadableString = (muscle: Muscle) => {
+  switch (muscle) {
+    case 'upperBack':
+      return 'upper back';
+    case 'midBack':
+      return 'mid back';
+    case 'lowBack':
+      return 'lower back';
+    case 'leg':
+      return 'legs';
+    case 'hipFlexors':
+      return 'hip flexors';
+    case 'iliotibialBand':
+      return 'iliotobial band';
+    case 'rotatorCuff':
+      return 'rotator cuff';
+    case 'innerThigh':
+      return 'inner thigh';
+    case 'upperBody':
+      return 'upper body';
+    default:
+      return muscle;
+  }
+};
+
 // based off of https://www.omicsonline.org/articles-images/2157-7595-6-220-t003.html
 export const difficultyToMET = (difficulty: number): number => {
   switch (difficulty) {

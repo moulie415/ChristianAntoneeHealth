@@ -10,7 +10,10 @@ import {MuscleHighlight} from '../../types/Exercise';
 import {MyRootState} from '../../types/Shared';
 import {downloadVideo, setWorkout} from '../../actions/exercises';
 import {connect} from 'react-redux';
-import {mapMuscleToHighlight} from '../../helpers/exercises';
+import {
+  mapMuscleToHighlight,
+  muscleReadableString,
+} from '../../helpers/exercises';
 import {useEffect} from 'react';
 import ExerciseVideo from '../commons/ExerciseVideo';
 import {getVideoHeight} from '../../helpers';
@@ -146,7 +149,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                                 fontSize: 10,
                                 textAlign: 'center',
                               }}>
-                              {muscle.toUpperCase()}
+                              {muscleReadableString(muscle).toUpperCase()}
                             </Text>
                           </View>
                         ))}
@@ -173,7 +176,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                                   fontSize: 10,
                                   textAlign: 'center',
                                 }}>
-                                {muscle.toUpperCase()}
+                                {muscleReadableString(muscle).toUpperCase()}
                               </Text>
                             </View>
                           ))}
