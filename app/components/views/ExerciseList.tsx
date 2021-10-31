@@ -105,10 +105,20 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           return (
             <>
               <ListItem
-                onPress={() =>
-                  navigation.navigate('CustomizeExercise', {exercise: item})
-                }
-                onLongPress={() => selectExercise(item)}
+                onPress={() => {
+                  if (item.premium && !profile.premium) {
+                    navigation.navigate('Premium');
+                  } else {
+                    navigation.navigate('CustomizeExercise', {exercise: item});
+                  }
+                }}
+                onLongPress={() => {
+                  if (item.premium && !profile.premium) {
+                    navigation.navigate('Premium');
+                  } else {
+                    selectExercise(item);
+                  }
+                }}
                 style={{
                   backgroundColor: selected ? colors.appBlue : undefined,
                 }}
@@ -146,9 +156,13 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                       color={selected ? '#fff' : colors.appBlue}
                       size={DevicePixels[20]}
                       onPress={() => {
-                        setSelectedExercise(item);
-                        bottomSheetRef.current.snapTo(0);
-                        setModalOpen(true);
+                        if (item.premium && !profile.premium) {
+                          navigation.navigate('Premium');
+                        } else {
+                          setSelectedExercise(item);
+                          bottomSheetRef.current.snapTo(0);
+                          setModalOpen(true);
+                        }
                       }}
                     />
                   </TouchableOpacity>
