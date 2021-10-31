@@ -32,7 +32,12 @@ export const STORE_LINK =
     ? 'https://apps.apple.com/us/app/health-and-movement/id1506679389'
     : 'https://play.google.com/store/apps/details?id=com.healthandmovement';
 
-export const UNIT_ID_INTERSTITIAL =
-  Platform.OS === 'ios'
-    ? 'ca-app-pub-7885763333661292/9112335668'
-    : 'ca-app-pub-7885763333661292/2930070695';
+export const UNIT_ID_INTERSTITIAL = () => {
+  if (__DEV__) {
+    return 'ca-app-pub-3940256099942544/4411468910';
+  }
+  if (Platform.OS === 'ios') {
+    return 'ca-app-pub-7885763333661292/9112335668';
+  }
+  return 'ca-app-pub-7885763333661292/2930070695';
+};
