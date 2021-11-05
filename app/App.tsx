@@ -61,7 +61,7 @@ import Policies from './components/views/Policies';
 import Loading from './components/views/Loading';
 import Test from './components/views/Test';
 import QuickRoutines from './components/views/QuickRoutines';
-import QuickRoutine, {Area, Equipment, Focus} from './types/QuickRoutines';
+import QuickRoutine from './types/QuickRoutines';
 import Tab1 from './components/views/Tab1';
 import Tab2 from './components/views/Tab2';
 import Tab3 from './components/views/Tab3';
@@ -70,7 +70,6 @@ import QuickRoutineView from './components/views/QuickRoutine';
 import {quickRoutineTabString} from './helpers';
 import TestType from './types/Test';
 import TestResults from './components/views/TestResults';
-import AdMob from '@react-native-admob/admob';
 
 const composeEnhancers =
   // @ts-ignore
@@ -282,7 +281,6 @@ const App: React.FC = () => {
           'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
       });
     }
-    AdMob.initialize();
   }, []);
   return (
     <PersistGate persistor={persistor}>
