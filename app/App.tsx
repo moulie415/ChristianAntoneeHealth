@@ -276,10 +276,12 @@ const App: React.FC = () => {
     Shake.setInvokeShakeOnShakeDeviceEvent(false);
     Purchases.setDebugLogsEnabled(true);
     Purchases.setup('qyiMfgjJHVvhxXVRPnXgECYFkphIJwhb');
-    Sentry.init({
-      dsn:
-        'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
-    });
+    if (!__DEV__) {
+      Sentry.init({
+        dsn:
+          'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
+      });
+    }
     AdMob.initialize();
   }, []);
   return (
