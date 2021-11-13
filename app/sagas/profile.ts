@@ -297,7 +297,7 @@ function* signUp(action: SignUpAction) {
         }),
       );
       resetToTabs();
-      navigate('Premium')
+      navigate('Premium');
     }
     setUserAttributes({
       name,
@@ -319,8 +319,9 @@ function* signUp(action: SignUpAction) {
 
 const WORKOUT_REMINDERS_ID = '1';
 const MONTHLY_TEST_REMINDERS_ID = '2';
-const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
-const MONTHLY_TEST_REMINDERS_CHANNEL_ID = 'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
+export const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
+export const MONTHLY_TEST_REMINDERS_CHANNEL_ID =
+  'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
 
 function* getWorkoutReminders() {
   const {workoutReminderTime, monthlyTestReminders} = yield select(
