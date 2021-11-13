@@ -1,14 +1,11 @@
 import React from 'react';
-import styles from '../../styles/views/FitnessTesting';
 import FitnessTestingProps from '../../types/views/FitnessTesting';
 import {TouchableOpacity, View, ImageSourcePropType} from 'react-native';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
-import colors from '../../constants/colors';
 import {Layout, Text} from '@ui-kitten/components';
 import globalStyles from '../../styles/globalStyles';
 import ImageLoader from '../commons/ImageLoader';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import DevicePixels from '../../helpers/DevicePixels';
 
 const getImage = (name: string): ImageSourcePropType => {
@@ -39,7 +36,6 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({navigation, tests}) => {
     : [];
   return (
     <Layout style={{flex: 1}}>
-      {/* <SafeAreaView style={{flex: 1}}> */}
       {items.map(({name, image, id}, index) => {
         return (
           <TouchableOpacity
@@ -68,7 +64,6 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({navigation, tests}) => {
           </TouchableOpacity>
         );
       })}
-      {/* </SafeAreaView> */}
     </Layout>
   );
 };

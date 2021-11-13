@@ -32,7 +32,7 @@ export const STORE_LINK =
     ? 'https://apps.apple.com/us/app/health-and-movement/id1506679389'
     : 'https://play.google.com/store/apps/details?id=com.healthandmovement';
 
-export const UNIT_ID_INTERSTITIAL = () => {
+const getInterstitialId = () => {
   if (__DEV__) {
     return 'ca-app-pub-3940256099942544/4411468910';
   }
@@ -41,3 +41,5 @@ export const UNIT_ID_INTERSTITIAL = () => {
   }
   return 'ca-app-pub-7885763333661292/2930070695';
 };
+
+export const UNIT_ID_INTERSTITIAL = getInterstitialId();

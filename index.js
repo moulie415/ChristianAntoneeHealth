@@ -26,7 +26,7 @@ PushNotification.configure({
         navigate('Workout');
       }
       if (notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID) {
-        navigate('Test');
+        navigate('Fitness');
       }
     }
     // process the notification

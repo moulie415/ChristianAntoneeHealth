@@ -13,6 +13,8 @@ import Countdown from '../commons/Countdown';
 import ViewMore from '../commons/ViewMore';
 import Table from '../commons/Table';
 import DevicePixels from '../../helpers/DevicePixels';
+import {useInterstitialAd} from '@react-native-admob/admob';
+import {UNIT_ID_INTERSTITIAL} from '../../constants';
 
 const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
   const {id} = route.params;
@@ -24,6 +26,18 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
   const [testResult, setTestResult] = useState<number>();
   const [testNote, setTestNote] = useState('');
   const [start, setStart] = useState(0);
+
+  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
+
+  useEffect(() => {
+    if (adDismissed) {
+      if (test.type === 'untimed') {
+        setTestStarted(true);
+      } else {
+        setShowCountdown(true);
+      }
+    }
+  }, [adDismissed, navigation, test.type]);
 
   useEffect(() => {
     if (
@@ -185,10 +199,14 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
             if (testStarted) {
               setComplete(true);
             } else {
-              if (test.type === 'untimed') {
-                setTestStarted(true);
+              if (adLoaded && !profile.premium) {
+                show();
               } else {
-                setShowCountdown(true);
+                if (test.type === 'untimed') {
+                  setTestStarted(true);
+                } else {
+                  setShowCountdown(true);
+                }
               }
             }
           }}

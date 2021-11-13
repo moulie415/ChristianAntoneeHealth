@@ -1,11 +1,12 @@
 import {Button, Divider, Layout, ListItem, Text} from '@ui-kitten/components';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import colors from '../../constants/colors';
+import {UNIT_ID_INTERSTITIAL} from '../../constants';
 import Exercise from '../../types/Exercise';
 import ReviewExercisesProps from '../../types/views/ReviewExercises';
 import {truncate} from '../../helpers';
@@ -16,11 +17,13 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ExerciseBottomSheet from '../commons/ExerciseBottomSheet';
 import DevicePixels from '../../helpers/DevicePixels';
+import {useInterstitialAd} from '@react-native-admob/admob';
 
 const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,
   setWorkoutAction,
   navigation,
+  profile,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>();
   const [selectedExercise, setSelectedExercise] = useState<Exercise>();
@@ -28,6 +31,14 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   const [sets, setSets] = useState(3);
   const [resistance, setResistance] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
+
+  useEffect(() => {
+    if (adDismissed) {
+      navigation.navigate('StartWorkout');
+    }
+  }, [adDismissed, navigation]);
 
   const renderItem = useCallback(
     ({item, index, drag, isActive}: RenderItemParams<Exercise>) => {
@@ -113,7 +124,13 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         onDragEnd={({data}) => setWorkoutAction(data)}
       />
       <Button
-        onPress={() => navigation.navigate('StartWorkout')}
+        onPress={() => {
+          if (!profile.premium && adLoaded) {
+            show();
+          } else {
+            navigation.navigate('StartWorkout');
+          }
+        }}
         style={{
           position: 'absolute',
           bottom: DevicePixels[30],
@@ -138,8 +155,9 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   workout: exercises.workout,
+  profile: profile.profile,
 });
 
 const mapDispatchToProps = {
