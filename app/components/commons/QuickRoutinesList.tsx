@@ -1,13 +1,17 @@
 import {List, ListItem, Text, Layout} from '@ui-kitten/components';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import QuickRoutine, {Equipment, Focus} from '../../types/QuickRoutines';
 import colors from '../../constants/colors';
-import {Level} from '../../types/Shared';
+import {Level, MyRootState} from '../../types/Shared';
 import ImageOverlay from './ImageOverlay';
 import {QuickRoutinesListNavigationProp} from '../../types/views/QuickRoutinesList';
 import DevicePixels from '../../helpers/DevicePixels';
+import {useInterstitialAd} from '@react-native-admob/admob';
+import {UNIT_ID_INTERSTITIAL} from '../../constants';
+import {connect} from 'react-redux';
+import Profile from '../../types/Profile';
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -45,7 +49,15 @@ const getLevelString = (level: Level) => {
 const QuickRoutinesList: React.FC<{
   routines: QuickRoutine[];
   navigation: QuickRoutinesListNavigationProp;
-}> = ({routines, navigation}) => {
+  profile: Profile;
+}> = ({routines, navigation, profile}) => {
+  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
+  const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
+  useEffect(() => {
+    if (adDismissed && selectedItem) {
+      navigation.navigate('QuickRoutine', {routine: selectedItem});
+    }
+  }, [adDismissed, navigation, selectedItem]);
   return (
     <Layout style={{flex: 1}}>
       <Text appearance="hint" style={{padding: DevicePixels[10]}}>
@@ -59,9 +71,14 @@ const QuickRoutinesList: React.FC<{
         renderItem={({item}) => {
           return (
             <ListItem
-              onPress={() =>
-                navigation.navigate('QuickRoutine', {routine: item})
-              }
+              onPress={() => {
+                if (adLoaded && !profile.premium) {
+                  setSelectedItem(item);
+                  show();
+                } else {
+                  navigation.navigate('QuickRoutine', {routine: item});
+                }
+              }}
               title={item.name}
               description={`${getLevelString(
                 item.level,
@@ -111,4 +128,8 @@ const QuickRoutinesList: React.FC<{
   );
 };
 
-export default QuickRoutinesList;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(QuickRoutinesList);

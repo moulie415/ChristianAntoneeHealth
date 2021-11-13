@@ -1,5 +1,4 @@
-import {Layout, Text} from '@ui-kitten/components';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import QuickRoutineList from '../commons/QuickRoutinesList';
