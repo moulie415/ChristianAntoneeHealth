@@ -8,7 +8,6 @@ import Carousel, {
 } from 'react-native-snap-carousel';
 import {Button, Divider, Layout, Text} from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import colors from '../../constants/colors';
 import {viewedWelcome} from '../../actions/profile';
 import {connect} from 'react-redux';
 import globalStyles from '../../styles/globalStyles';

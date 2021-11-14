@@ -1,6 +1,6 @@
 import {Alert, Linking, Platform} from 'react-native';
 import AppleHealthKit from 'react-native-health';
-import GoogleFit, {ActivityType} from 'react-native-google-fit';
+import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Unit} from '../types/Profile';
@@ -191,7 +191,7 @@ export const getStepSamples = async (months = 1) => {
   const response = await GoogleFit.getDailyStepCountSamples({
     startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
-    bucketUnit: 'DAY',
+    bucketUnit: BucketUnit.DAY,
     bucketInterval: 1,
   });
 
