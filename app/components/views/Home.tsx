@@ -62,10 +62,16 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
                 onPress={() => navigation.navigate('Education')}
               />
               <HomeCard
-                title="Saved routines"
-                subtitle="Start a saved workout"
+                title="Saved workouts/tests"
+                subtitle="View saved workouts, tests..."
                 image={require('../../images/yoga_mat.jpeg')}
-                onPress={() => 0}
+                onPress={() => {
+                  if (profile.premium) {
+                    navigation.navigate('SavedItems');
+                  } else {
+                    navigation.navigate('Premium');
+                  }
+                }}
               />
             </Layout>
             <Layout

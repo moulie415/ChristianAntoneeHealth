@@ -1,6 +1,6 @@
 import {Alert, Linking, Platform} from 'react-native';
 import AppleHealthKit from 'react-native-health';
-import GoogleFit from 'react-native-google-fit';
+import GoogleFit, {ActivityType} from 'react-native-google-fit';
 import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Unit} from '../types/Profile';
@@ -360,7 +360,6 @@ export const saveWorkout = (
   endDate: string,
   calories: number,
   name: string,
-  id: string,
   description: string,
 ) => {
   if (Platform.OS === 'ios') {
@@ -387,13 +386,16 @@ export const saveWorkout = (
       );
     });
   } else {
-    return GoogleFit.saveWorkout(
-      name,
-      id,
-      description,
-      startDate,
-      endDate,
+    return GoogleFit.saveWorkout({
+      startDate: moment(startDate).toISOString(),
+      endDate: moment(endDate).toISOString(),
+      activityType: ActivityType.Strength_training,
+      sessionName: name,
+      identifier: `workout:${moment(startDate).toISOString()} - ${moment(
+        endDate,
+      ).toISOString()}`,
       calories,
-    );
+      description,
+    });
   }
 };
