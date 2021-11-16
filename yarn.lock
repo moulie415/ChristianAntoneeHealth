@@ -1184,10 +1184,10 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
-"@gregfrench/react-native-wheel-picker@^1.2.17":
-  version "1.2.17"
-  resolved "https://registry.yarnpkg.com/@gregfrench/react-native-wheel-picker/-/react-native-wheel-picker-1.2.17.tgz#51b5f1eb77077a1f23e56d912321b573ca22c9f0"
-  integrity sha512-IGu+j0vrZfdIPrM/jA2oAMUVrcUm+QNInl6t9HVnuKT5TyH8O9cUus6ap071GQ0LQciwrr3+7Hxz4C3Vi0b2qg==
+"@gregfrench/react-native-wheel-picker@^1.2.18":
+  version "1.2.18"
+  resolved "https://registry.yarnpkg.com/@gregfrench/react-native-wheel-picker/-/react-native-wheel-picker-1.2.18.tgz#3204d2705794f3863e4fea8771582a646ffe1320"
+  integrity sha512-crIND0v0dz0chcXmQLMKX4fDY2b/9Y3Lmb8yg3V/We12GdlIO68IWwF1TWYknrZ5LPPDpjqwYVTjr/rFRdnToA==
   dependencies:
     "@react-native-picker/picker" "^1.9.4"
 
@@ -6998,10 +6998,10 @@ react-native-health@^1.10.0:
   dependencies:
     "@expo/config-plugins" "^2.0.0"
 
-react-native-image-picker@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.2.0.tgz#852867e340da464fda6895b32d383d88a143e623"
-  integrity sha512-RT/MIDx/j6lSF7ZaHG1CU/Fw+TcY2FejvvzjfWbB3DUBp5cZU6JmIWwFEYD/GD8PSvE/3l6K1r67C02phk/wqw==
+react-native-image-picker@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.3.0.tgz#d68640061d3c5e6bef1d417c8085828318162874"
+  integrity sha512-YJtpuNHK7PS4ujbsSVAL6rKW4QQEDTf80MxuPmwByYgMi01VbfkXZ/8+pf61ctOED3Z0ZZKbk7/3pJ0dQHVAbg==
 
 react-native-pager-view@^5.4.9:
   version "5.4.9"
