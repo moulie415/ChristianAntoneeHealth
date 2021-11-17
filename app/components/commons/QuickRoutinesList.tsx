@@ -53,6 +53,7 @@ const QuickRoutinesList: React.FC<{
 }> = ({routines, navigation, profile}) => {
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
   const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
+
   useEffect(() => {
     if (adDismissed && selectedItem) {
       navigation.navigate('QuickRoutine', {routine: selectedItem});

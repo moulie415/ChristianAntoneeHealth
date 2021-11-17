@@ -1,6 +1,7 @@
-import {Layout, Text, Spinner, Divider, ListItem} from '@ui-kitten/components';
-import React, {useEffect} from 'react';
+import {Layout, Text, Spinner, Divider, Button} from '@ui-kitten/components';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
+import moment from 'moment';
 import {connect} from 'react-redux';
 import {downloadRoutineVideo} from '../../../actions/quickRoutines';
 import {getVideoHeight} from '../../../helpers';
@@ -10,6 +11,7 @@ import QuickRoutineProps from '../../../types/views/QuickRoutine';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Countdown from '../../commons/Countdown';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -18,13 +20,32 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   route,
 }) => {
   const {routine} = route.params;
+
+  const video: {src: string; path: string} | undefined = videos[routine.id];
+  const [started, setStarted] = useState(false);
+  const [start, setStart] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+
   useEffect(() => {
     downloadVideoAction(routine.id);
   }, [downloadVideoAction, routine]);
-  const video: {src: string; path: string} | undefined = videos[routine.id];
+
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setSeconds(moment().unix() - start);
+    }, 1000);
+    return () => clearInterval(intervalID);
+  }, [start]);
 
   return (
     <Layout style={{flex: 1}}>
+      {started && (
+        <Countdown
+          onComplete={() => {
+            setStart(moment().unix());
+          }}
+        />
+      )}
       <Layout
         style={{
           flexDirection: 'row',
@@ -44,7 +65,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             color={colors.darkBlue}
           />
           <Text style={{marginLeft: DevicePixels[10]}} category="h5">
-            {`Under ${routine.duration} minutes`}
+            {start
+              ? moment().utc().startOf('day').add({seconds}).format('mm:ss')
+              : `Under ${routine.duration} minutes`}
           </Text>
         </Layout>
       </Layout>
@@ -74,6 +97,20 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           <Text style={{margin: DevicePixels[10]}}>{routine.description}</Text>
         </Layout>
       </ScrollView>
+      <Button
+        onPress={() => {
+          if (!started) {
+            setStarted(true);
+          }
+        }}
+        style={{
+          position: 'absolute',
+          bottom: DevicePixels[20],
+          right: DevicePixels[20],
+          left: DevicePixels[20],
+        }}>
+        {started ? 'End' : 'Start'}
+      </Button>
     </Layout>
   );
 };
