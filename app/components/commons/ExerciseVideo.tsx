@@ -7,10 +7,12 @@ import {getVideoHeight} from '../../helpers';
 import crashlytics from '@react-native-firebase/crashlytics';
 import DevicePixels from '../../helpers/DevicePixels';
 
-const ExerciseVideo: React.FC<{path: string; paused?: boolean}> = ({
-  path,
-  paused,
-}) => {
+const ExerciseVideo: React.FC<{
+  path: string;
+  paused?: boolean;
+  onPause?: () => void;
+  onPlay?: () => void;
+}> = ({path, paused, onPause, onPlay}) => {
   return (
     <>
       {Platform.OS === 'ios' ? (
@@ -31,6 +33,8 @@ const ExerciseVideo: React.FC<{path: string; paused?: boolean}> = ({
           onError={(e: Error) => crashlytics().log(e.message)}
           repeat
           paused={paused}
+          onPause={onPause}
+          onPlay={onPlay}
         />
       )}
     </>

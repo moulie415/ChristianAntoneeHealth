@@ -20,22 +20,25 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   route,
 }) => {
   const {routine} = route.params;
-
   const video: {src: string; path: string} | undefined = videos[routine.id];
   const [started, setStarted] = useState(false);
   const [start, setStart] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [paused, setPaused] = useState(true);
 
   useEffect(() => {
     downloadVideoAction(routine.id);
   }, [downloadVideoAction, routine]);
 
   useEffect(() => {
-    const intervalID = setInterval(() => {
-      setSeconds(moment().unix() - start);
-    }, 1000);
-    return () => clearInterval(intervalID);
-  }, [start]);
+    if (start) {
+      const intervalID = setInterval(() => {
+        setSeconds(moment().unix() - start);
+        setPaused(false);
+      }, 1000);
+      return () => clearInterval(intervalID);
+    }
+  }, [start, started]);
 
   return (
     <Layout style={{flex: 1}}>
@@ -65,7 +68,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             color={colors.darkBlue}
           />
           <Text style={{marginLeft: DevicePixels[10]}} category="h5">
-            {start
+            {start && seconds
               ? moment().utc().startOf('day').add({seconds}).format('mm:ss')
               : `Under ${routine.duration} minutes`}
           </Text>
@@ -77,7 +80,12 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           video &&
           routine.video &&
           video.src === routine.video.src ? (
-            <ExerciseVideo paused path={video.path} />
+            <ExerciseVideo
+              paused={paused}
+              path={video.path}
+              onPause={() => setPaused(true)}
+              onPlay={() => setPaused(false)}
+            />
           ) : (
             <Layout
               style={{
