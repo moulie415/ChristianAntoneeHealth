@@ -50,7 +50,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
         setCalories(calorieEstimate);
         setLoading(false);
       } catch (e) {
-        Alert.alert('Error saving workout', e.message);
+        Alert.alert('Error saving quick routine', e.message);
         setLoading(false);
       }
     };
@@ -122,7 +122,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
         textStyle={{minHeight: DevicePixels[50]}}
         style={{margin: DevicePixels[10], marginTop: 0}}
         multiline
-        placeholder="Add details about your workout"
+        placeholder="Add details about this quick routine"
         value={note}
         onChangeText={setNote}
       />
@@ -130,7 +130,11 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
         disabled={loading}
         style={{margin: DevicePixels[10]}}
         onPress={() =>
-          navigation.navigate('QuickRoutineSummary', {calories, seconds, difficulty})
+          navigation.navigate('QuickRoutineSummary', {
+            calories,
+            seconds,
+            difficulty,
+          })
         }>
         Save & Continue
       </Button>

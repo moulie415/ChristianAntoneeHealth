@@ -18,6 +18,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   videos,
   loading,
   route,
+  navigation,
 }) => {
   const {routine} = route.params;
   const video: {src: string; path: string} | undefined = videos[routine.id];
@@ -74,7 +75,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </Text>
         </Layout>
       </Layout>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[20]}}>
         <>
           {!loading &&
           video &&
@@ -109,6 +110,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
         onPress={() => {
           if (!started) {
             setStarted(true);
+          } else {
+            navigation.navigate('EndQuickRoutine', {seconds});
           }
         }}
         style={{

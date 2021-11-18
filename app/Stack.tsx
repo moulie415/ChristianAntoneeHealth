@@ -30,6 +30,8 @@ import Settings from './components/views/More/Settings';
 import About from './components/views/More/About';
 import SignUpFlow from './components/views/SignUpFlow';
 import SavedItemsTabs from './SavedItemsTabs';
+import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
+import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';
 
 const Stack = createStackNavigator<StackParamList>();
 
@@ -155,6 +157,20 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="QuickRoutine"
             component={QuickRoutineView}
+            options={({navigation}) => ({
+              headerTitle: 'Quick Routine',
+            })}
+          />
+          <Stack.Screen
+            name="EndQuickRoutine"
+            component={EndQuickRoutine}
+            options={({navigation}) => ({
+              headerTitle: 'Quick Routine',
+            })}
+          />
+          <Stack.Screen
+            name="QuickRoutineSummary"
+            component={QuickRoutineSummary}
             options={({navigation}) => ({
               headerTitle: 'Quick Routine',
             })}

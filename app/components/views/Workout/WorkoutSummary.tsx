@@ -3,7 +3,10 @@ import React from 'react';
 import moment from 'moment';
 import {View} from 'react-native';
 import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
-import {getDifficultyEmoji, getDifficultyText} from '../../../helpers/exercises';
+import {
+  getDifficultyEmoji,
+  getDifficultyText,
+} from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
 import DevicePixels from '../../../helpers/DevicePixels';
 
@@ -33,7 +36,9 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({route, navigation}) => {
         </Layout>
         <Layout style={{alignItems: 'center'}}>
           <Text category="s1">Intensity</Text>
-          <Text style={{fontSize: DevicePixels[100]}}>{getDifficultyEmoji(difficulty)}</Text>
+          <Text style={{fontSize: DevicePixels[100]}}>
+            {getDifficultyEmoji(difficulty)}
+          </Text>
           <Text category="s1">{getDifficultyText(difficulty)}</Text>
         </Layout>
       </Layout>
