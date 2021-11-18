@@ -1,18 +1,22 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
 import React from 'react';
 import moment from 'moment';
-import {View} from 'react-native';
-import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
   getDifficultyEmoji,
   getDifficultyText,
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {MyRootState} from '../../../types/Shared';
+import {saveQuickRoutine} from '../../../actions/quickRoutines';
+import {connect} from 'react-redux';
+import QuickRoutineSummaryProps from '../../../types/views/QuickRoutineSummary';
 
-const QuickRoutineSummary: React.FC<WorkoutSummaryProps> = ({
+const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   route,
   navigation,
+  profile,
+  saveQuickRoutineAction,
 }) => {
   const {calories, seconds, difficulty} = route.params;
   return (
@@ -50,6 +54,19 @@ const QuickRoutineSummary: React.FC<WorkoutSummaryProps> = ({
         Return Home
       </Button>
       <Button
+        onPress={() => {
+          if (profile.premium) {
+            saveQuickRoutineAction({
+              calories,
+              seconds,
+              difficulty,
+              createddate: new Date(),
+            });
+            resetToTabs();
+          } else {
+            navigation.navigate('Premium');
+          }
+        }}
         style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
         Save quick routine
       </Button>
@@ -57,4 +74,15 @@ const QuickRoutineSummary: React.FC<WorkoutSummaryProps> = ({
   );
 };
 
-export default QuickRoutineSummary;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+const mapDispatchToProps = {
+  saveQuickRoutineAction: saveQuickRoutine,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(QuickRoutineSummary);

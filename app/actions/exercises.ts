@@ -1,4 +1,5 @@
 import Exercise from '../types/Exercise';
+import {SavedWorkout} from '../types/SavedItem';
 import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import {SetLoggedInAction} from './profile';
 
@@ -14,6 +15,7 @@ export const SET_WORKOUT_NOTE = 'SET_WORKOUT_NOTE';
 export const DOWNLOAD_VIDEO = 'DOWNLOAD_VIDEO';
 export const SET_VIDEO = 'SET_VIDEO';
 export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
+export const SAVE_WORKOUT = 'SAVED_WORKOUT';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -77,6 +79,11 @@ export interface SetVideoLoadingAction {
 export interface SetVideoAction {
   type: typeof SET_VIDEO;
   payload: {id: string; src: string; path: string};
+}
+
+export interface SaveWorkoutAction {
+  type: typeof SAVE_WORKOUT;
+  payload: SavedWorkout;
 }
 
 export const getExercises = (
@@ -146,6 +153,11 @@ export const setVideoLoading = (payload: boolean): SetVideoLoadingAction => ({
   payload,
 });
 
+export const saveWorkout = (payload: SavedWorkout): SaveWorkoutAction => ({
+  type: SAVE_WORKOUT,
+  payload,
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -155,4 +167,5 @@ export type ExercisesActions =
   | DownloadVideoAction
   | SetVideoAction
   | SetVideoLoadingAction
-  | SetLoadingAction;
+  | SetLoadingAction
+  | SaveWorkoutAction;

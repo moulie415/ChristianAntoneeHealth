@@ -841,7 +841,7 @@ PODS:
   - react-native-fbsdk/Share (3.0.0):
     - FBSDKShareKit (~> 8.1)
     - React
-  - react-native-flipper (0.119.0):
+  - react-native-flipper (0.120.0):
     - React-Core
   - react-native-image-picker (4.3.0):
     - React-Core
@@ -947,13 +947,13 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPicker (2.2.0):
+  - RNCPicker (2.2.1):
     - React-Core
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
-  - RNDeviceInfo (8.4.7):
+  - RNDeviceInfo (8.4.8):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -1409,7 +1409,7 @@ SPEC CHECKSUMS:
   React-jsinspector: d9c8eb0b53f0da206fed56612b289fec84991157
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
-  react-native-flipper: e079eb24149005c71ca9067a6ae49d74cfb3dfbd
+  react-native-flipper: e30ae82a1536e8f6f4f34012353ebdf1d8aa5157
   react-native-image-picker: 869530859570f2af86ae57bc48886a5e2367a825
   react-native-pager-view: 3ee7d4c7697fb3ef788346e834a60cca97ed8540
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
@@ -1439,10 +1439,10 @@ SPEC CHECKSUMS:
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: 2568e0d0b4644dd9d5f2cec9eca197f5f3f5acb3
+  RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
-  RNDeviceInfo: b32d24c84e40d54b736e62a7d2abd15e1225258d
+  RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBAnalytics: f7216b73a72ba21fab0778e86c8257024f89cb3a
   RNFBApp: dda844e7084b590eb3d9bec1b2115cabbe4bc40e

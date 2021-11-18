@@ -22,9 +22,15 @@ import {
   getTableColumn,
   getTableMax,
 } from '../../../helpers';
-import {resetToTabs} from '../../../RootNavigation';
+import {navigate, navigationRef, resetToTabs} from '../../../RootNavigation';
+import {saveTest} from '../../../actions/tests';
 
-const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
+const TestResults: React.FC<TestResultsProp> = ({
+  route,
+  profile,
+  saveTestAction,
+  navigation,
+}) => {
   const {test, testResult, testNote, seconds} = route.params;
   const table = profile.gender === 'male' ? test.mens : test.womens;
   const isTable = 'age' in table;
@@ -130,7 +136,24 @@ const TestResults: React.FC<TestResultsProp> = ({route, profile}) => {
       </Layout>
 
       <Layout style={{flex: 1, justifyContent: 'flex-end'}}>
-        <Button onPress={resetToTabs}>Save result</Button>
+        <Button onPress={resetToTabs} style={{marginBottom: DevicePixels[10]}}>
+          Return Home
+        </Button>
+        <Button
+          onPress={() => {
+            if (profile.premium) {
+              saveTestAction({
+                seconds,
+                result: testResult,
+                createddate: new Date(),
+              });
+              resetToTabs();
+            } else {
+              navigation.navigate('Premium');
+            }
+          }}>
+          Save result
+        </Button>
       </Layout>
     </Layout>
   );
@@ -140,4 +163,8 @@ const mapStateToProps = (state: MyRootState) => ({
   profile: state.profile.profile,
 });
 
-export default connect(mapStateToProps)(TestResults);
+const mapDispatchToProps = {
+  saveTestAction: saveTest,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestResults);

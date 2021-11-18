@@ -1,7 +1,6 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
 import React from 'react';
 import moment from 'moment';
-import {View} from 'react-native';
 import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
   getDifficultyEmoji,
@@ -9,8 +8,17 @@ import {
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {saveWorkout} from '../../../actions/exercises';
+import {MyRootState} from '../../../types/Shared';
+import {connect} from 'react-redux';
 
-const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({route, navigation}) => {
+const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
+  route,
+  profile,
+  navigation,
+  saveWorkoutAction,
+  workout,
+}) => {
   const {calories, seconds, difficulty} = route.params;
   return (
     <Layout style={{flex: 1}}>
@@ -47,6 +55,20 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({route, navigation}) => {
         Return Home
       </Button>
       <Button
+        onPress={() => {
+          if (profile.premium) {
+            saveWorkoutAction({
+              calories,
+              seconds,
+              workout: workout.map(exercise => exercise.id),
+              difficulty,
+              createddate: new Date(),
+            });
+            resetToTabs();
+          } else {
+            navigation.navigate('Premium');
+          }
+        }}
         style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
         Save Workout
       </Button>
@@ -54,4 +76,13 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({route, navigation}) => {
   );
 };
 
-export default WorkoutSummary;
+const mapStateToProps = ({profile, exercises}: MyRootState) => ({
+  profile: profile.profile,
+  workout: exercises.workout,
+});
+
+const mapDispatchToProps = {
+  saveWorkoutAction: saveWorkout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutSummary);

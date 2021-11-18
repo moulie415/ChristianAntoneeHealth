@@ -1,4 +1,4 @@
-import {call, put, select, takeEvery} from 'redux-saga/effects';
+import {call, put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import Snackbar from 'react-native-snackbar';
 import {
   AddExerciseAction,
@@ -7,6 +7,8 @@ import {
   DELETE_EXERCISE,
   GetExercisesAction,
   GET_EXERCISES,
+  SaveWorkoutAction,
+  SAVE_WORKOUT,
   setExercises,
   setLoading,
   UpdateExerciseAction,
@@ -61,9 +63,19 @@ export function* updateExercise(action: UpdateExerciseAction) {
   Snackbar.show({text: 'Exercise updated'});
 }
 
+export function* saveWorkout(action: SaveWorkoutAction) {
+  try {
+    yield call(api.saveWorkout, action.payload);
+    yield call(Snackbar.show, {text: 'Workout saved'});
+  } catch (e) {
+    yield call(Snackbar.show, {text: 'Error saving workout'});
+  }
+}
+
 export default function* exercisesSaga() {
   yield takeEvery(GET_EXERCISES, getExercises);
   yield takeEvery(ADD_EXERCISE, addExercise);
   yield takeEvery(DELETE_EXERCISE, deleteExercise);
   yield takeEvery(UPDATE_EXERCISE, updateExercise);
+  yield takeLatest(SAVE_WORKOUT, saveWorkout);
 }

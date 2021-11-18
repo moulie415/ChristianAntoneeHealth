@@ -6,6 +6,7 @@ import Profile from '../types/Profile';
 import Test from '../types/Test';
 import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
+import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -104,4 +105,16 @@ export const isAdmin = async (uid: string) => {
   const admins = await db().collection('admins').get();
   const keys = admins.docs.map(doc => doc.id);
   return keys.includes(uid);
+};
+
+export const saveWorkout = (workout: SavedWorkout) => {
+  return db().collection('savedWorkouts').add(workout);
+};
+
+export const saveTest = (test: SavedTest) => {
+  return db().collection('savedTests').add(test);
+};
+
+export const saveQuickRoutine = (quickRoutine: SavedQuickRoutine) => {
+  return db().collection('savedQuickRoutines').add(quickRoutine);
 };

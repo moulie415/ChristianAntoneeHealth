@@ -1,10 +1,12 @@
 import QuickRoutine from '../types/QuickRoutines';
+import {SavedQuickRoutine} from '../types/SavedItem';
 
 export const GET_QUICK_ROUTINES = 'GET_QUICK_ROUTINES';
 export const SET_QUICK_ROUTINES = 'SET_QUICK_ROUTINES';
 export const DOWNLOAD_ROUTINE_VIDEO = 'DOWNLOAD_ROUTINE_VIDEO';
 export const SET_ROUTINE_VIDEO = 'SET_ROUTINE_VIDEO';
 export const SET_ROUTINE_VIDEO_LOADING = 'SET_ROUTINE_VIDEO_LOADING';
+export const SAVE_QUICK_ROUTINE = 'SAVE_QUICK_ROUTINE';
 
 interface SetQuickRoutinesAction {
   type: typeof SET_QUICK_ROUTINES;
@@ -41,6 +43,11 @@ export interface SetRoutineVideoAction {
   payload: {id: string; src: string; path: string};
 }
 
+export interface SaveQuickRoutineAction {
+  type: typeof SAVE_QUICK_ROUTINE;
+  payload: SavedQuickRoutine;
+}
+
 export const downloadRoutineVideo = (
   id: string,
 ): DownloadRoutineVideoAction => ({
@@ -64,8 +71,16 @@ export const setRoutineVideoLoading = (
   payload,
 });
 
+export const saveQuickRoutine = (
+  payload: SavedQuickRoutine,
+): SaveQuickRoutineAction => ({
+  type: SAVE_QUICK_ROUTINE,
+  payload,
+});
+
 export type QuickRoutinesActions =
   | SetQuickRoutinesAction
   | DownloadRoutineVideoAction
   | SetRoutineVideoAction
-  | SetRoutineVideoLoadingAction;
+  | SetRoutineVideoLoadingAction
+  | SaveQuickRoutineAction;

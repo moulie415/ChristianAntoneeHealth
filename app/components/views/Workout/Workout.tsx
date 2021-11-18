@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../../../styles/views/Workout';
 import {TouchableOpacity, SafeAreaView, View} from 'react-native';

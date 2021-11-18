@@ -86,7 +86,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
           margin: DevicePixels[10],
           marginTop: DevicePixels[20],
         }}>
-        Workout Complete!
+        Quick routine Complete!
       </Text>
       <Text style={{margin: DevicePixels[10]}}>
         Rate your performance to help us understand your fitness level
@@ -118,7 +118,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
         <Text style={{fontWeight: 'normal'}}>{` - ${subtext}`}</Text>
       </Text>
       <Input
-        label="Workout note"
+        label="Quick routine note"
         textStyle={{minHeight: DevicePixels[50]}}
         style={{margin: DevicePixels[10], marginTop: 0}}
         multiline

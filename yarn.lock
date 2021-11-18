@@ -1658,10 +1658,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.0.tgz#3e5268da892349a35c66ab7bd75e834147621e5a"
   integrity sha512-kQcL8U5CYQRgmNtlyhEH1BIp06Eaxhj7Lybd7rV4asd4Q90kCEm52b5x5WnE0J6WdVvC6sRzdcbPCb0s9yc4mQ==
 
-"@react-native-picker/picker@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.2.0.tgz#e96ecc0808bdf2a706a263b422864bee5a0e6b76"
-  integrity sha512-zhzXsppY9t6TU39WMx/x1L1PyP3dPgGhtav7Yo8nlfihNGIAFwHnNcNuyC8CLdWxKj9n2+Z6+ZR6r/Kda82JnA==
+"@react-native-picker/picker@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.2.1.tgz#32b9f540d8e88a73d8856f73cca88251cecb9614"
+  integrity sha512-EC7yv22QLHlTfnbC1ez9IUdXTOh1W31x96Oir0PfskSGFFJMWWdLTg4VrcE2DsGLzbfjjkBk123c173vf2a5MQ==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -2051,10 +2051,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/ramda@^0.27.49":
-  version "0.27.49"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.49.tgz#cc39877f343bdb65f26e16b355453cc3e624d4b7"
-  integrity sha512-kPMKn68EhHsYqzlR+r9HiQ0w1bokQvMjS2U5BFY7oBT6DE2TYNuah1XGbmFIGMcRTCxe09Fly+9wjklTitavtw==
+"@types/ramda@^0.27.50":
+  version "0.27.50"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.50.tgz#cc680fa45361918dd6fa942be9884c5892a81f06"
+  integrity sha512-9CIXC4laCxK1UxfYmLZhXj3AEJu8C/cGTKMapykAvP8gIbAJjdVfzMVR9vq9d8Cddt71UlDDwNvGZ5q/DE+83w==
   dependencies:
     ts-toolbelt "^6.15.1"
 
@@ -6943,10 +6943,10 @@ react-native-countdown-circle-timer@^2.5.4:
   resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-2.5.4.tgz#9e6ff6b2ee22e2025fcd9a845d9ee7f48cdb3cec"
   integrity sha512-wiO+s8EwEMfPt4G16zBWGpIiMwEQQRtSv8shgr7m7QkV69tmKlLrHquesYZjGvLNOQhYRAIZPJSf1ZJNZi1FDA==
 
-react-native-device-info@^8.4.7:
-  version "8.4.7"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.7.tgz#1546232a297e0776dc46c90875055ff65aab891a"
-  integrity sha512-I0z7FfbtxKW5+1wWE7L1bzy0iuiQzgUNVUrvpQoVQSz/BpC9kNIwZokC8O3HpUJDkFVr2Bhd5WO3tISzS7OXxw==
+react-native-device-info@^8.4.8:
+  version "8.4.8"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.8.tgz#fc92ae423e47db6cfbf30c30012e09cee63727fa"
+  integrity sha512-92676ZWHZHsPM/EW1ulgb2MuVfjYfMWRTWMbLcrCsipkcMaZ9Traz5mpsnCS7KZpsOksnvUinzDIjsct2XGc6Q==
 
 react-native-draggable-flatlist@*, react-native-draggable-flatlist@^2.6.2:
   version "2.6.2"
@@ -6968,10 +6968,10 @@ react-native-fbsdk@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-3.0.0.tgz#07ef41758bb17a0acaff744008af625a45ef9a01"
   integrity sha512-i0JocuzLlGk13J0xFDjm8GlX7SADAL2kh/syE/HOn5HHdW+PFjC31MNj5AtzIw2TicHXpHGO6VPKNfdWFbxboA==
 
-react-native-flipper@^0.119.0:
-  version "0.119.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.119.0.tgz#28fd527892d8486ddb22260c373e1488d9aa3beb"
-  integrity sha512-okID5GGj58Vwb4pIeTc5lF9knB7UFIyqzNPkoWCGgM31B7t6xprOLvleBtkq+zq8tQVqd0UaFd38eBP7CXR3vQ==
+react-native-flipper@^0.120.0:
+  version "0.120.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.120.0.tgz#a383b0f157fa94e0f61265c09d32b671b94f0670"
+  integrity sha512-Vacbfe64BjU46GOkMlVe3mVwiKbhX/9i92zkRoKXhQN3inJ/TOh6kSZo8Rpm0Fee+POKVGRin+8mElv32bYQgA==
 
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"

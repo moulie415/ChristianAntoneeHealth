@@ -6,6 +6,8 @@ import {
   DownloadRoutineVideoAction,
   DOWNLOAD_ROUTINE_VIDEO,
   GET_QUICK_ROUTINES,
+  SaveQuickRoutineAction,
+  SAVE_QUICK_ROUTINE,
   setQuickRoutines,
   setRoutineVideo,
   setRoutineVideoLoading,
@@ -13,6 +15,7 @@ import {
 import * as api from '../helpers/api';
 import QuickRoutine from '../types/QuickRoutines';
 import {MyRootState} from '../types/Shared';
+import Snackbar from 'react-native-snackbar';
 
 export function* getQuickRoutines() {
   const tests: {[key: string]: QuickRoutine} = yield call(api.getQuickRoutines);
@@ -66,7 +69,17 @@ function* downloadRoutineVideoWorker(action: DownloadRoutineVideoAction) {
   yield put(setRoutineVideoLoading(false));
 }
 
+function* saveQuickRoutine(action: SaveQuickRoutineAction) {
+  try {
+    yield call(api.saveQuickRoutine, action.payload);
+    yield call(Snackbar.show, {text: 'Quick routine saved '});
+  } catch (e) {
+    yield call(Snackbar.show, {text: 'Error saving quick routine'});
+  }
+}
+
 export default function* quickRoutinesSaga() {
   yield takeEvery(GET_QUICK_ROUTINES, getQuickRoutines);
   yield takeLatest(DOWNLOAD_ROUTINE_VIDEO, downloadRoutineVideoWorker);
+  yield takeLatest(SAVE_QUICK_ROUTINE, saveQuickRoutine);
 }

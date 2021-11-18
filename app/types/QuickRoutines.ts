@@ -8,6 +8,7 @@ export default interface QuickRoutine {
   id: string;
   name: string;
   description: string;
+  exercises: string[];
   area: Area;
   duration: number;
   equipment: Equipment;
