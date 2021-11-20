@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../../../styles/views/Workout';
-import {TouchableOpacity, SafeAreaView, View} from 'react-native';
+import {TouchableOpacity, SafeAreaView, View, Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
@@ -31,9 +31,7 @@ const Workout: React.FC<WorkoutProps> = ({
   setWorkoutAction,
   profile,
 }) => {
-  // useEffect(() => {
-  //   AdMob.isTestDevice().then(result => console.log(result));
-  // }, []);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [level, setLevel] = useState<Level>(Level.BEGINNER);
   const [selectedLevel, setSelectedLevel] = useState<Level>(Level.BEGINNER);
@@ -50,8 +48,10 @@ const Workout: React.FC<WorkoutProps> = ({
   const [settings, setSetting] = useState<
     'goal' | 'experience' | 'equipment' | 'warmup'
   >();
-  const [equipment, setEquipment] = useState<Equipment[]>([]);
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([]);
+  const [equipment, setEquipment] = useState<Equipment[]>([Equipment.NONE]);
+  const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([
+    Equipment.NONE,
+  ]);
   const sheetRef = useRef<BottomSheet>(null);
   const [warmUp, setWarmup] = useState<WarmUp[]>([]);
   const [selectedWarmup, setSelectedWarmup] = useState<WarmUp[]>([]);
@@ -111,6 +111,20 @@ const Workout: React.FC<WorkoutProps> = ({
       default:
         return '';
     }
+  };
+
+  const availableEquipmentString = () => {
+    if (!equipment || equipment.length === 0) {
+      return 'N/A';
+    }
+    if (
+      equipment &&
+      equipment.length === 1 &&
+      equipment[0] === Equipment.NONE
+    ) {
+      return 'None';
+    }
+    return `${equipment.length} selected`;
   };
 
   const renderHeader = () => {
@@ -302,9 +316,7 @@ const Workout: React.FC<WorkoutProps> = ({
                     marginRight: DevicePixels[5],
                     fontWeight: 'bold',
                   }}>
-                  {!equipment || equipment.length === 0
-                    ? 'None'
-                    : `${equipment.length} selected`}
+                  {availableEquipmentString()}
                 </Text>
                 <Icon
                   name="chevron-right"
@@ -349,16 +361,20 @@ const Workout: React.FC<WorkoutProps> = ({
           <Button
             disabled={false}
             onPress={() => {
-              setWorkoutAction([]);
-              navigation.navigate('ExerciseList', {
-                strengthArea: area,
-                level: level,
-                goal,
-                equipment,
-                cardioType,
-                warmUp,
-                coolDown,
-              });
+              if (equipment.length) {
+                setWorkoutAction([]);
+                navigation.navigate('ExerciseList', {
+                  strengthArea: area,
+                  level: level,
+                  goal,
+                  equipment,
+                  cardioType,
+                  warmUp,
+                  coolDown,
+                });
+              } else {
+                Alert.alert('Sorry', 'Please specify equipment first');
+              }
             }}
             style={{margin: DevicePixels[10]}}>
             Continue

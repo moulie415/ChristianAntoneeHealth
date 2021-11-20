@@ -6,16 +6,20 @@ import {
   DownloadRoutineVideoAction,
   DOWNLOAD_ROUTINE_VIDEO,
   GET_QUICK_ROUTINES,
+  GET_SAVED_QUICK_ROUTINES,
   SaveQuickRoutineAction,
   SAVE_QUICK_ROUTINE,
   setQuickRoutines,
   setRoutineVideo,
   setRoutineVideoLoading,
+  setSavedQuickRoutine,
 } from '../actions/quickRoutines';
 import * as api from '../helpers/api';
 import QuickRoutine from '../types/QuickRoutines';
 import {MyRootState} from '../types/Shared';
 import Snackbar from 'react-native-snackbar';
+import {SavedQuickRoutine} from '../types/SavedItem';
+import {setLoading} from '../actions/exercises';
 
 export function* getQuickRoutines() {
   const tests: {[key: string]: QuickRoutine} = yield call(api.getQuickRoutines);
@@ -71,10 +75,28 @@ function* downloadRoutineVideoWorker(action: DownloadRoutineVideoAction) {
 
 function* saveQuickRoutine(action: SaveQuickRoutineAction) {
   try {
-    yield call(api.saveQuickRoutine, action.payload);
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    yield call(api.saveQuickRoutine, action.payload, uid);
     yield call(Snackbar.show, {text: 'Quick routine saved '});
   } catch (e) {
     yield call(Snackbar.show, {text: 'Error saving quick routine'});
+  }
+}
+
+function* getSavedQuickRoutines() {
+  try {
+    yield put(setLoading(true));
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const savedQuickRoutines: {[key: string]: SavedQuickRoutine} = yield call(
+      api.getSavedQuickRoutines,
+      uid,
+    );
+    yield put(setSavedQuickRoutine(savedQuickRoutines));
+    yield put(setLoading(false));
+  } catch (e) {
+    console.log(e);
+    yield put(setLoading(false));
+    Snackbar.show({text: 'Error getting saved quick routines'});
   }
 }
 
@@ -82,4 +104,5 @@ export default function* quickRoutinesSaga() {
   yield takeEvery(GET_QUICK_ROUTINES, getQuickRoutines);
   yield takeLatest(DOWNLOAD_ROUTINE_VIDEO, downloadRoutineVideoWorker);
   yield takeLatest(SAVE_QUICK_ROUTINE, saveQuickRoutine);
+  yield takeLatest(GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
 }

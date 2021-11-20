@@ -107,14 +107,73 @@ export const isAdmin = async (uid: string) => {
   return keys.includes(uid);
 };
 
-export const saveWorkout = (workout: SavedWorkout) => {
-  return db().collection('savedWorkouts').add(workout);
+export const saveWorkout = (workout: SavedWorkout, uid: string) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedWorkouts')
+    .add(workout);
 };
 
-export const saveTest = (test: SavedTest) => {
-  return db().collection('savedTests').add(test);
+export const saveTest = (test: SavedTest, uid: string) => {
+  return db().collection('users').doc(uid).collection('savedTests').add(test);
 };
 
-export const saveQuickRoutine = (quickRoutine: SavedQuickRoutine) => {
-  return db().collection('savedQuickRoutines').add(quickRoutine);
+export const saveQuickRoutine = (
+  quickRoutine: SavedQuickRoutine,
+  uid: string,
+) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedQuickRoutines')
+    .add(quickRoutine);
+};
+
+export const getSavedWorkouts = async (uid: string) => {
+  const savedWorkouts = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedWorkouts')
+    .limit(10)
+    .get();
+  return savedWorkouts.docs.reduce(
+    (acc: {[id: string]: SavedWorkout}, curr) => {
+      const workout: any = curr.data();
+      acc[curr.id] = {...workout, id: curr.id};
+      return acc;
+    },
+    {},
+  );
+};
+
+export const getSavedTests = async (uid: string) => {
+  const savedTests = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedTests')
+    .limit(10)
+    .get();
+  return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, curr) => {
+    const test: any = curr.data();
+    acc[curr.id] = {...test, id: curr.id};
+    return acc;
+  }, {});
+};
+
+export const getSavedQuickRoutines = async (uid: string) => {
+  const savedQuickRoutines = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedQuickRoutines')
+    .limit(10)
+    .get();
+  return savedQuickRoutines.docs.reduce(
+    (acc: {[id: string]: SavedQuickRoutine}, curr) => {
+      const routine: any = curr.data();
+      acc[curr.id] = {...routine, id: curr.id};
+      return acc;
+    },
+    {},
+  );
 };

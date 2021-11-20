@@ -7,10 +7,12 @@ import {
   DELETE_EXERCISE,
   GetExercisesAction,
   GET_EXERCISES,
+  GET_SAVED_WORKOUTS,
   SaveWorkoutAction,
   SAVE_WORKOUT,
   setExercises,
   setLoading,
+  setSavedWorkouts,
   UpdateExerciseAction,
   UPDATE_EXERCISE,
 } from '../actions/exercises';
@@ -18,6 +20,7 @@ import Exercise from '../types/Exercise';
 import * as api from '../helpers/api';
 import {MyRootState} from '../types/Shared';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {SavedWorkout} from '../types/SavedItem';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, area, cardioType} = action.payload;
@@ -65,10 +68,27 @@ export function* updateExercise(action: UpdateExerciseAction) {
 
 export function* saveWorkout(action: SaveWorkoutAction) {
   try {
-    yield call(api.saveWorkout, action.payload);
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    yield call(api.saveWorkout, action.payload, uid);
     yield call(Snackbar.show, {text: 'Workout saved'});
   } catch (e) {
     yield call(Snackbar.show, {text: 'Error saving workout'});
+  }
+}
+
+function* getSavedWorkouts() {
+  try {
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    yield put(setLoading(true));
+    const workouts: {[key: string]: SavedWorkout} = yield call(
+      api.getSavedWorkouts,
+      uid,
+    );
+    yield put(setSavedWorkouts(workouts));
+    yield put(setLoading(false));
+  } catch (e) {
+    yield put(setLoading(false));
+    Snackbar.show({text: 'Error getting saved workouts'});
   }
 }
 
@@ -78,4 +98,5 @@ export default function* exercisesSaga() {
   yield takeEvery(DELETE_EXERCISE, deleteExercise);
   yield takeEvery(UPDATE_EXERCISE, updateExercise);
   yield takeLatest(SAVE_WORKOUT, saveWorkout);
+  yield takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts);
 }

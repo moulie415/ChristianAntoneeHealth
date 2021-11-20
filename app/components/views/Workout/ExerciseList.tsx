@@ -7,7 +7,7 @@ import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import Exercise from '../../../types/Exercise';
-import {Goal, MyRootState} from '../../../types/Shared';
+import {Equipment, Goal, MyRootState} from '../../../types/Shared';
 import ExerciseListProps from '../../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../../actions/exercises';
 import {truncate} from '../../../helpers';
@@ -73,7 +73,9 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           (!exercise.coolDown?.length ||
             coolDown.includes(exercise.coolDown)) &&
           (!exercise.equipment ||
-            exercise.equipment.every(item => equipment.includes(item))) &&
+            exercise.equipment.every(item => equipment.includes(item)) ||
+            ((!exercise.equipment || exercise.equipment.length === 0) &&
+              equipment.includes(Equipment.NONE))) &&
           exercise.level === level
         );
       }),

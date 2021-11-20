@@ -3,18 +3,22 @@ import {
   SET_QUICK_ROUTINES,
   SET_ROUTINE_VIDEO,
   SET_ROUTINE_VIDEO_LOADING,
+  SET_SAVED_QUICK_ROUTINES,
 } from '../actions/quickRoutines';
 import QuickRoutine from '../types/QuickRoutines';
+import {SavedQuickRoutine} from '../types/SavedItem';
 
 export interface QuickRoutinesState {
   quickRoutines: {[key: string]: QuickRoutine};
   videos: {[key: string]: {src: string; path: string}};
+  savedQuickRoutines: {[key: string]: SavedQuickRoutine};
   videoLoading: boolean;
 }
 
 const initialState: QuickRoutinesState = {
   quickRoutines: {},
   videos: {},
+  savedQuickRoutines: {},
   videoLoading: false,
 };
 
@@ -43,6 +47,11 @@ const reducer = (
       return {
         ...state,
         videoLoading: action.payload,
+      };
+    case SET_SAVED_QUICK_ROUTINES:
+      return {
+        ...state,
+        savedQuickRoutines: {...state.savedQuickRoutines, ...action.payload},
       };
     default:
       return state;

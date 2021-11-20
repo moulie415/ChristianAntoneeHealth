@@ -6,9 +6,10 @@ import {
   SET_VIDEO,
   SET_VIDEO_LOADING,
   SET_LOADING,
+  SET_SAVED_WORKOUTS,
 } from '../actions/exercises';
-import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
+import {SavedWorkout} from '../types/SavedItem';
 
 export interface ExercisesState {
   exercises: {[key: string]: Exercise};
@@ -18,6 +19,7 @@ export interface ExercisesState {
   workoutNotes: {[key: string]: string};
   videos: {[key: string]: {src: string; path: string}};
   videoLoading: boolean;
+  savedWorkouts: {[key: string]: SavedWorkout};
 }
 
 const initialState: ExercisesState = {
@@ -27,6 +29,7 @@ const initialState: ExercisesState = {
   exerciseNotes: {},
   workoutNotes: {},
   videos: {},
+  savedWorkouts: {},
   videoLoading: false,
 };
 
@@ -73,6 +76,11 @@ const reducer = (
       return {
         ...state,
         videoLoading: action.payload,
+      };
+    case SET_SAVED_WORKOUTS:
+      return {
+        ...state,
+        savedWorkouts: {...state.savedWorkouts, ...action.payload},
       };
     default:
       return state;

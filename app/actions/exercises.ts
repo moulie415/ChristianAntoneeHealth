@@ -16,6 +16,8 @@ export const DOWNLOAD_VIDEO = 'DOWNLOAD_VIDEO';
 export const SET_VIDEO = 'SET_VIDEO';
 export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
 export const SAVE_WORKOUT = 'SAVED_WORKOUT';
+export const GET_SAVED_WORKOUTS = 'GET_SAVED_WORKOUTS';
+export const SET_SAVED_WORKOUTS = 'SET_SAVED_WORKOUTS';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -84,6 +86,15 @@ export interface SetVideoAction {
 export interface SaveWorkoutAction {
   type: typeof SAVE_WORKOUT;
   payload: SavedWorkout;
+}
+
+export interface GetSavedWorkoutsAction {
+  type: typeof GET_SAVED_WORKOUTS;
+}
+
+export interface SetSavedWorkoutsAction {
+  type: typeof SET_SAVED_WORKOUTS;
+  payload: {[key: string]: SavedWorkout};
 }
 
 export const getExercises = (
@@ -158,6 +169,17 @@ export const saveWorkout = (payload: SavedWorkout): SaveWorkoutAction => ({
   payload,
 });
 
+export const getSavedWorkouts = (): GetSavedWorkoutsAction => ({
+  type: GET_SAVED_WORKOUTS,
+});
+
+export const setSavedWorkouts = (savedWorkouts: {
+  [key: string]: SavedWorkout;
+}): SetSavedWorkoutsAction => ({
+  type: SET_SAVED_WORKOUTS,
+  payload: savedWorkouts,
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -168,4 +190,6 @@ export type ExercisesActions =
   | SetVideoAction
   | SetVideoLoadingAction
   | SetLoadingAction
-  | SaveWorkoutAction;
+  | SaveWorkoutAction
+  | GetSavedWorkoutsAction
+  | SetSavedWorkoutsAction;
