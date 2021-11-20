@@ -72,6 +72,7 @@ export interface StepSample {
 }
 
 export enum Equipment {
+  NONE = 'none',
   BARBELLS = 'barbells',
   DUMBBELLS = 'dumbbells',
   BENCHES = 'benches',
