@@ -15,8 +15,9 @@ import {
 } from '../../../helpers/exercises';
 import {saveWorkout} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
+import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 
-const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
+const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
   navigation,
   profile,
@@ -26,7 +27,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
   const [calories, setCalories] = useState(0);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds} = route.params;
+  const {seconds, routine} = route.params;
   useEffect(() => {
     const getSamples = async () => {
       const startDate = moment().subtract(seconds, 'seconds').toISOString();
@@ -45,7 +46,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
           endDate,
           calorieEstimate,
           'Health and Movement quick routine',
-          workout.map(e => e.name).join(', '),
+          routine.description,
         );
         setCalories(calorieEstimate);
         setLoading(false);
@@ -55,7 +56,14 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
       }
     };
     getSamples();
-  }, [seconds, difficulty, profile.unit, profile.weight, workout]);
+  }, [
+    seconds,
+    difficulty,
+    profile.unit,
+    profile.weight,
+    workout,
+    routine.description,
+  ]);
   const emoji = useMemo(() => getDifficultyEmoji(difficulty), [difficulty]);
 
   const {text, subtext} = useMemo(() => {
@@ -134,6 +142,7 @@ const EndQuickRoutine: React.FC<EndWorkoutProps> = ({
             calories,
             seconds,
             difficulty,
+            routine,
           })
         }>
         Save & Continue

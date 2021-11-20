@@ -98,8 +98,13 @@ export type StackParamList = {
   QuickRoutines: undefined;
   QuickRoutinesTabs: undefined;
   QuickRoutine: {routine: QuickRoutine};
-  EndQuickRoutine: {seconds: number};
-  QuickRoutineSummary: {seconds: number; calories: number; difficulty: number};
+  EndQuickRoutine: {routine: QuickRoutine; seconds: number};
+  QuickRoutineSummary: {
+    routine: QuickRoutine;
+    seconds: number;
+    calories: number;
+    difficulty: number;
+  };
   SavedItems: undefined;
 };
 

@@ -12,6 +12,7 @@ export interface SavedTest {
   createddate: Date;
   seconds?: number;
   result: number;
+  testId: string;
 }
 
 export interface SavedQuickRoutine {
@@ -20,4 +21,5 @@ export interface SavedQuickRoutine {
   seconds: number;
   difficulty: number;
   createddate: Date;
+  quickRoutineId: string;
 }

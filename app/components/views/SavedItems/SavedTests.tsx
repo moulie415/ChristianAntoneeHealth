@@ -1,6 +1,6 @@
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {FunctionComponent, useEffect} from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {getSavedTests} from '../../../actions/tests';
@@ -9,12 +9,22 @@ import {MyRootState} from '../../../types/Shared';
 import ImageOverlay from '../../commons/ImageOverlay';
 import DevicePixels from '../../../helpers/DevicePixels';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Test from '../../../types/Test';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StackParamList} from '../../../App';
+
+type SavedItemsNavigationProp = StackNavigationProp<
+  StackParamList,
+  'SavedItems'
+>;
 
 const SavedTests: FunctionComponent<{
   loading: boolean;
   savedTests: {[key: string]: SavedTest};
   getSavedTestsAction: () => void;
-}> = ({loading, savedTests, getSavedTestsAction}) => {
+  tests: {[key: string]: Test};
+  navigation: SavedItemsNavigationProp;
+}> = ({loading, savedTests, getSavedTestsAction, tests, navigation}) => {
   useEffect(() => {
     getSavedTestsAction();
   }, [getSavedTestsAction]);
@@ -24,10 +34,23 @@ const SavedTests: FunctionComponent<{
         data={Object.values(savedTests)}
         keyExtractor={item => item.id}
         renderItem={({item}) => {
+          const test = tests[item.testId];
           return (
             <ListItem
-              onPress={() => {}}
-              title={moment(item.createddate).format('MMMM Do YYYY, HH:mm')}
+              onPress={() =>
+                Alert.alert('Retry test?', '', [
+                  {text: 'Cancel', style: 'cancel'},
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      navigation.navigate('Test', {id: item.testId});
+                    },
+                  },
+                ])
+              }
+              title={`${test.name} - ${moment(item.createddate).format(
+                'MMMM Do YYYY',
+              )}`}
               description={''}
               accessoryLeft={() => (
                 <ImageOverlay
@@ -42,11 +65,13 @@ const SavedTests: FunctionComponent<{
                       {'Duration '}
                     </Text>
                     <Text category="h6" style={{color: '#fff'}}>
-                      {moment()
-                        .utc()
-                        .startOf('day')
-                        .add({seconds: item.seconds})
-                        .format('mm:ss')}
+                      {item.seconds
+                        ? moment()
+                            .utc()
+                            .startOf('day')
+                            .add({seconds: item.seconds})
+                            .format('mm:ss')
+                        : 'N/A'}
                     </Text>
                   </View>
                 </ImageOverlay>
@@ -63,6 +88,7 @@ const SavedTests: FunctionComponent<{
 const mapStateToProps = ({exercises, tests}: MyRootState) => ({
   loading: exercises.loading,
   savedTests: tests.savedTests,
+  tests: tests.tests,
 });
 
 const mapDispatchToProps = {

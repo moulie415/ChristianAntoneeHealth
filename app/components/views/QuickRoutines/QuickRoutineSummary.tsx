@@ -18,7 +18,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   profile,
   saveQuickRoutineAction,
 }) => {
-  const {calories, seconds, difficulty} = route.params;
+  const {calories, seconds, difficulty, routine} = route.params;
   return (
     <Layout style={{flex: 1}}>
       <Layout
@@ -61,6 +61,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
               seconds,
               difficulty,
               createddate: new Date(),
+              quickRoutineId: routine.id,
             });
             resetToTabs();
           } else {

@@ -1,7 +1,8 @@
 import {Layout, Text, Spinner, Divider, Button} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, Dimensions} from 'react-native';
 import moment from 'moment';
+import Carousel from 'react-native-snap-carousel';
 import {connect} from 'react-redux';
 import {downloadRoutineVideo} from '../../../actions/quickRoutines';
 import {getVideoHeight} from '../../../helpers';
@@ -12,6 +13,9 @@ import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Countdown from '../../commons/Countdown';
+import globalStyles from '../../../styles/globalStyles';
+
+const {width, height} = Dimensions.get('screen');
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -40,6 +44,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       return () => clearInterval(intervalID);
     }
   }, [start, started]);
+
+  const carouselItems = [routine.description, ...(routine.exercises || [])];
 
   return (
     <Layout style={{flex: 1}}>
@@ -75,7 +81,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </Text>
         </Layout>
       </Layout>
-      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[20]}}>
+      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[60]}}>
         <>
           {!loading &&
           video &&
@@ -103,7 +109,33 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             {routine.name}
           </Text>
           <Divider />
-          <Text style={{margin: DevicePixels[10]}}>{routine.description}</Text>
+          <Carousel
+            vertical={false}
+            data={carouselItems}
+            sliderWidth={width}
+            itemWidth={width - DevicePixels[75]}
+            renderItem={({item, index}) => {
+              return (
+                <Layout
+                  style={{
+                    marginVertical: DevicePixels[20],
+                    borderRadius: DevicePixels[10],
+                    ...globalStyles.boxShadow,
+                  }}>
+                  <Layout
+                    style={{
+                      borderRadius: DevicePixels[10],
+                      backgroundColor: '#fff',
+                      height: DevicePixels[300],
+                      padding: DevicePixels[20],
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{lineHeight: DevicePixels[20]}}>{item}</Text>
+                  </Layout>
+                </Layout>
+              );
+            }}
+          />
         </Layout>
       </ScrollView>
       <Button
@@ -111,7 +143,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           if (!started) {
             setStarted(true);
           } else {
-            navigation.navigate('EndQuickRoutine', {seconds});
+            navigation.navigate('EndQuickRoutine', {seconds, routine});
           }
         }}
         style={{

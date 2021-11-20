@@ -9,7 +9,7 @@ type QuickRoutineNavigationProp = StackNavigationProp<
   'QuickRoutineSummary'
 >;
 
-type QuickRoutineRouteProp = RouteProp<StackParamList, 'WorkoutSummary'>;
+type QuickRoutineRouteProp = RouteProp<StackParamList, 'QuickRoutineSummary'>;
 
 export default interface QuickRoutineSummaryProps {
   navigation: QuickRoutineNavigationProp;

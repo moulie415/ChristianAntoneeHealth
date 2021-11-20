@@ -1,9 +1,11 @@
+import {StackNavigationProp} from '@react-navigation/stack';
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {FunctionComponent, useEffect} from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {connect} from 'react-redux';
 import {getSavedQuickRoutines} from '../../../actions/quickRoutines';
+import {StackParamList} from '../../../App';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {getDifficultyEmoji} from '../../../helpers/exercises';
 import QuickRoutine from '../../../types/QuickRoutines';
@@ -12,16 +14,23 @@ import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
 
+type SavedItemsNavigationProp = StackNavigationProp<
+  StackParamList,
+  'SavedItems'
+>;
+
 const SavedQuickRoutines: FunctionComponent<{
   loading: boolean;
   savedQuickRoutines: {[key: string]: SavedQuickRoutine};
   getSavedQuickRoutinesAction: () => void;
   quickRoutines: {[key: string]: QuickRoutine};
+  navigation: SavedItemsNavigationProp;
 }> = ({
   loading,
   savedQuickRoutines,
   getSavedQuickRoutinesAction,
   quickRoutines,
+  navigation,
 }) => {
   useEffect(() => {
     getSavedQuickRoutinesAction();
@@ -32,16 +41,28 @@ const SavedQuickRoutines: FunctionComponent<{
         data={Object.values(savedQuickRoutines)}
         keyExtractor={item => item.id}
         renderItem={({item}) => {
-          const quickRoutine = quickRoutines[item.id];
+          const quickRoutine = quickRoutines[item.quickRoutineId];
           return (
             <ListItem
-              onPress={() => {}}
-              title={`${quickRoutine.name}${moment(item.createddate).format(
-                'MMMM Do YYYY, HH:mm',
+              onPress={() =>
+                Alert.alert('Retry quick routine?', '', [
+                  {text: 'Cancel', style: 'cancel'},
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      navigation.navigate('QuickRoutine', {
+                        routine: quickRoutine,
+                      });
+                    },
+                  },
+                ])
+              }
+              title={`${quickRoutine.name} - ${moment(item.createddate).format(
+                'MMMM Do YYYY',
               )}`}
               description={`${quickRoutine.exercises?.length} ${
                 quickRoutine.exercises?.length > 1 ? 'exercises' : 'exercise'
-              }, calories expended: ${item.calories}`}
+              }, ${Math.floor(item.calories)} calories expended`}
               accessoryLeft={() => (
                 <ImageOverlay
                   containerStyle={{
