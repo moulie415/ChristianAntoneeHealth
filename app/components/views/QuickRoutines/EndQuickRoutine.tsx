@@ -46,7 +46,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           endDate,
           calorieEstimate,
           'Health and Movement quick routine',
-          routine.description,
+          routine.name,
         );
         setCalories(calorieEstimate);
         setLoading(false);
@@ -62,7 +62,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     profile.unit,
     profile.weight,
     workout,
-    routine.description,
+    routine.name,
   ]);
   const emoji = useMemo(() => getDifficultyEmoji(difficulty), [difficulty]);
 

@@ -7,7 +7,6 @@ export type Focus = 'strength' | 'mobility' | 'balance' | 'intensity';
 export default interface QuickRoutine {
   id: string;
   name: string;
-  description: string;
   exercises: string[];
   area: Area;
   duration: number;

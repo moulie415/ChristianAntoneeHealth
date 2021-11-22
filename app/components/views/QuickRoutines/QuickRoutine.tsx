@@ -45,7 +45,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
     }
   }, [start, started]);
 
-  const carouselItems = [routine.description, ...(routine.exercises || [])];
+  const carouselItems = routine.exercises || [];
 
   return (
     <Layout style={{flex: 1}}>
@@ -81,7 +81,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </Text>
         </Layout>
       </Layout>
-      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[60]}}>
+      <ScrollView contentContainerStyle={{paddingBottom: DevicePixels[30]}}>
         <>
           {!loading &&
           video &&
@@ -128,7 +128,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       backgroundColor: '#fff',
                       height: DevicePixels[300],
                       padding: DevicePixels[20],
-                      justifyContent: 'center',
                     }}>
                     <Text style={{lineHeight: DevicePixels[20]}}>{item}</Text>
                   </Layout>
@@ -137,23 +136,18 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             }}
           />
         </Layout>
+        <Button
+          onPress={() => {
+            if (!started) {
+              setStarted(true);
+            } else {
+              navigation.navigate('EndQuickRoutine', {seconds, routine});
+            }
+          }}
+          style={{margin: DevicePixels[10]}}>
+          {started ? 'End' : 'Start'}
+        </Button>
       </ScrollView>
-      <Button
-        onPress={() => {
-          if (!started) {
-            setStarted(true);
-          } else {
-            navigation.navigate('EndQuickRoutine', {seconds, routine});
-          }
-        }}
-        style={{
-          position: 'absolute',
-          bottom: DevicePixels[20],
-          right: DevicePixels[20],
-          left: DevicePixels[20],
-        }}>
-        {started ? 'End' : 'Start'}
-      </Button>
     </Layout>
   );
 };
