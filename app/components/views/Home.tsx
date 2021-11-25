@@ -39,13 +39,13 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               <HomeCard
                 title="New Workout"
                 subtitle="Start a new workout now"
-                image={require('../../images/old_man_stretching.jpeg')}
+                image={require('../../images/Homepage_new_workout.jpeg')}
                 onPress={() => navigation.navigate('Workout')}
               />
               <HomeCard
                 title="Fitness tests"
                 subtitle="Track your fitness overtime"
-                image={require('../../images/flexibility.jpeg')}
+                image={require('../../images/Homepage_fitness_test.jpeg')}
                 onPress={() => navigation.navigate('Fitness')}
               />
             </Layout>
@@ -58,13 +58,13 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               <HomeCard
                 title="Education"
                 subtitle="Health and nutrition articles"
-                image={require('../../images/education.jpeg')}
+                image={require('../../images/Homepage_Education.jpeg')}
                 onPress={() => navigation.navigate('Education')}
               />
               <HomeCard
                 title="Saved workouts/tests"
                 subtitle="View saved workouts, tests..."
-                image={require('../../images/yoga_mat.jpeg')}
+                image={require('../../images/Homepage_Saved_Workouts.jpeg')}
                 onPress={() => {
                   if (profile.premium) {
                     navigation.navigate('SavedItems');
@@ -83,13 +83,13 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
               <HomeCard
                 title="Quick routines"
                 subtitle="View premade routines"
-                image={require('../../images/dumbell.png')}
+                image={require('../../images/Homepage_quick_routine.jpeg')}
                 onPress={() => navigation.navigate('QuickRoutines')}
               />
               <HomeCard
                 title="View Activity"
                 subtitle="Track you daily activity"
-                image={require('../../images/activity_log.jpeg')}
+                image={require('../../images/Homepage_activity_tracking.jpeg')}
                 onPress={() => {
                   if (Platform.OS === 'ios') {
                     Linking.openURL('x-apple-health://');

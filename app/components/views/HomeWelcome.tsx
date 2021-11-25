@@ -25,21 +25,21 @@ const items: CarouselItem[] = [
     title: 'Targeted Workouts',
     description:
       'Create custom workouts to target specific areas of the body and types of fitness.',
-    image: require('../../images/old_man_yoga.jpeg'),
+    image: require('../../images/1st_Carousel_image_targeted_workouts.jpeg'),
     icon: 'dumbbell',
   },
   {
     title: 'Track Progress',
     description:
       'Monitor your activity and track your fitness with your personalised activity dashboard',
-    image: require('../../images/old_woman.jpeg'),
+    image: require('../../images/2nd_carousel_image_fitness_tracking.jpeg'),
     icon: 'chart-line',
   },
   {
     title: 'Test Fitness',
     description:
       'Measure fitness across 4 key areas, and get recommendations to improve',
-    image: require('../../images/woman_yoga.jpeg'),
+    image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
     icon: 'heartbeat',
   },
 ];

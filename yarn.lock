@@ -1423,10 +1423,12 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@react-native-admob/admob@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.2.1.tgz#1d6dcc4125558fe01f32225d1c5d7b138934a954"
-  integrity sha512-TJpSrp1tj93xG84+Y888y5lgLRHtxbbaE6Hg0Rij7e/k32KyisM2FisyHJmPTm4my5GyjkM9zO1C/PT3AkCiIA==
+"@react-native-admob/admob@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.3.3.tgz#306afab8b1df3af1ca61c0757eacc504e0e3449d"
+  integrity sha512-iRW53vvehz3EJXmQPsV3MILzihuCXxxGMO1UtuLVu7i6UhDOkNP3SLPMR76wVjdhYuPe69nSBZzRUa5sZHOyMA==
+  dependencies:
+    use-deep-compare-effect "^1.8.1"
 
 "@react-native-community/art@^1.2.0":
   version "1.2.0"
@@ -3483,6 +3485,11 @@ depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
+
+dequal@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.2.tgz#85ca22025e3a87e65ef75a7a437b35284a7e319d"
+  integrity sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
 
 destroy@~1.0.4:
   version "1.0.4"
@@ -6924,6 +6931,11 @@ react-native-circular-progress@^1.3.7:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-clean-project@^3.6.7:
+  version "3.6.7"
+  resolved "https://registry.yarnpkg.com/react-native-clean-project/-/react-native-clean-project-3.6.7.tgz#6d22ad22fe3a1e6efdb040eb66f9bdfb2273ac2e"
+  integrity sha512-GSJG1oNRJKtINPMzfHgRmu7HJs7phwgtwQ6GvyGARiySqQlU/bAc5zsI9rOeNPGlpgYongQtjOGdmqSpsWMJTw==
+
 react-native-codegen@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.7.tgz#86651c5c5fec67a8077ef7f4e36f7ed459043e14"
@@ -8516,6 +8528,14 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+use-deep-compare-effect@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.8.1.tgz#ef0ce3b3271edb801da1ec23bf0754ef4189d0c6"
+  integrity sha512-kbeNVZ9Zkc0RFGpfMN3MNfaKNvcLNyxOAAd9O4CBZ+kCBXXscn9s/4I+8ytUER4RDpEYs5+O6Rs4PqiZ+rHr5Q==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    dequal "^2.0.2"
 
 use-subscription@^1.0.0:
   version "1.5.1"

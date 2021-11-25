@@ -30,7 +30,7 @@ const sections: {
       {id: 'full', name: 'Full body'},
       {id: 'core', name: 'Abs and core'},
     ],
-    image: require('../../../images/flexibility.jpeg'),
+    image: require('../../../images/Quick_Routine_body_part.jpeg'),
   },
   {
     title: 'Training focus',
@@ -41,7 +41,7 @@ const sections: {
       {id: 'balance', name: 'Balance'},
       {id: 'intensity', name: 'High intensity'},
     ],
-    image: require('../../../images/lower_body.jpeg'),
+    image: require('../../../images/Quick_routine_training_focus.jpeg'),
   },
   {
     title: 'Equipment',
@@ -51,7 +51,7 @@ const sections: {
       {id: 'minimal', name: 'Minimal equipment'},
       {id: 'none', name: 'No equipment'},
     ],
-    image: require('../../../images/dumbell.png'),
+    image: require('../../../images/Quick_routine_equipment.jpeg'),
   },
 ];
 

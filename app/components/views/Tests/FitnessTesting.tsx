@@ -11,21 +11,21 @@ import DevicePixels from '../../../helpers/DevicePixels';
 const getImage = (name: string): ImageSourcePropType => {
   const lower = name.toLowerCase();
   if (lower.includes('cardio')) {
-    return require('../../../images/cardio.jpeg');
+    return require('../../../images/Fitness_testing_step_test.jpeg');
   }
   if (lower.includes('aerobic')) {
-    return require('../../../images/aerobic.jpeg');
+    return require('../../../images/Fitness_testing_heart_rate_recovery.jpeg');
   }
   if (lower.includes('plank')) {
-    return require('../../../images/plank.jpeg');
+    return require('../../../images/Fitness_testing_plank.jpeg');
   }
   if (lower.includes('push up')) {
-    return require('../../../images/push-up.jpeg');
+    return require('../../../images/Fitness_testing_push_up.jpeg');
   }
   if (lower.includes('sit and reach')) {
-    return require('../../../images/sit-and-reach.jpeg');
+    return require('../../../images/Fitness_testing_sit_and_reach.jpeg');
   }
-  return require('../../../images/squat.jpeg');
+  return require('../../../images/Fitness_testing_squat.jpeg');
 };
 
 const FitnessTesting: React.FC<FitnessTestingProps> = ({navigation, tests}) => {
