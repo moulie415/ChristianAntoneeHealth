@@ -5,8 +5,6 @@ export default interface Test {
   time?: number;
   summary: string;
   how: string[];
-  improve: string;
-  why: string;
   metric?: string;
   mens?: Table | PercentileTable;
   womens?: Table | PercentileTable;
