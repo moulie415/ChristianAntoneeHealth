@@ -1,8 +1,10 @@
 import {Button, Divider, Input, Layout, Text} from '@ui-kitten/components';
+import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import {ScrollView} from 'react-native';
+import {ScrollView, Dimensions} from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
@@ -15,6 +17,12 @@ import Table from '../../commons/Table';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {useInterstitialAd} from '@react-native-admob/admob';
 import {UNIT_ID_INTERSTITIAL} from '../../../constants';
+import globalStyles from '../../../styles/globalStyles';
+import {getTestImage} from '../../../helpers/images';
+import ImageLoader from '../../commons/ImageLoader';
+import {getVideoHeight} from '../../../helpers';
+
+const {width, height} = Dimensions.get('screen');
 
 const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
   const {id} = route.params;
@@ -156,21 +164,47 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
           </Layout>
         ) : (
           <>
-            <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} />
-            <Text category="h6" style={{marginHorizontal: DevicePixels[10]}}>
+            {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
+            <Image
+              source={getTestImage(test.name)}
+              style={{height: getVideoHeight()}}
+            />
+            <Text category="h6" style={{margin: DevicePixels[10]}}>
               {test.name}
             </Text>
-            <Text style={{margin: DevicePixels[10]}}>{test.summary}</Text>
-            <Divider />
-            <Text style={{margin: DevicePixels[10]}} category="s1">
-              How to perform this test
+            <Text
+              style={{
+                marginHorizontal: DevicePixels[10],
+              }}>
+              {test.summary}
             </Text>
-            <ViewMore text={test.how.map(step => `• ${step} \n\n`).join('')} />
-            <Divider />
-            <Text style={{margin: DevicePixels[10]}} category="s1">
-              Why is this test important
-            </Text>
-            <ViewMore text={test.why} />
+            <Carousel
+              vertical={false}
+              data={test.how}
+              sliderWidth={width}
+              itemWidth={width - DevicePixels[75]}
+              renderItem={({item, index}) => {
+                return (
+                  <Layout
+                    style={{
+                      marginVertical: DevicePixels[20],
+                      borderRadius: DevicePixels[10],
+                      ...globalStyles.boxShadow,
+                    }}>
+                    <Layout
+                      style={{
+                        borderRadius: DevicePixels[10],
+                        backgroundColor: '#fff',
+                        height: DevicePixels[300],
+                        padding: DevicePixels[20],
+                      }}>
+                      <Text style={{lineHeight: DevicePixels[20]}}>{item}</Text>
+                    </Layout>
+                  </Layout>
+                );
+              }}
+            />
+
             <Divider />
             {test.mens &&
               'age' in test.mens &&
@@ -192,35 +226,30 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
               )}
           </>
         )}
-      </ScrollView>
-      {!(testStarted && test.type === 'countdown') && !complete && (
-        <Button
-          onPress={() => {
-            if (testStarted) {
-              setComplete(true);
-            } else {
-              if (adLoaded && !profile.premium) {
-                show();
+        {!(testStarted && test.type === 'countdown') && !complete && (
+          <Button
+            onPress={() => {
+              if (testStarted) {
+                setComplete(true);
               } else {
-                if (test.type === 'untimed') {
-                  setTestStarted(true);
+                if (adLoaded && !profile.premium) {
+                  show();
                 } else {
-                  setShowCountdown(true);
+                  if (test.type === 'untimed') {
+                    setTestStarted(true);
+                  } else {
+                    setShowCountdown(true);
+                  }
                 }
               }
-            }
-          }}
-          style={{
-            margin: DevicePixels[10],
-            marginBottom: DevicePixels[20],
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-          }}>
-          {testStarted ? 'End' : 'Start'}
-        </Button>
-      )}
+            }}
+            style={{
+              margin: DevicePixels[10],
+            }}>
+            {testStarted ? 'End' : 'Start'}
+          </Button>
+        )}
+      </ScrollView>
     </Layout>
   );
 };
