@@ -4,6 +4,7 @@ import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import {SetLoggedInAction} from './profile';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
+export const GET_EXERCISES_BY_ID = 'GET_EXERCISES_BY_ID';
 export const SET_EXERCISES = 'SET_EXERCISES';
 export const ADD_EXERCISE = 'ADD_EXERCISE';
 export const DELETE_EXERCISE = 'DELETE_EXERCISE';
@@ -27,6 +28,11 @@ export interface GetExercisesAction {
     area: StrengthArea;
     cardioType: CardioType;
   };
+}
+
+export interface GetExercisesByIdAction {
+  type: typeof GET_EXERCISES_BY_ID;
+  payload: string[];
 }
 
 export interface AddExerciseAction {
@@ -105,6 +111,11 @@ export const getExercises = (
 ): GetExercisesAction => ({
   type: GET_EXERCISES,
   payload: {level, goal, area, cardioType},
+});
+
+export const getExercisesById = (ids: string[]): GetExercisesByIdAction => ({
+  type: GET_EXERCISES_BY_ID,
+  payload: ids,
 });
 
 export const addExercise = (exercise: Exercise): AddExerciseAction => ({
@@ -192,4 +203,5 @@ export type ExercisesActions =
   | SetLoadingAction
   | SaveWorkoutAction
   | GetSavedWorkoutsAction
-  | SetSavedWorkoutsAction;
+  | SetSavedWorkoutsAction
+  | GetExercisesByIdAction;

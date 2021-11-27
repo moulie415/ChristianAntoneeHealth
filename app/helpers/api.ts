@@ -71,6 +71,18 @@ export const getExercises = async (
   }, {});
 };
 
+export const getExercisesById = async (ids: string[]) => {
+  const snapshot = await db()
+    .collection('exercises')
+    .where(db.FieldPath.documentId(), 'in', ids)
+    .get();
+  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, curr) => {
+    const exercise: any = curr.data();
+    acc[curr.id] = {...exercise, id: curr.id};
+    return acc;
+  }, {});
+};
+
 export const deleteExercise = (id: string) => {
   return db().collection('exercises').doc(id).delete();
 };
@@ -92,8 +104,32 @@ export const getTests = async () => {
   }, {});
 };
 
+export const getTestsById = async (ids: string[]) => {
+  const snapshot = await db()
+    .collection('tests')
+    .where(db.FieldPath.documentId(), 'in', ids)
+    .get();
+  return snapshot.docs.reduce((acc: {[id: string]: Test}, curr) => {
+    const test: any = curr.data();
+    acc[curr.id] = {...test, id: curr.id};
+    return acc;
+  }, {});
+};
+
 export const getQuickRoutines = async () => {
   const snapshot = await db().collection('quickRoutines').get();
+  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, curr) => {
+    const quickRoutine: any = curr.data();
+    acc[curr.id] = {...quickRoutine, id: curr.id};
+    return acc;
+  }, {});
+};
+
+export const getQuickRoutinesById = async (ids: string[]) => {
+  const snapshot = await db()
+    .collection('quickRoutines')
+    .where(db.FieldPath.documentId(), 'in', ids)
+    .get();
   return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, curr) => {
     const quickRoutine: any = curr.data();
     acc[curr.id] = {...quickRoutine, id: curr.id};

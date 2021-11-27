@@ -2,6 +2,7 @@ import {SavedTest} from '../types/SavedItem';
 import Test from '../types/Test';
 
 export const GET_TESTS = 'GET_TESTS';
+export const GET_TESTS_BY_ID = 'GET_TESTS_BY_ID';
 export const SET_TESTS = 'SET_TESTS';
 export const SAVE_TEST = 'SAVE_TEST';
 export const GET_SAVED_TESTS = 'GET_SAVED_TESTS';
@@ -13,6 +14,11 @@ interface SetTestsAction {
 
 export interface GetTestsAction {
   type: typeof GET_TESTS;
+}
+
+export interface GetTestsByIdAction {
+  type: typeof GET_TESTS_BY_ID;
+  payload: string[];
 }
 
 export interface SaveTestAction {
@@ -54,8 +60,14 @@ export const setSavedTests = (savedTests: {
   payload: savedTests,
 });
 
+export const getTestsById = (ids: string[]): GetTestsByIdAction => ({
+  type: GET_TESTS_BY_ID,
+  payload: ids,
+});
+
 export type TestsActions =
   | SetTestsAction
   | SaveTestAction
   | GetSavedTestsAction
-  | SetSavedTestsAction;
+  | SetSavedTestsAction
+  | GetTestsByIdAction;

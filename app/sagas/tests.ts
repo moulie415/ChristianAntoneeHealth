@@ -2,8 +2,10 @@ import Snackbar from 'react-native-snackbar';
 import {takeEvery, call, put, takeLatest, select} from 'redux-saga/effects';
 import {setLoading} from '../actions/exercises';
 import {
+  GetTestsByIdAction,
   GET_SAVED_TESTS,
   GET_TESTS,
+  GET_TESTS_BY_ID,
   SaveTestAction,
   SAVE_TEST,
   setSavedTests,
@@ -46,8 +48,25 @@ function* getSavedTests() {
   }
 }
 
+function* getTestsById(action: GetTestsByIdAction) {
+  try {
+    const ids = action.payload;
+    yield put(setLoading(true));
+    if (ids.length) {
+      const tests: {[key: string]: Test} = yield call(api.getTestsById, ids);
+      yield put(setTests(tests));
+    }
+    yield put(setLoading(false));
+  } catch (e) {
+    console.log(e);
+    yield put(setLoading(false));
+    Snackbar.show({text: 'Error fetching tests'});
+  }
+}
+
 export default function* testsSaga() {
   yield takeEvery(GET_TESTS, getTests);
   yield takeLatest(SAVE_TEST, saveTest);
   yield takeLatest(GET_SAVED_TESTS, getSavedTests);
+  yield takeLatest(GET_TESTS_BY_ID, getTestsById);
 }

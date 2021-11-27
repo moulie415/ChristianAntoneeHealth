@@ -5,7 +5,9 @@ import analytics from '@react-native-firebase/analytics';
 import {
   DownloadRoutineVideoAction,
   DOWNLOAD_ROUTINE_VIDEO,
+  GetQuickRoutinesByIdAction,
   GET_QUICK_ROUTINES,
+  GET_QUICK_ROUTINES_BY_ID,
   GET_SAVED_QUICK_ROUTINES,
   SaveQuickRoutineAction,
   SAVE_QUICK_ROUTINE,
@@ -100,9 +102,29 @@ function* getSavedQuickRoutines() {
   }
 }
 
+function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
+  try {
+    const ids = action.payload;
+    yield put(setLoading(true));
+    if (ids.length) {
+      const routines: {[key: string]: QuickRoutine} = yield call(
+        api.getQuickRoutinesById,
+        ids,
+      );
+      yield put(setQuickRoutines(routines));
+    }
+    yield put(setLoading(false));
+  } catch (e) {
+    console.log(e);
+    yield put(setLoading(false));
+    Snackbar.show({text: 'Error fetching quick routines'});
+  }
+}
+
 export default function* quickRoutinesSaga() {
   yield takeEvery(GET_QUICK_ROUTINES, getQuickRoutines);
   yield takeLatest(DOWNLOAD_ROUTINE_VIDEO, downloadRoutineVideoWorker);
   yield takeLatest(SAVE_QUICK_ROUTINE, saveQuickRoutine);
   yield takeLatest(GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
+  yield takeLatest(GET_QUICK_ROUTINES_BY_ID, getQuickRoutinesById);
 }

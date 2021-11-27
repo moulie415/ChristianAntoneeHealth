@@ -6,7 +6,9 @@ import {
   DeleteExerciseAction,
   DELETE_EXERCISE,
   GetExercisesAction,
+  GetExercisesByIdAction,
   GET_EXERCISES,
+  GET_EXERCISES_BY_ID,
   GET_SAVED_WORKOUTS,
   SaveWorkoutAction,
   SAVE_WORKOUT,
@@ -92,6 +94,26 @@ function* getSavedWorkouts() {
   }
 }
 
+function* getExercisesById(action: GetExercisesByIdAction) {
+  try {
+    const ids = action.payload;
+    yield put(setLoading(true));
+    if (ids.length) {
+      const exercises: {[key: string]: Exercise} = yield call(
+        api.getExercisesById,
+        ids,
+      );
+
+      yield put(setExercises(exercises));
+    }
+    yield put(setLoading(false));
+  } catch (e) {
+    yield put(setLoading(false));
+    console.log(e);
+    Snackbar.show({text: 'Error fetching exercises'});
+  }
+}
+
 export default function* exercisesSaga() {
   yield takeEvery(GET_EXERCISES, getExercises);
   yield takeEvery(ADD_EXERCISE, addExercise);
@@ -99,4 +121,5 @@ export default function* exercisesSaga() {
   yield takeEvery(UPDATE_EXERCISE, updateExercise);
   yield takeLatest(SAVE_WORKOUT, saveWorkout);
   yield takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts);
+  yield takeLatest(GET_EXERCISES_BY_ID, getExercisesById);
 }

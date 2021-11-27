@@ -2,6 +2,7 @@ import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
 
 export const GET_QUICK_ROUTINES = 'GET_QUICK_ROUTINES';
+export const GET_QUICK_ROUTINES_BY_ID = 'GET_QUICK_ROUTINES_BY_ID';
 export const SET_QUICK_ROUTINES = 'SET_QUICK_ROUTINES';
 export const DOWNLOAD_ROUTINE_VIDEO = 'DOWNLOAD_ROUTINE_VIDEO';
 export const SET_ROUTINE_VIDEO = 'SET_ROUTINE_VIDEO';
@@ -19,6 +20,11 @@ export interface GetTestsAction {
   type: typeof GET_QUICK_ROUTINES;
 }
 
+export interface GetQuickRoutinesByIdAction {
+  type: typeof GET_QUICK_ROUTINES_BY_ID;
+  payload: string[];
+}
+
 export const setQuickRoutines = (quickRoutines: {
   [key: string]: QuickRoutine;
 }): SetQuickRoutinesAction => ({
@@ -28,6 +34,13 @@ export const setQuickRoutines = (quickRoutines: {
 
 export const getQuickRoutines = (): GetTestsAction => ({
   type: GET_QUICK_ROUTINES,
+});
+
+export const getQuickRoutinesById = (
+  ids: string[],
+): GetQuickRoutinesByIdAction => ({
+  type: GET_QUICK_ROUTINES_BY_ID,
+  payload: ids,
 });
 
 export interface DownloadRoutineVideoAction {
@@ -107,4 +120,5 @@ export type QuickRoutinesActions =
   | SetRoutineVideoLoadingAction
   | SaveQuickRoutineAction
   | GetSavedQuickRoutinesAction
-  | SetSavedQuickRoutinesAction;
+  | SetSavedQuickRoutinesAction
+  | GetQuickRoutinesByIdAction;
