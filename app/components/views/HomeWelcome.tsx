@@ -30,8 +30,9 @@ const items: CarouselItem[] = [
   },
   {
     title: 'Track Progress',
-    description:
-      'Monitor your activity and track your fitness with your personalised activity dashboard',
+    description: `Monitor your activity and track your fitness with your with ${
+      Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+    }`,
     image: require('../../images/2nd_carousel_image_fitness_tracking.jpeg'),
     icon: 'chart-line',
   },
@@ -41,6 +42,13 @@ const items: CarouselItem[] = [
       'Measure fitness across 4 key areas, and get recommendations to improve',
     image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
     icon: 'heartbeat',
+  },
+  {
+    title: 'Quick routines',
+    description:
+      'select from a variety of exercise routines designed to target specific body parts',
+    image: require('../../images/4th_carousel_image_quick_routine.jpeg'),
+    icon: 'sync',
   },
 ];
 

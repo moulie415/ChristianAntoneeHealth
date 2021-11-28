@@ -1,5 +1,5 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import {
   getDifficultyEmoji,
@@ -19,6 +19,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   saveQuickRoutineAction,
 }) => {
   const {calories, seconds, difficulty, routine} = route.params;
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   return (
     <Layout style={{flex: 1}}>
       <Layout
@@ -54,8 +55,10 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
         Return Home
       </Button>
       <Button
+        disabled={buttonDisabled}
         onPress={() => {
           if (profile.premium) {
+            setButtonDisabled(true);
             saveQuickRoutineAction({
               calories,
               seconds,

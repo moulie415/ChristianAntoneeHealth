@@ -1,14 +1,12 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {View} from 'react-native';
 import DevicePixels from '../../../helpers/DevicePixels';
 import TestResultsProp from '../../../types/views/TestResults';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import moment from 'moment';
 import colors from '../../../constants/colors';
 import {MyRootState} from '../../../types/Shared';
-import {Table} from '../../../types/Test';
 import {connect} from 'react-redux';
 import {
   capitalizeFirstLetter,
@@ -22,7 +20,7 @@ import {
   getTableColumn,
   getTableMax,
 } from '../../../helpers';
-import {navigate, navigationRef, resetToTabs} from '../../../RootNavigation';
+import {resetToTabs} from '../../../RootNavigation';
 import {saveTest} from '../../../actions/tests';
 
 const TestResults: React.FC<TestResultsProp> = ({
@@ -45,6 +43,8 @@ const TestResults: React.FC<TestResultsProp> = ({
   const [fill, setFill] = useState(
     isTable ? (100 / max) * score : getPercentileFill(percentile),
   );
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   return (
     <Layout style={{flex: 1, padding: 20}}>
       <Text
@@ -140,8 +140,10 @@ const TestResults: React.FC<TestResultsProp> = ({
           Return Home
         </Button>
         <Button
+          disabled={buttonDisabled}
           onPress={() => {
             if (profile.premium) {
+              setButtonDisabled(true);
               saveTestAction({
                 seconds,
                 result: testResult,

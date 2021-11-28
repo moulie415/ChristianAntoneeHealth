@@ -1,5 +1,5 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
@@ -20,6 +20,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   workout,
 }) => {
   const {calories, seconds, difficulty} = route.params;
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   return (
     <Layout style={{flex: 1}}>
       <Layout
@@ -55,8 +56,10 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
         Return Home
       </Button>
       <Button
+        disabled={buttonDisabled}
         onPress={() => {
           if (profile.premium) {
+            setButtonDisabled(true);
             saveWorkoutAction({
               calories,
               seconds,

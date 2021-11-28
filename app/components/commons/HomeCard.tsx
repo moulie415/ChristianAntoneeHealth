@@ -35,7 +35,7 @@ const HomeCard: React.FC<{
       onPress={onPress}>
       <Layout style={{flex: 1, borderRadius: DevicePixels[25]}}>
         <ImageOverlay
-          overlayAlpha={0.4}
+          overlayAlpha={0.5}
           containerStyle={{
             flex: 1,
             width: '100%',
@@ -55,7 +55,7 @@ const HomeCard: React.FC<{
             justifyContent: 'center',
           }}>
           <Text
-            category="h5"
+            category="h6"
             style={[
               globalStyles.textShadow,
               {color: '#fff', textAlign: 'center'},
