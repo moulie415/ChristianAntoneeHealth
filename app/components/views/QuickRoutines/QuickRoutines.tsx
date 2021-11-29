@@ -5,6 +5,7 @@ import {
   ImageSourcePropType,
   TouchableOpacity,
   SafeAreaView,
+  StyleSheet,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
@@ -14,6 +15,7 @@ import globalStyles from '../../../styles/globalStyles';
 import {Area, Equipment, Focus} from '../../../types/QuickRoutines';
 import QuickRoutinesProps from '../../../types/views/QuickRoutines';
 import ImageLoader from '../../commons/ImageLoader';
+import ImageOverlay from '../../commons/ImageOverlay';
 
 const sections: {
   title: string;
@@ -86,12 +88,17 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                 }
                 key={title}
                 style={{flex: 1, paddingBottom: DevicePixels[5]}}>
-                <ImageLoader
+                {/* <ImageLoader
                   style={{width: '100%', flex: 1}}
                   delay={index * 200}
                   resizeMode="cover"
                   source={image}
+                /> */}
+                <ImageOverlay
+                  source={image}
+                  containerStyle={{width: '100%', flex: 1}}
                 />
+
                 <View
                   style={{
                     position: 'absolute',

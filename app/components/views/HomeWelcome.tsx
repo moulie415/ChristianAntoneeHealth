@@ -12,6 +12,7 @@ import {viewedWelcome} from '../../actions/profile';
 import {connect} from 'react-redux';
 import globalStyles from '../../styles/globalStyles';
 import DevicePixels from '../../helpers/DevicePixels';
+import colors from '../../constants/colors';
 
 interface CarouselItem {
   title: string;
@@ -102,12 +103,12 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                   borderBottomRightRadius: DevicePixels[8],
                 }}>
                 <Layout style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Icon
+                  {/* <Icon
                     size={DevicePixels[20]}
                     name={item.icon}
-                    color="#fff"
-                    style={{marginRight: DevicePixels[10]}}
-                  />
+                    color={colors.appBlack}
+                    style={{textAlign: 'center'}}
+                  /> */}
                   <Text category="h4" style={{flex: 1, textAlign: 'center'}}>
                     {item.title}
                   </Text>
