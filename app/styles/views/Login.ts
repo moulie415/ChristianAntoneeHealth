@@ -4,7 +4,7 @@ import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   welcome: {
     fontSize: DevicePixels[20],
@@ -18,6 +18,12 @@ export default StyleSheet.create({
   },
   input: {
     margin: DevicePixels[10],
+    borderWidth: 0,
+    marginBottom: 0,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    marginTop: DevicePixels[1],
+    paddingLeft: DevicePixels[10],
+    height: DevicePixels[50],
   },
   appleButton: {
     marginVertical: DevicePixels[10],
@@ -26,6 +32,8 @@ export default StyleSheet.create({
   },
   button: {
     margin: DevicePixels[10],
+    marginTop: DevicePixels[5],
+    height: DevicePixels[50],
   },
   icon: {
     marginRight: DevicePixels[10],
