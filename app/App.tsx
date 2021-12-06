@@ -7,7 +7,7 @@ import Shake from '@shakebugs/react-native-shake';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {NavigationContainer} from '@react-navigation/native';
+import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
@@ -30,6 +30,8 @@ import {useEffect} from 'react';
 import QuickRoutine from './types/QuickRoutines';
 import TestType from './types/Test';
 import StackComponent from './Stack';
+import {Alert, Linking} from 'react-native';
+import queryString from 'query-string';
 
 const composeEnhancers =
   // @ts-ignore
@@ -108,6 +110,35 @@ export type StackParamList = {
   SavedItems: undefined;
 };
 
+const handleDeepLink = (url: string) => {
+  const parsed = queryString.parseUrl(url);
+  if (parsed.url === 'healthandmovement://workout') {
+    if (typeof parsed.query.exercises === 'string') {
+      const exercises = parsed.query.exercises.split(',');
+      console.log(exercises);
+    }
+  }
+};
+
+const linking: LinkingOptions<StackParamList> = {
+  prefixes: ['healthandmovement://'],
+  async getInitialURL() {
+    const url = await Linking.getInitialURL();
+    if (url !== null) {
+      handleDeepLink(url);
+      return url;
+    }
+  },
+
+  subscribe(listener) {
+    const onReceiveURL = ({url}: {url: string}) => {
+      handleDeepLink(url);
+    };
+
+    Linking.addEventListener('url', onReceiveURL);
+  },
+};
+
 const App: React.FC = () => {
   useEffect(() => {
     Shake.setInvokeShakeOnShakeDeviceEvent(false);
@@ -126,6 +157,7 @@ const App: React.FC = () => {
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={eva.light}>
           <NavigationContainer
+            linking={linking}
             ref={navigationRef}
             onReady={() => {
               SplashScreen.hide();

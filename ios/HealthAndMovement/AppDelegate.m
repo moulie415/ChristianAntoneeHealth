@@ -10,6 +10,7 @@
 #import <RNCPushNotificationIOS.h>
 #import <UserNotifications/UserNotifications.h>
 #import "RCTAppleHealthKit.h"
+#import <React/RCTLinkingManager.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -65,7 +66,9 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
-  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [RNGoogleSignin application:application openURL:url options:options];
+  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] ||
+                                    [RNGoogleSignin application:application openURL:url options:options] ||
+                                    [RCTLinkingManager application:application openURL:url options:options];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

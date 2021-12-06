@@ -51,7 +51,7 @@ import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, resetToTabs} from '../RootNavigation';
-import {Alert, Platform} from 'react-native';
+import {Alert, Linking, Platform} from 'react-native';
 import {
   getActivitySamples,
   getStepSamples,
@@ -448,6 +448,10 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(initBiometrics);
         }
         resetToTabs();
+        const url: string = yield call(Linking.getInitialURL);
+        if (url) {
+          Alert.alert(url);
+        }
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));
