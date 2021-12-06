@@ -6,6 +6,9 @@ import {
   Platform,
   KeyboardAvoidingView,
   ScrollView,
+  View,
+  ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Spinner, Input, Button, Text} from '@ui-kitten/components';
@@ -20,6 +23,7 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {handleAuth} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
+import ImageOverlay from '../commons/ImageOverlay';
 
 GoogleSignin.configure({
   webClientId:
@@ -123,7 +127,17 @@ const Login: React.FC<LoginProps> = ({
   };
 
   return (
-    <Layout style={{flex: 1}}>
+    <ImageBackground
+      source={require('../../images/login.jpeg')}
+      blurRadius={1}
+      style={{flex: 1}}>
+      <Layout
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: '#000',
+          opacity: 0.3,
+        }}
+      />
       <ScrollView keyboardShouldPersistTaps="always">
         <KeyboardAvoidingView behavior="position" style={styles.container}>
           <Image
@@ -131,28 +145,41 @@ const Login: React.FC<LoginProps> = ({
             source={require('../../images/health_and_movement_logo_colour_centred.png')}
           />
           <Text
-            style={{textAlign: 'center', marginBottom: DevicePixels[50]}}
+            style={{
+              textAlign: 'center',
+              marginBottom: DevicePixels[50],
+              color: '#fff',
+            }}
             category="h4">
             Welcome back!
           </Text>
-          <Layout
+          <View
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
               marginBottom: DevicePixels[30],
             }}>
-            <Text>Not a member? </Text>
+            <Text style={{color: '#fff'}}>Not a member? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
               <Text
-                style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>
+                style={{
+                  textDecorationLine: 'underline',
+                  fontWeight: 'bold',
+                  color: '#fff',
+                }}>
                 SIGN UP
               </Text>
             </TouchableOpacity>
-          </Layout>
-          <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+          </View>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginBottom: DevicePixels[20],
+              color: '#fff',
+            }}>
             Login with
           </Text>
-          <Layout
+          <View
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -227,7 +254,7 @@ const Login: React.FC<LoginProps> = ({
                 )
               }
             />
-          </Layout>
+          </View>
           <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
             or
           </Text>
@@ -247,7 +274,6 @@ const Login: React.FC<LoginProps> = ({
             autoCorrect={false}
             keyboardType="email-address"
           />
-
           <Input
             style={styles.input}
             placeholder="Password"
@@ -274,7 +300,6 @@ const Login: React.FC<LoginProps> = ({
             )}
             autoCapitalize="none"
           />
-
           <Button
             onPress={async () => {
               if (username && pass) {
@@ -303,7 +328,7 @@ const Login: React.FC<LoginProps> = ({
           </Button>
         </KeyboardAvoidingView>
       </ScrollView>
-    </Layout>
+    </ImageBackground>
   );
 };
 

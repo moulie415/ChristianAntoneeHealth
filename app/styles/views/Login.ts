@@ -4,7 +4,7 @@ import DevicePixels from '../../helpers/DevicePixels';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   welcome: {
     fontSize: DevicePixels[20],

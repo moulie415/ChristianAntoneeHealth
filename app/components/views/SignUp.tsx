@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Alert, Image, Platform, TouchableOpacity} from 'react-native';
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {Spinner, Layout, Button, Text} from '@ui-kitten/components';
@@ -14,6 +22,7 @@ import sStyles from '../../styles/views/More';
 import SignUpProps from '../../types/views/SignUp';
 import {setStep} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
+import ImageOverlay from '../commons/ImageOverlay';
 
 const SignUp: React.FC<SignUpProps> = ({
   navigation,
@@ -100,33 +109,57 @@ const SignUp: React.FC<SignUpProps> = ({
   };
 
   return (
-    <Layout style={styles.container}>
+    <ImageBackground
+      blurRadius={1}
+      style={{flex: 1}}
+      source={require('../../images/sign-up.jpeg')}>
+      <Layout
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: '#000',
+          opacity: 0.3,
+        }}
+      />
       <Image
         style={styles.logo}
         source={require('../../images/health_and_movement_logo_colour_centred.png')}
       />
       <Text
-        style={{textAlign: 'center', marginBottom: DevicePixels[50]}}
+        style={{
+          textAlign: 'center',
+          marginBottom: DevicePixels[50],
+          color: '#fff',
+        }}
         category="h4">
         Welcome back!
       </Text>
-      <Layout
+      <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           marginBottom: DevicePixels[30],
         }}>
-        <Text>Already a member? </Text>
+        <Text style={{color: '#fff'}}>Already a member? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>
+          <Text
+            style={{
+              textDecorationLine: 'underline',
+              fontWeight: 'bold',
+              color: '#fff',
+            }}>
             LOG IN
           </Text>
         </TouchableOpacity>
-      </Layout>
-      <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+      </View>
+      <Text
+        style={{
+          textAlign: 'center',
+          marginBottom: DevicePixels[20],
+          color: '#fff',
+        }}>
         Get started with
       </Text>
-      <Layout
+      <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -197,8 +230,13 @@ const SignUp: React.FC<SignUpProps> = ({
             )
           }
         />
-      </Layout>
-      <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+      </View>
+      <Text
+        style={{
+          textAlign: 'center',
+          marginBottom: DevicePixels[20],
+          color: '#fff',
+        }}>
         or
       </Text>
 
@@ -210,7 +248,7 @@ const SignUp: React.FC<SignUpProps> = ({
         style={styles.button}>
         Sign up with email
       </Button>
-    </Layout>
+    </ImageBackground>
   );
 };
 
