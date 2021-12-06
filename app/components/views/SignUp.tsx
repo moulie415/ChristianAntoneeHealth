@@ -123,9 +123,9 @@ const SignUp: React.FC<SignUpProps> = ({
       />
       <Image
         style={styles.logo}
-        source={require('../../images/health_and_movement_logo_colour_centred.png')}
+        source={require('../../images/logo-and-text.png')}
       />
-      <Text
+      {/* <Text
         style={{
           textAlign: 'center',
           marginBottom: DevicePixels[50],
@@ -133,14 +133,16 @@ const SignUp: React.FC<SignUpProps> = ({
         }}
         category="h4">
         Welcome back!
-      </Text>
+      </Text> */}
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           marginBottom: DevicePixels[30],
         }}>
-        <Text style={{color: '#fff'}}>Already a member? </Text>
+        <Text style={{color: '#fff', fontWeight: 'bold'}}>
+          Already a member?{' '}
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text
             style={{
@@ -157,6 +159,7 @@ const SignUp: React.FC<SignUpProps> = ({
           textAlign: 'center',
           marginBottom: DevicePixels[20],
           color: '#fff',
+          fontWeight: 'bold',
         }}>
         Get started with
       </Text>
@@ -179,6 +182,7 @@ const SignUp: React.FC<SignUpProps> = ({
               width: DevicePixels[75],
               height: DevicePixels[50],
               marginHorizontal: DevicePixels[10],
+              borderWidth: 0,
             }}
             accessoryLeft={() =>
               appleLoading ? (
@@ -201,6 +205,7 @@ const SignUp: React.FC<SignUpProps> = ({
             width: DevicePixels[75],
             height: DevicePixels[50],
             marginHorizontal: DevicePixels[10],
+            borderWidth: 0,
           }}
           accessoryLeft={() =>
             facebookLoading ? (
@@ -222,6 +227,7 @@ const SignUp: React.FC<SignUpProps> = ({
             width: DevicePixels[75],
             height: DevicePixels[50],
             marginHorizontal: DevicePixels[10],
+            borderWidth: 0,
           }}
           accessoryLeft={() =>
             googleLoading ? (
@@ -237,6 +243,7 @@ const SignUp: React.FC<SignUpProps> = ({
           textAlign: 'center',
           marginBottom: DevicePixels[20],
           color: '#fff',
+          fontWeight: 'bold',
         }}>
         or
       </Text>

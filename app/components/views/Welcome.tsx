@@ -11,6 +11,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
   return (
     <ImageBackground
       style={{width: '100%', height: '100%'}}
+      blurRadius={1}
       source={require('../../images/oap_training.png')}>
       <Image
         style={styles.logo}
@@ -26,7 +27,7 @@ const Welcome: React.FC<WelcomeProps> = ({navigation}) => {
           marginTop: DevicePixels[60],
         }}>
         <Button
-          style={{width: '40%', backgroundColor: '#000'}}
+          style={{width: '40%', backgroundColor: '#000', borderWidth: 0}}
           onPress={() => navigation.navigate('Login')}>
           Log In
         </Button>

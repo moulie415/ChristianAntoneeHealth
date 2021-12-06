@@ -41,7 +41,7 @@ export default StyleSheet.create({
     margin: DevicePixels[10],
     marginTop: DevicePixels[60],
     height: DevicePixels[75],
-    width: DevicePixels[75],
+    width: '100%',
     alignSelf: 'center',
   },
   button: {
