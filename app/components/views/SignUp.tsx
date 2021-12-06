@@ -4,6 +4,7 @@ import {
   Image,
   ImageBackground,
   Platform,
+  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -248,6 +249,23 @@ const SignUp: React.FC<SignUpProps> = ({
         style={styles.button}>
         Sign up with email
       </Button>
+      {/* <SafeAreaView
+        style={{
+          position: 'absolute',
+          top: DevicePixels[20],
+          left: DevicePixels[20],
+        }}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          hitSlop={{
+            left: DevicePixels[10],
+            right: DevicePixels[10],
+            top: DevicePixels[10],
+            bottom: DevicePixels[10],
+          }}>
+          <Icon name="chevron-left" size={DevicePixels[25]} color="#fff" />
+        </TouchableOpacity>
+      </SafeAreaView> */}
     </ImageBackground>
   );
 };

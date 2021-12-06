@@ -9,6 +9,7 @@ import {
   View,
   ImageBackground,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Spinner, Input, Button, Text} from '@ui-kitten/components';
@@ -255,7 +256,12 @@ const Login: React.FC<LoginProps> = ({
               }
             />
           </View>
-          <Text style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginBottom: DevicePixels[20],
+              color: '#fff',
+            }}>
             or
           </Text>
           <Input
@@ -328,6 +334,23 @@ const Login: React.FC<LoginProps> = ({
           </Button>
         </KeyboardAvoidingView>
       </ScrollView>
+      {/* <SafeAreaView
+        style={{
+          position: 'absolute',
+          top: DevicePixels[20],
+          left: DevicePixels[20],
+        }}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          hitSlop={{
+            left: DevicePixels[10],
+            right: DevicePixels[10],
+            top: DevicePixels[10],
+            bottom: DevicePixels[10],
+          }}>
+          <Icon name="chevron-left" size={DevicePixels[25]} color="#fff" />
+        </TouchableOpacity>
+      </SafeAreaView> */}
     </ImageBackground>
   );
 };
