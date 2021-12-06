@@ -55,6 +55,7 @@
     "react-native-google-fit": "^0.18.0",
     "react-native-health": "^1.10.0",
     "react-native-image-picker": "^4.3.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-pager-view": "^5.4.9",
     "react-native-progress": "^5.0.0",
     "react-native-purchases": "^4.4.1",

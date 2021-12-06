@@ -5,11 +5,9 @@ import {
   Image,
   Platform,
   KeyboardAvoidingView,
-  ScrollView,
   View,
   ImageBackground,
   StyleSheet,
-  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -25,6 +23,7 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {handleAuth} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImageOverlay from '../commons/ImageOverlay';
 import colors from '../../constants/colors';
 
@@ -144,7 +143,8 @@ const Login: React.FC<LoginProps> = ({
         style={styles.logo}
         source={require('../../images/logo-and-text.png')}
       />
-      <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'flex-end'}}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{flex: 1, justifyContent: 'flex-end'}}>
         <Text
           style={{
             color: '#fff',
@@ -223,38 +223,36 @@ const Login: React.FC<LoginProps> = ({
           }>
           Google
         </Button>
-        <KeyboardAvoidingView behavior="position">
-          <TextInput
-            style={[
-              styles.input,
-              {
-                borderTopLeftRadius: DevicePixels[5],
-                borderTopRightRadius: DevicePixels[5],
-              },
-            ]}
-            placeholder="Email"
-            onChangeText={u => setUsername(u)}
-            placeholderTextColor="#fff"
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="email-address"
-          />
-          <TextInput
-            style={[
-              styles.input,
-              {
-                borderBottomLeftRadius: DevicePixels[5],
-                borderBottomRightRadius: DevicePixels[5],
-              },
-            ]}
-            placeholder="Password"
-            secureTextEntry={secure}
-            placeholderTextColor="#fff"
-            onChangeText={p => setPass(p)}
-            autoCorrect={false}
-            autoCapitalize="none"
-          />
-        </KeyboardAvoidingView>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              borderTopLeftRadius: DevicePixels[5],
+              borderTopRightRadius: DevicePixels[5],
+            },
+          ]}
+          placeholder="Email"
+          onChangeText={u => setUsername(u)}
+          placeholderTextColor="#fff"
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={[
+            styles.input,
+            {
+              borderBottomLeftRadius: DevicePixels[5],
+              borderBottomRightRadius: DevicePixels[5],
+            },
+          ]}
+          placeholder="Password"
+          secureTextEntry={secure}
+          placeholderTextColor="#fff"
+          onChangeText={p => setPass(p)}
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
         <Button
           onPress={async () => {
             if (username && pass) {
@@ -300,7 +298,7 @@ const Login: React.FC<LoginProps> = ({
             </Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 };
