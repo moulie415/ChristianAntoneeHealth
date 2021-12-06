@@ -9,7 +9,7 @@ export default StyleSheet.create({
     margin: DevicePixels[10],
     marginTop: DevicePixels[100],
     marginBottom: DevicePixels[60],
-    height: DevicePixels[75],
+    height: DevicePixels[78],
     width: DevicePixels[75],
     alignSelf: 'center',
   },

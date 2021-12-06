@@ -40,11 +40,13 @@ export default StyleSheet.create({
   logo: {
     margin: DevicePixels[10],
     marginTop: DevicePixels[60],
-    height: DevicePixels[75],
-    width: '100%',
+    height: DevicePixels[79],
+    width: DevicePixels[200],
     alignSelf: 'center',
   },
   button: {
     margin: DevicePixels[10],
+    marginBottom: DevicePixels[5],
+    height: DevicePixels[50],
   },
 });

@@ -111,64 +111,28 @@ const SignUp: React.FC<SignUpProps> = ({
 
   return (
     <ImageBackground
-      blurRadius={1}
       style={{flex: 1}}
       source={require('../../images/sign-up.jpeg')}>
       <Layout
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
-          opacity: 0.3,
+          opacity: 0.7,
         }}
       />
       <Image
         style={styles.logo}
         source={require('../../images/logo-and-text.png')}
       />
-      {/* <Text
-        style={{
-          textAlign: 'center',
-          marginBottom: DevicePixels[50],
-          color: '#fff',
-        }}
-        category="h4">
-        Welcome back!
-      </Text> */}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginBottom: DevicePixels[30],
-        }}>
-        <Text style={{color: '#fff', fontWeight: 'bold'}}>
-          Already a member?{' '}
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text
-            style={{
-              textDecorationLine: 'underline',
-              fontWeight: 'bold',
-              color: '#fff',
-            }}>
-            LOG IN
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <Text
-        style={{
-          textAlign: 'center',
-          marginBottom: DevicePixels[20],
-          color: '#fff',
-          fontWeight: 'bold',
-        }}>
-        Get started with
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginBottom: DevicePixels[20],
-        }}>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <Button
+          onPress={async () => {
+            navigation.navigate('SignUpFlow', {dry: true});
+            setStepAction(0);
+          }}
+          style={styles.button}>
+          Sign up with email
+        </Button>
         {Platform.OS === 'ios' && (
           <Button
             onPress={async () => {
@@ -177,21 +141,21 @@ const SignUp: React.FC<SignUpProps> = ({
               setAppleLoading(false);
             }}
             style={{
-              backgroundColor: '#fff',
-              alignSelf: 'center',
-              width: DevicePixels[75],
+              backgroundColor: 'transparent',
               height: DevicePixels[50],
               marginHorizontal: DevicePixels[10],
-              borderWidth: 0,
+              marginBottom: DevicePixels[5],
+              borderColor: '#fff',
             }}
             accessoryLeft={() =>
               appleLoading ? (
                 <Spinner />
               ) : (
-                <Icon name="apple" size={DevicePixels[20]} />
+                <Icon name="apple" color="#fff" size={DevicePixels[20]} />
               )
-            }
-          />
+            }>
+            Apple
+          </Button>
         )}
         <Button
           onPress={async () => {
@@ -200,21 +164,21 @@ const SignUp: React.FC<SignUpProps> = ({
             setFacebookLoading(false);
           }}
           style={{
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-            width: DevicePixels[75],
+            backgroundColor: 'transparent',
             height: DevicePixels[50],
             marginHorizontal: DevicePixels[10],
-            borderWidth: 0,
+            marginBottom: DevicePixels[5],
+            borderColor: '#fff',
           }}
           accessoryLeft={() =>
             facebookLoading ? (
               <Spinner />
             ) : (
-              <Icon color="#3b5998" name="facebook-f" size={DevicePixels[20]} />
+              <Icon color="#fff" name="facebook-f" size={DevicePixels[20]} />
             )
-          }
-        />
+          }>
+          Facebook
+        </Button>
         <Button
           onPress={async () => {
             setGoogleLoading(true);
@@ -222,57 +186,41 @@ const SignUp: React.FC<SignUpProps> = ({
             setGoogleLoading(false);
           }}
           style={{
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-            width: DevicePixels[75],
+            backgroundColor: 'transparent',
             height: DevicePixels[50],
             marginHorizontal: DevicePixels[10],
-            borderWidth: 0,
+            marginBottom: DevicePixels[5],
+            borderColor: '#fff',
           }}
           accessoryLeft={() =>
             googleLoading ? (
               <Spinner />
             ) : (
-              <Icon color="#ea4335" name="google" size={DevicePixels[20]} />
+              <Icon color="#fff" name="google" size={DevicePixels[20]} />
             )
-          }
-        />
+          }>
+          Google
+        </Button>
       </View>
-      <Text
+      <View
         style={{
-          textAlign: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: DevicePixels[15],
           marginBottom: DevicePixels[20],
-          color: '#fff',
-          fontWeight: 'bold',
         }}>
-        or
-      </Text>
-
-      <Button
-        onPress={async () => {
-          navigation.navigate('SignUpFlow', {dry: true});
-          setStepAction(0);
-        }}
-        style={styles.button}>
-        Sign up with email
-      </Button>
-      {/* <SafeAreaView
-        style={{
-          position: 'absolute',
-          top: DevicePixels[20],
-          left: DevicePixels[20],
-        }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          hitSlop={{
-            left: DevicePixels[10],
-            right: DevicePixels[10],
-            top: DevicePixels[10],
-            bottom: DevicePixels[10],
-          }}>
-          <Icon name="chevron-left" size={DevicePixels[25]} color="#fff" />
+        <Text style={{color: '#fff'}}>Already signed up? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: '#fff',
+              textDecorationLine: 'underline',
+            }}>
+            Log in
+          </Text>
         </TouchableOpacity>
-      </SafeAreaView> */}
+      </View>
     </ImageBackground>
   );
 };
