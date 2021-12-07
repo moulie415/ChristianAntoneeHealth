@@ -10,11 +10,14 @@ import {
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
   GET_SAVED_WORKOUTS,
+  HandleDeepLinkAction,
+  HANDLE_DEEP_LINK,
   SaveWorkoutAction,
   SAVE_WORKOUT,
   setExercises,
   setLoading,
   setSavedWorkouts,
+  setWorkout,
   UpdateExerciseAction,
   UPDATE_EXERCISE,
 } from '../actions/exercises';
@@ -23,6 +26,9 @@ import * as api from '../helpers/api';
 import {MyRootState} from '../types/Shared';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {SavedWorkout} from '../types/SavedItem';
+import queryString from 'query-string';
+import {Alert} from 'react-native';
+import {navigate} from '../RootNavigation';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, area, cardioType} = action.payload;
@@ -114,6 +120,58 @@ function* getExercisesById(action: GetExercisesByIdAction) {
   }
 }
 
+function* handleDeepLink(action: HandleDeepLinkAction) {
+  const url = action.payload;
+  const parsed = queryString.parseUrl(url);
+  if (parsed.url === 'healthandmovement://workout') {
+    try {
+      if (typeof parsed.query.exercises === 'string') {
+        const exerciseIds = parsed.query.exercises.split(',');
+        const exercises: {[key: string]: Exercise} = yield select(
+          (state: MyRootState) => state.exercises.exercises,
+        );
+        const {premium, admin} = yield select(
+          (state: MyRootState) => state.profile.profile,
+        );
+        const missing = exerciseIds.filter(id => {
+          return !exercises[id];
+        });
+        if (missing.length) {
+          yield call(getExercisesById, {
+            type: GET_EXERCISES_BY_ID,
+            payload: missing,
+          });
+        }
+        const updatedExercises: {[key: string]: Exercise} = yield select(
+          (state: MyRootState) => state.exercises.exercises,
+        );
+        const filtered = Object.values(updatedExercises).filter(exercise =>
+          exerciseIds.includes(exercise.id),
+        );
+
+        if (filtered.some(exercise => exercise.premium) && !premium && !admin) {
+          Alert.alert(
+            'Sorry',
+            'That workout link includes premium exercises, would you like to subscribe to premium?',
+            [
+              {text: 'No thanks'},
+              {text: 'Yes', onPress: () => navigate('Premium')},
+            ],
+          );
+        } else {
+          yield put(setWorkout(filtered));
+          navigate('ReviewExercises');
+        }
+      }
+    } catch (e) {
+      Alert.alert(
+        'Error',
+        'Sorry Health and Movement had problems handling the link',
+      );
+    }
+  }
+}
+
 export default function* exercisesSaga() {
   yield takeEvery(GET_EXERCISES, getExercises);
   yield takeEvery(ADD_EXERCISE, addExercise);
@@ -122,4 +180,5 @@ export default function* exercisesSaga() {
   yield takeLatest(SAVE_WORKOUT, saveWorkout);
   yield takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts);
   yield takeLatest(GET_EXERCISES_BY_ID, getExercisesById);
+  yield takeLatest(HANDLE_DEEP_LINK, handleDeepLink);
 }

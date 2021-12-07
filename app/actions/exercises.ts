@@ -1,7 +1,6 @@
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
 import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
-import {SetLoggedInAction} from './profile';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
 export const GET_EXERCISES_BY_ID = 'GET_EXERCISES_BY_ID';
@@ -19,6 +18,7 @@ export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
 export const SAVE_WORKOUT = 'SAVED_WORKOUT';
 export const GET_SAVED_WORKOUTS = 'GET_SAVED_WORKOUTS';
 export const SET_SAVED_WORKOUTS = 'SET_SAVED_WORKOUTS';
+export const HANDLE_DEEP_LINK = 'HANDLE_DEEP_LINK';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -101,6 +101,11 @@ export interface GetSavedWorkoutsAction {
 export interface SetSavedWorkoutsAction {
   type: typeof SET_SAVED_WORKOUTS;
   payload: {[key: string]: SavedWorkout};
+}
+
+export interface HandleDeepLinkAction {
+  type: typeof HANDLE_DEEP_LINK;
+  payload: string;
 }
 
 export const getExercises = (
@@ -191,6 +196,11 @@ export const setSavedWorkouts = (savedWorkouts: {
   payload: savedWorkouts,
 });
 
+export const handleDeepLink = (url: string): HandleDeepLinkAction => ({
+  type: HANDLE_DEEP_LINK,
+  payload: url,
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -204,4 +214,5 @@ export type ExercisesActions =
   | SaveWorkoutAction
   | GetSavedWorkoutsAction
   | SetSavedWorkoutsAction
-  | GetExercisesByIdAction;
+  | GetExercisesByIdAction
+  | HandleDeepLinkAction;

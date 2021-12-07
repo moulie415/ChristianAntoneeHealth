@@ -30,8 +30,8 @@ import {useEffect} from 'react';
 import QuickRoutine from './types/QuickRoutines';
 import TestType from './types/Test';
 import StackComponent from './Stack';
-import {Alert, Linking} from 'react-native';
-import queryString from 'query-string';
+import {Linking} from 'react-native';
+import {handleDeepLink} from './actions/exercises';
 
 const composeEnhancers =
   // @ts-ignore
@@ -110,29 +110,19 @@ export type StackParamList = {
   SavedItems: undefined;
 };
 
-const handleDeepLink = (url: string) => {
-  const parsed = queryString.parseUrl(url);
-  if (parsed.url === 'healthandmovement://workout') {
-    if (typeof parsed.query.exercises === 'string') {
-      const exercises = parsed.query.exercises.split(',');
-      console.log(exercises);
-    }
-  }
-};
-
 const linking: LinkingOptions<StackParamList> = {
   prefixes: ['healthandmovement://'],
   async getInitialURL() {
     const url = await Linking.getInitialURL();
     if (url !== null) {
-      handleDeepLink(url);
+      store.dispatch(handleDeepLink(url));
       return url;
     }
   },
 
   subscribe(listener) {
     const onReceiveURL = ({url}: {url: string}) => {
-      handleDeepLink(url);
+      store.dispatch(handleDeepLink(url));
     };
 
     Linking.addEventListener('url', onReceiveURL);

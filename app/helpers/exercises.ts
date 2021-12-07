@@ -1,3 +1,4 @@
+import {Share} from 'react-native';
 import {capitalizeFirstLetter} from '.';
 import Exercise, {
   allMuscleHighlights,
@@ -206,4 +207,13 @@ export const equipmentItemReadableString = (item: Equipment) => {
     default:
       return capitalizeFirstLetter(item);
   }
+};
+
+export const shareWorkout = (workout: Exercise[], name: string) => {
+  const url = `healthandmovement://workout?exercises=${workout
+    .map(exercise => exercise.id)
+    .join(',')}`;
+  Share.share({
+    title: `${name} has shared a Health and Movement workout with you`,
+  });
 };
