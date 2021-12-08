@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import QuickRoutinesListProps from '../../../types/views/QuickRoutinesList';
@@ -11,12 +11,15 @@ const Tab4: React.FC<QuickRoutinesListProps> = ({
 }) => {
   // @ts-ignore
   const {key} = route.params;
-  const filtered = Object.values(quickRoutines).filter(routine => {
-    return (
-      (key === 'area' && routine.area === 'core') ||
-      (key === 'focus' && routine.focus === 'intensity')
-    );
-  });
+
+  const filtered = useMemo(() => {
+    return Object.values(quickRoutines).filter(routine => {
+      return (
+        (key === 'area' && routine.area === 'core') ||
+        (key === 'focus' && routine.focus === 'intensity')
+      );
+    });
+  }, [key, quickRoutines]);
   return <QuickRoutineList routines={filtered} navigation={navigation} />;
 };
 

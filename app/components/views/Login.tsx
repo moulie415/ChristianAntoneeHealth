@@ -275,7 +275,9 @@ const Login: React.FC<LoginProps> = ({
             }
             setSpinner(false);
           }}
-          accessoryLeft={() => (spinner ? <Spinner /> : null)}
+          accessoryLeft={() =>
+            spinner ? <Spinner style={{backgroundColor: '#fff'}} /> : null
+          }
           style={styles.button}>
           Log in
         </Button>

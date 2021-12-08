@@ -11,7 +11,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         style={{}}
         accessoryLeft={() => (
           <Image
-            source={require('../../../images/article1.webp')}
+            source={require('../../../images/article1.jpeg')}
             style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
@@ -28,7 +28,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         style={{}}
         accessoryLeft={() => (
           <Image
-            source={require('../../../images/article2.webp')}
+            source={require('../../../images/article2.jpeg')}
             style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
@@ -45,7 +45,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         style={{}}
         accessoryLeft={() => (
           <Image
-            source={require('../../../images/article3.webp')}
+            source={require('../../../images/article3.jpeg')}
             style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}
@@ -62,7 +62,7 @@ const Education: React.FC<EducationProps> = ({navigation}) => {
         style={{}}
         accessoryLeft={() => (
           <Image
-            source={require('../../../images/article4.webp')}
+            source={require('../../../images/article4.jpeg')}
             style={{height: DevicePixels[100], width: DevicePixels[100]}}
           />
         )}

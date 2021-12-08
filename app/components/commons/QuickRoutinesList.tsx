@@ -1,6 +1,6 @@
 import {List, ListItem, Text, Layout} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import QuickRoutine, {Equipment, Focus} from '../../types/QuickRoutines';
 import colors from '../../constants/colors';
@@ -59,6 +59,7 @@ const QuickRoutinesList: React.FC<{
       navigation.navigate('QuickRoutine', {routine: selectedItem});
     }
   }, [adDismissed, navigation, selectedItem]);
+
   return (
     <Layout style={{flex: 1}}>
       <Text appearance="hint" style={{padding: DevicePixels[10]}}>
@@ -71,57 +72,83 @@ const QuickRoutinesList: React.FC<{
         keyExtractor={item => item.id}
         renderItem={({item}) => {
           return (
-            <ListItem
-              onPress={() => {
-                if (adLoaded && !profile.premium) {
-                  setSelectedItem(item);
-                  show();
-                } else {
-                  navigation.navigate('QuickRoutine', {routine: item});
+            <>
+              <ListItem
+                onPress={() => {
+                  if (adLoaded && !profile.premium) {
+                    setSelectedItem(item);
+                    show();
+                  } else {
+                    navigation.navigate('QuickRoutine', {routine: item});
+                  }
+                }}
+                title={item.name}
+                description={`${getLevelString(
+                  item.level,
+                )} - ${getEquipmentString(item.equipment)} - ${getFocusString(
+                  item.focus,
+                )}`}
+                accessoryLeft={() =>
+                  !item.premium || profile.premium ? (
+                    <ImageOverlay
+                      containerStyle={{
+                        height: DevicePixels[75],
+                        width: DevicePixels[75],
+                      }}
+                      overlayAlpha={0.4}
+                      source={
+                        item.thumbnail
+                          ? {uri: item.thumbnail.src}
+                          : require('../../images/old_man_stretching.jpeg')
+                      }>
+                      <View style={{alignItems: 'center'}}>
+                        <Text
+                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
+                          {'Under '}
+                        </Text>
+                        <Text category="h6" style={{color: '#fff'}}>
+                          {item.duration}
+                        </Text>
+                        <Text
+                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
+                          mins
+                        </Text>
+                      </View>
+                    </ImageOverlay>
+                  ) : (
+                    <View
+                      style={{
+                        height: DevicePixels[50],
+                        width: DevicePixels[75],
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon name="lock" size={DevicePixels[30]} />
+                    </View>
+                  )
                 }
-              }}
-              title={item.name}
-              description={`${getLevelString(
-                item.level,
-              )} - ${getEquipmentString(item.equipment)} - ${getFocusString(
-                item.focus,
-              )}`}
-              accessoryLeft={() => (
-                <ImageOverlay
-                  containerStyle={{
-                    height: DevicePixels[75],
-                    width: DevicePixels[75],
+                accessoryRight={() => (
+                  <TouchableOpacity style={{padding: DevicePixels[10]}}>
+                    <Icon
+                      name="ellipsis-h"
+                      color={colors.appBlue}
+                      size={DevicePixels[20]}
+                      onPress={() => 0}
+                    />
+                  </TouchableOpacity>
+                )}
+              />
+              {item.premium && !profile.premium && (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Premium')}
+                  style={{
+                    ...StyleSheet.absoluteFillObject,
+                    backgroundColor: '#000',
+                    opacity: 0.5,
                   }}
-                  overlayAlpha={0.4}
-                  source={
-                    item.thumbnail
-                      ? {uri: item.thumbnail.src}
-                      : require('../../images/old_man_stretching.jpeg')
-                  }>
-                  <View style={{alignItems: 'center'}}>
-                    <Text style={{color: '#fff', fontSize: DevicePixels[12]}}>
-                      {'Under '}
-                    </Text>
-                    <Text category="h6" style={{color: '#fff'}}>
-                      {item.duration}
-                    </Text>
-                    <Text style={{color: '#fff', fontSize: DevicePixels[12]}}>
-                      mins
-                    </Text>
-                  </View>
-                </ImageOverlay>
+                />
               )}
-              accessoryRight={() => (
-                <TouchableOpacity style={{padding: DevicePixels[10]}}>
-                  <Icon
-                    name="ellipsis-h"
-                    color={colors.appBlue}
-                    size={DevicePixels[20]}
-                    onPress={() => 0}
-                  />
-                </TouchableOpacity>
-              )}
-            />
+            </>
           );
         }}
       />

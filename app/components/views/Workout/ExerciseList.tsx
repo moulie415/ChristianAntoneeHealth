@@ -2,7 +2,12 @@ import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BottomSheet from 'reanimated-bottom-sheet';
-import {TouchableOpacity, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -174,13 +179,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Premium')}
                   style={{
-                    position: 'absolute',
-                    height: DevicePixels[70],
-                    backgroundColor: 'rgba(0,0,0, 0.5)',
-                    width: '100%',
-                  }}>
-                  <Text />
-                </TouchableOpacity>
+                    ...StyleSheet.absoluteFillObject,
+                    backgroundColor: '#000',
+                    opacity: 0.5,
+                  }}
+                />
               )}
             </>
           );
