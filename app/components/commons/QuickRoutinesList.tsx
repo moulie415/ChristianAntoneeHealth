@@ -75,7 +75,9 @@ const QuickRoutinesList: React.FC<{
             <>
               <ListItem
                 onPress={() => {
-                  if (adLoaded && !profile.premium) {
+                  if (item.premium && !profile.premium) {
+                    navigation.navigate('Premium');
+                  } else if (adLoaded && !profile.premium) {
                     setSelectedItem(item);
                     show();
                   } else {

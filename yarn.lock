@@ -1429,10 +1429,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@react-native-admob/admob@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.3.3.tgz#306afab8b1df3af1ca61c0757eacc504e0e3449d"
-  integrity sha512-iRW53vvehz3EJXmQPsV3MILzihuCXxxGMO1UtuLVu7i6UhDOkNP3SLPMR76wVjdhYuPe69nSBZzRUa5sZHOyMA==
+"@react-native-admob/admob@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.5.0.tgz#96b6d4f92c31cc1f8fd6c517063084f66fa22e26"
+  integrity sha512-ET81kAtmvKZ/Sj+hFk5taExd6VYRTjLiWamFkAb7QkX8bhueMnb7kkF6Re8pIH4i3O7uasxMutKzMDmJzKqvlA==
   dependencies:
     use-deep-compare-effect "^1.8.1"
 
@@ -1576,10 +1576,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz#8e6feb30f2620e5abdf565d5fe74c0c04edcf6ae"
-  integrity sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg==
+"@react-native-community/datetimepicker@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-4.0.1.tgz#f6361dc3087d458ee36bdd81fcd866df6bb906ab"
+  integrity sha512-lJURO1rhbmUCviYja2TcOxt14qc2w/5B9J+a7eZPG+9RF+1JEaWAGq3jdxWzLcimLdn+FWE8oQuveXZuuzO91Q==
   dependencies:
     invariant "^2.2.4"
 
@@ -1859,10 +1859,10 @@
     "@sentry/types" "6.12.0"
     tslib "^1.9.3"
 
-"@sentry/react-native@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@sentry/react-native/-/react-native-3.2.3.tgz#39faf729a152f8cc9699b1d427ed0e8d095042a8"
-  integrity sha512-1d7RpprRDZ6WG53VhP1vhGllxlk3weZ1nbsTx3rHPuFXehhUsc8+W3M+WoVB4SHIUn9LWIHe01E9XnKZX/BSoQ==
+"@sentry/react-native@^3.2.6":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@sentry/react-native/-/react-native-3.2.6.tgz#35f6258fd752f9000f7fa8db17c9553f5436fb85"
+  integrity sha512-hGg8Gu6BJqVCAgDzC9rwhXu9uwUuYEzmfMduP37YuMLJ0JRq1Iwcc1Dthy2LRk4vbMZ9iPqEaF4e9Zdajp0vXw==
   dependencies:
     "@sentry/browser" "6.12.0"
     "@sentry/cli" "^1.68.0"
@@ -6991,10 +6991,10 @@ react-native-fbsdk@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-3.0.0.tgz#07ef41758bb17a0acaff744008af625a45ef9a01"
   integrity sha512-i0JocuzLlGk13J0xFDjm8GlX7SADAL2kh/syE/HOn5HHdW+PFjC31MNj5AtzIw2TicHXpHGO6VPKNfdWFbxboA==
 
-react-native-flipper@^0.120.0:
-  version "0.120.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.120.0.tgz#a383b0f157fa94e0f61265c09d32b671b94f0670"
-  integrity sha512-Vacbfe64BjU46GOkMlVe3mVwiKbhX/9i92zkRoKXhQN3inJ/TOh6kSZo8Rpm0Fee+POKVGRin+8mElv32bYQgA==
+react-native-flipper@^0.123.0:
+  version "0.123.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.123.0.tgz#06972ea704962fcffd42db63bdaed3d8f6fcce84"
+  integrity sha512-pWFf/Z9ljZvATciXPnuNGn+gjd57bQzkUNmnhUKk/MZM6oh4zhEb3/Idh1bDwqulW81Sk5H1tXCQmdSRlqwKMQ==
 
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
@@ -7007,10 +7007,10 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-google-fit@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/react-native-google-fit/-/react-native-google-fit-0.18.0.tgz#697fad429b022b282afc66fefa0849da56b51bf7"
-  integrity sha512-5mdUQh3HaSmqinKtXmVtYbX20gJCxpE7Aad9l6GTPkcmHnHk7Y4cKnznPV8Wgoxwsf21eY4sHX1un1q72VuIgw==
+react-native-google-fit@^0.18.1:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/react-native-google-fit/-/react-native-google-fit-0.18.1.tgz#4544d9b8ea5f327c885e152e4591851dd27e8e84"
+  integrity sha512-V4OdBaVo7Bfe9ZgkaJLmzl5yQPqjKNA1hQSDmYCxfP1IuXgLalvlDFfyFF1nUGxIu9gDq47gLFewwpKdSbjvcw==
   dependencies:
     moment "2.29.1"
 
@@ -7021,10 +7021,10 @@ react-native-health@^1.10.0:
   dependencies:
     "@expo/config-plugins" "^2.0.0"
 
-react-native-image-picker@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.3.0.tgz#d68640061d3c5e6bef1d417c8085828318162874"
-  integrity sha512-YJtpuNHK7PS4ujbsSVAL6rKW4QQEDTf80MxuPmwByYgMi01VbfkXZ/8+pf61ctOED3Z0ZZKbk7/3pJ0dQHVAbg==
+react-native-image-picker@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.4.2.tgz#808f906307731a63c71f93bf532e81b9f81503df"
+  integrity sha512-+qy5RZ908X4WGYsOrWQPnBrte9WKS4BIfYFmmBgqlNKWHx6MAWjD9hvxjmZTW7uTm5QxXoo+0f7kpkn2H4SKpw==
 
 react-native-iphone-x-helper@^1.0.3:
   version "1.3.1"
@@ -7051,10 +7051,10 @@ react-native-progress@^5.0.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-purchases@^4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-4.4.1.tgz#be2edd72cd00a636577a496ad4f637e8573a559d"
-  integrity sha512-hxg9IZhr73dxZmYjmGtzHLwdxmS9Yb1rPVtbZMKXAGKOipG7NahmbkRYCCKYhuYsSIRYITBhJj7fK9JnNx1x1A==
+react-native-purchases@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-4.5.0.tgz#7290f26d92a5d63e45ee37a8f9593a50de2fb324"
+  integrity sha512-l4hVCPqtXiflHN2vwZwrmja521eF2xvFyINn1OTzIgB+8xxi1eQ1AFmeelXzxaNsRsKkMS5ZJBC33Xa2l+IJ6w==
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"
@@ -7081,10 +7081,10 @@ react-native-safe-area-context@^3.3.2:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
   integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
 
-react-native-screens@^3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.9.0.tgz#39b79f0e50b9d68ec822d333bc76e7aaee90f3fd"
-  integrity sha512-TP/kASLQ/2iGCz4/n9CHeveKC9urzbfYXFH+1TfBnqaBwjIszhVuadiIOQ0qWKdSs6qnBR2xPTp9U18sNoc34A==
+react-native-screens@^3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.10.1.tgz#2634a1a17380c559a06de391e4969ae72c4365ff"
+  integrity sha512-ZF/XHnRsuinvDY1XiCWLXxoUoSf+NgsAes2SZfX9rFQQcv128zmh/+19SSavGrSf6rQNzqytEMdRGI6yr4Gbjw==
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
@@ -7114,10 +7114,10 @@ react-native-spinkit@^1.5.1:
   dependencies:
     prop-types "^15.5.8"
 
-react-native-splash-screen@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
-  integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
+react-native-splash-screen@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz#3af71ed17afe50fee69590a45aec399d071ead02"
+  integrity sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==
 
 react-native-svg@^12.1.1:
   version "12.1.1"
@@ -7174,10 +7174,10 @@ react-native-view-more-text@^2.1.0:
   dependencies:
     prop-types "^15.5.7"
 
-react-native-webview@^11.14.3:
-  version "11.14.3"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.14.3.tgz#31da92b8fd21f4d1192e057867478598153a6f5d"
-  integrity sha512-y/+7mE6by/uLGSIVmlp1xpJvL37rAuOL90EWTJYKZWL5iM8lN+pQkj/zwcPcGu4zNmuHdXXUk/cMR8hE89mNYg==
+react-native-webview@^11.15.0:
+  version "11.15.0"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.15.0.tgz#b5aea9da579ca17fb9fd324e5202b1b5b8ce9fa8"
+  integrity sha512-0Wv+8qu8XuACx1xZwzc2Yfl+rOvxUouLcPxUKdkhaMVNpwoM5/ePpczCQZ3LpiRnSoEtjaUkfyQHbJQ+x4dDJQ==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
