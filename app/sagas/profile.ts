@@ -448,10 +448,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(initBiometrics);
         }
         resetToTabs();
-        const url: string = yield call(Linking.getInitialURL);
-        if (url) {
-          Alert.alert(url);
-        }
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));
@@ -470,8 +466,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
     }
   } catch (e) {
     navigate('Welcome');
+    debugger;
     crashlytics().recordError(e);
-    console.log(e);
+    Alert.alert('Error', e.message);
   }
 }
 

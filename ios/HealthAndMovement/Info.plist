@@ -289,5 +289,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>FirebaseDynamicLinksCustomDomains</key>
+  <array>
+    <string>https://healthandmovement.page.link</string>
+    <string>https://healthandmovement.page.link/workout</string>
+  </array>
 </dict>
 </plist>

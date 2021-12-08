@@ -52,6 +52,12 @@ export function* getExercises(action: GetExercisesAction) {
   );
   yield put(setExercises(exercises));
   yield put(setLoading(false));
+  const link: FirebaseDynamicLinksTypes.DynamicLink | null = yield call(
+    dynamicLinks().getInitialLink,
+  );
+  if (link && link.url) {
+    yield call(handleDeepLink, link.url);
+  }
 }
 
 export function* deleteExercise(action: DeleteExerciseAction) {
