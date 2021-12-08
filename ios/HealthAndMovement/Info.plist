@@ -293,6 +293,8 @@
   <array>
     <string>https://healthandmovement.page.link</string>
     <string>https://healthandmovement.page.link/workout</string>
+    <string>https://healthandmovement</string>
+    <string>https://healthandmovement/workout</string>
   </array>
 </dict>
 </plist>

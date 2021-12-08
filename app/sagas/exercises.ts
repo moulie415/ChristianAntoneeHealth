@@ -132,7 +132,7 @@ function* getExercisesById(action: GetExercisesByIdAction) {
 
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
-  if (parsed.url === 'healthandmovement://workout') {
+  if (parsed.url === 'https://healthandmovement/workout') {
     try {
       const {loggedIn} = yield select((state: MyRootState) => state.profile);
       if (loggedIn) {
@@ -175,7 +175,6 @@ export function* handleDeepLink(url: string) {
             );
           } else {
             yield put(setWorkout(filtered));
-            navigate('ExerciseList');
             navigate('ReviewExercises');
           }
         }
@@ -188,13 +187,18 @@ export function* handleDeepLink(url: string) {
         'Sorry Health and Movement had problems handling the link',
       );
     }
+  } else {
+    Alert.alert(
+      'Error',
+      'Sorry Health and Movement had problems handling the link',
+    );
   }
 }
 
 function onDynamicLink() {
   return eventChannel(emitter => {
-    const subscriber = dynamicLinks().onLink(link => {
-      emitter(link);
+    const subscriber = dynamicLinks().onLink(({url}) => {
+      emitter(url);
     });
     return subscriber;
   });
@@ -214,9 +218,7 @@ export default function* exercisesSaga() {
   );
 
   while (true) {
-    const url: FirebaseDynamicLinksTypes.DynamicLink = yield take(
-      dynamicLinkChannel,
-    );
-    yield call(handleDeepLink, url.url);
+    const url: string = yield take(dynamicLinkChannel);
+    yield call(handleDeepLink, url);
   }
 }
