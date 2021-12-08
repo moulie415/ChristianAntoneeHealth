@@ -31,7 +31,6 @@ import {
   UpdateProfileAction,
   SET_WORKOUT_REMINDERS,
   SetWorkoutRemindersAction,
-  setWorkoutReminders,
   SET_WORKOUT_REMINDER_TIME,
   SetWorkoutReminderTimeAction,
   setWorkoutReminderTime,
@@ -51,7 +50,7 @@ import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, resetToTabs} from '../RootNavigation';
-import {Alert, Linking, Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
   getStepSamples,
@@ -76,6 +75,10 @@ import {
 import Exercise from '../types/Exercise';
 import Purchases, {PurchaserInfo} from 'react-native-purchases';
 import {setUserAttributes} from '../helpers/profile';
+import {handleDeepLink} from './exercises';
+import dynamicLinks, {
+  FirebaseDynamicLinksTypes,
+} from '@react-native-firebase/dynamic-links';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -448,6 +451,22 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(initBiometrics);
         }
         resetToTabs();
+        const getLinkPromise = () => {
+          return new Promise<FirebaseDynamicLinksTypes.DynamicLink>(resolve => {
+            dynamicLinks()
+              .getInitialLink()
+              .then(link => {
+                resolve(link);
+              });
+          });
+        };
+        const link: FirebaseDynamicLinksTypes.DynamicLink = yield call(
+          getLinkPromise,
+        );
+
+        if (link && link.url) {
+          yield call(handleDeepLink, link.url);
+        }
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));
@@ -466,7 +485,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
     }
   } catch (e) {
     navigate('Welcome');
-    debugger;
     crashlytics().recordError(e);
     Alert.alert('Error', e.message);
   }

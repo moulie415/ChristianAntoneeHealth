@@ -5,12 +5,14 @@ import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
   getDifficultyEmoji,
   getDifficultyText,
+  shareWorkout,
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {saveWorkout} from '../../../actions/exercises';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,
@@ -72,8 +74,14 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
             navigation.navigate('Premium');
           }
         }}
-        style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
+        style={{margin: DevicePixels[10]}}>
         Save Workout
+      </Button>
+      <Button
+        onPress={() => shareWorkout(workout, profile.name)}
+        accessoryLeft={() => <Icon name="share-alt" color="#fff" />}
+        style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
+        Share workout
       </Button>
     </Layout>
   );

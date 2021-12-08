@@ -52,12 +52,6 @@ export function* getExercises(action: GetExercisesAction) {
   );
   yield put(setExercises(exercises));
   yield put(setLoading(false));
-  const link: FirebaseDynamicLinksTypes.DynamicLink | null = yield call(
-    dynamicLinks().getInitialLink,
-  );
-  if (link && link.url) {
-    yield call(handleDeepLink, link.url);
-  }
 }
 
 export function* deleteExercise(action: DeleteExerciseAction) {
@@ -136,48 +130,57 @@ function* getExercisesById(action: GetExercisesByIdAction) {
   }
 }
 
-function* handleDeepLink(url: string) {
+export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
   if (parsed.url === 'healthandmovement://workout') {
     try {
-      if (typeof parsed.query.exercises === 'string') {
-        const exerciseIds = parsed.query.exercises.split(',');
-        const exercises: {[key: string]: Exercise} = yield select(
-          (state: MyRootState) => state.exercises.exercises,
-        );
-        const {premium, admin} = yield select(
-          (state: MyRootState) => state.profile.profile,
-        );
-        const missing = exerciseIds.filter(id => {
-          return !exercises[id];
-        });
-        if (missing.length) {
-          yield call(getExercisesById, {
-            type: GET_EXERCISES_BY_ID,
-            payload: missing,
-          });
-        }
-        const updatedExercises: {[key: string]: Exercise} = yield select(
-          (state: MyRootState) => state.exercises.exercises,
-        );
-        const filtered = Object.values(updatedExercises).filter(exercise =>
-          exerciseIds.includes(exercise.id),
-        );
-
-        if (filtered.some(exercise => exercise.premium) && !premium && !admin) {
-          Alert.alert(
-            'Sorry',
-            'That workout link includes premium exercises, would you like to subscribe to premium?',
-            [
-              {text: 'No thanks'},
-              {text: 'Yes', onPress: () => navigate('Premium')},
-            ],
+      const {loggedIn} = yield select((state: MyRootState) => state.profile);
+      if (loggedIn) {
+        if (typeof parsed.query.exercises === 'string') {
+          const exerciseIds = parsed.query.exercises.split(',');
+          const exercises: {[key: string]: Exercise} = yield select(
+            (state: MyRootState) => state.exercises.exercises,
           );
-        } else {
-          yield put(setWorkout(filtered));
-          navigate('ExerciseList');
-          navigate('ReviewExercises');
+          const {premium, admin} = yield select(
+            (state: MyRootState) => state.profile.profile,
+          );
+          const missing = exerciseIds.filter(id => {
+            return !exercises[id];
+          });
+          if (missing.length) {
+            yield call(getExercisesById, {
+              type: GET_EXERCISES_BY_ID,
+              payload: missing,
+            });
+          }
+          const updatedExercises: {[key: string]: Exercise} = yield select(
+            (state: MyRootState) => state.exercises.exercises,
+          );
+          const filtered = Object.values(updatedExercises).filter(exercise =>
+            exerciseIds.includes(exercise.id),
+          );
+
+          if (
+            filtered.some(exercise => exercise.premium) &&
+            !premium &&
+            !admin
+          ) {
+            Alert.alert(
+              'Sorry',
+              'That workout link includes premium exercises, would you like to subscribe to premium?',
+              [
+                {text: 'No thanks'},
+                {text: 'Yes', onPress: () => navigate('Premium')},
+              ],
+            );
+          } else {
+            yield put(setWorkout(filtered));
+            navigate('ExerciseList');
+            navigate('ReviewExercises');
+          }
         }
+      } else {
+        Alert.alert('Error', 'Please log in before using that link');
       }
     } catch (e) {
       Alert.alert(

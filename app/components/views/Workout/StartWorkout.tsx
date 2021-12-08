@@ -88,7 +88,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           setIndex(e.nativeEvent.position);
           setShowNoteInput({});
         }}
-        style={{flex: 1}}>
+        style={{flex: 1, paddingHorizontal: 0}}>
         {workout.map((exercise, index) => {
           const video: {src: string; path: string} | undefined =
             videos[exercise.id];
