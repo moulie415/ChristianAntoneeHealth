@@ -160,6 +160,7 @@ function* handleDeepLink(action: HandleDeepLinkAction) {
           );
         } else {
           yield put(setWorkout(filtered));
+          navigate('ExerciseList');
           navigate('ReviewExercises');
         }
       }

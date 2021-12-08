@@ -1656,6 +1656,11 @@
     "@expo/config-plugins" "^4.0.10"
     stacktrace-js "^2.0.0"
 
+"@react-native-firebase/dynamic-links@^13.1.0":
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-13.1.0.tgz#f39f65a7ee7bf3d224bdcc5c2c23390cdc9b4764"
+  integrity sha512-sxJqHr6nYIN9Ly5EYyRJIj6zNnERRYPJDicgjOwdrJhRfgEnuaoFttGE3hWwzfaqB9pwTPOByhOYi7FgwQeG4Q==
+
 "@react-native-firebase/firestore@^13.1.0":
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-13.1.0.tgz#63d86e37cd8676b4ea3b55a5d6227cf2ba933cfd"
