@@ -18,7 +18,6 @@ export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
 export const SAVE_WORKOUT = 'SAVED_WORKOUT';
 export const GET_SAVED_WORKOUTS = 'GET_SAVED_WORKOUTS';
 export const SET_SAVED_WORKOUTS = 'SET_SAVED_WORKOUTS';
-export const HANDLE_DEEP_LINK = 'HANDLE_DEEP_LINK';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -101,11 +100,6 @@ export interface GetSavedWorkoutsAction {
 export interface SetSavedWorkoutsAction {
   type: typeof SET_SAVED_WORKOUTS;
   payload: {[key: string]: SavedWorkout};
-}
-
-export interface HandleDeepLinkAction {
-  type: typeof HANDLE_DEEP_LINK;
-  payload: string;
 }
 
 export const getExercises = (
@@ -196,11 +190,6 @@ export const setSavedWorkouts = (savedWorkouts: {
   payload: savedWorkouts,
 });
 
-export const handleDeepLink = (url: string): HandleDeepLinkAction => ({
-  type: HANDLE_DEEP_LINK,
-  payload: url,
-});
-
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -214,5 +203,4 @@ export type ExercisesActions =
   | SaveWorkoutAction
   | GetSavedWorkoutsAction
   | SetSavedWorkoutsAction
-  | GetExercisesByIdAction
-  | HandleDeepLinkAction;
+  | GetExercisesByIdAction;

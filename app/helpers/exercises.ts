@@ -211,13 +211,15 @@ export const equipmentItemReadableString = (item: Equipment) => {
 };
 
 export const shareWorkout = (workout: Exercise[], name: string) => {
-  const url = `healthandmovement://workout?exercises=${workout
-    .map(exercise => exercise.id)
-    .join(',')}`;
-    debugger;
+  const url = `
+    https://healthandmovement.page.link/?link=https://healthandmovement/workout?exercises=${workout
+      .map(exercise => exercise.id)
+      .join(
+        ',',
+      )}&apn=com.healthandmovement&isi=1506679389&ibi=com.HealthAndMovement`;
   Share.share({
     title: `${name} has shared a Health and Movement workout with you`,
     url,
-    message: `Click the link to view the workout: ${url} if you do not have the app installed then you can install it here: ${STORE_LINK}`,
+    message: `Click the link to view the workout: ${url}`,
   });
 };

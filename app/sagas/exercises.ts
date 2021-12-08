@@ -1,4 +1,13 @@
-import {call, put, select, takeEvery, takeLatest} from 'redux-saga/effects';
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+  take,
+} from 'redux-saga/effects';
+import {eventChannel} from '@redux-saga/core';
+import {EventChannel} from '@redux-saga/core';
 import Snackbar from 'react-native-snackbar';
 import {
   AddExerciseAction,
@@ -10,8 +19,6 @@ import {
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
   GET_SAVED_WORKOUTS,
-  HandleDeepLinkAction,
-  HANDLE_DEEP_LINK,
   SaveWorkoutAction,
   SAVE_WORKOUT,
   setExercises,
@@ -29,6 +36,9 @@ import {SavedWorkout} from '../types/SavedItem';
 import queryString from 'query-string';
 import {Alert} from 'react-native';
 import {navigate} from '../RootNavigation';
+import dynamicLinks, {
+  FirebaseDynamicLinksTypes,
+} from '@react-native-firebase/dynamic-links';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, area, cardioType} = action.payload;
@@ -120,8 +130,7 @@ function* getExercisesById(action: GetExercisesByIdAction) {
   }
 }
 
-function* handleDeepLink(action: HandleDeepLinkAction) {
-  const url = action.payload;
+function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
   if (parsed.url === 'healthandmovement://workout') {
     try {
@@ -173,6 +182,15 @@ function* handleDeepLink(action: HandleDeepLinkAction) {
   }
 }
 
+function onDynamicLink() {
+  return eventChannel(emitter => {
+    const subscriber = dynamicLinks().onLink(link => {
+      emitter(link);
+    });
+    return subscriber;
+  });
+}
+
 export default function* exercisesSaga() {
   yield takeEvery(GET_EXERCISES, getExercises);
   yield takeEvery(ADD_EXERCISE, addExercise);
@@ -181,5 +199,15 @@ export default function* exercisesSaga() {
   yield takeLatest(SAVE_WORKOUT, saveWorkout);
   yield takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts);
   yield takeLatest(GET_EXERCISES_BY_ID, getExercisesById);
-  yield takeLatest(HANDLE_DEEP_LINK, handleDeepLink);
+
+  const dynamicLinkChannel: EventChannel<FirebaseDynamicLinksTypes.DynamicLink> = yield call(
+    onDynamicLink,
+  );
+
+  while (true) {
+    const url: FirebaseDynamicLinksTypes.DynamicLink = yield take(
+      dynamicLinkChannel,
+    );
+    yield call(handleDeepLink, url.url);
+  }
 }

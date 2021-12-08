@@ -1,7 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {StackParamList} from './App';
 import {createStackNavigator} from '@react-navigation/stack';
-import Icon from '';
 import Premium from './components/views/More/Premium';
 import Loading from './components/views/Loading';
 import ExerciseList from './components/views/Workout/ExerciseList';
