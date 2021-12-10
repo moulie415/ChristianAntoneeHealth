@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-google-fit/android/src/main/java/com/reactnative/googlefit/GoogleFitManager.java b/node_modules/react-native-google-fit/android/src/main/java/com/reactnative/googlefit/GoogleFitManager.java
+index 8650c2a..faec315 100644
+--- a/node_modules/react-native-google-fit/android/src/main/java/com/reactnative/googlefit/GoogleFitManager.java
++++ b/node_modules/react-native-google-fit/android/src/main/java/com/reactnative/googlefit/GoogleFitManager.java
+@@ -214,7 +214,7 @@ public class GoogleFitManager implements ActivityEventListener {
+                 .build();
+         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(context, options);
+ 
+-        GoogleSignInAccount gsa = GoogleSignIn.getAccountForScopes(mReactContext, new Scope(Scopes.FITNESS_ACTIVITY_READ));
++        GoogleSignInAccount gsa = GoogleSignIn.getAccountForScopes(mReactContext, new Scope("https://www.googleapis.com/auth/fitness.activity.read"));
+         Fitness.getConfigClient(mReactContext, gsa).disableFit();
+         mApiClient.disconnect();
+ 

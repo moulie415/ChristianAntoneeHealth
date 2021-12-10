@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest && npx tsc --skipLibCheck",
     "lint": "eslint .",
-    "clean": "react-native-clean-project"
+    "clean": "react-native-clean-project",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.15.0",
@@ -39,6 +40,8 @@
     "@ui-kitten/components": "^5.1.1",
     "@ui-kitten/eva-icons": "^5.1.1",
     "moment": "^2.29.1",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "query-string": "^7.0.1",
     "ramda": "^0.27.1",
     "react": "17.0.2",

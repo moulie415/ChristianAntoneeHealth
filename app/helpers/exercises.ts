@@ -211,11 +211,10 @@ export const equipmentItemReadableString = (item: Equipment) => {
 };
 
 export const shareWorkout = (workout: Exercise[], name: string) => {
-  const url = `https://healthandmovement.page.link/?link=https://healthandmovement/workout?exercises=${workout
-    .map(exercise => exercise.id)
-    .join(
-      ',',
-    )}&apn=com.healthandmovement&isi=1506679389&ibi=com.HealthAndMovement`;
+  const url = `https://healthandmovement.page.link/?link=https://healthandmovement/workout${encodeURIComponent(
+    `?exercises=${workout.map(exercise => exercise.id).join(',')}`,
+  )}&apn=com.healthandmovement&isi=1506679389&ibi=com.HealthAndMovement`;
+
   Share.share({
     title: `${name} has shared a Health and Movement workout with you`,
     url,
