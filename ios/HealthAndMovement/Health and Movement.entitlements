@@ -10,9 +10,9 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>https://healthandmovement.page.link</string>
-		<string>https://healthandmovement/workout</string>
-		<string>https://healthandmovement</string>
+		<string>applinks:healthandmovement.page.link</string>
+		<string>applinks:healthandmovement/workout</string>
+		<string>applinks:healthandmovement</string>
 	</array>
 	<key>com.apple.developer.healthkit</key>
 	<true/>
