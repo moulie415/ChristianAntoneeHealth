@@ -848,7 +848,7 @@ PODS:
     - React
   - react-native-flipper (0.123.0):
     - React-Core
-  - react-native-image-picker (4.4.2):
+  - react-native-image-picker (4.6.0):
     - React-Core
   - react-native-pager-view (5.4.9):
     - React-Core
@@ -941,7 +941,7 @@ PODS:
     - React
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNAdMob (1.5.0):
+  - RNAdMob (2.0.0):
     - Google-Mobile-Ads-SDK (~> 8.0)
     - React-Core
   - RNAppleAuthentication (2.1.5):
@@ -964,27 +964,27 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (13.1.0):
+  - RNFBAnalytics (14.0.1):
     - Firebase/Analytics (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (13.1.0):
+  - RNFBApp (14.0.1):
     - Firebase/CoreOnly (= 8.10.0)
     - React-Core
-  - RNFBAuth (13.1.0):
+  - RNFBAuth (14.0.1):
     - Firebase/Auth (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (13.1.0):
+  - RNFBCrashlytics (14.0.1):
     - Firebase/Crashlytics (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBDynamicLinks (13.1.0):
+  - RNFBDynamicLinks (14.0.1):
     - Firebase/DynamicLinks (= 8.10.0)
     - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
-  - RNFBFirestore (13.1.0):
+  - RNFBFirestore (14.0.1):
     - Firebase/Firestore (= 8.10.0)
     - React-Core
     - RNFBApp
@@ -1030,7 +1030,7 @@ PODS:
   - RNScreens (3.10.1):
     - React-Core
     - React-RCTImage
-  - RNSentry (3.2.6):
+  - RNSentry (3.2.8):
     - React-Core
     - Sentry (= 7.5.4)
   - RNSnackbar (2.4.0):
@@ -1425,7 +1425,7 @@ SPEC CHECKSUMS:
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
   react-native-flipper: 33bba1cad647f4d56403012993f201e10518b78c
-  react-native-image-picker: 6a18bc5c053ba096ec9b027bd497129cfda30e6b
+  react-native-image-picker: 8c83c5c7d137e866bcb9a2db93f1e1ca866fddbf
   react-native-pager-view: 3ee7d4c7697fb3ef788346e834a60cca97ed8540
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-shake: 2cb54987defd2bcea04ed09f5252ccbfe39914ab
@@ -1449,7 +1449,7 @@ SPEC CHECKSUMS:
   ReactCommon: 9bac022ab71596f2b0fde1268272543184c63971
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNAdMob: 4c11d24ece99491fd868872cc4d4a570f98fa8ed
+  RNAdMob: 2a380a83b9e85ae6cf4943ddba615c14113a4ba5
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
@@ -1459,19 +1459,19 @@ SPEC CHECKSUMS:
   RNDateTimePicker: a654a0ebfa3dd78bbe5389421aa2d3d5b2744e47
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: a7527dd01cb02bfaebad2857733a2d01c22d8009
-  RNFBApp: 1d553b3f201e9aaeba03d777b1dea51eaacc24cc
-  RNFBAuth: af8bef00241eaab1c1c06d9b942c133d8a5135a8
-  RNFBCrashlytics: 5b0472223e5bfcdf5760ee787f1d114bc1cf2162
-  RNFBDynamicLinks: 1033d685b3fffd20ca1c2f5e48cf76d18bce1bf4
-  RNFBFirestore: d141f27f48e94c66830e561167aff712659d4d87
+  RNFBAnalytics: 7559ac75a8d289ca8272b63c980fc68c8d633da9
+  RNFBApp: b6eef98aff9bfb2f7c135efee640215f72d718ab
+  RNFBAuth: d6f91ae9dc4330014b90a87ea97910b5dc5adaaf
+  RNFBCrashlytics: 27fe03701209b7dde02f986e0d67404d1f84a1e6
+  RNFBDynamicLinks: a567809399423b9e70d9485e8d3b11f0017bb5b7
+  RNFBFirestore: be3c95593d8f493ad4f02f63684c3329bb6d7638
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: aa1b4dff749eb760c6de50f1d987aa45455e58a8
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
-  RNSentry: 013532c90dc3947b14cd032a0df8a3a19bcf43bc
+  RNSentry: fe878ca3982d7871e502ccbb90072fe764c8d07d
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 27e8268bdb0a1f191f219a33267f7e0445e8d62f
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
