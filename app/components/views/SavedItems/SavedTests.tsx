@@ -10,10 +10,10 @@ import ImageOverlay from '../../commons/ImageOverlay';
 import DevicePixels from '../../../helpers/DevicePixels';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Test from '../../../types/Test';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 
-type SavedItemsNavigationProp = StackNavigationProp<
+type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'SavedItems'
 >;

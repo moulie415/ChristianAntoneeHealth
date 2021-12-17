@@ -53,6 +53,7 @@ export const persistor = persistStore(store);
 export type StackParamList = {
   Login: undefined;
   SignUp: undefined;
+  ForgotPassword: undefined;
   SignUpFlow: {dry?: boolean};
   Welcome: undefined;
   Tabs: undefined;

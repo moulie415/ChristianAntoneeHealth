@@ -1,11 +1,11 @@
 import {RouteProp} from '@react-navigation/core';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import QuickRoutine from '../QuickRoutines';
 
 type QuickRoutinesListRouteProp = RouteProp<StackParamList, 'QuickRoutines'>;
 
-export type QuickRoutinesListNavigationProp = StackNavigationProp<
+export type QuickRoutinesListNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'QuickRoutines'
 >;

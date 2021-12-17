@@ -1,7 +1,7 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { StackParamList } from '../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../App';
 
-type AboutNavigationProp = StackNavigationProp<StackParamList, 'About'>;
+type AboutNavigationProp = NativeStackNavigationProp<StackParamList, 'About'>;
 
 export default interface AboutProps {
   navigation: AboutNavigationProp;

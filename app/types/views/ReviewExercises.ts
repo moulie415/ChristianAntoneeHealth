@@ -1,9 +1,9 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
 import Profile from '../Profile';
 
-type ReviewExercisesNavigationProp = StackNavigationProp<
+type ReviewExercisesNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'ReviewExercises'
 >;
@@ -13,4 +13,4 @@ export default interface ReviewExercisesProps {
   setWorkoutAction: (workout: Exercise[]) => void;
   navigation: ReviewExercisesNavigationProp;
   profile: Profile;
-}
+};

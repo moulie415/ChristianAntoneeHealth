@@ -1,9 +1,9 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {UpdateProfilePayload} from '../../actions/profile';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 
-type SettingsNavigationProp = StackNavigationProp<StackParamList, 'Settings'>;
+type SettingsNavigationProp = NativeStackNavigationProp<StackParamList, 'Settings'>;
 
 export default interface SettingsProps {
   navigation: SettingsNavigationProp;

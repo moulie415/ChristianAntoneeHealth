@@ -14,11 +14,11 @@ import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
 import {getDifficultyEmoji} from '../../../helpers/exercises';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Exercise from '../../../types/Exercise';
 
-type SavedItemsNavigationProp = StackNavigationProp<
+type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'SavedItems'
 >;

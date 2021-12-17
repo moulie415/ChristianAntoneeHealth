@@ -1,8 +1,8 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Test from '../Test';
 
-type FitnessTestingNavigationProp = StackNavigationProp<
+type FitnessTestingNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'Fitness'
 >;
@@ -10,4 +10,4 @@ type FitnessTestingNavigationProp = StackNavigationProp<
 export default interface FitnessTestingProps {
   navigation: FitnessTestingNavigationProp;
   tests: {[key: string]: Test};
-};
+}

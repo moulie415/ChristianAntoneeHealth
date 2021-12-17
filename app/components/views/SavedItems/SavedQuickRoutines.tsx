@@ -1,4 +1,4 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
@@ -17,7 +17,7 @@ import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
 
-type SavedItemsNavigationProp = StackNavigationProp<
+type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'SavedItems'
 >;

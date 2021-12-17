@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {StackParamList} from './App';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Premium from './components/views/More/Premium';
 import Loading from './components/views/Loading';
 import ExerciseList from './components/views/Workout/ExerciseList';
@@ -32,10 +32,10 @@ import SignUpFlow from './components/views/SignUpFlow';
 import SavedItemsTabs from './SavedItemsTabs';
 import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
 import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';
-import {TouchableOpacity} from 'react-native';
 import HeaderShareButton from './components/commons/HeaderShareButton';
+import ForgotPassword from './components/views/ForgotPassword';
 
-const Stack = createStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 const StackComponent: FunctionComponent = () => {
   return (
@@ -65,6 +65,11 @@ const StackComponent: FunctionComponent = () => {
             name="SignUp"
             component={SignUp}
             options={{headerShown: false}}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Forgot Password'}}
+            name="ForgotPassword"
+            component={ForgotPassword}
           />
           <Stack.Screen
             name="SignUpFlow"

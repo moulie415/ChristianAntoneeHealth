@@ -1,12 +1,12 @@
 import {RouteProp} from '@react-navigation/core';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 import {SavedTest} from '../SavedItem';
 
 type TestResultsRouteProp = RouteProp<StackParamList, 'TestResults'>;
 
-type TestResultsNavigationProp = StackNavigationProp<
+type TestResultsNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'TestResults'
 >;

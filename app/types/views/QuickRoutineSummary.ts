@@ -1,10 +1,10 @@
 import {RouteProp} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 import {SavedQuickRoutine} from '../SavedItem';
 
-type QuickRoutineNavigationProp = StackNavigationProp<
+type QuickRoutineNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'QuickRoutineSummary'
 >;
@@ -16,4 +16,4 @@ export default interface QuickRoutineSummaryProps {
   route: QuickRoutineRouteProp;
   profile: Profile;
   saveQuickRoutineAction: (quickRoutine: SavedQuickRoutine) => void;
-};
+}

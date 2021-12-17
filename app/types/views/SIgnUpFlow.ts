@@ -1,10 +1,10 @@
 import {RouteProp} from '@react-navigation/core';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 import {SignUpPayload} from '../../actions/profile';
 
-type SignUpFlowNavigationProp = StackNavigationProp<
+type SignUpFlowNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'SignUpFlow'
 >;

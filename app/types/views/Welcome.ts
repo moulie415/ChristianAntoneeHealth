@@ -1,8 +1,11 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 
-type WelcomeNavigationProp = StackNavigationProp<StackParamList, 'Welcome'>;
+type WelcomeNavigationProp = NativeStackNavigationProp<
+  StackParamList,
+  'Welcome'
+>;
 
 export default interface WelcomeProps {
   navigation: WelcomeNavigationProp;
-};
+}

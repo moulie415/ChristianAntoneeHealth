@@ -4,14 +4,13 @@ import {
   TouchableOpacity,
   Image,
   Platform,
-  KeyboardAvoidingView,
   View,
   ImageBackground,
   StyleSheet,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Spinner, Input, Button, Text} from '@ui-kitten/components';
+import {Spinner, Button, Text} from '@ui-kitten/components';
 import auth from '@react-native-firebase/auth';
 import {Layout} from '@ui-kitten/components';
 import {connect} from 'react-redux';
@@ -24,8 +23,6 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 import {handleAuth} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import ImageOverlay from '../commons/ImageOverlay';
-import colors from '../../constants/colors';
 
 GoogleSignin.configure({
   webClientId:
@@ -286,7 +283,7 @@ const Login: React.FC<LoginProps> = ({
             flexDirection: 'row',
             justifyContent: 'center',
             marginTop: DevicePixels[15],
-            marginBottom: DevicePixels[20],
+            marginBottom: DevicePixels[5]
           }}>
           <Text style={{color: '#fff'}}>Not signed up yet? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
@@ -300,6 +297,18 @@ const Login: React.FC<LoginProps> = ({
             </Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
+          onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: '#fff',
+              textDecorationLine: 'underline',
+            }}>
+            Forgot password?
+          </Text>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
     </ImageBackground>
   );

@@ -1,11 +1,11 @@
 import {RouteProp} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
 import Profile from '../Profile';
 import {SavedWorkout} from '../SavedItem';
 
-type WorkoutSummaryNavigationProp = StackNavigationProp<
+type WorkoutSummaryNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'WorkoutSummary'
 >;
@@ -18,5 +18,4 @@ export default interface WorkoutSummaryProps {
   profile: Profile;
   saveWorkoutAction: (workout: SavedWorkout) => void;
   workout: Exercise[];
-  
 }

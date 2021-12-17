@@ -1,9 +1,12 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 
-type PremiumNavigationProp = StackNavigationProp<StackParamList, 'Premium'>;
+type PremiumNavigationProp = NativeStackNavigationProp<
+  StackParamList,
+  'Premium'
+>;
 
 export default interface PremiumProps {
   navigation: PremiumNavigationProp;
   setPremiumAction: (premium: boolean) => void;
-};
+}

@@ -1,5 +1,5 @@
 import {RouteProp} from '@react-navigation/core';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
 
@@ -8,7 +8,7 @@ type CustomizeExerciseRouteProp = RouteProp<
   'CustomizeExercise'
 >;
 
-type CustomizeExerciseNavigationProp = StackNavigationProp<
+type CustomizeExerciseNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'CustomizeExercise'
 >;
@@ -21,4 +21,4 @@ export default interface CustomizeExerciseProps {
   downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
-}
+};

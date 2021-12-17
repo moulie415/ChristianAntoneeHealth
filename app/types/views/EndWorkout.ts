@@ -1,10 +1,10 @@
 import {RouteProp} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
 import Profile from '../Profile';
 
-type EndWorkoutNavigationProp = StackNavigationProp<
+type EndWorkoutNavigationProp = NativeStackNavigationProp<
   StackParamList,
   'EndWorkout'
 >;
@@ -16,4 +16,4 @@ export default interface EndWorkoutProps {
   route: EndWorkoutRouteProp;
   profile: Profile;
   workout: Exercise[];
-};
+}

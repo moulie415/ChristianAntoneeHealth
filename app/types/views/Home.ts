@@ -1,11 +1,11 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 
-type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 
 export default interface HomeProps {
   navigation: HomeNavigationProp;
   profile: Profile;
   hasViewedWelcome: boolean;
-}
+};
