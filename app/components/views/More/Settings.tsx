@@ -281,6 +281,12 @@ const Settings: React.FC<SettingsProps> = ({
               />
             </TouchableOpacity>
           </Layout>
+          <Divider />
+          <Button
+            status="danger"
+            onPress={() => navigation.navigate('DeleteAccount')}>
+            Delete my account
+          </Button>
         </Layout>
       </ScrollView>
       <Button

@@ -34,6 +34,7 @@ import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
 import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';
 import HeaderShareButton from './components/commons/HeaderShareButton';
 import ForgotPassword from './components/views/ForgotPassword';
+import DeleteAccount from './components/views/DeleteAccount';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -70,6 +71,11 @@ const StackComponent: FunctionComponent = () => {
             options={{headerTitle: 'Forgot Password'}}
             name="ForgotPassword"
             component={ForgotPassword}
+          />
+          <Stack.Screen
+            name="DeleteAccount"
+            component={DeleteAccount}
+            options={{headerTitle: 'Delete Account'}}
           />
           <Stack.Screen
             name="SignUpFlow"

@@ -103,9 +103,10 @@ const Profile: React.FC<ProfileProps> = ({
           style={{
             flexDirection: 'row',
             margin: DevicePixels[20],
+            marginBottom: 0,
             alignItems: 'center',
           }}>
-          <TouchableOpacity style={{marginRight: DevicePixels[20]}}>
+          {/* <TouchableOpacity style={{marginRight: DevicePixels[20]}}>
             {profile.avatar ? (
               <Image style={styles.avatar} source={{uri: profile.avatar}} />
             ) : (
@@ -118,18 +119,17 @@ const Profile: React.FC<ProfileProps> = ({
                 <FIcon name="user" solid size={DevicePixels[25]} color="#fff" />
               </TouchableOpacity>
             )}
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Text category="h5">{profile.name}</Text>
         </Layout>
         <Layout style={{margin: DevicePixels[20]}}>
-          <Text style={{color: colors.textGrey}} category="label">
+          <Text style={{color: colors.textGrey, flex: 1}} category="label">
             Date of Birth
           </Text>
           {(show || Platform.OS === 'ios') && (
             <DatePicker
               style={{
                 marginVertical: DevicePixels[5],
-                width: DevicePixels[125],
               }}
               testID="datePicker"
               value={moment(dob).toDate()}
