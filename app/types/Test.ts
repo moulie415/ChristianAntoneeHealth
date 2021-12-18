@@ -8,6 +8,7 @@ export default interface Test {
   metric?: string;
   mens?: Table | PercentileTable;
   womens?: Table | PercentileTable;
+  premium?: boolean;
 };
 
 export interface Table {

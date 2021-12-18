@@ -87,16 +87,17 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                   });
                 }}
                 key={title}
-                style={{flex: 1, paddingBottom: DevicePixels[5]}}>
+                style={{flex: 1, marginBottom: DevicePixels[5]}}>
                 {/* <ImageLoader
                   style={{width: '100%', flex: 1}}
                   delay={index * 200}
                   resizeMode="cover"
                   source={image}
                 /> */}
-                <ImageOverlay
+                <ImageLoader
                   source={image}
-                  containerStyle={{width: '100%', flex: 1}}
+                  overlay
+                  style={{width: '100%', flex: 1}}
                 />
 
                 <View
