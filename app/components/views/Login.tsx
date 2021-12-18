@@ -259,7 +259,7 @@ const Login: React.FC<LoginProps> = ({
               if (!user.emailVerified) {
                 Alert.alert(
                   'Sorry',
-                  'You must first verify your email using the link we sent you before logging in',
+                  'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
                 );
               } else {
                 handleAuthAction(user);

@@ -478,7 +478,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
     } else if (user) {
       Alert.alert(
         'Account not verified',
-        'Please verify your account using the link we sent to your email address',
+        'Please verify your account using the link we sent to your email address, please also check your spam folder',
       );
       navigateToLoginIfNecessary();
     } else {
