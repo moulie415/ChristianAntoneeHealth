@@ -72,7 +72,6 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
   useEffect(() => {
     getQuickRoutinesAction();
   }, [getQuickRoutinesAction]);
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Layout style={{flex: 1}}>
@@ -80,12 +79,13 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
           return (
             <Fragment key={key}>
               <TouchableOpacity
-                onPress={() =>
+                onPress={() => {
                   setItemsCollapsed({
-                    ...itemsCollapsed,
-                    [index]: !itemsCollapsed[index],
-                  })
-                }
+                    0: index === 0 ? !itemsCollapsed[0] : true,
+                    1: index === 1 ? !itemsCollapsed[1] : true,
+                    2: index === 2 ? !itemsCollapsed[2] : true,
+                  });
+                }}
                 key={title}
                 style={{flex: 1, paddingBottom: DevicePixels[5]}}>
                 {/* <ImageLoader
