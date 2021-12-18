@@ -64,7 +64,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
                 source={image}
                 overlay
               />
-              {premium && (
+              {premium && !profile.premium && (
                 <View
                   style={{
                     position: 'absolute',

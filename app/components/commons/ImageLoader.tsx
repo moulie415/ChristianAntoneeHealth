@@ -14,7 +14,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = props => {
       delay: props.delay,
     }).start();
     Animated.timing(overlayOpacity.current, {
-      toValue: 0.6,
+      toValue: 0.7,
       duration: 1000,
       useNativeDriver: true,
       delay: props.delay,

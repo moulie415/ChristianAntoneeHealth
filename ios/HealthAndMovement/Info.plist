@@ -63,6 +63,13 @@
 	<string>212292566660393</string>
 	<key>FacebookDisplayName</key>
 	<string>Health And Movement</string>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://healthandmovement.page.link</string>
+		<string>https://healthandmovement.page.link/workout</string>
+		<string>https://healthandmovement</string>
+		<string>https://healthandmovement/workout</string>
+	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-7885763333661292~1425417333</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -284,17 +291,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>FirebaseDynamicLinksCustomDomains</key>
-  <array>
-    <string>https://healthandmovement.page.link</string>
-    <string>https://healthandmovement.page.link/workout</string>
-    <string>https://healthandmovement</string>
-    <string>https://healthandmovement/workout</string>
-  </array>
 </dict>
 </plist>
