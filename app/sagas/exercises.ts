@@ -205,10 +205,10 @@ function onDynamicLink() {
 }
 
 export default function* exercisesSaga() {
-  yield takeEvery(GET_EXERCISES, getExercises);
-  yield takeEvery(ADD_EXERCISE, addExercise);
-  yield takeEvery(DELETE_EXERCISE, deleteExercise);
-  yield takeEvery(UPDATE_EXERCISE, updateExercise);
+  yield takeLatest(GET_EXERCISES, getExercises);
+  yield takeLatest(ADD_EXERCISE, addExercise);
+  yield takeLatest(DELETE_EXERCISE, deleteExercise);
+  yield takeLatest(UPDATE_EXERCISE, updateExercise);
   yield takeLatest(SAVE_WORKOUT, saveWorkout);
   yield takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts);
   yield takeLatest(GET_EXERCISES_BY_ID, getExercisesById);

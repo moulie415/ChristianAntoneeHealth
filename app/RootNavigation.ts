@@ -28,6 +28,17 @@ export function resetToLogin() {
   );
 }
 
+export function navigateToLoginIfNecessary() {
+  if (
+    !navigationRef
+      .getState()
+      ?.routes.map(route => route.name)
+      .includes('Login')
+  ) {
+    navigate('Login');
+  }
+}
+
 export function resetToWelcome() {
   navigationRef.current?.dispatch(
     CommonActions.reset({

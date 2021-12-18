@@ -19,7 +19,8 @@ const DeleteAccount: React.FC<{
   const [requiresPassword, setRequiresPassword] = useState(false);
   useEffect(() => {
     const user = auth().currentUser;
-    if (user?.providerId === 'firebase') {
+    console.log(user.providerData);
+    if (user?.providerData?.find(data => data.providerId === 'password')) {
       setRequiresPassword(true);
     }
   }, []);
@@ -35,7 +36,12 @@ const DeleteAccount: React.FC<{
         }}
       />
       <Text
-        style={{color: '#fff', margin: DevicePixels[10], fontWeight: 'bold'}}>
+        style={{
+          color: '#fff',
+          margin: DevicePixels[10],
+          fontWeight: 'bold',
+          lineHeight: DevicePixels[20],
+        }}>
         {`We're sad to see you go, please enter your email${
           requiresPassword ? ' and password' : ''
         } to confirm deletion and be aware that this will delete all your Health and Movement data and it will not be recoverable.`}
@@ -44,7 +50,7 @@ const DeleteAccount: React.FC<{
         style={{
           borderRadius: DevicePixels[5],
           margin: DevicePixels[10],
-          marginBottom: DevicePixels[20],
+          marginBottom: DevicePixels[10],
           borderWidth: 0,
           backgroundColor: 'rgba(255,255,255,0.3)',
           paddingLeft: DevicePixels[10],

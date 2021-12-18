@@ -17,6 +17,7 @@ import {
   takeEvery,
   takeLatest,
   fork,
+  debounce,
 } from 'redux-saga/effects';
 import {
   setLoggedIn,
@@ -49,7 +50,7 @@ import {getProfileImage} from '../helpers/images';
 import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
-import {goBack, navigate, resetToTabs} from '../RootNavigation';
+import {goBack, navigate, navigateToLoginIfNecessary, resetToTabs} from '../RootNavigation';
 import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
@@ -479,6 +480,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         'Account not verified',
         'Please verify your account using the link we sent to your email address',
       );
+      navigateToLoginIfNecessary();
     } else {
       yield put(setLoggedIn(false));
       navigate('Welcome');
@@ -492,13 +494,13 @@ function* handleAuthWorker(action: HandleAuthAction) {
 
 export default function* profileSaga() {
   yield all([
-    takeEvery(SIGN_UP, signUp),
-    takeEvery(GET_SAMPLES, getSamplesWorker),
-    takeEvery(UPDATE_PROFILE, updateProfile),
+    takeLatest(SIGN_UP, signUp),
+    takeLatest(GET_SAMPLES, getSamplesWorker),
+    takeLatest(UPDATE_PROFILE, updateProfile),
     takeLatest(SET_WORKOUT_REMINDERS, setWorkoutRemindersWorker),
     takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
     takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
-    takeLatest(HANDLE_AUTH, handleAuthWorker),
+    debounce(1000, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
   ]);
 

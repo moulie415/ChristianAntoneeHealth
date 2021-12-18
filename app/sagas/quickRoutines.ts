@@ -122,7 +122,7 @@ function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
 }
 
 export default function* quickRoutinesSaga() {
-  yield takeEvery(GET_QUICK_ROUTINES, getQuickRoutines);
+  yield takeLatest(GET_QUICK_ROUTINES, getQuickRoutines);
   yield takeLatest(DOWNLOAD_ROUTINE_VIDEO, downloadRoutineVideoWorker);
   yield takeLatest(SAVE_QUICK_ROUTINE, saveQuickRoutine);
   yield takeLatest(GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);

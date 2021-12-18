@@ -65,7 +65,7 @@ function* getTestsById(action: GetTestsByIdAction) {
 }
 
 export default function* testsSaga() {
-  yield takeEvery(GET_TESTS, getTests);
+  yield takeLatest(GET_TESTS, getTests);
   yield takeLatest(SAVE_TEST, saveTest);
   yield takeLatest(GET_SAVED_TESTS, getSavedTests);
   yield takeLatest(GET_TESTS_BY_ID, getTestsById);

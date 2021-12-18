@@ -7,4 +7,5 @@ export default interface GoalsProps {
   purpose?: Purpose;
   setPurpose: (purpose: Purpose) => void;
   signUp: () => void;
+  loading: boolean;
 };

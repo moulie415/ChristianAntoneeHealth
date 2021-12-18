@@ -39,6 +39,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState(profile.name || '');
+  const [loading, setLoading] = useState(false);
 
   const dry = route.params?.dry;
   const getTitle = () => {
@@ -52,6 +53,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   };
 
   const completeSignUp = () => {
+    setLoading(true);
     signUpAction({
       name,
       dob,
@@ -132,6 +134,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
               purpose={purpose}
               setPurpose={setPurpose}
               signUp={completeSignUp}
+              loading={loading}
             />
           )}
         </KeyboardAvoidingView>

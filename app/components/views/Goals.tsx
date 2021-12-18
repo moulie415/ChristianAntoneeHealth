@@ -25,6 +25,7 @@ const Goals: React.FC<GoalsProps> = ({
   purpose,
   setPurpose,
   signUp,
+  loading,
 }) => {
   const selectGoal = (goal: Goal) => {
     selectedGoals.includes(goal)
@@ -146,7 +147,7 @@ const Goals: React.FC<GoalsProps> = ({
           <Icon name="plus" color={colors.appBlue} size={DevicePixels[25]} />
         </TouchableOpacity>
       </Layout>
-      <Button disabled={!purpose} onPress={signUp}>
+      <Button disabled={!purpose || loading} onPress={signUp}>
         Create Account
       </Button>
     </Layout>

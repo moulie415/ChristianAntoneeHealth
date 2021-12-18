@@ -125,14 +125,6 @@ const SignUp: React.FC<SignUpProps> = ({
         source={require('../../images/logo-and-text.png')}
       />
       <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <Button
-          onPress={async () => {
-            navigation.navigate('SignUpFlow', {dry: true});
-            setStepAction(0);
-          }}
-          style={styles.button}>
-          Sign up with email
-        </Button>
         {Platform.OS === 'ios' && (
           <Button
             onPress={async () => {
@@ -189,7 +181,6 @@ const SignUp: React.FC<SignUpProps> = ({
             backgroundColor: 'transparent',
             height: DevicePixels[50],
             marginHorizontal: DevicePixels[10],
-            marginBottom: DevicePixels[5],
             borderColor: '#fff',
           }}
           accessoryLeft={() =>
@@ -200,6 +191,14 @@ const SignUp: React.FC<SignUpProps> = ({
             )
           }>
           Google
+        </Button>
+        <Button
+          onPress={async () => {
+            navigation.navigate('SignUpFlow', {dry: true});
+            setStepAction(0);
+          }}
+          style={styles.button}>
+          Sign up with email
         </Button>
       </View>
       <View
