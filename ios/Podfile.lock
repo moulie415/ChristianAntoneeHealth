@@ -964,31 +964,31 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (14.0.1):
+  - RNFBAnalytics (14.1.0):
     - Firebase/Analytics (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (14.0.1):
+  - RNFBApp (14.1.0):
     - Firebase/CoreOnly (= 8.10.0)
     - React-Core
-  - RNFBAuth (14.0.1):
+  - RNFBAuth (14.1.0):
     - Firebase/Auth (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (14.0.1):
+  - RNFBCrashlytics (14.1.0):
     - Firebase/Crashlytics (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNFBDynamicLinks (14.0.1):
+  - RNFBDynamicLinks (14.1.0):
     - Firebase/DynamicLinks (= 8.10.0)
     - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
-  - RNFBFirestore (14.0.1):
+  - RNFBFirestore (14.1.0):
     - Firebase/Firestore (= 8.10.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (1.10.3):
+  - RNGestureHandler (2.1.0):
     - React-Core
   - RNGoogleSignin (5.0.0):
     - GoogleSignIn (~> 5.0.0)
@@ -1459,13 +1459,13 @@ SPEC CHECKSUMS:
   RNDateTimePicker: d16386fda012db9e1fac5d2f8281a91254dfee99
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: 7559ac75a8d289ca8272b63c980fc68c8d633da9
-  RNFBApp: b6eef98aff9bfb2f7c135efee640215f72d718ab
-  RNFBAuth: d6f91ae9dc4330014b90a87ea97910b5dc5adaaf
-  RNFBCrashlytics: 27fe03701209b7dde02f986e0d67404d1f84a1e6
-  RNFBDynamicLinks: a567809399423b9e70d9485e8d3b11f0017bb5b7
-  RNFBFirestore: be3c95593d8f493ad4f02f63684c3329bb6d7638
-  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNFBAnalytics: 0555b9d857644540ad36872fed900b2a08080530
+  RNFBApp: e884e9a2dcc5edfa73e2651ef6638df5e0672f89
+  RNFBAuth: fd6cbf93302641dbe20045a44e64c1fa3d4eff02
+  RNFBCrashlytics: 996f65bff28906dce4fb6af64d9e6fd366d489c2
+  RNFBDynamicLinks: 5306a3654921afe00f7fcdeb2e06a02e8d108926
+  RNFBFirestore: 335dcbdb91786a892dd76831373f9794ac947e3b
+  RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: aa1b4dff749eb760c6de50f1d987aa45455e58a8
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf

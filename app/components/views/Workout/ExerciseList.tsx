@@ -1,7 +1,7 @@
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import BottomSheet from 'reanimated-bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import {
   ImageBackground,
   StyleSheet,
@@ -167,7 +167,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                           navigation.navigate('Premium');
                         } else {
                           setSelectedExercise(item);
-                          bottomSheetRef.current.snapTo(0);
+                          bottomSheetRef.current.expand();
                           setModalOpen(true);
                         }
                       }}

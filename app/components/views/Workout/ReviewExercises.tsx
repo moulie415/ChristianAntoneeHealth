@@ -14,7 +14,7 @@ import {Goal, MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../../actions/exercises';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import BottomSheet from 'reanimated-bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import ExerciseBottomSheet from '../../commons/ExerciseBottomSheet';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {useInterstitialAd} from '@react-native-admob/admob';
@@ -69,7 +69,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                 size={DevicePixels[20]}
                 onPress={() => {
                   setSelectedExercise(item);
-                  bottomSheetRef.current?.snapTo(0);
+                  bottomSheetRef.current?.expand();
                   setModalOpen(true);
                 }}
               />

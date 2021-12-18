@@ -18,20 +18,20 @@ import {
 } from '../../../types/Shared';
 import {setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
-import BottomSheet from 'reanimated-bottom-sheet';
+import BottomSheet, {useBottomSheet} from '@gorhom/bottom-sheet';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {capitalizeFirstLetter} from '../../../helpers';
 import GoalMenu from './GoalMenu';
 import EquipmentMenu from './EquipmentMenu';
 import ExperienceMenu from './ExperienceMenu';
 import WarmUpCoolDown from './WarmUpCoolDown';
+import CustomBackdrop from '../../commons/CustomBackdrop';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
   setWorkoutAction,
   profile,
 }) => {
-
   const [modalOpen, setModalOpen] = useState(false);
   const [level, setLevel] = useState<Level>(Level.BEGINNER);
   const [selectedLevel, setSelectedLevel] = useState<Level>(Level.BEGINNER);
@@ -74,7 +74,7 @@ const Workout: React.FC<WorkoutProps> = ({
   };
 
   const onCancel = () => {
-    sheetRef.current.snapTo(1);
+    sheetRef.current.close();
     setModalOpen(false);
     switch (settings) {
       case 'goal':
@@ -94,7 +94,7 @@ const Workout: React.FC<WorkoutProps> = ({
   };
 
   const onSave = () => {
-    sheetRef.current.snapTo(1);
+    sheetRef.current.close();
     setModalOpen(false);
     switch (settings) {
       case 'goal':
@@ -127,114 +127,6 @@ const Workout: React.FC<WorkoutProps> = ({
     return `${equipment.length} selected`;
   };
 
-  const renderHeader = () => {
-    return (
-      <>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            backgroundColor: colors.button,
-            alignItems: 'center',
-            borderTopLeftRadius: DevicePixels[5],
-            borderTopRightRadius: DevicePixels[5],
-          }}>
-          <TouchableOpacity>
-            <Text
-              onPress={onCancel}
-              style={{
-                color: colors.appBlue,
-                padding: DevicePixels[10],
-                fontWeight: 'bold',
-              }}>
-              CANCEL
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>{getSettingsTitle()}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onSave}>
-            <Text
-              style={{
-                color: colors.appBlue,
-                padding: DevicePixels[10],
-                fontWeight: 'bold',
-              }}>
-              SAVE
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {settings === 'equipment' && (
-          <View
-            style={{
-              backgroundColor: '#fff',
-            }}>
-            <TouchableOpacity
-              style={{padding: DevicePixels[10]}}
-              onPress={() => {
-                selectedEquipment.length === Object.keys(Equipment).length
-                  ? setSelectedEquipment([])
-                  : setSelectedEquipment(Object.values(Equipment));
-              }}>
-              <Text
-                style={{
-                  textAlign: 'right',
-                  fontWeight: 'bold',
-                  // fontSize: DevicePixels[20],
-                  color: colors.appBlue,
-                }}>
-                {selectedEquipment.length === Object.keys(Equipment).length
-                  ? 'Clear all'
-                  : 'Select all'}
-              </Text>
-            </TouchableOpacity>
-            <Divider />
-          </View>
-        )}
-      </>
-    );
-  };
-
-  const renderContent = () => {
-    return (
-      <ScrollView
-        style={{
-          backgroundColor: 'white',
-          height: '100%',
-        }}>
-        {settings === 'goal' && (
-          <GoalMenu
-            selectedGoal={selectedGoal}
-            setSelectedGoal={setSelectedGoal}
-            selectedArea={selectedArea}
-            setSelectedArea={setSelectedArea}
-            selectedCardioType={selectedCardioType}
-            setSelectedCardioType={setSelectedCardioType}
-          />
-        )}
-        {settings === 'experience' && (
-          <ExperienceMenu
-            selectedLevel={selectedLevel}
-            setSelectedLevel={setSelectedLevel}
-          />
-        )}
-        {settings === 'equipment' && (
-          <EquipmentMenu
-            selectedEquipment={selectedEquipment}
-            setSelectedEquipment={setSelectedEquipment}
-          />
-        )}
-        {settings === 'warmup' && (
-          <WarmUpCoolDown
-            selectedWarmup={selectedWarmup}
-            setSelectedWarmUp={setSelectedWarmup}
-            selectedCoolDown={selectedCoolDown}
-            setSelectedCoolDown={setSelectedCoolDown}
-          />
-        )}
-      </ScrollView>
-    );
-  };
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -245,7 +137,7 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{paddingVertical: DevicePixels[20]}}
           title="Fitness goal"
           onPress={() => {
-            sheetRef.current.snapTo(0);
+            sheetRef.current.expand();
             setModalOpen(true);
             setSetting('goal');
           }}
@@ -274,7 +166,7 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{paddingVertical: DevicePixels[20]}}
           title="Exercise experience"
           onPress={() => {
-            sheetRef.current.snapTo(0);
+            sheetRef.current.expand();
             setModalOpen(true);
             setSetting('experience');
           }}
@@ -303,7 +195,7 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{paddingVertical: DevicePixels[20]}}
           title="Available equipment"
           onPress={() => {
-            sheetRef.current.snapTo(0);
+            sheetRef.current.expand();
             setModalOpen(true);
             setSetting('equipment');
           }}
@@ -332,7 +224,7 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{paddingVertical: DevicePixels[20]}}
           title="Warm-up & Cool-down"
           onPress={() => {
-            sheetRef.current.snapTo(0);
+            sheetRef.current.expand();
             setModalOpen(true);
             setSetting('warmup');
           }}
@@ -395,13 +287,108 @@ const Workout: React.FC<WorkoutProps> = ({
       </SafeAreaView>
       <BottomSheet
         ref={sheetRef}
-        snapPoints={['80%', 0]}
-        enabledInnerScrolling
-        initialSnap={1}
-        onCloseStart={() => setModalOpen(false)}
-        renderContent={renderContent}
-        renderHeader={renderHeader}
-      />
+        onClose={() => setModalOpen(false)}
+        enablePanDownToClose
+        snapPoints={['80%']}
+        index={-1}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            backgroundColor: colors.button,
+            alignItems: 'center',
+            borderTopLeftRadius: DevicePixels[5],
+            borderTopRightRadius: DevicePixels[5],
+          }}>
+          <TouchableOpacity>
+            <Text
+              onPress={onCancel}
+              style={{
+                color: colors.appBlue,
+                padding: DevicePixels[10],
+                fontWeight: 'bold',
+              }}>
+              CANCEL
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text>{getSettingsTitle()}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onSave}>
+            <Text
+              style={{
+                color: colors.appBlue,
+                padding: DevicePixels[10],
+                fontWeight: 'bold',
+              }}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {settings === 'equipment' && (
+          <View
+            style={{
+              backgroundColor: '#fff',
+            }}>
+            <TouchableOpacity
+              style={{padding: DevicePixels[10]}}
+              onPress={() => {
+                selectedEquipment.length === Object.keys(Equipment).length
+                  ? setSelectedEquipment([])
+                  : setSelectedEquipment(Object.values(Equipment));
+              }}>
+              <Text
+                style={{
+                  textAlign: 'right',
+                  fontWeight: 'bold',
+                  // fontSize: DevicePixels[20],
+                  color: colors.appBlue,
+                }}>
+                {selectedEquipment.length === Object.keys(Equipment).length
+                  ? 'Clear all'
+                  : 'Select all'}
+              </Text>
+            </TouchableOpacity>
+            <Divider />
+          </View>
+        )}
+        <ScrollView
+          style={{
+            backgroundColor: 'white',
+            height: '100%',
+          }}>
+          {settings === 'goal' && (
+            <GoalMenu
+              selectedGoal={selectedGoal}
+              setSelectedGoal={setSelectedGoal}
+              selectedArea={selectedArea}
+              setSelectedArea={setSelectedArea}
+              selectedCardioType={selectedCardioType}
+              setSelectedCardioType={setSelectedCardioType}
+            />
+          )}
+          {settings === 'experience' && (
+            <ExperienceMenu
+              selectedLevel={selectedLevel}
+              setSelectedLevel={setSelectedLevel}
+            />
+          )}
+          {settings === 'equipment' && (
+            <EquipmentMenu
+              selectedEquipment={selectedEquipment}
+              setSelectedEquipment={setSelectedEquipment}
+            />
+          )}
+          {settings === 'warmup' && (
+            <WarmUpCoolDown
+              selectedWarmup={selectedWarmup}
+              setSelectedWarmUp={setSelectedWarmup}
+              selectedCoolDown={selectedCoolDown}
+              setSelectedCoolDown={setSelectedCoolDown}
+            />
+          )}
+        </ScrollView>
+      </BottomSheet>
     </Layout>
   );
 };

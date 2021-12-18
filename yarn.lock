@@ -1190,6 +1190,23 @@
   resolved "https://registry.yarnpkg.com/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
+"@gorhom/bottom-sheet@^4":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.1.5.tgz#35341d45799de28082c380db6639537b04fa0b26"
+  integrity sha512-3F5P8jK3NXwT2lGwkAdkdLwDVHaRvMZalUTXjK6Ogf0Tki6idffJ3TNlQZlg8k6+OnXAx0+i80f4XaI+J4GFrA==
+  dependencies:
+    "@gorhom/portal" "^1.0.11"
+    invariant "^2.2.4"
+    nanoid "^3.1.20"
+    react-native-redash "^16.1.1"
+
+"@gorhom/portal@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.11.tgz#4224d45fea25e70d7e55af3b67249bad0ac9359b"
+  integrity sha512-Vrh2hAVp8ZToJ1a1NbYnehNzdJTxJv1BF3vMNbz1pnJIqm0nbi2W51piVvfiqohCDAegOyCCH1j/AEhW2cJYTA==
+  dependencies:
+    nanoid "^3.1.23"
+
 "@gregfrench/react-native-wheel-picker@^1.2.18":
   version "1.2.18"
   resolved "https://registry.yarnpkg.com/@gregfrench/react-native-wheel-picker/-/react-native-wheel-picker-1.2.18.tgz#3204d2705794f3863e4fea8771582a646ffe1320"
@@ -1629,42 +1646,42 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.1.12.tgz#279ff7bbe487af92ad95ec758a029a54569e2a62"
   integrity sha512-CiuLZ2orueBiWHYxfaJF57jQY6HY2Q3z5pdAE4MKH8EqIImr/jgDJrJ/UxOVZHK1Ng9P+XlGIKfVIcuWZ6guuA==
 
-"@react-native-firebase/analytics@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.0.1.tgz#111a1f38453cab96ae9c9544ef7bd5e8edf2e15f"
-  integrity sha512-emjDe000sKp5rPU5Lh+UKXtCWvHv2lJRCaMH3raDSj8C7TglyQPqlRFnIjGMko2QmfXucolzlpvb1AYkUOTkyw==
+"@react-native-firebase/analytics@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.1.0.tgz#ed239b01a379e84e8cb872ef71842e01774d0ed6"
+  integrity sha512-z1BkBx6c1/eynOcyMknezuC+zwLyGVc4qz3gvWOLiokLbqaneXiYVNPe6D/hhM0HIxSLM6JCptvkpAlUi0G7Pg==
 
-"@react-native-firebase/app@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.0.1.tgz#bdac886dae85628eedbb2cf91c31b3681e4562fc"
-  integrity sha512-LDudsR9OGKqf9wqaYKeYujmPRMY4pI/zWva/WAH0gzLNR7RuSrwFVpzxXx3wQw8f6ruJ8h8VJw0h3P2vhV1jgw==
+"@react-native-firebase/app@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.1.0.tgz#f3a26c893c86e9cb50f9735bc9ab0b1fef6462aa"
+  integrity sha512-xYGJEbKBfi3UNTeSHKSc1LcAZ9wuTi4uqgdmmm5vBiSF0+IkpxGmCk3izACDRaaji7eEBAHu4MaHFRmqwuil6Q==
   dependencies:
     "@expo/config-plugins" "^4.0.12"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-14.0.1.tgz#a672664d2fa1f039bbbef78a6a0337e654c46e6b"
-  integrity sha512-n5IZCTeLW9+F7WdcTl48FsZ2MyqzAiUFWkX0ZjYQgX7Eg/WsQitJV6UfuQmKd5wn82wbOr1Tre11hqTl/oYHUg==
+"@react-native-firebase/auth@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-14.1.0.tgz#853fdaf045d417f9bbbdb3accf08cebbc6e7e4ed"
+  integrity sha512-Z+9F6N4Xx5YnggINqzKN0rP2ROBTKapXHKA0IIkFISB4RZsuDXnS3FhFUArGdVnjv87ywgp3Lb+mdIGq9cl8Ug==
 
-"@react-native-firebase/crashlytics@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-14.0.1.tgz#28b4f2823f4a4b873d06e5ab944d62e39aa7fa5c"
-  integrity sha512-YLbBUoZsVb2ePoZ0t0GhmTe6qmHe1Apb+eW0z8NnN+3X7h4UQoOHMp62xQy2m/YMok8XQoVF8XrZ/cl5Coa8eQ==
+"@react-native-firebase/crashlytics@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-14.1.0.tgz#fd9ad1fb180bf92199f3e7ba5068b3725349fd45"
+  integrity sha512-bvk2fIUyXGNNpGhzwIv/PQJJrxgw2LZQM6xvnStSwDkprcFFoivMh2k9zcfwUnziCRUOt/nVvusq0OdSNqLYyA==
   dependencies:
     "@expo/config-plugins" "^4.0.12"
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/dynamic-links@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-14.0.1.tgz#71792e24b875ce891446168cae4745a526c9aac6"
-  integrity sha512-UODqye8TJw6Cmk0nMFLTEfqOKDcDJkeVx0vhqwpTDsfUgi5VxYZAPmSkVsFHr7BUOLFsAj44iek1/uZuMqBqpA==
+"@react-native-firebase/dynamic-links@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-14.1.0.tgz#e0b0c9b527d6889819d2d467a34b1d9ef32b45d8"
+  integrity sha512-Qj5QElkDuN8WnhKUJK6lrDTnCqoelltmxxY0qaCwvJCb7k5BqAT1mcUZy+stIxPulKTpAd/14oeTuWpffqL+7A==
 
-"@react-native-firebase/firestore@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.0.1.tgz#8610994db93737f8874c57580e84991359daf8a9"
-  integrity sha512-GPjdM21rtiDlVI6oGhLEthp7to80WaeJuq8t25d9LNRJQr+ThvRD01wQ82DxBXXdD6drSBXMi96CH/UDTZ9fYw==
+"@react-native-firebase/firestore@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.1.0.tgz#012b50b9dd3b9686ae44d850b1dde4bcc316750a"
+  integrity sha512-IMtdKCuAxnuEhIoRT+hLuhc4TZa3/y4ytrn66/glOZY3OyswTUHtGqktn4gTTm3hrAP1KEG9FvBOqIdmNxQHSQ==
 
 "@react-native-picker/picker@^1.9.4":
   version "1.16.0"
@@ -2336,6 +2353,11 @@ abort-controller@^3.0.0:
   integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
   dependencies:
     event-target-shim "^5.0.0"
+
+abs-svg-path@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/abs-svg-path/-/abs-svg-path-0.1.1.tgz#df601c8e8d2ba10d4a76d625e236a9a39c2723bf"
+  integrity sha1-32Acjo0roQ1KdtYl4japo5wnI78=
 
 absolute-path@^0.0.0:
   version "0.0.0"
@@ -6248,6 +6270,11 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
+nanoid@^3.1.20:
+  version "3.1.30"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
+  integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
+
 nanoid@^3.1.23:
   version "3.1.23"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.23.tgz#f744086ce7c2bc47ee0a8472574d5c78e4183a81"
@@ -6373,6 +6400,13 @@ normalize-path@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
+
+normalize-svg-path@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/normalize-svg-path/-/normalize-svg-path-1.1.0.tgz#0e614eca23c39f0cffe821d6be6cd17e569a766c"
+  integrity sha512-r9KHKG2UUeB5LoTouwDzBy2VxXlHsiM6fyLQvnJa0S5hrhzqElH/CH7TUGhT1fVvIYBIKf3OpY4YJ4CK+iaqHg==
+  dependencies:
+    svg-arc-to-cubic-bezier "^3.0.0"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -6681,6 +6715,11 @@ parse-json@^5.0.0:
     error-ex "^1.3.1"
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
+
+parse-svg-path@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/parse-svg-path/-/parse-svg-path-0.1.2.tgz#7a7ec0d1eb06fa5325c7d3e009b859a09b5d49eb"
+  integrity sha1-en7A0esG+lMlx9PgCbhZoJtdSes=
 
 parse5@6.0.1:
   version "6.0.1"
@@ -7062,15 +7101,15 @@ react-native-flipper@^0.126.0:
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.126.0.tgz#9a2ca3a52aba309e1bd9fdd0501772804fdfe9ee"
   integrity sha512-HsWhoc7Aa+KWFsZ/j7mVpVsaq1Oc+MkwkF1fl6Z4oACRZvWFwHbxVcMf72hkWmaEf6X1TD5h9dZeVT8JMW18OA==
 
-react-native-gesture-handler@^1.10.3:
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz#942bbf2963bbf49fa79593600ee9d7b5dab3cfc0"
-  integrity sha512-cBGMi1IEsIVMgoox4RvMx7V2r6bNKw0uR1Mu1o7NbuHS6BRSVLq0dP34l2ecnPlC+jpWd3le6Yg1nrdCjby2Mw==
+react-native-gesture-handler@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.1.0.tgz#be7a83a7bd340a2316551a4d30d7abf06b46c1da"
+  integrity sha512-vF4yEUrV5GMBioTkvf5Le1l3N/52dSLBnNMFC+kZ4hssnRoXB0hEQ0ReUkZckRB5L3nbHBhAyjySEtFPx4nyEA==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
-    fbjs "^3.0.0"
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
+    lodash "^4.17.21"
     prop-types "^15.7.2"
 
 react-native-google-fit@^0.18.2:
@@ -7141,6 +7180,15 @@ react-native-reanimated@2.2.4:
     fbjs "^3.0.0"
     mockdate "^3.0.2"
     string-hash-64 "^1.0.3"
+
+react-native-redash@^16.1.1:
+  version "16.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.2.3.tgz#ee63e100c60f83275116e57d4e8bc79f26349db9"
+  integrity sha512-vSjHA6/mBY3IpDYPish3DlG06PKNLkb/b89hw7nsDM3yxAJ7Db+yMnEL3pp2YsoYblDc3s+0+wBRlvxay4X4vQ==
+  dependencies:
+    abs-svg-path "^0.1.1"
+    normalize-svg-path "^1.0.1"
+    parse-svg-path "^0.1.2"
 
 react-native-safe-area-context@^3.3.2:
   version "3.3.2"
@@ -7359,11 +7407,6 @@ readable-stream@^2.0.6, readable-stream@~2.3.6:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
-
-reanimated-bottom-sheet@^1.0.0-alpha.22:
-  version "1.0.0-alpha.22"
-  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.22.tgz#01a200946f1a461f01f1e773e5b4961c2df2e53b"
-  integrity sha512-NxecCn+2iA4YzkFuRK5/b86GHHS2OhZ9VRgiM4q18AC20YE/psRilqxzXCKBEvkOjP5AaAvY0yfE7EkEFBjTvw==
 
 recast@^0.20.3:
   version "0.20.5"
@@ -8267,6 +8310,11 @@ supports-hyperlinks@^2.0.0:
   dependencies:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
+
+svg-arc-to-cubic-bezier@^3.0.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/svg-arc-to-cubic-bezier/-/svg-arc-to-cubic-bezier-3.2.0.tgz#390c450035ae1c4a0104d90650304c3bc814abe6"
+  integrity sha512-djbJ/vZKZO+gPoSDThGNpKDO+o+bAeA4XQKovvkNCqnIS2t+S4qnLAGQhyyrulhCFRl1WWzAp0wUDV8PpTVU3g==
 
 symbol-observable@^1.2.0:
   version "1.2.0"
