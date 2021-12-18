@@ -64,24 +64,26 @@ const DeleteAccount: React.FC<{
         autoCorrect={false}
         keyboardType="email-address"
       />
-      <TextInput
-        style={{
-          borderRadius: DevicePixels[5],
-          margin: DevicePixels[10],
-          marginBottom: DevicePixels[20],
-          borderWidth: 0,
-          backgroundColor: 'rgba(255,255,255,0.3)',
-          paddingLeft: DevicePixels[10],
-          height: DevicePixels[50],
-          color: '#fff',
-        }}
-        placeholder="Password"
-        onChangeText={p => setPassword(p)}
-        placeholderTextColor="#fff"
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry
-      />
+      {requiresPassword && (
+        <TextInput
+          style={{
+            borderRadius: DevicePixels[5],
+            margin: DevicePixels[10],
+            marginBottom: DevicePixels[20],
+            borderWidth: 0,
+            backgroundColor: 'rgba(255,255,255,0.3)',
+            paddingLeft: DevicePixels[10],
+            height: DevicePixels[50],
+            color: '#fff',
+          }}
+          placeholder="Password"
+          onChangeText={p => setPassword(p)}
+          placeholderTextColor="#fff"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+        />
+      )}
       <Button
         onPress={async () => {
           setLoading(true);
