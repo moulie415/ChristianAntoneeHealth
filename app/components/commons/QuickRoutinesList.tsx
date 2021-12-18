@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import QuickRoutine, {Equipment, Focus} from '../../types/QuickRoutines';
-import colors from '../../constants/colors';
 import {Level, MyRootState} from '../../types/Shared';
 import ImageOverlay from './ImageOverlay';
 import {QuickRoutinesListNavigationProp} from '../../types/views/QuickRoutinesList';
@@ -59,7 +58,6 @@ const QuickRoutinesList: React.FC<{
       navigation.navigate('QuickRoutine', {routine: selectedItem});
     }
   }, [adDismissed, navigation, selectedItem]);
-
   return (
     <Layout style={{flex: 1}}>
       <Text appearance="hint" style={{padding: DevicePixels[10]}}>
@@ -129,16 +127,16 @@ const QuickRoutinesList: React.FC<{
                     </View>
                   )
                 }
-                accessoryRight={() => (
-                  <TouchableOpacity style={{padding: DevicePixels[10]}}>
-                    <Icon
-                      name="ellipsis-h"
-                      color={colors.appBlue}
-                      size={DevicePixels[20]}
-                      onPress={() => 0}
-                    />
-                  </TouchableOpacity>
-                )}
+                // accessoryRight={() => (
+                //   <TouchableOpacity style={{padding: DevicePixels[10]}}>
+                //     <Icon
+                //       name="ellipsis-h"
+                //       color={colors.appBlue}
+                //       size={DevicePixels[20]}
+                //       onPress={() => 0}
+                //     />
+                //   </TouchableOpacity>
+                // )}
               />
               {item.premium && !profile.premium && (
                 <TouchableOpacity

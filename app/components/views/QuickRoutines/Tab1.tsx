@@ -21,7 +21,7 @@ const Tab1: React.FC<QuickRoutinesListProps> = ({
       );
     });
   }, [key, quickRoutines]);
-  
+
   return <QuickRoutineList routines={filtered} navigation={navigation} />;
 };
 
