@@ -11,7 +11,6 @@ const Tab1: React.FC<QuickRoutinesListProps> = ({
 }) => {
   // @ts-ignore
   const {key} = route.params;
-
   const filtered = useMemo(() => {
     return Object.values(quickRoutines).filter(routine => {
       return (

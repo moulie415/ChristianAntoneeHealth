@@ -1,6 +1,6 @@
 import {List, ListItem, Text, Layout} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import QuickRoutine, {Equipment, Focus} from '../../types/QuickRoutines';
 import {Level, MyRootState} from '../../types/Shared';
@@ -11,6 +11,7 @@ import {useInterstitialAd} from '@react-native-admob/admob';
 import {UNIT_ID_INTERSTITIAL} from '../../constants';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
+import styles from '../../styles/commons/QuickRoutinesList';
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -59,13 +60,13 @@ const QuickRoutinesList: React.FC<{
     }
   }, [adDismissed, navigation, selectedItem]);
   return (
-    <Layout style={{flex: 1}}>
-      <Text appearance="hint" style={{padding: DevicePixels[10]}}>
+    <Layout style={styles.flex}>
+      <Text appearance="hint" style={styles.padding}>
         {`${routines.length} ${routines.length === 1 ? 'routine' : 'routines'}`}
       </Text>
 
       <List
-        style={{flex: 1}}
+        style={styles.flex}
         data={routines}
         keyExtractor={item => item.id}
         renderItem={({item}) => {
@@ -91,61 +92,32 @@ const QuickRoutinesList: React.FC<{
                 accessoryLeft={() =>
                   !item.premium || profile.premium ? (
                     <ImageOverlay
-                      containerStyle={{
-                        height: DevicePixels[75],
-                        width: DevicePixels[75],
-                      }}
+                      containerStyle={styles.imageContainer}
                       overlayAlpha={0.4}
                       source={
                         item.thumbnail
                           ? {uri: item.thumbnail.src}
                           : require('../../images/old_man_stretching.jpeg')
                       }>
-                      <View style={{alignItems: 'center'}}>
-                        <Text
-                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
-                          {'Under '}
-                        </Text>
-                        <Text category="h6" style={{color: '#fff'}}>
+                      <View style={styles.center}>
+                        <Text style={styles.routineText}>{'Under '}</Text>
+                        <Text category="h6" style={styles.textWhite}>
                           {item.duration}
                         </Text>
-                        <Text
-                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
-                          mins
-                        </Text>
+                        <Text style={styles.routineText}>mins</Text>
                       </View>
                     </ImageOverlay>
                   ) : (
-                    <View
-                      style={{
-                        height: DevicePixels[50],
-                        width: DevicePixels[75],
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
+                    <View style={styles.lockIcon}>
                       <Icon name="lock" size={DevicePixels[30]} />
                     </View>
                   )
                 }
-                // accessoryRight={() => (
-                //   <TouchableOpacity style={{padding: DevicePixels[10]}}>
-                //     <Icon
-                //       name="ellipsis-h"
-                //       color={colors.appBlue}
-                //       size={DevicePixels[20]}
-                //       onPress={() => 0}
-                //     />
-                //   </TouchableOpacity>
-                // )}
               />
               {item.premium && !profile.premium && (
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Premium')}
-                  style={{
-                    ...StyleSheet.absoluteFillObject,
-                    backgroundColor: '#000',
-                    opacity: 0.5,
-                  }}
+                  style={styles.overlay}
                 />
               )}
             </>
