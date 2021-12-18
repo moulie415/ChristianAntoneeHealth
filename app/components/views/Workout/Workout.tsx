@@ -18,14 +18,13 @@ import {
 } from '../../../types/Shared';
 import {setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
-import BottomSheet, {useBottomSheet} from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {capitalizeFirstLetter} from '../../../helpers';
 import GoalMenu from './GoalMenu';
 import EquipmentMenu from './EquipmentMenu';
 import ExperienceMenu from './ExperienceMenu';
 import WarmUpCoolDown from './WarmUpCoolDown';
-import CustomBackdrop from '../../commons/CustomBackdrop';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
