@@ -500,7 +500,7 @@ export default function* profileSaga() {
     takeLatest(SET_WORKOUT_REMINDERS, setWorkoutRemindersWorker),
     takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
     takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
-    debounce(1000, HANDLE_AUTH, handleAuthWorker),
+    debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
   ]);
 

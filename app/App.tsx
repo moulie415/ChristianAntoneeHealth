@@ -30,6 +30,7 @@ import {useEffect} from 'react';
 import QuickRoutine from './types/QuickRoutines';
 import TestType from './types/Test';
 import StackComponent from './Stack';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 const composeEnhancers =
   // @ts-ignore
@@ -141,4 +142,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default gestureHandlerRootHOC(App);
