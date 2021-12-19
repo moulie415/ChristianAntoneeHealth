@@ -26,6 +26,7 @@ interface ImageOverlayProps {
   containerStyle?: ViewStyle;
   blurRadius?: number;
   children?: ReactElement;
+  onLoad?: () => void;
 }
 
 const ImageOverlay: React.FC<ImageOverlayProps> = ({
@@ -40,6 +41,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({
   source,
   title,
   titleStyle,
+  onLoad,
 }) => {
   const getJustifyContent = () => {
     if (contentPosition === 'top') {
@@ -54,6 +56,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({
   return (
     <ImageBackground
       source={source}
+      onLoad={onLoad}
       style={[
         styles.image,
         {
