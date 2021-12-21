@@ -1600,6 +1600,12 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-community/datetimepicker@react-native-community/datetimepicker":
+  version "5.1.0"
+  resolved "https://codeload.github.com/react-native-community/datetimepicker/tar.gz/fc0c0641adc7e2a2a155bcce90b8f065debe6f75"
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/eslint-config@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-config/-/eslint-config-2.0.0.tgz#35dcc529a274803fc4e0a6b3d6c274551fb91774"
@@ -1650,6 +1656,11 @@
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.1.0.tgz#ed239b01a379e84e8cb872ef71842e01774d0ed6"
   integrity sha512-z1BkBx6c1/eynOcyMknezuC+zwLyGVc4qz3gvWOLiokLbqaneXiYVNPe6D/hhM0HIxSLM6JCptvkpAlUi0G7Pg==
+
+"@react-native-firebase/app-check@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-check/-/app-check-14.1.0.tgz#620cc10f8a3f6f928a96d0f21f979d50d21cb677"
+  integrity sha512-t6GlmdXwE+4eoyC1BPbbJFAMyXAekOuqmKF+8Z64sLrw6reXvWZjD03ET2mKsP23kO8l2SNBW1UhgbP1S761WQ==
 
 "@react-native-firebase/app@^14.1.0":
   version "14.1.0"
