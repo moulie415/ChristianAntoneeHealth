@@ -20,7 +20,7 @@
     "@react-native-admob/admob": "^2.0.0",
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/async-storage": "^1.12.1",
-    "@react-native-community/datetimepicker": "react-native-community/datetimepicker",
+    "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-community/google-signin": "^5.0.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/push-notification-ios": "^1.10.1",
