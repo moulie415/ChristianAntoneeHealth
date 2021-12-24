@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {List, ListItem} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
-import {TouchableOpacityBase, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
@@ -76,7 +76,7 @@ const ArticleList: React.FC<{
               }
             />
             {item.premium && !profile.premium && (
-              <TouchableOpacityBase
+              <TouchableOpacity
                 onPress={() => onPress(item)}
                 style={{
                   ...StyleSheet.absoluteFillObject,
