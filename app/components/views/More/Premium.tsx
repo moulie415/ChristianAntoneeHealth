@@ -1,12 +1,12 @@
 import {Layout, Text, Button} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
+import {Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import crashlytics from '@react-native-firebase/crashlytics';
 import Purchases, {
   PurchaserInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
-import Image from 'react-native-fast-image';
 import PremiumProps from '../../../types/views/Premium';
 import colors from '../../../constants/colors';
 import {
@@ -48,15 +48,31 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
   return (
-    <Layout level="4" style={{flex: 1}}>
+    <Layout level="4" style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView style={{flex: 1}}>
-        <Text category="h3" style={{margin: DevicePixels[40]}}>
-          Health and Movement Premium
+        <Image
+          style={{
+            alignSelf: 'center',
+            height: DevicePixels[80],
+            width: '100%',
+            margin: DevicePixels[20],
+            marginBottom: DevicePixels[10],
+          }}
+          resizeMode="contain"
+          source={require('../../../images/health_and_movement_logo_and_text_colour_centred.png')}
+        />
+        <Text
+          category="h5"
+          style={{
+            marginBottom: DevicePixels[20],
+            textAlign: 'center',
+          }}>
+          Go Premium!
         </Text>
         <View
           style={{
-            marginHorizontal: DevicePixels[40],
-            marginBottom: DevicePixels[40],
+            marginHorizontal: DevicePixels[20],
+            marginBottom: DevicePixels[20],
           }}>
           <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
             <Icon
@@ -66,10 +82,48 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
               name="dumbbell"
             />
             <View style={{flex: 1}}>
-              <Text category="s1">Workouts</Text>
-              <Text>
-                Access to an extensive library of customisable exercises
-                allowing you to build your own workout routines
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Exercise Video Library
+              </Text>
+              <Text style={{}}>
+                Customise your workouts with full access to{' '}
+                <Text style={{fontWeight: 'bold'}}>ALL</Text> exercise videos
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
+            <Icon
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
+              color={colors.appBlue}
+              name="list-ol"
+            />
+            <View style={{flex: 1}}>
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Quick Routines
+              </Text>
+              <Text style={{}}>
+                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> quick
+                routines to select workouts from any training style and target
+                every body part
+              </Text>
+            </View>
+          </View>
+
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
+            <Icon
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
+              color={colors.appBlue}
+              name="book-open"
+            />
+            <View style={{flex: 1}}>
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Educational Articles
+              </Text>
+              <Text style={{}}>
+                Gain access to <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
+                educational content
               </Text>
             </View>
           </View>
@@ -81,30 +135,28 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
               name="heartbeat"
             />
             <View style={{flex: 1}}>
-              <Text category="s1">Fitness tests</Text>
-              <Text>
-                Measure your progress through a range of fitness tests
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Fitness Testing
+              </Text>
+              <Text style={{}}>
+                See how you rank against others by unlocking{' '}
+                <Text style={{fontWeight: 'bold'}}>ALL</Text> fitness testing
+                categories
               </Text>
             </View>
           </View>
           <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
-            <View style={{width: DevicePixels[75], alignItems: 'center'}}>
-              <Image
-                style={{width: DevicePixels[40], height: DevicePixels[40]}}
-                source={
-                  Platform.OS === 'ios'
-                    ? require('../../../images/apple_health.png')
-                    : require('../../../images/fit.png')
-                }
-              />
-            </View>
+            <Icon
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
+              color={colors.appBlue}
+              name="comment-slash"
+            />
             <View style={{flex: 1}}>
-              <Text category="s1">
-                {Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'}
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Remove Ads
               </Text>
-              <Text>{`Track your activity by connecting with ${
-                Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
-              }`}</Text>
+              <Text style={{}}>Enjoy the full content of the app Ad-free</Text>
             </View>
           </View>
         </View>
