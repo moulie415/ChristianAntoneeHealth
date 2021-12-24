@@ -7,6 +7,7 @@ import Test from '../types/Test';
 import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
+import Education from '../types/Education';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -64,9 +65,9 @@ export const getExercises = async (
   cardioType: CardioType,
 ) => {
   const snapshot = await getExercisesQuery(level, goal, area, cardioType);
-  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, curr) => {
-    const exercise: any = curr.data();
-    acc[curr.id] = {...exercise, id: curr.id};
+  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+    const exercise: any = cur.data();
+    acc[cur.id] = {...exercise, id: cur.id};
     return acc;
   }, {});
 };
@@ -76,9 +77,9 @@ export const getExercisesById = async (ids: string[]) => {
     .collection('exercises')
     .where(db.FieldPath.documentId(), 'in', ids)
     .get();
-  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, curr) => {
-    const exercise: any = curr.data();
-    acc[curr.id] = {...exercise, id: curr.id};
+  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+    const exercise: any = cur.data();
+    acc[cur.id] = {...exercise, id: cur.id};
     return acc;
   }, {});
 };
@@ -97,9 +98,9 @@ export const updateExercise = (exercise: Exercise) => {
 
 export const getTests = async () => {
   const snapshot = await db().collection('tests').get();
-  return snapshot.docs.reduce((acc: {[id: string]: Test}, curr) => {
-    const test: any = curr.data();
-    acc[curr.id] = {...test, id: curr.id};
+  return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
+    const test: any = cur.data();
+    acc[cur.id] = {...test, id: cur.id};
     return acc;
   }, {});
 };
@@ -109,18 +110,18 @@ export const getTestsById = async (ids: string[]) => {
     .collection('tests')
     .where(db.FieldPath.documentId(), 'in', ids)
     .get();
-  return snapshot.docs.reduce((acc: {[id: string]: Test}, curr) => {
-    const test: any = curr.data();
-    acc[curr.id] = {...test, id: curr.id};
+  return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
+    const test: any = cur.data();
+    acc[cur.id] = {...test, id: cur.id};
     return acc;
   }, {});
 };
 
 export const getQuickRoutines = async () => {
   const snapshot = await db().collection('quickRoutines').get();
-  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, curr) => {
-    const quickRoutine: any = curr.data();
-    acc[curr.id] = {...quickRoutine, id: curr.id};
+  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
+    const quickRoutine: any = cur.data();
+    acc[cur.id] = {...quickRoutine, id: cur.id};
     return acc;
   }, {});
 };
@@ -130,9 +131,9 @@ export const getQuickRoutinesById = async (ids: string[]) => {
     .collection('quickRoutines')
     .where(db.FieldPath.documentId(), 'in', ids)
     .get();
-  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, curr) => {
-    const quickRoutine: any = curr.data();
-    acc[curr.id] = {...quickRoutine, id: curr.id};
+  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
+    const quickRoutine: any = cur.data();
+    acc[cur.id] = {...quickRoutine, id: cur.id};
     return acc;
   }, {});
 };
@@ -173,14 +174,11 @@ export const getSavedWorkouts = async (uid: string) => {
     .collection('savedWorkouts')
     .limit(10)
     .get();
-  return savedWorkouts.docs.reduce(
-    (acc: {[id: string]: SavedWorkout}, curr) => {
-      const workout: any = curr.data();
-      acc[curr.id] = {...workout, id: curr.id};
-      return acc;
-    },
-    {},
-  );
+  return savedWorkouts.docs.reduce((acc: {[id: string]: SavedWorkout}, cur) => {
+    const workout: any = cur.data();
+    acc[cur.id] = {...workout, id: cur.id};
+    return acc;
+  }, {});
 };
 
 export const getSavedTests = async (uid: string) => {
@@ -190,9 +188,9 @@ export const getSavedTests = async (uid: string) => {
     .collection('savedTests')
     .limit(10)
     .get();
-  return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, curr) => {
-    const test: any = curr.data();
-    acc[curr.id] = {...test, id: curr.id};
+  return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, cur) => {
+    const test: any = cur.data();
+    acc[cur.id] = {...test, id: cur.id};
     return acc;
   }, {});
 };
@@ -205,11 +203,20 @@ export const getSavedQuickRoutines = async (uid: string) => {
     .limit(10)
     .get();
   return savedQuickRoutines.docs.reduce(
-    (acc: {[id: string]: SavedQuickRoutine}, curr) => {
-      const routine: any = curr.data();
-      acc[curr.id] = {...routine, id: curr.id};
+    (acc: {[id: string]: SavedQuickRoutine}, cur) => {
+      const routine: any = cur.data();
+      acc[cur.id] = {...routine, id: cur.id};
       return acc;
     },
     {},
   );
+};
+
+export const getEducation = async () => {
+  const education = await db().collection('education').get();
+  return education.docs.reduce((acc: {[id: string]: Education}, cur) => {
+    const edu: any = cur.data();
+    acc[cur.id] = {...edu, id: cur.id};
+    return acc;
+  }, {});
 };

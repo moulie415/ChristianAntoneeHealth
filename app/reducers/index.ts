@@ -4,6 +4,7 @@ import profile from './profile';
 import exercises from './exercises';
 import tests from './tests';
 import quickRoutines from './quickRoutines';
+import education from './education';
 
 const config = {
   key: 'root',
@@ -16,4 +17,5 @@ export default persistCombineReducers(config, {
   exercises,
   tests,
   quickRoutines,
+  education,
 });

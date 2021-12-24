@@ -1,3 +1,4 @@
+import {EducationState} from '../reducers/education';
 import {ExercisesState} from '../reducers/exercises';
 import {ProfileState} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
@@ -8,6 +9,7 @@ export type MyRootState = {
   profile: ProfileState;
   tests: TestsState;
   quickRoutines: QuickRoutinesState;
+  education: EducationState;
 };
 
 export enum Level {

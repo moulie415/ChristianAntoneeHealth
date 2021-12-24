@@ -5,6 +5,7 @@ import {
   takeEvery,
   takeLatest,
   take,
+  all,
 } from 'redux-saga/effects';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
@@ -205,13 +206,15 @@ function onDynamicLink() {
 }
 
 export default function* exercisesSaga() {
-  yield takeLatest(GET_EXERCISES, getExercises);
-  yield takeLatest(ADD_EXERCISE, addExercise);
-  yield takeLatest(DELETE_EXERCISE, deleteExercise);
-  yield takeLatest(UPDATE_EXERCISE, updateExercise);
-  yield takeLatest(SAVE_WORKOUT, saveWorkout);
-  yield takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts);
-  yield takeLatest(GET_EXERCISES_BY_ID, getExercisesById);
+  yield all([
+    takeLatest(GET_EXERCISES, getExercises),
+    takeLatest(ADD_EXERCISE, addExercise),
+    takeLatest(DELETE_EXERCISE, deleteExercise),
+    takeLatest(UPDATE_EXERCISE, updateExercise),
+    takeLatest(SAVE_WORKOUT, saveWorkout),
+    takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts),
+    takeLatest(GET_EXERCISES_BY_ID, getExercisesById),
+  ]);
 
   const dynamicLinkChannel: EventChannel<FirebaseDynamicLinksTypes.DynamicLink> = yield call(
     onDynamicLink,

@@ -7,6 +7,7 @@ import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
 import colors from '../constants/colors';
 import {PercentileTable, Table} from '../types/Test';
+import {Category} from '../types/Education';
 
 const {height, width} = Dimensions.get('window');
 
@@ -296,5 +297,16 @@ export const getPercentileFill = (percentile: string) => {
       return 20;
     default:
       return 10;
+  }
+};
+
+export const getEducationCategoryString = (category: Category) => {
+  switch (category) {
+    case Category.EXERCISE:
+      return 'Education Articles';
+    case Category.NUTRITIONAL:
+      return 'Nutritional Info';
+    default:
+      return 'General Lifestyle';
   }
 };

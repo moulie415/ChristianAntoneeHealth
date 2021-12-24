@@ -31,6 +31,7 @@ import QuickRoutine from './types/QuickRoutines';
 import TestType from './types/Test';
 import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import Education from './types/Education';
 
 const composeEnhancers =
   // @ts-ignore
@@ -85,7 +86,7 @@ export type StackParamList = {
   EndWorkout: {seconds: number};
   WorkoutSummary: {seconds: number; calories: number; difficulty: number};
   Education: undefined;
-  EducationWebView: {url: string};
+  EducationArticle: {education: Education};
   Settings: undefined;
   More: undefined;
   Profile: undefined;

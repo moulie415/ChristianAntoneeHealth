@@ -5,7 +5,6 @@ import Premium from './components/views/More/Premium';
 import Loading from './components/views/Loading';
 import ExerciseList from './components/views/Workout/ExerciseList';
 import CustomizeExercise from './components/views/Workout/CustomizeExercise';
-import EducationWebView from './components/views/More/EducationWebView';
 import ExerciseListHeaderRight from './components/commons/ExerciseListHeaderRight';
 import ReviewExercises from './components/views/Workout/ReviewExercises';
 import StartWorkout from './components/views/Workout/StartWorkout';
@@ -19,7 +18,6 @@ import TestResults from './components/views/Tests/TestResults';
 import Tabs from './Tabs';
 import QuickRoutinesTabs from './QuickRoutinesTabs';
 import Login from './components/views/Login';
-import Education from './components/views/More/Education';
 import SignUp from './components/views/SignUp';
 import Welcome from './components/views/Welcome';
 import Profile from './components/views/More/Profile';
@@ -35,6 +33,8 @@ import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSu
 import HeaderShareButton from './components/commons/HeaderShareButton';
 import ForgotPassword from './components/views/ForgotPassword';
 import DeleteAccount from './components/views/DeleteAccount';
+import EducationTabs from './EducationTabs';
+import EducationArticle from './components/views/Education/EducationArticle';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -143,10 +143,14 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="Terms" component={Terms} />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="About" component={About} />
-          <Stack.Screen name="Education" component={Education} />
           <Stack.Screen
-            name="EducationWebView"
-            component={EducationWebView}
+            name="Education"
+            component={EducationTabs}
+        
+          />
+          <Stack.Screen
+            name="EducationArticle"
+            component={EducationArticle}
             options={{headerTitle: ''}}
           />
           <Stack.Screen name="Policies" component={Policies} />
