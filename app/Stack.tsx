@@ -143,11 +143,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="Terms" component={Terms} />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="About" component={About} />
-          <Stack.Screen
-            name="Education"
-            component={EducationTabs}
-        
-          />
+          <Stack.Screen name="Education" component={EducationTabs} />
           <Stack.Screen
             name="EducationArticle"
             component={EducationArticle}
