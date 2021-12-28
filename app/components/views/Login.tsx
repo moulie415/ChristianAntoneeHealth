@@ -151,75 +151,80 @@ const Login: React.FC<LoginProps> = ({
           category="h5">
           Log in now
         </Text>
-
-        {Platform.OS === 'ios' && (
+        <View style={{flexDirection: 'row'}}>
+          {Platform.OS === 'ios' && (
+            <Button
+              onPress={async () => {
+                setAppleLoading(true);
+                await appleSignIn();
+                setAppleLoading(false);
+              }}
+              style={{
+                flex: 1,
+                backgroundColor: 'transparent',
+                height: DevicePixels[50],
+                marginHorizontal: DevicePixels[5],
+                marginLeft: DevicePixels[10],
+                marginBottom: DevicePixels[5],
+                borderColor: '#fff',
+              }}
+              accessoryLeft={() =>
+                appleLoading ? (
+                  <Spinner />
+                ) : (
+                  <Icon name="apple" color="#fff" size={DevicePixels[20]} />
+                )
+              }
+            />
+          )}
           <Button
             onPress={async () => {
-              setAppleLoading(true);
-              await appleSignIn();
-              setAppleLoading(false);
+              setFacebookLoading(true);
+              await facebookSignIn();
+              setFacebookLoading(false);
             }}
             style={{
+              flex: 1,
               backgroundColor: 'transparent',
               height: DevicePixels[50],
-              marginHorizontal: DevicePixels[10],
+              marginHorizontal: DevicePixels[5],
+              marginLeft:
+                Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
               marginBottom: DevicePixels[5],
               borderColor: '#fff',
             }}
             accessoryLeft={() =>
-              appleLoading ? (
+              facebookLoading ? (
                 <Spinner />
               ) : (
-                <Icon name="apple" color="#fff" size={DevicePixels[20]} />
+                <Icon color="#fff" name="facebook-f" size={DevicePixels[20]} />
               )
-            }>
-            Apple
-          </Button>
-        )}
-        <Button
-          onPress={async () => {
-            setFacebookLoading(true);
-            await facebookSignIn();
-            setFacebookLoading(false);
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            height: DevicePixels[50],
-            marginHorizontal: DevicePixels[10],
-            marginBottom: DevicePixels[5],
-            borderColor: '#fff',
-          }}
-          accessoryLeft={() =>
-            facebookLoading ? (
-              <Spinner />
-            ) : (
-              <Icon color="#fff" name="facebook-f" size={DevicePixels[20]} />
-            )
-          }>
-          Facebook
-        </Button>
-        <Button
-          onPress={async () => {
-            setGoogleLoading(true);
-            await googleSignIn();
-            setGoogleLoading(false);
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            height: DevicePixels[50],
-            marginHorizontal: DevicePixels[10],
-            marginBottom: DevicePixels[5],
-            borderColor: '#fff',
-          }}
-          accessoryLeft={() =>
-            googleLoading ? (
-              <Spinner />
-            ) : (
-              <Icon color="#fff" name="google" size={DevicePixels[20]} />
-            )
-          }>
-          Google
-        </Button>
+            }
+          />
+          <Button
+            onPress={async () => {
+              setGoogleLoading(true);
+              await googleSignIn();
+              setGoogleLoading(false);
+            }}
+            style={{
+              backgroundColor: 'transparent',
+              height: DevicePixels[50],
+              marginHorizontal: DevicePixels[5],
+              marginRight: DevicePixels[10],
+              marginBottom: DevicePixels[5],
+              borderColor: '#fff',
+              flex: 1,
+            }}
+            accessoryLeft={() =>
+              googleLoading ? (
+                <Spinner />
+              ) : (
+                <Icon color="#fff" name="google" size={DevicePixels[20]} />
+              )
+            }
+          />
+        </View>
         <TextInput
           style={[
             styles.input,
@@ -283,7 +288,7 @@ const Login: React.FC<LoginProps> = ({
             flexDirection: 'row',
             justifyContent: 'center',
             marginTop: DevicePixels[15],
-            marginBottom: DevicePixels[5]
+            marginBottom: DevicePixels[5],
           }}>
           <Text style={{color: '#fff'}}>Not signed up yet? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>

@@ -26,7 +26,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
             textAlign: 'center',
             padding: DevicePixels[20],
             marginVertical: DevicePixels[10],
-          }}>{`Welcome ${profile.name || 'user'}!`}</Text>
+          }}>{`Welcome ${profile.name || 'user'}`}</Text>
         {!hasViewedWelcome && <HomeWelcome />}
         {hasViewedWelcome && (
           <Layout style={{flex: 1}}>

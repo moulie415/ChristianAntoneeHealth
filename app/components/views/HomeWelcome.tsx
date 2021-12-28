@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Dimensions, ImageSourcePropType, Platform} from 'react-native';
 import Carousel, {
   Pagination,
@@ -47,7 +47,7 @@ const items: CarouselItem[] = [
   {
     title: 'Quick routines',
     description:
-      'select from a variety of exercise routines designed to target specific body parts',
+      'Select from a variety of exercise routines designed to target specific body parts',
     image: require('../../images/4th_carousel_image_quick_routine.jpeg'),
     icon: 'sync',
   },
@@ -84,17 +84,17 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
               <ParallaxImage
                 containerStyle={{
                   flex: 1,
-                  marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
                   backgroundColor: 'white',
                   borderTopLeftRadius: DevicePixels[8],
                   borderTopRightRadius: DevicePixels[8],
+                  marginBottom: Platform.select({ios: 0, android: 1}),
                 }}
                 style={{resizeMode: 'cover'}}
                 parallaxFactor={0.1}
                 source={item.image}
                 {...parallaxProps}
               />
-              <Pagination activeDotIndex={index} dotsLength={items.length} />
+
               <Divider />
               <Layout
                 style={{
@@ -109,24 +109,23 @@ const HomeWelcome: React.FC<{setHasViewedWelcome: () => void}> = ({
                     color={colors.appBlack}
                     style={{textAlign: 'center'}}
                   /> */}
-                  <Text category="h4" style={{flex: 1, textAlign: 'center'}}>
+                  <Text category="h5" style={{flex: 1, textAlign: 'center'}}>
                     {item.title}
                   </Text>
                 </Layout>
-                <Text>{item.description}</Text>
-                {index === items.length - 1 && (
-                  <Button
-                    onPress={setHasViewedWelcome}
-                    // status="control"
-                    style={{alignSelf: 'flex-end', margin: DevicePixels[5]}}>
-                    Finish
-                  </Button>
-                )}
+                <Text style={{lineHeight: 25, textAlign: 'center'}}>
+                  {item.description}
+                </Text>
               </Layout>
+              <Pagination activeDotIndex={index} dotsLength={items.length} />
             </Layout>
           );
         }}
       />
+
+      <Button onPress={setHasViewedWelcome} style={{margin: DevicePixels[20]}}>
+        Lets go!
+      </Button>
     </Layout>
   );
 };
