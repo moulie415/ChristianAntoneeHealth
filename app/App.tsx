@@ -71,6 +71,7 @@ export type StackParamList = {
     test: TestType;
     seconds: number;
   };
+  FitnessGoal: undefined;
   ExerciseList: {
     goal: Goal;
     strengthArea: StrengthArea;

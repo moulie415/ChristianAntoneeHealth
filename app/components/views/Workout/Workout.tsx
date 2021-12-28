@@ -25,6 +25,8 @@ import GoalMenu from './GoalMenu';
 import EquipmentMenu from './EquipmentMenu';
 import ExperienceMenu from './ExperienceMenu';
 import WarmUpCoolDown from './WarmUpCoolDown';
+import ImageLoader from '../../commons/ImageLoader';
+import globalStyles from '../../../styles/globalStyles';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
@@ -129,160 +131,275 @@ const Workout: React.FC<WorkoutProps> = ({
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
-        <Text category="h5" style={{margin: DevicePixels[10], marginBottom: 0}}>
-          Workout settings
-        </Text>
-        <ListItem
-          style={{paddingVertical: DevicePixels[20]}}
-          title="Fitness goal"
+        <TouchableOpacity
           onPress={() => {
             sheetRef.current.expand();
             setModalOpen(true);
             setSetting('goal');
           }}
-          accessoryRight={() => {
-            return (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    color: colors.appBlue,
-                    marginRight: DevicePixels[5],
-                    fontWeight: 'bold',
-                  }}>
-                  {goal === Goal.STRENGTH ? 'Strength' : 'Cardiovascular'}
-                </Text>
-                <Icon
-                  name="chevron-right"
-                  color={colors.appBlue}
-                  size={DevicePixels[20]}
-                />
-              </View>
-            );
-          }}
-        />
-        <Divider />
-        <ListItem
-          style={{paddingVertical: DevicePixels[20]}}
-          title="Exercise experience"
+          style={{
+            flex: 1,
+            marginBottom: DevicePixels[5],
+          }}>
+          <ImageLoader
+            style={{width: '100%', flex: 1}}
+            delay={200}
+            resizeMode="cover"
+            source={require('../../../images/3rd_carousel_image_fitness_testing.jpeg')}
+            overlay
+          />
+
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              left: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
+              Fitness goal
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                right: 0,
+                color: '#fff',
+                marginRight: DevicePixels[20],
+                fontWeight: 'bold',
+                ...globalStyles.textShadow,
+              }}>
+              {goal === Goal.STRENGTH ? 'Strength' : 'Cardiovascular'}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             sheetRef.current.expand();
             setModalOpen(true);
             setSetting('experience');
           }}
-          accessoryRight={() => {
-            return (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    color: colors.appBlue,
-                    marginRight: DevicePixels[5],
-                    fontWeight: 'bold',
-                  }}>
-                  {capitalizeFirstLetter(level)}
-                </Text>
-                <Icon
-                  name="chevron-right"
-                  color={colors.appBlue}
-                  size={DevicePixels[20]}
-                />
-              </View>
-            );
-          }}
-        />
-        <Divider />
-        <ListItem
-          style={{paddingVertical: DevicePixels[20]}}
-          title="Available equipment"
+          style={{
+            flex: 1,
+            marginBottom: DevicePixels[5],
+          }}>
+          <ImageLoader
+            style={{width: '100%', flex: 1}}
+            delay={400}
+            resizeMode="cover"
+            source={require('../../../images/Fitness_testing_plank.jpeg')}
+            overlay
+          />
+
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              left: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
+              Exercise experience
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                right: 0,
+                color: '#fff',
+                marginRight: DevicePixels[20],
+                fontWeight: 'bold',
+                ...globalStyles.textShadow,
+              }}>
+              {capitalizeFirstLetter(level)}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             sheetRef.current.expand();
             setModalOpen(true);
             setSetting('equipment');
           }}
-          accessoryRight={() => {
-            return (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    color: colors.appBlue,
-                    marginRight: DevicePixels[5],
-                    fontWeight: 'bold',
-                  }}>
-                  {availableEquipmentString()}
-                </Text>
-                <Icon
-                  name="chevron-right"
-                  color={colors.appBlue}
-                  size={DevicePixels[20]}
-                />
-              </View>
-            );
-          }}
-        />
-        <Divider />
-        <ListItem
-          style={{paddingVertical: DevicePixels[20]}}
-          title="Warm-up & Cool-down"
+          style={{
+            flex: 1,
+            marginBottom: DevicePixels[5],
+          }}>
+          <ImageLoader
+            style={{width: '100%', flex: 1}}
+            delay={600}
+            resizeMode="cover"
+            source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
+            overlay
+          />
+
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              left: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
+              Available Equipment
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                right: 0,
+                color: '#fff',
+                marginRight: DevicePixels[20],
+                fontWeight: 'bold',
+                ...globalStyles.textShadow,
+              }}>
+              {availableEquipmentString()}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             sheetRef.current.expand();
             setModalOpen(true);
             setSetting('warmup');
           }}
-          accessoryRight={() => {
-            return (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    color: colors.appBlue,
-                    marginRight: DevicePixels[5],
-                    fontWeight: 'bold',
-                  }}>
-                  {warmUp.length || coolDown.length ? 'On' : 'Off'}
-                </Text>
-                <Icon
-                  name="chevron-right"
-                  color={colors.appBlue}
-                  size={DevicePixels[20]}
-                />
-              </View>
-            );
-          }}
-        />
-        <Divider />
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
-          <Button
-            disabled={false}
-            onPress={() => {
-              if (equipment.length) {
-                setWorkoutAction([]);
-                navigation.navigate('ExerciseList', {
-                  strengthArea: area,
-                  level: level,
-                  goal,
-                  equipment,
-                  cardioType,
-                  warmUp,
-                  coolDown,
-                });
-              } else {
-                Alert.alert('Sorry', 'Please specify equipment first');
-              }
-            }}
-            style={{margin: DevicePixels[10]}}>
-            Continue
-          </Button>
-        </View>
-        {modalOpen && (
-          <Layout
+          style={{
+            flex: 1,
+          }}>
+          <ImageLoader
+            style={{width: '100%', flex: 1}}
+            delay={800}
+            resizeMode="cover"
+            source={require('../../../images/Homepage_activity_tracking.jpeg')}
+            overlay
+          />
+
+          <View
             style={{
               position: 'absolute',
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              top: 0,
               bottom: 0,
-              left: 0,
-              right: 0,
-            }}
-          />
-        )}
+              top: 0,
+              left: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              category="h5"
+              style={[globalStyles.textShadow, {color: '#fff'}]}>
+              Warm-up & Cool-down
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                right: 0,
+                color: '#fff',
+                marginRight: DevicePixels[20],
+                fontWeight: 'bold',
+                ...globalStyles.textShadow,
+              }}>
+              {warmUp.length || coolDown.length ? 'On' : 'Off'}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              top: 0,
+              right: DevicePixels[20],
+              justifyContent: 'center',
+            }}>
+            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+          </View>
+        </TouchableOpacity>
+
+        <Button
+          disabled={false}
+          onPress={() => {
+            if (equipment.length) {
+              setWorkoutAction([]);
+              navigation.navigate('ExerciseList', {
+                strengthArea: area,
+                level: level,
+                goal,
+                equipment,
+                cardioType,
+                warmUp,
+                coolDown,
+              });
+            } else {
+              Alert.alert('Sorry', 'Please specify equipment first');
+            }
+          }}
+          style={{margin: DevicePixels[10]}}>
+          Continue
+        </Button>
       </SafeAreaView>
       <BottomSheet
         ref={sheetRef}
