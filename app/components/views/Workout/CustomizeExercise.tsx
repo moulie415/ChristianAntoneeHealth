@@ -136,7 +136,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     padding: DevicePixels[10],
                   }}>
                   <Text category="h5">Muscles worked</Text>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                     <View style={{marginRight: DevicePixels[10]}}>
                       <Text>Primary:</Text>
                       <View style={{flexDirection: 'row'}}>
