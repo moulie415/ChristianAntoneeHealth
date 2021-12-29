@@ -2,20 +2,23 @@ import {Layout, ListItem} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLevel} from '../../../actions/exercises';
 import DevicePixels from '../../../helpers/DevicePixels';
 import globalStyles from '../../../styles/globalStyles';
-import {Level} from '../../../types/Shared';
+import {Level, MyRootState} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import Text from '../../commons/Text';
 import Collapsible from 'react-native-collapsible';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
 
 const Experience: React.FC<{
   setLevelAction: (level: Level) => void;
   navigation: NativeStackNavigationProp<StackParamList, 'Experience'>;
-}> = ({setLevelAction, navigation}) => {
+  level: Level;
+}> = ({setLevelAction, navigation, level}) => {
   const [itemsCollapsed, setItemsCollapsed] = useState<{
     [key: number]: boolean;
   }>({
@@ -36,7 +39,6 @@ const Experience: React.FC<{
             overlay
             style={{width: '100%', flex: 1}}
           />
-
           <View
             style={{
               position: 'absolute',
@@ -52,7 +54,6 @@ const Experience: React.FC<{
             </Text>
           </View>
         </TouchableOpacity>
-
         <Collapsible collapsed={itemsCollapsed[0]}>
           <ListItem
             onPress={() => {
@@ -63,6 +64,22 @@ const Experience: React.FC<{
             description="If you’re just starting out on your health and fitness journey or
             working through an injury and want to make sure you’re technique is
             right then this is a good place to start"
+            accessoryLeft={() => {
+              return level === Level.BEGINNER ? (
+                <Icon
+                  name="check-circle"
+                  size={DevicePixels[20]}
+                  solid
+                  color={colors.appBlue}
+                />
+              ) : (
+                <Icon
+                  name="circle"
+                  size={DevicePixels[20]}
+                  color={colors.appBlue}
+                />
+              );
+            }}
           />
         </Collapsible>
         <TouchableOpacity
@@ -100,6 +117,22 @@ const Experience: React.FC<{
             description="For those of you who have been recreationally active for a while and
             have some experience in the gym with weights, but would like a
             little more direction and guidance in structuring your workouts."
+            accessoryLeft={() => {
+              return level === Level.INTERMEDIATE ? (
+                <Icon
+                  name="check-circle"
+                  size={DevicePixels[20]}
+                  solid
+                  color={colors.appBlue}
+                />
+              ) : (
+                <Icon
+                  name="circle"
+                  size={DevicePixels[20]}
+                  color={colors.appBlue}
+                />
+              );
+            }}
           />
         </Collapsible>
         <TouchableOpacity
@@ -139,6 +172,22 @@ const Experience: React.FC<{
             find a list of exercises that will require you to move in multiple
             planes, transfer power efficiently up and down the body, and use
             your joints and muscles in creative ways."
+            accessoryLeft={() => {
+              return level === Level.ADVANCED ? (
+                <Icon
+                  name="check-circle"
+                  size={DevicePixels[20]}
+                  solid
+                  color={colors.appBlue}
+                />
+              ) : (
+                <Icon
+                  name="circle"
+                  size={DevicePixels[20]}
+                  color={colors.appBlue}
+                />
+              );
+            }}
           />
         </Collapsible>
       </Layout>
@@ -146,8 +195,12 @@ const Experience: React.FC<{
   );
 };
 
+const mapStateToProps = ({exercises}: MyRootState) => ({
+  level: exercises.level,
+});
+
 const mapDispatchToProps = {
   setLevelAction: setLevel,
 };
 
-export default connect(null, mapDispatchToProps)(Experience);
+export default connect(mapStateToProps, mapDispatchToProps)(Experience);

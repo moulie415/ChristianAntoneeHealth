@@ -1,4 +1,4 @@
-import {Divider, Layout, ListItem, Text} from '@ui-kitten/components';
+import {Card, Divider, Layout, ListItem, Text} from '@ui-kitten/components';
 import React, {Fragment, useState} from 'react';
 import {
   View,
@@ -8,9 +8,15 @@ import {
 } from 'react-native';
 import DevicePixels from '../../../helpers/DevicePixels';
 import globalStyles from '../../../styles/globalStyles';
-import {CardioType, Goal, StrengthArea} from '../../../types/Shared';
+import {
+  CardioType,
+  Goal,
+  MyRootState,
+  StrengthArea,
+} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import Collapsible from 'react-native-collapsible';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   setCardioType,
   setFitnessGoal,
@@ -19,17 +25,24 @@ import {
 import {connect} from 'react-redux';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
 
 const FitnessGoal: React.FC<{
   setFitnessGoalAction: (goal: Goal) => void;
   setStrengthAreaAction: (area: StrengthArea) => void;
   setCardioTypeAction: (type: CardioType) => void;
+  fitnessGoal: Goal;
+  strengthArea: StrengthArea;
+  cardioType: CardioType;
   navigation: NativeStackNavigationProp<StackParamList, 'FitnessGoal'>;
 }> = ({
   setFitnessGoalAction,
   setStrengthAreaAction,
   setCardioTypeAction,
   navigation,
+  fitnessGoal,
+  strengthArea,
+  cardioType,
 }) => {
   const sections: {
     title: string;
@@ -134,12 +147,6 @@ const FitnessGoal: React.FC<{
                 }}
                 key={title}
                 style={{flex: 1, marginBottom: DevicePixels[5]}}>
-                {/* <ImageLoader
-                  style={{width: '100%', flex: 1}}
-                  delay={index * 200}
-                  resizeMode="cover"
-                  source={image}
-                /> */}
                 <ImageLoader
                   source={image}
                   overlay
@@ -169,7 +176,25 @@ const FitnessGoal: React.FC<{
                         onPress={action}
                         title={name}
                         description={description}
+                        accessoryLeft={() => {
+                          return key === fitnessGoal &&
+                            (id === strengthArea || id === cardioType) ? (
+                            <Icon
+                              name="check-circle"
+                              size={DevicePixels[20]}
+                              solid
+                              color={colors.appBlue}
+                            />
+                          ) : (
+                            <Icon
+                              name="circle"
+                              size={DevicePixels[20]}
+                              color={colors.appBlue}
+                            />
+                          );
+                        }}
                       />
+
                       <Divider />
                     </Fragment>
                   );
@@ -183,10 +208,16 @@ const FitnessGoal: React.FC<{
   );
 };
 
+const mapStateToProps = ({exercises}: MyRootState) => ({
+  fitnessGoal: exercises.fitnessGoal,
+  strengthArea: exercises.strengthArea,
+  cardioType: exercises.cardioType,
+});
+
 const mapDispatchToProps = {
   setFitnessGoalAction: setFitnessGoal,
   setStrengthAreaAction: setStrengthArea,
   setCardioTypeAction: setCardioType,
 };
 
-export default connect(null, mapDispatchToProps)(FitnessGoal);
+export default connect(mapStateToProps, mapDispatchToProps)(FitnessGoal);
