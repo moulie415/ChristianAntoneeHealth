@@ -18,6 +18,10 @@ export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
 export const SAVE_WORKOUT = 'SAVED_WORKOUT';
 export const GET_SAVED_WORKOUTS = 'GET_SAVED_WORKOUTS';
 export const SET_SAVED_WORKOUTS = 'SET_SAVED_WORKOUTS';
+export const SET_FITNESS_GOAL = 'SET_FITNESS_GOAL';
+export const SET_STRENGTH_AREA = 'SET_STRENGTH_AREA';
+export const SET_CARDIO_TYPE = 'SET_CARDIO_TYPE';
+export const SET_LEVEL = 'SET_LEVEL';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -100,6 +104,26 @@ export interface GetSavedWorkoutsAction {
 export interface SetSavedWorkoutsAction {
   type: typeof SET_SAVED_WORKOUTS;
   payload: {[key: string]: SavedWorkout};
+}
+
+export interface SetFitnessGoalAction {
+  type: typeof SET_FITNESS_GOAL;
+  payload: Goal;
+}
+
+export interface SetStrengthAreaAction {
+  type: typeof SET_STRENGTH_AREA;
+  payload: StrengthArea;
+}
+
+export interface SetCardioTypeAction {
+  type: typeof SET_CARDIO_TYPE;
+  payload: CardioType;
+}
+
+export interface SetLevelAction {
+  type: typeof SET_LEVEL;
+  payload: Level;
 }
 
 export const getExercises = (
@@ -190,6 +214,26 @@ export const setSavedWorkouts = (savedWorkouts: {
   payload: savedWorkouts,
 });
 
+export const setFitnessGoal = (goal: Goal): SetFitnessGoalAction => ({
+  type: SET_FITNESS_GOAL,
+  payload: goal,
+});
+
+export const setStrengthArea = (area: StrengthArea): SetStrengthAreaAction => ({
+  type: SET_STRENGTH_AREA,
+  payload: area,
+});
+
+export const setCardioType = (type: CardioType): SetCardioTypeAction => ({
+  type: SET_CARDIO_TYPE,
+  payload: type,
+});
+
+export const setLevel = (level: Level): SetLevelAction => ({
+  type: SET_LEVEL,
+  payload: level,
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -203,4 +247,8 @@ export type ExercisesActions =
   | SaveWorkoutAction
   | GetSavedWorkoutsAction
   | SetSavedWorkoutsAction
-  | GetExercisesByIdAction;
+  | GetExercisesByIdAction
+  | SetFitnessGoalAction
+  | SetStrengthAreaAction
+  | SetCardioTypeAction
+  | SetLevelAction;

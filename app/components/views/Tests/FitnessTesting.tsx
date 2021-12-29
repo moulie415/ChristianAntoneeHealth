@@ -39,7 +39,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
   const ref = useRef<ScrollView>(null);
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView ref={ref}>
+      <ScrollView ref={ref} onScroll={() => setShowButton(false)}>
         {items.map(({name, image, id, premium}, index) => {
           return (
             <TouchableOpacity

@@ -7,13 +7,10 @@ import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
 import {Text, Button, Layout, ListItem, Divider} from '@ui-kitten/components';
 import {
-  CardioType,
   CoolDown,
   Equipment,
   Goal,
-  Level,
   MyRootState,
-  StrengthArea,
   WarmUp,
 } from '../../../types/Shared';
 import {setWorkout} from '../../../actions/exercises';
@@ -21,9 +18,7 @@ import {connect} from 'react-redux';
 import BottomSheet from '@gorhom/bottom-sheet';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {capitalizeFirstLetter} from '../../../helpers';
-import GoalMenu from './GoalMenu';
 import EquipmentMenu from './EquipmentMenu';
-import ExperienceMenu from './ExperienceMenu';
 import WarmUpCoolDown from './WarmUpCoolDown';
 import ImageLoader from '../../commons/ImageLoader';
 import globalStyles from '../../../styles/globalStyles';
@@ -31,21 +26,12 @@ import globalStyles from '../../../styles/globalStyles';
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
   setWorkoutAction,
+  fitnessGoal,
+  strengthArea,
+  cardioType,
+  level,
   profile,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [level, setLevel] = useState<Level>(Level.BEGINNER);
-  const [selectedLevel, setSelectedLevel] = useState<Level>(Level.BEGINNER);
-  const [goal, setGoal] = useState<Goal>(Goal.STRENGTH);
-  const [selectedGoal, setSelectedGoal] = useState<Goal>(Goal.STRENGTH);
-  const [area, setArea] = useState<StrengthArea>(StrengthArea.UPPER);
-  const [selectedArea, setSelectedArea] = useState<StrengthArea>(
-    StrengthArea.UPPER,
-  );
-  const [cardioType, setCardioType] = useState<CardioType>(CardioType.HIT);
-  const [selectedCardioType, setSelectedCardioType] = useState<CardioType>(
-    CardioType.HIT,
-  );
   const [settings, setSetting] = useState<
     'goal' | 'experience' | 'equipment' | 'warmup'
   >();
@@ -61,10 +47,6 @@ const Workout: React.FC<WorkoutProps> = ({
 
   const getSettingsTitle = () => {
     switch (settings) {
-      case 'goal':
-        return 'Fitness Goal';
-      case 'experience':
-        return 'Exercise Experience';
       case 'equipment':
         return 'Available Equipment';
       case 'warmup':
@@ -76,14 +58,7 @@ const Workout: React.FC<WorkoutProps> = ({
 
   const onCancel = () => {
     sheetRef.current.close();
-    setModalOpen(false);
     switch (settings) {
-      case 'goal':
-        setSelectedArea(area);
-        setSelectedCardioType(cardioType);
-        return setSelectedGoal(goal);
-      case 'experience':
-        return setSelectedLevel(level);
       case 'equipment':
         return setSelectedEquipment(equipment);
       case 'warmup':
@@ -96,14 +71,7 @@ const Workout: React.FC<WorkoutProps> = ({
 
   const onSave = () => {
     sheetRef.current.close();
-    setModalOpen(false);
     switch (settings) {
-      case 'goal':
-        setArea(selectedArea);
-        setCardioType(selectedCardioType);
-        return setGoal(selectedGoal);
-      case 'experience':
-        return setLevel(selectedLevel);
       case 'equipment':
         return setEquipment(selectedEquipment);
       case 'warmup':
@@ -133,9 +101,7 @@ const Workout: React.FC<WorkoutProps> = ({
       <SafeAreaView style={{flex: 1}}>
         <TouchableOpacity
           onPress={() => {
-            sheetRef.current.expand();
-            setModalOpen(true);
-            setSetting('goal');
+            navigation.navigate('FitnessGoal');
           }}
           style={{
             flex: 1,
@@ -179,7 +145,9 @@ const Workout: React.FC<WorkoutProps> = ({
                 fontWeight: 'bold',
                 ...globalStyles.textShadow,
               }}>
-              {goal === Goal.STRENGTH ? 'Strength' : 'Cardiovascular'}
+              {fitnessGoal === Goal.STRENGTH
+                ? `Strength (${strengthArea})`
+                : `Cardiovascular (${cardioType})`}
             </Text>
           </View>
           <View
@@ -195,9 +163,7 @@ const Workout: React.FC<WorkoutProps> = ({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            sheetRef.current.expand();
-            setModalOpen(true);
-            setSetting('experience');
+            navigation.navigate('Experience');
           }}
           style={{
             flex: 1,
@@ -258,7 +224,6 @@ const Workout: React.FC<WorkoutProps> = ({
         <TouchableOpacity
           onPress={() => {
             sheetRef.current.expand();
-            setModalOpen(true);
             setSetting('equipment');
           }}
           style={{
@@ -320,7 +285,6 @@ const Workout: React.FC<WorkoutProps> = ({
         <TouchableOpacity
           onPress={() => {
             sheetRef.current.expand();
-            setModalOpen(true);
             setSetting('warmup');
           }}
           style={{
@@ -385,9 +349,9 @@ const Workout: React.FC<WorkoutProps> = ({
             if (equipment.length) {
               setWorkoutAction([]);
               navigation.navigate('ExerciseList', {
-                strengthArea: area,
+                strengthArea,
                 level: level,
-                goal,
+                goal: fitnessGoal,
                 equipment,
                 cardioType,
                 warmUp,
@@ -403,7 +367,6 @@ const Workout: React.FC<WorkoutProps> = ({
       </SafeAreaView>
       <BottomSheet
         ref={sheetRef}
-        onClose={() => setModalOpen(false)}
         enablePanDownToClose
         snapPoints={['80%']}
         index={-1}>
@@ -473,22 +436,6 @@ const Workout: React.FC<WorkoutProps> = ({
             backgroundColor: 'white',
             height: '100%',
           }}>
-          {settings === 'goal' && (
-            <GoalMenu
-              selectedGoal={selectedGoal}
-              setSelectedGoal={setSelectedGoal}
-              selectedArea={selectedArea}
-              setSelectedArea={setSelectedArea}
-              selectedCardioType={selectedCardioType}
-              setSelectedCardioType={setSelectedCardioType}
-            />
-          )}
-          {settings === 'experience' && (
-            <ExperienceMenu
-              selectedLevel={selectedLevel}
-              setSelectedLevel={setSelectedLevel}
-            />
-          )}
           {settings === 'equipment' && (
             <EquipmentMenu
               selectedEquipment={selectedEquipment}
@@ -509,8 +456,12 @@ const Workout: React.FC<WorkoutProps> = ({
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: MyRootState) => ({
   profile: profile.profile,
+  fitnessGoal: exercises.fitnessGoal,
+  strengthArea: exercises.strengthArea,
+  cardioType: exercises.cardioType,
+  level: exercises.level,
 });
 
 const mapDispatchToProps = {

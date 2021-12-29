@@ -72,6 +72,8 @@ export type StackParamList = {
     seconds: number;
   };
   FitnessGoal: undefined;
+  Experience: undefined;
+  WarmUp: undefined;
   ExerciseList: {
     goal: Goal;
     strengthArea: StrengthArea;

@@ -36,6 +36,7 @@ import DeleteAccount from './components/views/DeleteAccount';
 import EducationTabs from './EducationTabs';
 import EducationArticle from './components/views/Education/EducationArticle';
 import FitnessGoal from './components/views/Workout/FitnessGoal';
+import Experience from './components/views/Workout/Experience';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -94,6 +95,11 @@ const StackComponent: FunctionComponent = () => {
             name="FitnessGoal"
             component={FitnessGoal}
             options={{headerTitle: 'Fitness Goal'}}
+          />
+          <Stack.Screen
+            name="Experience"
+            component={Experience}
+            options={{headerTitle: 'Exercise experience'}}
           />
           <Stack.Screen
             name="ExerciseList"

@@ -7,14 +7,23 @@ import {
   SET_VIDEO_LOADING,
   SET_LOADING,
   SET_SAVED_WORKOUTS,
+  SET_FITNESS_GOAL,
+  SET_STRENGTH_AREA,
+  SET_CARDIO_TYPE,
+  SET_LEVEL,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
+import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 
 export interface ExercisesState {
   exercises: {[key: string]: Exercise};
   loading: boolean;
   workout: Exercise[];
+  fitnessGoal: Goal;
+  strengthArea: StrengthArea;
+  cardioType: CardioType;
+  level: Level;
   exerciseNotes: {[key: string]: string};
   workoutNotes: {[key: string]: string};
   videos: {[key: string]: {src: string; path: string}};
@@ -26,6 +35,10 @@ const initialState: ExercisesState = {
   loading: false,
   exercises: {},
   workout: [],
+  fitnessGoal: Goal.STRENGTH,
+  strengthArea: StrengthArea.UPPER,
+  cardioType: CardioType.HIT,
+  level: Level.BEGINNER,
   exerciseNotes: {},
   workoutNotes: {},
   videos: {},
@@ -81,6 +94,26 @@ const reducer = (
       return {
         ...state,
         savedWorkouts: {...state.savedWorkouts, ...action.payload},
+      };
+    case SET_FITNESS_GOAL:
+      return {
+        ...state,
+        fitnessGoal: action.payload,
+      };
+    case SET_STRENGTH_AREA:
+      return {
+        ...state,
+        strengthArea: action.payload,
+      };
+    case SET_CARDIO_TYPE:
+      return {
+        ...state,
+        cardioType: action.payload,
+      };
+    case SET_LEVEL:
+      return {
+        ...state,
+        level: action.payload,
       };
     default:
       return state;
