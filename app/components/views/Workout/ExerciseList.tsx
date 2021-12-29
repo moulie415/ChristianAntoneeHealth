@@ -1,23 +1,15 @@
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import BottomSheet from '@gorhom/bottom-sheet';
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import Exercise from '../../../types/Exercise';
-import {Equipment, Goal, MyRootState} from '../../../types/Shared';
+import {Equipment, MyRootState} from '../../../types/Shared';
 import ExerciseListProps from '../../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../../actions/exercises';
 import {truncate} from '../../../helpers';
-import ExerciseBottomSheet from '../../commons/ExerciseBottomSheet';
-import globalStyles from '../../../styles/globalStyles';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import DevicePixels from '../../../helpers/DevicePixels';
 
@@ -40,12 +32,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     warmUp,
     coolDown,
   } = route.params;
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const [selectedExercise, setSelectedExercise] = useState<Exercise>();
-  const [reps, setReps] = useState(15);
-  const [sets, setSets] = useState(3);
-  const [resistance, setResistance] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     getExercisesAction(level, goal, strengthArea, cardioType);
@@ -55,15 +41,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     if (workout.find(e => e.id === exercise.id)) {
       setWorkoutAction(workout.filter(e => e.id !== exercise.id));
     } else {
-      setWorkoutAction([
-        ...workout,
-        {
-          ...exercise,
-          reps,
-          sets,
-          resistance,
-        },
-      ]);
+      setWorkoutAction([...workout, exercise]);
     }
   };
 
@@ -156,24 +134,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                     </View>
                   )
                 }
-                accessoryRight={() => (
-                  <TouchableOpacity style={{padding: DevicePixels[10]}}>
-                    <Icon
-                      name="ellipsis-h"
-                      color={selected ? '#fff' : colors.appBlue}
-                      size={DevicePixels[20]}
-                      onPress={() => {
-                        if (item.premium && !profile.premium) {
-                          navigation.navigate('Premium');
-                        } else {
-                          setSelectedExercise(item);
-                          bottomSheetRef.current.expand();
-                          setModalOpen(true);
-                        }
-                      }}
-                    />
-                  </TouchableOpacity>
-                )}
               />
               {item.premium && !profile.premium && (
                 <TouchableOpacity
@@ -190,18 +150,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         }}
       />
       <AbsoluteSpinner loading={!filtered.length && loading} />
-      <ExerciseBottomSheet
-        selectedExercise={selectedExercise}
-        bottomSheetRef={bottomSheetRef}
-        reps={reps}
-        sets={sets}
-        resistance={resistance}
-        setSets={setSets}
-        setReps={setReps}
-        setResistance={setResistance}
-        setOpen={setModalOpen}
-        open={modalOpen}
-      />
     </Layout>
   );
 };

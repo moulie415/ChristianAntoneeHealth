@@ -1,5 +1,5 @@
 import {Button, Divider, Layout, ListItem, Text} from '@ui-kitten/components';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native';
 import DraggableFlatList, {
@@ -10,12 +10,10 @@ import {UNIT_ID_INTERSTITIAL} from '../../../constants';
 import Exercise from '../../../types/Exercise';
 import ReviewExercisesProps from '../../../types/views/ReviewExercises';
 import {truncate} from '../../../helpers';
-import {Goal, MyRootState} from '../../../types/Shared';
+import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../../actions/exercises';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import BottomSheet from '@gorhom/bottom-sheet';
-import ExerciseBottomSheet from '../../commons/ExerciseBottomSheet';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {useInterstitialAd} from '@react-native-admob/admob';
 
@@ -25,13 +23,6 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   navigation,
   profile,
 }) => {
-  const bottomSheetRef = useRef<BottomSheet>();
-  const [selectedExercise, setSelectedExercise] = useState<Exercise>();
-  const [reps, setReps] = useState(15);
-  const [sets, setSets] = useState(3);
-  const [resistance, setResistance] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
-
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
 
   useEffect(() => {
@@ -60,20 +51,6 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                   : require('../../../images/old_man_stretching.jpeg')
               }
             />
-          )}
-          accessoryRight={() => (
-            <TouchableOpacity style={{padding: DevicePixels[10]}}>
-              <Icon
-                name="ellipsis-h"
-                color={colors.appBlue}
-                size={DevicePixels[20]}
-                onPress={() => {
-                  setSelectedExercise(item);
-                  bottomSheetRef.current?.expand();
-                  setModalOpen(true);
-                }}
-              />
-            </TouchableOpacity>
           )}
         />
       );
@@ -139,18 +116,6 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         }}>
         Start workout
       </Button>
-      <ExerciseBottomSheet
-        selectedExercise={selectedExercise}
-        bottomSheetRef={bottomSheetRef}
-        reps={reps}
-        sets={sets}
-        resistance={resistance}
-        setSets={setSets}
-        setReps={setReps}
-        setResistance={setResistance}
-        open={modalOpen}
-        setOpen={setModalOpen}
-      />
     </Layout>
   );
 };
