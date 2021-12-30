@@ -495,16 +495,17 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(handleDeepLink, link.url);
         }
 
-        const authStatus: FirebaseMessagingTypes.AuthorizationStatus = yield call(
-          messaging().requestPermission,
-        );
-        const enabled =
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-        if (enabled) {
-          const FCMToken: string = yield call(messaging().getToken);
-          yield call(api.setFCMToken, user.uid, FCMToken);
-        }
+        messaging()
+          .requestPermission()
+          .then(async authStatus => {
+            const enabled =
+              authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+              authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+            if (enabled) {
+              const FCMToken = await messaging().getToken();
+              api.setFCMToken(user.uid, FCMToken);
+            }
+          });
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));
