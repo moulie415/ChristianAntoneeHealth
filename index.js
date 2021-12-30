@@ -5,7 +5,6 @@ import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import Shake from '@shakebugs/react-native-shake';
-import db from '@react-native-firebase/firestore';
 import {navigate} from './app/RootNavigation';
 import {
   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
@@ -16,7 +15,7 @@ PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: token => {
     console.log('TOKEN:', token);
-    // db().collection('users').doc(uid).update({FCMToken: token});
+    }
   },
 
   // (required) Called when a remote or local notification is opened or received

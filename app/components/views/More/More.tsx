@@ -51,7 +51,13 @@ const More: React.FC<MoreProps> = ({
     {
       title: 'Connections',
       icon: 'user-friends',
-      onPress: () => navigation.navigate('Connections'),
+      onPress: () => {
+        if (profile.premium) {
+          navigation.navigate('Connections');
+        } else {
+          navigation.navigate('Premium');
+        }
+      },
     },
     {
       title: 'Premium',

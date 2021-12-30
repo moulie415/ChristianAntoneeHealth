@@ -85,6 +85,9 @@ import {handleDeepLink} from './exercises';
 import dynamicLinks, {
   FirebaseDynamicLinksTypes,
 } from '@react-native-firebase/dynamic-links';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -331,6 +334,7 @@ const MONTHLY_TEST_REMINDERS_ID = '2';
 export const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
 export const MONTHLY_TEST_REMINDERS_CHANNEL_ID =
   'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
+export const CONNECTION_ID = 'CONNECTION_ID';
 
 function* getWorkoutReminders() {
   const {workoutReminderTime, monthlyTestReminders} = yield select(
@@ -340,24 +344,39 @@ function* getWorkoutReminders() {
   yield put(setMonthlyTestReminders(monthlyTestReminders));
 }
 
-function* createChannels() {
-  PushNotification.createChannel(
-    {
-      channelId: WORKOUT_REMINDERS_CHANNEL_ID,
-      channelName: 'Workout reminders',
-      channelDescription: 'Daily reminders to workout',
-    },
-    created => console.log('channel created', created),
-  );
+const channels: {
+  channelId: string;
+  channelName: string;
+  channelDescription: string;
+}[] = [
+  {
+    channelId: WORKOUT_REMINDERS_CHANNEL_ID,
+    channelName: 'Workout reminders',
+    channelDescription: 'Daily reminders to workout',
+  },
+  {
+    channelId: MONTHLY_TEST_REMINDERS_CHANNEL_ID,
+    channelName: 'Monthly reminders',
+    channelDescription: 'Monthly reminders to take a fitness test',
+  },
+  {
+    channelId: CONNECTION_ID,
+    channelName: 'Connections',
+    channelDescription: 'Channel for in app connections',
+  },
+];
 
-  PushNotification.createChannel(
-    {
-      channelId: MONTHLY_TEST_REMINDERS_CHANNEL_ID,
-      channelName: 'Monthly reminders',
-      channelDescription: 'Monthly reminders to take a fitness test',
-    },
-    created => console.log('channel created', created),
-  );
+function* createChannels() {
+  channels.forEach(({channelId, channelName, channelDescription}) => {
+    PushNotification.createChannel(
+      {
+        channelId,
+        channelName,
+        channelDescription,
+      },
+      created => console.log('channel created', created),
+    );
+  });
 }
 
 function* setWorkoutRemindersWorker(action: SetWorkoutRemindersAction) {
@@ -474,6 +493,17 @@ function* handleAuthWorker(action: HandleAuthAction) {
 
         if (link && link.url) {
           yield call(handleDeepLink, link.url);
+        }
+
+        const authStatus: FirebaseMessagingTypes.AuthorizationStatus = yield call(
+          messaging().requestPermission,
+        );
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (enabled) {
+          const FCMToken: string = yield call(messaging().getToken);
+          yield call(api.setFCMToken, user.uid, FCMToken);
         }
       } else {
         navigate('SignUpFlow');

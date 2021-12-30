@@ -1730,6 +1730,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-14.1.0.tgz#50e60a9cb926587a99a4ea27f85c1a8425df7041"
   integrity sha512-NO9EyIi4hNYAQtPOieUN9EBXGmhWZeEjL4HAAFMLhSL8I7tomlizou54ojDcPF5tUGS9931jO+5fsCKdsKH55A==
 
+"@react-native-firebase/messaging@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-14.1.0.tgz#b2b3f85e9c6a9e73fb6ad6ec046ca95c8a1b4a6e"
+  integrity sha512-rF4T/euNx9YNCyxXSdvG2ImhL1El+5nWTR5tWIJQM/JmAgrzgoE36VtG7AOVYvtf3Vw0dkCCC0j3QhlwfmoCQw==
+
 "@react-native-picker/picker@^1.9.4":
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.0.tgz#3e5268da892349a35c66ab7bd75e834147621e5a"

@@ -141,6 +141,7 @@ const Login: React.FC<LoginProps> = ({
         source={require('../../images/logo-and-text.png')}
       />
       <KeyboardAwareScrollView
+        keyboardShouldPersistTaps
         contentContainerStyle={{flex: 1, justifyContent: 'flex-end'}}>
         <Text
           style={{
@@ -257,23 +258,27 @@ const Login: React.FC<LoginProps> = ({
         />
         <Button
           onPress={async () => {
-            if (username && pass) {
-              setSpinner(true);
-              setSecure(true);
-              const {user} = await signIn(username, pass);
-              if (!user.emailVerified) {
+            try {
+              if (username && pass) {
+                setSpinner(true);
+                setSecure(true);
+                const {user} = await signIn(username, pass);
+                if (!user.emailVerified) {
+                  Alert.alert(
+                    'Sorry',
+                    'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
+                  );
+                } else {
+                  handleAuthAction(user);
+                }
+              } else {
                 Alert.alert(
                   'Sorry',
-                  'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
+                  'Please enter both your email and your password',
                 );
-              } else {
-                handleAuthAction(user);
               }
-            } else {
-              Alert.alert(
-                'Sorry',
-                'Please enter both your email and your password',
-              );
+            } catch (e) {
+              console.log(e);
             }
             setSpinner(false);
           }}

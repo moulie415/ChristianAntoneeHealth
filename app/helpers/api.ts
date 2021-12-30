@@ -231,3 +231,12 @@ export const generateLink = async () => {
     Snackbar.show({text: 'Error generating link'});
   }
 };
+
+export const acceptInviteLink = async (value: string) => {
+  const response = await functions().httpsCallable('acceptInviteLink')({value});
+  return response.data.user;
+};
+
+export const setFCMToken = (uid: string, FCMToken: string) => {
+  return db().collection('users').doc(uid).update({FCMToken});
+};

@@ -40,6 +40,7 @@ import {navigate} from '../RootNavigation';
 import dynamicLinks, {
   FirebaseDynamicLinksTypes,
 } from '@react-native-firebase/dynamic-links';
+import Profile from '../types/Profile';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, area, cardioType} = action.payload;
@@ -196,7 +197,14 @@ export function* handleDeepLink(url: string) {
       );
       if (loggedIn) {
         if (profile.premium) {
-          
+          if (typeof parsed.query.value === 'string') {
+            const user: Profile = yield call(
+              api.acceptInviteLink,
+              parsed.query.value,
+            );
+            Snackbar.show({text: `You are now connected with ${user.name}`});
+            navigate('Connections');
+          }
         } else {
           Alert.alert(
             'Sorry',
