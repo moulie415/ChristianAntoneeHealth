@@ -67,10 +67,10 @@
 	<array>
 		<string>https://healthandmovement.page.link</string>
 		<string>https://healthandmovement.page.link/workout</string>
-    <string>https://healthandmovement.page.link/invite</string>
+		<string>https://healthandmovement.page.link/invite</string>
 		<string>https://healthandmovement</string>
 		<string>https://healthandmovement/workout</string>
-    <string>https://healthandmovement/invite</string>
+		<string>https://healthandmovement/invite</string>
 	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-7885763333661292~1425417333</string>
@@ -280,6 +280,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

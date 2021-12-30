@@ -12,7 +12,7 @@
 	<array>
 		<string>applinks:healthandmovement.page.link</string>
 		<string>applinks:healthandmovement/workout</string>
-    <string>applinks:healthandmovement/invite</string>
+		<string>applinks:healthandmovement/invite</string>
 		<string>applinks:healthandmovement</string>
 		<string>webcredentials:example.com</string>
 	</array>
