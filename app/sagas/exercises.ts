@@ -133,6 +133,7 @@ function* getExercisesById(action: GetExercisesByIdAction) {
 
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
+
   if (parsed.url === 'https://healthandmovement/workout') {
     try {
       const {loggedIn} = yield select((state: MyRootState) => state.profile);
@@ -178,6 +179,33 @@ export function* handleDeepLink(url: string) {
             yield put(setWorkout(filtered));
             navigate('ReviewExercises');
           }
+        }
+      } else {
+        Alert.alert('Error', 'Please log in before using that link');
+      }
+    } catch (e) {
+      Alert.alert(
+        'Error',
+        'Sorry Health and Movement had problems handling the link',
+      );
+    }
+  } else if (parsed.url === 'https://healthandmovement/invite') {
+    try {
+      const {loggedIn, profile} = yield select(
+        (state: MyRootState) => state.profile,
+      );
+      if (loggedIn) {
+        if (profile.premium) {
+          
+        } else {
+          Alert.alert(
+            'Sorry',
+            'That feature requires premium, would you like to subscribe to premium?',
+            [
+              {text: 'No thanks'},
+              {text: 'Yes', onPress: () => navigate('Premium')},
+            ],
+          );
         }
       } else {
         Alert.alert('Error', 'Please log in before using that link');

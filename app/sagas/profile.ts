@@ -50,7 +50,12 @@ import {getProfileImage} from '../helpers/images';
 import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
-import {goBack, navigate, navigateToLoginIfNecessary, resetToTabs} from '../RootNavigation';
+import {
+  goBack,
+  navigate,
+  navigateToLoginIfNecessary,
+  resetToTabs,
+} from '../RootNavigation';
 import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
@@ -438,6 +443,8 @@ function* handleAuthWorker(action: HandleAuthAction) {
       yield put(setAdmin(isAdmin));
       if (purchaserInfo.entitlements.active.Premium || isAdmin) {
         yield put(setPremium(true));
+      } else {
+        yield put(setPremium(false));
       }
 
       setUserAttributes({

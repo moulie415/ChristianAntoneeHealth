@@ -396,6 +396,9 @@ PODS:
   - Firebase/Firestore (8.10.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.10.0)
+  - Firebase/Functions (8.10.0):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 8.10.0)
   - FirebaseAnalytics (8.10.0):
     - FirebaseAnalytics/AdIdSupport (= 8.10.0)
     - FirebaseCore (~> 8.0)
@@ -454,6 +457,9 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
+  - FirebaseFunctions (8.10.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - FirebaseInstallations (8.10.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.6)
@@ -957,6 +963,8 @@ PODS:
     - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
+  - RNCClipboard (1.9.0):
+    - React-Core
   - RNCMaskedView (0.1.11):
     - React
   - RNCPicker (2.2.1):
@@ -997,6 +1005,10 @@ PODS:
     - RNFBApp
   - RNFBFirestore (14.1.0):
     - Firebase/Firestore (= 8.10.0)
+    - React-Core
+    - RNFBApp
+  - RNFBFunctions (14.1.0):
+    - Firebase/Functions (= 8.10.0)
     - React-Core
     - RNFBApp
   - RNGestureHandler (2.1.0):
@@ -1144,6 +1156,7 @@ DEPENDENCIES:
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - RNAppleHealthKit (from `../node_modules/react-native-health`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
@@ -1157,6 +1170,7 @@ DEPENDENCIES:
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBDynamicLinks (from `../node_modules/@react-native-firebase/dynamic-links`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
+  - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-community/google-signin`)"
   - RNPurchases (from `../node_modules/react-native-purchases`)
@@ -1188,6 +1202,7 @@ SPEC REPOS:
     - FirebaseCrashlytics
     - FirebaseDynamicLinks
     - FirebaseFirestore
+    - FirebaseFunctions
     - FirebaseInstallations
     - Flipper
     - Flipper-Boost-iOSX
@@ -1322,6 +1337,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-health"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNCPicker:
@@ -1348,6 +1365,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/dynamic-links"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
+  RNFBFunctions:
+    :path: "../node_modules/@react-native-firebase/functions"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -1394,6 +1413,7 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: 3b7f17cdf5bf1ae6ad5956696a6c26edeb39cca7
   FirebaseDynamicLinks: bb6ac718f763ec43560f0e2bb6b655a798b277af
   FirebaseFirestore: 0e7321a508cc9de54316ec45400caba6b5719beb
+  FirebaseFunctions: 9c406f9b2deb72719437565c106ca4a439d2a661
   FirebaseInstallations: 830327b45345ffc859eaa9c17bcd5ae893fd5425
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
@@ -1469,6 +1489,7 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCClipboard: 99fc8ad669a376b756fbc8098ae2fd05c0ed0668
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
@@ -1482,6 +1503,7 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: 996f65bff28906dce4fb6af64d9e6fd366d489c2
   RNFBDynamicLinks: 5306a3654921afe00f7fcdeb2e06a02e8d108926
   RNFBFirestore: 335dcbdb91786a892dd76831373f9794ac947e3b
+  RNFBFunctions: 8d98326f2148ef40ec39139914675c19a11ccc30
   RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: aa1b4dff749eb760c6de50f1d987aa45455e58a8
