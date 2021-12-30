@@ -1,6 +1,7 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import db from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import functions from '@react-native-firebase/functions';
 import Exercise from '../types/Exercise';
 import Profile from '../types/Profile';
 import Test from '../types/Test';
@@ -8,6 +9,7 @@ import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import Education from '../types/Education';
+import Snackbar from 'react-native-snackbar';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -219,4 +221,13 @@ export const getEducation = async () => {
     acc[cur.id] = {...edu, id: cur.id};
     return acc;
   }, {});
+};
+
+export const generateLink = async () => {
+  try {
+    const response = await functions().httpsCallable('generateLink')();
+    return response.data.link;
+  } catch (e) {
+    Snackbar.show({text: 'Error generating link'});
+  }
 };

@@ -38,6 +38,7 @@ import EducationArticle from './components/views/Education/EducationArticle';
 import FitnessGoal from './components/views/Workout/FitnessGoal';
 import Experience from './components/views/Workout/Experience';
 import WarmUp from './components/views/Workout/WarmUp';
+import Connections from './components/views/More/Connections';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -216,6 +217,7 @@ const StackComponent: FunctionComponent = () => {
             component={SavedItemsTabs}
             options={{headerTitle: ''}}
           />
+          <Stack.Screen name="Connections" component={Connections} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />

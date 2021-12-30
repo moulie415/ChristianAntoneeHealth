@@ -113,6 +113,7 @@ export type StackParamList = {
     difficulty: number;
   };
   SavedItems: undefined;
+  Connections: undefined;
 };
 
 const App: React.FC = () => {

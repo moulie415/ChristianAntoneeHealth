@@ -49,6 +49,11 @@ const More: React.FC<MoreProps> = ({
       onPress: () => navigation.navigate('Profile'),
     },
     {
+      title: 'Connections',
+      icon: 'user-friends',
+      onPress: () => navigation.navigate('Connections'),
+    },
+    {
       title: 'Premium',
       icon: 'trophy',
       onPress: () => navigation.navigate('Premium'),
