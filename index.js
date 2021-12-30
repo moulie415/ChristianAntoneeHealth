@@ -13,10 +13,7 @@ import {
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
-  onRegister: token => {
-    console.log('TOKEN:', token);
-    }
-  },
+  onRegister: token => {},
 
   // (required) Called when a remote or local notification is opened or received
   onNotification: notification => {
