@@ -1,6 +1,14 @@
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
-import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
+import {
+  CardioType,
+  CoolDown,
+  Equipment,
+  Goal,
+  Level,
+  StrengthArea,
+  WarmUp,
+} from '../types/Shared';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
 export const GET_EXERCISES_BY_ID = 'GET_EXERCISES_BY_ID';
@@ -22,6 +30,9 @@ export const SET_FITNESS_GOAL = 'SET_FITNESS_GOAL';
 export const SET_STRENGTH_AREA = 'SET_STRENGTH_AREA';
 export const SET_CARDIO_TYPE = 'SET_CARDIO_TYPE';
 export const SET_LEVEL = 'SET_LEVEL';
+export const SET_EQUIPMENT = 'SET_EQUIPMENT';
+export const SET_WARM_UP = 'SET_WARMUP';
+export const SET_COOL_DOWN = 'SET_COOLDOWN';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -124,6 +135,21 @@ export interface SetCardioTypeAction {
 export interface SetLevelAction {
   type: typeof SET_LEVEL;
   payload: Level;
+}
+
+export interface SetEquipmentAction {
+  type: typeof SET_EQUIPMENT;
+  payload: Equipment[];
+}
+
+export interface SetWarmUpAction {
+  type: typeof SET_WARM_UP;
+  payload: WarmUp[];
+}
+
+export interface SetCoolDownAction {
+  type: typeof SET_COOL_DOWN;
+  payload: CoolDown[];
 }
 
 export const getExercises = (
@@ -234,6 +260,21 @@ export const setLevel = (level: Level): SetLevelAction => ({
   payload: level,
 });
 
+export const setEquipment = (equipment: Equipment[]): SetEquipmentAction => ({
+  type: SET_EQUIPMENT,
+  payload: equipment,
+});
+
+export const setWarmUp = (warmUp: WarmUp[]): SetWarmUpAction => ({
+  type: SET_WARM_UP,
+  payload: warmUp,
+});
+
+export const setCoolDown = (coolDown: CoolDown[]): SetCoolDownAction => ({
+  type: SET_COOL_DOWN,
+  payload: coolDown,
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -251,4 +292,7 @@ export type ExercisesActions =
   | SetFitnessGoalAction
   | SetStrengthAreaAction
   | SetCardioTypeAction
-  | SetLevelAction;
+  | SetLevelAction
+  | SetEquipmentAction
+  | SetWarmUpAction
+  | SetCoolDownAction;

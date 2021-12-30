@@ -11,10 +11,21 @@ import {
   SET_STRENGTH_AREA,
   SET_CARDIO_TYPE,
   SET_LEVEL,
+  SET_EQUIPMENT,
+  SET_WARM_UP,
+  SET_COOL_DOWN,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
-import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
+import {
+  CardioType,
+  CoolDown,
+  Equipment,
+  Goal,
+  Level,
+  StrengthArea,
+  WarmUp,
+} from '../types/Shared';
 
 export interface ExercisesState {
   exercises: {[key: string]: Exercise};
@@ -24,6 +35,9 @@ export interface ExercisesState {
   strengthArea: StrengthArea;
   cardioType: CardioType;
   level: Level;
+  equipment: Equipment[];
+  warmUp: WarmUp[];
+  coolDown: CoolDown[];
   exerciseNotes: {[key: string]: string};
   workoutNotes: {[key: string]: string};
   videos: {[key: string]: {src: string; path: string}};
@@ -39,6 +53,9 @@ const initialState: ExercisesState = {
   strengthArea: StrengthArea.UPPER,
   cardioType: CardioType.HIT,
   level: Level.BEGINNER,
+  equipment: [Equipment.NONE],
+  warmUp: [],
+  coolDown: [],
   exerciseNotes: {},
   workoutNotes: {},
   videos: {},
@@ -114,6 +131,21 @@ const reducer = (
       return {
         ...state,
         level: action.payload,
+      };
+    case SET_EQUIPMENT:
+      return {
+        ...state,
+        equipment: action.payload,
+      };
+    case SET_WARM_UP:
+      return {
+        ...state,
+        warmUp: action.payload,
+      };
+    case SET_COOL_DOWN:
+      return {
+        ...state,
+        coolDown: action.payload,
       };
     default:
       return state;

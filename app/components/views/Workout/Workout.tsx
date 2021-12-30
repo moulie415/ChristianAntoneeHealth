@@ -1,11 +1,10 @@
 import React, {useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import styles from '../../../styles/views/Workout';
 import {TouchableOpacity, SafeAreaView, View, Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
-import {Text, Button, Layout, ListItem, Divider} from '@ui-kitten/components';
+import {Text, Button, Layout, Divider} from '@ui-kitten/components';
 import {
   CoolDown,
   Equipment,
@@ -13,73 +12,42 @@ import {
   MyRootState,
   WarmUp,
 } from '../../../types/Shared';
-import {setWorkout} from '../../../actions/exercises';
+import {setEquipment, setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import BottomSheet from '@gorhom/bottom-sheet';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {capitalizeFirstLetter} from '../../../helpers';
 import EquipmentMenu from './EquipmentMenu';
-import WarmUpCoolDown from './WarmUpCoolDown';
 import ImageLoader from '../../commons/ImageLoader';
 import globalStyles from '../../../styles/globalStyles';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
   setWorkoutAction,
+  setEquipmentAction,
+  equipment,
   fitnessGoal,
   strengthArea,
   cardioType,
   level,
+  warmUp,
+  coolDown,
   profile,
 }) => {
-  const [settings, setSetting] = useState<
-    'goal' | 'experience' | 'equipment' | 'warmup'
-  >();
-  const [equipment, setEquipment] = useState<Equipment[]>([Equipment.NONE]);
+  const [settings, setSetting] = useState<'equipment' | 'warmup'>();
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([
     Equipment.NONE,
   ]);
   const sheetRef = useRef<BottomSheet>(null);
-  const [warmUp, setWarmup] = useState<WarmUp[]>([]);
-  const [selectedWarmup, setSelectedWarmup] = useState<WarmUp[]>([]);
-  const [coolDown, setCoolDown] = useState<CoolDown[]>([]);
-  const [selectedCoolDown, setSelectedCoolDown] = useState<CoolDown[]>([]);
-
-  const getSettingsTitle = () => {
-    switch (settings) {
-      case 'equipment':
-        return 'Available Equipment';
-      case 'warmup':
-        return 'Warm-up & Cool-down';
-      default:
-        return '';
-    }
-  };
 
   const onCancel = () => {
     sheetRef.current.close();
-    switch (settings) {
-      case 'equipment':
-        return setSelectedEquipment(equipment);
-      case 'warmup':
-        setSelectedCoolDown(coolDown);
-        return setSelectedWarmup(warmUp);
-      default:
-        return '';
-    }
+    setSelectedEquipment(equipment);
   };
 
   const onSave = () => {
     sheetRef.current.close();
-    switch (settings) {
-      case 'equipment':
-        return setEquipment(selectedEquipment);
-      case 'warmup':
-        setCoolDown(selectedCoolDown);
-        return setWarmup(selectedWarmup);
-      default:
-        return '';
-    }
+    setEquipmentAction(selectedEquipment);
   };
 
   const availableEquipmentString = () => {
@@ -114,7 +82,6 @@ const Workout: React.FC<WorkoutProps> = ({
             source={require('../../../images/3rd_carousel_image_fitness_testing.jpeg')}
             overlay
           />
-
           <View
             style={{
               position: 'absolute',
@@ -176,7 +143,6 @@ const Workout: React.FC<WorkoutProps> = ({
             source={require('../../../images/Fitness_testing_plank.jpeg')}
             overlay
           />
-
           <View
             style={{
               position: 'absolute',
@@ -237,7 +203,6 @@ const Workout: React.FC<WorkoutProps> = ({
             source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
             overlay
           />
-
           <View
             style={{
               position: 'absolute',
@@ -284,8 +249,7 @@ const Workout: React.FC<WorkoutProps> = ({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            sheetRef.current.expand();
-            setSetting('warmup');
+            navigation.navigate('WarmUp');
           }}
           style={{
             flex: 1,
@@ -297,7 +261,6 @@ const Workout: React.FC<WorkoutProps> = ({
             source={require('../../../images/Homepage_activity_tracking.jpeg')}
             overlay
           />
-
           <View
             style={{
               position: 'absolute',
@@ -328,7 +291,7 @@ const Workout: React.FC<WorkoutProps> = ({
                 fontWeight: 'bold',
                 ...globalStyles.textShadow,
               }}>
-              {warmUp.length || coolDown.length ? 'On' : 'Off'}
+              {warmUp.length + coolDown.length + ' selected'}
             </Text>
           </View>
           <View
@@ -342,7 +305,6 @@ const Workout: React.FC<WorkoutProps> = ({
             <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
           </View>
         </TouchableOpacity>
-
         <Button
           disabled={false}
           onPress={() => {
@@ -391,7 +353,7 @@ const Workout: React.FC<WorkoutProps> = ({
             </Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text>{getSettingsTitle()}</Text>
+            <Text>Available Equipment</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onSave}>
             <Text
@@ -442,14 +404,6 @@ const Workout: React.FC<WorkoutProps> = ({
               setSelectedEquipment={setSelectedEquipment}
             />
           )}
-          {settings === 'warmup' && (
-            <WarmUpCoolDown
-              selectedWarmup={selectedWarmup}
-              setSelectedWarmUp={setSelectedWarmup}
-              selectedCoolDown={selectedCoolDown}
-              setSelectedCoolDown={setSelectedCoolDown}
-            />
-          )}
         </ScrollView>
       </BottomSheet>
     </Layout>
@@ -462,10 +416,14 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
   strengthArea: exercises.strengthArea,
   cardioType: exercises.cardioType,
   level: exercises.level,
+  equipment: exercises.equipment,
+  warmUp: exercises.warmUp,
+  coolDown: exercises.coolDown,
 });
 
 const mapDispatchToProps = {
   setWorkoutAction: setWorkout,
+  setEquipmentAction: setEquipment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workout);
