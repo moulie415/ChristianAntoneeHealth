@@ -17,6 +17,7 @@ import Purchases from 'react-native-purchases';
 import {STORE_LINK} from '../../../constants';
 import {rateApp} from '../../../helpers';
 import DevicePixels from '../../../helpers/DevicePixels';
+import messaging from '@react-native-firebase/messaging';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -31,6 +32,7 @@ const More: React.FC<MoreProps> = ({
         onPress: async () => {
           resetToWelcome();
           await auth().signOut();
+          messaging().deleteToken();
           Purchases.logOut();
           setLoggedInAction(false);
         },

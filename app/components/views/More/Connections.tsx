@@ -17,7 +17,7 @@ const Connections: React.FC<{profile: Profile}> = ({profile}) => {
   return (
     <Layout style={{flex: 1}}>
       <Input
-        label="Send an invite link to people you want to connect with, this link will only work for today but please only send it to people you want to connect with as anyone can use it"
+        label="Send an invite link to someone you want to connect with, this link will only work once, please only send it to someone you wish to connect with"
         disabled
         style={{margin: DevicePixels[10]}}
         value={link}
@@ -53,6 +53,7 @@ const Connections: React.FC<{profile: Profile}> = ({profile}) => {
         onPress={async () => {
           setLoading(true);
           const data = await generateLink();
+
           setLoading(false);
           setLink(data);
         }}>

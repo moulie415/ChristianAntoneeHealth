@@ -233,7 +233,9 @@ export const generateLink = async () => {
 };
 
 export const acceptInviteLink = async (value: string) => {
-  const response = await functions().httpsCallable('acceptInviteLink')({value});
+  const response = await functions().httpsCallable('acceptInviteLink')({
+    value,
+  });
   return response.data.user;
 };
 

@@ -141,7 +141,7 @@ const Login: React.FC<LoginProps> = ({
         source={require('../../images/logo-and-text.png')}
       />
       <KeyboardAwareScrollView
-        keyboardShouldPersistTaps
+        keyboardShouldPersistTaps="always"
         contentContainerStyle={{flex: 1, justifyContent: 'flex-end'}}>
         <Text
           style={{

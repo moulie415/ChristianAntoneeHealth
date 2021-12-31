@@ -134,7 +134,6 @@ function* getExercisesById(action: GetExercisesByIdAction) {
 
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
-
   if (parsed.url === 'https://healthandmovement/workout') {
     try {
       const {loggedIn} = yield select((state: MyRootState) => state.profile);
