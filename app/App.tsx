@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
 import Purchases from 'react-native-purchases';
@@ -10,7 +10,7 @@ import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {ApplicationProvider, IconRegistry, Layout} from '@ui-kitten/components';
 import 'react-native-gesture-handler';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
@@ -32,6 +32,7 @@ import TestType from './types/Test';
 import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Education from './types/Education';
+import Video from 'react-native-video';
 
 const composeEnhancers =
   // @ts-ignore
@@ -117,6 +118,8 @@ export type StackParamList = {
 };
 
 const App: React.FC = () => {
+  const [showSplash, setShowSplash] = useState(true);
+
   useEffect(() => {
     Shake.setInvokeShakeOnShakeDeviceEvent(false);
     Purchases.setDebugLogsEnabled(true);
@@ -136,11 +139,32 @@ const App: React.FC = () => {
           <NavigationContainer
             ref={navigationRef}
             onReady={() => {
-              SplashScreen.hide();
               sagaMiddleware.run(rootSaga);
             }}>
             <StackComponent />
           </NavigationContainer>
+          {showSplash && (
+            <Layout
+              style={{
+                backgroundColor: '#fff',
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Video
+                onLoad={() => SplashScreen.hide()}
+                source={require('./images/splash.mp4')}
+                style={{width: '100%', height: 1000}}
+                resizeMode="contain"
+                onEnd={() => setShowSplash(false)}
+              />
+            </Layout>
+          )}
         </ApplicationProvider>
       </Provider>
     </PersistGate>
