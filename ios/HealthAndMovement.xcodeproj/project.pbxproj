@@ -759,7 +759,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = HealthAndMovement/HealthAndMovementDebug.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 27RJG57PEM;
@@ -778,7 +778,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement;
 				PRODUCT_NAME = "Health and Movement";
-				PROVISIONING_PROFILE_SPECIFIER = "Health and Movement Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "Health and Movement Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "HealthAndMovement-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
