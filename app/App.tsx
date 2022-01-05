@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
 import Purchases from 'react-native-purchases';
@@ -10,7 +10,7 @@ import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IconRegistry, Layout} from '@ui-kitten/components';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import 'react-native-gesture-handler';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
@@ -33,6 +33,9 @@ import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Education from './types/Education';
 import Video from 'react-native-video';
+import {Dimensions} from 'react-native';
+
+const {height, width} = Dimensions.get('window');
 
 const composeEnhancers =
   // @ts-ignore
@@ -144,26 +147,17 @@ const App: React.FC = () => {
             <StackComponent />
           </NavigationContainer>
           {showSplash && (
-            <Layout
+            <Video
+              onLoad={() => SplashScreen.hide()}
+              source={require('./images/splash.mp4')}
               style={{
+                height,
+                width,
                 backgroundColor: '#fff',
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                right: 0,
-                left: 0,
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Video
-                onLoad={() => SplashScreen.hide()}
-                source={require('./images/splash.mp4')}
-                style={{width: '100%', height: 1000}}
-                resizeMode="contain"
-                onEnd={() => setShowSplash(false)}
-              />
-            </Layout>
+              }}
+              resizeMode="cover"
+              onEnd={() => setShowSplash(false)}
+            />
           )}
         </ApplicationProvider>
       </Provider>
