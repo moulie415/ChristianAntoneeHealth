@@ -10,14 +10,13 @@
 		00E356F31AD99517003FC87E /* HealthAndMovementTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HealthAndMovementTests.m */; };
 		0A24E31426DCFFEA0030CD7E /* countdown.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0A24E31326DCFE050030CD7E /* countdown.wav */; };
 		0A24F535261784EB00859CAB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A24F534261784EB00859CAB /* HealthKit.framework */; };
+		0A35906D278650F8006400D4 /* launch.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 0A35906C278650F8006400D4 /* launch.jpeg */; };
 		0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */; };
 		0A701BC126BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
 		0A701BC226BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
 		0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABF7D9925FCF2D0008BB70F /* File.swift */; };
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
-		0AF814EB2436B16D0056E3CD /* oap_training.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814EA2436B16D0056E3CD /* oap_training.png */; };
-		0AFA94C92439E7E0003ADDE3 /* health_and_movement_logo_colour_centred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFA94C82439E7E0003ADDE3 /* health_and_movement_logo_colour_centred.png */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -75,6 +74,7 @@
 		0A058F9F242FC8D0006B658E /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		0A24E31326DCFE050030CD7E /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = countdown.wav; path = ../app/audio/countdown.wav; sourceTree = "<group>"; };
 		0A24F534261784EB00859CAB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		0A35906C278650F8006400D4 /* launch.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = launch.jpeg; path = ../app/images/launch.jpeg; sourceTree = "<group>"; };
 		0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HealthAndMovement/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A6FCF5C2760C6F70090931A /* HealthAndMovementDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HealthAndMovementDebug.entitlements; path = HealthAndMovement/HealthAndMovementDebug.entitlements; sourceTree = "<group>"; };
 		0A701BC026BF219A00EB809A /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
@@ -83,9 +83,7 @@
 		0ABF7D9925FCF2D0008BB70F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		0AC9281126BEBEE20027F8AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0AF814E82436AD100056E3CD /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		0AF814EA2436B16D0056E3CD /* oap_training.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oap_training.png; path = ../app/images/oap_training.png; sourceTree = "<group>"; };
 		0AFA94C72438B073003ADDE3 /* Health and Movement.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Health and Movement.entitlements"; path = "HealthAndMovement/Health and Movement.entitlements"; sourceTree = "<group>"; };
-		0AFA94C82439E7E0003ADDE3 /* health_and_movement_logo_colour_centred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = health_and_movement_logo_colour_centred.png; path = ../app/images/health_and_movement_logo_colour_centred.png; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Health and Movement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Health and Movement.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = HealthAndMovement/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = HealthAndMovement/AppDelegate.m; sourceTree = "<group>"; };
@@ -191,10 +189,9 @@
 		13B07FAE1A68108700A75B9A /* HealthAndMovement */ = {
 			isa = PBXGroup;
 			children = (
+				0A35906C278650F8006400D4 /* launch.jpeg */,
 				0A6FCF5C2760C6F70090931A /* HealthAndMovementDebug.entitlements */,
-				0AFA94C82439E7E0003ADDE3 /* health_and_movement_logo_colour_centred.png */,
 				0AFA94C72438B073003ADDE3 /* Health and Movement.entitlements */,
-				0AF814EA2436B16D0056E3CD /* oap_training.png */,
 				0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -375,9 +372,8 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				0A701BC126BF219A00EB809A /* Configuration.storekit in Resources */,
 				0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */,
-				0AF814EB2436B16D0056E3CD /* oap_training.png in Resources */,
+				0A35906D278650F8006400D4 /* launch.jpeg in Resources */,
 				0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */,
-				0AFA94C92439E7E0003ADDE3 /* health_and_movement_logo_colour_centred.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
