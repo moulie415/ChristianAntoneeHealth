@@ -1,7 +1,5 @@
 import React from 'react';
 import {Platform} from 'react-native';
-// @ts-ignore
-import VideoPlayer from 'react-native-video-controls';
 import Video from 'react-native-video';
 import {getVideoHeight} from '../../helpers';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -25,16 +23,13 @@ const ExerciseVideo: React.FC<{
           paused={paused}
         />
       ) : (
-        <VideoPlayer
+        <Video
           source={{uri: `file://${path}`}}
           style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
-          disableVolume
-          disableBack
-          onError={(e: Error) => crashlytics().log(e.message)}
+          onError={e => crashlytics().log(e.error.errorString)}
           repeat
           paused={paused}
-          onPause={onPause}
-          onPlay={onPlay}
+          controls
         />
       )}
     </>
