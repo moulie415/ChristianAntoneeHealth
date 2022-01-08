@@ -1,70 +1,46 @@
-import {ButtonGroup, Input, Layout, Spinner} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import {Divider, Layout, List, ListItem} from '@ui-kitten/components';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import Profile from '../../../types/Profile';
-import Button from '../../commons/Button';
-import {generateLink} from '../../../helpers/api';
-import Clipboard from '@react-native-clipboard/clipboard';
-import DevicePixels from '../../../helpers/DevicePixels';
-import Snackbar from 'react-native-snackbar';
-import {Share} from 'react-native';
+import {getConnections} from '../../../actions/profile';
+import Avatar from '../../commons/Avatar';
 
-const Connections: React.FC<{profile: Profile}> = ({profile}) => {
+const Connections: React.FC<{
+  profile: Profile;
+  connections: {[key: string]: Profile};
+  getConnectionsAction: () => void;
+}> = ({profile, connections, getConnectionsAction}) => {
   const [loading, setLoading] = useState(false);
-  const [link, setLink] = useState('');
+
+  useEffect(() => {
+    getConnectionsAction();
+  }, [getConnectionsAction]);
   return (
     <Layout style={{flex: 1}}>
-      <Input
-        label="Send an invite link to someone you want to connect with, this link will only work once, please only send it to someone you wish to connect with"
-        disabled
-        style={{margin: DevicePixels[10]}}
-        value={link}
-        placeholder="Press button to generate link"
-        accessoryRight={() =>
-          link ? (
-            <ButtonGroup>
-              <Button
-                onPress={() => {
-                  Clipboard.setString(link);
-                  Snackbar.show({text: 'Link copied to clipboard!'});
-                }}>
-                <Icon name="clipboard" />
-              </Button>
-              <Button
-                onPress={() => {
-                  Share.share({
-                    title: 'Health and Movement',
-                    url: link,
-                    message: `${profile.name} has invited you to connect on Health and Movement, click the link to connect: ${link}`,
-                  });
-                }}>
-                <Icon name="share-alt" />
-              </Button>
-            </ButtonGroup>
-          ) : null
-        }
+      <List
+        data={Object.values(connections)}
+        renderItem={({item}) => (
+          <ListItem
+            title={item.name}
+            accessoryLeft={() => (
+              <Avatar src={item.avatar} name={item.name} size={50} />
+            )}
+          />
+        )}
+        ItemSeparatorComponent={() => <Divider />}
       />
-      <Button
-        style={{margin: DevicePixels[10]}}
-        disabled={!!link || loading}
-        accessoryLeft={() => (loading ? <Spinner /> : null)}
-        onPress={async () => {
-          setLoading(true);
-          const data = await generateLink();
-
-          setLoading(false);
-          setLink(data);
-        }}>
-        Generate
-      </Button>
     </Layout>
   );
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
+  connections: profile.connections,
 });
 
-export default connect(mapStateToProps)(Connections);
+const mapDispatchToProps = {
+  getConnectionsAction: getConnections,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Connections);

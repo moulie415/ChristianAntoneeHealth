@@ -12,6 +12,7 @@ import {
   SET_STEP,
   SET_PREMIUM,
   SET_ADMIN,
+  SET_CONNECTIONS,
 } from '../actions/profile';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
@@ -29,6 +30,7 @@ export interface ProfileState {
   workoutReminderTime: string;
   monthlyTestReminders: boolean;
   monthlyTestReminderTime: string;
+  connections: {[key: string]: Profile};
 }
 
 const initialState: ProfileState = {
@@ -58,6 +60,7 @@ const initialState: ProfileState = {
     9,
     0,
   ).toISOString(),
+  connections: {},
 };
 
 const reducer = (
@@ -132,6 +135,11 @@ const reducer = (
       return {
         ...state,
         profile: {...state.profile, admin: action.payload},
+      };
+    case SET_CONNECTIONS:
+      return {
+        ...state,
+        connections: {...state.connections, ...action.payload},
       };
     default:
       return state;

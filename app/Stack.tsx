@@ -39,6 +39,8 @@ import FitnessGoal from './components/views/Workout/FitnessGoal';
 import Experience from './components/views/Workout/Experience';
 import WarmUp from './components/views/Workout/WarmUp';
 import Connections from './components/views/More/Connections';
+import AddConnection from './components/views/More/AddConnection';
+import AddConnectionButton from './components/commons/AddConnectionButton';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -217,7 +219,20 @@ const StackComponent: FunctionComponent = () => {
             component={SavedItemsTabs}
             options={{headerTitle: ''}}
           />
-          <Stack.Screen name="Connections" component={Connections} />
+          <Stack.Screen
+            name="Connections"
+            component={Connections}
+            options={({navigation}) => ({
+              headerRight: () => (
+                <AddConnectionButton navigation={navigation} />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="AddConnection"
+            options={{headerTitle: 'Add Connection'}}
+            component={AddConnection}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />

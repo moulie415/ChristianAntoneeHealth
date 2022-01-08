@@ -242,3 +242,8 @@ export const acceptInviteLink = async (value: string) => {
 export const setFCMToken = (uid: string, FCMToken: string) => {
   return db().collection('users').doc(uid).update({FCMToken});
 };
+
+export const getConnections = async () => {
+  const response = await functions().httpsCallable('getConnections')();
+  return response.data.users;
+};

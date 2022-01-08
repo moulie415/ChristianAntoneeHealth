@@ -44,6 +44,8 @@ import {
   handleAuth,
   setPremium,
   setAdmin,
+  GET_CONNECTIONS,
+  setConnections,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -431,6 +433,11 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
   }
 }
 
+function* getConnections() {
+  const connections: {[key: string]: Profile} = yield call(api.getConnections);
+  yield put(setConnections(connections));
+}
+
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
@@ -540,6 +547,7 @@ export default function* profileSaga() {
     takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
     debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
+    takeLatest(GET_CONNECTIONS, getConnections),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

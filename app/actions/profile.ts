@@ -1,5 +1,4 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {StackParamList} from '../App';
 import Profile, {Gender, Unit} from '../types/Profile';
 import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
 
@@ -19,6 +18,8 @@ export const SET_STEP = 'SET_STEP';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
 export const SET_PREMIUM = 'SET_PREMIUM';
 export const SET_ADMIN = 'SET_ADMIN';
+export const GET_CONNECTIONS = 'GET_CONNECTIONS';
+export const SET_CONNECTIONS = 'SET_CONNECTIONS';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -124,6 +125,15 @@ export interface SetAdminAction {
   payload: boolean;
 }
 
+export interface GetConnectionsAction {
+  type: typeof GET_CONNECTIONS;
+}
+
+export interface SetConnectionsAction {
+  type: typeof SET_CONNECTIONS;
+  payload: {[key: string]: Profile};
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -140,7 +150,9 @@ export type ProfileActionTypes =
   | SetStepAction
   | HandleAuthAction
   | SetPremiumAction
-  | SetAdminAction;
+  | SetAdminAction
+  | GetConnectionsAction
+  | SetConnectionsAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -232,4 +244,15 @@ export const setPremium = (premium: boolean): SetPremiumAction => ({
 export const setAdmin = (payload: boolean): SetAdminAction => ({
   type: SET_ADMIN,
   payload,
+});
+
+export const getConnections = (): GetConnectionsAction => ({
+  type: GET_CONNECTIONS,
+});
+
+export const setConnections = (connections: {
+  [key: string]: Profile;
+}): SetConnectionsAction => ({
+  type: SET_CONNECTIONS,
+  payload: connections,
 });

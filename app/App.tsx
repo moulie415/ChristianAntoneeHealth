@@ -118,6 +118,7 @@ export type StackParamList = {
   };
   SavedItems: undefined;
   Connections: undefined;
+  AddConnection: undefined;
 };
 
 const App: React.FC = () => {
