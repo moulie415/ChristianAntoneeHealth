@@ -119,6 +119,7 @@ export type StackParamList = {
   SavedItems: undefined;
   Connections: undefined;
   AddConnection: undefined;
+  Chat: {uid: string};
 };
 
 const App: React.FC = () => {

@@ -184,10 +184,7 @@ export function* handleDeepLink(url: string) {
         Alert.alert('Error', 'Please log in before using that link');
       }
     } catch (e) {
-      Alert.alert(
-        'Error',
-        'Sorry Health and Movement had problems handling the link',
-      );
+      Alert.alert('Error handling link', e.message);
     }
   } else if (parsed.url === 'https://healthandmovement/invite') {
     try {
@@ -218,10 +215,7 @@ export function* handleDeepLink(url: string) {
         Alert.alert('Error', 'Please log in before using that link');
       }
     } catch (e) {
-      Alert.alert(
-        'Error',
-        'Sorry Health and Movement had problems handling the link',
-      );
+      Alert.alert('Error handling link', e.message);
     }
   } else {
     Alert.alert(
