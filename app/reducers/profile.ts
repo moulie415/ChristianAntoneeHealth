@@ -13,6 +13,7 @@ import {
   SET_PREMIUM,
   SET_ADMIN,
   SET_CONNECTIONS,
+  SET_LOADING,
 } from '../actions/profile';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
@@ -31,6 +32,7 @@ export interface ProfileState {
   monthlyTestReminders: boolean;
   monthlyTestReminderTime: string;
   connections: {[key: string]: Profile};
+  loading: boolean;
 }
 
 const initialState: ProfileState = {
@@ -61,6 +63,7 @@ const initialState: ProfileState = {
     0,
   ).toISOString(),
   connections: {},
+  loading: false,
 };
 
 const reducer = (
@@ -140,6 +143,11 @@ const reducer = (
       return {
         ...state,
         connections: {...state.connections, ...action.payload},
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

@@ -18,6 +18,7 @@ import {
   takeLatest,
   fork,
   debounce,
+  throttle,
 } from 'redux-saga/effects';
 import {
   setLoggedIn,
@@ -46,6 +47,7 @@ import {
   setAdmin,
   GET_CONNECTIONS,
   setConnections,
+  setLoading,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -434,8 +436,20 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
 }
 
 function* getConnections() {
-  const connections: {[key: string]: Profile} = yield call(api.getConnections);
-  yield put(setConnections(connections));
+  try {
+    yield put(setLoading(true));
+    console.log('test');
+    const connections: {[key: string]: Profile} = yield call(
+      api.getConnections,
+    );
+    yield put(setConnections(connections));
+    console.log('test1');
+    yield put(setLoading(false));
+  } catch (e) {
+    console.log('test2');
+    Snackbar.show({text: 'Error fetching connections'});
+    yield put(setLoading(false));
+  }
 }
 
 function* handleAuthWorker(action: HandleAuthAction) {
@@ -547,7 +561,7 @@ export default function* profileSaga() {
     takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
     debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
-    takeLatest(GET_CONNECTIONS, getConnections),
+    throttle(30000, GET_CONNECTIONS, getConnections),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

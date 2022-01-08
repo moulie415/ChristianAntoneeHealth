@@ -1,18 +1,18 @@
 import {Divider, Layout, List, ListItem} from '@ui-kitten/components';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import Profile from '../../../types/Profile';
 import {getConnections} from '../../../actions/profile';
 import Avatar from '../../commons/Avatar';
+import {RefreshControl} from 'react-native';
 
 const Connections: React.FC<{
   profile: Profile;
   connections: {[key: string]: Profile};
   getConnectionsAction: () => void;
-}> = ({profile, connections, getConnectionsAction}) => {
-  const [loading, setLoading] = useState(false);
-
+  loading: boolean;
+}> = ({profile, connections, getConnectionsAction, loading}) => {
   useEffect(() => {
     getConnectionsAction();
   }, [getConnectionsAction]);
@@ -20,6 +20,12 @@ const Connections: React.FC<{
     <Layout style={{flex: 1}}>
       <List
         data={Object.values(connections)}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={getConnectionsAction}
+          />
+        }
         renderItem={({item}) => (
           <ListItem
             title={item.name}
@@ -37,6 +43,7 @@ const Connections: React.FC<{
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   connections: profile.connections,
+  loading: profile.loading,
 });
 
 const mapDispatchToProps = {

@@ -20,6 +20,7 @@ export const SET_PREMIUM = 'SET_PREMIUM';
 export const SET_ADMIN = 'SET_ADMIN';
 export const GET_CONNECTIONS = 'GET_CONNECTIONS';
 export const SET_CONNECTIONS = 'SET_CONNECTIONS';
+export const SET_LOADING = 'SET_LOADING';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -134,6 +135,11 @@ export interface SetConnectionsAction {
   payload: {[key: string]: Profile};
 }
 
+export interface SetLoading {
+  type: typeof SET_LOADING;
+  payload: boolean;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -152,7 +158,8 @@ export type ProfileActionTypes =
   | SetPremiumAction
   | SetAdminAction
   | GetConnectionsAction
-  | SetConnectionsAction;
+  | SetConnectionsAction
+  | SetLoading;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -255,4 +262,9 @@ export const setConnections = (connections: {
 }): SetConnectionsAction => ({
   type: SET_CONNECTIONS,
   payload: connections,
+});
+
+export const setLoading = (loading: boolean): SetLoading => ({
+  type: SET_LOADING,
+  payload: loading,
 });
