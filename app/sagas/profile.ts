@@ -438,15 +438,12 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
 function* getConnections() {
   try {
     yield put(setLoading(true));
-    console.log('test');
     const connections: {[key: string]: Profile} = yield call(
       api.getConnections,
     );
     yield put(setConnections(connections));
-    console.log('test1');
     yield put(setLoading(false));
   } catch (e) {
-    console.log('test2');
     Snackbar.show({text: 'Error fetching connections'});
     yield put(setLoading(false));
   }
