@@ -41,14 +41,12 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
                 subtitle="Start a new workout now"
                 image={require('../../images/Homepage_new_workout.jpeg')}
                 onPress={() => navigation.navigate('Workout')}
-                delay={200}
               />
               <HomeCard
                 title="Fitness tests"
                 subtitle="Track your fitness overtime"
                 image={require('../../images/Homepage_fitness_test.jpeg')}
                 onPress={() => navigation.navigate('Fitness')}
-                delay={400}
               />
             </Layout>
             <Layout
@@ -62,7 +60,6 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
                 subtitle="Health and nutrition articles"
                 image={require('../../images/Homepage_Education.jpeg')}
                 onPress={() => navigation.navigate('Education')}
-                delay={600}
               />
               <HomeCard
                 title="Saved workouts/tests"
@@ -75,7 +72,6 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
                     navigation.navigate('Premium');
                   }
                 }}
-                delay={800}
               />
             </Layout>
             <Layout
@@ -89,7 +85,6 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
                 subtitle="View premade routines"
                 image={require('../../images/Homepage_quick_routine.jpeg')}
                 onPress={() => navigation.navigate('QuickRoutines')}
-                delay={1000}
               />
               <HomeCard
                 title="View Activity"
@@ -108,7 +103,6 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
                     });
                   }
                 }}
-                delay={1200}
               />
             </Layout>
           </Layout>
