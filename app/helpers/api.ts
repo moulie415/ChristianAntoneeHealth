@@ -11,6 +11,7 @@ import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import Education from '../types/Education';
 import Snackbar from 'react-native-snackbar';
 import Chat from '../types/Chat';
+import Message from '../types/Message';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -284,4 +285,12 @@ export const getChats = async (uid: string) => {
     acc[otherUid] = chat;
     return acc;
   }, {});
+};
+
+export const sendMessage = (
+  message: Message,
+  chatId: string,
+  userId: string,
+) => {
+  return functions().httpsCallable('sendMessage')({message, chatId, userId});
 };

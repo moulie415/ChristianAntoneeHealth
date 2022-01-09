@@ -16,6 +16,7 @@ import {
   SET_LOADING,
   SET_MESSAGES,
   SET_CHATS,
+  SET_MESSAGE,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -172,6 +173,17 @@ const reducer = (
       return {
         ...state,
         chats: {...state.chats, ...action.payload},
+      };
+    case SET_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          [action.payload.uid]: {
+            ...state.messages[action.payload.uid],
+            [action.payload.message._id]: action.payload.message,
+          },
+        },
       };
     default:
       return state;

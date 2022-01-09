@@ -26,6 +26,8 @@ export const SET_CONNECTIONS = 'SET_CONNECTIONS';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_MESSAGES = 'SET_MESSAGES';
 export const SET_CHATS = 'SET_CHATS';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const SET_MESSAGE = 'SET_MESSAGE';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -155,6 +157,16 @@ export interface SetChatsAction {
   payload: {[key: string]: Chat};
 }
 
+export interface SendMessageAction {
+  type: typeof SEND_MESSAGE;
+  payload: {message: Message; chatId: string; uid: string};
+}
+
+export interface SetMessageAction {
+  type: typeof SET_MESSAGE;
+  payload: {message: Message; uid: string};
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -176,7 +188,9 @@ export type ProfileActionTypes =
   | SetConnectionsAction
   | SetLoading
   | SetMessagesAction
-  | SetChatsAction;
+  | SetChatsAction
+  | SendMessageAction
+  | SetMessageAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -304,4 +318,21 @@ export const setMessages = (
 export const setChats = (chats: {[key: string]: Chat}): SetChatsAction => ({
   type: SET_CHATS,
   payload: chats,
+});
+
+export const sendMessage = (
+  message: Message,
+  chatId: string,
+  uid: string,
+): SendMessageAction => ({
+  type: SEND_MESSAGE,
+  payload: {message, chatId, uid},
+});
+
+export const setMessage = (
+  uid: string,
+  message: Message,
+): SetMessageAction => ({
+  type: SET_MESSAGE,
+  payload: {uid, message},
 });

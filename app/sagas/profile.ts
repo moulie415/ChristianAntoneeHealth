@@ -49,6 +49,9 @@ import {
   setConnections,
   setLoading,
   setChats,
+  SEND_MESSAGE,
+  SendMessageAction,
+  setMessage,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -341,6 +344,7 @@ export const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
 export const MONTHLY_TEST_REMINDERS_CHANNEL_ID =
   'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
 export const CONNECTION_ID = 'CONNECTION_ID';
+export const MESSAGE_CHANNEL_ID = 'MESSAGE_CHANNEL_ID';
 
 function* getWorkoutReminders() {
   const {workoutReminderTime, monthlyTestReminders} = yield select(
@@ -369,6 +373,11 @@ const channels: {
     channelId: CONNECTION_ID,
     channelName: 'Connections',
     channelDescription: 'Channel for in app connections',
+  },
+  {
+    channelId: MESSAGE_CHANNEL_ID,
+    channelName: 'Messages',
+    channelDescription: 'Channel for receiving messages from connections',
   },
 ];
 
@@ -452,6 +461,17 @@ function* getConnections() {
   } catch (e) {
     Snackbar.show({text: 'Error fetching connections'});
     yield put(setLoading(false));
+  }
+}
+
+function* sendMessage(action: SendMessageAction) {
+  const {chatId, message, uid} = action.payload;
+  try {
+    yield put(setMessage(uid, message));
+    yield call(api.sendMessage, message, chatId, uid);
+  } catch (e) {
+    Snackbar.show({text: e.message});
+    yield put(setMessage(uid, {...message, sent: false, pending: false}));
   }
 }
 
@@ -565,6 +585,7 @@ export default function* profileSaga() {
     debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),
+    takeLatest(SEND_MESSAGE, sendMessage),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

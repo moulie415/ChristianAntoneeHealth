@@ -1,16 +1,17 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import React, {useEffect, useState} from 'react';
-import {GiftedChat} from 'react-native-gifted-chat';
+import React, {useCallback, useEffect, useState} from 'react';
+import {AvatarProps, GiftedChat} from 'react-native-gifted-chat';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import {setMessages} from '../../../actions/profile';
+import {sendMessage, setMessages} from '../../../actions/profile';
 import Message from '../../../types/Message';
 import Avatar from '../../commons/Avatar';
 import {TouchableOpacity} from 'react-native';
+import moment from 'moment';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -23,6 +24,7 @@ interface ChatProps {
   messagesObj: {[key: string]: Message};
   connection: Profile;
   chatId: string;
+  sendMessageAction: (message: Message, chatId: string, uid: string) => void;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -33,6 +35,7 @@ const Chat: React.FC<ChatProps> = ({
   navigation,
   connection,
   chatId,
+  sendMessageAction,
 }) => {
   const [messages, setMessages] = useState(Object.values(messagesObj || {}));
 
@@ -71,10 +74,21 @@ const Chat: React.FC<ChatProps> = ({
       ),
     });
   }, [navigation, connection.name, connection.avatar]);
+
   return (
     <GiftedChat
       messages={messages}
       user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
+      inverted={false}
+      onSend={msgs => {
+        const message: Message = {
+          ...msgs[0],
+          type: 'text',
+          pending: true,
+          createdAt: moment().unix(),
+        };
+        sendMessageAction(message, chatId, uid);
+      }}
     />
   );
 };
@@ -88,6 +102,7 @@ const mapStateToProps = ({profile}: MyRootState, props: ChatProps) => ({
 
 const mapDispatchToProps = {
   setMessagesAction: setMessages,
+  sendMessageAction: sendMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
