@@ -1,5 +1,6 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
 import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
@@ -24,6 +25,7 @@ export const GET_CONNECTIONS = 'GET_CONNECTIONS';
 export const SET_CONNECTIONS = 'SET_CONNECTIONS';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_MESSAGES = 'SET_MESSAGES';
+export const SET_CHATS = 'SET_CHATS';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -148,6 +150,11 @@ export interface SetMessagesAction {
   payload: {uid: string; messages: {[key: string]: Message}};
 }
 
+export interface SetChatsAction {
+  type: typeof SET_CHATS;
+  payload: {[key: string]: Chat};
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -168,7 +175,8 @@ export type ProfileActionTypes =
   | GetConnectionsAction
   | SetConnectionsAction
   | SetLoading
-  | SetMessagesAction;
+  | SetMessagesAction
+  | SetChatsAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -292,3 +300,8 @@ export const setMessages = (
     payload: {uid, messages},
   };
 };
+
+export const setChats = (chats: {[key: string]: Chat}): SetChatsAction => ({
+  type: SET_CHATS,
+  payload: chats,
+});

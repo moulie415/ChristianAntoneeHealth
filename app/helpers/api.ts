@@ -10,6 +10,7 @@ import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import Education from '../types/Education';
 import Snackbar from 'react-native-snackbar';
+import Chat from '../types/Chat';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -263,4 +264,24 @@ export const getConnections = async (uid: string) => {
     return acc;
   }, {});
   return users;
+};
+
+export const getChats = async (uid: string) => {
+  const idQuery = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('chats')
+    .limit(20)
+    .get();
+  const ids = idQuery.docs.map(chat => chat.data().id);
+  const chats = await db()
+    .collection('chats')
+    .where(db.FieldPath.documentId(), 'in', ids)
+    .get();
+  return chats.docs.reduce((acc: {[key: string]: Chat}, cur) => {
+    const otherUid = cur.data().users.find((id: string) => id !== uid);
+    const chat: any = {id: cur.id, ...cur.data()};
+    acc[otherUid] = chat;
+    return acc;
+  }, {});
 };

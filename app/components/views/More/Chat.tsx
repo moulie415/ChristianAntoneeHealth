@@ -22,6 +22,7 @@ interface ChatProps {
   ) => void;
   messagesObj: {[key: string]: Message};
   connection: Profile;
+  chatId: string;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -31,41 +32,34 @@ const Chat: React.FC<ChatProps> = ({
   messagesObj,
   navigation,
   connection,
+  chatId,
 }) => {
   const [messages, setMessages] = useState(Object.values(messagesObj || {}));
-  console.log(messages);
+
   const {uid} = route.params;
   useEffect(() => {
-    let subscriber: () => void;
-    const getMessages = async () => {
-      const idQuery = await db()
-        .collection('chats')
-        .where('users', 'array-contains-any', [profile.uid, uid])
-        .get();
-      const {id} = idQuery.docs[0];
-      console.log(id);
-      subscriber = db()
-        .collection('chats')
-        .doc(id)
-        .collection('messages')
-        .limit(20)
-        .onSnapshot(
-          snapshot => {
-            setMessagesAction(uid, snapshot);
-            console.log(snapshot);
-          },
-          error => {
-            console.log(error);
-          },
-        );
-    };
-    getMessages();
+    const subscriber = db()
+      .collection('chats')
+      .doc(chatId)
+      .collection('messages')
+      .limit(20)
+      .onSnapshot(
+        snapshot => {
+          setMessagesAction(uid, snapshot);
+        },
+        error => {
+          console.warn(error);
+        },
+      );
+
     return () => {
-      if (subscriber) {
-        subscriber();
-      }
+      subscriber();
     };
-  }, [profile.uid, uid, setMessagesAction]);
+  }, [uid, setMessagesAction, chatId]);
+
+  useEffect(() => {
+    setMessages(Object.values(messagesObj || {}));
+  }, [messagesObj]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -89,6 +83,7 @@ const mapStateToProps = ({profile}: MyRootState, props: ChatProps) => ({
   profile: profile.profile,
   messagesObj: profile.messages[props.route.params.uid],
   connection: profile.connections[props.route.params.uid],
+  chatId: profile.chats[props.route.params.uid].id,
 });
 
 const mapDispatchToProps = {

@@ -15,7 +15,9 @@ import {
   SET_CONNECTIONS,
   SET_LOADING,
   SET_MESSAGES,
+  SET_CHATS,
 } from '../actions/profile';
+import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile from '../types/Profile';
 import {Sample, StepSample} from '../types/Shared';
@@ -36,6 +38,7 @@ export interface ProfileState {
   connections: {[key: string]: Profile};
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
+  chats: {[key: string]: Chat};
 }
 
 const initialState: ProfileState = {
@@ -68,6 +71,7 @@ const initialState: ProfileState = {
   connections: {},
   loading: false,
   messages: {},
+  chats: {},
 };
 
 const reducer = (
@@ -163,6 +167,11 @@ const reducer = (
             ...action.payload.messages,
           },
         },
+      };
+    case SET_CHATS:
+      return {
+        ...state,
+        chats: {...state.chats, ...action.payload},
       };
     default:
       return state;

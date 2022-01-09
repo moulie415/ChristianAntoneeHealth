@@ -48,6 +48,7 @@ import {
   GET_CONNECTIONS,
   setConnections,
   setLoading,
+  setChats,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -92,6 +93,7 @@ import dynamicLinks, {
 import messaging, {
   FirebaseMessagingTypes,
 } from '@react-native-firebase/messaging';
+import Chat from '../types/Chat';
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -443,6 +445,8 @@ function* getConnections() {
       api.getConnections,
       uid,
     );
+    const chats: {[key: string]: Chat} = yield call(api.getChats, uid);
+    yield put(setChats(chats));
     yield put(setConnections(connections));
     yield put(setLoading(false));
   } catch (e) {
