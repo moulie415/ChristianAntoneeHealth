@@ -3,7 +3,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import React, {useEffect, useState} from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
-import {View, Text} from 'react-native';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
@@ -11,6 +10,7 @@ import {connect} from 'react-redux';
 import {setMessages} from '../../../actions/profile';
 import Message from '../../../types/Message';
 import Avatar from '../../commons/Avatar';
+import {TouchableOpacity} from 'react-native';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -32,7 +32,8 @@ const Chat: React.FC<ChatProps> = ({
   navigation,
   connection,
 }) => {
-  const [messages, setMessages] = useState(Object.values(messagesObj));
+  const [messages, setMessages] = useState(Object.values(messagesObj || {}));
+  console.log(messages);
   const {uid} = route.params;
   useEffect(() => {
     let subscriber: () => void;
@@ -42,6 +43,7 @@ const Chat: React.FC<ChatProps> = ({
         .where('users', 'array-contains-any', [profile.uid, uid])
         .get();
       const {id} = idQuery.docs[0];
+      console.log(id);
       subscriber = db()
         .collection('chats')
         .doc(id)
@@ -50,6 +52,7 @@ const Chat: React.FC<ChatProps> = ({
         .onSnapshot(
           snapshot => {
             setMessagesAction(uid, snapshot);
+            console.log(snapshot);
           },
           error => {
             console.log(error);
@@ -68,7 +71,9 @@ const Chat: React.FC<ChatProps> = ({
     navigation.setOptions({
       headerTitle: connection.name,
       headerRight: () => (
-        <Avatar src={connection.avatar} name={connection.name} />
+        <TouchableOpacity>
+          <Avatar src={connection.avatar} name={connection.name} />
+        </TouchableOpacity>
       ),
     });
   }, [navigation, connection.name, connection.avatar]);

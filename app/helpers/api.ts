@@ -243,7 +243,24 @@ export const setFCMToken = (uid: string, FCMToken: string) => {
   return db().collection('users').doc(uid).update({FCMToken});
 };
 
-export const getConnections = async () => {
-  const response = await functions().httpsCallable('getConnections')();
-  return response.data.users;
+export const getConnections = async (uid: string) => {
+  // const response = await functions().httpsCallable('getConnections')();
+  // return response.data.users;
+  const connections = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('connections')
+    .limit(20)
+    .get();
+  const uids = connections.docs.map(doc => doc.data().uid);
+  const userData = await db()
+    .collection('users')
+    .where(db.FieldPath.documentId(), 'in', uids)
+    .get();
+  const users = userData.docs.reduce((acc: {[key: string]: Profile}, cur) => {
+    const user: any = cur.data();
+    acc[cur.id] = user;
+    return acc;
+  }, {});
+  return users;
 };

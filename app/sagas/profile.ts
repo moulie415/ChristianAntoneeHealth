@@ -437,9 +437,11 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
 
 function* getConnections() {
   try {
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield put(setLoading(true));
     const connections: {[key: string]: Profile} = yield call(
       api.getConnections,
+      uid,
     );
     yield put(setConnections(connections));
     yield put(setLoading(false));
