@@ -1,7 +1,8 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {GiftedChat} from 'react-native-gifted-chat';
 import {View, Text} from 'react-native';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
@@ -9,6 +10,7 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {setMessages} from '../../../actions/profile';
 import Message from '../../../types/Message';
+import Avatar from '../../commons/Avatar';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -18,16 +20,19 @@ interface ChatProps {
     uid: string,
     snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>,
   ) => void;
-  messages: {[key: string]: Message};
+  messagesObj: {[key: string]: Message};
+  connection: Profile;
 }
 
 const Chat: React.FC<ChatProps> = ({
   route,
   profile,
   setMessagesAction,
-  messages,
+  messagesObj,
+  navigation,
+  connection,
 }) => {
-  console.log(messages);
+  const [messages, setMessages] = useState(Object.values(messagesObj));
   const {uid} = route.params;
   useEffect(() => {
     let subscriber: () => void;
@@ -58,16 +63,27 @@ const Chat: React.FC<ChatProps> = ({
       }
     };
   }, [profile.uid, uid, setMessagesAction]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: connection.name,
+      headerRight: () => (
+        <Avatar src={connection.avatar} name={connection.name} />
+      ),
+    });
+  }, [navigation, connection.name, connection.avatar]);
   return (
-    <View>
-      <Text />
-    </View>
+    <GiftedChat
+      messages={messages}
+      user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
+    />
   );
 };
 
 const mapStateToProps = ({profile}: MyRootState, props: ChatProps) => ({
   profile: profile.profile,
-  messages: profile.messages[props.route.params.uid],
+  messagesObj: profile.messages[props.route.params.uid],
+  connection: profile.connections[props.route.params.uid],
 });
 
 const mapDispatchToProps = {
