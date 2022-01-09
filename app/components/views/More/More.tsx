@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import auth from '@react-native-firebase/auth';
-import Shake from '@shakebugs/react-native-shake';
+// import Shake from '@shakebugs/react-native-shake';
 import crashlytics from '@react-native-firebase/crashlytics';
 import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
@@ -108,11 +108,11 @@ const More: React.FC<MoreProps> = ({
       icon: 'star',
       onPress: rateApp,
     },
-    {
-      title: 'Report a problem',
-      icon: 'bug',
-      onPress: () => Shake.show(),
-    },
+    // {
+    //   title: 'Report a problem',
+    //   icon: 'bug',
+    //   onPress: () => Shake.show(),
+    // },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
     {
       title: `v${VersionNumber.appVersion} (${VersionNumber.buildVersion})`,

@@ -1986,11 +1986,6 @@
     "@sentry/types" "6.12.0"
     tslib "^1.9.3"
 
-"@shakebugs/react-native-shake@^15.1.0":
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/@shakebugs/react-native-shake/-/react-native-shake-15.1.0.tgz#2484c167e9e4ecb839feff4c4ba4eea701867675"
-  integrity sha512-eEot72sCQ78RN9klhe7EItw/oQDpmsQzSRKft0gVsxLR1l4nguxNC3EDDYjE/RmO1dgJZPP6q89VEr2/FXWgjw==
-
 "@sideway/address@^4.1.0":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.1.tgz#9e321e74310963fdf8eebfbee09c7bd69972de4d"

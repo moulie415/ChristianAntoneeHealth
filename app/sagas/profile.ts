@@ -1,5 +1,5 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import Shake from '@shakebugs/react-native-shake';
+// import Shake from '@shakebugs/react-native-shake';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import crashlytics from '@react-native-firebase/crashlytics';
 import PushNotification from 'react-native-push-notification';
@@ -496,7 +496,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
     if (user && user.emailVerified) {
-      Shake.setMetadata('uid', user.uid);
+      // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,
         user,

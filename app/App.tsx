@@ -3,7 +3,7 @@ import reducer from './reducers';
 import {Provider} from 'react-redux';
 import Purchases from 'react-native-purchases';
 import {PersistGate} from 'redux-persist/lib/integration/react';
-import Shake from '@shakebugs/react-native-shake';
+// import Shake from '@shakebugs/react-native-shake';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -126,7 +126,7 @@ const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    Shake.setInvokeShakeOnShakeDeviceEvent(false);
+    // Shake.setInvokeShakeOnShakeDeviceEvent(false);
     Purchases.setDebugLogsEnabled(true);
     Purchases.setup('qyiMfgjJHVvhxXVRPnXgECYFkphIJwhb');
     if (!__DEV__) {
