@@ -8,6 +8,9 @@ import Avatar from '../../commons/Avatar';
 import {RefreshControl} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
+import Text from '../../commons/Text';
+import DevicePixels from '../../../helpers/DevicePixels';
+import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
 
 const Connections: React.FC<{
   profile: Profile;
@@ -15,7 +18,7 @@ const Connections: React.FC<{
   getConnectionsAction: () => void;
   loading: boolean;
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
-}> = ({profile, connections, getConnectionsAction, loading, navigation}) => {
+}> = ({connections, getConnectionsAction, loading, navigation}) => {
   useEffect(() => {
     getConnectionsAction();
   }, [getConnectionsAction]);
@@ -36,7 +39,16 @@ const Connections: React.FC<{
             accessoryLeft={() => (
               <Avatar src={item.avatar} name={item.name} size={50} />
             )}
+            accessoryRight={() => <UnreadConnectionCount uid={item.uid} />}
           />
+        )}
+        ListEmptyComponent={() => (
+          <Text
+            style={{textAlign: 'center', padding: DevicePixels[20]}}
+            appearance="hint">
+            No connections yet, press the invite button in the top right to send
+            a link.
+          </Text>
         )}
         ItemSeparatorComponent={() => <Divider />}
       />

@@ -255,16 +255,19 @@ export const getConnections = async (uid: string) => {
     .limit(20)
     .get();
   const uids = connections.docs.map(doc => doc.data().uid);
-  const userData = await db()
-    .collection('users')
-    .where(db.FieldPath.documentId(), 'in', uids)
-    .get();
-  const users = userData.docs.reduce((acc: {[key: string]: Profile}, cur) => {
-    const user: any = cur.data();
-    acc[cur.id] = user;
-    return acc;
-  }, {});
-  return users;
+  if (uids.length) {
+    const userData = await db()
+      .collection('users')
+      .where(db.FieldPath.documentId(), 'in', uids)
+      .get();
+    const users = userData.docs.reduce((acc: {[key: string]: Profile}, cur) => {
+      const user: any = cur.data();
+      acc[cur.id] = user;
+      return acc;
+    }, {});
+    return users;
+  }
+  return {};
 };
 
 export const getChats = async (uid: string) => {
@@ -275,16 +278,19 @@ export const getChats = async (uid: string) => {
     .limit(20)
     .get();
   const ids = idQuery.docs.map(chat => chat.data().id);
-  const chats = await db()
-    .collection('chats')
-    .where(db.FieldPath.documentId(), 'in', ids)
-    .get();
-  return chats.docs.reduce((acc: {[key: string]: Chat}, cur) => {
-    const otherUid = cur.data().users.find((id: string) => id !== uid);
-    const chat: any = {id: cur.id, ...cur.data()};
-    acc[otherUid] = chat;
-    return acc;
-  }, {});
+  if (ids.length) {
+    const chats = await db()
+      .collection('chats')
+      .where(db.FieldPath.documentId(), 'in', ids)
+      .get();
+    return chats.docs.reduce((acc: {[key: string]: Chat}, cur) => {
+      const otherUid = cur.data().users.find((id: string) => id !== uid);
+      const chat: any = {id: cur.id, ...cur.data()};
+      acc[otherUid] = chat;
+      return acc;
+    }, {});
+  }
+  return {};
 };
 
 export const sendMessage = (
@@ -293,4 +299,8 @@ export const sendMessage = (
   userId: string,
 ) => {
   return functions().httpsCallable('sendMessage')({message, chatId, userId});
+};
+
+export const setUnread = (uid: string, unread: {[key: string]: number}) => {
+  return db().collection('users').doc(uid).update({unread});
 };

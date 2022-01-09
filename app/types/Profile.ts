@@ -20,4 +20,5 @@ export default interface Profile {
   signedUp?: boolean;
   admin?: boolean;
   premium?: boolean;
-};
+  unread?: {[key: string]: number};
+}

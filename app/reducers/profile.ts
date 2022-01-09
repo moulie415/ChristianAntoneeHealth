@@ -17,6 +17,7 @@ import {
   SET_MESSAGES,
   SET_CHATS,
   SET_MESSAGE,
+  SET_UNREAD,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -184,6 +185,11 @@ const reducer = (
             [action.payload.message._id]: action.payload.message,
           },
         },
+      };
+    case SET_UNREAD:
+      return {
+        ...state,
+        profile: {...state.profile, unread: action.payload},
       };
     default:
       return state;

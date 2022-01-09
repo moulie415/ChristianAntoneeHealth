@@ -7,7 +7,7 @@ import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import {sendMessage, setMessages} from '../../../actions/profile';
+import {sendMessage, setMessages, setRead} from '../../../actions/profile';
 import Message from '../../../types/Message';
 import Avatar from '../../commons/Avatar';
 import {TouchableOpacity} from 'react-native';
@@ -25,6 +25,7 @@ interface ChatProps {
   connection: Profile;
   chatId: string;
   sendMessageAction: (message: Message, chatId: string, uid: string) => void;
+  setReadAction: (uid: string) => void;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -36,6 +37,7 @@ const Chat: React.FC<ChatProps> = ({
   connection,
   chatId,
   sendMessageAction,
+  setReadAction,
 }) => {
   const [messages, setMessages] = useState(Object.values(messagesObj || {}));
 
@@ -75,6 +77,10 @@ const Chat: React.FC<ChatProps> = ({
     });
   }, [navigation, connection.name, connection.avatar]);
 
+  useEffect(() => {
+    setReadAction(uid);
+  }, [uid, setReadAction]);
+
   return (
     <GiftedChat
       messages={messages}
@@ -85,7 +91,7 @@ const Chat: React.FC<ChatProps> = ({
           ...msgs[0],
           type: 'text',
           pending: true,
-          createdAt: moment().unix(),
+          createdAt: moment().valueOf(),
         };
         sendMessageAction(message, chatId, uid);
       }}
@@ -103,6 +109,7 @@ const mapStateToProps = ({profile}: MyRootState, props: ChatProps) => ({
 const mapDispatchToProps = {
   setMessagesAction: setMessages,
   sendMessageAction: sendMessage,
+  setReadAction: setRead,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

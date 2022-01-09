@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import auth from '@react-native-firebase/auth';
 import Shake from '@shakebugs/react-native-shake';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -18,6 +18,7 @@ import {STORE_LINK} from '../../../constants';
 import {rateApp} from '../../../helpers';
 import DevicePixels from '../../../helpers/DevicePixels';
 import messaging from '@react-native-firebase/messaging';
+import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -39,7 +40,12 @@ const More: React.FC<MoreProps> = ({
       },
     ]);
   };
-  const listItems: {title: string; icon: string; onPress?: () => void}[] = [
+  const listItems: {
+    title: string;
+    icon: string;
+    onPress?: () => void;
+    accessoryRight?: () => ReactNode;
+  }[] = [
     {
       title: 'Education',
       icon: 'book-open',
@@ -60,6 +66,7 @@ const More: React.FC<MoreProps> = ({
           navigation.navigate('Premium');
         }
       },
+      accessoryRight: () => <UnreadRowCount />,
     },
     {
       title: 'Premium',
@@ -125,7 +132,6 @@ const More: React.FC<MoreProps> = ({
     <Layout>
       <SafeAreaView>
         <List
-          style={{}}
           data={listItems}
           ItemSeparatorComponent={() => <Divider />}
           renderItem={({item}) => (
@@ -139,6 +145,9 @@ const More: React.FC<MoreProps> = ({
                   name={item.icon}
                 />
               )}
+              accessoryRight={
+                item.accessoryRight ? item.accessoryRight : () => null
+              }
               onPress={item.onPress}
             />
           )}

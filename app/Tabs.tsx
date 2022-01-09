@@ -7,6 +7,7 @@ import Home from './components/views/Home';
 import Workout from './components/views/Workout/Workout';
 import FitnessTesting from './components/views/Tests/FitnessTesting';
 import More from './components/views/More/More';
+import MoreIcon from './components/commons/unread/MoreIcon';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -67,9 +68,7 @@ const Tabs = () => {
       <Tab.Screen
         options={{
           tabBarLabel: 'More',
-          tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="ellipsis-h" />
-          ),
+          tabBarIcon: ({color, size}) => <MoreIcon color={color} size={size} />,
           headerShown: false,
         }}
         key="More"

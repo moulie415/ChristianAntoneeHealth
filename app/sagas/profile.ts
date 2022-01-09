@@ -52,6 +52,9 @@ import {
   SEND_MESSAGE,
   SendMessageAction,
   setMessage,
+  SET_READ,
+  SetReadAction,
+  setUnread,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -460,6 +463,7 @@ function* getConnections() {
     yield put(setLoading(false));
   } catch (e) {
     Snackbar.show({text: 'Error fetching connections'});
+    console.warn(e.message);
     yield put(setLoading(false));
   }
 }
@@ -472,6 +476,21 @@ function* sendMessage(action: SendMessageAction) {
   } catch (e) {
     Snackbar.show({text: e.message});
     yield put(setMessage(uid, {...message, sent: false, pending: false}));
+  }
+}
+
+function* setRead(action: SetReadAction) {
+  const otherUid = action.payload;
+  const {uid} = yield select((state: MyRootState) => state.profile.profile);
+  const current: {[key: string]: number} = yield select(
+    (state: MyRootState) => state.profile.profile.unread,
+  );
+  if (current) {
+    const unread = {...current, [otherUid]: 0};
+    yield call(api.setUnread, uid, unread);
+    const count = Object.values(unread).reduce((acc, cur) => acc + cur, 0);
+    PushNotification.setApplicationIconBadgeNumber(count);
+    yield put(setUnread(unread));
   }
 }
 
@@ -499,7 +518,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);
       }
-
       const {purchaserInfo, created} = yield call(Purchases.logIn, user.uid);
       crashlytics().setUserId(user.uid);
       const isAdmin: boolean = yield call(api.isAdmin, user.uid);
@@ -586,6 +604,7 @@ export default function* profileSaga() {
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
+    takeLatest(SET_READ, setRead),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

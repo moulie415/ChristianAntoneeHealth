@@ -28,6 +28,8 @@ export const SET_MESSAGES = 'SET_MESSAGES';
 export const SET_CHATS = 'SET_CHATS';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const SET_MESSAGE = 'SET_MESSAGE';
+export const SET_READ = 'SET_READ';
+export const SET_UNREAD = 'SET_UNREAD';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -167,6 +169,16 @@ export interface SetMessageAction {
   payload: {message: Message; uid: string};
 }
 
+export interface SetReadAction {
+  type: typeof SET_READ;
+  payload: string;
+}
+
+export interface SetUnreadAction {
+  type: typeof SET_UNREAD;
+  payload: {[key: string]: number};
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -190,7 +202,9 @@ export type ProfileActionTypes =
   | SetMessagesAction
   | SetChatsAction
   | SendMessageAction
-  | SetMessageAction;
+  | SetMessageAction
+  | SetReadAction
+  | SetUnreadAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -335,4 +349,16 @@ export const setMessage = (
 ): SetMessageAction => ({
   type: SET_MESSAGE,
   payload: {uid, message},
+});
+
+export const setRead = (uid: string): SetReadAction => ({
+  type: SET_READ,
+  payload: uid,
+});
+
+export const setUnread = (unread: {
+  [key: string]: number;
+}): SetUnreadAction => ({
+  type: SET_UNREAD,
+  payload: unread,
 });
