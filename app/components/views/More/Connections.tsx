@@ -6,13 +6,16 @@ import Profile from '../../../types/Profile';
 import {getConnections} from '../../../actions/profile';
 import Avatar from '../../commons/Avatar';
 import {RefreshControl} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
 
 const Connections: React.FC<{
   profile: Profile;
   connections: {[key: string]: Profile};
   getConnectionsAction: () => void;
   loading: boolean;
-}> = ({profile, connections, getConnectionsAction, loading}) => {
+  navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
+}> = ({profile, connections, getConnectionsAction, loading, navigation}) => {
   useEffect(() => {
     getConnectionsAction();
   }, [getConnectionsAction]);
@@ -28,6 +31,7 @@ const Connections: React.FC<{
         }
         renderItem={({item}) => (
           <ListItem
+            onPress={() => navigation.navigate('Chat', {uid: item.uid})}
             title={item.name}
             accessoryLeft={() => (
               <Avatar src={item.avatar} name={item.name} size={50} />

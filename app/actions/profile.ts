@@ -1,4 +1,6 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
 import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
 
@@ -21,6 +23,7 @@ export const SET_ADMIN = 'SET_ADMIN';
 export const GET_CONNECTIONS = 'GET_CONNECTIONS';
 export const SET_CONNECTIONS = 'SET_CONNECTIONS';
 export const SET_LOADING = 'SET_LOADING';
+export const SET_MESSAGES = 'SET_MESSAGES';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -140,6 +143,11 @@ export interface SetLoading {
   payload: boolean;
 }
 
+export interface SetMessagesAction {
+  type: typeof SET_MESSAGES;
+  payload: {uid: string; messages: {[key: string]: Message}};
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -159,7 +167,8 @@ export type ProfileActionTypes =
   | SetAdminAction
   | GetConnectionsAction
   | SetConnectionsAction
-  | SetLoading;
+  | SetLoading
+  | SetMessagesAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -268,3 +277,18 @@ export const setLoading = (loading: boolean): SetLoading => ({
   type: SET_LOADING,
   payload: loading,
 });
+
+export const setMessages = (
+  uid: string,
+  snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>,
+): SetMessagesAction => {
+  const messages = snapshot.docs.reduce((acc: {[id: string]: Message}, cur) => {
+    const message: any = cur.data();
+    acc[cur.id] = {...message, id: cur.id};
+    return acc;
+  }, {});
+  return {
+    type: SET_MESSAGES,
+    payload: {uid, messages},
+  };
+};
