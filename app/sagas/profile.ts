@@ -488,8 +488,6 @@ function* setRead(action: SetReadAction) {
   if (current) {
     const unread = {...current, [otherUid]: 0};
     yield call(api.setUnread, uid, unread);
-    const count = Object.values(unread).reduce((acc, cur) => acc + cur, 0);
-    PushNotification.setApplicationIconBadgeNumber(count);
     yield put(setUnread(unread));
   }
 }
@@ -568,6 +566,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
               api.setFCMToken(user.uid, FCMToken);
             }
           });
+        if (doc.data().unread) {
+          yield put(setUnread(doc.data().unread));
+        }
       } else {
         navigate('SignUpFlow');
         yield put(setStep(0));

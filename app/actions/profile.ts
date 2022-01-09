@@ -1,5 +1,6 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
@@ -356,9 +357,11 @@ export const setRead = (uid: string): SetReadAction => ({
   payload: uid,
 });
 
-export const setUnread = (unread: {
-  [key: string]: number;
-}): SetUnreadAction => ({
-  type: SET_UNREAD,
-  payload: unread,
-});
+export const setUnread = (unread: {[key: string]: number}): SetUnreadAction => {
+  const count = Object.values(unread).reduce((acc, cur) => acc + cur, 0);
+  PushNotification.setApplicationIconBadgeNumber(count);
+  return {
+    type: SET_UNREAD,
+    payload: unread,
+  };
+};
