@@ -228,7 +228,7 @@ export function* handleDeepLink(url: string) {
       Alert.alert('Error handling link', e.message);
     }
   } else {
-    Alert.alert('Error', 'InvalidLink');
+    Alert.alert('Error', 'Invalid link');
   }
 }
 
