@@ -5,12 +5,43 @@ import {MyRootState} from '../../../types/Shared';
 import Profile from '../../../types/Profile';
 import {getConnections} from '../../../actions/profile';
 import Avatar from '../../commons/Avatar';
-import {RefreshControl} from 'react-native';
+import {RefreshControl, View} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
+import Message from '../../../types/Message';
+import {getSimplifiedTime} from '../../../helpers/profile';
+import colors from '../../../constants/colors';
+
+const getLastMessage = (
+  messages: {[key: string]: {[key: string]: Message}},
+  uid: string,
+): {lastMessage: string; italicize?: boolean; createdAt?: number} => {
+  const userMessages = messages[uid];
+  if (userMessages) {
+    const messagesArr = Object.values(userMessages);
+    let message: Message = {
+      text: '',
+      createdAt: 0,
+      type: 'text',
+      _id: '',
+      user: {_id: ''},
+    };
+    messagesArr.forEach(msg => {
+      if (msg.createdAt > message.createdAt) {
+        message = msg;
+      }
+    });
+    return {
+      lastMessage: message.text,
+      italicize: message.system,
+      createdAt: message.createdAt as number,
+    };
+  }
+  return {lastMessage: 'Beginning of chat', italicize: true};
+};
 
 const Connections: React.FC<{
   profile: Profile;
@@ -18,7 +49,8 @@ const Connections: React.FC<{
   getConnectionsAction: () => void;
   loading: boolean;
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
-}> = ({connections, getConnectionsAction, loading, navigation}) => {
+  messages: {[key: string]: {[key: string]: Message}};
+}> = ({connections, getConnectionsAction, loading, navigation, messages}) => {
   useEffect(() => {
     getConnectionsAction();
   }, [getConnectionsAction]);
@@ -32,16 +64,39 @@ const Connections: React.FC<{
             onRefresh={getConnectionsAction}
           />
         }
-        renderItem={({item}) => (
-          <ListItem
-            onPress={() => navigation.navigate('Chat', {uid: item.uid})}
-            title={item.name}
-            accessoryLeft={() => (
-              <Avatar src={item.avatar} name={item.name} size={50} />
-            )}
-            accessoryRight={() => <UnreadConnectionCount uid={item.uid} />}
-          />
-        )}
+        renderItem={({item}) => {
+          const {lastMessage, createdAt, italicize} = getLastMessage(
+            messages,
+            item.uid,
+          );
+          return (
+            <ListItem
+              onPress={() => navigation.navigate('Chat', {uid: item.uid})}
+              title={item.name}
+              description={lastMessage}
+              accessoryLeft={() => (
+                <Avatar
+                  src={item.avatar}
+                  name={item.name}
+                  size={DevicePixels[40]}
+                />
+              )}
+              accessoryRight={() => (
+                <View style={{alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      fontSize: DevicePixels[10],
+                      color: colors.textGrey,
+                      marginBottom: DevicePixels[5]
+                    }}>
+                    {getSimplifiedTime(createdAt)}
+                  </Text>
+                  <UnreadConnectionCount uid={item.uid} />
+                </View>
+              )}
+            />
+          );
+        }}
         ListEmptyComponent={() => (
           <Text
             style={{textAlign: 'center', padding: DevicePixels[20]}}
@@ -60,6 +115,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   connections: profile.connections,
   loading: profile.loading,
+  messages: profile.messages,
 });
 
 const mapDispatchToProps = {

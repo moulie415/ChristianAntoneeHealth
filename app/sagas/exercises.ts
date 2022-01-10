@@ -43,7 +43,7 @@ import dynamicLinks, {
 import Profile from '../types/Profile';
 
 export function* getExercises(action: GetExercisesAction) {
-  const {level, goal, area, cardioType} = action.payload;
+  const {level, goal, area, cardioType, warmUp, coolDown} = action.payload;
   yield put(setLoading(true));
   const exercises: {[key: string]: Exercise} = yield call(
     api.getExercises,
@@ -51,6 +51,8 @@ export function* getExercises(action: GetExercisesAction) {
     goal,
     area,
     cardioType,
+    warmUp,
+    coolDown,
   );
   yield put(setExercises(exercises));
   yield put(setLoading(false));

@@ -41,6 +41,8 @@ export interface GetExercisesAction {
     goal: Goal;
     area: StrengthArea;
     cardioType: CardioType;
+    coolDown: CoolDown[];
+    warmUp: WarmUp[];
   };
 }
 
@@ -157,9 +159,11 @@ export const getExercises = (
   goal: Goal,
   area: StrengthArea,
   cardioType: CardioType,
+  warmUp: WarmUp[],
+  coolDown: CoolDown[],
 ): GetExercisesAction => ({
   type: GET_EXERCISES,
-  payload: {level, goal, area, cardioType},
+  payload: {level, goal, area, cardioType, warmUp, coolDown},
 });
 
 export const getExercisesById = (ids: string[]): GetExercisesByIdAction => ({

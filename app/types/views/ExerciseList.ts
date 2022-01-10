@@ -3,7 +3,14 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
 import Profile from '../Profile';
-import {CardioType, Goal, Level, StrengthArea} from '../Shared';
+import {
+  CardioType,
+  CoolDown,
+  Goal,
+  Level,
+  StrengthArea,
+  WarmUp,
+} from '../Shared';
 
 type ExerciseListNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -20,9 +27,11 @@ export default interface ExerciseListProps {
     goal: Goal,
     area: StrengthArea,
     cardioType: CardioType,
+    warmUp: WarmUp[],
+    coolDown: CoolDown[],
   ) => void;
   workout: Exercise[];
   setWorkoutAction: (workout: Exercise[]) => void;
   loading: boolean;
   profile: Profile;
-}
+};

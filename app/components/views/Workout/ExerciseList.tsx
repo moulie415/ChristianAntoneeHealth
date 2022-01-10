@@ -1,7 +1,7 @@
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {useEffect, useMemo} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -34,8 +34,16 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   } = route.params;
 
   useEffect(() => {
-    getExercisesAction(level, goal, strengthArea, cardioType);
-  }, [getExercisesAction, level, goal, strengthArea, cardioType]);
+    getExercisesAction(level, goal, strengthArea, cardioType, warmUp, coolDown);
+  }, [
+    getExercisesAction,
+    level,
+    goal,
+    strengthArea,
+    cardioType,
+    warmUp,
+    coolDown,
+  ]);
 
   const selectExercise = (exercise: Exercise) => {
     if (workout.find(e => e.id === exercise.id)) {
@@ -83,6 +91,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
       <List
         style={{flex: 1}}
         data={filtered}
+        refreshControl={<RefreshControl refreshing={loading} />}
         keyExtractor={(item: Exercise) => item.id}
         renderItem={({item}: {item: Exercise}) => {
           const selected = workout.find(e => e.id === item.id);
@@ -148,7 +157,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           );
         }}
       />
-      <AbsoluteSpinner loading={!filtered.length && loading} />
     </Layout>
   );
 };

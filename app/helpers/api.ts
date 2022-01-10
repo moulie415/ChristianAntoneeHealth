@@ -1,11 +1,18 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import db from '@react-native-firebase/firestore';
+import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import Exercise from '../types/Exercise';
 import Profile from '../types/Profile';
 import Test from '../types/Test';
-import {CardioType, Goal, Level, StrengthArea} from '../types/Shared';
+import {
+  CardioType,
+  CoolDown,
+  Goal,
+  Level,
+  StrengthArea,
+  WarmUp,
+} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import Education from '../types/Education';
@@ -40,26 +47,46 @@ export const createUser = async (
   }
 };
 
-const getExercisesQuery = (
+const getExercisesQuery = async (
   level: Level,
   goal: Goal,
   area: StrengthArea,
   cardioType: CardioType,
+  warmUp: WarmUp[],
+  coolDown: CoolDown[],
 ) => {
+  let warmUpDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[] = [];
+  let coolDownDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[] = [];
+  if (warmUp.length) {
+    const warmUpQuery = await db()
+      .collection('exercises')
+      .where('warmUp', 'in', warmUp)
+      .get();
+    warmUpDocs = warmUpQuery.docs;
+  }
+  if (coolDown.length) {
+    const coolDownQuery = await db()
+      .collection('exercises')
+      .where('coolDown', 'in', coolDown)
+      .get();
+    coolDownDocs = coolDownQuery.docs;
+  }
   if (goal === Goal.STRENGTH) {
-    return db()
+    const exercises = await db()
       .collection('exercises')
       .where('type', '==', goal)
       .where('area', '==', area)
       .where('level', '==', level)
       .get();
+    return [...exercises.docs, ...warmUpDocs, ...coolDownDocs];
   }
-  return db()
+  const exercises = await db()
     .collection('exercises')
     .where('type', '==', goal)
     .where('cardioType', '==', cardioType)
     .where('level', '==', level)
     .get();
+  return [...exercises.docs, ...warmUpDocs, ...coolDownDocs];
 };
 
 export const getExercises = async (
@@ -67,9 +94,18 @@ export const getExercises = async (
   goal: Goal,
   area: StrengthArea,
   cardioType: CardioType,
+  warmUp: WarmUp[],
+  coolDown: CoolDown[],
 ) => {
-  const snapshot = await getExercisesQuery(level, goal, area, cardioType);
-  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+  const docs = await getExercisesQuery(
+    level,
+    goal,
+    area,
+    cardioType,
+    warmUp,
+    coolDown,
+  );
+  return docs.reduce((acc: {[id: string]: Exercise}, cur) => {
     const exercise: any = cur.data();
     acc[cur.id] = {...exercise, id: cur.id};
     return acc;

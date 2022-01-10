@@ -13,7 +13,7 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {sendMessage, setMessages, setRead} from '../../../actions/profile';
 import Message from '../../../types/Message';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -87,38 +87,40 @@ const Chat: React.FC<ChatProps> = ({
   }, [uid, setReadAction]);
 
   return (
-    <GiftedChat
-      messages={messages.sort(
-        (a, b) => (a.createdAt as number) - (b.createdAt as number),
-      )}
-      user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
-      inverted={false}
-      renderAvatar={props => {
-        return (
-          <GiftedAvatar
-            {...props}
-            renderAvatar={(p: AvatarProps<Message>) =>
-              p ? (
-                <Avatar
-                  name={p.currentMessage.user.name}
-                  src={p.currentMessage.user.avatar as string}
-                  size={DevicePixels[30]}
-                />
-              ) : null
-            }
-          />
-        );
-      }}
-      onSend={msgs => {
-        const message: Message = {
-          ...msgs[0],
-          type: 'text',
-          pending: true,
-          createdAt: moment().valueOf(),
-        };
-        sendMessageAction(message, chatId, uid);
-      }}
-    />
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
+      <GiftedChat
+        messages={messages.sort(
+          (a, b) => (a.createdAt as number) - (b.createdAt as number),
+        )}
+        user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
+        inverted={false}
+        renderAvatar={props => {
+          return (
+            <GiftedAvatar
+              {...props}
+              renderAvatar={(p: AvatarProps<Message>) =>
+                p ? (
+                  <Avatar
+                    name={p.currentMessage.user.name}
+                    src={p.currentMessage.user.avatar as string}
+                    size={DevicePixels[30]}
+                  />
+                ) : null
+              }
+            />
+          );
+        }}
+        onSend={msgs => {
+          const message: Message = {
+            ...msgs[0],
+            type: 'text',
+            pending: true,
+            createdAt: moment().valueOf(),
+          };
+          sendMessageAction(message, chatId, uid);
+        }}
+      />
+    </View>
   );
 };
 
