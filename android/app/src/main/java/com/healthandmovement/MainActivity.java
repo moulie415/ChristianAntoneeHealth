@@ -10,15 +10,8 @@ import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
 
 import android.view.MotionEvent;
-import com.shakebugs.shake.Shake;
 
 public class MainActivity extends ReactActivity {
-
-  @Override
-  public boolean dispatchTouchEvent(MotionEvent ev) {
-    Shake.handleTouchEvent(ev, this);
-    return super.dispatchTouchEvent(ev);
-  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
