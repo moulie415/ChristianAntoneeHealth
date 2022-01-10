@@ -36,7 +36,7 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {SavedWorkout} from '../types/SavedItem';
 import queryString from 'query-string';
 import {Alert} from 'react-native';
-import {navigate} from '../RootNavigation';
+import {navigate, resetToTabs} from '../RootNavigation';
 import dynamicLinks, {
   FirebaseDynamicLinksTypes,
 } from '@react-native-firebase/dynamic-links';
@@ -140,6 +140,7 @@ export function* handleDeepLink(url: string) {
     try {
       const {loggedIn} = yield select((state: MyRootState) => state.profile);
       if (loggedIn) {
+        navigate('Loading');
         if (typeof parsed.query.exercises === 'string') {
           const exerciseIds = parsed.query.exercises.split(',');
           const exercises: {[key: string]: Exercise} = yield select(
@@ -169,6 +170,7 @@ export function* handleDeepLink(url: string) {
             !premium &&
             !admin
           ) {
+            resetToTabs();
             Alert.alert(
               'Sorry',
               'That workout link includes premium exercises, would you like to subscribe to premium?',
@@ -179,6 +181,7 @@ export function* handleDeepLink(url: string) {
             );
           } else {
             yield put(setWorkout(filtered));
+            resetToTabs();
             navigate('ReviewExercises');
           }
         }
@@ -187,6 +190,7 @@ export function* handleDeepLink(url: string) {
       }
     } catch (e) {
       Alert.alert('Error handling link', e.message);
+      resetToTabs();
     }
   } else if (parsed.url === 'https://healthandmovement/invite') {
     try {
@@ -194,6 +198,7 @@ export function* handleDeepLink(url: string) {
         (state: MyRootState) => state.profile,
       );
       if (loggedIn) {
+        navigate('Loading');
         if (profile.premium) {
           if (typeof parsed.query.value === 'string') {
             const user: Profile = yield call(
@@ -201,9 +206,11 @@ export function* handleDeepLink(url: string) {
               parsed.query.value,
             );
             Snackbar.show({text: `You are now connected with ${user.name}`});
+            resetToTabs();
             navigate('Connections');
           }
         } else {
+          resetToTabs();
           Alert.alert(
             'Sorry',
             'That feature requires premium, would you like to subscribe to premium?',
@@ -217,13 +224,11 @@ export function* handleDeepLink(url: string) {
         Alert.alert('Error', 'Please log in before using that link');
       }
     } catch (e) {
+      resetToTabs();
       Alert.alert('Error handling link', e.message);
     }
   } else {
-    Alert.alert(
-      'Error',
-      'Sorry Health and Movement had problems handling the link',
-    );
+    Alert.alert('Error', 'InvalidLink');
   }
 }
 
