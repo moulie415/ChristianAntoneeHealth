@@ -49,17 +49,16 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     () =>
       Object.values(exercises).filter(exercise => {
         return (
-          exercise.type === goal &&
-          (strengthArea === exercise.area ||
-            cardioType === exercise.cardioType) &&
-          (!exercise.warmUp?.length || warmUp.includes(exercise.warmUp)) &&
-          (!exercise.coolDown?.length ||
-            coolDown.includes(exercise.coolDown)) &&
-          (!exercise.equipment ||
-            exercise.equipment.every(item => equipment.includes(item)) ||
-            ((!exercise.equipment || exercise.equipment.length === 0) &&
-              equipment.includes(Equipment.NONE))) &&
-          exercise.level === level
+          (exercise.type === goal &&
+            (strengthArea === exercise.area ||
+              cardioType === exercise.cardioType) &&
+            (!exercise.equipment ||
+              exercise.equipment.every(item => equipment.includes(item)) ||
+              ((!exercise.equipment || exercise.equipment.length === 0) &&
+                equipment.includes(Equipment.NONE))) &&
+            exercise.level === level) ||
+          (exercise.warmUp && warmUp.includes(exercise.warmUp)) ||
+          (exercise.coolDown && coolDown.includes(exercise.coolDown))
         );
       }),
     [
