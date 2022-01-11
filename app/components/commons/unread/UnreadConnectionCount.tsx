@@ -15,16 +15,16 @@ const UnreadConnectionCount: React.FC<{
     return (
       <Layout
         style={{
-          width: DevicePixels[22],
-          height: DevicePixels[22],
-          borderRadius: DevicePixels[11],
+          width: DevicePixels[18],
+          height: DevicePixels[18],
+          borderRadius: DevicePixels[9],
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
         }}>
         <Text
           style={{
-            fontSize: DevicePixels[12],
+            fontSize: DevicePixels[10],
             fontWeight: 'bold',
             color: '#fff',
           }}>
