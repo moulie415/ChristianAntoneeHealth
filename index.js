@@ -1,6 +1,6 @@
 //import './wdyr';
 import {AppRegistry} from 'react-native';
-import App from './app/App';
+import App, {store} from './app/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -12,6 +12,7 @@ import {
   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './app/sagas/profile';
+import {setUnread} from './app/actions/profile';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -48,6 +49,10 @@ PushNotification.configure({
             )
           ) {
             PushNotification.localNotification(notification);
+            const {unread} = store.getState().profile.profile;
+            const {uid} = notification.data;
+            const newUnread = unread[uid] ? unread[uid] + 1 : 1;
+            store.dispatch(setUnread({...unread, [uid]: newUnread}));
           }
         } else {
           PushNotification.localNotification(notification);

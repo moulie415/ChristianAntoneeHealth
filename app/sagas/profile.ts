@@ -513,12 +513,6 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
       const route: any = navigationRef.current.getCurrentRoute();
       if (route.name === 'Chat' && route.params?.uid === uid) {
         notif.play();
-      } else {
-        const {unread} = yield select(
-          (state: MyRootState) => state.profile.profile,
-        );
-        const newUnread = unread[uid] ? unread[uid] + 1 : 1;
-        yield put(setUnread({...unread, [uid]: newUnread}));
       }
     }
   }
