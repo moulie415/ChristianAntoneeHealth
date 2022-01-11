@@ -1,7 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -44,7 +44,6 @@ const Chat: React.FC<ChatProps> = ({
   sendMessageAction,
   setReadAction,
 }) => {
-  const messages = Object.values(messagesObj || {});
 
   const {uid} = route.params;
 
@@ -63,12 +62,25 @@ const Chat: React.FC<ChatProps> = ({
     setReadAction(uid);
   }, [uid, setReadAction]);
 
+  const sortMessages = useCallback(() => {
+    const messages = Object.values(messagesObj || {});
+    return messages
+      .sort((a, b) => (a.createdAt as number) - (b.createdAt as number))
+      .map(message => {
+        if (message.user) {
+          return {
+            ...message,
+            user: {...message.user, avatar: message.user.avatar || undefined},
+          };
+        }
+        return message;
+      });
+  }, [messagesObj]);
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
-        messages={messages.sort(
-          (a, b) => (a.createdAt as number) - (b.createdAt as number),
-        )}
+        messages={sortMessages()}
         user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
         inverted={false}
         renderAvatar={props => {
