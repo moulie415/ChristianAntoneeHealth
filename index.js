@@ -42,11 +42,11 @@ PushNotification.configure({
         if (navigationRef.current) {
           const route = navigationRef.current.getCurrentRoute();
           if (
-            route.name === 'Chat' &&
-            route.params?.uid === notification.data.uid
+            !(
+              route.name === 'Chat' &&
+              route.params?.uid === notification.data.uid
+            )
           ) {
-            // play sound
-          } else {
             PushNotification.localNotification(notification);
           }
         } else {

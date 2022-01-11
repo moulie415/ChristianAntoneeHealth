@@ -45,7 +45,7 @@ export interface ProfileState {
 
 const initialState: ProfileState = {
   step: 0,
-  profile: {email: '', uid: ''},
+  profile: {email: '', uid: '', unread: {}},
   loggedIn: false,
   hasViewedWelcome: false,
   hasViewedSignUp: false,

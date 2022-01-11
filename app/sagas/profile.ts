@@ -68,6 +68,7 @@ import {
   goBack,
   navigate,
   navigateToLoginIfNecessary,
+  navigationRef,
   resetToTabs,
 } from '../RootNavigation';
 import {Alert, Platform} from 'react-native';
@@ -102,6 +103,14 @@ import dynamicLinks, {
 import messaging from '@react-native-firebase/messaging';
 import Chat from '../types/Chat';
 import db from '@react-native-firebase/firestore';
+import Sound from 'react-native-sound';
+import {StackParamList} from '../App';
+
+const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load the sound', error);
+  }
+});
 
 type Snapshot = FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
@@ -500,6 +509,18 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
   while (true) {
     const snapshot: Snapshot = yield take(channel);
     yield put(setMessages(uid, snapshot));
+    if (navigationRef.current) {
+      const route: any = navigationRef.current.getCurrentRoute();
+      if (route.name === 'Chat' && route.params?.uid === uid) {
+        notif.play();
+      } else {
+        const {unread} = yield select(
+          (state: MyRootState) => state.profile.profile,
+        );
+        const newUnread = unread[uid] ? unread[uid] + 1 : 1;
+        yield put(setUnread({...unread, [uid]: newUnread}));
+      }
+    }
   }
 }
 
@@ -516,6 +537,7 @@ function* sendMessage(action: SendMessageAction) {
   try {
     yield put(setMessage(uid, message));
     yield call(api.sendMessage, message, chatId, uid);
+    notif.play();
   } catch (e) {
     Snackbar.show({text: e.message});
     yield put(setMessage(uid, {...message, sent: false, pending: false}));
