@@ -321,7 +321,7 @@ export const setMessages = (
 ): SetMessagesAction => {
   const messages = snapshot.docs.reduce((acc: {[id: string]: Message}, cur) => {
     const message: any = cur.data();
-    acc[cur.id] = {...message, id: cur.id};
+    acc[message ? message._id : cur.id] = {...message, id: cur.id};
     return acc;
   }, {});
   return {

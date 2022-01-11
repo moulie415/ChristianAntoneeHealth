@@ -5,8 +5,10 @@ import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 //import Shake from '@shakebugs/react-native-shake';
-import {navigate} from './app/RootNavigation';
+import {navigate, navigationRef} from './app/RootNavigation';
 import {
+  CONNECTION_ID,
+  MESSAGE_CHANNEL_ID,
   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './app/sagas/profile';
@@ -26,6 +28,33 @@ PushNotification.configure({
         navigate('Fitness');
       }
     }
+    if (notification.data.channelId === CONNECTION_ID) {
+      if (navigationRef.current && notification.userInteraction) {
+        navigate('Connections');
+      } else if (notification.foreground) {
+        PushNotification.localNotification(notification);
+      }
+    }
+    if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
+      if (navigationRef.current && notification.userInteraction) {
+        navigate('Connections');
+      } else if (notification.foreground) {
+        if (navigationRef.current) {
+          const route = navigationRef.current.getCurrentRoute();
+          if (
+            route.name === 'Chat' &&
+            route.params?.uid === notification.data.uid
+          ) {
+            // play sound
+          } else {
+            PushNotification.localNotification(notification);
+          }
+        } else {
+          PushNotification.localNotification(notification);
+        }
+      }
+    }
+
     // process the notification
 
     // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)

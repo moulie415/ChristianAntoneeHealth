@@ -13,7 +13,7 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {sendMessage, setMessages, setRead} from '../../../actions/profile';
 import Message from '../../../types/Message';
-import {TouchableOpacity, View} from 'react-native';
+import {Platform, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -88,7 +88,7 @@ const Chat: React.FC<ChatProps> = ({
               {...props}
               containerStyle={{
                 left: {
-                  marginRight: 0,
+                  marginRight: Platform.OS === 'ios' ? DevicePixels[10] : 0,
                 },
                 right: {},
               }}

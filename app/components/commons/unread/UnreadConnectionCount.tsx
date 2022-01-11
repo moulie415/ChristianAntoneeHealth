@@ -3,6 +3,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
+import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
 
 const UnreadConnectionCount: React.FC<{
@@ -14,15 +15,19 @@ const UnreadConnectionCount: React.FC<{
     return (
       <Layout
         style={{
-          marginLeft: 5,
-          width: 22,
-          height: 22,
-          borderRadius: 11,
+          width: DevicePixels[22],
+          height: DevicePixels[22],
+          borderRadius: DevicePixels[11],
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
         }}>
-        <Text style={{fontSize: 12, fontWeight: 'bold', color: '#fff'}}>
+        <Text
+          style={{
+            fontSize: DevicePixels[12],
+            fontWeight: 'bold',
+            color: '#fff',
+          }}>
           {count > 9 ? '9+' : count}
         </Text>
       </Layout>

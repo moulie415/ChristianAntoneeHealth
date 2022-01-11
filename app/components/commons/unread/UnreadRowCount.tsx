@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Text, Layout} from '@ui-kitten/components';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
+import DevicePixels from '../../../helpers/DevicePixels';
 
 const UnreadRowCount: React.FC<{unread: {[key: string]: number}}> = ({
   unread,
@@ -12,15 +13,20 @@ const UnreadRowCount: React.FC<{unread: {[key: string]: number}}> = ({
     return (
       <Layout
         style={{
-          marginLeft: 5,
-          width: 22,
-          height: 22,
-          borderRadius: 11,
+          marginLeft: DevicePixels[5],
+          width: DevicePixels[18],
+          height: DevicePixels[18],
+          borderRadius: DevicePixels[9],
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
         }}>
-        <Text style={{fontSize: 12, fontWeight: 'bold', color: '#fff'}}>
+        <Text
+          style={{
+            fontSize: DevicePixels[10],
+            fontWeight: 'bold',
+            color: '#fff',
+          }}>
           {count > 9 ? '9+' : count}
         </Text>
       </Layout>

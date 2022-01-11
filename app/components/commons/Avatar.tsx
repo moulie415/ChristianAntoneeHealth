@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'react-native-fast-image';
 // @ts-ignore
 import UserAvatar from 'react-native-user-avatar';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const Avatar: React.FC<{
   src?: string;
@@ -13,14 +14,14 @@ const Avatar: React.FC<{
       <Image
         source={{uri: src}}
         style={{
-          width: size || 30,
-          height: size || 30,
-          borderRadius: size ? size / 2 : 15,
+          width: size || DevicePixels[30],
+          height: size || DevicePixels[30],
+          borderRadius: size ? size / 2 : DevicePixels[15],
         }}
       />
     );
   }
-  return <UserAvatar size={size || 30} name={name} src={src} />;
+  return <UserAvatar size={size || DevicePixels[30]} name={name} src={src} />;
 };
 
 export default Avatar;
