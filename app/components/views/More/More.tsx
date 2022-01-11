@@ -66,7 +66,12 @@ const More: React.FC<MoreProps> = ({
           navigation.navigate('Premium');
         }
       },
-      accessoryRight: () => <UnreadRowCount />,
+      accessoryRight: () =>
+        profile.premium ? (
+          <UnreadRowCount />
+        ) : (
+          <Icon name="lock" size={DevicePixels[15]} />
+        ),
     },
     {
       title: 'Premium',
