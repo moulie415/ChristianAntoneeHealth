@@ -44,32 +44,9 @@ const Chat: React.FC<ChatProps> = ({
   sendMessageAction,
   setReadAction,
 }) => {
-  const [messages, setMessages] = useState(Object.values(messagesObj || {}));
+  const messages = Object.values(messagesObj || {});
 
   const {uid} = route.params;
-  useEffect(() => {
-    const subscriber = db()
-      .collection('chats')
-      .doc(chatId)
-      .collection('messages')
-      .limit(20)
-      .onSnapshot(
-        snapshot => {
-          setMessagesAction(uid, snapshot);
-        },
-        error => {
-          console.warn(error);
-        },
-      );
-
-    return () => {
-      subscriber();
-    };
-  }, [uid, setMessagesAction, chatId]);
-
-  useEffect(() => {
-    setMessages(Object.values(messagesObj || {}));
-  }, [messagesObj]);
 
   useEffect(() => {
     navigation.setOptions({

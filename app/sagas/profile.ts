@@ -55,6 +55,9 @@ import {
   SET_READ,
   SetReadAction,
   setUnread,
+  SET_CHATS,
+  SetChatsAction,
+  setMessages,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -96,10 +99,11 @@ import {handleDeepLink} from './exercises';
 import dynamicLinks, {
   FirebaseDynamicLinksTypes,
 } from '@react-native-firebase/dynamic-links';
-import messaging, {
-  FirebaseMessagingTypes,
-} from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import Chat from '../types/Chat';
+import db from '@react-native-firebase/firestore';
+
+type Snapshot = FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -468,6 +472,44 @@ function* getConnections() {
   }
 }
 
+function onChatMessage(id: string) {
+  return eventChannel(emitter => {
+    const subscriber = db()
+      .collection('chats')
+      .doc(id)
+      .collection('messages')
+      .limit(20)
+      .onSnapshot(
+        snapshot => {
+          emitter(snapshot);
+        },
+        error => {
+          console.warn(error);
+        },
+      );
+    return subscriber;
+  });
+}
+
+function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
+  const channel: EventChannel<Snapshot> = yield call(
+    onChatMessage,
+    chatsObj[uid].id,
+  );
+  while (true) {
+    const snapshot: Snapshot = yield take(channel);
+    yield put(setMessages(uid, snapshot));
+  }
+}
+
+function* chatsWatcher(action: SetChatsAction) {
+  const chatsObj = action.payload;
+  const uids = Object.keys(chatsObj);
+  for (const uid of uids) {
+    yield fork(chatWatcher, uid, chatsObj);
+  }
+}
+
 function* sendMessage(action: SendMessageAction) {
   const {chatId, message, uid} = action.payload;
   try {
@@ -606,6 +648,7 @@ export default function* profileSaga() {
     throttle(30000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
     takeLatest(SET_READ, setRead),
+    takeLatest(SET_CHATS, chatsWatcher),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(
