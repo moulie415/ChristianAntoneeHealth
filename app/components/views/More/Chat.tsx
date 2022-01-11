@@ -44,7 +44,6 @@ const Chat: React.FC<ChatProps> = ({
   sendMessageAction,
   setReadAction,
 }) => {
-
   const {uid} = route.params;
 
   useEffect(() => {
@@ -87,6 +86,12 @@ const Chat: React.FC<ChatProps> = ({
           return (
             <GiftedAvatar
               {...props}
+              containerStyle={{
+                left: {
+                  marginRight: 0,
+                },
+                right: {},
+              }}
               renderAvatar={(p: AvatarProps<Message>) =>
                 p ? (
                   <Avatar
