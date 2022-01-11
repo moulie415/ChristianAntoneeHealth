@@ -478,7 +478,8 @@ function onChatMessage(id: string) {
       .collection('chats')
       .doc(id)
       .collection('messages')
-      .limit(20)
+      .limitToLast(20)
+      .orderBy('createdAt')
       .onSnapshot(
         snapshot => {
           emitter(snapshot);
