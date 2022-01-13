@@ -14,6 +14,7 @@ import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
 import Message from '../../../types/Message';
 import {getSimplifiedTime} from '../../../helpers/profile';
 import colors from '../../../constants/colors';
+import {truncate} from '../../../helpers';
 
 const getLastMessage = (
   messages: {[key: string]: {[key: string]: Message}},
@@ -73,7 +74,7 @@ const Connections: React.FC<{
             <ListItem
               onPress={() => navigation.navigate('Chat', {uid: item.uid})}
               title={item.name}
-              description={lastMessage}
+              description={truncate(lastMessage, 40)}
               accessoryLeft={() => (
                 <Avatar
                   src={item.avatar}
@@ -87,7 +88,7 @@ const Connections: React.FC<{
                     style={{
                       fontSize: DevicePixels[10],
                       color: colors.textGrey,
-                      marginBottom: DevicePixels[5]
+                      marginBottom: DevicePixels[5],
                     }}>
                     {getSimplifiedTime(createdAt)}
                   </Text>
