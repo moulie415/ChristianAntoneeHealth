@@ -4,6 +4,7 @@ import exercisesSaga from './exercises';
 import testsSaga from './tests';
 import quickRoutinesSaga from './quickRoutines';
 import educationSaga from './education';
+import appStateSaga from './appState';
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +13,6 @@ export default function* rootSaga() {
     fork(testsSaga),
     fork(quickRoutinesSaga),
     fork(educationSaga),
+    fork(appStateSaga),
   ]);
 }

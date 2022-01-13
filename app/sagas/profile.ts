@@ -71,7 +71,7 @@ import {
   navigationRef,
   resetToTabs,
 } from '../RootNavigation';
-import {Alert, Platform} from 'react-native';
+import {Alert, AppState, AppStateStatus, Platform} from 'react-native';
 import {
   getActivitySamples,
   getStepSamples,
@@ -511,7 +511,12 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
     yield put(setMessages(uid, snapshot));
     if (navigationRef.current) {
       const route: any = navigationRef.current.getCurrentRoute();
-      if (route.name === 'Chat' && route.params?.uid === uid) {
+      const {state} = yield select((state: MyRootState) => state.profile);
+      if (
+        route.name === 'Chat' &&
+        route.params?.uid === uid &&
+        state === 'active'
+      ) {
         notif.play();
       }
     }

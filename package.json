@@ -102,7 +102,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^25.2.1",
     "@types/ramda": "^0.27.60",
-    "@types/react-native": "0.64.1",
+    "@types/react-native": "0.66.3",
     "@types/react-native-draggable-flatlist": "^2.0.0",
     "@types/react-native-fbsdk": "^3.0.1",
     "@types/react-native-push-notification": "^7.3.3",

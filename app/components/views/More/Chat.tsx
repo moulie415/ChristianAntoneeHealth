@@ -1,7 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import React, {useCallback, useEffect, useState} from 'react';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import React, {useCallback, useEffect} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,

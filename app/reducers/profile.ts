@@ -1,3 +1,4 @@
+import {AppState, AppStateStatus} from 'react-native';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -18,6 +19,7 @@ import {
   SET_CHATS,
   SET_MESSAGE,
   SET_UNREAD,
+  SET_APP_STATE,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -41,6 +43,7 @@ export interface ProfileState {
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
   chats: {[key: string]: Chat};
+  state: AppStateStatus;
 }
 
 const initialState: ProfileState = {
@@ -74,6 +77,7 @@ const initialState: ProfileState = {
   loading: false,
   messages: {},
   chats: {},
+  state: AppState.currentState,
 };
 
 const reducer = (
@@ -190,6 +194,11 @@ const reducer = (
       return {
         ...state,
         profile: {...state.profile, unread: action.payload},
+      };
+    case SET_APP_STATE:
+      return {
+        ...state,
+        state: action.payload,
       };
     default:
       return state;

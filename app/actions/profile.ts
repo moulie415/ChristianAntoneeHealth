@@ -1,5 +1,6 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {AppStateStatus} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -31,6 +32,7 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const SET_READ = 'SET_READ';
 export const SET_UNREAD = 'SET_UNREAD';
+export const SET_APP_STATE = 'SET_APP_STATE';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -180,6 +182,11 @@ export interface SetUnreadAction {
   payload: {[key: string]: number};
 }
 
+export interface SetAppStateAction {
+  type: typeof SET_APP_STATE;
+  payload: AppStateStatus;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -205,7 +212,8 @@ export type ProfileActionTypes =
   | SendMessageAction
   | SetMessageAction
   | SetReadAction
-  | SetUnreadAction;
+  | SetUnreadAction
+  | SetAppStateAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -365,3 +373,8 @@ export const setUnread = (unread: {[key: string]: number}): SetUnreadAction => {
     payload: unread,
   };
 };
+
+export const setAppState = (appState: AppStateStatus): SetAppStateAction => ({
+  type: SET_APP_STATE,
+  payload: appState,
+});

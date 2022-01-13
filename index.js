@@ -40,7 +40,10 @@ PushNotification.configure({
       if (navigationRef.current && notification.userInteraction) {
         navigate('Connections');
       } else if (notification.foreground) {
-        if (navigationRef.current) {
+        if (
+          navigationRef.current &&
+          store.getState().profile.state === 'active'
+        ) {
           const route = navigationRef.current.getCurrentRoute();
           if (
             !(
@@ -56,6 +59,10 @@ PushNotification.configure({
           }
         } else {
           PushNotification.localNotification(notification);
+          const {unread} = store.getState().profile.profile;
+          const {uid} = notification.data;
+          const newUnread = unread[uid] ? unread[uid] + 1 : 1;
+          store.dispatch(setUnread({...unread, [uid]: newUnread}));
         }
       }
     }
