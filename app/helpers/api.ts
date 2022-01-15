@@ -178,12 +178,6 @@ export const getQuickRoutinesById = async (ids: string[]) => {
   }, {});
 };
 
-export const isAdmin = async (uid: string) => {
-  const admins = await db().collection('admins').get();
-  const keys = admins.docs.map(doc => doc.id);
-  return keys.includes(uid);
-};
-
 export const saveWorkout = (workout: SavedWorkout, uid: string) => {
   return db()
     .collection('users')
@@ -339,4 +333,9 @@ export const sendMessage = (
 
 export const setUnread = (uid: string, unread: {[key: string]: number}) => {
   return db().collection('users').doc(uid).update({unread});
+};
+
+export const getSettings = async () => {
+  const snapshot = await db().collection('settings').get();
+  return snapshot.docs[0].data();
 };

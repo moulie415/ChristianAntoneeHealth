@@ -22,8 +22,13 @@ import {setPremium} from '../../../actions/profile';
 import {connect} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {MyRootState} from '../../../types/Shared';
 
-const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
+const Premium: React.FC<PremiumProps> = ({
+  navigation,
+  setPremiumAction,
+  settings,
+}) => {
   const [pkg, setPackage] = useState<PurchasesPackage>();
   const [info, setInfo] = useState<PurchaserInfo>();
   useEffect(() => {
@@ -145,20 +150,25 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
-            <Icon
-              style={{width: DevicePixels[75], textAlign: 'center'}}
-              size={DevicePixels[30]}
-              color={colors.appBlue}
-              name="comment-slash"
-            />
-            <View style={{flex: 1}}>
-              <Text category="s1" style={{fontWeight: 'bold'}}>
-                Remove Ads
-              </Text>
-              <Text style={{}}>Enjoy the full content of the app Ad-free</Text>
+          {settings.ads && (
+            <View
+              style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
+              <Icon
+                style={{width: DevicePixels[75], textAlign: 'center'}}
+                size={DevicePixels[30]}
+                color={colors.appBlue}
+                name="comment-slash"
+              />
+              <View style={{flex: 1}}>
+                <Text category="s1" style={{fontWeight: 'bold'}}>
+                  Remove Ads
+                </Text>
+                <Text style={{}}>
+                  Enjoy the full content of the app Ad-free
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
         </View>
         {pkg ? (
           <>
@@ -226,9 +236,12 @@ const Premium: React.FC<PremiumProps> = ({navigation, setPremiumAction}) => {
     </Layout>
   );
 };
+const mapStateToProps = ({settings}: MyRootState) => ({
+  settings,
+});
 
 const mapDispatchToProps = {
   setPremiumAction: setPremium,
 };
 
-export default connect(null, mapDispatchToProps)(Premium);
+export default connect(mapStateToProps, mapDispatchToProps)(Premium);

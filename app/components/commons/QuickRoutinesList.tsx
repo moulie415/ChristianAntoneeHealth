@@ -12,6 +12,7 @@ import {UNIT_ID_INTERSTITIAL} from '../../constants';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import styles from '../../styles/commons/QuickRoutinesList';
+import {SettingsState} from '../../reducers/settings';
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -50,7 +51,8 @@ const QuickRoutinesList: React.FC<{
   routines: QuickRoutine[];
   navigation: QuickRoutinesListNavigationProp;
   profile: Profile;
-}> = ({routines, navigation, profile}) => {
+  settings: SettingsState;
+}> = ({routines, navigation, profile, settings}) => {
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
   const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
 
@@ -76,7 +78,7 @@ const QuickRoutinesList: React.FC<{
                 onPress={() => {
                   if (item.premium && !profile.premium) {
                     navigation.navigate('Premium');
-                  } else if (adLoaded && !profile.premium) {
+                  } else if (adLoaded && !profile.premium && settings.ads) {
                     setSelectedItem(item);
                     show();
                   } else {
@@ -128,8 +130,9 @@ const QuickRoutinesList: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: MyRootState) => ({
   profile: profile.profile,
+  settings,
 });
 
 export default connect(mapStateToProps)(QuickRoutinesList);

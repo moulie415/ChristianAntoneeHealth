@@ -105,6 +105,8 @@ import Chat from '../types/Chat';
 import db from '@react-native-firebase/firestore';
 import Sound from 'react-native-sound';
 import {StackParamList} from '../App';
+import {getSettings} from './settings';
+import {SettingsState} from '../reducers/settings';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -582,7 +584,11 @@ function* handleAuthWorker(action: HandleAuthAction) {
       }
       const {purchaserInfo, created} = yield call(Purchases.logIn, user.uid);
       crashlytics().setUserId(user.uid);
-      const isAdmin: boolean = yield call(api.isAdmin, user.uid);
+      yield call(getSettings);
+      const settings: SettingsState = yield select(
+        (state: MyRootState) => state.settings,
+      );
+      const isAdmin = settings.admins.includes(user.uid);
       yield put(setAdmin(isAdmin));
       if (purchaserInfo.entitlements.active.Premium || isAdmin) {
         yield put(setPremium(true));

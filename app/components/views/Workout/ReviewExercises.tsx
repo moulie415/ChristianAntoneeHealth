@@ -22,6 +22,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   setWorkoutAction,
   navigation,
   profile,
+  settings,
 }) => {
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
 
@@ -102,7 +103,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       />
       <Button
         onPress={() => {
-          if (!profile.premium && adLoaded) {
+          if (!profile.premium && adLoaded && settings.ads) {
             show();
           } else {
             navigation.navigate('StartWorkout');
@@ -120,9 +121,10 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile, settings}: MyRootState) => ({
   workout: exercises.workout,
   profile: profile.profile,
+  settings,
 });
 
 const mapDispatchToProps = {

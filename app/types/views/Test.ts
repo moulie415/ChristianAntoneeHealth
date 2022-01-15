@@ -1,5 +1,6 @@
 import {NavigationProp, RouteProp} from '@react-navigation/core';
 import {StackParamList} from '../../App';
+import {SettingsState} from '../../reducers/settings';
 import Profile from '../Profile';
 import Test from '../Test';
 
@@ -11,4 +12,5 @@ export default interface TestProps {
   route: TestRouteProp;
   navigation: TestNavigationProp;
   profile: Profile;
+  settings: SettingsState;
 }

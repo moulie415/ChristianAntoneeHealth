@@ -14,13 +14,15 @@ import Education from '../../../types/Education';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import {SettingsState} from '../../../reducers/settings';
 
 const ArticleList: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
   profile: Profile;
   filtered: Education[];
   loading: boolean;
-}> = ({navigation, profile, filtered, loading}) => {
+  settings: SettingsState;
+}> = ({navigation, profile, filtered, loading, settings}) => {
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
   const [selectedItem, setSelectedItem] = useState<Education>();
   useEffect(() => {
@@ -40,7 +42,7 @@ const ArticleList: React.FC<{
       } else if (profile.premium) {
         navigation.navigate('EducationArticle', {education: item});
       } else {
-        if (adLoaded) {
+        if (adLoaded && settings.ads) {
           show();
           setSelectedItem(item);
         } else {
@@ -48,7 +50,7 @@ const ArticleList: React.FC<{
         }
       }
     },
-    [profile.premium, navigation, adLoaded, show],
+    [profile.premium, navigation, adLoaded, show, settings.ads],
   );
   return filtered.length ? (
     <List
@@ -94,9 +96,10 @@ const ArticleList: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, education}: MyRootState) => ({
+const mapStateToProps = ({profile, education, settings}: MyRootState) => ({
   profile: profile.profile,
   loading: education.loading,
+  settings,
 });
 
 export default connect(mapStateToProps)(ArticleList);

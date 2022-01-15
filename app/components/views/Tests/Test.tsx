@@ -24,7 +24,13 @@ import {getVideoHeight} from '../../../helpers';
 
 const {width, height} = Dimensions.get('screen');
 
-const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
+const Test: React.FC<TestProps> = ({
+  route,
+  tests,
+  profile,
+  navigation,
+  settings,
+}) => {
   const {id} = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
@@ -232,7 +238,7 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
               if (testStarted) {
                 setComplete(true);
               } else {
-                if (adLoaded && !profile.premium) {
+                if (adLoaded && !profile.premium && settings.ads) {
                   show();
                 } else {
                   if (test.type === 'untimed') {
@@ -254,9 +260,10 @@ const Test: React.FC<TestProps> = ({route, tests, profile, navigation}) => {
   );
 };
 
-const mapStateToProps = ({tests, profile}: MyRootState) => ({
+const mapStateToProps = ({tests, profile, settings}: MyRootState) => ({
   tests: tests.tests,
   profile: profile.profile,
+  settings,
 });
 
 export default connect(mapStateToProps)(Test);
