@@ -1,6 +1,12 @@
-import {Button, Input, Layout, Spinner, Text} from '@ui-kitten/components';
+import {Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
@@ -9,12 +15,15 @@ import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import {MyRootState} from '../../../types/Shared';
 import StartWorkoutProps from '../../../types/views/StartWorkout';
-import ViewMore from '../../commons/ViewMore';
 import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import {getVideoHeight} from '../../../helpers';
 import Countdown from '../../commons/Countdown';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
+import SegmentedControlTab from 'react-native-segmented-control-tab';
+import MusclesDiagram from '../../commons/MusclesDiagram';
+import ViewMore from '../../commons/ViewMore';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -26,26 +35,16 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   loading,
 }) => {
   const [index, setIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>();
   const [workoutStarted, setWorkoutStarted] = useState(false);
-  const [showNoteInput, setShowNoteInput] = useState<{[key: string]: boolean}>(
-    {},
-  );
-
-  const inputRefs = useRef<{[key: string]: Input}>({});
-
-  useEffect(() => {
-    const keys = Object.keys(showNoteInput);
-    const key = keys.find(k => showNoteInput[k]);
-    if (key) {
-      inputRefs.current[key].focus();
-    }
-  }, [showNoteInput]);
 
   useEffect(() => {
     downloadVideoAction(workout[index].id);
   }, [index, workout, downloadVideoAction]);
+
+  const textInputRef = useRef<TextInput>();
 
   useEffect(() => {
     if (workoutStarted) {
@@ -56,6 +55,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
       return () => clearInterval(intervalID);
     }
   }, [workoutStarted]);
+
+  useEffect(() => {
+    if (tabIndex === 2) {
+      textInputRef.current?.focus();
+    }
+  }, [tabIndex]);
 
   return (
     <Layout style={{flex: 1}}>
@@ -75,7 +80,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
             color={colors.darkBlue}
           />
           <Text
-            style={{marginLeft: DevicePixels[10], width: DevicePixels[70]}}
+            style={{marginLeft: DevicePixels[10], width: DevicePixels[50]}}
             category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
@@ -86,13 +91,13 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
         ref={pagerRef}
         onPageSelected={e => {
           setIndex(e.nativeEvent.position);
-          setShowNoteInput({});
         }}
         style={{flex: 1, paddingHorizontal: 0}}>
         {workout.map((exercise, index) => {
           const video: {src: string; path: string} | undefined =
             videos[exercise.id];
           const next = workout[index + 1];
+
           return (
             <ScrollView keyboardShouldPersistTaps="always" key={exercise.id}>
               <>
@@ -100,7 +105,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 video &&
                 exercise.video &&
                 video.src === exercise.video.src ? (
-                  <ExerciseVideo paused={!workoutStarted} path={video.path} />
+                  <ExerciseVideo path={video.path} />
                 ) : (
                   <Layout
                     style={{
@@ -159,53 +164,49 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 </Text>
                 <Layout style={{flex: 2, alignItems: 'flex-end'}}>
                   <Text>{`${exercise.reps} repetitions`}</Text>
-                  <Text>{`x${exercise.sets} sets`}</Text>
+                  <Text>{`${exercise.sets} sets`}</Text>
                 </Layout>
               </Layout>
-              <ViewMore text={exercise.description} />
-              <TouchableOpacity
-                onPress={() =>
-                  setShowNoteInput({
-                    ...showNoteInput,
-                    [exercise.id]: true,
-                  })
-                }
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
+              <SegmentedControlTab
+                tabsContainerStyle={{
                   margin: DevicePixels[10],
-                }}>
-                <Icon
-                  name={exerciseNotes[exercise.id] ? 'edit' : 'file'}
-                  color={colors.appBlue}
-                  size={DevicePixels[25]}
-                />
-                <Text
-                  style={{color: colors.appBlue, marginLeft: DevicePixels[10]}}>
-                  {`${
-                    exerciseNotes[exercise.id] ? 'Edit' : 'Add'
-                  } exercise note`}
-                </Text>
-              </TouchableOpacity>
-              {(showNoteInput[exercise.id] || !!exerciseNotes[exercise.id]) && (
-                <Input
-                  style={{margin: DevicePixels[10]}}
-                  textStyle={{minHeight: DevicePixels[50]}}
-                  multiline
-                  ref={element => (inputRefs.current[exercise.id] = element)}
-                  disabled={!showNoteInput[exercise.id]}
-                  value={exerciseNotes[exercise.id]}
-                  onChangeText={text =>
-                    setExerciseNoteAction(exercise.id, text)
-                  }
-                  onSubmitEditing={() =>
-                    setShowNoteInput({
-                      ...showNoteInput,
-                      [exercise.id]: false,
-                    })
-                  }
-                />
+                }}
+                values={['Description', 'Diagram', 'Notes']}
+                selectedIndex={tabIndex}
+                onTabPress={setTabIndex}
+                tabStyle={{borderColor: colors.appBlue}}
+                activeTabStyle={{
+                  backgroundColor: colors.appBlue,
+                  borderColor: colors.appBlue,
+                }}
+                tabTextStyle={{color: colors.appBlue}}
+              />
+              {tabIndex === 0 && (
+                <ViewMore text={exercise.description} lines={10} />
               )}
+              {tabIndex === 1 && <MusclesDiagram exercise={exercise} />}
+              {tabIndex === 2 && (
+                <View style={{justifyContent: 'flex-start'}}>
+                  <TextInput
+                    ref={textInputRef}
+                    style={{
+                      margin: DevicePixels[10],
+                      borderWidth: DevicePixels[1],
+                      height: DevicePixels[100],
+                      textAlignVertical: 'top',
+                      borderRadius: DevicePixels[10],
+                      borderColor: colors.appBlue,
+                      padding: DevicePixels[10],
+                    }}
+                    multiline
+                    value={exerciseNotes[exercise.id]}
+                    onChangeText={text =>
+                      setExerciseNoteAction(exercise.id, text)
+                    }
+                  />
+                </View>
+              )}
+
               {next && (
                 <Layout style={{margin: DevicePixels[10]}}>
                   <Text category="h6" style={{marginBottom: DevicePixels[10]}}>

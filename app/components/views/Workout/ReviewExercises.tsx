@@ -85,7 +85,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Icon name="plus" size={DevicePixels[25]} />
+              <Icon name="plus" color="#fff" size={DevicePixels[25]} />
             </Layout>
             <Text
               category="s1"

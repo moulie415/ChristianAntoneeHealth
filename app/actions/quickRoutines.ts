@@ -4,9 +4,6 @@ import {SavedQuickRoutine} from '../types/SavedItem';
 export const GET_QUICK_ROUTINES = 'GET_QUICK_ROUTINES';
 export const GET_QUICK_ROUTINES_BY_ID = 'GET_QUICK_ROUTINES_BY_ID';
 export const SET_QUICK_ROUTINES = 'SET_QUICK_ROUTINES';
-export const DOWNLOAD_ROUTINE_VIDEO = 'DOWNLOAD_ROUTINE_VIDEO';
-export const SET_ROUTINE_VIDEO = 'SET_ROUTINE_VIDEO';
-export const SET_ROUTINE_VIDEO_LOADING = 'SET_ROUTINE_VIDEO_LOADING';
 export const SAVE_QUICK_ROUTINE = 'SAVE_QUICK_ROUTINE';
 export const GET_SAVED_QUICK_ROUTINES = 'GET_SAVED_QUICK_ROUTINES';
 export const SET_SAVED_QUICK_ROUTINES = 'SET_SAVED_QUICK_ROUTINES';
@@ -43,21 +40,6 @@ export const getQuickRoutinesById = (
   payload: ids,
 });
 
-export interface DownloadRoutineVideoAction {
-  type: typeof DOWNLOAD_ROUTINE_VIDEO;
-  payload: string;
-}
-
-export interface SetRoutineVideoLoadingAction {
-  type: typeof SET_ROUTINE_VIDEO_LOADING;
-  payload: boolean;
-}
-
-export interface SetRoutineVideoAction {
-  type: typeof SET_ROUTINE_VIDEO;
-  payload: {id: string; src: string; path: string};
-}
-
 export interface SaveQuickRoutineAction {
   type: typeof SAVE_QUICK_ROUTINE;
   payload: SavedQuickRoutine;
@@ -70,30 +52,7 @@ export interface GetSavedQuickRoutinesAction {
 export interface SetSavedQuickRoutinesAction {
   type: typeof SET_SAVED_QUICK_ROUTINES;
   payload: {[key: string]: SavedQuickRoutine};
-}
-
-export const downloadRoutineVideo = (
-  id: string,
-): DownloadRoutineVideoAction => ({
-  type: DOWNLOAD_ROUTINE_VIDEO,
-  payload: id,
-});
-
-export const setRoutineVideo = (
-  id: string,
-  src: string,
-  path: string,
-): SetRoutineVideoAction => ({
-  type: SET_ROUTINE_VIDEO,
-  payload: {id, src, path},
-});
-
-export const setRoutineVideoLoading = (
-  payload: boolean,
-): SetRoutineVideoLoadingAction => ({
-  type: SET_ROUTINE_VIDEO_LOADING,
-  payload,
-});
+};
 
 export const saveQuickRoutine = (
   payload: SavedQuickRoutine,
@@ -115,9 +74,6 @@ export const setSavedQuickRoutine = (savedQuickRoutines: {
 
 export type QuickRoutinesActions =
   | SetQuickRoutinesAction
-  | DownloadRoutineVideoAction
-  | SetRoutineVideoAction
-  | SetRoutineVideoLoadingAction
   | SaveQuickRoutineAction
   | GetSavedQuickRoutinesAction
   | SetSavedQuickRoutinesAction
