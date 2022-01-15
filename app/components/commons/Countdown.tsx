@@ -22,11 +22,11 @@ const Countdown: FunctionComponent<{onComplete?: () => void}> = ({
 }) => {
   const [playing, setPlaying] = useState(false);
   useEffect(() => {
-    setPlaying(true);
     countdown.play(success => {
       if (!success) {
         crashlytics().log('countdown audio failed');
       }
+      setPlaying(true);
     });
 
     return () => {
