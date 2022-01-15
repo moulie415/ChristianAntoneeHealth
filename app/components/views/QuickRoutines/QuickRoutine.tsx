@@ -1,4 +1,4 @@
-import {Layout, Text, Spinner, Button, ListItem} from '@ui-kitten/components';
+import {Layout, Text, Spinner, Button} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ScrollView,

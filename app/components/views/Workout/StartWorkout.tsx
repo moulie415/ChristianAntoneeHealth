@@ -39,12 +39,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>();
   const [workoutStarted, setWorkoutStarted] = useState(false);
+  const textInputRef = useRef<TextInput>();
 
   useEffect(() => {
     downloadVideoAction(workout[index].id);
   }, [index, workout, downloadVideoAction]);
-
-  const textInputRef = useRef<TextInput>();
 
   useEffect(() => {
     if (workoutStarted) {
