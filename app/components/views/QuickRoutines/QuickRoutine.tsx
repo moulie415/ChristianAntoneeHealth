@@ -102,7 +102,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             color={colors.darkBlue}
           />
           <Text
-            style={{marginLeft: DevicePixels[10], width: DevicePixels[50]}}
+            style={{marginLeft: DevicePixels[10], width: DevicePixels[55]}}
             category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
