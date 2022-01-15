@@ -122,7 +122,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       position: 'absolute',
                       right: DevicePixels[5],
-                      top: '25%',
+                      top: '18%',
                       zIndex: 9,
                       padding: DevicePixels[10],
                     }}>
@@ -139,7 +139,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       position: 'absolute',
                       left: DevicePixels[5],
-                      top: '25%',
+                      top: '18%',
                       zIndex: 9,
                       padding: DevicePixels[10],
                     }}>
@@ -169,6 +169,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
               <SegmentedControlTab
                 tabsContainerStyle={{
                   margin: DevicePixels[10],
+                  marginBottom: 0,
                 }}
                 values={['Description', 'Diagram', 'Notes']}
                 selectedIndex={tabIndex}
@@ -180,32 +181,34 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 }}
                 tabTextStyle={{color: colors.appBlue}}
               />
-              {tabIndex === 0 && (
-                <ViewMore text={exercise.description} lines={10} />
-              )}
-              {tabIndex === 1 && <MusclesDiagram exercise={exercise} />}
-              {tabIndex === 2 && (
-                <View style={{justifyContent: 'flex-start'}}>
-                  <TextInput
-                    ref={textInputRef}
-                    style={{
-                      margin: DevicePixels[10],
-                      borderWidth: DevicePixels[1],
-                      height: DevicePixels[100],
-                      textAlignVertical: 'top',
-                      borderRadius: DevicePixels[10],
-                      borderColor: colors.appBlue,
-                      padding: DevicePixels[10],
-                    }}
-                    multiline
-                    value={exerciseNotes[exercise.id]}
-                    onChangeText={text =>
-                      setExerciseNoteAction(exercise.id, text)
-                    }
-                  />
-                </View>
-              )}
-
+              <View style={{height: DevicePixels[250]}}>
+                {tabIndex === 0 && (
+                  <ViewMore text={exercise.description} lines={10} />
+                )}
+                {tabIndex === 1 && <MusclesDiagram exercise={exercise} />}
+                {tabIndex === 2 && (
+                  <View style={{justifyContent: 'flex-start'}}>
+                    <TextInput
+                      ref={textInputRef}
+                      style={{
+                        margin: DevicePixels[10],
+                        borderWidth: DevicePixels[1],
+                        height: DevicePixels[100],
+                        textAlignVertical: 'top',
+                        borderRadius: DevicePixels[10],
+                        borderColor: colors.appBlue,
+                        padding: DevicePixels[10],
+                      }}
+                      placeholder="Enter notes here..."
+                      multiline
+                      value={exerciseNotes[exercise.id]}
+                      onChangeText={text =>
+                        setExerciseNoteAction(exercise.id, text)
+                      }
+                    />
+                  </View>
+                )}
+              </View>
               {next && (
                 <Layout style={{margin: DevicePixels[10]}}>
                   <Text category="h6" style={{marginBottom: DevicePixels[10]}}>

@@ -16,7 +16,6 @@ export default interface QuickRoutineProps {
   loading: boolean;
   route: QuickRoutinesRouteProp;
   navigation: QuickRoutinesNavigationProp;
-  getExercisesByIdAction: (ids: string[]) => void;
   setExerciseNoteAction: (exercise: string, note: string) => void;
   exerciseNotes: {[key: string]: string};
   exercisesObj: {[key: string]: Exercise};

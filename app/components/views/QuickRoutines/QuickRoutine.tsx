@@ -18,11 +18,7 @@ import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Countdown from '../../commons/Countdown';
-import {
-  downloadVideo,
-  getExercisesById,
-  setExerciseNote,
-} from '../../../actions/exercises';
+import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import MusclesDiagram from '../../commons/MusclesDiagram';
@@ -35,7 +31,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   loading,
   route,
   navigation,
-  getExercisesByIdAction,
   exerciseNotes,
   setExerciseNoteAction,
   exercisesObj,
@@ -57,10 +52,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const loadingExercises = useMemo(() => {
     return exercises ? exercises.find(e => !e) : true;
   }, [exercises]);
-
-  useEffect(() => {
-    getExercisesByIdAction(routine.exerciseIds);
-  }, [routine.exerciseIds, getExercisesByIdAction]);
 
   useEffect(() => {
     if (exercisesObj[routine.exerciseIds[index]]) {
@@ -311,7 +302,6 @@ const mapStateToProps = ({exercises}: MyRootState) => ({
 
 const mapDispatchToProps = {
   downloadVideoAction: downloadVideo,
-  getExercisesByIdAction: getExercisesById,
   setExerciseNoteAction: setExerciseNote,
 };
 

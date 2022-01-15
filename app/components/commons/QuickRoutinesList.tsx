@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import styles from '../../styles/commons/QuickRoutinesList';
 import {SettingsState} from '../../reducers/settings';
+import {getExercisesById} from '../../actions/exercises';
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -52,15 +53,17 @@ const QuickRoutinesList: React.FC<{
   navigation: QuickRoutinesListNavigationProp;
   profile: Profile;
   settings: SettingsState;
-}> = ({routines, navigation, profile, settings}) => {
+  getExercisesByIdAction: (ids: string[]) => void;
+}> = ({routines, navigation, profile, settings, getExercisesByIdAction}) => {
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
   const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
 
   useEffect(() => {
     if (adDismissed && selectedItem) {
+      getExercisesByIdAction(selectedItem.exerciseIds);
       navigation.navigate('QuickRoutine', {routine: selectedItem});
     }
-  }, [adDismissed, navigation, selectedItem]);
+  }, [adDismissed, navigation, selectedItem, getExercisesByIdAction]);
   return (
     <Layout style={styles.flex}>
       <Text appearance="hint" style={styles.padding}>
@@ -82,6 +85,7 @@ const QuickRoutinesList: React.FC<{
                     setSelectedItem(item);
                     show();
                   } else {
+                    getExercisesByIdAction(item.exerciseIds);
                     navigation.navigate('QuickRoutine', {routine: item});
                   }
                 }}
@@ -135,4 +139,8 @@ const mapStateToProps = ({profile, settings}: MyRootState) => ({
   settings,
 });
 
-export default connect(mapStateToProps)(QuickRoutinesList);
+const mapDispatchToProps = {
+  getExercisesByIdAction: getExercisesById,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuickRoutinesList);

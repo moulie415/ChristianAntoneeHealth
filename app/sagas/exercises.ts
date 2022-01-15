@@ -114,7 +114,7 @@ function* getSavedWorkouts() {
   }
 }
 
-function* getExercisesById(action: GetExercisesByIdAction) {
+export function* getExercisesById(action: GetExercisesByIdAction) {
   try {
     const ids = action.payload;
     yield put(setLoading(true));

@@ -29,6 +29,7 @@ const SavedQuickRoutines: FunctionComponent<{
   quickRoutines: {[key: string]: QuickRoutine};
   navigation: SavedItemsNavigationProp;
   getQuickRoutinesByIdAction: (ids: string[]) => void;
+  getExercisesByIdAction: (ids: string[]) => void;
 }> = ({
   loading,
   savedQuickRoutines,
@@ -36,6 +37,7 @@ const SavedQuickRoutines: FunctionComponent<{
   quickRoutines,
   navigation,
   getQuickRoutinesByIdAction,
+  getExercisesByIdAction,
 }) => {
   useEffect(() => {
     getSavedQuickRoutinesAction();
@@ -68,6 +70,7 @@ const SavedQuickRoutines: FunctionComponent<{
                       {
                         text: 'Yes',
                         onPress: () => {
+                          getExercisesByIdAction(quickRoutine.exerciseIds);
                           navigation.navigate('QuickRoutine', {
                             routine: quickRoutine,
                           });

@@ -52,7 +52,7 @@ export interface GetSavedQuickRoutinesAction {
 export interface SetSavedQuickRoutinesAction {
   type: typeof SET_SAVED_QUICK_ROUTINES;
   payload: {[key: string]: SavedQuickRoutine};
-};
+}
 
 export const saveQuickRoutine = (
   payload: SavedQuickRoutine,
