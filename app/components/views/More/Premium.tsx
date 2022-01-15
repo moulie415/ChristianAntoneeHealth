@@ -58,13 +58,13 @@ const Premium: React.FC<PremiumProps> = ({
         <Image
           style={{
             alignSelf: 'center',
-            height: DevicePixels[80],
+            height: DevicePixels[50],
             width: '100%',
             margin: DevicePixels[20],
             marginBottom: DevicePixels[10],
           }}
           resizeMode="contain"
-          source={require('../../../images/health_and_movement_logo_and_text_colour_centred.png')}
+          source={require('../../../images/health_and_movement_logo_colour_centred.png')}
         />
         <Text
           category="h5"

@@ -91,7 +91,7 @@ const Workout: React.FC<WorkoutProps> = ({
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+              category="h6"
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Fitness goal
             </Text>
@@ -152,7 +152,7 @@ const Workout: React.FC<WorkoutProps> = ({
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+              category="h6"
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Exercise experience
             </Text>
@@ -212,7 +212,7 @@ const Workout: React.FC<WorkoutProps> = ({
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+              category="h6"
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Available Equipment
             </Text>
@@ -270,7 +270,7 @@ const Workout: React.FC<WorkoutProps> = ({
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+              category="h6"
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Warm-up & Cool-down
             </Text>

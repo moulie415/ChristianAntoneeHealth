@@ -14,6 +14,6 @@ export default interface QuickRoutine {
   focus: Focus;
   level: Level;
   premium: boolean;
-  video: {src: string; title: string};
+  exerciseIds: string[];
   thumbnail?: {src: string; title: string};
 };
