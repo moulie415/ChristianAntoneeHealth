@@ -81,8 +81,8 @@ const SavedQuickRoutines: FunctionComponent<{
                   title={`${quickRoutine.name} - ${moment(
                     item.createddate,
                   ).format('MMMM Do YYYY')}`}
-                  description={`${quickRoutine.exercises?.length} ${
-                    quickRoutine.exercises?.length > 1
+                  description={`${quickRoutine.exerciseIds?.length} ${
+                    quickRoutine.exerciseIds?.length > 1
                       ? 'exercises'
                       : 'exercise'
                   }, ${Math.floor(item.calories)} calories expended`}
