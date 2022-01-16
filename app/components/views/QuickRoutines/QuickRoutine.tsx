@@ -17,13 +17,11 @@ import QuickRoutineProps from '../../../types/views/QuickRoutine';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
-import Countdown from '../../commons/Countdown';
 import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
-import {DebugInstructions} from 'react-native/Libraries/NewAppScreen';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -42,7 +40,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const pagerRef = useRef<PagerView>();
   const [routineStarted, setRoutineStarted] = useState(false);
   const textInputRef = useRef<TextInput>();
-  const [showCountdown, setShowCountdown] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -76,15 +73,12 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
 
   useEffect(() => {
     if (!loadingExercises) {
-      setShowCountdown(true);
+      setRoutineStarted(true);
     }
   }, [loadingExercises]);
 
   return (
     <Layout style={{flex: 1}}>
-      {showCountdown && (
-        <Countdown onComplete={() => setRoutineStarted(true)} />
-      )}
       <Layout
         style={{
           flexDirection: 'row',
@@ -129,7 +123,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   video &&
                   exercise.video &&
                   video.src === exercise.video.src ? (
-                    <ExerciseVideo paused={!routineStarted} path={video.path} />
+                    <ExerciseVideo paused path={video.path} />
                   ) : (
                     <Layout
                       style={{
@@ -254,7 +248,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{height: DevicePixels[250]}}>
+                <View style={{height: DevicePixels[275]}}>
                   {tabIndex === 0 && (
                     <ViewMore text={exercise.description} lines={10} />
                   )}
@@ -281,7 +275,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   )}
                 </View>
 
-                {next && (
+                {/* {next && (
                   <Layout style={{margin: DevicePixels[10]}}>
                     <Text
                       category="h6"
@@ -314,11 +308,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           backgroundColor: colors.button,
                         }}>
                         <Text>{next.name}</Text>
-                        {/* <Text>{`${next.reps} repetitions x${next.sets} sets`}</Text> */}
+                        <Text>{`${next.reps} repetitions x${next.sets} sets`}</Text>
                       </Layout>
                     </TouchableOpacity>
                   </Layout>
-                )}
+                )} */}
                 <Button
                   onPress={() => {
                     Alert.alert('End quick routine', 'Are you sure?', [

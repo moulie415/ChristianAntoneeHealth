@@ -103,7 +103,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 video &&
                 exercise.video &&
                 video.src === exercise.video.src ? (
-                  <ExerciseVideo path={video.path} />
+                  <ExerciseVideo paused={!workoutStarted} path={video.path} />
                 ) : (
                   <Layout
                     style={{
