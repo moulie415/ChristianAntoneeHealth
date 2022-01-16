@@ -1,5 +1,5 @@
 //import './wdyr';
-import {AppRegistry} from 'react-native';
+import {Alert, AppRegistry} from 'react-native';
 import App, {store} from './app/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
@@ -13,6 +13,7 @@ import {
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './app/sagas/profile';
 import {setUnread} from './app/actions/profile';
+import {alertPremiumFeature} from './app/helpers/exercises';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -31,14 +32,24 @@ PushNotification.configure({
     }
     if (notification.data.channelId === CONNECTION_ID) {
       if (navigationRef.current && notification.userInteraction) {
-        navigate('Connections');
+        const premium = store.getState().profile.profile.premium;
+        if (premium) {
+          navigate('Connections');
+        } else {
+          alertPremiumFeature();
+        }
       } else if (notification.foreground) {
         PushNotification.localNotification(notification);
       }
     }
     if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
       if (navigationRef.current && notification.userInteraction) {
-        navigate('Connections');
+        const premium = store.getState().profile.profile.premium;
+        if (premium) {
+          navigate('Connections');
+        } else {
+          alertPremiumFeature();
+        }
       } else if (notification.foreground) {
         if (
           navigationRef.current &&

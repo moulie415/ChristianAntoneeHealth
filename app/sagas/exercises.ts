@@ -41,6 +41,7 @@ import dynamicLinks, {
   FirebaseDynamicLinksTypes,
 } from '@react-native-firebase/dynamic-links';
 import Profile from '../types/Profile';
+import {alertPremiumFeature} from '../helpers/exercises';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, area, cardioType, warmUp, coolDown} = action.payload;
@@ -211,14 +212,7 @@ export function* handleDeepLink(url: string) {
           }
         } else {
           resetToTabs();
-          Alert.alert(
-            'Sorry',
-            'That feature requires premium, would you like to subscribe to premium?',
-            [
-              {text: 'No thanks'},
-              {text: 'Yes', onPress: () => navigate('Premium')},
-            ],
-          );
+          alertPremiumFeature();
         }
       } else {
         Alert.alert('Error', 'Please log in before using that link');

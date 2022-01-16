@@ -5,17 +5,21 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Profile from '../../../types/Profile';
 
 const MoreIcon: React.FC<{
-  unread: {[key: string]: number};
+  profile: Profile;
   size: number;
   color: string;
-}> = ({unread, size, color}) => {
-  const count = Object.values(unread || {}).reduce((acc, cur) => acc + cur, 0);
+}> = ({size, color, profile}) => {
+  const count = Object.values(profile.unread || {}).reduce(
+    (acc, cur) => acc + cur,
+    0,
+  );
   return (
     <>
       <Icon name="ellipsis-h" size={size} color={color} />
-      {count > 0 && (
+      {profile.premium && count > 0 && (
         <Layout
           style={{
             width: DevicePixels[17],
@@ -43,7 +47,7 @@ const MoreIcon: React.FC<{
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
-  unread: profile.profile.unread,
+  profile: profile.profile,
 });
 
 export default connect(mapStateToProps)(MoreIcon);

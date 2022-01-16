@@ -1,6 +1,7 @@
-import {Share} from 'react-native';
+import {Alert, Share} from 'react-native';
 import {capitalizeFirstLetter} from '.';
 import {STORE_LINK} from '../constants';
+import { navigate } from '../RootNavigation';
 import Exercise, {
   allMuscleHighlights,
   Muscle,
@@ -220,4 +221,12 @@ export const shareWorkout = (workout: Exercise[], name: string) => {
     url,
     message: `${name} has shared a Health and Movement workout with you, click the link to view the workout: ${url}`,
   });
+};
+
+export const alertPremiumFeature = () => {
+  Alert.alert(
+    'Sorry',
+    'That feature requires premium, would you like to subscribe to premium?',
+    [{text: 'No thanks'}, {text: 'Yes', onPress: () => navigate('Premium')}],
+  );
 };
