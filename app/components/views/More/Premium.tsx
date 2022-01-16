@@ -23,6 +23,7 @@ import {connect} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 
 const Premium: React.FC<PremiumProps> = ({
   navigation,
@@ -31,6 +32,7 @@ const Premium: React.FC<PremiumProps> = ({
 }) => {
   const [pkg, setPackage] = useState<PurchasesPackage>();
   const [info, setInfo] = useState<PurchaserInfo>();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getOfferings = async () => {
       try {
@@ -196,6 +198,7 @@ const Premium: React.FC<PremiumProps> = ({
                   }}
                   onPress={async () => {
                     try {
+                      setLoading(true);
                       const {
                         purchaserInfo,
                         productIdentifier,
@@ -204,11 +207,13 @@ const Premium: React.FC<PremiumProps> = ({
                         typeof purchaserInfo.entitlements.active.Premium !==
                         'undefined'
                       ) {
+                        setLoading(false);
                         navigation.goBack();
                         setPremiumAction(true);
                         Snackbar.show({text: 'Premium activated'});
                       }
                     } catch (e) {
+                      setLoading(false);
                       if (!e.userCancelled) {
                         crashlytics().recordError(e);
                         Alert.alert('Error', e.message);
@@ -233,6 +238,7 @@ const Premium: React.FC<PremiumProps> = ({
           <ActivityIndicator />
         )}
       </ScrollView>
+      <AbsoluteSpinner loading={loading} />
     </Layout>
   );
 };

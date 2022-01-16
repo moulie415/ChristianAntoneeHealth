@@ -164,7 +164,7 @@ export interface SetChatsAction {
 
 export interface SendMessageAction {
   type: typeof SEND_MESSAGE;
-  payload: {message: Message; chatId: string; uid: string};
+  payload: {message: Message; chatId: string; uid: string; mute?: boolean};
 }
 
 export interface SetMessageAction {

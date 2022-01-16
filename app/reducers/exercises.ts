@@ -14,6 +14,7 @@ import {
   SET_EQUIPMENT,
   SET_WARM_UP,
   SET_COOL_DOWN,
+  SET_SHARE_MODAL_VISIBLE,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
@@ -43,6 +44,7 @@ export interface ExercisesState {
   videos: {[key: string]: {src: string; path: string}};
   videoLoading: boolean;
   savedWorkouts: {[key: string]: SavedWorkout};
+  shareModalVisible: boolean;
 }
 
 const initialState: ExercisesState = {
@@ -61,6 +63,7 @@ const initialState: ExercisesState = {
   videos: {},
   savedWorkouts: {},
   videoLoading: false,
+  shareModalVisible: false,
 };
 
 const reducer = (
@@ -146,6 +149,11 @@ const reducer = (
       return {
         ...state,
         coolDown: action.payload,
+      };
+    case SET_SHARE_MODAL_VISIBLE:
+      return {
+        ...state,
+        shareModalVisible: action.payload,
       };
     default:
       return state;

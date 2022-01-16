@@ -1,5 +1,8 @@
 import {IMessage} from 'react-native-gifted-chat';
 
+export type MessageType = 'text' | 'workout';
+
 export default interface Message extends IMessage {
-  type: 'text' | 'workout';
-}
+  type: MessageType;
+  workout?: string[];
+};

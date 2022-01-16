@@ -2,19 +2,17 @@ import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
+import {setShareModalVisible} from '../../actions/exercises';
 import colors from '../../constants/colors';
 import DevicePixels from '../../helpers/DevicePixels';
-import {shareWorkout} from '../../helpers/exercises';
-import Exercise from '../../types/Exercise';
-import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 
 const HeaderShareButton: FunctionComponent<{
-  workout: Exercise[];
-  profile: Profile;
-}> = ({workout, profile}) => {
+  setShareModalVisibleAction: (payload: boolean) => void;
+  visible: boolean;
+}> = ({setShareModalVisibleAction, visible}) => {
   return (
-    <TouchableOpacity onPress={() => shareWorkout(workout, profile.name)}>
+    <TouchableOpacity onPress={() => setShareModalVisibleAction(!visible)}>
       <Icon
         color={colors.appBlue}
         size={DevicePixels[20]}
@@ -25,9 +23,12 @@ const HeaderShareButton: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
-  workout: exercises.workout,
-  profile: profile.profile,
+const mapStateToProps = ({exercises}: MyRootState) => ({
+  visible: exercises.shareModalVisible,
 });
 
-export default connect(mapStateToProps)(HeaderShareButton);
+const mapDispatchToProps = {
+  setShareModalVisibleAction: setShareModalVisible,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderShareButton);

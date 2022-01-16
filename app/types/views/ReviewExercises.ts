@@ -15,4 +15,5 @@ export default interface ReviewExercisesProps {
   navigation: ReviewExercisesNavigationProp;
   profile: Profile;
   settings: SettingsState;
+  modalVisible: boolean;
 }

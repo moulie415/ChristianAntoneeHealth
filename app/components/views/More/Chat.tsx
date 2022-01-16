@@ -6,6 +6,7 @@ import {
   GiftedChat,
   Avatar as GiftedAvatar,
   AvatarProps,
+  MessageText,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
@@ -17,6 +18,7 @@ import {Platform, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -79,6 +81,38 @@ const Chat: React.FC<ChatProps> = ({
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
+        renderCustomView={props => {
+          switch (props.currentMessage.type) {
+            case 'workout':
+              return <View />;
+            default:
+              return null;
+          }
+        }}
+        renderMessageText={props => {
+          switch (props.currentMessage.type) {
+            case 'text':
+            case 'workout':
+              return <MessageText {...props} />;
+            default:
+              const newProps = {
+                ...props,
+                currentMessage: {
+                  ...props.currentMessage,
+                  text: 'Unknown message type',
+                },
+              };
+              return (
+                <MessageText
+                  {...newProps}
+                  textStyle={{
+                    left: {fontStyle: 'italic'},
+                    right: {fontStyle: 'italic'},
+                  }}
+                />
+              );
+          }
+        }}
         messages={sortMessages()}
         user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
         inverted={false}
