@@ -42,6 +42,11 @@ import Connections from './components/views/More/Connections';
 import AddConnection from './components/views/More/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
+import {TouchableOpacity} from 'react-native';
+import Text from './components/commons/Text';
+import colors from './constants/colors';
+import DevicePixels from './helpers/DevicePixels';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -237,7 +242,19 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="Chat" component={Chat} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
-          <Stack.Screen name="Premium" component={Premium} />
+          <Stack.Screen
+            name="Premium"
+            component={Premium}
+            options={({navigation}) => ({
+              headerLeft: () => (
+                <TouchableOpacity
+                  style={{padding: DevicePixels[10]}}
+                  onPress={() => navigation.goBack()}>
+                  <Text style={{color: colors.appBlue}}>Cancel</Text>
+                </TouchableOpacity>
+              ),
+            })}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </>

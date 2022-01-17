@@ -228,6 +228,7 @@ const Premium: React.FC<PremiumProps> = ({
                 {!hasUsedTrial && (
                   <Text
                     style={{
+                      paddingBottom: DevicePixels[20],
                       textAlign: 'center',
                     }}>{`${pkg.product.price_string}/month after`}</Text>
                 )}
