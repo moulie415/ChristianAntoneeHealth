@@ -52,6 +52,7 @@ const Premium: React.FC<PremiumProps> = ({
     };
     getOfferings();
   }, []);
+
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
   return (
@@ -152,6 +153,23 @@ const Premium: React.FC<PremiumProps> = ({
               </Text>
             </View>
           </View>
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
+            <Icon
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
+              color={colors.appBlue}
+              name="user-friends"
+            />
+            <View style={{flex: 1}}>
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Stay connected
+              </Text>
+              <Text style={{}}>
+                Enjoy in-app messaging where you can share exercises, workouts,
+                and compare tests results!
+              </Text>
+            </View>
+          </View>
           {settings.ads && (
             <View
               style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
@@ -221,18 +239,47 @@ const Premium: React.FC<PremiumProps> = ({
                       }
                     }
                   }}>
-                  {hasUsedTrial
-                    ? `${pkg.product.price_string}/month`
-                    : 'Start a 1-Week free trial'}
+                  {`${pkg.product.price_string}/month`}
                 </Button>
 
-                {!hasUsedTrial && (
+                <TouchableOpacity
+                  onPress={async () => {
+                    setLoading(true);
+                    const restore = await Purchases.restoreTransactions();
+                    if (
+                      typeof restore.entitlements.active.Premium !== 'undefined'
+                    ) {
+                      setLoading(false);
+                      navigation.goBack();
+                      setPremiumAction(true);
+                      Snackbar.show({text: 'Premium re-activated'});
+                    } else {
+                      setLoading(false);
+                      Snackbar.show({
+                        text: 'No previous active subscription found',
+                      });
+                    }
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginTop: DevicePixels[10],
+                      marginBottom: DevicePixels[20],
+                      padding: DevicePixels[10],
+                      color: colors.appBlue,
+                      textDecorationLine: 'underline',
+                    }}>
+                    Restore purchases
+                  </Text>
+                </TouchableOpacity>
+
+                {/* {!hasUsedTrial && (
                   <Text
                     style={{
                       paddingBottom: DevicePixels[20],
                       textAlign: 'center',
                     }}>{`${pkg.product.price_string}/month after`}</Text>
-                )}
+                )} */}
               </>
             )}
           </>
