@@ -28,6 +28,9 @@ import {
   setWorkout,
   UpdateExerciseAction,
   UPDATE_EXERCISE,
+  viewWorkout,
+  ViewWorkoutAction,
+  VIEW_WORKOUT,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import * as api from '../helpers/api';
@@ -135,6 +138,56 @@ export function* getExercisesById(action: GetExercisesByIdAction) {
   }
 }
 
+export function* viewWorkoutWatcher(action: ViewWorkoutAction) {
+  try {
+    yield put(setLoading(true));
+    const ids = action.payload;
+    const exercises: {[key: string]: Exercise} = yield select(
+      (state: MyRootState) => state.exercises.exercises,
+    );
+    const {premium, admin} = yield select(
+      (state: MyRootState) => state.profile.profile,
+    );
+    const missing = ids.filter(id => {
+      return !exercises[id];
+    });
+    if (missing.length) {
+      yield call(getExercisesById, {
+        type: GET_EXERCISES_BY_ID,
+        payload: missing,
+      });
+    }
+    const updatedExercises: {[key: string]: Exercise} = yield select(
+      (state: MyRootState) => state.exercises.exercises,
+    );
+    const filtered = Object.values(updatedExercises).filter(exercise =>
+      ids.includes(exercise.id),
+    );
+
+    if (filtered.some(exercise => exercise.premium) && !premium && !admin) {
+      resetToTabs();
+      yield put(setLoading(false));
+      Alert.alert(
+        'Sorry',
+        'That workout link includes premium exercises, would you like to subscribe to premium?',
+        [
+          {text: 'No thanks'},
+          {text: 'Yes', onPress: () => navigate('Premium')},
+        ],
+      );
+    } else {
+      yield put(setLoading(false));
+      yield put(setWorkout(filtered));
+      resetToTabs();
+      navigate('ReviewExercises');
+    }
+  } catch (e) {
+    resetToTabs();
+    Snackbar.show({text: 'Error fetching exercises'});
+    yield put(setLoading(false));
+  }
+}
+
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
   if (parsed.url === 'https://healthandmovement/workout') {
@@ -144,47 +197,7 @@ export function* handleDeepLink(url: string) {
         navigate('Loading');
         if (typeof parsed.query.exercises === 'string') {
           const exerciseIds = parsed.query.exercises.split(',');
-          const exercises: {[key: string]: Exercise} = yield select(
-            (state: MyRootState) => state.exercises.exercises,
-          );
-          const {premium, admin} = yield select(
-            (state: MyRootState) => state.profile.profile,
-          );
-          const missing = exerciseIds.filter(id => {
-            return !exercises[id];
-          });
-          if (missing.length) {
-            yield call(getExercisesById, {
-              type: GET_EXERCISES_BY_ID,
-              payload: missing,
-            });
-          }
-          const updatedExercises: {[key: string]: Exercise} = yield select(
-            (state: MyRootState) => state.exercises.exercises,
-          );
-          const filtered = Object.values(updatedExercises).filter(exercise =>
-            exerciseIds.includes(exercise.id),
-          );
-
-          if (
-            filtered.some(exercise => exercise.premium) &&
-            !premium &&
-            !admin
-          ) {
-            resetToTabs();
-            Alert.alert(
-              'Sorry',
-              'That workout link includes premium exercises, would you like to subscribe to premium?',
-              [
-                {text: 'No thanks'},
-                {text: 'Yes', onPress: () => navigate('Premium')},
-              ],
-            );
-          } else {
-            yield put(setWorkout(filtered));
-            resetToTabs();
-            navigate('ReviewExercises');
-          }
+          yield put(viewWorkout(exerciseIds));
         }
       } else {
         Alert.alert('Error', 'Please log in before using that link');
@@ -244,6 +257,7 @@ export default function* exercisesSaga() {
     takeLatest(SAVE_WORKOUT, saveWorkout),
     takeLatest(GET_SAVED_WORKOUTS, getSavedWorkouts),
     takeLatest(GET_EXERCISES_BY_ID, getExercisesById),
+    takeLatest(VIEW_WORKOUT, viewWorkoutWatcher),
   ]);
 
   const dynamicLinkChannel: EventChannel<FirebaseDynamicLinksTypes.DynamicLink> = yield call(

@@ -104,7 +104,6 @@ import messaging from '@react-native-firebase/messaging';
 import Chat from '../types/Chat';
 import db from '@react-native-firebase/firestore';
 import Sound from 'react-native-sound';
-import {StackParamList} from '../App';
 import {getSettings} from './settings';
 import {SettingsState} from '../reducers/settings';
 

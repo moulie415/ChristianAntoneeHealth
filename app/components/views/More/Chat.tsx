@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -24,6 +24,8 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
+import {viewWorkout} from '../../../actions/exercises';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -38,6 +40,8 @@ interface ChatProps {
   chatId: string;
   sendMessageAction: (message: Message, chatId: string, uid: string) => void;
   setReadAction: (uid: string) => void;
+  viewWorkoutAction: (workout: string[]) => void;
+  exercisesLoading: boolean;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -50,6 +54,8 @@ const Chat: React.FC<ChatProps> = ({
   chatId,
   sendMessageAction,
   setReadAction,
+  viewWorkoutAction,
+  exercisesLoading,
 }) => {
   const {uid} = route.params;
 
@@ -88,19 +94,24 @@ const Chat: React.FC<ChatProps> = ({
       case 'workout':
         return (
           <TouchableOpacity
+            onPress={() => viewWorkoutAction(props.currentMessage.workout)}
             style={{
               padding: DevicePixels[10],
               margin: DevicePixels[10],
               borderRadius: 5,
               backgroundColor: '#fff',
               justifyContent: 'space-evenly',
-              flexDirection: 'row'
+              flexDirection: 'row',
+              alignItems: 'center',
             }}>
             <Icon
               size={DevicePixels[30]}
               name="dumbbell"
               style={{color: colors.appBlue}}
             />
+            <Text style={{fontWeight: 'bold', color: colors.appBlue}}>
+              Press to view workout
+            </Text>
           </TouchableOpacity>
         );
       default:
@@ -175,21 +186,27 @@ const Chat: React.FC<ChatProps> = ({
           sendMessageAction(message, chatId, uid);
         }}
       />
+      <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
     </View>
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState, props: ChatProps) => ({
+const mapStateToProps = (
+  {profile, exercises}: MyRootState,
+  props: ChatProps,
+) => ({
   profile: profile.profile,
   messagesObj: profile.messages[props.route.params.uid],
   connection: profile.connections[props.route.params.uid],
   chatId: profile.chats[props.route.params.uid].id,
+  exercisesLoading: exercises.loading,
 });
 
 const mapDispatchToProps = {
   setMessagesAction: setMessages,
   sendMessageAction: sendMessage,
   setReadAction: setRead,
+  viewWorkoutAction: viewWorkout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

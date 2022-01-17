@@ -34,6 +34,7 @@ export const SET_EQUIPMENT = 'SET_EQUIPMENT';
 export const SET_WARM_UP = 'SET_WARMUP';
 export const SET_COOL_DOWN = 'SET_COOLDOWN';
 export const SET_SHARE_MODAL_VISIBLE = 'SET_SHARE_MODAL_VISIBLE';
+export const VIEW_WORKOUT = 'VIEW_WORKOUT';
 
 export interface GetExercisesAction {
   type: typeof GET_EXERCISES;
@@ -158,6 +159,11 @@ export interface SetCoolDownAction {
 export interface SetShareModalVisible {
   type: typeof SET_SHARE_MODAL_VISIBLE;
   payload: boolean;
+}
+
+export interface ViewWorkoutAction {
+  type: typeof VIEW_WORKOUT;
+  payload: string[];
 }
 
 export const getExercises = (
@@ -292,6 +298,11 @@ export const setShareModalVisible = (
   payload,
 });
 
+export const viewWorkout = (payload: string[]): ViewWorkoutAction => ({
+  type: VIEW_WORKOUT,
+  payload,
+});
+
 export type ExercisesActions =
   | SetExercisesAction
   | GetExercisesAction
@@ -313,4 +324,5 @@ export type ExercisesActions =
   | SetEquipmentAction
   | SetWarmUpAction
   | SetCoolDownAction
-  | SetShareModalVisible;
+  | SetShareModalVisible
+  | ViewWorkoutAction;
