@@ -175,7 +175,8 @@ const Premium: React.FC<PremiumProps> = ({
         {pkg ? (
           <>
             {premiumActive ? (
-              <View style={{alignItems: 'center'}}>
+              <View
+                style={{alignItems: 'center', paddingBottom: DevicePixels[20]}}>
                 <Text category="h3" style={{textAlign: 'center'}}>
                   🎉 Premium active 🎉
                 </Text>
