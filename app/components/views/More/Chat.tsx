@@ -1,12 +1,15 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, {useCallback, useEffect} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
   AvatarProps,
   MessageText,
+  BubbleProps,
+  MessageTextProps,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
@@ -19,6 +22,8 @@ import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
+import Button from '../../commons/Button';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -78,66 +83,88 @@ const Chat: React.FC<ChatProps> = ({
       });
   }, [messagesObj]);
 
+  const renderCustomView = (props: BubbleProps<Message>) => {
+    switch (props.currentMessage.type) {
+      case 'workout':
+        return (
+          <TouchableOpacity
+            style={{
+              padding: DevicePixels[10],
+              margin: DevicePixels[10],
+              borderRadius: 5,
+              backgroundColor: '#fff',
+              justifyContent: 'space-evenly',
+              flexDirection: 'row'
+            }}>
+            <Icon
+              size={DevicePixels[30]}
+              name="dumbbell"
+              style={{color: colors.appBlue}}
+            />
+          </TouchableOpacity>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const renderMessageText = (props: MessageTextProps<Message>) => {
+    switch (props.currentMessage.type) {
+      case 'text':
+      case 'workout':
+        return <MessageText {...props} />;
+      default:
+        const newProps = {
+          ...props,
+          currentMessage: {
+            ...props.currentMessage,
+            text: 'Unknown message type',
+          },
+        };
+        return (
+          <MessageText
+            {...newProps}
+            textStyle={{
+              left: {fontStyle: 'italic'},
+              right: {fontStyle: 'italic'},
+            }}
+          />
+        );
+    }
+  };
+
+  const renderAvatar = (props: AvatarProps<Message>) => {
+    return (
+      <GiftedAvatar
+        {...props}
+        containerStyle={{
+          left: {
+            marginRight: Platform.OS === 'ios' ? DevicePixels[10] : 0,
+          },
+          right: {},
+        }}
+        renderAvatar={(p: AvatarProps<Message>) =>
+          p ? (
+            <Avatar
+              name={p.currentMessage.user.name}
+              src={p.currentMessage.user.avatar as string}
+              size={DevicePixels[30]}
+            />
+          ) : null
+        }
+      />
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
-        renderCustomView={props => {
-          switch (props.currentMessage.type) {
-            case 'workout':
-              return <View />;
-            default:
-              return null;
-          }
-        }}
-        renderMessageText={props => {
-          switch (props.currentMessage.type) {
-            case 'text':
-            case 'workout':
-              return <MessageText {...props} />;
-            default:
-              const newProps = {
-                ...props,
-                currentMessage: {
-                  ...props.currentMessage,
-                  text: 'Unknown message type',
-                },
-              };
-              return (
-                <MessageText
-                  {...newProps}
-                  textStyle={{
-                    left: {fontStyle: 'italic'},
-                    right: {fontStyle: 'italic'},
-                  }}
-                />
-              );
-          }
-        }}
+        renderCustomView={renderCustomView}
+        renderMessageText={renderMessageText}
         messages={sortMessages()}
         user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
         inverted={false}
-        renderAvatar={props => {
-          return (
-            <GiftedAvatar
-              {...props}
-              containerStyle={{
-                left: {
-                  marginRight: Platform.OS === 'ios' ? DevicePixels[10] : 0,
-                },
-                right: {},
-              }}
-              renderAvatar={(p: AvatarProps<Message>) =>
-                p ? (
-                  <Avatar
-                    name={p.currentMessage.user.name}
-                    src={p.currentMessage.user.avatar as string}
-                    size={DevicePixels[30]}
-                  />
-                ) : null
-              }
-            />
-          );
-        }}
+        renderAvatar={renderAvatar}
         onSend={msgs => {
           const message: Message = {
             ...msgs[0],
