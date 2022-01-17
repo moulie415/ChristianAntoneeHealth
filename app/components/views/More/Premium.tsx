@@ -53,6 +53,20 @@ const Premium: React.FC<PremiumProps> = ({
     getOfferings();
   }, []);
 
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      navigation.setOptions({
+        headerLeft: () => (
+          <TouchableOpacity
+            style={{padding: DevicePixels[10]}}
+            onPress={() => navigation.goBack()}>
+            <Text style={{color: colors.appBlue}}>Cancel</Text>
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [navigation]);
+
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
   return (

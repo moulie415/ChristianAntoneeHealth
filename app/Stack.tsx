@@ -242,19 +242,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="Chat" component={Chat} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
-          <Stack.Screen
-            name="Premium"
-            component={Premium}
-            options={({navigation}) => ({
-              headerLeft: () => (
-                <TouchableOpacity
-                  style={{padding: DevicePixels[10]}}
-                  onPress={() => navigation.goBack()}>
-                  <Text style={{color: colors.appBlue}}>Cancel</Text>
-                </TouchableOpacity>
-              ),
-            })}
-          />
+          <Stack.Screen name="Premium" component={Premium} />
         </Stack.Group>
       </Stack.Navigator>
     </>
