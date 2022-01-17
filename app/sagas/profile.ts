@@ -71,7 +71,7 @@ import {
   navigationRef,
   resetToTabs,
 } from '../RootNavigation';
-import {Alert, AppState, AppStateStatus, Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
   getStepSamples,
@@ -636,7 +636,10 @@ function* handleAuthWorker(action: HandleAuthAction) {
               api.setFCMToken(user.uid, FCMToken);
             }
           });
-        if (doc.data().unread) {
+        const {premium} = yield select(
+          (state: MyRootState) => state.profile.profile,
+        );
+        if (doc.data().unread && premium) {
           yield put(setUnread(doc.data().unread));
         }
       } else {

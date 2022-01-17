@@ -45,6 +45,7 @@ const ShareModal: React.FC<{
 }) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showExternal, setShowExternal] = useState(false);
 
   const shareExternal = useCallback(() => {
     setVisible(false);
@@ -55,10 +56,11 @@ const ShareModal: React.FC<{
   }, [type, profile.name, setVisible, workout]);
 
   useEffect(() => {
-    if (visible && !profile.premium) {
+    if (visible && !profile.premium && !showExternal) {
+      setShowExternal(true);
       shareExternal();
     }
-  }, [visible, profile.premium, shareExternal]);
+  }, [visible, profile.premium, shareExternal, showExternal]);
 
   useEffect(() => {
     if (profile.premium) {

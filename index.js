@@ -1,5 +1,5 @@
 //import './wdyr';
-import {Alert, AppRegistry} from 'react-native';
+import {AppRegistry} from 'react-native';
 import App, {store} from './app/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
@@ -51,6 +51,15 @@ PushNotification.configure({
           alertPremiumFeature();
         }
       } else if (notification.foreground) {
+        const handleMessageNotification = () => {
+          PushNotification.localNotification(notification);
+          const {unread, premium} = store.getState().profile.profile;
+          if (premium) {
+            const {uid} = notification.data;
+            const newUnread = unread[uid] ? unread[uid] + 1 : 1;
+            store.dispatch(setUnread({...unread, [uid]: newUnread}));
+          }
+        };
         if (
           navigationRef.current &&
           store.getState().profile.state === 'active'
@@ -62,18 +71,10 @@ PushNotification.configure({
               route.params?.uid === notification.data.uid
             )
           ) {
-            PushNotification.localNotification(notification);
-            const {unread} = store.getState().profile.profile;
-            const {uid} = notification.data;
-            const newUnread = unread[uid] ? unread[uid] + 1 : 1;
-            store.dispatch(setUnread({...unread, [uid]: newUnread}));
+            handleMessageNotification();
           }
         } else {
-          PushNotification.localNotification(notification);
-          const {unread} = store.getState().profile.profile;
-          const {uid} = notification.data;
-          const newUnread = unread[uid] ? unread[uid] + 1 : 1;
-          store.dispatch(setUnread({...unread, [uid]: newUnread}));
+          handleMessageNotification();
         }
       }
     }

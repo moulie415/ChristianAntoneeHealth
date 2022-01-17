@@ -5,14 +5,14 @@ import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
   getDifficultyEmoji,
   getDifficultyText,
-  shareWorkout,
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
 import DevicePixels from '../../../helpers/DevicePixels';
-import {saveWorkout} from '../../../actions/exercises';
+import {saveWorkout, setShareModalVisible} from '../../../actions/exercises';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import ShareModal from '../../commons/ShareModal';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,
@@ -20,6 +20,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   navigation,
   saveWorkoutAction,
   workout,
+  setShareModalVisibleAction,
 }) => {
   const {calories, seconds, difficulty} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -78,11 +79,12 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
         Save Workout
       </Button>
       <Button
-        onPress={() => shareWorkout(workout, profile.name)}
+        onPress={() => setShareModalVisibleAction(true)}
         accessoryLeft={() => <Icon name="share-alt" color="#fff" />}
         style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
         Share workout
       </Button>
+      <ShareModal title="Share workout" type="workout" workout={workout} />
     </Layout>
   );
 };
@@ -94,6 +96,7 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
 
 const mapDispatchToProps = {
   saveWorkoutAction: saveWorkout,
+  setShareModalVisibleAction: setShareModalVisible,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutSummary);
