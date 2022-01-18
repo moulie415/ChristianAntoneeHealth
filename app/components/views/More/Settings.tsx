@@ -281,14 +281,14 @@ const Settings: React.FC<SettingsProps> = ({
               />
             </TouchableOpacity>
           </Layout>
-          <Divider />
-          <Button
-            style={{marginTop: DevicePixels[20]}}
-            status="danger"
-            onPress={() => navigation.navigate('DeleteAccount')}>
-            Delete my account
-          </Button>
         </Layout>
+        <Divider />
+        <Button
+          style={{margin: DevicePixels[20]}}
+          status="danger"
+          onPress={() => navigation.navigate('DeleteAccount')}>
+          Delete my account
+        </Button>
       </ScrollView>
       <Button
         onPress={() => {
