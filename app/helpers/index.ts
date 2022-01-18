@@ -84,7 +84,7 @@ export const getWeightItems = (
     }
     labels.push(day.format('dd'));
   }
-  return {data, labels, minMax: [lowest - 5, highest + 5]};
+  return {data, labels: labels.reverse(), minMax: [lowest - 5, highest + 5]};
 };
 
 export const rateApp = () => {
