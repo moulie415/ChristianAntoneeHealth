@@ -186,7 +186,7 @@ function* updateProfile(action: UpdateProfileAction) {
     console.log(e);
   }
   const {profile} = yield select((state: MyRootState) => state.profile);
-  yield call(api.updateUser, {
+  const updateObj = {
     ...profile,
     ...(dob ? {dob} : {}),
     ...(weight ? {weight} : {}),
@@ -197,21 +197,9 @@ function* updateProfile(action: UpdateProfileAction) {
     ...(workoutFrequency ? {workoutFrequency} : {}),
     ...(purpose ? {purpose} : {}),
     ...(avatar ? {avatar} : {}),
-  });
-  yield put(
-    setProfile({
-      ...profile,
-      ...(dob ? {dob} : {}),
-      ...(weight ? {weight} : {}),
-      ...(height ? {height} : {}),
-      ...(unit ? {unit} : {}),
-      ...(gender ? {gender} : {}),
-      ...(goals ? {goals} : {}),
-      ...(workoutFrequency ? {workoutFrequency} : {}),
-      ...(purpose ? {purpose} : {}),
-      ...(avatar ? {avatar} : {}),
-    }),
-  );
+  };
+  yield call(api.updateUser, updateObj);
+  yield put(setProfile(updateObj));
   yield call(Snackbar.show, {text: 'Profile updated'});
   setUserAttributes({
     birthday: dob,
