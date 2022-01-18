@@ -106,6 +106,7 @@ import db from '@react-native-firebase/firestore';
 import Sound from 'react-native-sound';
 import {getSettings} from './settings';
 import {SettingsState} from '../reducers/settings';
+import {logError} from '../helpers/error';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -660,7 +661,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
     }
   } catch (e) {
     navigate('Welcome');
-    crashlytics().recordError(e);
+    logError(e);
     Alert.alert('Error', e.message);
   }
 }

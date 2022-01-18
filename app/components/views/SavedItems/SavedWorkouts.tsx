@@ -64,22 +64,14 @@ const SavedWorkouts: FunctionComponent<{
             renderItem={({item}) => {
               return (
                 <ListItem
-                  onPress={() =>
-                    Alert.alert('Retry workout?', '', [
-                      {text: 'Cancel', style: 'cancel'},
-                      {
-                        text: 'Yes',
-                        onPress: () => {
-                          setWorkoutAction(
-                            item.workout.map(id => {
-                              return exercises[id];
-                            }),
-                          );
-                          navigation.navigate('ReviewExercises');
-                        },
-                      },
-                    ])
-                  }
+                  onPress={() => {
+                    setWorkoutAction(
+                      item.workout.map(id => {
+                        return exercises[id];
+                      }),
+                    );
+                    navigation.navigate('ReviewExercises');
+                  }}
                   title={moment(item.createddate).format('MMMM Do YYYY')}
                   description={`${item.workout.length} ${
                     item.workout.length > 1 ? 'exercises' : 'exercise'

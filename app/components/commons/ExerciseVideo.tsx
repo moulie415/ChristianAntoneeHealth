@@ -2,8 +2,8 @@ import React from 'react';
 import {Platform} from 'react-native';
 import Video from 'react-native-video';
 import {getVideoHeight} from '../../helpers';
-import crashlytics from '@react-native-firebase/crashlytics';
 import DevicePixels from '../../helpers/DevicePixels';
+import {logError} from '../../helpers/error';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -17,7 +17,7 @@ const ExerciseVideo: React.FC<{
         <Video
           source={{uri: path}}
           controls
-          onError={e => crashlytics().log(e.error.errorString)}
+          onError={e => logError(new Error(e.error.errorString))}
           style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
           repeat
           paused={paused}
@@ -26,7 +26,7 @@ const ExerciseVideo: React.FC<{
         <Video
           source={{uri: `file://${path}`}}
           style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
-          onError={e => crashlytics().log(e.error.errorString)}
+          onError={e => logError(new Error(e.error.errorString))}
           repeat
           paused={paused}
           controls

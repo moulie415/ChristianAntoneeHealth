@@ -57,17 +57,7 @@ const SavedTests: FunctionComponent<{
               const test = tests[item.testId];
               return (
                 <ListItem
-                  onPress={() =>
-                    Alert.alert('Retry test?', '', [
-                      {text: 'Cancel', style: 'cancel'},
-                      {
-                        text: 'Yes',
-                        onPress: () => {
-                          navigation.navigate('Test', {id: item.testId});
-                        },
-                      },
-                    ])
-                  }
+                  onPress={() => navigation.navigate('Test', {id: item.testId})}
                   title={`${test.name} - ${moment(item.createddate).format(
                     'MMMM Do YYYY',
                   )}`}

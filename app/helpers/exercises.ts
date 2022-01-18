@@ -1,7 +1,8 @@
 import {Alert, Share} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 import {capitalizeFirstLetter} from '.';
 import {STORE_LINK} from '../constants';
-import { navigate } from '../RootNavigation';
+import {navigate} from '../RootNavigation';
 import Exercise, {
   allMuscleHighlights,
   Muscle,
@@ -9,6 +10,7 @@ import Exercise, {
 } from '../types/Exercise';
 import {Unit} from '../types/Profile';
 import {Equipment, Level} from '../types/Shared';
+import {logError} from './error';
 
 const levelMapping = {
   null: 0,
@@ -211,16 +213,24 @@ export const equipmentItemReadableString = (item: Equipment) => {
   }
 };
 
-export const shareWorkout = (workout: Exercise[], name: string) => {
+export const shareWorkout = async (workout: Exercise[], name: string) => {
   const url = `https://healthandmovement.page.link/?link=https://healthandmovement/workout${encodeURIComponent(
     `?exercises=${workout.map(exercise => exercise.id).join(',')}`,
   )}&apn=com.healthandmovement&isi=1506679389&ibi=com.HealthAndMovement`;
 
-  Share.share({
-    title: `${name} has shared a Health and Movement workout with you`,
-    url,
-    message: `${name} has shared a Health and Movement workout with you, click the link to view the workout: ${url}`,
-  });
+  try {
+    const {action} = await Share.share({
+      title: `${name} has shared a Health and Movement workout with you`,
+      url,
+      message: `${name} has shared a Health and Movement workout with you, click the link to view the workout: ${url}`,
+    });
+    if (action === 'sharedAction') {
+      Snackbar.show({text: 'Workout shared successfully'});
+    }
+  } catch (e) {
+    Snackbar.show({text: 'Error sharing workout'});
+    logError(e);
+  }
 };
 
 export const alertPremiumFeature = () => {

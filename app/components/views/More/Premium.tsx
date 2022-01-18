@@ -24,6 +24,7 @@ import Snackbar from 'react-native-snackbar';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import {logError} from '../../../helpers/error';
 
 const Premium: React.FC<PremiumProps> = ({
   navigation,
@@ -47,7 +48,7 @@ const Premium: React.FC<PremiumProps> = ({
         }
       } catch (e) {
         Alert.alert('Error fetching Premium offerings', e.message);
-        crashlytics().recordError(e);
+        logError(e);
       }
     };
     getOfferings();
@@ -248,7 +249,7 @@ const Premium: React.FC<PremiumProps> = ({
                     } catch (e) {
                       setLoading(false);
                       if (!e.userCancelled) {
-                        crashlytics().recordError(e);
+                        logError(e);
                         Alert.alert('Error', e.message);
                       }
                     }

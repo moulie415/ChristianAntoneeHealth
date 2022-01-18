@@ -8,6 +8,7 @@ import {useState} from 'react';
 import {useEffect} from 'react';
 import {View} from 'react-native';
 import {Text} from '@ui-kitten/components';
+import {logError} from '../../helpers/error';
 
 const countdown = new Sound('countdown.wav', Sound.MAIN_BUNDLE, e => {
   if (e) {
@@ -25,7 +26,7 @@ const Countdown: FunctionComponent<{onComplete?: () => void}> = ({
     setPlaying(true);
     countdown.play(success => {
       if (!success) {
-        crashlytics().log('countdown audio failed');
+        logError(new Error('Countdown audio failed'));
       }
     });
 

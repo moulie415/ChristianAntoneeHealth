@@ -64,20 +64,12 @@ const SavedQuickRoutines: FunctionComponent<{
               const quickRoutine = quickRoutines[item.quickRoutineId];
               return (
                 <ListItem
-                  onPress={() =>
-                    Alert.alert('Retry quick routine?', '', [
-                      {text: 'Cancel', style: 'cancel'},
-                      {
-                        text: 'Yes',
-                        onPress: () => {
-                          getExercisesByIdAction(quickRoutine.exerciseIds);
-                          navigation.navigate('QuickRoutine', {
-                            routine: quickRoutine,
-                          });
-                        },
-                      },
-                    ])
-                  }
+                  onPress={() => {
+                    getExercisesByIdAction(quickRoutine.exerciseIds);
+                    navigation.navigate('QuickRoutine', {
+                      routine: quickRoutine,
+                    });
+                  }}
                   title={`${quickRoutine.name} - ${moment(
                     item.createddate,
                   ).format('MMMM Do YYYY')}`}

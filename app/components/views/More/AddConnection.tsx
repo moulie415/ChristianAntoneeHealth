@@ -10,6 +10,7 @@ import {Share} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../../types/Profile';
+import {logError} from '../../../helpers/error';
 
 const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   const [loading, setLoading] = useState(false);
@@ -33,12 +34,20 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
                 <Icon name="clipboard" />
               </Button>
               <Button
-                onPress={() => {
-                  Share.share({
-                    title: 'Health and Movement',
-                    url: link,
-                    message: `${profile.name} has invited you to connect on Health and Movement, click the link to connect: ${link}`,
-                  });
+                onPress={async () => {
+                  try {
+                    const {action} = await Share.share({
+                      title: 'Health and Movement',
+                      url: link,
+                      message: `${profile.name} has invited you to connect on Health and Movement, click the link to connect: ${link}`,
+                    });
+                    if (action === 'sharedAction') {
+                      Snackbar.show({text: 'Link shared successfully'});
+                    }
+                  } catch (e) {
+                    Snackbar.show({text: 'Error sharing link'});
+                    logError(e);
+                  }
                 }}>
                 <Icon name="share-alt" />
               </Button>
