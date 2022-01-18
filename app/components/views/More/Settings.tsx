@@ -283,6 +283,7 @@ const Settings: React.FC<SettingsProps> = ({
           </Layout>
           <Divider />
           <Button
+            style={{marginTop: DevicePixels[20]}}
             status="danger"
             onPress={() => navigation.navigate('DeleteAccount')}>
             Delete my account
