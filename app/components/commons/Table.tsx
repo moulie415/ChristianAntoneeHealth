@@ -1,26 +1,50 @@
 import {Text} from '@ui-kitten/components';
+import moment from 'moment';
 import React, {useMemo} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import colors from '../../constants/colors';
 import DevicePixels from '../../helpers/DevicePixels';
+import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
 import {Cell, Table as TableType} from '../../types/Test';
 import {Row as RowType} from '../../types/Test';
 
 const CELL_WIDTH = 100;
 
-const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
-  table,
-  title,
-  metric,
-}) => {
-  const {tableHead, tableData} = useMemo(() => {
-    const getRowArr = (row: RowType, showMetric = true) => {
+const Table: React.FC<{
+  table: TableType;
+  title?: string;
+  metric?: string;
+  profile: Profile;
+}> = ({table, title, metric, profile}) => {
+  const {tableHead, tableData, ageIndex} = useMemo(() => {
+    let aIndex;
+    const getRowArr = (
+      row: RowType,
+      showMetric = true,
+      findAgeIndex = false,
+    ) => {
       return Object.keys(row)
         .sort((a, b) => {
           return Number(a[3]) - Number(b[3]);
         })
-        .map(key => {
+        .map((key, index) => {
           // @ts-ignore
           const col = row[key];
+
+          if (findAgeIndex) {
+            const age = profile.dob && moment().diff(profile.dob, 'years');
+            if (age) {
+              if (
+                (!col.higher || age <= Number(col.higher)) &&
+                (!col.lower || age >= Number(col.lower))
+              ) {
+                aIndex = index;
+              }
+            }
+          }
+
           const metricStr = showMetric && metric ? metric : '';
           if (col.lower && col.higher) {
             return `${col.lower} - ${col.higher}${metricStr}`;
@@ -31,7 +55,7 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
           return `< ${col.higher}${metricStr}`;
         });
     };
-    const head = ['Age', ...getRowArr(table.age, false)];
+    const head = ['Age', ...getRowArr(table.age, false, true)];
     const data = [];
 
     table.excellent && data.push(['Excellent', ...getRowArr(table.excellent)]);
@@ -52,8 +76,9 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
     return {
       tableHead: head,
       tableData: data,
+      ageIndex: aIndex,
     };
-  }, [table, metric]);
+  }, [table, metric, profile.dob]);
 
   return (
     <>
@@ -75,20 +100,27 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
         }}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            {tableHead.map(cell => (
-              <Text
-                key={Math.random()}
-                style={{
-                  padding: DevicePixels[2],
-                  borderWidth: StyleSheet.hairlineWidth,
-                  width: CELL_WIDTH,
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  fontSize: DevicePixels[12],
-                }}>
-                {cell}
-              </Text>
-            ))}
+            {tableHead.map((cell, index) => {
+              const shiftedIndex = index - 1;
+              const isAgeIndex =
+                ageIndex !== undefined && shiftedIndex === ageIndex;
+              return (
+                <Text
+                  key={Math.random()}
+                  style={{
+                    padding: DevicePixels[2],
+                    borderWidth: StyleSheet.hairlineWidth,
+                    width: CELL_WIDTH,
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: DevicePixels[12],
+                    backgroundColor: isAgeIndex ? colors.appBlue : undefined,
+                    color: isAgeIndex ? '#fff' : undefined,
+                  }}>
+                  {cell}
+                </Text>
+              );
+            })}
           </View>
           {tableData.map(row => {
             return (
@@ -118,4 +150,8 @@ const Table: React.FC<{table: TableType; title?: string; metric?: string}> = ({
   );
 };
 
-export default Table;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(Table);

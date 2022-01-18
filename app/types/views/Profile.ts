@@ -4,7 +4,10 @@ import {StackParamList} from '../../App';
 import Profile from '../Profile';
 import {Sample} from '../Shared';
 
-type ProfileNavigationProp = NativeStackNavigationProp<StackParamList, 'Profile'>;
+type ProfileNavigationProp = NativeStackNavigationProp<
+  StackParamList,
+  'Profile'
+>;
 
 export default interface ProfileProps {
   navigation: ProfileNavigationProp;
@@ -12,4 +15,4 @@ export default interface ProfileProps {
   weightSamples: {[key: number]: Sample[]};
   updateProfileAction: (payload: UpdateProfilePayload) => void;
   getSamplesAction: () => void;
-};
+}

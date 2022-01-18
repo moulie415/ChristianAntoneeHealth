@@ -1,8 +1,13 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {View, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
-import FIcon from 'react-native-vector-icons/FontAwesome5';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+  View,
+  Alert,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {LineChart} from 'react-native-chart-kit';
-import Image from 'react-native-fast-image';
 import moment from 'moment';
 import styles from '../../../styles/views/Profile';
 import ProfileProps from '../../../types/views/Profile';
@@ -11,7 +16,6 @@ import {MyRootState} from '../../../types/Shared';
 import {
   IndexPath,
   Input,
-  Icon,
   Select,
   SelectItem,
   Text,
@@ -28,6 +32,18 @@ import {getWeightItems} from '../../../helpers';
 import {weightChartConfig} from '../../../constants';
 import {isAvailable, isEnabled} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Avatar from '../../commons/Avatar';
+import {
+  launchCamera,
+  launchImageLibrary,
+  CameraOptions,
+  ImageLibraryOptions,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
+import Snackbar from 'react-native-snackbar';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import {logError} from '../../../helpers/error';
+import storage from '@react-native-firebase/storage';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -42,6 +58,8 @@ const Profile: React.FC<ProfileProps> = ({
   const [dob, setDob] = useState(profile.dob);
   const [height, setHeight] = useState<number>(profile.height);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
+  const [avatar, setAvatar] = useState(profile.avatar);
+  const [loading, setLoading] = useState(false);
   const [selectedUnitIndex, setSelectedUnitIndex] = useState(
     new IndexPath(profile.unit && profile.unit === 'imperial' ? 1 : 0),
   );
@@ -56,6 +74,7 @@ const Profile: React.FC<ProfileProps> = ({
     dob,
     height,
     unit,
+    avatar,
   };
 
   const equal = equals(newProfile, profile);
@@ -93,6 +112,21 @@ const Profile: React.FC<ProfileProps> = ({
     init();
   }, [getSamplesAction]);
 
+  const handlePickerCallback = useCallback(
+    async (response: ImagePickerResponse) => {
+      console.log(response);
+      if (response.errorMessage || response.errorCode) {
+        Snackbar.show({
+          text: `Error: ${response.errorMessage || response.errorCode}`,
+        });
+      } else if (!response.didCancel) {
+        const image = response.assets[0];
+        setAvatar(image.uri);
+      }
+    },
+    [],
+  );
+
   return (
     <Layout style={{flex: 1}}>
       <ScrollView
@@ -106,20 +140,57 @@ const Profile: React.FC<ProfileProps> = ({
             marginBottom: 0,
             alignItems: 'center',
           }}>
-          {/* <TouchableOpacity style={{marginRight: DevicePixels[20]}}>
-            {profile.avatar ? (
-              <Image style={styles.avatar} source={{uri: profile.avatar}} />
-            ) : (
-              <TouchableOpacity
-                style={{
-                  backgroundColor: colors.appGrey,
-                  padding: DevicePixels[15],
-                  borderRadius: DevicePixels[45],
-                }}>
-                <FIcon name="user" solid size={DevicePixels[25]} color="#fff" />
-              </TouchableOpacity>
-            )}
-          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => {
+              if (profile.premium) {
+                const MAX_SIZE = 500;
+                const cameraOptions: CameraOptions = {
+                  mediaType: 'photo',
+                  maxHeight: MAX_SIZE,
+                  maxWidth: MAX_SIZE,
+                };
+                const imageLibraryOptions: ImageLibraryOptions = {
+                  mediaType: 'photo',
+                  maxHeight: MAX_SIZE,
+                  maxWidth: MAX_SIZE,
+                };
+                Alert.alert('Edit profile photo', '', [
+                  {
+                    text: 'Upload from image library',
+                    onPress: () =>
+                      launchImageLibrary(cameraOptions, handlePickerCallback),
+                  },
+                  {
+                    text: 'Take photo',
+                    onPress: () =>
+                      launchCamera(imageLibraryOptions, handlePickerCallback),
+                  },
+                ]);
+              } else {
+                navigation.navigate('Premium');
+              }
+            }}
+            style={{marginRight: DevicePixels[15]}}>
+            <Avatar name={profile.name} src={avatar} size={DevicePixels[50]} />
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                backgroundColor: colors.appBlue,
+                height: DevicePixels[15],
+                width: DevicePixels[15],
+                borderRadius: DevicePixels[8],
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon
+                size={DevicePixels[8]}
+                name={profile.premium ? 'pencil-alt' : 'lock'}
+                color="#fff"
+              />
+            </View>
+          </TouchableOpacity>
           <Text category="h5">{profile.name}</Text>
         </Layout>
         <Layout style={{margin: DevicePixels[20]}}>
@@ -226,15 +297,33 @@ const Profile: React.FC<ProfileProps> = ({
         />
       </ScrollView>
       <Button
-        onPress={() => {
-          navigation.goBack();
-          updateProfileAction({
-            gender,
-            dob,
-            height,
-            weight,
-            unit,
-          });
+        onPress={async () => {
+          try {
+            setLoading(true);
+            let newAvatar = profile.avatar;
+            if (avatar !== profile.avatar) {
+              const imageRef = storage()
+                .ref(`images/${profile.uid}`)
+                .child('avatar');
+              await imageRef.putFile(avatar);
+              newAvatar = await imageRef.getDownloadURL();
+            }
+            navigation.goBack();
+            updateProfileAction({
+              gender,
+              dob,
+              height,
+              weight,
+              unit,
+              avatar: newAvatar,
+            });
+            setLoading(false);
+          } catch (e) {
+            console.log(e);
+            setLoading(false);
+            logError(e);
+            Snackbar.show({text: 'Error updating profile'});
+          }
         }}
         disabled={!dob || !height || !weight || !gender || equal}
         style={{
@@ -247,6 +336,7 @@ const Profile: React.FC<ProfileProps> = ({
         }}>
         Save
       </Button>
+      <AbsoluteSpinner loading={loading} />
     </Layout>
   );
 };

@@ -228,18 +228,24 @@ const Test: React.FC<TestProps> = ({
                 <Table
                   table={test.womens}
                   metric={test.metric}
-                  title="Womens table"
+                  title="Women's table"
                 />
               )}
             {test.mens &&
               '10th' in test.mens &&
               (profile.gender === 'male' || !profile.gender) && (
-                <PercentileTable table={test.mens} />
+                <PercentileTable
+                  table={test.mens}
+                  title="Mens percentile table"
+                />
               )}
             {test.womens &&
               '10th' in test.womens &&
               (profile.gender === 'female' || !profile.gender) && (
-                <PercentileTable table={test.womens} />
+                <PercentileTable
+                  table={test.womens}
+                  title="Women's percentile table"
+                />
               )}
           </>
         )}

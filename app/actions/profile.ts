@@ -77,6 +77,7 @@ export interface UpdateProfilePayload {
   goals?: Goal[];
   workoutFrequency?: number;
   purpose?: Purpose;
+  avatar?: string;
 }
 
 export interface SignUpAction {

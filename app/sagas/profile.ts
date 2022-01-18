@@ -174,6 +174,7 @@ function* updateProfile(action: UpdateProfileAction) {
     gender,
     workoutFrequency,
     purpose,
+    avatar,
   } = action.payload;
   try {
     const enabled: boolean = yield call(isEnabled);
@@ -195,6 +196,7 @@ function* updateProfile(action: UpdateProfileAction) {
     ...(goals ? {goals} : {}),
     ...(workoutFrequency ? {workoutFrequency} : {}),
     ...(purpose ? {purpose} : {}),
+    ...(avatar ? {avatar} : {}),
   });
   yield put(
     setProfile({
@@ -207,6 +209,7 @@ function* updateProfile(action: UpdateProfileAction) {
       ...(goals ? {goals} : {}),
       ...(workoutFrequency ? {workoutFrequency} : {}),
       ...(purpose ? {purpose} : {}),
+      ...(avatar ? {avatar} : {}),
     }),
   );
   yield call(Snackbar.show, {text: 'Profile updated'});
