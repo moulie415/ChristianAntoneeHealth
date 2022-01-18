@@ -2,6 +2,7 @@ import {Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
+  Platform,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -71,14 +72,22 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           alignItems: 'center',
         }}>
         <Text category="h5">{`Exercise ${index + 1}/${workout.length}`}</Text>
-        <Layout style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <Layout
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <Icon
             name="stopwatch"
             size={DevicePixels[25]}
             color={colors.darkBlue}
           />
           <Text
-            style={{marginLeft: DevicePixels[10], width: DevicePixels[60]}}
+            style={{
+              marginLeft: DevicePixels[10],
+              width: Platform.OS === 'ios' ? DevicePixels[60] : 'auto',
+            }}
             category="h5">
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>

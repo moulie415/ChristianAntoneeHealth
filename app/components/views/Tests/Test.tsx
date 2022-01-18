@@ -21,6 +21,7 @@ import globalStyles from '../../../styles/globalStyles';
 import {getTestImage} from '../../../helpers/images';
 import ImageLoader from '../../commons/ImageLoader';
 import {getVideoHeight} from '../../../helpers';
+import PercentileTable from '../../commons/PercentileTable';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -229,6 +230,16 @@ const Test: React.FC<TestProps> = ({
                   metric={test.metric}
                   title="Womens table"
                 />
+              )}
+            {test.mens &&
+              '10th' in test.mens &&
+              (profile.gender === 'male' || !profile.gender) && (
+                <PercentileTable table={test.mens} />
+              )}
+            {test.womens &&
+              '10th' in test.womens &&
+              (profile.gender === 'female' || !profile.gender) && (
+                <PercentileTable table={test.womens} />
               )}
           </>
         )}
