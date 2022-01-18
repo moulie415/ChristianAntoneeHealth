@@ -114,7 +114,6 @@ const Profile: React.FC<ProfileProps> = ({
 
   const handlePickerCallback = useCallback(
     async (response: ImagePickerResponse) => {
-      console.log(response);
       if (response.errorMessage || response.errorCode) {
         Snackbar.show({
           text: `Error: ${response.errorMessage || response.errorCode}`,
@@ -319,7 +318,6 @@ const Profile: React.FC<ProfileProps> = ({
             });
             setLoading(false);
           } catch (e) {
-            console.log(e);
             setLoading(false);
             logError(e);
             Snackbar.show({text: 'Error updating profile'});
