@@ -102,7 +102,10 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                 ...globalStyles.boxShadow,
               }}>
               {item === 0 && !!exercise.muscles && (
-                <MusclesDiagram exercise={exercise} />
+                <MusclesDiagram
+                  primary={exercise.muscles}
+                  secondary={exercise.musclesSecondary}
+                />
               )}
               {item === 1 && !!exercise.muscles && !!exercise.muscles.length && (
                 <Layout
