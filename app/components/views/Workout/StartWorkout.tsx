@@ -170,7 +170,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   {exercise.name}
                 </Text>
                 <Layout style={{flex: 2, alignItems: 'flex-end'}}>
-                  <Text>{`${exercise.reps} repetitions`}</Text>
+                  <Text>{`${exercise.reps} reps`}</Text>
                   <Text>{`${exercise.sets} sets`}</Text>
                 </Layout>
               </Layout>
@@ -294,7 +294,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                         backgroundColor: colors.button,
                       }}>
                       <Text>{next.name}</Text>
-                      <Text>{`${next.reps} repetitions x${next.sets} sets`}</Text>
+                      <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
                     </Layout>
                   </TouchableOpacity>
                 </Layout>
