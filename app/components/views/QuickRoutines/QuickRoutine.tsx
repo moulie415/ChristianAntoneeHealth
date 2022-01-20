@@ -78,40 +78,14 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
     }
   }, [loadingExercises]);
 
+  useEffect(() => {
+    if (exercises && exercises.length) {
+      navigation.setOptions({headerTitle: exercises[index].name});
+    }
+  }, [exercises, index, navigation]);
+
   return (
     <Layout style={{flex: 1}}>
-      <Layout
-        style={{
-          flexDirection: 'row',
-          margin: DevicePixels[10],
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text category="h5">{`Exercise ${index + 1}/${
-          routine.exerciseIds.length
-        }`}</Text>
-        <Layout
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Icon
-            name="stopwatch"
-            size={DevicePixels[25]}
-            color={colors.darkBlue}
-          />
-          <Text
-            style={{
-              marginLeft: DevicePixels[10],
-              width: Platform.OS === 'ios' ? DevicePixels[60] : 'auto',
-            }}
-            category="h5">
-            {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
-          </Text>
-        </Layout>
-      </Layout>
-
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
@@ -179,21 +153,32 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </TouchableOpacity>
                   )}
                 </>
-                <Layout
+                <View
                   style={{
-                    marginHorizontal: DevicePixels[10],
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    margin: DevicePixels[10],
                   }}>
-                  <Text style={{flex: 4}} category="h5">
-                    {exercise.name}
-                  </Text>
-                  {/* <Layout style={{flex: 2, alignItems: 'flex-end'}}>
-                    <Text>{`${exercise.reps} repetitions`}</Text>
-                    <Text>{`x${exercise.sets} sets`}</Text>
-                  </Layout> */}
-                </Layout>
+                  <Text category="h5">{`Exercise ${index + 1}/${
+                    exercises.length
+                  }`}</Text>
+
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Icon
+                      name="stopwatch"
+                      size={DevicePixels[15]}
+                      color={colors.darkBlue}
+                    />
+                    <Text category="h5" style={{marginLeft: DevicePixels[5]}}>
+                      {moment()
+                        .utc()
+                        .startOf('day')
+                        .add({seconds})
+                        .format('mm:ss')}
+                    </Text>
+                  </View>
+                </View>
                 <View
                   style={{
                     flexDirection: 'row',

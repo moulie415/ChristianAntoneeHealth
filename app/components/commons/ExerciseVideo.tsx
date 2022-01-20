@@ -18,14 +18,14 @@ const ExerciseVideo: React.FC<{
           source={{uri: path}}
           controls
           onError={e => logError(new Error(e.error.errorString))}
-          style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
+          style={{height: getVideoHeight()}}
           repeat
           paused={paused}
         />
       ) : (
         <Video
           source={{uri: `file://${path}`}}
-          style={{height: getVideoHeight(), marginBottom: DevicePixels[10]}}
+          style={{height: getVideoHeight()}}
           onError={e => logError(new Error(e.error.errorString))}
           repeat
           paused={paused}

@@ -2,7 +2,6 @@ import {Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
-  Platform,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -24,6 +23,7 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import ViewMore from '../../commons/ViewMore';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -62,38 +62,15 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     }
   }, [tabIndex]);
 
+  useEffect(() => {
+    if (workout[index]) {
+      navigation.setOptions({headerTitle: workout[index].name});
+    }
+  }, [index, navigation, workout]);
+
   return (
     <Layout style={{flex: 1}}>
       <Countdown onComplete={() => setWorkoutStarted(true)} />
-      <Layout
-        style={{
-          flexDirection: 'row',
-          margin: DevicePixels[10],
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text category="h5">{`Exercise ${index + 1}/${workout.length}`}</Text>
-        <Layout
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Icon
-            name="stopwatch"
-            size={DevicePixels[25]}
-            color={colors.darkBlue}
-          />
-          <Text
-            style={{
-              marginLeft: DevicePixels[10],
-              width: Platform.OS === 'ios' ? DevicePixels[60] : 'auto',
-            }}
-            category="h5">
-            {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
-          </Text>
-        </Layout>
-      </Layout>
 
       <PagerView
         ref={pagerRef}
@@ -160,37 +137,18 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   </TouchableOpacity>
                 )}
               </>
-              <Layout
-                style={{
-                  marginHorizontal: DevicePixels[10],
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <Text style={{flex: 4}} category="h5">
-                  {exercise.name}
-                </Text>
-                <Layout style={{flex: 2, alignItems: 'flex-end'}}>
-                  <Text>{`${exercise.reps} reps`}</Text>
-                </Layout>
-              </Layout>
-              <View
-                style={{
-                  alignItems: 'flex-end',
-                  marginHorizontal: DevicePixels[10],
-                }}>
-                <Text
-                  style={{
-                    marginBottom: DevicePixels[3],
-                  }}>{`${exercise.sets} sets`}</Text>
-                <Text>{`Resistance: ${
-                  exercise.resistance === 0
-                    ? 'Bodyweight'
-                    : `${exercise.resistance} ${
-                        profile.unit === 'metric' ? 'kg' : 'lbs'
-                      }`
-                }`}</Text>
-              </View>
+
+              <Text
+                category="h5"
+                style={{textAlign: 'center', marginTop: DevicePixels[10]}}>{`${
+                exercise.reps
+              } reps / ${exercise.sets} sets / ${
+                exercise.resistance === 0
+                  ? 'Bodyweight'
+                  : `${exercise.resistance} ${
+                      profile.unit === 'metric' ? 'kg' : 'lbs'
+                    }`
+              }`}</Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -285,11 +243,40 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   />
                 )}
               </View>
-              {next && (
-                <Layout style={{margin: DevicePixels[10]}}>
+
+              <Layout style={{margin: DevicePixels[10]}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: DevicePixels[10],
+                  }}>
+                  <Text category="h6">{`Exercise ${index + 1}/${
+                    workout.length
+                  }`}</Text>
+
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Icon
+                      name="stopwatch"
+                      size={DevicePixels[15]}
+                      color={colors.darkBlue}
+                    />
+                    <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                      {moment()
+                        .utc()
+                        .startOf('day')
+                        .add({seconds})
+                        .format('mm:ss')}
+                    </Text>
+                  </View>
+                </View>
+                {next && (
                   <Text category="h6" style={{marginBottom: DevicePixels[10]}}>
                     Up next
                   </Text>
+                )}
+                {next && (
                   <TouchableOpacity
                     onPress={() => pagerRef.current.setPage(index + 1)}
                     style={{
@@ -319,8 +306,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
                     </Layout>
                   </TouchableOpacity>
-                </Layout>
-              )}
+                )}
+              </Layout>
+
               <Button
                 onPress={() => {
                   Alert.alert('End Workout', 'Are you sure?', [

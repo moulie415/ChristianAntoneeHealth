@@ -88,8 +88,8 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         category="h5"
         style={{
           textAlign: 'center',
-          marginBottom: DevicePixels[10],
-          marginHorizontal: DevicePixels[10],
+          margin: DevicePixels[10],
+          marginBottom: 0,
         }}>
         {exercise.name}
       </Text>

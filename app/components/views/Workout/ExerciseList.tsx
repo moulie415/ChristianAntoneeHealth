@@ -12,6 +12,7 @@ import {getExercises, setWorkout} from '../../../actions/exercises';
 import {truncate} from '../../../helpers';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import DevicePixels from '../../../helpers/DevicePixels';
+import { FlatList } from 'react-native-gesture-handler';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -49,7 +50,10 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     if (workout.find(e => e.id === exercise.id)) {
       setWorkoutAction(workout.filter(e => e.id !== exercise.id));
     } else {
-      setWorkoutAction([...workout, {...exercise, reps: 15, sets: 3}]);
+      setWorkoutAction([
+        ...workout,
+        {...exercise, reps: 15, sets: 3, resistance: 0},
+      ]);
     }
   };
 
@@ -88,8 +92,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           your settings like adding any equipment you might have
         </Text>
       )}
-      <List
-        style={{flex: 1}}
+      <FlatList
+        // style={{flex: 1}}
         data={filtered}
         refreshControl={<RefreshControl refreshing={loading} />}
         keyExtractor={(item: Exercise) => item.id}

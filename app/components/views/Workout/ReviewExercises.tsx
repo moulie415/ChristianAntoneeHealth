@@ -70,7 +70,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       </Text>
       <DraggableFlatList
         data={workout}
-        style={{flex: 1}}
+  
         ItemSeparatorComponent={() => <Divider />}
         renderItem={renderItem}
         ListFooterComponent={() => (

@@ -22,6 +22,7 @@ import {getTestImage} from '../../../helpers/images';
 import ImageLoader from '../../commons/ImageLoader';
 import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
+import {textContent} from 'domutils';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -179,38 +180,19 @@ const Test: React.FC<TestProps> = ({
             <Text category="h6" style={{margin: DevicePixels[10]}}>
               {test.name}
             </Text>
-            <Text
+            <Layout
               style={{
                 marginHorizontal: DevicePixels[10],
+                marginBottom: DevicePixels[10],
               }}>
-              {test.summary}
-            </Text>
-            <Carousel
-              vertical={false}
-              data={test.how}
-              sliderWidth={width}
-              itemWidth={width - DevicePixels[75]}
-              renderItem={({item, index}) => {
+              {test.how?.map(h => {
                 return (
-                  <Layout
-                    style={{
-                      marginVertical: DevicePixels[20],
-                      borderRadius: DevicePixels[10],
-                      ...globalStyles.boxShadow,
-                    }}>
-                    <Layout
-                      style={{
-                        borderRadius: DevicePixels[10],
-                        backgroundColor: '#fff',
-                        height: DevicePixels[300],
-                        padding: DevicePixels[20],
-                      }}>
-                      <Text style={{lineHeight: DevicePixels[20]}}>{item}</Text>
-                    </Layout>
-                  </Layout>
+                  <Text style={{}} key={h}>
+                    {h}
+                  </Text>
                 );
-              }}
-            />
+              })}
+            </Layout>
 
             <Divider />
             {test.mens &&

@@ -3,7 +3,6 @@ export default interface Test {
   name: string;
   type: 'countdown' | 'countup' | 'untimed';
   time?: number;
-  summary: string;
   how: string[];
   metric?: string;
   mens?: Table | PercentileTable;
