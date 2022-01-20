@@ -32,12 +32,16 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   downloadVideoAction,
   videos,
   loading,
+  profile,
 }) => {
   const {exercise} = route.params;
-  const [reps, setReps] = useState(15);
-  const [sets, setSets] = useState(3);
-  const [resistance, setResistance] = useState(0);
+  const current = workout.find(e => e.id === exercise.id);
+  const [reps, setReps] = useState(current?.reps || 15);
+  const [sets, setSets] = useState(current?.sets || 3);
+  const [resistance, setResistance] = useState(current?.resistance || 0);
   const video: {src: string; path: string} | undefined = videos[exercise.id];
+
+  console.log(resistance);
 
   useEffect(() => {
     downloadVideoAction(exercise.id);
@@ -54,6 +58,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
           ...exercise,
           reps: Number(reps),
           sets: Number(sets),
+          resistance,
         },
       ]);
       Snackbar.show({text: 'Exercise added'});
@@ -214,7 +219,11 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     {RESISTANCE.map(value => (
                       <PickerItem
                         label={
-                          value === 0 ? 'Bodyweight' : `${value.toString()} kg`
+                          value === 0
+                            ? 'Bodyweight'
+                            : `${value.toString()} ${
+                                profile.unit === 'metric' ? 'kg' : 'lbs'
+                              }`
                         }
                         value={value}
                         key={value}
@@ -236,10 +245,11 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   workout: exercises.workout,
   videos: exercises.videos,
   loading: exercises.videoLoading,
+  profile: profile.profile,
 });
 
 const mapDispatchToProps = {

@@ -33,6 +33,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   downloadVideoAction,
   videos,
   loading,
+  profile,
 }) => {
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
@@ -166,14 +167,30 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                <Text style={{flex: 4}} category="h6">
+                <Text style={{flex: 4}} category="h5">
                   {exercise.name}
                 </Text>
                 <Layout style={{flex: 2, alignItems: 'flex-end'}}>
                   <Text>{`${exercise.reps} reps`}</Text>
-                  <Text>{`${exercise.sets} sets`}</Text>
                 </Layout>
               </Layout>
+              <View
+                style={{
+                  alignItems: 'flex-end',
+                  marginHorizontal: DevicePixels[10],
+                }}>
+                <Text
+                  style={{
+                    marginBottom: DevicePixels[3],
+                  }}>{`${exercise.sets} sets`}</Text>
+                <Text>{`Resistance: ${
+                  exercise.resistance === 0
+                    ? 'Bodyweight'
+                    : `${exercise.resistance} ${
+                        profile.unit === 'metric' ? 'kg' : 'lbs'
+                      }`
+                }`}</Text>
+              </View>
               <View
                 style={{
                   flexDirection: 'row',
@@ -327,11 +344,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   workout: exercises.workout,
   exerciseNotes: exercises.exerciseNotes,
   videos: exercises.videos,
   loading: exercises.videoLoading,
+  profile: profile.profile,
 });
 
 const mapDispatchToProps = {

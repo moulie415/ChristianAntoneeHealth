@@ -1,6 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
+import Profile from '../Profile';
 
 type StartWorkoutNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -15,4 +16,5 @@ export default interface StartWorkoutProps {
   downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
+  profile: Profile;
 };

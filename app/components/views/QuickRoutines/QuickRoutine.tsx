@@ -186,7 +186,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                   }}>
-                  <Text style={{flex: 4}} category="h6">
+                  <Text style={{flex: 4}} category="h5">
                     {exercise.name}
                   </Text>
                   {/* <Layout style={{flex: 2, alignItems: 'flex-end'}}>

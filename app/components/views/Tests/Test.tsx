@@ -247,6 +247,11 @@ const Test: React.FC<TestProps> = ({
                   title="Women's percentile table"
                 />
               )}
+            {test.source && (
+              <Text category="label" style={{margin: DevicePixels[10]}}>
+                {test.source}
+              </Text>
+            )}
           </>
         )}
         {!(testStarted && test.type === 'countdown') && !complete && (
