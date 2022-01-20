@@ -241,7 +241,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 {tabIndex === 0 && (
                   <ViewMore text={exercise.description} lines={10} />
                 )}
-                {tabIndex === 1 && <MusclesDiagram exercise={exercise} />}
+                {tabIndex === 1 && (
+                  <MusclesDiagram
+                    primary={exercise.muscles}
+                    secondary={exercise.musclesSecondary}
+                  />
+                )}
                 {tabIndex === 2 && (
                   <TextInput
                     ref={textInputRef}

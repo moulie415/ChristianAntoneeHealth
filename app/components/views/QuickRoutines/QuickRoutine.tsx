@@ -121,7 +121,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             setIndex(e.nativeEvent.position);
           }}
           style={{flex: 1, paddingHorizontal: 0}}>
-          {exercises.map((exercise, index) => {
+          {exercises.map((exercise, i) => {
             const video: {src: string; path: string} | undefined =
               videos[exercise.id];
             const next = exercises[index + 1];
@@ -144,9 +144,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       <Spinner />
                     </Layout>
                   )}
-                  {exercises[index + 1] && (
+                  {exercises[i + 1] && (
                     <TouchableOpacity
-                      onPress={() => pagerRef.current.setPage(index + 1)}
+                      onPress={() => pagerRef.current.setPage(i + 1)}
                       style={{
                         position: 'absolute',
                         right: DevicePixels[5],
@@ -161,9 +161,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       />
                     </TouchableOpacity>
                   )}
-                  {exercises[index - 1] && (
+                  {exercises[i - 1] && (
                     <TouchableOpacity
-                      onPress={() => pagerRef.current.setPage(index - 1)}
+                      onPress={() => pagerRef.current.setPage(i - 1)}
                       style={{
                         position: 'absolute',
                         left: DevicePixels[5],
@@ -261,7 +261,14 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   {tabIndex === 0 && (
                     <ViewMore text={exercise.description} lines={10} />
                   )}
-                  {tabIndex === 1 && <MusclesDiagram exercise={exercise} />}
+
+                  {tabIndex === 1 && i === index && (
+                    <MusclesDiagram
+                      primary={exercise.muscles}
+                      secondary={exercise.musclesSecondary}
+                    />
+                  )}
+
                   {tabIndex === 2 && (
                     <TextInput
                       ref={textInputRef}
