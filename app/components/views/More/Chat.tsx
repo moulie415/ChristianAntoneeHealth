@@ -23,7 +23,6 @@ import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import Button from '../../commons/Button';
 import {viewWorkout} from '../../../actions/exercises';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 
@@ -157,8 +156,8 @@ const Chat: React.FC<ChatProps> = ({
         renderAvatar={(p: AvatarProps<Message>) =>
           p ? (
             <Avatar
-              name={p.currentMessage.user.name}
-              src={p.currentMessage.user.avatar as string}
+              name={connection.name}
+              src={connection.avatar}
               size={DevicePixels[30]}
             />
           ) : null
