@@ -79,7 +79,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   }, [loadingExercises]);
 
   useEffect(() => {
-    if (exercises && exercises.length) {
+    if (exercises && exercises[index]) {
       navigation.setOptions({headerTitle: exercises[index].name});
     }
   }, [exercises, index, navigation]);
