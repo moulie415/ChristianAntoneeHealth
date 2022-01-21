@@ -42,7 +42,6 @@ function* getSavedQuickRoutines() {
     yield put(setSavedQuickRoutine(savedQuickRoutines));
     yield put(setLoading(false));
   } catch (e) {
-    console.log(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error getting saved quick routines'});
   }
@@ -61,7 +60,6 @@ function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
     }
     yield put(setLoading(false));
   } catch (e) {
-    console.log(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error fetching quick routines'});
   }

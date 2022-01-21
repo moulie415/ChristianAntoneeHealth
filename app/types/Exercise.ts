@@ -41,7 +41,7 @@ export default interface Exercise {
   resistance?: number;
   thumbnail?: Thumbnail;
   video?: Video;
-};
+}
 
 export type Muscle =
   | 'chest'
@@ -65,68 +65,3 @@ export type Muscle =
   | 'all'
   | 'upperBody'
   | 'arms';
-
-export type MuscleHighlight =
-  // Back
-  | 'trapezius'
-  | 'upper-back'
-  | 'lower-back'
-
-  // Chest
-  | 'chest'
-
-  // Arms
-  | 'biceps'
-  | 'triceps'
-  | 'forearm'
-  | 'back-deltoids'
-  | 'front-deltoids'
-
-  // Abs
-  | 'abs'
-  | 'obliques'
-
-  // Legs
-  | 'adductor'
-  | 'hamstring'
-  | 'quadriceps'
-  | 'abductors'
-  | 'calves'
-  | 'gluteal'
-
-  // Head
-  | 'head'
-  | 'neck';
-
-export const allMuscleHighlights: MuscleHighlight[] = [
-  // Back
-  'trapezius',
-  'upper-back',
-  'lower-back',
-
-  // Chest
-  'chest',
-
-  // Arms
-  'biceps',
-  'triceps',
-  'forearm',
-  'back-deltoids',
-  'front-deltoids',
-
-  // Abs
-  'abs',
-  'obliques',
-
-  // Legs
-  'adductor',
-  'hamstring',
-  'quadriceps',
-  'abductors',
-  'calves',
-  'gluteal',
-
-  // Head
-  'head',
-  'neck',
-];

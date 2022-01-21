@@ -58,7 +58,6 @@ function* getTestsById(action: GetTestsByIdAction) {
     }
     yield put(setLoading(false));
   } catch (e) {
-    console.log(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error fetching tests'});
   }

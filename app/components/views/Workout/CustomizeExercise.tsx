@@ -41,8 +41,6 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   const [resistance, setResistance] = useState(current?.resistance || 0);
   const video: {src: string; path: string} | undefined = videos[exercise.id];
 
-  console.log(resistance);
-
   useEffect(() => {
     downloadVideoAction(exercise.id);
   }, [downloadVideoAction, exercise.id]);

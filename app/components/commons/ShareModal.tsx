@@ -165,7 +165,6 @@ const ShareModal: React.FC<{
                 setLoading(false);
                 setVisible(false);
               } catch (e) {
-                console.log(e.message);
                 Snackbar.show({
                   text: `Error sending ${
                     selected.length > 1 ? 'Messages' : 'Message'
