@@ -1,9 +1,7 @@
-import React, {memo, useMemo} from 'react';
+import React, {memo} from 'react';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
 import DevicePixels from '../../helpers/DevicePixels';
-// @ts-ignore
-import Body from 'react-native-body-highlighter';
 import Text from './Text';
 import {Layout} from '@ui-kitten/components';
 import Exercise, {Muscle} from '../../types/Exercise';
