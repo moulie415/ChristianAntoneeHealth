@@ -10,4 +10,6 @@ export default {
   appRed: '#d13f64',
   appLightBlue: '#86def9',
   appGreen: '#6ee1b9',
+  musclePrimary: '#1c7ad9',
+  muscleSecondary: '#b7d6f6',
 };
