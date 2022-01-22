@@ -648,10 +648,10 @@ function* handleAuthWorker(action: HandleAuthAction) {
       navigateToLoginIfNecessary();
     } else {
       yield put(setLoggedIn(false));
-      navigate('Welcome');
+      navigate('Login');
     }
   } catch (e) {
-    navigate('Welcome');
+    navigate('Login');
     logError(e);
     Alert.alert('Error', e.message);
   }

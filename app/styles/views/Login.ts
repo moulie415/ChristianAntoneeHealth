@@ -16,16 +16,7 @@ export default StyleSheet.create({
     color: '#333333',
     marginBottom: DevicePixels[5],
   },
-  input: {
-    margin: DevicePixels[10],
-    borderWidth: 0,
-    marginBottom: 0,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    marginTop: DevicePixels[1],
-    paddingLeft: DevicePixels[10],
-    height: DevicePixels[50],
-    color: '#fff',
-  },
+
   appleButton: {
     marginVertical: DevicePixels[10],
     width: DevicePixels[250],

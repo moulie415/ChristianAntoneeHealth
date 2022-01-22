@@ -19,7 +19,6 @@ import Tabs from './Tabs';
 import QuickRoutinesTabs from './QuickRoutinesTabs';
 import Login from './components/views/Login';
 import SignUp from './components/views/SignUp';
-import Welcome from './components/views/Welcome';
 import Profile from './components/views/More/Profile';
 import Notifications from './components/views/More/Notifications';
 import Support from './components/views/More/Support';
@@ -42,11 +41,6 @@ import Connections from './components/views/More/Connections';
 import AddConnection from './components/views/More/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
-import {TouchableOpacity} from 'react-native';
-import Text from './components/commons/Text';
-import colors from './constants/colors';
-import DevicePixels from './helpers/DevicePixels';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -62,11 +56,6 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="Loading"
             component={Loading}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
             options={{headerShown: false}}
           />
           <Stack.Screen
