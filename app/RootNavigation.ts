@@ -43,7 +43,7 @@ export function resetToWelcome() {
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{name: 'Welcome'}],
+      routes: [{name: 'Login'}],
     }),
   );
 }

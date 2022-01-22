@@ -7,7 +7,6 @@ import {
   View,
   ImageBackground,
   StyleSheet,
-  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Spinner, Button, Text} from '@ui-kitten/components';
@@ -20,34 +19,18 @@ import {MyRootState} from '../../types/Shared';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-community/google-signin';
-import {handleAuth} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {setStep, signUp} from '../../actions/profile';
 
 GoogleSignin.configure({
   webClientId:
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
 });
 
-const Login: React.FC<LoginProps> = ({
-  navigation,
-  handleAuth: handleAuthAction,
-}) => {
-  const [spinner, setSpinner] = useState(false);
+const Login: React.FC<LoginProps> = ({navigation, setStep: setStepAction}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
-  const [secure, setSecure] = useState(true);
-  const [username, setUsername] = useState('');
-  const [pass, setPass] = useState('');
-
-  const signIn = async (email: string, password: string) => {
-    try {
-      return await auth().signInWithEmailAndPassword(email, password);
-    } catch (e) {
-      Alert.alert('Error', e.message);
-    }
-  };
 
   const appleSignIn = async () => {
     try {
@@ -72,6 +55,7 @@ const Login: React.FC<LoginProps> = ({
       // Sign the user in with the credential
       return auth().signInWithCredential(appleCredential);
     } catch (e) {
+      setAppleLoading(false);
       Alert.alert('Error', e.message);
     }
   };
@@ -100,7 +84,6 @@ const Login: React.FC<LoginProps> = ({
       );
       // Sign-in the user with the credential
       const credentials = await auth().signInWithCredential(facebookCredential);
-      setFacebookLoading(false);
       return credentials;
     } catch (e) {
       Alert.alert('Error', e.message);
@@ -118,10 +101,10 @@ const Login: React.FC<LoginProps> = ({
 
       // Sign-in the user with the credential
       const credentials = await auth().signInWithCredential(googleCredential);
-      setGoogleLoading(false);
       return credentials;
     } catch (e) {
       console.log({e});
+      setGoogleLoading(false);
     }
   };
 
@@ -140,9 +123,8 @@ const Login: React.FC<LoginProps> = ({
         style={styles.logo}
         source={require('../../images/logo-and-text.png')}
       />
-      <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="always"
-        contentContainerStyle={{flex: 1, justifyContent: 'flex-end'}}>
+
+      <View style={{justifyContent: 'flex-end', flex: 1}}>
         <Text
           style={{
             color: '#fff',
@@ -150,7 +132,7 @@ const Login: React.FC<LoginProps> = ({
             paddingVertical: DevicePixels[20],
           }}
           category="h5">
-          Log in now
+          Continue with
         </Text>
         <View style={{flexDirection: 'row'}}>
           {Platform.OS === 'ios' && (
@@ -158,7 +140,6 @@ const Login: React.FC<LoginProps> = ({
               onPress={async () => {
                 setAppleLoading(true);
                 await appleSignIn();
-                setAppleLoading(false);
               }}
               style={{
                 flex: 1,
@@ -182,7 +163,6 @@ const Login: React.FC<LoginProps> = ({
             onPress={async () => {
               setFacebookLoading(true);
               await facebookSignIn();
-              setFacebookLoading(false);
             }}
             style={{
               flex: 1,
@@ -206,7 +186,6 @@ const Login: React.FC<LoginProps> = ({
             onPress={async () => {
               setGoogleLoading(true);
               await googleSignIn();
-              setGoogleLoading(false);
             }}
             style={{
               backgroundColor: 'transparent',
@@ -226,100 +205,34 @@ const Login: React.FC<LoginProps> = ({
             }
           />
         </View>
-        <TextInput
-          style={[
-            styles.input,
-            {
-              borderTopLeftRadius: DevicePixels[5],
-              borderTopRightRadius: DevicePixels[5],
-            },
-          ]}
-          placeholder="Email"
-          onChangeText={u => setUsername(u)}
-          placeholderTextColor="#fff"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-        />
-        <TextInput
-          style={[
-            styles.input,
-            {
-              borderBottomLeftRadius: DevicePixels[5],
-              borderBottomRightRadius: DevicePixels[5],
-            },
-          ]}
-          placeholder="Password"
-          secureTextEntry={secure}
-          placeholderTextColor="#fff"
-          onChangeText={p => setPass(p)}
-          autoCorrect={false}
-          autoCapitalize="none"
-        />
-        <Button
-          onPress={async () => {
-            try {
-              if (username && pass) {
-                setSpinner(true);
-                setSecure(true);
-                const {user} = await signIn(username, pass);
-                if (!user.emailVerified) {
-                  Alert.alert(
-                    'Sorry',
-                    'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
-                  );
-                } else {
-                  handleAuthAction(user);
-                }
-              } else {
-                Alert.alert(
-                  'Sorry',
-                  'Please enter both your email and your password',
-                );
-              }
-            } catch (e) {
-              console.log(e);
-            }
-            setSpinner(false);
-          }}
-          accessoryLeft={() =>
-            spinner ? <Spinner style={{backgroundColor: '#fff'}} /> : null
-          }
-          style={styles.button}>
-          Log in
-        </Button>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: DevicePixels[15],
-            marginBottom: DevicePixels[5],
-          }}>
-          <Text style={{color: '#fff'}}>Not signed up yet? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#fff',
-                textDecorationLine: 'underline',
-              }}>
-              Sign up
-            </Text>
-          </TouchableOpacity>
-        </View>
         <TouchableOpacity
-          style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
-          onPress={() => navigation.navigate('ForgotPassword')}>
+          style={{margin: DevicePixels[20], alignSelf: 'center'}}
+          onPress={() => navigation.navigate('SignUp')}>
           <Text
             style={{
               fontWeight: 'bold',
               color: '#fff',
               textDecorationLine: 'underline',
             }}>
-            Forgot password?
+            Log in
           </Text>
         </TouchableOpacity>
-      </KeyboardAwareScrollView>
+        <TouchableOpacity
+          style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
+          onPress={() => {
+            navigation.navigate('SignUpFlow', {dry: true});
+            setStepAction(0);
+          }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: '#fff',
+              textDecorationLine: 'underline',
+            }}>
+            Sign up with email
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 };
@@ -329,7 +242,8 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 });
 
 const mapDispatchToProps = {
-  handleAuth,
+  signUp,
+  setStep,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

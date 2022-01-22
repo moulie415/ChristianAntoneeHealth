@@ -3,109 +3,34 @@ import {
   Alert,
   Image,
   ImageBackground,
-  Platform,
-  SafeAreaView,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {Spinner, Layout, Button, Text} from '@ui-kitten/components';
 import auth from '@react-native-firebase/auth';
-import db from '@react-native-firebase/firestore';
-import appleAuth from '@invertase/react-native-apple-authentication';
-import {LoginManager, AccessToken} from 'react-native-fbsdk';
-import {GoogleSignin} from '@react-native-community/google-signin';
 import styles from '../../styles/views/SignUp';
-import colors from '../../constants/colors';
-import sStyles from '../../styles/views/More';
 import SignUpProps from '../../types/views/SignUp';
-import {setStep} from '../../actions/profile';
+import {handleAuth} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
-import ImageOverlay from '../commons/ImageOverlay';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SignUp: React.FC<SignUpProps> = ({
   navigation,
-  setStep: setStepAction,
+  handleAuth: handleAuthAction,
 }) => {
-  const [facebookLoading, setFacebookLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [appleLoading, setAppleLoading] = useState(false);
+  const [secure, setSecure] = useState(true);
+  const [username, setUsername] = useState('');
+  const [pass, setPass] = useState('');
+  const [spinner, setSpinner] = useState(false);
 
-  const appleSignIn = async () => {
+  const signIn = async (email: string, password: string) => {
     try {
-      // Start the sign-in request
-      const appleAuthRequestResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-      });
-
-      // Ensure Apple returned a user identityToken
-      if (!appleAuthRequestResponse.identityToken) {
-        throw 'Apple Sign-In failed - no identify token returned';
-      }
-
-      // Create a Firebase credential from the response
-      const {identityToken, nonce} = appleAuthRequestResponse;
-      const appleCredential = auth.AppleAuthProvider.credential(
-        identityToken,
-        nonce,
-      );
-
-      // Sign the user in with the credential
-      return auth().signInWithCredential(appleCredential);
+      return await auth().signInWithEmailAndPassword(email, password);
     } catch (e) {
       Alert.alert('Error', e.message);
-    }
-  };
-
-  const facebookSignIn = async () => {
-    try {
-      // Attempt login with permissions
-      const result = await LoginManager.logInWithPermissions([
-        'public_profile',
-        'email',
-      ]);
-
-      if (result.isCancelled) {
-        throw 'User cancelled the login process';
-      }
-
-      // Once signed in, get the users AccesToken
-      const data = await AccessToken.getCurrentAccessToken();
-
-      if (!data) {
-        throw 'Something went wrong obtaining access token';
-      }
-      // Create a Firebase credential with the AccessToken
-      const facebookCredential = auth.FacebookAuthProvider.credential(
-        data.accessToken,
-      );
-      // Sign-in the user with the credential
-      const credentials = await auth().signInWithCredential(facebookCredential);
-      setFacebookLoading(false);
-      return credentials;
-    } catch (e) {
-      Alert.alert('Error', e.message);
-      setFacebookLoading(false);
-    }
-  };
-
-  const googleSignIn = async () => {
-    // Get the users ID token
-    try {
-      const {idToken} = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      const credentials = await auth().signInWithCredential(googleCredential);
-      setGoogleLoading(false);
-      return credentials;
-    } catch (e) {
-      console.log({e});
     }
   };
 
@@ -124,116 +49,113 @@ const SignUp: React.FC<SignUpProps> = ({
         style={styles.logo}
         source={require('../../images/logo-and-text.png')}
       />
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        {Platform.OS === 'ios' && (
-          <Button
-            onPress={async () => {
-              setAppleLoading(true);
-              await appleSignIn();
-              setAppleLoading(false);
-            }}
-            style={{
-              backgroundColor: 'transparent',
-              height: DevicePixels[50],
-              marginHorizontal: DevicePixels[5],
-              marginLeft:
-                Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
-              marginBottom: DevicePixels[5],
-              borderColor: '#fff',
-              flex: 1,
-            }}
-            accessoryLeft={() =>
-              appleLoading ? (
-                <Spinner />
-              ) : (
-                <Icon name="apple" color="#fff" size={DevicePixels[20]} />
-              )
-            }
-          />
-        )}
-        <View style={{flexDirection: 'row'}}>
-          <Button
-            onPress={async () => {
-              setFacebookLoading(true);
-              await facebookSignIn();
-              setFacebookLoading(false);
-            }}
-            style={{
-              backgroundColor: 'transparent',
-              height: DevicePixels[50],
-              marginHorizontal: DevicePixels[5],
-              marginLeft:
-                Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
-              marginBottom: DevicePixels[5],
-              borderColor: '#fff',
-              flex: 1,
-            }}
-            accessoryLeft={() =>
-              facebookLoading ? (
-                <Spinner />
-              ) : (
-                <Icon color="#fff" name="facebook-f" size={DevicePixels[20]} />
-              )
-            }
-          />
-          <Button
-            onPress={async () => {
-              setGoogleLoading(true);
-              await googleSignIn();
-              setGoogleLoading(false);
-            }}
-            style={{
-              backgroundColor: 'transparent',
-              height: DevicePixels[50],
-              marginHorizontal: DevicePixels[5],
-              marginRight: DevicePixels[10],
-              borderColor: '#fff',
-              flex: 1,
-            }}
-            accessoryLeft={() =>
-              googleLoading ? (
-                <Spinner />
-              ) : (
-                <Icon color="#fff" name="google" size={DevicePixels[20]} />
-              )
-            }
-          />
-        </View>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={{
+          flex: 1,
+          justifyContent: 'flex-end',
+        }}>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              borderTopLeftRadius: DevicePixels[5],
+              borderTopRightRadius: DevicePixels[5],
+            },
+          ]}
+          placeholder="Email"
+          onChangeText={u => setUsername(u)}
+          placeholderTextColor="#fff"
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={[
+            styles.input,
+            {
+              borderBottomLeftRadius: DevicePixels[5],
+              borderBottomRightRadius: DevicePixels[5],
+            },
+          ]}
+          placeholder="Password"
+          secureTextEntry={secure}
+          placeholderTextColor="#fff"
+          onChangeText={p => setPass(p)}
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
         <Button
           onPress={async () => {
-            navigation.navigate('SignUpFlow', {dry: true});
-            setStepAction(0);
+            try {
+              if (username && pass) {
+                setSpinner(true);
+                setSecure(true);
+                const {user} = await signIn(username, pass);
+                if (!user.emailVerified) {
+                  Alert.alert(
+                    'Sorry',
+                    'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
+                  );
+                } else {
+                  handleAuthAction(user);
+                }
+              } else {
+                Alert.alert(
+                  'Sorry',
+                  'Please enter both your email and your password',
+                );
+              }
+            } catch (e) {
+              console.log(e);
+              setSpinner(false);
+            }
           }}
+          accessoryLeft={() =>
+            spinner ? <Spinner style={{backgroundColor: '#fff'}} /> : null
+          }
           style={styles.button}>
-          Sign up with email
+          Log in
         </Button>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginTop: DevicePixels[15],
-          marginBottom: DevicePixels[20],
-          flex: 1,
-        }}>
-        <Text style={{color: '#fff'}}>Already signed up? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: DevicePixels[15],
+            marginBottom: DevicePixels[20],
+          }}>
+          <Text style={{color: '#fff'}}>Not signed up? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textDecorationLine: 'underline',
+              }}>
+              Sign up
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
+          onPress={() => navigation.navigate('ForgotPassword')}>
           <Text
             style={{
               fontWeight: 'bold',
               color: '#fff',
               textDecorationLine: 'underline',
             }}>
-            Log in
+            Forgot password?
           </Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 };
 
 const mapDispatchToProps = {
-  setStep,
+  handleAuth,
 };
 
 export default connect(null, mapDispatchToProps)(SignUp);
