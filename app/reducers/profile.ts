@@ -156,7 +156,7 @@ const reducer = (
     case SET_CONNECTIONS:
       return {
         ...state,
-        connections: {...state.connections, ...action.payload},
+        connections: action.payload,
       };
     case SET_LOADING:
       return {
