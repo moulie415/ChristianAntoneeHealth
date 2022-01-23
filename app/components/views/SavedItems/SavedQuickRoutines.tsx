@@ -2,8 +2,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
-import {Alert, View} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
+import {getExercisesById} from '../../../actions/exercises';
 import {
   getQuickRoutinesById,
   getSavedQuickRoutines,
@@ -130,6 +131,7 @@ const mapStateToProps = ({exercises, quickRoutines}: MyRootState) => ({
 const mapDispatchToProps = {
   getSavedQuickRoutinesAction: getSavedQuickRoutines,
   getQuickRoutinesByIdAction: getQuickRoutinesById,
+  getExercisesByIdAction: getExercisesById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedQuickRoutines);
