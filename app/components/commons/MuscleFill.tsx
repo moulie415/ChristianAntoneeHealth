@@ -13,6 +13,8 @@ import {
   hamstrings,
   hipFlexors,
   innerThighs,
+  legsBack,
+  legsFront,
   lowerBack,
   midUpperBack,
   obliques,
@@ -60,6 +62,8 @@ const getMuscle = (m: Muscle, back?: boolean) => {
       return back ? triceps : biceps;
     case 'upperBody':
       return back ? upperBodyBack : upperBodyFront;
+    case 'leg':
+      return back ? legsBack : legsFront;
   }
 };
 
@@ -70,7 +74,7 @@ const MuscleFill: React.FC<{
 }> = ({muscle, back, secondary}) => {
   return (
     <>
-      {getMuscle(muscle, back).map(d => {
+      {getMuscle(muscle, back)?.map(d => {
         return (
           <Path
             key={d}

@@ -164,6 +164,10 @@ const Profile: React.FC<ProfileProps> = ({
                     onPress: () =>
                       launchCamera(imageLibraryOptions, handlePickerCallback),
                   },
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
                 ]);
               } else {
                 navigation.navigate('Premium');
