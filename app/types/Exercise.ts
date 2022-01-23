@@ -2,7 +2,6 @@ import {
   Level,
   Goal,
   StrengthArea,
-  Location,
   FlexibilityArea,
   CardioType,
   WarmUp,
@@ -23,12 +22,11 @@ export default interface Exercise {
   id?: string;
   name: string;
   description: string;
-  level: Level;
-  type: Goal;
+  level?: Level;
+  type?: Goal;
   area?: StrengthArea;
   cardioType?: CardioType;
   flexibilityArea?: FlexibilityArea;
-  location: Location;
   equipment?: EquipmentItem[];
   muscles?: Muscle[];
   musclesSecondary?: Muscle[];

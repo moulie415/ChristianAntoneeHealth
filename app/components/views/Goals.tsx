@@ -1,8 +1,6 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import styles from '../../styles/views/Goals';
+import {TouchableOpacity} from 'react-native';
 import GoalsProps from '../../types/views/Goals';
-import {Goal, Purpose} from '../../types/Shared';
 import {
   Select,
   SelectItem,
@@ -18,8 +16,6 @@ import {purposeItems} from '../../constants';
 import DevicePixels from '../../helpers/DevicePixels';
 
 const Goals: React.FC<GoalsProps> = ({
-  selectedGoals,
-  setSelectedGoals,
   workoutFrequency,
   setWorkoutFrequency,
   purpose,
@@ -27,21 +23,6 @@ const Goals: React.FC<GoalsProps> = ({
   signUp,
   loading,
 }) => {
-  const selectGoal = (goal: Goal) => {
-    selectedGoals.includes(goal)
-      ? setSelectedGoals(selectedGoals.filter(t => t !== goal))
-      : setSelectedGoals([...selectedGoals, goal]);
-  };
-  const CheckIcon = ({goal}: {goal: Goal}) => {
-    return selectedGoals.includes(goal) ? (
-      <Icon name="check" size={DevicePixels[12]} style={{color: '#fff'}} />
-    ) : null;
-  };
-  const CrossIcon = ({goal}: {goal: Goal}) => {
-    return selectedGoals.includes(goal) ? (
-      <Icon name="times" size={DevicePixels[12]} />
-    ) : null;
-  };
   return (
     <Layout style={{margin: DevicePixels[20]}}>
       <Text
@@ -74,41 +55,6 @@ const Goals: React.FC<GoalsProps> = ({
           );
         })}
       </Select>
-      <Text
-        style={{marginTop: DevicePixels[30], marginBottom: DevicePixels[10]}}>
-        What is your main purpose for using this app?
-      </Text>
-      <Layout
-        style={{
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
-        }}>
-        <Button
-          size="tiny"
-          accessoryLeft={() => <CheckIcon goal={Goal.STRENGTH} />}
-          accessoryRight={() => <CrossIcon goal={Goal.STRENGTH} />}
-          onPress={() => selectGoal(Goal.STRENGTH)}
-          status={selectedGoals.includes(Goal.STRENGTH) ? 'primary' : 'basic'}
-          style={{
-            width: DevicePixels[120],
-            marginBottom: DevicePixels[20],
-          }}>
-          Strength
-        </Button>
-        <Button
-          size="tiny"
-          accessoryLeft={() => <CheckIcon goal={Goal.CARDIO} />}
-          accessoryRight={() => <CrossIcon goal={Goal.CARDIO} />}
-          onPress={() => selectGoal(Goal.CARDIO)}
-          status={selectedGoals.includes(Goal.CARDIO) ? 'primary' : 'basic'}
-          style={{
-            width: DevicePixels[120],
-            marginBottom: DevicePixels[20],
-          }}>
-          Cardiovascular
-        </Button>
-      </Layout>
       <Text
         style={{marginTop: DevicePixels[30], marginBottom: DevicePixels[20]}}>
         How many times a week do you want to workout?

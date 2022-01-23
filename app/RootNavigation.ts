@@ -29,7 +29,14 @@ export function resetToLogin() {
 }
 
 export function navigateToLoginIfNecessary() {
-  navigate('SignUp');
+  if (
+    !navigationRef
+      .getState()
+      ?.routes.map(route => route.name)
+      .includes('Login')
+  ) {
+    navigate('Login');
+  }
 }
 
 export function resetToWelcome() {

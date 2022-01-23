@@ -1,4 +1,4 @@
-import {Goal, Purpose} from './Shared';
+import {Goal} from './Shared';
 
 export type Gender = 'male' | 'female';
 
@@ -12,10 +12,9 @@ export default interface Profile {
   gender?: Gender;
   weight?: number;
   height?: number;
-  purpose?: Purpose;
+  purpose?: Goal;
   unit?: Unit;
   workoutFrequency?: number;
-  goals?: Goal[];
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;

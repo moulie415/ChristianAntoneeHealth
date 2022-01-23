@@ -5,7 +5,7 @@ import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
-import {Goal, Purpose, Sample, StepSample} from '../types/Shared';
+import {Goal, Sample, StepSample} from '../types/Shared';
 
 export const SET_PROFILE = 'SET_PROFILE';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
@@ -62,9 +62,8 @@ export interface SignUpPayload {
   height: number;
   unit: Unit;
   gender: Gender;
-  goals: Goal[];
   workoutFrequency: number;
-  purpose: Purpose;
+  purpose: Goal;
   password?: string;
   email: string;
 }
@@ -75,9 +74,8 @@ export interface UpdateProfilePayload {
   height?: number;
   gender?: Gender;
   unit?: Unit;
-  goals?: Goal[];
   workoutFrequency?: number;
-  purpose?: Purpose;
+  purpose?: Goal;
   avatar?: string;
 }
 
