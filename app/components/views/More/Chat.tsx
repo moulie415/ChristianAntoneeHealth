@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -71,7 +71,7 @@ const Chat: React.FC<ChatProps> = ({
   loading,
 }) => {
   const {uid} = route.params;
-
+  const ref = useRef<GiftedChat>();
   useEffect(() => {
     navigation.setOptions({
       headerTitle: connection.name,
@@ -114,6 +114,12 @@ const Chat: React.FC<ChatProps> = ({
   const showLoadEarlier = useMemo(() => {
     return !sortMessages().some(m => m.text === 'Beginning of chat');
   }, [sortMessages]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current?.scrollToBottom();
+    }, 2000);
+  }, []);
 
   const renderCustomView = (props: BubbleProps<Message>) => {
     switch (props.currentMessage.type) {
@@ -195,11 +201,14 @@ const Chat: React.FC<ChatProps> = ({
 
   return (
     <Animated.View
-      entering={FadeIn.duration(500).delay(500)}
+      entering={FadeIn.duration(1000).delay(500)}
       style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
         renderCustomView={renderCustomView}
-        messagesContainerStyle={{paddingTop: DevicePixels[50]}}
+        ref={ref}
+        messagesContainerStyle={{
+          paddingTop: Platform.OS === 'ios' ? 0 : DevicePixels[50],
+        }}
         loadEarlier={showLoadEarlier}
         isLoadingEarlier={loading}
         onLoadEarlier={loadEarlier}
