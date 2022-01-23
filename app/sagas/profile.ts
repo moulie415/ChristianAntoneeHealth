@@ -324,7 +324,6 @@ function* signUp(action: SignUpAction) {
         }),
       );
       resetToTabs();
-      navigate('Premium');
     }
     setUserAttributes({
       name,
@@ -568,7 +567,7 @@ function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
-    if (user && user.emailVerified) {
+    if (user && (user.emailVerified || user.providerData?.[0])) {
       // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,
