@@ -15,4 +15,5 @@ export default interface QuickRoutine {
   premium: boolean;
   exerciseIds: string[];
   thumbnail?: {src: string; title: string};
-};
+  instructions?: string[];
+}

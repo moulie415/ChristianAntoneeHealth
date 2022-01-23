@@ -54,15 +54,15 @@ export const getWeightItems = (
   let prevWeight;
   let lowest = profile.weight || 0;
   let highest = profile.weight || 0;
-  for (let i = 0; i <= 6; i++) {
-    const day = moment().add(i, 'days');
+  for (let i = 6; i >= 0; i--) {
+    const day = moment().subtract(i, 'days');
     const dayOfYear = day.dayOfYear();
     const sample =
       monthlyWeightSamples &&
       monthlyWeightSamples.find(
         s => moment(s.startDate).dayOfYear() === dayOfYear,
       )?.value;
-    if (i === 0) {
+    if (i === 6) {
       const weight = sample || profile.weight || 0;
       if (weight > highest) {
         highest = weight;
@@ -84,7 +84,7 @@ export const getWeightItems = (
     }
     labels.push(day.format('dd'));
   }
-  return {data, labels: labels.reverse(), minMax: [lowest - 5, highest + 5]};
+  return {data, labels, minMax: [lowest - 5, highest + 5]};
 };
 
 export const rateApp = () => {
