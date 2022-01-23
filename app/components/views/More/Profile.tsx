@@ -298,6 +298,12 @@ const Profile: React.FC<ProfileProps> = ({
           // withVerticalLines={false}
           withShadow={false}
         />
+        <Button
+          style={{margin: DevicePixels[20]}}
+          status="danger"
+          onPress={() => navigation.navigate('DeleteAccount')}>
+          Delete my account
+        </Button>
       </ScrollView>
       <Button
         onPress={async () => {

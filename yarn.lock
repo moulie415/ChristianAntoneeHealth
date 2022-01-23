@@ -7361,10 +7361,10 @@ react-native-fast-image@^8.5.11:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
-react-native-fbsdk@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-3.0.0.tgz#07ef41758bb17a0acaff744008af625a45ef9a01"
-  integrity sha512-i0JocuzLlGk13J0xFDjm8GlX7SADAL2kh/syE/HOn5HHdW+PFjC31MNj5AtzIw2TicHXpHGO6VPKNfdWFbxboA==
+react-native-fbsdk-next@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-7.0.1.tgz#ebd5b540e9003831c332d9f718c3b0dee31e3313"
+  integrity sha512-pMOIP0HTgz2EjliGQB15SH87I3PaCXRUCWf4XAv4qb+8h/t6fRaZMf4WEEgPAWjzfYQh0eO1qZZu2qjlZKi8ag==
 
 react-native-flipper@^0.126.0:
   version "0.126.0"

@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform, ScrollView, View} from 'react-native';
 import SettingsProps from '../../../types/views/Settings';
-import {Goal, MyRootState, Purpose} from '../../../types/Shared';
+import {Goal, MyRootState} from '../../../types/Shared';
 import {
   setMonthlyTestReminders,
   setWorkoutReminders,
@@ -29,6 +29,12 @@ import {purposeItems} from '../../../constants';
 import {equals} from 'ramda';
 import DevicePixels from '../../../helpers/DevicePixels';
 
+const isValidPurpose = (purpose: Goal) =>
+  purpose === Goal.BONE_DENSITY ||
+  purpose === Goal.CORE ||
+  purpose === Goal.STRENGTH ||
+  purpose === Goal.WEIGHT;
+
 const Settings: React.FC<SettingsProps> = ({
   workoutReminders,
   setWorkoutRemindersAction,
@@ -42,33 +48,18 @@ const Settings: React.FC<SettingsProps> = ({
 }) => {
   const [show, setShow] = useState(false);
   const [goalReminder, setGoalReminder] = useState(true);
-  const [selectedGoals, setSelectedGoals] = useState<Goal[]>(
-    profile.goals || [],
-  );
+
   const [workoutFrequency, setWorkoutFrequency] = useState(
     profile.workoutFrequency || 1,
   );
-  const [purpose, setPurpose] = useState<Purpose>(profile.purpose);
-
-  const selectGoal = (goal: Goal) => {
-    selectedGoals.includes(goal)
-      ? setSelectedGoals(selectedGoals.filter(t => t !== goal))
-      : setSelectedGoals([...selectedGoals, goal]);
-  };
-  const CheckIcon = ({goal}: {goal: Goal}) => {
-    return selectedGoals.includes(goal) ? (
-      <Icon name="check" size={DevicePixels[12]} style={{color: '#fff'}} />
-    ) : null;
-  };
-  const CrossIcon = ({goal}: {goal: Goal}) => {
-    return selectedGoals.includes(goal) ? (
-      <Icon name="times" size={DevicePixels[12]} />
-    ) : null;
-  };
+  const [purpose, setPurpose] = useState<Goal>(
+    profile.purpose && isValidPurpose(profile.purpose)
+      ? profile.purpose
+      : Goal.STRENGTH,
+  );
 
   const newProfile = {
     ...profile,
-    goals: selectedGoals,
     workoutFrequency,
     purpose,
   };
@@ -157,7 +148,6 @@ const Settings: React.FC<SettingsProps> = ({
         <Layout style={{margin: DevicePixels[10]}}>
           <Text
             style={{
-              marginTop: DevicePixels[30],
               marginBottom: DevicePixels[10],
             }}>
             What is your main purpose for using this app?
@@ -165,7 +155,7 @@ const Settings: React.FC<SettingsProps> = ({
           <Select
             value={
               purpose
-                ? purposeItems.find(item => item.purpose === purpose).title
+                ? purposeItems.find(item => item.purpose === purpose)?.title
                 : ' '
             }
             onSelect={index => {
@@ -188,47 +178,7 @@ const Settings: React.FC<SettingsProps> = ({
               );
             })}
           </Select>
-          <Text
-            style={{
-              marginTop: DevicePixels[30],
-              marginBottom: DevicePixels[10],
-            }}>
-            What is your main purpose for using this app?
-          </Text>
 
-          <Layout
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}>
-            <Button
-              size="tiny"
-              accessoryLeft={() => <CheckIcon goal={Goal.STRENGTH} />}
-              accessoryRight={() => <CrossIcon goal={Goal.STRENGTH} />}
-              onPress={() => selectGoal(Goal.STRENGTH)}
-              status={
-                selectedGoals.includes(Goal.STRENGTH) ? 'primary' : 'basic'
-              }
-              style={{
-                width: DevicePixels[120],
-                marginBottom: DevicePixels[20],
-              }}>
-              Strength
-            </Button>
-            <Button
-              size="tiny"
-              accessoryLeft={() => <CheckIcon goal={Goal.CARDIO} />}
-              accessoryRight={() => <CrossIcon goal={Goal.CARDIO} />}
-              onPress={() => selectGoal(Goal.CARDIO)}
-              status={selectedGoals.includes(Goal.CARDIO) ? 'primary' : 'basic'}
-              style={{
-                width: DevicePixels[120],
-                marginBottom: DevicePixels[20],
-              }}>
-              Cardiovascular
-            </Button>
-          </Layout>
           <Text
             style={{
               marginTop: DevicePixels[30],
@@ -283,12 +233,7 @@ const Settings: React.FC<SettingsProps> = ({
           </Layout>
         </Layout>
         <Divider />
-        <Button
-          style={{margin: DevicePixels[20]}}
-          status="danger"
-          onPress={() => navigation.navigate('DeleteAccount')}>
-          Delete my account
-        </Button>
+
       </ScrollView>
       <Button
         onPress={() => {

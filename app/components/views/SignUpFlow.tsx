@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/SignUpFlow';
 import {Gender, Unit} from '../../types/Profile';
-import {Goal, MyRootState, Purpose} from '../../types/Shared';
+import {Goal, MyRootState} from '../../types/Shared';
 import SignUpFlowProps from '../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
 import FitnessInfo from './FitnessInfo';
@@ -28,13 +28,10 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   const [height, setHeight] = useState<number>(profile.height);
   const [gender, setGender] = useState<Gender>(profile.gender);
-  const [selectedGoals, setSelectedGoals] = useState<Goal[]>(
-    profile.goals || [],
-  );
   const [workoutFrequency, setWorkoutFrequency] = useState(
     profile.workoutFrequency || 1,
   );
-  const [purpose, setPurpose] = useState<Purpose>(profile.purpose);
+  const [purpose, setPurpose] = useState<Goal>(profile.purpose);
   const [email, setEmail] = useState(profile.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -61,7 +58,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       height,
       unit,
       gender,
-      goals: selectedGoals,
       workoutFrequency,
       purpose,
       email,
@@ -127,8 +123,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           )}
           {step === 2 && (
             <Goals
-              selectedGoals={selectedGoals}
-              setSelectedGoals={setSelectedGoals}
               workoutFrequency={workoutFrequency}
               setWorkoutFrequency={setWorkoutFrequency}
               purpose={purpose}

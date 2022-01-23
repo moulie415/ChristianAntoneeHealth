@@ -174,7 +174,6 @@ function* updateProfile(action: UpdateProfileAction) {
     height,
     unit,
     dob,
-    goals,
     gender,
     workoutFrequency,
     purpose,
@@ -197,7 +196,6 @@ function* updateProfile(action: UpdateProfileAction) {
     ...(height ? {height} : {}),
     ...(unit ? {unit} : {}),
     ...(gender ? {gender} : {}),
-    ...(goals ? {goals} : {}),
     ...(workoutFrequency ? {workoutFrequency} : {}),
     ...(purpose ? {purpose} : {}),
     ...(avatar ? {avatar} : {}),
@@ -211,7 +209,6 @@ function* updateProfile(action: UpdateProfileAction) {
     height: height?.toString(),
     unit,
     gender,
-    goals: goals?.toString(),
     workoutFrequency: workoutFrequency?.toString(),
     purpose,
   });
@@ -270,7 +267,6 @@ function* signUp(action: SignUpAction) {
     unit,
     height,
     gender,
-    goals,
     workoutFrequency,
     purpose,
     password,
@@ -295,7 +291,6 @@ function* signUp(action: SignUpAction) {
         height,
         unit,
         gender,
-        goals,
         workoutFrequency,
         purpose,
       });
@@ -312,7 +307,6 @@ function* signUp(action: SignUpAction) {
         unit,
         height,
         gender,
-        goals,
         workoutFrequency,
         purpose,
       });
@@ -325,13 +319,11 @@ function* signUp(action: SignUpAction) {
           height,
           unit,
           gender,
-          goals,
           workoutFrequency,
           purpose,
         }),
       );
       resetToTabs();
-      navigate('Premium');
     }
     setUserAttributes({
       name,
@@ -340,7 +332,6 @@ function* signUp(action: SignUpAction) {
       height: height?.toString(),
       unit,
       gender,
-      goals: goals.toString(),
       workoutFrequency: workoutFrequency.toString(),
       purpose,
     });
@@ -576,7 +567,7 @@ function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
-    if (user && user.emailVerified) {
+    if (user && (user.emailVerified || user.providerData?.[0])) {
       // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,

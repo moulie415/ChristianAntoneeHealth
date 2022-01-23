@@ -23,6 +23,9 @@ export enum Level {
 export enum Goal {
   STRENGTH = 'strength',
   CARDIO = 'cardiovascular',
+  BONE_DENSITY = 'boneDensity',
+  WEIGHT = 'weight',
+  CORE = 'core',
 }
 
 export enum StrengthArea {
@@ -51,17 +54,6 @@ export enum FlexibilityArea {
   SHOULDERS = 'shoulders',
   HIPS = 'hips',
   SPINE = 'spine',
-}
-
-export enum Purpose {
-  EXERCISE = 'exercise',
-  CALORIES = 'calories',
-  FITNESS = 'fitness',
-}
-
-export enum Location {
-  GYM = 'gym',
-  HOME = 'home',
 }
 
 export interface Sample {

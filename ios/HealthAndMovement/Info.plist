@@ -23,6 +23,8 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb212292566660393</string>
@@ -61,6 +63,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>212292566660393</string>
+	<key>FacebookClientToken</key>
+	<string>790defa691a497fe1cdba431a79e26f3</string>
 	<key>FacebookDisplayName</key>
 	<string>Health And Movement</string>
 	<key>FirebaseDynamicLinksCustomDomains</key>

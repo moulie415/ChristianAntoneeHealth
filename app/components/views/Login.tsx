@@ -17,7 +17,7 @@ import styles from '../../styles/views/Login';
 import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
 import appleAuth from '@invertase/react-native-apple-authentication';
-import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import DevicePixels from '../../helpers/DevicePixels';
 import {setStep, signUp} from '../../actions/profile';
