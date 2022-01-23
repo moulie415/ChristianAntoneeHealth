@@ -323,6 +323,22 @@ export const getChats = async (uid: string) => {
   return {};
 };
 
+export const getMessages = async (chatId: string, startAfter: number) => {
+  const query = await db()
+    .collection('chats')
+    .doc(chatId)
+    .collection('messages')
+    .orderBy('createdAt')
+    .where('createdAt', '<', startAfter)
+    .limitToLast(20)
+    .get();
+  return query.docs.reduce((acc: {[id: string]: Message}, cur) => {
+    const message: any = cur.data();
+    acc[message ? message._id : cur.id] = {...message, id: cur.id};
+    return acc;
+  }, {});
+};
+
 export const sendMessage = (
   message: Message,
   chatId: string,

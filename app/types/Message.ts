@@ -5,4 +5,5 @@ export type MessageType = 'text' | 'workout';
 export default interface Message extends IMessage {
   type: MessageType;
   workout?: string[];
+  id?: string;
 };

@@ -58,6 +58,9 @@ import {
   SET_CHATS,
   SetChatsAction,
   setMessages,
+  LOAD_EARLIER_MESSAGES,
+  LoadEarlierMessagesAction,
+  setMessagesObj,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -107,6 +110,7 @@ import Sound from 'react-native-sound';
 import {getSettings} from './settings';
 import {SettingsState} from '../reducers/settings';
 import {logError} from '../helpers/error';
+import Message from '../types/Message';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -549,6 +553,26 @@ function* setRead(action: SetReadAction) {
   }
 }
 
+function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
+  try {
+    const {chatId, uid, startAfter} = action.payload;
+    const {messages} = yield select((state: MyRootState) => state.profile);
+    const current = messages[uid];
+    yield put(setLoading(true));
+    const earlier: {[key: string]: Message} = yield call(
+      api.getMessages,
+      chatId,
+      startAfter,
+    );
+    yield put(setMessagesObj(uid, {...current, ...earlier}));
+    yield put(setLoading(false));
+  } catch (e) {
+    yield put(setLoading(false));
+    Snackbar.show({text: 'Error loading earlier messages'});
+    logError(e);
+  }
+}
+
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
@@ -669,8 +693,9 @@ export default function* profileSaga() {
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
-    takeLatest(SET_READ, setRead),
+    throttle(10000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
+    takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

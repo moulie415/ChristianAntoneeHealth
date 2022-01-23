@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -15,9 +15,14 @@ import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import {sendMessage, setMessages, setRead} from '../../../actions/profile';
+import {
+  loadEarlierMessages,
+  sendMessage,
+  setMessages,
+  setRead,
+} from '../../../actions/profile';
 import Message from '../../../types/Message';
-import {Platform, TouchableOpacity, View} from 'react-native';
+import {Platform, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -25,6 +30,7 @@ import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import {viewWorkout} from '../../../actions/exercises';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -41,6 +47,12 @@ interface ChatProps {
   setReadAction: (uid: string) => void;
   viewWorkoutAction: (workout: string[]) => void;
   exercisesLoading: boolean;
+  loadEarlierMessages: (
+    chatId: string,
+    uid: string,
+    startAfter: number,
+  ) => void;
+  loading: boolean;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -55,6 +67,8 @@ const Chat: React.FC<ChatProps> = ({
   setReadAction,
   viewWorkoutAction,
   exercisesLoading,
+  loadEarlierMessages: loadEarlierMessagesAction,
+  loading,
 }) => {
   const {uid} = route.params;
 
@@ -71,6 +85,9 @@ const Chat: React.FC<ChatProps> = ({
 
   useEffect(() => {
     setReadAction(uid);
+    return () => {
+      setReadAction(uid);
+    };
   }, [uid, setReadAction]);
 
   const sortMessages = useCallback(() => {
@@ -87,6 +104,16 @@ const Chat: React.FC<ChatProps> = ({
         return message;
       });
   }, [messagesObj]);
+
+  const loadEarlier = useCallback(async () => {
+    const sorted = sortMessages();
+    const startAfter = sorted[0].createdAt;
+    loadEarlierMessagesAction(chatId, uid, startAfter as number);
+  }, [sortMessages, chatId, uid, loadEarlierMessagesAction]);
+
+  const showLoadEarlier = useMemo(() => {
+    return !sortMessages().some(m => m.text === 'Beginning of chat');
+  }, [sortMessages]);
 
   const renderCustomView = (props: BubbleProps<Message>) => {
     switch (props.currentMessage.type) {
@@ -135,8 +162,8 @@ const Chat: React.FC<ChatProps> = ({
           <MessageText
             {...newProps}
             textStyle={{
-              left: {fontStyle: 'italic'},
-              right: {fontStyle: 'italic'},
+              left: {fontStyle: 'italic', fontFamily: 'normal'},
+              right: {fontStyle: 'italic', fontFamily: 'normal'},
             }}
           />
         );
@@ -167,9 +194,15 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <Animated.View
+      entering={FadeIn.duration(500).delay(500)}
+      style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
         renderCustomView={renderCustomView}
+        messagesContainerStyle={{paddingTop: DevicePixels[50]}}
+        loadEarlier={showLoadEarlier}
+        isLoadingEarlier={loading}
+        onLoadEarlier={loadEarlier}
         renderMessageText={renderMessageText}
         messages={sortMessages()}
         user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
@@ -186,7 +219,7 @@ const Chat: React.FC<ChatProps> = ({
         }}
       />
       <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
-    </View>
+    </Animated.View>
   );
 };
 
@@ -199,6 +232,7 @@ const mapStateToProps = (
   connection: profile.connections[props.route.params.uid],
   chatId: profile.chats[props.route.params.uid].id,
   exercisesLoading: exercises.loading,
+  loading: profile.loading,
 });
 
 const mapDispatchToProps = {
@@ -206,6 +240,7 @@ const mapDispatchToProps = {
   sendMessageAction: sendMessage,
   setReadAction: setRead,
   viewWorkoutAction: viewWorkout,
+  loadEarlierMessages,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

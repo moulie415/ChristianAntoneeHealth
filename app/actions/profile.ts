@@ -33,6 +33,7 @@ export const SET_MESSAGE = 'SET_MESSAGE';
 export const SET_READ = 'SET_READ';
 export const SET_UNREAD = 'SET_UNREAD';
 export const SET_APP_STATE = 'SET_APP_STATE';
+export const LOAD_EARLIER_MESSAGES = 'LOAD_EARLIER_MESSAGES';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -188,6 +189,11 @@ export interface SetAppStateAction {
   payload: AppStateStatus;
 }
 
+export interface LoadEarlierMessagesAction {
+  type: typeof LOAD_EARLIER_MESSAGES;
+  payload: {chatId: string; uid: string; startAfter: number};
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -214,7 +220,8 @@ export type ProfileActionTypes =
   | SetMessageAction
   | SetReadAction
   | SetUnreadAction
-  | SetAppStateAction;
+  | SetAppStateAction
+  | LoadEarlierMessagesAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -339,6 +346,14 @@ export const setMessages = (
   };
 };
 
+export const setMessagesObj = (
+  uid: string,
+  messages: {[key: string]: Message},
+): SetMessagesAction => ({
+  type: SET_MESSAGES,
+  payload: {uid, messages},
+});
+
 export const setChats = (chats: {[key: string]: Chat}): SetChatsAction => ({
   type: SET_CHATS,
   payload: chats,
@@ -378,4 +393,13 @@ export const setUnread = (unread: {[key: string]: number}): SetUnreadAction => {
 export const setAppState = (appState: AppStateStatus): SetAppStateAction => ({
   type: SET_APP_STATE,
   payload: appState,
+});
+
+export const loadEarlierMessages = (
+  chatId: string,
+  uid: string,
+  startAfter: number,
+): LoadEarlierMessagesAction => ({
+  type: LOAD_EARLIER_MESSAGES,
+  payload: {chatId, uid, startAfter},
 });
