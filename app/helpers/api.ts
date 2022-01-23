@@ -5,14 +5,7 @@ import functions from '@react-native-firebase/functions';
 import Exercise from '../types/Exercise';
 import Profile from '../types/Profile';
 import Test from '../types/Test';
-import {
-  CardioType,
-  CoolDown,
-  Goal,
-  Level,
-  StrengthArea,
-  WarmUp,
-} from '../types/Shared';
+import {CoolDown, Goal, Level, WarmUp} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import Education from '../types/Education';
@@ -50,8 +43,6 @@ export const createUser = async (
 const getExercisesQuery = async (
   level: Level,
   goal: Goal,
-  area: StrengthArea,
-  cardioType: CardioType,
   warmUp: WarmUp[],
   coolDown: CoolDown[],
 ) => {
@@ -71,19 +62,9 @@ const getExercisesQuery = async (
       .get();
     coolDownDocs = coolDownQuery.docs;
   }
-  if (goal === Goal.STRENGTH) {
-    const exercises = await db()
-      .collection('exercises')
-      .where('type', '==', goal)
-      .where('area', '==', area)
-      .where('level', '==', level)
-      .get();
-    return [...exercises.docs, ...warmUpDocs, ...coolDownDocs];
-  }
   const exercises = await db()
     .collection('exercises')
     .where('type', '==', goal)
-    .where('cardioType', '==', cardioType)
     .where('level', '==', level)
     .get();
   return [...exercises.docs, ...warmUpDocs, ...coolDownDocs];
@@ -92,19 +73,10 @@ const getExercisesQuery = async (
 export const getExercises = async (
   level: Level,
   goal: Goal,
-  area: StrengthArea,
-  cardioType: CardioType,
   warmUp: WarmUp[],
   coolDown: CoolDown[],
 ) => {
-  const docs = await getExercisesQuery(
-    level,
-    goal,
-    area,
-    cardioType,
-    warmUp,
-    coolDown,
-  );
+  const docs = await getExercisesQuery(level, goal, warmUp, coolDown);
   return docs.reduce((acc: {[id: string]: Exercise}, cur) => {
     const exercise: any = cur.data();
     acc[cur.id] = {...exercise, id: cur.id};

@@ -1,7 +1,6 @@
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
 import {
-  CardioType,
   CoolDown,
   Equipment,
   Goal,
@@ -28,7 +27,6 @@ export const GET_SAVED_WORKOUTS = 'GET_SAVED_WORKOUTS';
 export const SET_SAVED_WORKOUTS = 'SET_SAVED_WORKOUTS';
 export const SET_FITNESS_GOAL = 'SET_FITNESS_GOAL';
 export const SET_STRENGTH_AREA = 'SET_STRENGTH_AREA';
-export const SET_CARDIO_TYPE = 'SET_CARDIO_TYPE';
 export const SET_LEVEL = 'SET_LEVEL';
 export const SET_EQUIPMENT = 'SET_EQUIPMENT';
 export const SET_WARM_UP = 'SET_WARMUP';
@@ -41,8 +39,6 @@ export interface GetExercisesAction {
   payload: {
     level: Level;
     goal: Goal;
-    area: StrengthArea;
-    cardioType: CardioType;
     coolDown: CoolDown[];
     warmUp: WarmUp[];
   };
@@ -131,11 +127,6 @@ export interface SetStrengthAreaAction {
   payload: StrengthArea;
 }
 
-export interface SetCardioTypeAction {
-  type: typeof SET_CARDIO_TYPE;
-  payload: CardioType;
-}
-
 export interface SetLevelAction {
   type: typeof SET_LEVEL;
   payload: Level;
@@ -169,13 +160,11 @@ export interface ViewWorkoutAction {
 export const getExercises = (
   level: Level,
   goal: Goal,
-  area: StrengthArea,
-  cardioType: CardioType,
   warmUp: WarmUp[],
   coolDown: CoolDown[],
 ): GetExercisesAction => ({
   type: GET_EXERCISES,
-  payload: {level, goal, area, cardioType, warmUp, coolDown},
+  payload: {level, goal, warmUp, coolDown},
 });
 
 export const getExercisesById = (ids: string[]): GetExercisesByIdAction => ({
@@ -266,11 +255,6 @@ export const setStrengthArea = (area: StrengthArea): SetStrengthAreaAction => ({
   payload: area,
 });
 
-export const setCardioType = (type: CardioType): SetCardioTypeAction => ({
-  type: SET_CARDIO_TYPE,
-  payload: type,
-});
-
 export const setLevel = (level: Level): SetLevelAction => ({
   type: SET_LEVEL,
   payload: level,
@@ -319,7 +303,6 @@ export type ExercisesActions =
   | GetExercisesByIdAction
   | SetFitnessGoalAction
   | SetStrengthAreaAction
-  | SetCardioTypeAction
   | SetLevelAction
   | SetEquipmentAction
   | SetWarmUpAction

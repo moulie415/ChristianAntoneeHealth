@@ -2,8 +2,8 @@ import {List, ListItem, Text, Layout} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import QuickRoutine, {Equipment, Focus} from '../../types/QuickRoutines';
-import {Level, MyRootState} from '../../types/Shared';
+import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
+import {Goal, Level, MyRootState} from '../../types/Shared';
 import ImageOverlay from './ImageOverlay';
 import {QuickRoutinesListNavigationProp} from '../../types/views/QuickRoutinesList';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -25,14 +25,14 @@ const getEquipmentString = (equipment: Equipment) => {
   return 'No Equipment';
 };
 
-const getFocusString = (focus: Focus) => {
-  if (focus === 'balance') {
+const getFocusString = (focus: Goal) => {
+  if (focus === Goal.BONE_DENSITY) {
     return 'Balance';
   }
-  if (focus === 'intensity') {
+  if (focus === Goal.CORE) {
     return 'Intensity';
   }
-  if (focus === 'mobility') {
+  if (focus === Goal.WEIGHT) {
     return 'Mobility';
   }
   return 'Strength';

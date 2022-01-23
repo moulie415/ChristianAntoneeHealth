@@ -22,7 +22,6 @@ export enum Level {
 
 export enum Goal {
   STRENGTH = 'strength',
-  CARDIO = 'cardiovascular',
   BONE_DENSITY = 'boneDensity',
   WEIGHT = 'weight',
   CORE = 'core',
@@ -32,11 +31,6 @@ export enum StrengthArea {
   UPPER = 'upper',
   LOWER = 'lower',
   FULL = 'full',
-}
-
-export enum CardioType {
-  HIT = 'hit',
-  SBIT = 'sbit',
 }
 
 export enum WarmUp {

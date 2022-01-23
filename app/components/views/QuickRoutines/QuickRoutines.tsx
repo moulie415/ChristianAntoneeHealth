@@ -12,7 +12,8 @@ import {connect} from 'react-redux';
 import {getQuickRoutines} from '../../../actions/quickRoutines';
 import DevicePixels from '../../../helpers/DevicePixels';
 import globalStyles from '../../../styles/globalStyles';
-import {Area, Equipment, Focus} from '../../../types/QuickRoutines';
+import {Area, Equipment} from '../../../types/QuickRoutines';
+import {Goal} from '../../../types/Shared';
 import QuickRoutinesProps from '../../../types/views/QuickRoutines';
 import ImageLoader from '../../commons/ImageLoader';
 import ImageOverlay from '../../commons/ImageOverlay';
@@ -21,7 +22,7 @@ const sections: {
   title: string;
   key: 'area' | 'focus' | 'equipment';
   image: ImageSourcePropType;
-  items: {id: Area | Focus | Equipment; name: string}[];
+  items: {id: Area | Goal | Equipment; name: string}[];
 }[] = [
   {
     title: 'Body part',
@@ -38,10 +39,13 @@ const sections: {
     title: 'Training focus',
     key: 'focus',
     items: [
-      {id: 'strength', name: 'Strength'},
-      {id: 'mobility', name: 'Mobility'},
-      {id: 'balance', name: 'Balance'},
-      {id: 'intensity', name: 'High intensity'},
+      {id: Goal.STRENGTH, name: 'Strength for everyday activities'},
+      {
+        id: Goal.BONE_DENSITY,
+        name: 'Bone density',
+      },
+      {id: Goal.WEIGHT, name: 'Weight management'},
+      {id: Goal.CORE, name: 'Core and lower back'},
     ],
     image: require('../../../images/Quick_routine_training_focus.jpeg'),
   },
@@ -125,7 +129,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                         onPress={() => {
                           if (
                             id === 'upper' ||
-                            id === 'strength' ||
+                            id === Goal.STRENGTH ||
                             (id === 'full' && key === 'equipment')
                           ) {
                             // @ts-ignore
@@ -136,7 +140,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                           }
                           if (
                             id === 'lower' ||
-                            id === 'mobility' ||
+                            id === Goal.BONE_DENSITY ||
                             id === 'minimal'
                           ) {
                             // @ts-ignore
@@ -147,7 +151,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                           }
                           if (
                             (id === 'full' && key === 'area') ||
-                            id === 'balance' ||
+                            id === Goal.WEIGHT ||
                             id === 'none'
                           ) {
                             // @ts-ignore
@@ -156,7 +160,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                               key,
                             });
                           }
-                          if (id === 'core' || id === 'intensity') {
+                          if (id === 'core' || Goal.CORE) {
                             // @ts-ignore
                             return navigation.navigate('QuickRoutinesTabs', {
                               screen: 'Tab4',

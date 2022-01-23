@@ -1,8 +1,7 @@
-import {Level} from './Shared';
+import {Goal, Level} from './Shared';
 
 export type Area = 'upper' | 'lower' | 'full' | 'core';
 export type Equipment = 'full' | 'minimal' | 'none';
-export type Focus = 'strength' | 'mobility' | 'balance' | 'intensity';
 
 export default interface QuickRoutine {
   id: string;
@@ -10,7 +9,7 @@ export default interface QuickRoutine {
   area: Area;
   duration: number;
   equipment: Equipment;
-  focus: Focus;
+  focus: Goal;
   level: Level;
   premium: boolean;
   exerciseIds: string[];

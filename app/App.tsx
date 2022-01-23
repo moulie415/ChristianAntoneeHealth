@@ -17,10 +17,8 @@ import {navigationRef} from './RootNavigation';
 import SplashScreen from 'react-native-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import {
-  CardioType,
   Goal,
   Level,
-  StrengthArea,
   Equipment as EquipmentItem,
   WarmUp,
   CoolDown,
@@ -79,9 +77,7 @@ export type StackParamList = {
   WarmUp: undefined;
   ExerciseList: {
     goal: Goal;
-    strengthArea: StrengthArea;
     level: Level;
-    cardioType: CardioType;
     equipment: EquipmentItem[];
     warmUp: WarmUp[];
     coolDown: CoolDown[];

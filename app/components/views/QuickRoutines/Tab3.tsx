@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../../types/Shared';
+import {Goal, MyRootState} from '../../../types/Shared';
 import QuickRoutineList from '../../commons/QuickRoutinesList';
 import QuickRoutinesListProps from '../../../types/views/QuickRoutinesList';
 
@@ -16,7 +16,7 @@ const Tab3: React.FC<QuickRoutinesListProps> = ({
     return Object.values(quickRoutines).filter(routine => {
       return (
         (key === 'area' && routine.area === 'full') ||
-        (key === 'focus' && routine.focus === 'balance') ||
+        (key === 'focus' && routine.focus === Goal.WEIGHT) ||
         (key === 'equipment' && routine.equipment === 'none')
       );
     });

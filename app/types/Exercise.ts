@@ -3,7 +3,6 @@ import {
   Goal,
   StrengthArea,
   FlexibilityArea,
-  CardioType,
   WarmUp,
   CoolDown,
   Equipment as EquipmentItem,
@@ -25,7 +24,6 @@ export default interface Exercise {
   level?: Level;
   type?: Goal;
   area?: StrengthArea;
-  cardioType?: CardioType;
   flexibilityArea?: FlexibilityArea;
   equipment?: EquipmentItem[];
   muscles?: Muscle[];

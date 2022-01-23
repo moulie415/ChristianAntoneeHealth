@@ -9,7 +9,6 @@ import {
   SET_SAVED_WORKOUTS,
   SET_FITNESS_GOAL,
   SET_STRENGTH_AREA,
-  SET_CARDIO_TYPE,
   SET_LEVEL,
   SET_EQUIPMENT,
   SET_WARM_UP,
@@ -19,7 +18,6 @@ import {
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
 import {
-  CardioType,
   CoolDown,
   Equipment,
   Goal,
@@ -34,7 +32,6 @@ export interface ExercisesState {
   workout: Exercise[];
   fitnessGoal: Goal;
   strengthArea: StrengthArea;
-  cardioType: CardioType;
   level: Level;
   equipment: Equipment[];
   warmUp: WarmUp[];
@@ -53,7 +50,6 @@ const initialState: ExercisesState = {
   workout: [],
   fitnessGoal: Goal.STRENGTH,
   strengthArea: StrengthArea.UPPER,
-  cardioType: CardioType.HIT,
   level: Level.BEGINNER,
   equipment: [Equipment.NONE],
   warmUp: [],
@@ -124,11 +120,6 @@ const reducer = (
       return {
         ...state,
         strengthArea: action.payload,
-      };
-    case SET_CARDIO_TYPE:
-      return {
-        ...state,
-        cardioType: action.payload,
       };
     case SET_LEVEL:
       return {

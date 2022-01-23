@@ -5,13 +5,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
 import {Text, Button, Layout, Divider} from '@ui-kitten/components';
-import {
-  CoolDown,
-  Equipment,
-  Goal,
-  MyRootState,
-  WarmUp,
-} from '../../../types/Shared';
+import {Equipment, MyRootState, Goal} from '../../../types/Shared';
 import {setEquipment, setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -27,8 +21,6 @@ const Workout: React.FC<WorkoutProps> = ({
   setEquipmentAction,
   equipment,
   fitnessGoal,
-  strengthArea,
-  cardioType,
   level,
   warmUp,
   coolDown,
@@ -64,6 +56,19 @@ const Workout: React.FC<WorkoutProps> = ({
     return `${equipment.length} selected`;
   };
 
+  const getGoalString = (goal: Goal) => {
+    if (goal === Goal.BONE_DENSITY) {
+      return 'Bone density';
+    }
+    if (goal === Goal.CORE) {
+      return 'Core and lower back';
+    }
+    if (goal === Goal.WEIGHT) {
+      return 'Weight management';
+    }
+    return 'Strength for everyday';
+  };
+
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -93,7 +98,7 @@ const Workout: React.FC<WorkoutProps> = ({
             <Text
               category="h6"
               style={[globalStyles.textShadow, {color: '#fff'}]}>
-              Fitness goal
+              Goal
             </Text>
           </View>
           <View
@@ -112,9 +117,7 @@ const Workout: React.FC<WorkoutProps> = ({
                 fontWeight: 'bold',
                 ...globalStyles.textShadow,
               }}>
-              {fitnessGoal === Goal.STRENGTH
-                ? `Strength (${strengthArea})`
-                : `Cardiovascular (${cardioType})`}
+              {getGoalString(fitnessGoal)}
             </Text>
           </View>
           <View
@@ -311,11 +314,9 @@ const Workout: React.FC<WorkoutProps> = ({
             if (equipment.length) {
               setWorkoutAction([]);
               navigation.navigate('ExerciseList', {
-                strengthArea,
                 level: level,
                 goal: fitnessGoal,
                 equipment,
-                cardioType,
                 warmUp,
                 coolDown,
               });
@@ -413,8 +414,6 @@ const Workout: React.FC<WorkoutProps> = ({
 const mapStateToProps = ({profile, exercises}: MyRootState) => ({
   profile: profile.profile,
   fitnessGoal: exercises.fitnessGoal,
-  strengthArea: exercises.strengthArea,
-  cardioType: exercises.cardioType,
   level: exercises.level,
   equipment: exercises.equipment,
   warmUp: exercises.warmUp,

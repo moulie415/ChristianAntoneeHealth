@@ -6,11 +6,9 @@ import {
   Alert,
   TextInput,
   View,
-  Platform,
 } from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import Image from 'react-native-fast-image';
 import {getVideoHeight} from '../../../helpers';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
@@ -153,32 +151,10 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </TouchableOpacity>
                   )}
                 </>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    margin: DevicePixels[10],
-                  }}>
-                  <Text category="h5">{`Exercise ${index + 1}/${
-                    exercises.length
-                  }`}</Text>
+                {!!routine.instructions && !!routine.instructions[index] && (
+                  <Text>!!routine.instructions[index]</Text>
+                )}
 
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      name="stopwatch"
-                      size={DevicePixels[15]}
-                      color={colors.darkBlue}
-                    />
-                    <Text category="h5" style={{marginLeft: DevicePixels[5]}}>
-                      {moment()
-                        .utc()
-                        .startOf('day')
-                        .add({seconds})
-                        .format('mm:ss')}
-                    </Text>
-                  </View>
-                </View>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -314,6 +290,33 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </TouchableOpacity>
                   </Layout>
                 )} */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    margin: DevicePixels[10],
+                    marginBottom: 0,
+                  }}>
+                  <Text category="h6">{`Exercise ${index + 1}/${
+                    exercises.length
+                  }`}</Text>
+
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Icon
+                      name="stopwatch"
+                      size={DevicePixels[15]}
+                      color={colors.darkBlue}
+                    />
+                    <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                      {moment()
+                        .utc()
+                        .startOf('day')
+                        .add({seconds})
+                        .format('mm:ss')}
+                    </Text>
+                  </View>
+                </View>
                 <Button
                   onPress={() => {
                     Alert.alert('End quick routine', 'Are you sure?', [

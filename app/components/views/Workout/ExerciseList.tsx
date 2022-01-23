@@ -12,7 +12,7 @@ import {getExercises, setWorkout} from '../../../actions/exercises';
 import {truncate} from '../../../helpers';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import DevicePixels from '../../../helpers/DevicePixels';
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -24,27 +24,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   loading,
   profile,
 }) => {
-  const {
-    strengthArea,
-    level,
-    goal,
-    equipment,
-    cardioType,
-    warmUp,
-    coolDown,
-  } = route.params;
+  const {level, goal, equipment, warmUp, coolDown} = route.params;
 
   useEffect(() => {
-    getExercisesAction(level, goal, strengthArea, cardioType, warmUp, coolDown);
-  }, [
-    getExercisesAction,
-    level,
-    goal,
-    strengthArea,
-    cardioType,
-    warmUp,
-    coolDown,
-  ]);
+    getExercisesAction(level, goal, warmUp, coolDown);
+  }, [getExercisesAction, level, goal, warmUp, coolDown]);
 
   const selectExercise = (exercise: Exercise) => {
     if (workout.find(e => e.id === exercise.id)) {
@@ -62,8 +46,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
       Object.values(exercises).filter(exercise => {
         return (
           (exercise.type === goal &&
-            (strengthArea === exercise.area ||
-              cardioType === exercise.cardioType) &&
             (!exercise.equipment ||
               exercise.equipment.every(item => equipment.includes(item)) ||
               ((!exercise.equipment || exercise.equipment.length === 0) &&
@@ -73,16 +55,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           (exercise.coolDown && coolDown.includes(exercise.coolDown))
         );
       }),
-    [
-      exercises,
-      goal,
-      level,
-      strengthArea,
-      cardioType,
-      warmUp,
-      coolDown,
-      equipment,
-    ],
+    [exercises, goal, level, warmUp, coolDown, equipment],
   );
   return (
     <Layout style={{flex: 1}}>
