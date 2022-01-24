@@ -32,7 +32,6 @@ import DevicePixels from '../../../helpers/DevicePixels';
 const isValidPurpose = (purpose: Goal) =>
   purpose === Goal.BONE_DENSITY ||
   purpose === Goal.CORE ||
-  purpose === Goal.STRENGTH ||
   purpose === Goal.WEIGHT;
 
 const Settings: React.FC<SettingsProps> = ({
@@ -55,7 +54,7 @@ const Settings: React.FC<SettingsProps> = ({
   const [purpose, setPurpose] = useState<Goal>(
     profile.purpose && isValidPurpose(profile.purpose)
       ? profile.purpose
-      : Goal.STRENGTH,
+      : Goal.BONE_DENSITY,
   );
 
   const newProfile = {

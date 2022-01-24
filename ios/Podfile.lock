@@ -875,13 +875,13 @@ PODS:
     - React-Core
   - react-native-flipper (0.126.0):
     - React-Core
-  - react-native-image-picker (4.7.0):
+  - react-native-image-picker (4.7.1):
     - React-Core
   - react-native-pager-view (5.4.9):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
-  - react-native-slider (4.1.12):
+  - react-native-slider (4.2.0):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
@@ -990,43 +990,43 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (14.2.3):
+  - RNFBAnalytics (14.2.4):
     - Firebase/Analytics (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (14.2.3):
+  - RNFBApp (14.2.4):
     - Firebase/CoreOnly (= 8.11.0)
     - React-Core
-  - RNFBAppCheck (14.2.3):
+  - RNFBAppCheck (14.2.4):
     - Firebase/AppCheck (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBAuth (14.2.3):
+  - RNFBAuth (14.2.4):
     - Firebase/Auth (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (14.2.3):
+  - RNFBCrashlytics (14.2.4):
     - Firebase/Crashlytics (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBDynamicLinks (14.2.3):
+  - RNFBDynamicLinks (14.2.4):
     - Firebase/DynamicLinks (= 8.11.0)
     - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
-  - RNFBFirestore (14.2.3):
+  - RNFBFirestore (14.2.4):
     - Firebase/Firestore (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBFunctions (14.2.3):
+  - RNFBFunctions (14.2.4):
     - Firebase/Functions (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (14.2.3):
+  - RNFBMessaging (14.2.4):
     - Firebase/Messaging (= 8.11.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (14.2.3):
+  - RNFBStorage (14.2.4):
     - Firebase/Storage (= 8.11.0)
     - React-Core
     - RNFBApp
@@ -1488,10 +1488,10 @@ SPEC CHECKSUMS:
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
   react-native-fbsdk-next: 800e60618cd7b861eb5d37ed4b653b5bc72e7ceb
   react-native-flipper: 7a3831caa612bd78c18811b22f7a7c9249e2668c
-  react-native-image-picker: 4b090b73077c3a71b91fddc739a594feebd00184
+  react-native-image-picker: 5fe0a96bef4935bbdfb02f59b910bf40d5526109
   react-native-pager-view: 3ee7d4c7697fb3ef788346e834a60cca97ed8540
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  react-native-slider: 6e9b86e76cce4b9e35b3403193a6432ed07e0c81
+  react-native-slider: 37e1cf275dab20d3c015e40969aa9f5c309645a8
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
@@ -1522,16 +1522,16 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 1dd15d7ed1ab7d999056bc77879a42920d139c12
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: 2dbe78d2c4213ad68922b2a59148943a24d464ac
-  RNFBApp: 0d0ffe0e3aacdf9fcad35f90b79bd8a3d3a99844
-  RNFBAppCheck: 11d0acf2c2b9e35bd99138cb33114558243a5d99
-  RNFBAuth: e156e2afa8695023b7507f76080527bdd3e38cb7
-  RNFBCrashlytics: 67e789bf7ffd7cd9accb7251b37d8f487d6beb74
-  RNFBDynamicLinks: e9390d129dd2ff70ef357e7a5c7fe4f0ba0126df
-  RNFBFirestore: 1ba382d55702376493cf6b7f7c5f9d9389fd9a3a
-  RNFBFunctions: ef3a2037edb6470aa17a8f6515d9c926c47f0d49
-  RNFBMessaging: 2a9dffb32f76274f86123644c62902e9ddc2a9ec
-  RNFBStorage: 7fb11f8bb05fdfcd814e880c3da42a3f294e8226
+  RNFBAnalytics: 51c70a0e1d5fe30eb8a86b0375dcf1ef9961e54e
+  RNFBApp: 7777c22386149f3845f1b0ca74e3d69a574559c5
+  RNFBAppCheck: 97174e0bce51e139a6933ea9a2ba78ceb5d2a0f3
+  RNFBAuth: 1835fbec6d337a3c875a1936541dc08ce7188794
+  RNFBCrashlytics: 7f1fa8406b16f4913bd80adfeafd742488fb5066
+  RNFBDynamicLinks: f7c5495d7ba90644578a94be2d93e3032f0e88bb
+  RNFBFirestore: 446dbd0d8ad5c9db0ffadd9e0014bf127692fca0
+  RNFBFunctions: 16cb612690a8d53dddda684957fa3d24f178240f
+  RNFBMessaging: 94fdb127cfa77647ebc85fb53ea6efaec40d344e
+  RNFBStorage: 05d2a6436d35e01e7b0a6bf596c43c2b79b3383b
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: 6eed91e035e9d0883b2fcb894cdff4a739ed7b08

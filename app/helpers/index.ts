@@ -116,7 +116,7 @@ export const quickRoutineTabString = (
       return 'Upper Body';
     }
     if (key === 'focus') {
-      return 'Strength';
+      return 'Bone density';
     }
     if (key === 'equipment') {
       return 'Full Equipment';
@@ -127,7 +127,7 @@ export const quickRoutineTabString = (
       return 'Lower Body';
     }
     if (key === 'focus') {
-      return 'Bone density';
+      return 'Weight';
     }
     if (key === 'equipment') {
       return 'Minimal equipment';
@@ -138,7 +138,7 @@ export const quickRoutineTabString = (
       return 'Full body';
     }
     if (key === 'focus') {
-      return 'Weight';
+      return 'Core and lower back';
     }
     if (key === 'equipment') {
       return 'No equipment';
@@ -146,9 +146,6 @@ export const quickRoutineTabString = (
   }
   if (key === 'area') {
     return 'Abs and core';
-  }
-  if (key === 'focus') {
-    return 'Core and lower back';
   }
 };
 

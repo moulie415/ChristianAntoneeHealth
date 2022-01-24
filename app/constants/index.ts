@@ -10,7 +10,6 @@ export interface PurposeItem {
 export const purposeItems: PurposeItem[] = [
   {title: 'Increase bone density', purpose: Goal.BONE_DENSITY},
   {title: 'Weight management', purpose: Goal.WEIGHT},
-  {title: 'Strength for everyday activities', purpose: Goal.STRENGTH},
   {title: 'Core and lower back strength', purpose: Goal.CORE},
 ];
 

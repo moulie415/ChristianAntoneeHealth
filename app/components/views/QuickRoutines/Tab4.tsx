@@ -14,10 +14,7 @@ const Tab4: React.FC<QuickRoutinesListProps> = ({
 
   const filtered = useMemo(() => {
     return Object.values(quickRoutines).filter(routine => {
-      return (
-        (key === 'area' && routine.area === 'core') ||
-        (key === 'focus' && routine.focus === Goal.CORE)
-      );
+      return key === 'area' && routine.area === 'core';
     });
   }, [key, quickRoutines]);
   return <QuickRoutineList routines={filtered} navigation={navigation} />;
