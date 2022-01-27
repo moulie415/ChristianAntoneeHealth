@@ -16,7 +16,7 @@ const Tab3: React.FC<QuickRoutinesListProps> = ({
     return Object.values(quickRoutines).filter(routine => {
       return (
         (key === 'area' && routine.area === 'full') ||
-        (key === 'focus' && routine.focus === Goal.WEIGHT) ||
+        (key === 'focus' && routine.focus === Goal.CORE) ||
         (key === 'equipment' && routine.equipment === 'none')
       );
     });

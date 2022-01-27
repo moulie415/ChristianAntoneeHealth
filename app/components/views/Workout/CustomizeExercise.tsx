@@ -192,7 +192,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   </Picker>
                 </Layout>
               )}
-              {item === 4 && exercise.type === Goal.STRENGTH && (
+              {item === 4 && (
                 <Layout
                   style={{
                     borderRadius: 10,

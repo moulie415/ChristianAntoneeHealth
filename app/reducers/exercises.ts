@@ -48,7 +48,7 @@ const initialState: ExercisesState = {
   loading: false,
   exercises: {},
   workout: [],
-  fitnessGoal: Goal.STRENGTH,
+  fitnessGoal: Goal.BONE_DENSITY,
   strengthArea: StrengthArea.UPPER,
   level: Level.BEGINNER,
   equipment: [Equipment.NONE],

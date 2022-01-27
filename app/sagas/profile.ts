@@ -567,7 +567,12 @@ function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
-    if (user && (user.emailVerified || user.providerData?.[0])) {
+    if (
+      user &&
+      (user.emailVerified ||
+        (user.providerData?.[0] &&
+          user.providerData?.[0].providerId !== 'password'))
+    ) {
       // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,
@@ -581,9 +586,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
         const userObj = {
           uid: user.uid,
           email: user.email,
-          avatar,
-          name: user.displayName,
-          providerId: user.providerData[0].providerId,
+          avatar: avatar || '',
+          name: user.displayName || '',
+          providerId: user.providerData[0].providerId || '',
         };
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);

@@ -26,12 +26,6 @@ const FitnessGoal: React.FC<{
     action: () => void;
   }[] = [
     {
-      title: 'Strength for everyday activities',
-      key: Goal.STRENGTH,
-      image: require('../../../images/Quick_Routine_body_part.jpeg'),
-      action: () => setFitnessGoalAction(Goal.STRENGTH),
-    },
-    {
       title: 'Bone density (weight bearing)',
       key: Goal.BONE_DENSITY,
       image: require('../../../images/Quick_routine_training_focus.jpeg'),

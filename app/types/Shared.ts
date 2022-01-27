@@ -21,7 +21,6 @@ export enum Level {
 }
 
 export enum Goal {
-  STRENGTH = 'strength',
   BONE_DENSITY = 'boneDensity',
   WEIGHT = 'weight',
   CORE = 'core',

@@ -49,7 +49,7 @@ const QuickRoutinesTabs: React.FC<{route: RouteProp<TopTabsParamsList>}> = ({
         component={Tab3}
         initialParams={route.params}
       />
-      {key !== 'equipment' && (
+      {key === 'area' && (
         <QuickRoutineTab.Screen
           name="Tab4"
           options={{

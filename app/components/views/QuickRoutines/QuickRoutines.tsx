@@ -39,7 +39,6 @@ const sections: {
     title: 'Training focus',
     key: 'focus',
     items: [
-      {id: Goal.STRENGTH, name: 'Strength for everyday activities'},
       {
         id: Goal.BONE_DENSITY,
         name: 'Bone density',
@@ -129,7 +128,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                         onPress={() => {
                           if (
                             id === 'upper' ||
-                            id === Goal.STRENGTH ||
+                            id === Goal.BONE_DENSITY ||
                             (id === 'full' && key === 'equipment')
                           ) {
                             // @ts-ignore
@@ -140,7 +139,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                           }
                           if (
                             id === 'lower' ||
-                            id === Goal.BONE_DENSITY ||
+                            id === Goal.WEIGHT ||
                             id === 'minimal'
                           ) {
                             // @ts-ignore
@@ -151,7 +150,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                           }
                           if (
                             (id === 'full' && key === 'area') ||
-                            id === Goal.WEIGHT ||
+                            (id === Goal.CORE && key === 'focus') ||
                             id === 'none'
                           ) {
                             // @ts-ignore
@@ -160,7 +159,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                               key,
                             });
                           }
-                          if (id === 'core' || Goal.CORE) {
+                          if (id === 'core' && key === 'area') {
                             // @ts-ignore
                             return navigation.navigate('QuickRoutinesTabs', {
                               screen: 'Tab4',
