@@ -281,6 +281,7 @@
 		<string>Ionicons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
+    <string>Feather.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
