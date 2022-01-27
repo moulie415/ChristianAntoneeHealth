@@ -13,6 +13,7 @@ import FitnessInfo from './FitnessInfo';
 import Goals from './Goals';
 import {signUp, setStep} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
+import LiquidSwipe from '../commons/liquidSwipe/LiquidSwipe';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
@@ -68,7 +69,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView keyboardShouldPersistTaps="always">
+      <LiquidSwipe />
+      {/* <ScrollView keyboardShouldPersistTaps="always">
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
           style={{flex: 1}}>
@@ -132,7 +134,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
             />
           )}
         </KeyboardAvoidingView>
-      </ScrollView>
+      </ScrollView> */}
     </Layout>
   );
 };
