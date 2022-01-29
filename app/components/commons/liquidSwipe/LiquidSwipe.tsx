@@ -2,38 +2,39 @@ import React, {useState} from 'react';
 
 import Slider from './Slider';
 import Slide from './Slide';
+import colors from '../../../constants/colors';
 
 const slides = [
   {
-    color: '#F2A1AD',
+    color: colors.appBlack,
     title: 'Dessert Recipes',
     description:
       'Hot or cold, our dessert recipes can turn an average meal into a memorable event',
     picture: require('./assets/1.png'),
   },
   {
-    color: '#0090D6',
+    color: colors.appBlue,
     title: 'Healthy Foods',
     description:
       'Discover healthy recipes that are easy to do with detailed cooking instructions from top chefs',
     picture: require('./assets/5.png'),
   },
   {
-    color: '#69C743',
+    color: colors.appBlue,
     title: 'Easy Meal Ideas',
     description:
       'explore recipes by food type, preparation method, cuisine, country and more',
     picture: require('./assets/4.png'),
   },
   {
-    color: '#FB3A4D',
+    color: colors.appBlack,
     title: '10000+ Recipes',
     description:
       'Browse thousands of curated recipes from top chefs, each with detailled cooking instructions',
     picture: require('./assets/2.png'),
   },
   {
-    color: '#F2AD62',
+    color: colors.appBlue,
     title: 'Video Tutorials',
     description:
       'Browse our best themed recipes, cooking tips, and how-to food video & photos',
