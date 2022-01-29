@@ -1,5 +1,5 @@
-import React, { ReactElement, ReactNode } from "react";
-import { Dimensions, Platform, StyleSheet, View } from "react-native";
+import React, {ReactElement, ReactNode} from 'react';
+import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -8,25 +8,25 @@ import Animated, {
   useDerivedValue,
   withSpring,
   withTiming,
-} from "react-native-reanimated";
-import Svg, { Path } from "react-native-svg";
-import MaskedView from "@react-native-community/masked-view";
-import { Vector } from "react-native-redash";
+} from 'react-native-reanimated';
+import Svg, {Path} from 'react-native-svg';
+import MaskedView from '@react-native-community/masked-view';
+import {Vector} from 'react-native-redash';
 
-import { SlideProps } from "./Slide";
+import {SlideProps} from './Slide';
 
-export const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
+export const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 export const MIN_LEDGE = 25;
 export const MARGIN_WIDTH = MIN_LEDGE + 50;
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const vec2 = (x: number, y: number) => {
-  "worklet";
-  return { x, y };
+  'worklet';
+  return {x, y};
 };
 const curve = (c1: Vector, c2: Vector, to: Vector) => {
-  "worklet";
+  'worklet';
   return `C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${to.x} ${to.y}`;
 };
 
@@ -45,7 +45,7 @@ interface WaveProps {
 
 const Wave = ({
   side,
-  position: { x, y },
+  position: {x, y},
   children,
   isTransitioning,
 }: WaveProps) => {
@@ -57,7 +57,7 @@ const Wave = ({
       x.value,
       [0, MIN_LEDGE],
       [0, MIN_LEDGE],
-      Extrapolate.CLAMP
+      Extrapolate.CLAMP,
     );
     const baseLedge = minLedge + Math.max(0, x.value - MIN_LEDGE - R.value);
     return withSpring(isTransitioning.value ? x.value : baseLedge);
@@ -68,7 +68,7 @@ const Wave = ({
     // 0.5522847498 is taken from https://spencermortensen.com/articles/bezier-circle/
     const C = stepY * 0.5522847498;
 
-    const p1 = { x: ledge.value, y: y.value - 2 * stepY };
+    const p1 = {x: ledge.value, y: y.value - 2 * stepY};
     const p2 = vec2(p1.x + stepX, p1.y + stepY);
     const p3 = vec2(p2.x + stepX, p2.y + stepY);
     const p4 = vec2(p3.x - stepX, p3.y + stepY);
@@ -88,7 +88,7 @@ const Wave = ({
 
     return {
       d: [
-        "M 0 0",
+        'M 0 0',
         `H ${p1.x}`,
         `V ${p1.y}`,
         curve(c11, c12, p2),
@@ -96,8 +96,8 @@ const Wave = ({
         curve(c31, c32, p4),
         curve(c41, c42, p5),
         `V ${HEIGHT}`,
-        "H 0",
-      ].join(" "),
+        'H 0',
+      ].join(' '),
     };
   });
   const maskElement = (
@@ -105,12 +105,11 @@ const Wave = ({
       style={[
         StyleSheet.absoluteFill,
         {
-          transform: [{ rotateY: side === Side.RIGHT ? "180deg" : "0deg" }],
+          transform: [{rotateY: side === Side.RIGHT ? '180deg' : '0deg'}],
         },
-      ]}
-    >
+      ]}>
       <AnimatedPath
-        fill={Platform.OS === "android" ? children.props.slide.color : "black"}
+        fill={Platform.OS === 'android' ? children.props.slide.color : 'black'}
         animatedProps={animatedProps}
       />
     </Svg>
@@ -130,7 +129,7 @@ const Wave = ({
       ],
     };
   });
-  if (Platform.OS === "android") {
+  if (Platform.OS === 'android') {
     return (
       <View style={StyleSheet.absoluteFill}>
         {maskElement}

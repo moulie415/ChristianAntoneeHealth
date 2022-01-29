@@ -654,7 +654,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield put(setUnread(doc.data().unread));
         }
       } else {
-        navigate('SignUpFlow');
+        navigate('SignUpFlow', {name: user.displayName});
         yield put(setStep(0));
       }
       yield put(setLoggedIn(true));

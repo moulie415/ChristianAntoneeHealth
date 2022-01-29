@@ -1,18 +1,18 @@
-import React, { ReactElement, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import React, {ReactElement, useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-} from "react-native-reanimated";
-import { PanGestureHandler } from "react-native-gesture-handler";
-import { snapPoint, useVector } from "react-native-redash";
+} from 'react-native-reanimated';
+import {PanGestureHandler} from 'react-native-gesture-handler';
+import {snapPoint, useVector} from 'react-native-redash';
 
-import Wave, { HEIGHT, MARGIN_WIDTH, Side, WIDTH } from "./Wave";
-import Button from "./Button";
-import { SlideProps } from "./Slide";
+import Wave, {HEIGHT, MARGIN_WIDTH, Side, WIDTH} from './Wave';
+import Button from './Button';
+import {SlideProps} from './Slide';
 
 const PREV = WIDTH;
 const NEXT = 0;
@@ -43,7 +43,7 @@ const Slider = ({
   const isTransitioningLeft = useSharedValue(false);
   const isTransitioningRight = useSharedValue(false);
   const onGestureEvent = useAnimatedGestureHandler({
-    onStart: ({ x }) => {
+    onStart: ({x}) => {
       if (x <= MARGIN_WIDTH && hasPrev) {
         activeSide.value = Side.LEFT;
         zIndex.value = 100;
@@ -53,7 +53,7 @@ const Slider = ({
         activeSide.value = Side.NONE;
       }
     },
-    onActive: ({ x, y }) => {
+    onActive: ({x, y}) => {
       if (activeSide.value === Side.LEFT) {
         left.x.value = Math.max(x, MARGIN_WIDTH);
         left.y.value = y;
@@ -62,7 +62,7 @@ const Slider = ({
         right.y.value = y;
       }
     },
-    onEnd: ({ velocityX, velocityY, x }) => {
+    onEnd: ({velocityX, velocityY, x}) => {
       if (activeSide.value === Side.LEFT) {
         const dest = snapPoint(x, velocityX, LEFT_SNAP_POINTS);
         isTransitioningLeft.value = dest === PREV;
@@ -81,9 +81,9 @@ const Slider = ({
               zIndex.value = 0;
               activeSide.value = Side.NONE;
             }
-          }
+          },
         );
-        left.y.value = withSpring(HEIGHT / 2, { velocity: velocityY });
+        left.y.value = withSpring(HEIGHT / 2, {velocity: velocityY});
       } else if (activeSide.value === Side.RIGHT) {
         const dest = snapPoint(x, velocityX, RIGHT_SNAP_POINTS);
         isTransitioningRight.value = dest === NEXT;
@@ -101,9 +101,9 @@ const Slider = ({
             } else {
               activeSide.value = Side.NONE;
             }
-          }
+          },
         );
-        right.y.value = withSpring(HEIGHT / 2, { velocity: velocityY });
+        right.y.value = withSpring(HEIGHT / 2, {velocity: velocityY});
       }
     },
   });
@@ -126,8 +126,7 @@ const Slider = ({
             <Wave
               position={left}
               side={Side.LEFT}
-              isTransitioning={isTransitioningLeft}
-            >
+              isTransitioning={isTransitioningLeft}>
               {prev}
             </Wave>
             <Button position={left} side={Side.LEFT} activeSide={activeSide} />
@@ -138,8 +137,7 @@ const Slider = ({
             <Wave
               position={right}
               side={Side.RIGHT}
-              isTransitioning={isTransitioningRight}
-            >
+              isTransitioning={isTransitioningRight}>
               {next}
             </Wave>
             <Button
