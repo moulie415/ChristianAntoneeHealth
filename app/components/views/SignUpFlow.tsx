@@ -87,7 +87,11 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       showNext: !!name && !!email,
       elements: (
         <View>
-          <Input value={name} onChangeText={setName} />
+          <Input
+            label="What's your name?"
+            value={name}
+            onChangeText={setName}
+          />
         </View>
       ),
     },
@@ -98,10 +102,14 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         'Discover healthy recipes that are easy to do with detailed cooking instructions from top chefs',
       picture: require('../commons/liquidSwipe/assets/5.png'),
       showNext: true,
-      elements: <View />,
+      elements: (
+        <View>
+          <Input label="testing" value={name} onChangeText={setName} />
+        </View>
+      ),
     },
     {
-      color: colors.appBlue,
+      color: colors.appBlack,
       title: 'Easy Meal Ideas',
       description:
         'explore recipes by food type, preparation method, cuisine, country and more',
@@ -110,7 +118,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       elements: <View />,
     },
     {
-      color: colors.appBlack,
+      color: colors.appBlue,
       title: '10000+ Recipes',
       description:
         'Browse thousands of curated recipes from top chefs, each with detailled cooking instructions',
@@ -119,7 +127,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       elements: <View />,
     },
     {
-      color: colors.appBlue,
+      color: colors.appBlack,
       title: 'Video Tutorials',
       description:
         'Browse our best themed recipes, cooking tips, and how-to food video & photos',
