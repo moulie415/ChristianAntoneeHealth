@@ -18,5 +18,6 @@ export default StyleSheet.create({
   },
   input: {
     marginTop: DevicePixels[10],
+    width: DevicePixels[200],
   },
 });

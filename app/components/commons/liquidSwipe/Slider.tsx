@@ -13,6 +13,7 @@ import {snapPoint, useVector} from 'react-native-redash';
 import Wave, {HEIGHT, MARGIN_WIDTH, Side, WIDTH} from './Wave';
 import Button from './Button';
 import {SlideProps} from './Slide';
+import colors from '../../../constants/colors';
 
 const PREV = WIDTH;
 const NEXT = 0;
@@ -129,7 +130,14 @@ const Slider = ({
               isTransitioning={isTransitioningLeft}>
               {prev}
             </Wave>
-            <Button position={left} side={Side.LEFT} activeSide={activeSide} />
+            <Button
+              position={left}
+              color={
+                prev?.props?.slide?.color === '#fff' ? colors.appBlue : 'white'
+              }
+              side={Side.LEFT}
+              activeSide={activeSide}
+            />
           </Animated.View>
         )}
         {next && (
@@ -144,6 +152,9 @@ const Slider = ({
               position={right}
               side={Side.RIGHT}
               activeSide={activeSide}
+              color={
+                next?.props?.slide?.color === '#fff' ? colors.appBlue : 'white'
+              }
             />
           </Animated.View>
         )}

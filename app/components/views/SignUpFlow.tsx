@@ -1,16 +1,19 @@
 import {Layout, Text} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {Bar} from 'react-native-progress';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import styles from '../../styles/views/SignUpFlow';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Gender, Unit} from '../../types/Profile';
 import {Goal, MyRootState} from '../../types/Shared';
 import SignUpFlowProps from '../../types/views/SIgnUpFlow';
@@ -19,11 +22,25 @@ import FitnessInfo from './FitnessInfo';
 import Goals from './Goals';
 import {signUp, setStep} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
-import LiquidSwipe from '../commons/liquidSwipe/LiquidSwipe';
 import {useBackHandler} from '../../hooks/UseBackHandler';
 import Slider from '../commons/liquidSwipe/Slider';
 import Slide from '../commons/liquidSwipe/Slide';
 import Input from '../commons/Input';
+import moment from 'moment';
+import Age from './Age';
+import {
+  getDateOfBirth,
+  getHeight,
+  getSex,
+  getWeight,
+  initBiometrics,
+  isAvailable,
+  linkToGoogleFit,
+} from '../../helpers/biometrics';
+import {logError} from '../../helpers/error';
+import SelectUnit from './SelectUnit';
+import SelectWeight from './SelectWeight';
+import SelectSex from './SelectSex';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
@@ -50,15 +67,45 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [loading, setLoading] = useState(false);
 
   const {dry} = route.params;
-  const getTitle = () => {
-    if (step === 0) {
-      return 'Account details';
+
+  const init = useCallback(async () => {
+    setLoading(true);
+    const available = await isAvailable();
+    if (!available && Platform.OS === 'android') {
+      Alert.alert(
+        'Google Fit not installed',
+        'While not required we recommend you install Google Fit to get the most out of Health and Movement',
+        [
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'Install Google Fit', onPress: linkToGoogleFit},
+        ],
+      );
+      setLoading(false);
+    } else if (Platform.OS === 'ios') {
+      try {
+        await initBiometrics();
+        const h = await getHeight();
+        setHeight(h);
+        const w = await getWeight();
+        setWeight(w);
+        const sex = await getSex();
+        setGender(sex);
+        const dateOfBirth = await getDateOfBirth();
+        if (dateOfBirth) {
+          setDob(dateOfBirth);
+        }
+        setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        logError(e);
+      }
     }
-    if (step === 1) {
-      return 'Fitness Info';
-    }
-    return 'Goals';
-  };
+    setLoading(false);
+  }, [setDob, setGender, setHeight, setWeight]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
 
   const completeSignUp = () => {
     setLoading(true);
@@ -79,58 +126,53 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   const slides = [
     {
-      color: colors.appBlack,
-      title: 'Dessert Recipes',
-      description:
-        'Hot or cold, our dessert recipes can turn an average meal into a memorable event',
+      color: colors.appBlue,
       picture: require('../commons/liquidSwipe/assets/1.png'),
-      showNext: !!name && !!email,
+      showNext: dry
+        ? password && confirmPassword && password === confirmPassword
+        : !!name,
       elements: (
-        <View>
-          <Input
-            label="What's your name?"
-            value={name}
-            onChangeText={setName}
-          />
-        </View>
+        <AccountDetails
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          name={name}
+          setName={setName}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
+        />
       ),
+      tint: colors.appWhite,
     },
     {
-      color: colors.appBlue,
-      title: 'Healthy Foods',
-      description:
-        'Discover healthy recipes that are easy to do with detailed cooking instructions from top chefs',
+      color: colors.appWhite,
       picture: require('../commons/liquidSwipe/assets/5.png'),
-      showNext: true,
-      elements: (
-        <View>
-          <Input label="testing" value={name} onChangeText={setName} />
-        </View>
-      ),
+      showNext: !!dob,
+      elements: <Age dob={dob} setDob={setDob} />,
     },
     {
       color: colors.appBlack,
-      title: 'Easy Meal Ideas',
-      description:
-        'explore recipes by food type, preparation method, cuisine, country and more',
       picture: require('../commons/liquidSwipe/assets/4.png'),
-      showNext: true,
-      elements: <View />,
+      showNext: !!unit,
+      tint: colors.appWhite,
+      elements: <SelectUnit unit={unit} setUnit={setUnit} />,
     },
     {
       color: colors.appBlue,
-      title: '10000+ Recipes',
-      description:
-        'Browse thousands of curated recipes from top chefs, each with detailled cooking instructions',
+      picture: require('../commons/liquidSwipe/assets/4.png'),
+      showNext: !!gender,
+      tint: colors.appWhite,
+      elements: <SelectSex gender={gender} setGender={setGender} />,
+    },
+    {
+      color: colors.appWhite,
       picture: require('../commons/liquidSwipe/assets/2.png'),
       showNext: true,
-      elements: <View />,
+      elements: <SelectWeight weight={weight} setWeight={setWeight} />,
     },
     {
       color: colors.appBlack,
-      title: 'Video Tutorials',
-      description:
-        'Browse our best themed recipes, cooking tips, and how-to food video & photos',
       picture: require('../commons/liquidSwipe/assets/3.png'),
       showNext: true,
       elements: <View />,

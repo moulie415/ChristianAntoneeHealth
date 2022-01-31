@@ -8,7 +8,7 @@ import {
   Text,
 } from '@ui-kitten/components';
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, Platform, TouchableOpacity} from 'react-native';
+import {Alert, Platform, TouchableOpacity, View} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import moment from 'moment';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
@@ -88,7 +88,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
 
   const [loading, setLoading] = useState(false);
   return (
-    <Layout style={{marginHorizontal: DevicePixels[20]}}>
+    <View style={{marginHorizontal: DevicePixels[20]}}>
       <Text style={{color: colors.textGrey}} category="label">
         Date of Birth
       </Text>
@@ -185,7 +185,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         Continue
       </Button>
       <AbsoluteSpinner loading={loading} />
-    </Layout>
+    </View>
   );
 };
 

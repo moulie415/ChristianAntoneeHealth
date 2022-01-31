@@ -1,5 +1,4 @@
 export default interface AccountDetailsProps {
-  setStep: (step: number) => void;
   dry?: boolean;
   email: string;
   setEmail: (email: string) => void;

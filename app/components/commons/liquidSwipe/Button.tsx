@@ -1,7 +1,7 @@
 import React from 'react';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {Vector} from 'react-native-redash';
-import Icon from 'react-native-vector-icons/Feather'
+import Icon from 'react-native-vector-icons/Feather';
 import {Dimensions} from 'react-native';
 
 import {Side} from './Wave';
@@ -13,9 +13,10 @@ interface ButtonProps {
   position: Vector<Animated.SharedValue<number>>;
   side: Side;
   activeSide: Animated.SharedValue<Side>;
+  color?: string;
 }
 
-const Button = ({position, side, activeSide}: ButtonProps) => {
+const Button = ({position, side, activeSide, color}: ButtonProps) => {
   const isLeft = side === Side.LEFT;
   const style = useAnimatedStyle(() => ({
     position: 'absolute',
@@ -33,7 +34,7 @@ const Button = ({position, side, activeSide}: ButtonProps) => {
       <Icon
         name={`chevron-${isLeft ? 'right' : 'left'}` as const}
         size={24}
-        color="white"
+        color={color || 'white'}
       />
     </Animated.View>
   );

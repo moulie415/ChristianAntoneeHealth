@@ -1,14 +1,14 @@
-import {Button, Input, Layout, Text} from '@ui-kitten/components';
+import {Input, Layout, Text} from '@ui-kitten/components';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useState} from 'react';
 import styles from '../../styles/views/SignUpFlow';
-import {Keyboard, TouchableOpacity} from 'react-native';
+import {Keyboard, TouchableOpacity, View} from 'react-native';
 import AccountDetailsProps from '../../types/views/AccountDetails';
 import DevicePixels from '../../helpers/DevicePixels';
+import colors from '../../constants/colors';
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({
-  setStep,
   dry,
   password,
   confirmPassword,
@@ -19,42 +19,38 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
   name,
   setName,
 }) => {
-  const disabled =
-    (dry && (!password || !confirmPassword || password !== confirmPassword)) ||
-    !email ||
-    !name;
   const [secure, setSecure] = useState(true);
   const [secureConfirm, setSecureConfirm] = useState(true);
   return (
-    <Layout style={{margin: DevicePixels[20]}}>
-      <Input
-        style={styles.input}
-        label="Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <Input
-        style={styles.input}
-        label="Email"
-        disabled={!dry}
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        autoCorrect={false}
-        accessoryLeft={() => (
-          <Icon
-            style={styles.icon}
-            size={DevicePixels[25]}
-            name="envelope"
-            solid
-          />
-        )}
-      />
+    <View style={{marginTop: DevicePixels[50]}}>
+      <Text category="h5" style={{color: colors.appWhite, textAlign: 'center'}}>
+        What's your name?
+      </Text>
+      <Input style={styles.input} value={name} onChangeText={setName} />
       {dry && (
         <Input
           style={styles.input}
-          label="Password"
+          label="What's you email?"
+          disabled={!dry}
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          autoCorrect={false}
+          accessoryLeft={() => (
+            <Icon
+              style={styles.icon}
+              size={DevicePixels[25]}
+              name="envelope"
+              solid
+            />
+          )}
+        />
+      )}
+      {dry && (
+        <Input
+          style={styles.input}
+          label="Enter password"
           value={password}
           onChangeText={setPassword}
           autoCapitalize="none"
@@ -115,20 +111,13 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
           Passwords do not match
         </Text>
       )}
-      <Layout style={{flexDirection: 'row', marginVertical: DevicePixels[20]}}>
+      {/* <Layout style={{flexDirection: 'row', marginVertical: DevicePixels[20]}}>
         <Text>
           By signing up you agree to the terms and conditions in our{' '}
           <Text>Privacy Policy</Text>
         </Text>
-      </Layout>
-      <Button
-        disabled={disabled}
-        onPress={() => {
-          setStep(1);
-        }}>
-        Continue
-      </Button>
-    </Layout>
+      </Layout> */}
+    </View>
   );
 };
 

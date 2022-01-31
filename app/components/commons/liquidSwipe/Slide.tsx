@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import Svg, {RadialGradient, Defs, Rect, Stop} from 'react-native-svg';
+import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Button from '../Button';
 import Input from '../Input';
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     padding: DevicePixels[75],
+    paddingBottom: 0,
     paddingTop: DevicePixels[100],
     alignItems: 'center',
     zIndex: 10,
@@ -47,17 +49,14 @@ const styles = StyleSheet.create({
 export interface SlideProps {
   slide: {
     color: string;
-    title: string;
-    description: string;
     picture: ReturnType<typeof require>;
     elements: JSX.Element;
     showNext: boolean;
+    tint?: string;
   };
 }
 
-const Slide = ({
-  slide: {picture, color, title, description, elements},
-}: SlideProps) => {
+const Slide = ({slide: {picture, color, elements, tint}}: SlideProps) => {
   const lighterColor = Color(color).lighten(0.8).toString();
   return (
     <>
@@ -73,7 +72,7 @@ const Slide = ({
       <View style={styles.container}>
         <Image
           source={require('../../../images/health_and_movement_logo_colour_centred.png')}
-          style={[styles.image, {tintColor: color}]}
+          style={[styles.image, {tintColor: tint || colors.appBlue}]}
         />
 
         {elements}
