@@ -1,20 +1,9 @@
 import Color from 'color';
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Image,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {View, StyleSheet, Dimensions, Image} from 'react-native';
 import Svg, {RadialGradient, Defs, Rect, Stop} from 'react-native-svg';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
-import Button from '../Button';
-import Input from '../Input';
 
 const {width, height} = Dimensions.get('screen');
 const SIZE = width - 250;
@@ -53,10 +42,13 @@ export interface SlideProps {
     elements: JSX.Element;
     showNext: boolean;
     tint?: string;
+    hideElements?: boolean;
   };
 }
 
-const Slide = ({slide: {picture, color, elements, tint}}: SlideProps) => {
+const Slide = ({
+  slide: {picture, color, elements, tint, hideElements},
+}: SlideProps) => {
   const lighterColor = Color(color).lighten(0.8).toString();
   return (
     <>
@@ -75,7 +67,7 @@ const Slide = ({slide: {picture, color, elements, tint}}: SlideProps) => {
           style={[styles.image, {tintColor: tint || colors.appBlue}]}
         />
 
-        {elements}
+        {!hideElements && elements}
       </View>
     </>
   );

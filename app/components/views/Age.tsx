@@ -1,4 +1,4 @@
-import {View, Platform} from 'react-native';
+import {View, Platform, SafeAreaView} from 'react-native';
 import React, {useState} from 'react';
 import moment from 'moment';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
@@ -13,11 +13,15 @@ const Age: React.FC<{dob: string; setDob: (dob: string) => void}> = ({
 }) => {
   const [show, setShow] = useState(false);
   return (
-    <View style={{marginTop: DevicePixels[40]}}>
+    <SafeAreaView style={{marginTop: DevicePixels[40]}}>
       <Text
         category="h4"
-        style={{textAlign: 'center', marginBottom: DevicePixels[20]}}>
-        Whats your age?
+        style={{
+          textAlign: 'center',
+          marginBottom: DevicePixels[20],
+          width: DevicePixels[300],
+        }}>
+        What's your age?
       </Text>
       <Text
         category="h1"
@@ -31,20 +35,31 @@ const Age: React.FC<{dob: string; setDob: (dob: string) => void}> = ({
       {Platform.OS === 'android' && (
         <Button onPress={() => setShow(true)}>Select date of birth</Button>
       )}
-      {(show || Platform.OS === 'ios') && (
-        <DatePicker
-          mode="date"
-          display={Platform.OS === 'ios' ? 'compact' : 'default'}
-          value={moment(dob).toDate()}
-          onChange={(_: Event, d: Date) => {
-            if (d) {
-              setDob(d.toISOString());
-            }
-            setShow(Platform.OS === 'ios');
-          }}
-        />
-      )}
-    </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          paddingBottom: DevicePixels[100],
+          alignItems: 'center'
+        }}>
+        {(show || Platform.OS === 'ios') && (
+          <DatePicker
+            mode="date"
+            style={{
+              width: DevicePixels[250],
+            }}
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            value={moment(dob).toDate()}
+            onChange={(_: Event, d: Date) => {
+              if (d) {
+                setDob(d.toISOString());
+              }
+              setShow(Platform.OS === 'ios');
+            }}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 

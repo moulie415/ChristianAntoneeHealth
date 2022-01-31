@@ -169,7 +169,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       color: colors.appWhite,
       picture: require('../commons/liquidSwipe/assets/2.png'),
       showNext: true,
-      elements: <SelectWeight weight={weight} setWeight={setWeight} />,
+      elements: (
+        <SelectWeight weight={weight} setWeight={setWeight} unit={unit} />
+      ),
     },
     {
       color: colors.appBlack,
@@ -191,6 +193,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       key={index}
       index={index}
       setIndex={setIndex}
+      current={{slide: slides[index]}}
       prev={prev && <Slide slide={prev} />}
       next={next && showNext && <Slide slide={next} />}>
       <Slide slide={slides[index]!} />

@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {ReactElement, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -12,35 +12,30 @@ import {snapPoint, useVector} from 'react-native-redash';
 
 import Wave, {HEIGHT, MARGIN_WIDTH, Side, WIDTH} from './Wave';
 import Button from './Button';
-import {SlideProps} from './Slide';
+import Slide, {SlideProps} from './Slide';
 import colors from '../../../constants/colors';
 
 const PREV = WIDTH;
 const NEXT = 0;
 const LEFT_SNAP_POINTS = [MARGIN_WIDTH, PREV];
 const RIGHT_SNAP_POINTS = [NEXT, WIDTH - MARGIN_WIDTH];
-
 interface SliderProps {
   index: number;
   setIndex: (value: number) => void;
   children: ReactElement<SlideProps>;
+  current: SlideProps;
   prev?: ReactElement<SlideProps>;
   next?: ReactElement<SlideProps>;
 }
 
-const Slider = ({
-  index,
-  children: current,
-  prev,
-  next,
-  setIndex,
-}: SliderProps) => {
+const Slider = ({index, current, prev, next, setIndex}: SliderProps) => {
   const hasPrev = !!prev;
   const hasNext = !!next;
   const zIndex = useSharedValue(0);
   const left = useVector(0, HEIGHT / 2);
   const right = useVector(0, HEIGHT / 2);
   const activeSide = useSharedValue(Side.NONE);
+  const [hideElements, setHideElements] = useState(false);
   const isTransitioningLeft = useSharedValue(false);
   const isTransitioningRight = useSharedValue(false);
   const onGestureEvent = useAnimatedGestureHandler({
@@ -55,6 +50,7 @@ const Slider = ({
       }
     },
     onActive: ({x, y}) => {
+      runOnJS(setHideElements)(true);
       if (activeSide.value === Side.LEFT) {
         left.x.value = Math.max(x, MARGIN_WIDTH);
         left.y.value = y;
@@ -78,9 +74,11 @@ const Slider = ({
           () => {
             if (isTransitioningLeft.value) {
               runOnJS(setIndex)(index - 1);
+              runOnJS(setHideElements)(false);
             } else {
               zIndex.value = 0;
               activeSide.value = Side.NONE;
+              runOnJS(setHideElements)(false);
             }
           },
         );
@@ -99,8 +97,10 @@ const Slider = ({
           () => {
             if (isTransitioningRight.value) {
               runOnJS(setIndex)(index + 1);
+              runOnJS(setHideElements)(false);
             } else {
               activeSide.value = Side.NONE;
+              runOnJS(setHideElements)(false);
             }
           },
         );
@@ -121,7 +121,7 @@ const Slider = ({
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View style={StyleSheet.absoluteFill}>
-        {current}
+        <Slide slide={{...current.slide, hideElements}} />
         {prev && (
           <Animated.View style={[StyleSheet.absoluteFill, leftStyle]}>
             <Wave
