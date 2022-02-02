@@ -20,14 +20,14 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import DevicePixels from '../../helpers/DevicePixels';
-import {setStep, signUp} from '../../actions/profile';
+import {signUp} from '../../actions/profile';
 
 GoogleSignin.configure({
   webClientId:
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
 });
 
-const Login: React.FC<LoginProps> = ({navigation, setStep: setStepAction}) => {
+const Login: React.FC<LoginProps> = ({navigation}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
@@ -221,7 +221,6 @@ const Login: React.FC<LoginProps> = ({navigation, setStep: setStepAction}) => {
           style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
           onPress={() => {
             navigation.navigate('SignUpFlow', {dry: true});
-            setStepAction(0);
           }}>
           <Text
             style={{
@@ -243,7 +242,6 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 
 const mapDispatchToProps = {
   signUp,
-  setStep,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

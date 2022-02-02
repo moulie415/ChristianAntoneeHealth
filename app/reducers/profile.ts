@@ -10,7 +10,6 @@ import {
   SET_WORKOUT_REMINDERS,
   SET_WORKOUT_REMINDER_TIME,
   SET_MONTHLY_TEST_REMINDERS,
-  SET_STEP,
   SET_PREMIUM,
   SET_ADMIN,
   SET_CONNECTIONS,
@@ -85,11 +84,6 @@ const reducer = (
   action: ProfileActionTypes,
 ): ProfileState => {
   switch (action.type) {
-    case SET_STEP:
-      return {
-        ...state,
-        step: action.payload,
-      };
     case SET_PROFILE:
       return {
         ...state,

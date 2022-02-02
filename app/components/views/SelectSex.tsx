@@ -22,11 +22,12 @@ const SelectSex: React.FC<{
           marginTop: DevicePixels[30],
           textAlign: 'center',
           marginBottom: DevicePixels[10],
+          width: DevicePixels[200]
         }}>
-        Select unit
+        What's your gender
       </Text>
       <Select
-        style={{width: DevicePixels[175]}}
+        style={{width: DevicePixels[175], alignSelf: 'center'}}
         selectedIndex={selectedGenderIndex}
         onSelect={index => {
           setSelectedGenderIndex(index as IndexPath);
@@ -34,8 +35,7 @@ const SelectSex: React.FC<{
             setGender(index.row === 0 ? 'male' : 'female');
           }
         }}
-        value={gender || 'Select gender'}
-        label="Gender">
+        value={gender || 'Select gender'}>
         <SelectItem selected={gender === 'male'} title="male" />
         <SelectItem selected={gender === 'female'} title="female" />
       </Select>

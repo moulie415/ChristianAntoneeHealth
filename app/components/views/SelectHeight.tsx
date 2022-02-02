@@ -10,22 +10,22 @@ const PickerItem = Picker.Item;
 
 const weights = [...Array(501).keys()];
 
-const SelectWeight: React.FC<{
-  weight: number;
-  setWeight: (weight: number) => void;
+const SelectHeight: React.FC<{
+  height: number;
+  setHeight: (height: number) => void;
   unit: Unit;
   gender: Gender;
-}> = ({weight, setWeight, unit, gender}) => {
+}> = ({height, setHeight, unit, gender}) => {
   useEffect(() => {
-    if (!weight) {
+    if (!height) {
       if (gender === 'male') {
-        setWeight(unit === 'metric' ? 84 : 185);
+        setHeight(unit === 'metric' ? 175 : 69);
       }
       if (gender === 'female') {
-        setWeight(unit === 'metric' ? 70 : 154);
+        setHeight(unit === 'metric' ? 160 : 63);
       }
     }
-  }, [weight, gender, setWeight, unit]);
+  }, [height, gender, setHeight, unit]);
 
   return (
     <View>
@@ -33,10 +33,11 @@ const SelectWeight: React.FC<{
         category="h4"
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
+          marginBottom: DevicePixels[20],
           width: DevicePixels[250],
+          color: colors.appWhite,
         }}>
-        What's your weight?
+        What's your height?
       </Text>
       <Text
         category="h1"
@@ -45,7 +46,7 @@ const SelectWeight: React.FC<{
           textAlign: 'center',
           marginBottom: DevicePixels[20],
         }}>
-        {`${weight} ${unit === 'metric' ? 'kg' : 'lbs'}`}
+        {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
       </Text>
       <View
         style={{
@@ -58,16 +59,18 @@ const SelectWeight: React.FC<{
             width: DevicePixels[250],
             height: DevicePixels[200],
           }}
-          selectedValue={weight}
+          selectedValue={height}
           lineColor="#999999"
           itemStyle={{
             fontSize: DevicePixels[15],
             color: Platform.OS === 'android' ? '#000' : undefined,
           }}
-          onValueChange={setWeight}>
+          onValueChange={setHeight}>
           {weights.map(value => (
             <PickerItem
-              label={`${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`}
+              label={`${value.toString()} ${
+                unit === 'metric' ? 'cm' : 'inches'
+              }`}
               value={value}
               key={value}
             />
@@ -78,4 +81,4 @@ const SelectWeight: React.FC<{
   );
 };
 
-export default SelectWeight;
+export default SelectHeight;

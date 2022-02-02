@@ -5,5 +5,4 @@ type LoginNavigationProp = NativeStackNavigationProp<StackParamList, 'Login'>;
 
 export default interface LoginProps {
   navigation: LoginNavigationProp;
-  setStep: (step: number) => void;
 }

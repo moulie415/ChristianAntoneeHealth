@@ -50,11 +50,12 @@ const Slider = ({index, current, prev, next, setIndex}: SliderProps) => {
       }
     },
     onActive: ({x, y}) => {
-      runOnJS(setHideElements)(true);
       if (activeSide.value === Side.LEFT) {
+        runOnJS(setHideElements)(true);
         left.x.value = Math.max(x, MARGIN_WIDTH);
         left.y.value = y;
       } else if (activeSide.value === Side.RIGHT) {
+        runOnJS(setHideElements)(true);
         right.x.value = Math.max(WIDTH - x, MARGIN_WIDTH);
         right.y.value = y;
       }

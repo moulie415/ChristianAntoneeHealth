@@ -20,7 +20,7 @@ import SignUpFlowProps from '../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
 import FitnessInfo from './FitnessInfo';
 import Goals from './Goals';
-import {signUp, setStep} from '../../actions/profile';
+import {signUp} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
 import {useBackHandler} from '../../hooks/UseBackHandler';
 import Slider from '../commons/liquidSwipe/Slider';
@@ -41,16 +41,17 @@ import {logError} from '../../helpers/error';
 import SelectUnit from './SelectUnit';
 import SelectWeight from './SelectWeight';
 import SelectSex from './SelectSex';
+import useInit from '../../hooks/UseInit';
+import SelectHeight from './SelectHeight';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
   route,
   profile,
   signUp: signUpAction,
-  setStep: setStepAction,
-  step,
 }) => {
-  const [dob, setDob] = useState(profile.dob);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
 
@@ -68,7 +69,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   const {dry} = route.params;
 
-  const init = useCallback(async () => {
+  useInit(async () => {
     setLoading(true);
     const available = await isAvailable();
     if (!available && Platform.OS === 'android') {
@@ -101,11 +102,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       }
     }
     setLoading(false);
-  }, [setDob, setGender, setHeight, setWeight]);
-
-  useEffect(() => {
-    init();
-  }, [init]);
+  });
 
   const completeSignUp = () => {
     setLoading(true);
@@ -149,35 +146,56 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       color: colors.appWhite,
       picture: require('../commons/liquidSwipe/assets/5.png'),
       showNext: !!dob,
-      elements: <Age dob={dob} setDob={setDob} />,
+      elements: (
+        <Age
+          dob={dob}
+          setDob={setDob}
+          setShowDatePicker={setShowDatePicker}
+          showDatePicker={showDatePicker}
+        />
+      ),
     },
     {
       color: colors.appBlack,
-      picture: require('../commons/liquidSwipe/assets/4.png'),
-      showNext: !!unit,
-      tint: colors.appWhite,
-      elements: <SelectUnit unit={unit} setUnit={setUnit} />,
-    },
-    {
-      color: colors.appBlue,
       picture: require('../commons/liquidSwipe/assets/4.png'),
       showNext: !!gender,
       tint: colors.appWhite,
       elements: <SelectSex gender={gender} setGender={setGender} />,
     },
     {
+      color: colors.appBlue,
+      picture: require('../commons/liquidSwipe/assets/4.png'),
+      showNext: !!unit,
+      tint: colors.appWhite,
+      elements: <SelectUnit unit={unit} setUnit={setUnit} />,
+    },
+
+    {
       color: colors.appWhite,
       picture: require('../commons/liquidSwipe/assets/2.png'),
-      showNext: true,
+      showNext: !!weight,
       elements: (
-        <SelectWeight weight={weight} setWeight={setWeight} unit={unit} />
+        <SelectWeight
+          weight={weight}
+          setWeight={setWeight}
+          unit={unit}
+          gender={gender}
+        />
       ),
     },
     {
       color: colors.appBlack,
       picture: require('../commons/liquidSwipe/assets/3.png'),
-      showNext: true,
-      elements: <View />,
+      showNext: !!height,
+      tint: colors.appWhite,
+      elements: (
+        <SelectHeight
+          height={height}
+          setHeight={setHeight}
+          unit={unit}
+          gender={gender}
+        />
+      ),
     },
   ];
 
@@ -274,12 +292,10 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
-  step: profile.step,
 });
 
 const mapDispatchToProps = {
   signUp,
-  setStep,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpFlow);

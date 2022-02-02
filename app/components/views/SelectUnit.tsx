@@ -23,7 +23,7 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
           textAlign: 'center',
           marginBottom: DevicePixels[10],
         }}>
-        Select unit
+        Preferred unit?
       </Text>
       <Select
         style={{width: DevicePixels[175]}}

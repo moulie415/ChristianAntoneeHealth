@@ -19,7 +19,6 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
 export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
 export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
-export const SET_STEP = 'SET_STEP';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
 export const SET_PREMIUM = 'SET_PREMIUM';
 export const SET_ADMIN = 'SET_ADMIN';
@@ -47,11 +46,6 @@ export interface SetLoggedInAction {
 
 interface ViewedWelcomeAction {
   type: typeof SET_HAS_VIEWED_WELCOME;
-}
-
-export interface SetStepAction {
-  type: typeof SET_STEP;
-  payload: number;
 }
 
 export interface SignUpPayload {
@@ -205,7 +199,6 @@ export type ProfileActionTypes =
   | SetWorkoutRemindersAction
   | SetWorkoutReminderTimeAction
   | SetMonthlyTestRemindersAction
-  | SetStepAction
   | HandleAuthAction
   | SetPremiumAction
   | SetAdminAction
@@ -293,10 +286,6 @@ export const setMonthlyTestReminders = (
   payload,
 });
 
-export const setStep = (step: number): SetStepAction => ({
-  type: SET_STEP,
-  payload: step,
-});
 
 export const handleAuth = (user: FirebaseAuthTypes.User) => ({
   type: HANDLE_AUTH,

@@ -37,7 +37,6 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
   setDob,
   unit,
   setUnit,
-  setStep,
 }) => {
   const [show, setShow] = useState(false);
   const init = useCallback(async () => {
@@ -180,7 +179,7 @@ const FitnessInfo: React.FC<FitnessInfoProps> = ({
         can update this information anytime in your profile.
       </Text>
       <Button
-        onPress={() => setStep(2)}
+        onPress={() => 0}
         disabled={!dob || !height || !weight || !gender}>
         Continue
       </Button>

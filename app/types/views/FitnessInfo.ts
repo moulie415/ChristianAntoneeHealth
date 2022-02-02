@@ -11,5 +11,4 @@ export default interface FitnessInfoProps {
   setDob: (dob: string) => void;
   unit: Unit;
   setUnit: (unit: Unit) => void;
-  setStep: (step: number) => void;
 };

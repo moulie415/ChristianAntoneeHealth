@@ -39,7 +39,6 @@ import {
   SET_MONTHLY_TEST_REMINDERS,
   SetMonthlyTestRemindersAction,
   setMonthlyTestReminders,
-  setStep,
   HandleAuthAction,
   HANDLE_AUTH,
   handleAuth,
@@ -338,7 +337,6 @@ function* signUp(action: SignUpAction) {
   } catch (e) {
     Alert.alert('Error', e.nativeErrorMessage || e.message);
   }
-  yield put(setStep(0));
   yield fork(getWorkoutReminders);
 }
 
@@ -655,7 +653,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
         }
       } else {
         navigate('SignUpFlow', {name: user.displayName});
-        yield put(setStep(0));
       }
       yield put(setLoggedIn(true));
       yield put(getTests());
