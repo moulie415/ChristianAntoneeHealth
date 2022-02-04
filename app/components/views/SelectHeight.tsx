@@ -33,7 +33,7 @@ const SelectHeight: React.FC<{
         category="h4"
         style={{
           textAlign: 'center',
-          marginBottom: DevicePixels[20],
+          marginVertical: DevicePixels[20],
           width: DevicePixels[250],
           color: colors.appWhite,
         }}>
@@ -58,12 +58,14 @@ const SelectHeight: React.FC<{
           style={{
             width: DevicePixels[250],
             height: DevicePixels[200],
+            color: '#fff'
           }}
+          textColor="#fff"
           selectedValue={height}
           lineColor="#999999"
           itemStyle={{
             fontSize: DevicePixels[15],
-            color: Platform.OS === 'android' ? '#000' : undefined,
+            color: '#fff'
           }}
           onValueChange={setHeight}>
           {weights.map(value => (
