@@ -17,7 +17,6 @@ import {Gender, Unit} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
-import Goals from '../Goals';
 import {signUp} from '../../../actions/profile';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {useBackHandler} from '../../../hooks/UseBackHandler';

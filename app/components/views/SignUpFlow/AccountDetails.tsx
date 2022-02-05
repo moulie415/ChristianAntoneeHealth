@@ -22,8 +22,14 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
   const [secure, setSecure] = useState(true);
   const [secureConfirm, setSecureConfirm] = useState(true);
   return (
-    <View style={{marginTop: DevicePixels[50]}}>
-      <Text category="h5" style={{color: colors.appWhite, textAlign: 'center'}}>
+    <View style={{marginTop: DevicePixels[20]}}>
+      <Text
+        category="h5"
+        style={{
+          color: colors.appWhite,
+          textAlign: 'center',
+          marginBottom: DevicePixels[10],
+        }}>
         What's your name?
       </Text>
       <Input style={styles.input} value={name} onChangeText={setName} />

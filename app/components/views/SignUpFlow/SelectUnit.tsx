@@ -1,6 +1,5 @@
-import {View} from 'react-native';
-import React, {useState} from 'react';
-import {IndexPath, Select, SelectItem} from '@ui-kitten/components';
+import {TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import {Unit} from '../../../types/Profile';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
@@ -10,9 +9,6 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
   unit,
   setUnit,
 }) => {
-  const [selectedUnitIndex, setSelectedUnitIndex] = useState(
-    new IndexPath(unit && unit === 'imperial' ? 1 : 0),
-  );
   return (
     <View>
       <Text
@@ -25,22 +21,53 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
         }}>
         Preferred unit?
       </Text>
-      <Select
-        style={{width: DevicePixels[175]}}
-        selectedIndex={selectedUnitIndex}
-        onSelect={index => {
-          setSelectedUnitIndex(index as IndexPath);
-          if ('row' in index) {
-            setUnit(index.row === 0 ? 'metric' : 'imperial');
-          }
-        }}
-        value={unit || 'Select unit'}>
-        <SelectItem selected={unit === 'metric'} title="metric (e.g. kg, cm)" />
-        <SelectItem
-          selected={unit === 'imperial'}
-          title="imperial (e.g. lbs, inches)"
-        />
-      </Select>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          paddingBottom: DevicePixels[175],
+        }}>
+        <TouchableOpacity
+          onPress={() => setUnit('metric')}
+          style={{
+            marginBottom: DevicePixels[20],
+            backgroundColor:
+              unit === 'metric' ? colors.darkBlue : colors.appWhite,
+            padding: DevicePixels[10],
+            borderColor: colors.darkBlue,
+            borderWidth: DevicePixels[1],
+            borderRadius: DevicePixels[5],
+            width: DevicePixels[200],
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: unit === 'metric' ? colors.appWhite : colors.darkBlue,
+            }}>
+            metric (e.g. kg, cm)
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setUnit('imperial')}
+          style={{
+            marginBottom: DevicePixels[20],
+            backgroundColor:
+              unit === 'imperial' ? colors.darkBlue : colors.appWhite,
+            padding: DevicePixels[10],
+            borderColor: colors.darkBlue,
+            borderWidth: DevicePixels[1],
+            borderRadius: DevicePixels[5],
+            width: DevicePixels[200],
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: unit === 'imperial' ? colors.appWhite : colors.darkBlue,
+            }}>
+            imperial (e.g. lbs, inches)
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
