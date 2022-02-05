@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: DevicePixels[125],
-    width: DevicePixels[120]
+    width: DevicePixels[120],
   },
   title: {
     fontSize: DevicePixels[48],

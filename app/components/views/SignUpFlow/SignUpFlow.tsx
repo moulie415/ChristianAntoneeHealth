@@ -1,29 +1,15 @@
-import {Layout, Text} from '@ui-kitten/components';
-import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Platform, Dimensions} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import styles from '../../../styles/views/SignUpFlow';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Gender, Unit} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
 import {signUp} from '../../../actions/profile';
-import DevicePixels from '../../../helpers/DevicePixels';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
 import Slider from '../../commons/liquidSwipe/Slider';
 import Slide from '../../commons/liquidSwipe/Slide';
-import Input from '../../commons/Input';
-import moment from 'moment';
 import Age from './Age';
 import {
   getDateOfBirth,
@@ -44,6 +30,9 @@ import SelectGoal from './SelectGoal';
 import SelectExperience from './SelectExperience';
 import SelectEquipment from './SelectEquipment';
 import {Equipment} from '../../../types/QuickRoutines';
+import * as Progress from 'react-native-progress';
+
+const {width} = Dimensions.get('window');
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
@@ -226,15 +215,26 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   useBackHandler(() => true);
 
   return (
-    <Slider
-      key={index}
-      index={index}
-      setIndex={setIndex}
-      current={{slide: slides[index]}}
-      prev={prev && <Slide slide={prev} />}
-      next={next && showNext && <Slide slide={next} />}>
-      <Slide slide={slides[index]!} />
-    </Slider>
+    <>
+      <Progress.Bar
+        width={width}
+        progress={(index + 1) / slides.length}
+        color={slides[index].tint || colors.appBlue}
+        style={{zIndex: 9}}
+        borderWidth={0}
+        borderRadius={0}
+      />
+
+      <Slider
+        key={index}
+        index={index}
+        setIndex={setIndex}
+        current={{slide: slides[index]}}
+        prev={prev && <Slide slide={prev} />}
+        next={next && showNext && <Slide slide={next} />}>
+        <Slide slide={slides[index]!} />
+      </Slider>
+    </>
   );
 };
 
