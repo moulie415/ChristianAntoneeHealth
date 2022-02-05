@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Platform, Dimensions} from 'react-native';
+import {Alert, Platform, Dimensions, SafeAreaView, View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
@@ -47,7 +47,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [equipment, setEquipment] = useState<Equipment>();
   const [experience, setExperience] = useState<Level>();
-
+  const [marketing, setMarketing] = useState(false);
   const [height, setHeight] = useState<number>(profile.height);
   const [gender, setGender] = useState<Gender>(profile.gender);
   const [goal, setGoal] = useState<Goal>(profile.goal);
@@ -209,7 +209,14 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     {
       color: colors.appWhite,
       showNext: false,
-      elements: <CompleteSignUp />,
+      elements: (
+        <CompleteSignUp
+          completeSignUp={completeSignUp}
+          loading={loading}
+          marketing={marketing}
+          setMarketing={setMarketing}
+        />
+      ),
     },
   ];
 
@@ -222,24 +229,29 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   return (
     <>
-      <Progress.Bar
-        width={width}
-        progress={(index + 1) / slides.length}
-        color={slides[index].tint || colors.appBlue}
-        style={{zIndex: 9}}
-        borderWidth={0}
-        borderRadius={0}
+      <SafeAreaView
+        style={{flex: 0, backgroundColor: slides[index].tint || colors.appBlue}}
       />
+      <SafeAreaView style={{flex: 1}}>
+        <Progress.Bar
+          width={width}
+          progress={(index + 1) / slides.length}
+          color={slides[index].tint || colors.appBlue}
+          style={{zIndex: 9}}
+          borderWidth={0}
+          borderRadius={0}
+        />
 
-      <Slider
-        key={index}
-        index={index}
-        setIndex={setIndex}
-        current={{slide: slides[index]}}
-        prev={prev && <Slide slide={prev} />}
-        next={next && showNext && <Slide slide={next} />}>
-        <Slide slide={slides[index]!} />
-      </Slider>
+        <Slider
+          key={index}
+          index={index}
+          setIndex={setIndex}
+          current={{slide: slides[index]}}
+          prev={prev && <Slide slide={prev} />}
+          next={next && showNext && <Slide slide={next} />}>
+          <Slide slide={slides[index]!} />
+        </Slider>
+      </SafeAreaView>
     </>
   );
 };
