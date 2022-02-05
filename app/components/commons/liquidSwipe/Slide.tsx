@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
 export interface SlideProps {
   slide: {
     color: string;
-    picture: ReturnType<typeof require>;
     elements: JSX.Element;
     showNext: boolean;
     tint?: string;
@@ -46,9 +45,7 @@ export interface SlideProps {
   };
 }
 
-const Slide = ({
-  slide: {picture, color, elements, tint, hideElements},
-}: SlideProps) => {
+const Slide = ({slide: {color, elements, tint, hideElements}}: SlideProps) => {
   const lighterColor = Color(color).lighten(0.8).toString();
   return (
     <>

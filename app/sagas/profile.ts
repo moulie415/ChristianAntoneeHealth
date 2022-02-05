@@ -174,8 +174,9 @@ function* updateProfile(action: UpdateProfileAction) {
     unit,
     dob,
     gender,
-    workoutFrequency,
-    purpose,
+    equipment,
+    experience,
+    goal,
     avatar,
   } = action.payload;
   try {
@@ -195,8 +196,9 @@ function* updateProfile(action: UpdateProfileAction) {
     ...(height ? {height} : {}),
     ...(unit ? {unit} : {}),
     ...(gender ? {gender} : {}),
-    ...(workoutFrequency ? {workoutFrequency} : {}),
-    ...(purpose ? {purpose} : {}),
+    ...(experience ? {experience} : {}),
+    ...(equipment ? {equipment} : {}),
+    ...(goal ? {goal} : {}),
     ...(avatar ? {avatar} : {}),
   };
   yield call(api.updateUser, updateObj);
@@ -208,8 +210,9 @@ function* updateProfile(action: UpdateProfileAction) {
     height: height?.toString(),
     unit,
     gender,
-    workoutFrequency: workoutFrequency?.toString(),
-    purpose,
+    equipment,
+    experience,
+    goal,
   });
 }
 
@@ -266,8 +269,9 @@ function* signUp(action: SignUpAction) {
     unit,
     height,
     gender,
-    workoutFrequency,
-    purpose,
+    equipment,
+    experience,
+    goal,
     password,
     email,
   } = action.payload;
@@ -290,8 +294,9 @@ function* signUp(action: SignUpAction) {
         height,
         unit,
         gender,
-        workoutFrequency,
-        purpose,
+        experience,
+        equipment,
+        goal,
       });
       goBack();
       navigate('Login');
@@ -306,8 +311,9 @@ function* signUp(action: SignUpAction) {
         unit,
         height,
         gender,
-        workoutFrequency,
-        purpose,
+        experience,
+        equipment,
+        goal,
       });
       yield put(
         setProfile({
@@ -318,8 +324,9 @@ function* signUp(action: SignUpAction) {
           height,
           unit,
           gender,
-          workoutFrequency,
-          purpose,
+          experience,
+          equipment,
+          goal,
         }),
       );
       resetToTabs();
@@ -331,8 +338,9 @@ function* signUp(action: SignUpAction) {
       height: height?.toString(),
       unit,
       gender,
-      workoutFrequency: workoutFrequency.toString(),
-      purpose,
+      experience,
+      equipment,
+      goal,
     });
   } catch (e) {
     Alert.alert('Error', e.nativeErrorMessage || e.message);

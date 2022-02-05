@@ -1,10 +1,14 @@
-import { View, Text } from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
+import {Level} from '../../../types/Shared';
 
-const SelectExperience = () => {
+const SelectExperience: React.FC<{
+  experience: Level;
+  setExperience: (experience: Level) => void;
+}> = ({experience, setExperience}) => {
   return (
     <View>
-      <Text></Text>
+      <Text />
     </View>
   );
 };

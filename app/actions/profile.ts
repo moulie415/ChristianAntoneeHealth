@@ -5,7 +5,8 @@ import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
-import {Goal, Sample, StepSample} from '../types/Shared';
+import {Equipment} from '../types/QuickRoutines';
+import {Goal, Level, Sample, StepSample} from '../types/Shared';
 
 export const SET_PROFILE = 'SET_PROFILE';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
@@ -56,8 +57,9 @@ export interface SignUpPayload {
   height: number;
   unit: Unit;
   gender: Gender;
-  workoutFrequency: number;
-  purpose: Goal;
+  experience: Level;
+  equipment: Equipment;
+  goal: Goal;
   password?: string;
   email: string;
 }
@@ -68,8 +70,9 @@ export interface UpdateProfilePayload {
   height?: number;
   gender?: Gender;
   unit?: Unit;
-  workoutFrequency?: number;
-  purpose?: Goal;
+  experience?: Level;
+  equipment?: Equipment;
+  goal?: Goal;
   avatar?: string;
 }
 
@@ -285,7 +288,6 @@ export const setMonthlyTestReminders = (
   type: SET_MONTHLY_TEST_REMINDERS,
   payload,
 });
-
 
 export const handleAuth = (user: FirebaseAuthTypes.User) => ({
   type: HANDLE_AUTH,

@@ -9,16 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Bar} from 'react-native-progress';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import styles from '../../../styles/views/SignUpFlow';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Gender, Unit} from '../../../types/Profile';
-import {Goal, MyRootState} from '../../../types/Shared';
+import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
-import FitnessInfo from './FitnessInfo';
 import Goals from '../Goals';
 import {signUp} from '../../../actions/profile';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -45,6 +43,8 @@ import useInit from '../../../hooks/UseInit';
 import SelectHeight from './SelectHeight';
 import SelectGoal from './SelectGoal';
 import SelectExperience from './SelectExperience';
+import SelectEquipment from './SelectEquipment';
+import {Equipment} from '../../../types/QuickRoutines';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
@@ -56,13 +56,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
+  const [equipment, setEquipment] = useState<Equipment>();
+  const [experience, setExperience] = useState<Level>();
 
   const [height, setHeight] = useState<number>(profile.height);
   const [gender, setGender] = useState<Gender>(profile.gender);
-  const [workoutFrequency, setWorkoutFrequency] = useState(
-    profile.workoutFrequency || 1,
-  );
-  const [purpose, setPurpose] = useState<Goal>(profile.purpose);
+  const [goal, setGoal] = useState<Goal>(profile.goal);
   const [email, setEmail] = useState(profile.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -115,11 +114,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       height,
       unit,
       gender,
-      workoutFrequency,
-      purpose,
+      goal,
       email,
       dry,
       password,
+      experience,
+      equipment,
     });
   };
 
@@ -195,15 +195,26 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appBlue,
-      showNext: !!unit,
+      showNext: !!goal,
       tint: colors.appWhite,
-      elements: <SelectGoal />,
+      elements: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
     {
       color: colors.appWhite,
-      showNext: !!weight,
-      elements: <SelectExperience />
-    }
+      showNext: !!experience,
+      elements: (
+        <SelectExperience
+          experience={experience}
+          setExperience={setExperience}
+        />
+      ),
+    },
+    {
+      color: colors.appBlack,
+      showNext: !!equipment,
+      tint: colors.appWhite,
+      elements: <SelectEquipment />,
+    },
   ];
 
   const [index, setIndex] = useState(0);
@@ -224,77 +235,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       <Slide slide={slides[index]!} />
     </Slider>
   );
-
-  // return (
-  //   <Layout style={{flex: 1}}>
-  //     <LiquidSwipe />
-  //     {/* <ScrollView keyboardShouldPersistTaps="always">
-  //       <KeyboardAvoidingView
-  //         behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
-  //         style={{flex: 1}}>
-  //         <Image
-  //           style={styles.logo}
-  //           source={require('../../images/health_and_movement_logo_colour_centred.png')}
-  //         />
-  //         <Text
-  //           category="h4"
-  //           style={{textAlign: 'center', marginHorizontal: DevicePixels[10]}}>
-  //           Sign up with 3 easy steps
-  //         </Text>
-  //         <Bar
-  //           color={colors.appBlue}
-  //           width={DevicePixels[200]}
-  //           style={{alignSelf: 'center', marginVertical: DevicePixels[10]}}
-  //           progress={(step + 1) / 3}
-  //         />
-  //         <Text
-  //           style={{alignSelf: 'center', marginTop: DevicePixels[10]}}
-  //           category="h5">
-  //           {getTitle()}
-  //         </Text>
-  //         {step === 0 && (
-  //           <AccountDetails
-  //             setStep={setStepAction}
-  //             dry={dry}
-  //             email={email}
-  //             setEmail={setEmail}
-  //             name={name}
-  //             setName={setName}
-  //             password={password}
-  //             setPassword={setPassword}
-  //             confirmPassword={confirmPassword}
-  //             setConfirmPassword={setConfirmPassword}
-  //           />
-  //         )}
-  //         {step === 1 && (
-  //           <FitnessInfo
-  //             weight={weight}
-  //             setWeight={setWeight}
-  //             height={height}
-  //             setHeight={setHeight}
-  //             gender={gender}
-  //             setGender={setGender}
-  //             dob={dob}
-  //             setDob={setDob}
-  //             setStep={setStepAction}
-  //             unit={unit}
-  //             setUnit={setUnit}
-  //           />
-  //         )}
-  //         {step === 2 && (
-  //           <Goals
-  //             workoutFrequency={workoutFrequency}
-  //             setWorkoutFrequency={setWorkoutFrequency}
-  //             purpose={purpose}
-  //             setPurpose={setPurpose}
-  //             signUp={completeSignUp}
-  //             loading={loading}
-  //           />
-  //         )}
-  //       </KeyboardAvoidingView>
-  //     </ScrollView> */}
-  //   </Layout>
-  // );
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({

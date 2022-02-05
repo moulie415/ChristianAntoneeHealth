@@ -2,15 +2,15 @@ import {Platform} from 'react-native';
 import {Goal} from '../types/Shared';
 import colors from './colors';
 
-export interface PurposeItem {
+export interface GoalItem {
   title: string;
-  purpose: Goal;
+  goal: Goal;
 }
 
-export const purposeItems: PurposeItem[] = [
-  {title: 'Increase bone density', purpose: Goal.BONE_DENSITY},
-  {title: 'Weight management', purpose: Goal.WEIGHT},
-  {title: 'Core and lower back strength', purpose: Goal.CORE},
+export const goalItems: GoalItem[] = [
+  {title: 'Increase bone density', goal: Goal.BONE_DENSITY},
+  {title: 'Weight management', goal: Goal.WEIGHT},
+  {title: 'Core and lower back strength', goal: Goal.CORE},
 ];
 
 export const weightChartConfig = {

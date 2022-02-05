@@ -12,9 +12,8 @@ export default interface Profile {
   gender?: Gender;
   weight?: number;
   height?: number;
-  purpose?: Goal;
+  goal?: Goal;
   unit?: Unit;
-  workoutFrequency?: number;
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;

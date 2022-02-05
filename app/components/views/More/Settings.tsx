@@ -25,14 +25,12 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
-import {purposeItems} from '../../../constants';
+import {goalItems} from '../../../constants';
 import {equals} from 'ramda';
 import DevicePixels from '../../../helpers/DevicePixels';
 
-const isValidPurpose = (purpose: Goal) =>
-  purpose === Goal.BONE_DENSITY ||
-  purpose === Goal.CORE ||
-  purpose === Goal.WEIGHT;
+const isValidGoal = (goal: Goal) =>
+  goal === Goal.BONE_DENSITY || goal === Goal.CORE || goal === Goal.WEIGHT;
 
 const Settings: React.FC<SettingsProps> = ({
   workoutReminders,
@@ -48,19 +46,15 @@ const Settings: React.FC<SettingsProps> = ({
   const [show, setShow] = useState(false);
   const [goalReminder, setGoalReminder] = useState(true);
 
-  const [workoutFrequency, setWorkoutFrequency] = useState(
-    profile.workoutFrequency || 1,
-  );
-  const [purpose, setPurpose] = useState<Goal>(
-    profile.purpose && isValidPurpose(profile.purpose)
-      ? profile.purpose
+  const [goal, setGoal] = useState<Goal>(
+    profile.goal && isValidGoal(profile.goal)
+      ? profile.goal
       : Goal.BONE_DENSITY,
   );
 
   const newProfile = {
     ...profile,
-    workoutFrequency,
-    purpose,
+    goal,
   };
 
   const equal = equals(newProfile, profile);
@@ -149,90 +143,32 @@ const Settings: React.FC<SettingsProps> = ({
             style={{
               marginBottom: DevicePixels[10],
             }}>
-            What is your main purpose for using this app?
+            What is your main goal for using this app?
           </Text>
           <Select
             value={
-              purpose
-                ? purposeItems.find(item => item.purpose === purpose)?.title
-                : ' '
+              goal ? goalItems.find(item => item.goal === goal)?.title : ' '
             }
             onSelect={index => {
               if ('row' in index) {
-                setPurpose(purposeItems[index.row].purpose);
+                setGoal(goalItems[index.row].goal);
               }
             }}
             selectedIndex={
-              new IndexPath(
-                purposeItems.findIndex(item => item.purpose === purpose),
-              )
+              new IndexPath(goalItems.findIndex(item => item.goal === goal))
             }>
-            {purposeItems.map(item => {
+            {goalItems.map(item => {
               return (
                 <SelectItem
-                  key={item.purpose}
-                  selected={item.purpose === purpose}
+                  key={item.goal}
+                  selected={item.goal === goal}
                   title={item.title}
                 />
               );
             })}
           </Select>
-
-          <Text
-            style={{
-              marginTop: DevicePixels[30],
-              marginBottom: DevicePixels[20],
-            }}>
-            How many times a week do you want to workout?
-          </Text>
-          <Layout
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: DevicePixels[10],
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                if (workoutFrequency > 1) {
-                  setWorkoutFrequency(workoutFrequency - 1);
-                }
-              }}>
-              <Icon
-                name="minus"
-                color={colors.appBlue}
-                size={DevicePixels[25]}
-              />
-            </TouchableOpacity>
-            <Input
-              style={{
-                marginHorizontal: DevicePixels[10],
-                width: DevicePixels[70],
-              }}
-              textAlign="center"
-              keyboardType="numeric"
-              returnKeyType="done"
-              value={workoutFrequency.toString()}
-              onChangeText={text => {
-                if (!isNaN(Number(text))) {
-                  setWorkoutFrequency(Number(text.replace(/[^0-9]/g, '')));
-                }
-                if (!text) {
-                  setWorkoutFrequency(1);
-                }
-              }}
-            />
-            <TouchableOpacity
-              onPress={() => setWorkoutFrequency(workoutFrequency + 1)}>
-              <Icon
-                name="plus"
-                color={colors.appBlue}
-                size={DevicePixels[25]}
-              />
-            </TouchableOpacity>
-          </Layout>
         </Layout>
         <Divider />
-
       </ScrollView>
       <Button
         onPress={() => {
