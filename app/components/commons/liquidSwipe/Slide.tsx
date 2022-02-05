@@ -1,6 +1,7 @@
 import Color from 'color';
 import React from 'react';
 import {View, StyleSheet, Dimensions, Image} from 'react-native';
+import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import Svg, {RadialGradient, Defs, Rect, Stop} from 'react-native-svg';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -59,7 +60,9 @@ const Slide = ({slide: {color, elements, tint, hideElements}}: SlideProps) => {
         <Rect x={0} y={0} width={width} height={height} fill="url(#gradient)" />
       </Svg>
       <View style={styles.container}>
-        <Image
+        <Animated.Image
+          entering={FadeIn.duration(1000)}
+          exiting={FadeOut.duration(1000)}
           source={require('../../../images/health_and_movement_logo_colour_centred.png')}
           style={[styles.image, {tintColor: tint || colors.appBlue}]}
         />

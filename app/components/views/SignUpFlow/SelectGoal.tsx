@@ -1,10 +1,10 @@
 import {View} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import {Goal} from '../../../types/Shared';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
-import {Radio, RadioGroup} from '@ui-kitten/components';
+import Button from '../../commons/Button';
 
 const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
   goal,
@@ -22,13 +22,9 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         }}>
         What's your goal?
       </Text>
-      <View>
-        <RadioGroup selectedIndex={undefined}>
-          <Radio>Weight training for Bone Density</Radio>
-          <Radio>Strength Training for Weight Management</Radio>
-          <Radio>Exercising for Core Strength</Radio>
-        </RadioGroup>
-      </View>
+      <Button>Weight training for Bone Density</Button>
+      <Button>Strength Training for Weight Management </Button>
+      <Button>Exercising for Core Strength</Button>
     </View>
   );
 };

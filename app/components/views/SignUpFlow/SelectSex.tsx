@@ -22,7 +22,7 @@ const SelectSex: React.FC<{
           marginTop: DevicePixels[30],
           textAlign: 'center',
           marginBottom: DevicePixels[10],
-          width: DevicePixels[200]
+          width: DevicePixels[250]
         }}>
         What's your gender
       </Text>
