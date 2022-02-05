@@ -11,21 +11,21 @@ import {
 } from 'react-native';
 import {Bar} from 'react-native-progress';
 import {connect} from 'react-redux';
-import colors from '../../constants/colors';
-import styles from '../../styles/views/SignUpFlow';
+import colors from '../../../constants/colors';
+import styles from '../../../styles/views/SignUpFlow';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Gender, Unit} from '../../types/Profile';
-import {Goal, MyRootState} from '../../types/Shared';
-import SignUpFlowProps from '../../types/views/SIgnUpFlow';
+import {Gender, Unit} from '../../../types/Profile';
+import {Goal, MyRootState} from '../../../types/Shared';
+import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
 import FitnessInfo from './FitnessInfo';
-import Goals from './Goals';
-import {signUp} from '../../actions/profile';
-import DevicePixels from '../../helpers/DevicePixels';
-import {useBackHandler} from '../../hooks/UseBackHandler';
-import Slider from '../commons/liquidSwipe/Slider';
-import Slide from '../commons/liquidSwipe/Slide';
-import Input from '../commons/Input';
+import Goals from '../Goals';
+import {signUp} from '../../../actions/profile';
+import DevicePixels from '../../../helpers/DevicePixels';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
+import Slider from '../../commons/liquidSwipe/Slider';
+import Slide from '../../commons/liquidSwipe/Slide';
+import Input from '../../commons/Input';
 import moment from 'moment';
 import Age from './Age';
 import {
@@ -36,13 +36,15 @@ import {
   initBiometrics,
   isAvailable,
   linkToGoogleFit,
-} from '../../helpers/biometrics';
-import {logError} from '../../helpers/error';
+} from '../../../helpers/biometrics';
+import {logError} from '../../../helpers/error';
 import SelectUnit from './SelectUnit';
 import SelectWeight from './SelectWeight';
 import SelectSex from './SelectSex';
-import useInit from '../../hooks/UseInit';
+import useInit from '../../../hooks/UseInit';
 import SelectHeight from './SelectHeight';
+import SelectGoal from './SelectGoal';
+import SelectExperience from './SelectExperience';
 
 const SignUpFlow: React.FC<SignUpFlowProps> = ({
   navigation,
@@ -124,7 +126,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const slides = [
     {
       color: colors.appBlue,
-      picture: require('../commons/liquidSwipe/assets/1.png'),
       showNext: dry
         ? password && confirmPassword && password === confirmPassword
         : !!name,
@@ -144,7 +145,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appWhite,
-      picture: require('../commons/liquidSwipe/assets/5.png'),
       showNext: !!dob,
       elements: (
         <Age
@@ -157,14 +157,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appBlack,
-      picture: require('../commons/liquidSwipe/assets/4.png'),
       showNext: !!gender,
       tint: colors.appWhite,
       elements: <SelectSex gender={gender} setGender={setGender} />,
     },
     {
       color: colors.appBlue,
-      picture: require('../commons/liquidSwipe/assets/4.png'),
       showNext: !!unit,
       tint: colors.appWhite,
       elements: <SelectUnit unit={unit} setUnit={setUnit} />,
@@ -172,7 +170,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
     {
       color: colors.appWhite,
-      picture: require('../commons/liquidSwipe/assets/2.png'),
       showNext: !!weight,
       elements: (
         <SelectWeight
@@ -185,7 +182,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appBlack,
-      picture: require('../commons/liquidSwipe/assets/3.png'),
       showNext: !!height,
       tint: colors.appWhite,
       elements: (
@@ -197,6 +193,17 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    {
+      color: colors.appBlue,
+      showNext: !!unit,
+      tint: colors.appWhite,
+      elements: <SelectGoal />,
+    },
+    {
+      color: colors.appWhite,
+      showNext: !!weight,
+      elements: <SelectExperience />
+    }
   ];
 
   const [index, setIndex] = useState(0);

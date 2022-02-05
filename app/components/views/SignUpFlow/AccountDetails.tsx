@@ -2,11 +2,11 @@ import {Input, Layout, Text} from '@ui-kitten/components';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useState} from 'react';
-import styles from '../../styles/views/SignUpFlow';
+import styles from '../../../styles/views/SignUpFlow';
 import {Keyboard, TouchableOpacity, View} from 'react-native';
-import AccountDetailsProps from '../../types/views/AccountDetails';
-import DevicePixels from '../../helpers/DevicePixels';
-import colors from '../../constants/colors';
+import AccountDetailsProps from '../../../types/views/AccountDetails';
+import DevicePixels from '../../../helpers/DevicePixels';
+import colors from '../../../constants/colors';
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({
   dry,

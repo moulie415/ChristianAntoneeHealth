@@ -1,10 +1,10 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-import {Gender} from '../../types/Profile';
+import {Gender} from '../../../types/Profile';
 import {IndexPath, Select, SelectItem} from '@ui-kitten/components';
-import DevicePixels from '../../helpers/DevicePixels';
-import Text from '../commons/Text';
-import colors from '../../constants/colors';
+import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
 
 const SelectSex: React.FC<{
   gender: Gender;

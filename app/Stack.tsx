@@ -25,7 +25,7 @@ import Support from './components/views/More/Support';
 import Terms from './components/views/More/Terms';
 import Settings from './components/views/More/Settings';
 import About from './components/views/More/About';
-import SignUpFlow from './components/views/SignUpFlow';
+import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
 import SavedItemsTabs from './SavedItemsTabs';
 import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
 import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';

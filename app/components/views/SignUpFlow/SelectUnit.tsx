@@ -1,10 +1,10 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
 import {IndexPath, Select, SelectItem} from '@ui-kitten/components';
-import {Unit} from '../../types/Profile';
-import DevicePixels from '../../helpers/DevicePixels';
-import Text from '../commons/Text';
-import colors from '../../constants/colors';
+import {Unit} from '../../../types/Profile';
+import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
 
 const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
   unit,

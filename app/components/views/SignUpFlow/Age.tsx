@@ -2,10 +2,10 @@ import {View, Platform} from 'react-native';
 import React from 'react';
 import moment from 'moment';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
-import colors from '../../constants/colors';
-import Text from '../commons/Text';
-import DevicePixels from '../../helpers/DevicePixels';
-import Button from '../commons/Button';
+import colors from '../../../constants/colors';
+import Text from '../../commons/Text';
+import DevicePixels from '../../../helpers/DevicePixels';
+import Button from '../../commons/Button';
 
 const Age: React.FC<{
   dob: string;

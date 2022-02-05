@@ -1,31 +1,31 @@
 import {Platform, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {Gender, Unit} from '../../types/Profile';
+import {Gender, Unit} from '../../../types/Profile';
 import Picker from '@gregfrench/react-native-wheel-picker';
-import DevicePixels from '../../helpers/DevicePixels';
-import Text from '../commons/Text';
-import colors from '../../constants/colors';
+import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
 
 const PickerItem = Picker.Item;
 
 const weights = [...Array(501).keys()];
 
-const SelectHeight: React.FC<{
-  height: number;
-  setHeight: (height: number) => void;
+const SelectWeight: React.FC<{
+  weight: number;
+  setWeight: (weight: number) => void;
   unit: Unit;
   gender: Gender;
-}> = ({height, setHeight, unit, gender}) => {
+}> = ({weight, setWeight, unit, gender}) => {
   useEffect(() => {
-    if (!height) {
+    if (!weight) {
       if (gender === 'male') {
-        setHeight(unit === 'metric' ? 175 : 69);
+        setWeight(unit === 'metric' ? 84 : 185);
       }
       if (gender === 'female') {
-        setHeight(unit === 'metric' ? 160 : 63);
+        setWeight(unit === 'metric' ? 70 : 154);
       }
     }
-  }, [height, gender, setHeight, unit]);
+  }, [weight, gender, setWeight, unit]);
 
   return (
     <View>
@@ -35,9 +35,8 @@ const SelectHeight: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appWhite,
         }}>
-        What's your height?
+        What's your weight?
       </Text>
       <Text
         category="h1"
@@ -46,7 +45,7 @@ const SelectHeight: React.FC<{
           textAlign: 'center',
           marginBottom: DevicePixels[20],
         }}>
-        {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
+        {`${weight} ${unit === 'metric' ? 'kg' : 'lbs'}`}
       </Text>
       <View
         style={{
@@ -58,21 +57,17 @@ const SelectHeight: React.FC<{
           style={{
             width: DevicePixels[250],
             height: DevicePixels[200],
-            color: '#fff'
           }}
-          textColor="#fff"
-          selectedValue={height}
+          selectedValue={weight}
           lineColor="#999999"
           itemStyle={{
             fontSize: DevicePixels[15],
-            color: '#fff'
+            color: Platform.OS === 'android' ? '#000' : undefined,
           }}
-          onValueChange={setHeight}>
+          onValueChange={setWeight}>
           {weights.map(value => (
             <PickerItem
-              label={`${value.toString()} ${
-                unit === 'metric' ? 'cm' : 'inches'
-              }`}
+              label={`${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`}
               value={value}
               key={value}
             />
@@ -83,4 +78,4 @@ const SelectHeight: React.FC<{
   );
 };
 
-export default SelectHeight;
+export default SelectWeight;
