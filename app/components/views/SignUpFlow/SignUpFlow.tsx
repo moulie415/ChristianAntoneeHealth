@@ -31,6 +31,7 @@ import SelectExperience from './SelectExperience';
 import SelectEquipment from './SelectEquipment';
 import {Equipment} from '../../../types/QuickRoutines';
 import * as Progress from 'react-native-progress';
+import CompleteSignUp from './CompleteSignUp';
 
 const {width} = Dimensions.get('window');
 
@@ -204,6 +205,11 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       elements: (
         <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
       ),
+    },
+    {
+      color: colors.appWhite,
+      showNext: false,
+      elements: <CompleteSignUp />,
     },
   ];
 
