@@ -1,6 +1,7 @@
 import Color from 'color';
 import React from 'react';
-import {View, StyleSheet, Dimensions, Image} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
+import Image from 'react-native-fast-image';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import Svg, {RadialGradient, Defs, Rect, Stop} from 'react-native-svg';
 import colors from '../../../constants/colors';
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: DevicePixels[125],
-    resizeMode: 'contain',
+    width: DevicePixels[120]
   },
   title: {
     fontSize: DevicePixels[48],
@@ -60,11 +61,13 @@ const Slide = ({slide: {color, elements, tint, hideElements}}: SlideProps) => {
         <Rect x={0} y={0} width={width} height={height} fill="url(#gradient)" />
       </Svg>
       <View style={styles.container}>
-        <Animated.Image
-          entering={FadeIn.duration(1000)}
-          exiting={FadeOut.duration(1000)}
+        <Image
+          // entering={FadeIn.duration(1000)}
+          // exiting={FadeOut.duration(1000)}
           source={require('../../../images/health_and_movement_logo_colour_centred.png')}
-          style={[styles.image, {tintColor: tint || colors.appBlue}]}
+          style={styles.image}
+          tintColor={tint || colors.appBlue}
+          resizeMode="contain"
         />
 
         {!hideElements && elements}
