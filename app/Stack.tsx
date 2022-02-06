@@ -232,10 +232,14 @@ const StackComponent: FunctionComponent = () => {
             component={AddConnection}
           />
           <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen
+            name="GoalSummary"
+            component={GoalSummary}
+            options={{headerTitle: 'Goal Summary'}}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />
-          <Stack.Screen name="GoalSummary" component={GoalSummary} />
         </Stack.Group>
       </Stack.Navigator>
     </>
