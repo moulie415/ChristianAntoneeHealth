@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {ReactNode, useEffect, useMemo} from 'react';
 import {Goal, MyRootState} from '../../types/Shared';
 import Profile from '../../types/Profile';
 import {connect} from 'react-redux';
@@ -6,20 +6,36 @@ import {setViewedSummary} from '../../actions/profile';
 import {Divider, Layout} from '@ui-kitten/components';
 import Text from '../commons/Text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {View} from 'react-native';
+import {Alert, TextStyle, TouchableOpacity, View} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 
-const Row: React.FC<{right: string | number; left: string; icon?: string}> = ({
+const Row: React.FC<{
+  right?: string | number;
+  left?: string;
+  icon?: string;
+  onPress?: () => void;
+  customLeft?: ReactNode;
+  leftStyle?: TextStyle;
+  rightStyle?: TextStyle;
+  iconStyle?: any;
+}> = ({
   right,
   left,
   icon,
+  onPress,
+  leftStyle,
+  rightStyle,
+  iconStyle,
+  customLeft,
 }) => {
   return (
     <>
-      <View
+      <TouchableOpacity
+        disabled={!onPress}
+        onPress={onPress}
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -35,20 +51,31 @@ const Row: React.FC<{right: string | number; left: string; icon?: string}> = ({
           <Icon
             name={icon || 'circle'}
             solid
-            style={{marginRight: DevicePixels[10], fontSize: DevicePixels[8]}}
+            style={[
+              {
+                marginRight: DevicePixels[10],
+                fontSize: DevicePixels[8],
+              },
+              iconStyle,
+            ]}
           />
-          <Text
-            style={{
-              marginRight: DevicePixels[10],
-            }}
-            category="s1">
-            {left}
-          </Text>
+          {customLeft || (
+            <Text
+              style={[
+                {
+                  marginRight: DevicePixels[10],
+                },
+                leftStyle,
+              ]}
+              category="s1">
+              {left}
+            </Text>
+          )}
         </View>
-        <Text category="h6" style={{color: colors.appBlue}}>
+        <Text category="h6" style={[{color: colors.appBlue}, rightStyle]}>
           {right}
         </Text>
-      </View>
+      </TouchableOpacity>
       <Divider style={{marginBottom: DevicePixels[10]}} />
     </>
   );
@@ -122,6 +149,71 @@ const GoalSummary: React.FC<{
 
       <Row left="Total time spent exercising" right={timeExercising} />
       <Row left={intensityText} right={intensityTime} />
+      {goal === Goal.WEIGHT && (
+        <>
+          <Row
+            onPress={() => {
+              Alert.alert(
+                'How to calculate BMI',
+                'Body Mass Index (or BMI) is calculated as your weight (in kilograms) divided by the square of your height (in metres) or BMI = Kg/M2',
+              );
+            }}
+            left="BMI"
+            leftStyle={{textDecorationLine: 'underline', fontWeight: 'bold'}}
+            right="18.5 - 24.9"
+          />
+          <Row left="Number of calories burned" right="3,500 kcal" />
+          <Row
+            left="We also suggest a healthy eating plan to maximize you benefit"
+            icon="exclamation"
+            iconStyle={{fontSize: 20}}
+          />
+        </>
+      )}
+      {goal === Goal.BONE_DENSITY && (
+        <>
+          <Row left="Number of weight bearing exercises performed" right={50} />
+          <Row
+            customLeft={
+              <Text>
+                We also suggest having a{' '}
+                <Text
+                  style={{textDecorationLine: 'underline', fontWeight: 'bold'}}>
+                  DEXA
+                </Text>{' '}
+                scan performed as part of your plan
+              </Text>
+            }
+            right=">-1"
+          />
+        </>
+      )}
+      {goal === Goal.CORE && (
+        <>
+          <Row left="Number of core exercises performed" right={30} />
+          <Row
+            onPress={() => {
+              Alert.alert('Quick routine not implemented yet');
+              //navigation.navigate('GoalSummary', {});
+            }}
+            customLeft={
+              <Text>
+                We also suggest{' '}
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    textDecorationLine: 'underline',
+                  }}>
+                  hip and low back stretches
+                </Text>{' '}
+                for optimum function
+              </Text>
+            }
+            icon="exclamation"
+            iconStyle={{fontSize: 20}}
+          />
+        </>
+      )}
     </Layout>
   );
 };
