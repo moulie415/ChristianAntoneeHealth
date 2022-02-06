@@ -117,7 +117,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     {
       color: colors.appBlue,
       showNext: dry
-        ? password && confirmPassword && password === confirmPassword
+        ? !!password && !!confirmPassword && password === confirmPassword
         : !!name,
       elements: (
         <AccountDetails
