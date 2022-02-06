@@ -34,6 +34,7 @@ export const SET_READ = 'SET_READ';
 export const SET_UNREAD = 'SET_UNREAD';
 export const SET_APP_STATE = 'SET_APP_STATE';
 export const LOAD_EARLIER_MESSAGES = 'LOAD_EARLIER_MESSAGES';
+export const SET_VIEWED_SUMMARY = 'SET_VIEWED_SUMMARY';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -191,6 +192,10 @@ export interface LoadEarlierMessagesAction {
   payload: {chatId: string; uid: string; startAfter: number};
 }
 
+export interface SetViewedSummaryAction {
+  type: typeof SET_VIEWED_SUMMARY;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -217,7 +222,8 @@ export type ProfileActionTypes =
   | SetReadAction
   | SetUnreadAction
   | SetAppStateAction
-  | LoadEarlierMessagesAction;
+  | LoadEarlierMessagesAction
+  | SetViewedSummaryAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -393,4 +399,8 @@ export const loadEarlierMessages = (
 ): LoadEarlierMessagesAction => ({
   type: LOAD_EARLIER_MESSAGES,
   payload: {chatId, uid, startAfter},
+});
+
+export const setViewedSummary = (): SetViewedSummaryAction => ({
+  type: SET_VIEWED_SUMMARY,
 });

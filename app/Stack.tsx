@@ -41,6 +41,7 @@ import Connections from './components/views/More/Connections';
 import AddConnection from './components/views/More/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
+import GoalSummary from './components/views/GoalSummary';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -234,6 +235,7 @@ const StackComponent: FunctionComponent = () => {
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />
+          <Stack.Screen name="GoalSummary" component={GoalSummary} />
         </Stack.Group>
       </Stack.Navigator>
     </>

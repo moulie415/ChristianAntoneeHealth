@@ -2,7 +2,6 @@ import {Layout, Text, Button} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import {Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import crashlytics from '@react-native-firebase/crashlytics';
 import Purchases, {
   PurchaserInfo,
   PurchasesPackage,

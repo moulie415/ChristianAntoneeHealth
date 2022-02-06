@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Layout, Text} from '@ui-kitten/components';
 import {Dimensions, Linking, Platform, SafeAreaView} from 'react-native';
 import GoogleFit from 'react-native-google-fit';
@@ -16,7 +16,17 @@ const RATIO = height / width;
 
 const ROW_MARGIN = DevicePixels[10] * RATIO;
 
-const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
+const Home: React.FC<HomeProps> = ({
+  navigation,
+  profile,
+  hasViewedWelcome,
+  viewedSummary,
+}) => {
+  useEffect(() => {
+    if (!viewedSummary) {
+      navigation.navigate('GoalSummary');
+    }
+  }, [viewedSummary, navigation]);
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -115,6 +125,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   hasViewedWelcome: profile.hasViewedWelcome,
+  viewedSummary: profile.viewedSummary,
 });
 
 export default connect(mapStateToProps)(Home);

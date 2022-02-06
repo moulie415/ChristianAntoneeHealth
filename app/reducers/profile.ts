@@ -19,6 +19,7 @@ import {
   SET_MESSAGE,
   SET_UNREAD,
   SET_APP_STATE,
+  SET_VIEWED_SUMMARY,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -43,6 +44,7 @@ export interface ProfileState {
   messages: {[key: string]: {[key: string]: Message}};
   chats: {[key: string]: Chat};
   state: AppStateStatus;
+  viewedSummary: boolean;
 }
 
 const initialState: ProfileState = {
@@ -77,6 +79,7 @@ const initialState: ProfileState = {
   messages: {},
   chats: {},
   state: AppState.currentState,
+  viewedSummary: false,
 };
 
 const reducer = (
@@ -193,6 +196,11 @@ const reducer = (
       return {
         ...state,
         state: action.payload,
+      };
+    case SET_VIEWED_SUMMARY:
+      return {
+        ...state,
+        viewedSummary: true,
       };
     default:
       return state;

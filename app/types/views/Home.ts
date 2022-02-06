@@ -8,4 +8,5 @@ export default interface HomeProps {
   navigation: HomeNavigationProp;
   profile: Profile;
   hasViewedWelcome: boolean;
+  viewedSummary: boolean;
 };
