@@ -59,6 +59,7 @@ export interface SignUpPayload {
   gender: Gender;
   experience: Level;
   equipment: Equipment;
+  marketing: boolean;
   goal: Goal;
   password?: string;
   email: string;
@@ -70,6 +71,7 @@ export interface UpdateProfilePayload {
   height?: number;
   gender?: Gender;
   unit?: Unit;
+  marketing?: boolean;
   experience?: Level;
   equipment?: Equipment;
   goal?: Goal;

@@ -14,6 +14,7 @@ export default interface Profile {
   height?: number;
   goal?: Goal;
   unit?: Unit;
+  marketing?: boolean;
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;

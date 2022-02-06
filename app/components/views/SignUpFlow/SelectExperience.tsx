@@ -17,7 +17,7 @@ const SelectExperience: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appWhite,
+          color: colors.appBlue,
         }}>
         What's your experience level?
       </Text>
@@ -32,9 +32,9 @@ const SelectExperience: React.FC<{
           style={{
             marginBottom: DevicePixels[20],
             backgroundColor:
-              experience === Level.BEGINNER ? colors.darkBlue : colors.appWhite,
+              experience === Level.BEGINNER ? colors.appBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
+            borderColor: colors.appBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -44,7 +44,7 @@ const SelectExperience: React.FC<{
               color:
                 experience === Level.BEGINNER
                   ? colors.appWhite
-                  : colors.darkBlue,
+                  : colors.appBlue,
             }}>
             No clue what I’m doing
           </Text>
@@ -55,10 +55,10 @@ const SelectExperience: React.FC<{
             marginBottom: DevicePixels[20],
             backgroundColor:
               experience === Level.INTERMEDIATE
-                ? colors.darkBlue
+                ? colors.appBlue
                 : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
+            borderColor: colors.appBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -68,7 +68,7 @@ const SelectExperience: React.FC<{
               color:
                 experience === Level.INTERMEDIATE
                   ? colors.appWhite
-                  : colors.darkBlue,
+                  : colors.appBlue,
             }}>
             I workout every now and again
           </Text>
@@ -77,9 +77,9 @@ const SelectExperience: React.FC<{
           onPress={() => setExperience(Level.ADVANCED)}
           style={{
             backgroundColor:
-              experience === Level.ADVANCED ? colors.darkBlue : colors.appWhite,
+              experience === Level.ADVANCED ? colors.appBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
+            borderColor: colors.appBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -89,7 +89,7 @@ const SelectExperience: React.FC<{
               color:
                 experience === Level.ADVANCED
                   ? colors.appWhite
-                  : colors.darkBlue,
+                  : colors.appBlue,
             }}>
             I’m a seasoned veteran
           </Text>

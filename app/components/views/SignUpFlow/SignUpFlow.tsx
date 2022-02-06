@@ -109,6 +109,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       password,
       experience,
       equipment,
+      marketing,
     });
   };
 
@@ -183,13 +184,13 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appWhite,
+      color: colors.appBlue,
+      tint: colors.appWhite,
       showNext: !!goal,
       elements: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
     {
-      color: colors.appBlue,
-      tint: colors.appWhite,
+      color: colors.appWhite,
       showNext: !!experience,
       elements: (
         <SelectExperience
@@ -207,7 +208,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appWhite,
+      color: colors.appBlue,
+      tint: colors.appWhite,
       showNext: false,
       elements: (
         <CompleteSignUp

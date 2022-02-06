@@ -176,6 +176,7 @@ function* updateProfile(action: UpdateProfileAction) {
     gender,
     equipment,
     experience,
+    marketing,
     goal,
     avatar,
   } = action.payload;
@@ -197,6 +198,7 @@ function* updateProfile(action: UpdateProfileAction) {
     ...(unit ? {unit} : {}),
     ...(gender ? {gender} : {}),
     ...(experience ? {experience} : {}),
+    ...(marketing ? {marketing} : {}),
     ...(equipment ? {equipment} : {}),
     ...(goal ? {goal} : {}),
     ...(avatar ? {avatar} : {}),
@@ -208,6 +210,7 @@ function* updateProfile(action: UpdateProfileAction) {
     birthday: dob,
     weight: weight?.toString(),
     height: height?.toString(),
+    marketing: marketing?.toString(),
     unit,
     gender,
     equipment,
@@ -274,6 +277,7 @@ function* signUp(action: SignUpAction) {
     goal,
     password,
     email,
+    marketing,
   } = action.payload;
   try {
     try {
@@ -296,6 +300,7 @@ function* signUp(action: SignUpAction) {
         gender,
         experience,
         equipment,
+        marketing,
         goal,
       });
       goBack();
@@ -313,6 +318,7 @@ function* signUp(action: SignUpAction) {
         gender,
         experience,
         equipment,
+        marketing,
         goal,
       });
       yield put(
@@ -326,6 +332,7 @@ function* signUp(action: SignUpAction) {
           gender,
           experience,
           equipment,
+          marketing,
           goal,
         }),
       );
@@ -340,6 +347,7 @@ function* signUp(action: SignUpAction) {
       gender,
       experience,
       equipment,
+      marketing: marketing?.toString(),
       goal,
     });
   } catch (e) {

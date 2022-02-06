@@ -18,7 +18,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appBlue,
+          color: colors.appWhite,
         }}>
         What's your goal?
       </Text>
@@ -33,9 +33,9 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
           style={{
             marginBottom: DevicePixels[20],
             backgroundColor:
-              goal === Goal.BONE_DENSITY ? colors.appBlue : colors.appWhite,
+              goal === Goal.BONE_DENSITY ? colors.darkBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -43,7 +43,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
             style={{
               textAlign: 'center',
               color:
-                goal === Goal.BONE_DENSITY ? colors.appWhite : colors.appBlue,
+                goal === Goal.BONE_DENSITY ? colors.appWhite : colors.darkBlue,
             }}>
             Weight training for Bone Density
           </Text>
@@ -53,16 +53,16 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
           style={{
             marginBottom: DevicePixels[20],
             backgroundColor:
-              goal === Goal.WEIGHT ? colors.appBlue : colors.appWhite,
+              goal === Goal.WEIGHT ? colors.darkBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
           <Text
             style={{
               textAlign: 'center',
-              color: goal === Goal.WEIGHT ? colors.appWhite : colors.appBlue,
+              color: goal === Goal.WEIGHT ? colors.appWhite : colors.darkBlue,
             }}>
             Strength Training for Weight Management
           </Text>
@@ -71,16 +71,16 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
           onPress={() => setGoal(Goal.CORE)}
           style={{
             backgroundColor:
-              goal === Goal.CORE ? colors.appBlue : colors.appWhite,
+              goal === Goal.CORE ? colors.darkBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
           <Text
             style={{
               textAlign: 'center',
-              color: goal === Goal.CORE ? colors.appWhite : colors.appBlue,
+              color: goal === Goal.CORE ? colors.appWhite : colors.darkBlue,
             }}>
             Exercising for Core Strength
           </Text>

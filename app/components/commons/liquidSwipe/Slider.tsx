@@ -39,6 +39,9 @@ const Slider = ({index, current, prev, next, setIndex}: SliderProps) => {
   const isTransitioningLeft = useSharedValue(false);
   const isTransitioningRight = useSharedValue(false);
   const onGestureEvent = useAnimatedGestureHandler({
+    onFinish: () => {
+      zIndex.value = 0;
+    },
     onStart: ({x}) => {
       if (x <= MARGIN_WIDTH && hasPrev) {
         activeSide.value = Side.LEFT;
