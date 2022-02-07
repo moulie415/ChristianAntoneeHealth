@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Alert, Platform, Dimensions, SafeAreaView, View} from 'react-native';
+import {
+  Alert,
+  Platform,
+  Dimensions,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
@@ -32,6 +39,9 @@ import SelectEquipment from './SelectEquipment';
 import {Equipment} from '../../../types/QuickRoutines';
 import * as Progress from 'react-native-progress';
 import CompleteSignUp from './CompleteSignUp';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import DevicePixels from '../../../helpers/DevicePixels';
+import {resetToWelcome} from '../../../RootNavigation';
 
 const {width} = Dimensions.get('window');
 
@@ -121,6 +131,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         : !!name,
       elements: (
         <AccountDetails
+          dry={dry}
           email={email}
           setEmail={setEmail}
           password={password}
@@ -243,7 +254,19 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           borderWidth={0}
           borderRadius={0}
         />
-
+        <TouchableOpacity
+          onPress={resetToWelcome}
+          style={{
+            zIndex: 200,
+            alignSelf: 'flex-end',
+            padding: DevicePixels[15],
+          }}>
+          <Icon
+            name="times"
+            color={colors.appWhite}
+            style={{fontSize: DevicePixels[20]}}
+          />
+        </TouchableOpacity>
         <Slider
           key={index}
           index={index}

@@ -17,7 +17,6 @@ export default StyleSheet.create({
     color: colors.appBlue,
   },
   input: {
-    marginTop: DevicePixels[10],
-    width: DevicePixels[200],
+    width: DevicePixels[225],
   },
 });

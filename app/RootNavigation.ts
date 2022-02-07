@@ -1,6 +1,6 @@
 import {CommonActions} from '@react-navigation/core';
 import {createNavigationContainerRef} from '@react-navigation/native';
-import {StackParamList} from './App';
+import {StackParamList, store} from './App';
 
 export const navigationRef = createNavigationContainerRef<StackParamList>();
 
@@ -17,6 +17,9 @@ export function resetToTabs() {
       routes: [{name: 'Tabs'}],
     }),
   );
+  if (!store.getState().profile.viewedSummary) {
+    navigate('GoalSummary');
+  }
 }
 
 export function resetToLogin() {

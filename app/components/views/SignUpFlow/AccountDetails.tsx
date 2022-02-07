@@ -34,95 +34,122 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
       </Text>
       <Input style={styles.input} value={name} onChangeText={setName} />
       {dry && (
-        <Input
-          style={styles.input}
-          label="What's you email?"
-          disabled={!dry}
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-          accessoryLeft={() => (
-            <Icon
-              style={styles.icon}
-              size={DevicePixels[25]}
-              name="envelope"
-              solid
-            />
-          )}
-        />
-      )}
-      {dry && (
-        <Input
-          style={styles.input}
-          label="Enter password"
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize="none"
-          secureTextEntry={secure}
-          autoCorrect={false}
-          accessoryLeft={() => (
-            <Icon
-              style={styles.icon}
-              size={DevicePixels[25]}
-              name="unlock"
-              solid
-            />
-          )}
-          accessoryRight={() => (
-            <TouchableOpacity onPress={() => setSecure(!secure)}>
+        <>
+          <Text
+            category="label"
+            style={{
+              marginTop: DevicePixels[10],
+              marginBottom: DevicePixels[5],
+              color: colors.appWhite,
+            }}>
+            What's your email
+          </Text>
+          <Input
+            style={styles.input}
+            disabled={!dry}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            autoCorrect={false}
+            accessoryLeft={() => (
               <Icon
                 style={styles.icon}
-                size={DevicePixels[30]}
-                name={secure ? 'eye' : 'eye-slash'}
+                size={DevicePixels[25]}
+                name="envelope"
                 solid
               />
-            </TouchableOpacity>
-          )}
-        />
+            )}
+          />
+        </>
       )}
       {dry && (
-        <Input
-          style={styles.input}
-          label="Confirm Password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          autoCapitalize="none"
-          secureTextEntry={secureConfirm}
-          onSubmitEditing={() => Keyboard.dismiss()}
-          autoCorrect={false}
-          accessoryLeft={() => (
-            <Icon
-              style={styles.icon}
-              size={DevicePixels[25]}
-              name="unlock"
-              solid
-            />
-          )}
-          accessoryRight={() => (
-            <TouchableOpacity onPress={() => setSecureConfirm(!secureConfirm)}>
+        <>
+          <Text
+            category="label"
+            style={{
+              marginTop: DevicePixels[10],
+              marginBottom: DevicePixels[5],
+              color: colors.appWhite,
+            }}>
+            Enter password
+          </Text>
+          <Input
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+            secureTextEntry={secure}
+            autoCorrect={false}
+            accessoryLeft={() => (
               <Icon
                 style={styles.icon}
-                size={DevicePixels[30]}
-                name={secureConfirm ? 'eye' : 'eye-slash'}
+                size={DevicePixels[25]}
+                name="unlock"
                 solid
               />
-            </TouchableOpacity>
-          )}
-        />
+            )}
+            accessoryRight={() => (
+              <TouchableOpacity onPress={() => setSecure(!secure)}>
+                <Icon
+                  style={styles.icon}
+                  size={DevicePixels[30]}
+                  name={secure ? 'eye' : 'eye-slash'}
+                  solid
+                />
+              </TouchableOpacity>
+            )}
+          />
+        </>
+      )}
+      {dry && (
+        <>
+          <Text
+            category="label"
+            style={{
+              marginTop: DevicePixels[10],
+              marginBottom: DevicePixels[5],
+              color: colors.appWhite,
+            }}>
+            Confirm Password
+          </Text>
+          <Input
+            style={styles.input}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            autoCapitalize="none"
+            secureTextEntry={secureConfirm}
+            onSubmitEditing={() => Keyboard.dismiss()}
+            autoCorrect={false}
+            accessoryLeft={() => (
+              <Icon
+                style={styles.icon}
+                size={DevicePixels[25]}
+                name="unlock"
+                solid
+              />
+            )}
+            accessoryRight={() => (
+              <TouchableOpacity
+                onPress={() => setSecureConfirm(!secureConfirm)}>
+                <Icon
+                  style={styles.icon}
+                  size={DevicePixels[30]}
+                  name={secureConfirm ? 'eye' : 'eye-slash'}
+                  solid
+                />
+              </TouchableOpacity>
+            )}
+          />
+        </>
       )}
       {password !== confirmPassword && (
-        <Text style={{marginTop: DevicePixels[10]}} status="danger">
+        <Text
+          style={{marginTop: DevicePixels[10], fontWeight: 'bold'}}
+          status="danger">
           Passwords do not match
         </Text>
       )}
-      {/* <Layout style={{flexDirection: 'row', marginVertical: DevicePixels[20]}}>
-        <Text>
-          By signing up you agree to the terms and conditions in our{' '}
-          <Text>Privacy Policy</Text>
-        </Text>
-      </Layout> */}
     </View>
   );
 };

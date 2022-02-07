@@ -16,17 +16,7 @@ const RATIO = height / width;
 
 const ROW_MARGIN = DevicePixels[10] * RATIO;
 
-const Home: React.FC<HomeProps> = ({
-  navigation,
-  profile,
-  hasViewedWelcome,
-  viewedSummary,
-}) => {
-  useEffect(() => {
-    if (!viewedSummary) {
-      navigation.navigate('GoalSummary');
-    }
-  }, [viewedSummary, navigation]);
+const Home: React.FC<HomeProps> = ({navigation, profile, hasViewedWelcome}) => {
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -125,7 +115,6 @@ const Home: React.FC<HomeProps> = ({
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   hasViewedWelcome: profile.hasViewedWelcome,
-  viewedSummary: profile.viewedSummary,
 });
 
 export default connect(mapStateToProps)(Home);

@@ -678,7 +678,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         'Account not verified',
         'Please verify your account using the link we sent to your email address, please also check your spam folder',
       );
-      navigateToLoginIfNecessary();
+      navigate('SignUp');
     } else {
       yield put(setLoggedIn(false));
       navigate('Login');
