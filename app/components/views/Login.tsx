@@ -7,9 +7,11 @@ import {
   View,
   ImageBackground,
   StyleSheet,
+  ImageSourcePropType,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Spinner, Button, Text} from '@ui-kitten/components';
+import {Spinner, Button} from '@ui-kitten/components';
+import Swiper from 'react-native-swiper';
 import auth from '@react-native-firebase/auth';
 import {Layout} from '@ui-kitten/components';
 import {connect} from 'react-redux';
@@ -21,11 +23,47 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import DevicePixels from '../../helpers/DevicePixels';
 import {signUp} from '../../actions/profile';
+import colors from '../../constants/colors';
+import Text from '../commons/Text';
 
 GoogleSignin.configure({
   webClientId:
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
 });
+
+interface CarouselItem {
+  title: string;
+  description: string;
+  image: ImageSourcePropType;
+}
+
+const items: CarouselItem[] = [
+  {
+    title: 'Targeted Workouts',
+    description:
+      'Create custom workouts to target specific areas of the body and types of fitness.',
+    image: require('../../images/login.jpeg'),
+  },
+  {
+    title: 'Track Progress',
+    description: `Monitor your activity and track your fitness with your with ${
+      Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+    }`,
+    image: require('../../images/2nd_carousel_image_fitness_tracking.jpeg'),
+  },
+  {
+    title: 'Test Fitness',
+    description:
+      'Measure fitness across 4 key areas, and get recommendations to improve',
+    image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
+  },
+  {
+    title: 'Quick routines',
+    description:
+      'Select from a variety of exercise routines designed to target specific body parts',
+    image: require('../../images/1st_Carousel_image_targeted_workouts.jpeg'),
+  },
+];
 
 const Login: React.FC<LoginProps> = ({navigation}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
@@ -109,27 +147,63 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   };
 
   return (
-    <ImageBackground
-      source={require('../../images/login.jpeg')}
-      style={{flex: 1}}>
-      <Layout
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: '#000',
-          opacity: 0.7,
-        }}
-      />
-      <Image
-        style={styles.logo}
-        source={require('../../images/logo-and-text.png')}
-      />
+    <>
+      <Swiper
+        activeDotColor={colors.appBlue}
+        removeClippedSubviews={false}
+        autoplay>
+        {items.map(({title, image, description}) => {
+          return (
+            <ImageBackground key={title} source={image} style={{flex: 1}}>
+              <Layout
+                style={{
+                  ...StyleSheet.absoluteFillObject,
+                  backgroundColor: '#000',
+                  opacity: 0.7,
+                }}
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: DevicePixels[220],
+                  margin: DevicePixels[20],
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                    marginBottom: DevicePixels[10],
+                  }}
+                  category="h6">
+                  {title}
+                </Text>
+                <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+                  {description}
+                </Text>
+              </View>
+            </ImageBackground>
+          );
+        })}
+      </Swiper>
 
-      <View style={{justifyContent: 'flex-end', flex: 1}}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../../images/logo-and-text.png')}
+        />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: DevicePixels[30],
+          left: 0,
+          right: 0,
+        }}>
         <Text
           style={{
             color: '#fff',
             textAlign: 'center',
-            paddingVertical: DevicePixels[20],
+            paddingVertical: DevicePixels[10],
           }}
           category="h5">
           Continue with
@@ -232,7 +306,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </ImageBackground>
+    </>
   );
 };
 

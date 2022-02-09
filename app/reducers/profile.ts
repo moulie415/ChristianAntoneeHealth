@@ -2,7 +2,6 @@ import {AppState, AppStateStatus} from 'react-native';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
-  SET_HAS_VIEWED_WELCOME,
   ProfileActionTypes,
   SET_MONTHLY_WEIGHT_SAMPLES,
   SET_MONTHLY_STEP_SAMPLES,
@@ -30,7 +29,6 @@ export interface ProfileState {
   step: number;
   profile: Profile;
   loggedIn: boolean;
-  hasViewedWelcome: boolean;
   hasViewedSignUp: boolean;
   weightSamples: {[key: number]: Sample[]};
   stepSamples: {[key: number]: StepSample[]};
@@ -51,7 +49,6 @@ const initialState: ProfileState = {
   step: 0,
   profile: {email: '', uid: '', unread: {}},
   loggedIn: false,
-  hasViewedWelcome: false,
   hasViewedSignUp: false,
   weightSamples: {},
   stepSamples: {},
@@ -99,11 +96,6 @@ const reducer = (
             loggedIn: action.payload,
           }
         : {...initialState, loggedIn: action.payload};
-    case SET_HAS_VIEWED_WELCOME:
-      return {
-        ...state,
-        hasViewedWelcome: true,
-      };
     case SET_MONTHLY_WEIGHT_SAMPLES:
       return {
         ...state,

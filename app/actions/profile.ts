@@ -10,7 +10,6 @@ import {Goal, Level, Sample, StepSample} from '../types/Shared';
 
 export const SET_PROFILE = 'SET_PROFILE';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
-export const SET_HAS_VIEWED_WELCOME = 'SET_HAS_VIEWED_WELCOME';
 export const SIGN_UP = 'SIGN_UP';
 export const GET_SAMPLES = 'GET_SAMPLES';
 export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
@@ -44,10 +43,6 @@ interface setProfileAction {
 export interface SetLoggedInAction {
   type: typeof SET_LOGGED_IN;
   payload: boolean;
-}
-
-interface ViewedWelcomeAction {
-  type: typeof SET_HAS_VIEWED_WELCOME;
 }
 
 export interface SignUpPayload {
@@ -199,7 +194,6 @@ export interface SetViewedSummaryAction {
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
-  | ViewedWelcomeAction
   | SignUpAction
   | SetMonthlyWeightSamplesAction
   | GetSamplesAction
@@ -240,10 +234,6 @@ export const updateProfile = (
 export const setLoggedIn = (loggedIn: boolean): SetLoggedInAction => ({
   type: SET_LOGGED_IN,
   payload: loggedIn,
-});
-
-export const viewedWelcome = (): ViewedWelcomeAction => ({
-  type: SET_HAS_VIEWED_WELCOME,
 });
 
 export const signUp = (payload: SignUpPayload): SignUpAction => ({

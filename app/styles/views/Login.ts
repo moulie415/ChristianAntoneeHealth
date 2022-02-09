@@ -31,11 +31,14 @@ export default StyleSheet.create({
     marginRight: DevicePixels[10],
     color: colors.appBlue,
   },
+  logoContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: DevicePixels[50],
+  },
   logo: {
-    margin: DevicePixels[10],
-    marginTop: DevicePixels[60],
+
     height: DevicePixels[79],
     width: DevicePixels[200],
-    alignSelf: 'center',
   },
 });
