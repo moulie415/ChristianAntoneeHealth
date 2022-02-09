@@ -61,7 +61,7 @@ static void InitializeFlipper(UIApplication *application) {
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
-  [[RCTAppleHealthKit new] initializeBackgroundObservers:bridge];
+  // [[RCTAppleHealthKit new] initializeBackgroundObservers:bridge];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
   return YES;
