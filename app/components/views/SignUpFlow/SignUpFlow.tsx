@@ -254,19 +254,21 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           borderWidth={0}
           borderRadius={0}
         />
-        <TouchableOpacity
-          onPress={resetToWelcome}
-          style={{
-            zIndex: 200,
-            alignSelf: 'flex-end',
-            padding: DevicePixels[15],
-          }}>
-          <Icon
-            name="times"
-            color={colors.appWhite}
-            style={{fontSize: DevicePixels[20]}}
-          />
-        </TouchableOpacity>
+        {index === 0 && (
+          <TouchableOpacity
+            onPress={resetToWelcome}
+            style={{
+              zIndex: 200,
+              padding: DevicePixels[15],
+              width: DevicePixels[50],
+            }}>
+            <Icon
+              name="times"
+              color={colors.appWhite}
+              style={{fontSize: DevicePixels[20]}}
+            />
+          </TouchableOpacity>
+        )}
         <Slider
           key={index}
           index={index}

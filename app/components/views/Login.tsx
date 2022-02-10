@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Alert,
   TouchableOpacity,
   Image,
   Platform,
@@ -12,24 +11,17 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Spinner, Button} from '@ui-kitten/components';
 import Swiper from 'react-native-swiper';
-import auth from '@react-native-firebase/auth';
 import {Layout} from '@ui-kitten/components';
 import {connect} from 'react-redux';
 import styles from '../../styles/views/Login';
 import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
-import appleAuth from '@invertase/react-native-apple-authentication';
-import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import {GoogleSignin} from '@react-native-community/google-signin';
 import DevicePixels from '../../helpers/DevicePixels';
 import {signUp} from '../../actions/profile';
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
-
-GoogleSignin.configure({
-  webClientId:
-    '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
-});
+import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 interface CarouselItem {
   title: string;
@@ -70,80 +62,19 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
 
-  const appleSignIn = async () => {
-    try {
-      // Start the sign-in request
-      const appleAuthRequestResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-      });
-
-      // Ensure Apple returned a user identityToken
-      if (!appleAuthRequestResponse.identityToken) {
-        throw 'Apple Sign-In failed - no identify token returned';
-      }
-
-      // Create a Firebase credential from the response
-      const {identityToken, nonce} = appleAuthRequestResponse;
-      const appleCredential = auth.AppleAuthProvider.credential(
-        identityToken,
-        nonce,
-      );
-
-      // Sign the user in with the credential
-      return auth().signInWithCredential(appleCredential);
-    } catch (e) {
-      setAppleLoading(false);
-      Alert.alert('Error', e.message);
-    }
+  const signInApple = async () => {
+    await appleSignIn();
+    setAppleLoading(false);
   };
 
-  const facebookSignIn = async () => {
-    try {
-      // Attempt login with permissions
-      const result = await LoginManager.logInWithPermissions([
-        'public_profile',
-        'email',
-      ]);
-
-      if (result.isCancelled) {
-        throw 'User cancelled the login process';
-      }
-
-      // Once signed in, get the users AccesToken
-      const data = await AccessToken.getCurrentAccessToken();
-
-      if (!data) {
-        throw 'Something went wrong obtaining access token';
-      }
-      // Create a Firebase credential with the AccessToken
-      const facebookCredential = auth.FacebookAuthProvider.credential(
-        data.accessToken,
-      );
-      // Sign-in the user with the credential
-      const credentials = await auth().signInWithCredential(facebookCredential);
-      return credentials;
-    } catch (e) {
-      Alert.alert('Error', e.message);
-      setFacebookLoading(false);
-    }
+  const signInFacebook = async () => {
+    await facebookSignIn();
+    setFacebookLoading(false);
   };
 
-  const googleSignIn = async () => {
-    // Get the users ID token
-    try {
-      const {idToken} = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      const credentials = await auth().signInWithCredential(googleCredential);
-      return credentials;
-    } catch (e) {
-      console.log({e});
-      setGoogleLoading(false);
-    }
+  const signInGoogle = async () => {
+    await googleSignIn();
+    setGoogleLoading(false);
   };
 
   return (
@@ -167,6 +98,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                   position: 'absolute',
                   bottom: DevicePixels[220],
                   margin: DevicePixels[20],
+                  left: 0,
+                  right: 0,
                 }}>
                 <Text
                   style={{
@@ -209,11 +142,11 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           Continue with
         </Text>
         <View style={{flexDirection: 'row'}}>
-          {Platform.OS === 'ios' && (
+          {Platform.OS === 'ios' && appleAuth.isSupported && (
             <Button
               onPress={async () => {
                 setAppleLoading(true);
-                await appleSignIn();
+                await signInApple();
               }}
               style={{
                 flex: 1,
@@ -236,7 +169,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           <Button
             onPress={async () => {
               setFacebookLoading(true);
-              await facebookSignIn();
+              await signInFacebook();
             }}
             style={{
               flex: 1,
@@ -259,7 +192,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           <Button
             onPress={async () => {
               setGoogleLoading(true);
-              await googleSignIn();
+              await signInGoogle();
             }}
             style={{
               backgroundColor: 'transparent',

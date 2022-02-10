@@ -8,6 +8,7 @@ import {StackParamList} from '../../App';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
+import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
@@ -19,7 +20,6 @@ const DeleteAccount: React.FC<{
   const [requiresPassword, setRequiresPassword] = useState(false);
   useEffect(() => {
     const user = auth().currentUser;
-    console.log(user.providerData);
     if (user?.providerData?.find(data => data.providerId === 'password')) {
       setRequiresPassword(true);
     }
@@ -88,10 +88,27 @@ const DeleteAccount: React.FC<{
         onPress={async () => {
           setLoading(true);
           try {
+            const user = auth().currentUser;
             if (requiresPassword) {
               await auth().signInWithEmailAndPassword(email, password);
             }
-            const user = auth().currentUser;
+            if (
+              user?.providerData?.find(data => data.providerId === 'google.com')
+            ) {
+              await googleSignIn();
+            }
+            if (
+              user?.providerData?.find(
+                data => data.providerId === 'facebook.com',
+              )
+            ) {
+              await facebookSignIn();
+            }
+            if (
+              user?.providerData?.find(data => data.providerId === 'apple.com')
+            ) {
+              await appleSignIn();
+            }
             await user.delete();
             Alert.alert('Success', 'Your account has been deleted');
           } catch (e) {
