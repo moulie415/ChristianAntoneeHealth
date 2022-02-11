@@ -63,19 +63,33 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   const [appleLoading, setAppleLoading] = useState(false);
 
   const signInApple = async () => {
-    await appleSignIn();
-    setAppleLoading(false);
+    try {
+      setAppleLoading(true);
+      await appleSignIn();
+    } catch (e) {
+      setAppleLoading(false);
+    }
   };
 
   const signInFacebook = async () => {
-    await facebookSignIn();
-    setFacebookLoading(false);
+    try {
+      setFacebookLoading(true);
+      await facebookSignIn();
+    } catch (e) {
+      setFacebookLoading(false);
+    }
   };
 
   const signInGoogle = async () => {
-    await googleSignIn();
-    setGoogleLoading(false);
+    try {
+      setGoogleLoading(true);
+      await googleSignIn();
+    } catch (e) {
+      setGoogleLoading(false);
+    }
   };
+
+  const disabled = facebookLoading || googleLoading || appleLoading;
 
   return (
     <>
@@ -144,10 +158,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
         <View style={{flexDirection: 'row'}}>
           {Platform.OS === 'ios' && appleAuth.isSupported && (
             <Button
-              onPress={async () => {
-                setAppleLoading(true);
-                await signInApple();
-              }}
+              disabled={disabled}
+              onPress={signInApple}
               style={{
                 flex: 1,
                 backgroundColor: 'transparent',
@@ -167,10 +179,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             />
           )}
           <Button
-            onPress={async () => {
-              setFacebookLoading(true);
-              await signInFacebook();
-            }}
+            onPress={signInFacebook}
+            disabled={disabled}
             style={{
               flex: 1,
               backgroundColor: 'transparent',
@@ -190,10 +200,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             }
           />
           <Button
-            onPress={async () => {
-              setGoogleLoading(true);
-              await signInGoogle();
-            }}
+            onPress={signInGoogle}
+            disabled={disabled}
             style={{
               backgroundColor: 'transparent',
               height: DevicePixels[50],

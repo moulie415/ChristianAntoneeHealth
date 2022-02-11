@@ -33,6 +33,7 @@ export const appleSignIn = async () => {
     return auth().signInWithCredential(appleCredential);
   } catch (e) {
     Alert.alert('Error', e.message);
+    throw e;
   }
 };
 
@@ -63,6 +64,7 @@ export const facebookSignIn = async () => {
     return credentials;
   } catch (e) {
     Alert.alert('Error', e.message);
+    throw e;
   }
 };
 
@@ -79,5 +81,6 @@ export const googleSignIn = async () => {
     return credentials;
   } catch (e) {
     Alert.alert('Error', e.message);
+    throw e;
   }
 };

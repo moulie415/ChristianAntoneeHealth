@@ -9,11 +9,13 @@ import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
+import {setLoggedIn} from '../../actions/profile';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
   profile: Profile;
-}> = ({profile}) => {
+  setLoggedIn: (loggedIn: boolean) => void;
+}> = ({profile, setLoggedIn: setLoggedInAction}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -110,6 +112,7 @@ const DeleteAccount: React.FC<{
               await appleSignIn();
             }
             await user.delete();
+            setLoggedInAction(false);
             Alert.alert('Success', 'Your account has been deleted');
           } catch (e) {
             Alert.alert('Error', e.message);
@@ -137,4 +140,8 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-export default connect(mapStateToProps)(DeleteAccount);
+const mapDispatchToProps = {
+  setLoggedIn,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteAccount);

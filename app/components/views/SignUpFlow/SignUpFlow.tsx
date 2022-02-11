@@ -42,6 +42,7 @@ import CompleteSignUp from './CompleteSignUp';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {resetToWelcome} from '../../../RootNavigation';
+import auth from '@react-native-firebase/auth';
 
 const {width} = Dimensions.get('window');
 
@@ -256,7 +257,10 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
         {index === 0 && (
           <TouchableOpacity
-            onPress={resetToWelcome}
+            onPress={() => {
+              auth().signOut();
+              resetToWelcome();
+            }}
             style={{
               zIndex: 200,
               padding: DevicePixels[15],

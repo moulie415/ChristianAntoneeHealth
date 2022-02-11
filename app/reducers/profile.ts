@@ -29,7 +29,6 @@ export interface ProfileState {
   step: number;
   profile: Profile;
   loggedIn: boolean;
-  hasViewedSignUp: boolean;
   weightSamples: {[key: number]: Sample[]};
   stepSamples: {[key: number]: StepSample[]};
   weeklySteps: StepSample[];
@@ -49,7 +48,6 @@ const initialState: ProfileState = {
   step: 0,
   profile: {email: '', uid: '', unread: {}},
   loggedIn: false,
-  hasViewedSignUp: false,
   weightSamples: {},
   stepSamples: {},
   weeklySteps: [],
