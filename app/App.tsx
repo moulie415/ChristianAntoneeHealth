@@ -25,7 +25,7 @@ import {
 } from './types/Shared';
 import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
-import QuickRoutine from './types/QuickRoutines';
+import QuickRoutine, {Equipment} from './types/QuickRoutines';
 import TestType from './types/Test';
 import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
@@ -117,6 +117,8 @@ export type StackParamList = {
   Chat: {uid: string};
   GoalSummary: undefined;
   WhatEquipment: {goal: Goal};
+  WhatExperience: {goal: Goal; equipment: Equipment};
+  Rating: undefined;
 };
 
 const App: React.FC = () => {

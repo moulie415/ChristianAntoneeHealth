@@ -43,6 +43,8 @@ import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
 import GoalSummary from './components/views/GoalSummary';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
+import Rating from './components/views/Rating';
+import WhatExperience from './components/views/Workout/WhatExperience';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -243,9 +245,15 @@ const StackComponent: FunctionComponent = () => {
             component={WhatEquipment}
             options={{headerTitle: ''}}
           />
+          <Stack.Screen
+            name="WhatExperience"
+            component={WhatExperience}
+            options={{headerTitle: ''}}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />
+          <Stack.Screen name="Rating" component={Rating} />
         </Stack.Group>
       </Stack.Navigator>
     </>

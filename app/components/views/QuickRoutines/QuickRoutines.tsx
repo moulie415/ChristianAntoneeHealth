@@ -40,11 +40,10 @@ const sections: {
     key: 'focus',
     items: [
       {
-        id: Goal.BONE_DENSITY,
-        name: 'Bone density',
+        id: Goal.STRENGTH,
+        name: 'Strength',
       },
-      {id: Goal.WEIGHT, name: 'Weight management'},
-      {id: Goal.CORE, name: 'Core and lower back'},
+      {id: Goal.FITNESS, name: 'Fitness'},
     ],
     image: require('../../../images/Quick_routine_training_focus.jpeg'),
   },
@@ -128,7 +127,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                         onPress={() => {
                           if (
                             id === 'upper' ||
-                            id === Goal.BONE_DENSITY ||
+                            id === Goal.STRENGTH ||
                             (id === 'full' && key === 'equipment')
                           ) {
                             // @ts-ignore
@@ -139,7 +138,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                           }
                           if (
                             id === 'lower' ||
-                            id === Goal.WEIGHT ||
+                            id === Goal.FITNESS ||
                             id === 'minimal'
                           ) {
                             // @ts-ignore
@@ -150,7 +149,6 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                           }
                           if (
                             (id === 'full' && key === 'area') ||
-                            (id === Goal.CORE && key === 'focus') ||
                             id === 'none'
                           ) {
                             // @ts-ignore

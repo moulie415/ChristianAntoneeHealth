@@ -1,3 +1,4 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Layout} from '@ui-kitten/components';
 import React from 'react';
 import {
@@ -7,11 +8,15 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {Goal} from '../../../types/Shared';
 import Text from '../../commons/Text';
 
-const WhatsYourGoal: React.FC = () => {
+const WhatsYourGoal: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
+}> = ({navigation}) => {
   return (
     <ImageBackground
       source={require('../../../images/Fitness_testing_squat.jpeg')}
@@ -20,7 +25,7 @@ const WhatsYourGoal: React.FC = () => {
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
-          opacity: 0.8,
+          opacity: 0.7,
         }}
       />
       <SafeAreaView style={{flex: 1}}>
@@ -35,7 +40,9 @@ const WhatsYourGoal: React.FC = () => {
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WhatEquipment', {goal: Goal.STRENGTH})
+            }
             style={{
               margin: DevicePixels[20],
               backgroundColor: colors.appBlue,
@@ -58,7 +65,9 @@ const WhatsYourGoal: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WhatEquipment', {goal: Goal.FITNESS})
+            }
             style={{
               margin: DevicePixels[20],
 

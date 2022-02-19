@@ -26,14 +26,8 @@ const getEquipmentString = (equipment: Equipment) => {
 };
 
 const getFocusString = (focus: Goal) => {
-  if (focus === Goal.BONE_DENSITY) {
-    return 'Balance';
-  }
-  if (focus === Goal.CORE) {
-    return 'Intensity';
-  }
-  if (focus === Goal.WEIGHT) {
-    return 'Mobility';
+  if (focus === Goal.FITNESS) {
+    return 'Fitness';
   }
   return 'Strength';
 };

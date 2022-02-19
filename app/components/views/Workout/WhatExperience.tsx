@@ -1,24 +1,17 @@
 import {
-  View,
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import React from 'react';
-import {Layout} from '@ui-kitten/components';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Layout} from '@ui-kitten/components';
 import Text from '../../commons/Text';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
-import {RouteProp} from '@react-navigation/native';
+import DevicePixels from '../../../helpers/DevicePixels';
 
-const WhatEquipment: React.FC<{
-  navigation: NativeStackNavigationProp<StackParamList, 'WhatEquipment'>;
-  route: RouteProp<StackParamList, 'WhatEquipment'>;
-}> = ({navigation, route}) => {
-  const {goal} = route.params;
+const WhatExperience: React.FC = () => {
   return (
     <ImageBackground
       source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
@@ -38,7 +31,7 @@ const WhatEquipment: React.FC<{
             marginTop: DevicePixels[20],
           }}
           category="h3">
-          What equipment do you have?
+          What's your experience level?
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
@@ -57,7 +50,7 @@ const WhatEquipment: React.FC<{
                 textAlign: 'center',
                 color: colors.appWhite,
               }}>
-              I don’t have anything
+              No clue what I’m doing
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -75,7 +68,7 @@ const WhatEquipment: React.FC<{
                 textAlign: 'center',
                 color: colors.appWhite,
               }}>
-              I’ve got a few bits and pieces
+              I workout every now and again
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -93,7 +86,7 @@ const WhatEquipment: React.FC<{
                 textAlign: 'center',
                 color: colors.appWhite,
               }}>
-              I’ve got access to a gym
+              I’m a seasoned veteran
             </Text>
           </TouchableOpacity>
         </View>
@@ -102,4 +95,4 @@ const WhatEquipment: React.FC<{
   );
 };
 
-export default WhatEquipment;
+export default WhatExperience;
