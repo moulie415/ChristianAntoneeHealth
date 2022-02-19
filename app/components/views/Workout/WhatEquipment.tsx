@@ -58,6 +58,7 @@ const WhatEquipment: React.FC<{
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
+                fontWeight: 'bold',
               }}>
               I don’t have anything
             </Text>
@@ -81,6 +82,7 @@ const WhatEquipment: React.FC<{
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
+                fontWeight: 'bold',
               }}>
               I’ve got a few bits and pieces
             </Text>
@@ -101,6 +103,7 @@ const WhatEquipment: React.FC<{
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
+                fontWeight: 'bold',
               }}>
               I’ve got access to a gym
             </Text>

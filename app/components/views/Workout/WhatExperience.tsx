@@ -63,6 +63,7 @@ const WhatExperience: React.FC<{
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
+                fontWeight: 'bold',
               }}>
               No clue what I’m doing
             </Text>
@@ -87,6 +88,7 @@ const WhatExperience: React.FC<{
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
+                fontWeight: 'bold',
               }}>
               I workout every now and again
             </Text>
@@ -111,6 +113,7 @@ const WhatExperience: React.FC<{
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
+                fontWeight: 'bold',
               }}>
               I’m a seasoned veteran
             </Text>

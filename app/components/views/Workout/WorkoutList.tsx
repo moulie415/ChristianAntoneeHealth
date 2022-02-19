@@ -1,20 +1,14 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import {List, ListItem} from '@ui-kitten/components';
+import {List} from '@ui-kitten/components';
 import {connect} from 'react-redux';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import QuickRoutine, {Equipment} from '../../../types/QuickRoutines';
 import {getQuickRoutines} from '../../../actions/quickRoutines';
 import Text from '../../commons/Text';
-import ImageOverlay from '../../commons/ImageOverlay';
 import {useInterstitialAd} from '@react-native-admob/admob';
 import {UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getExercisesById} from '../../../actions/exercises';
@@ -25,6 +19,10 @@ import {SettingsState} from '../../../reducers/settings';
 import colors from '../../../constants/colors';
 import ImageLoader from '../../commons/ImageLoader';
 import globalStyles from '../../../styles/globalStyles';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
+const {height} = Dimensions.get('screen');
 
 const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -93,14 +91,31 @@ const WorkoutList: React.FC<{
     );
   });
 
+
   return (
     <View>
       <List
-        data={Object.values(quickRoutines)}
+        ListEmptyComponent={() => (
+          <SafeAreaView style={{height: height - DevicePixels[50]}}>
+            <AbsoluteSpinner loading />
+          </SafeAreaView>
+        )}
+        data={filtered}
         renderItem={({item, index}) => {
+          const locked = item.premium && !profile.premium;
           return (
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={() => {
+                if (item.premium && !profile.premium) {
+                  navigation.navigate('Premium');
+                } else if (adLoaded && !profile.premium && settings.ads) {
+                  setSelectedItem(item);
+                  show();
+                } else {
+                  getExercisesByIdAction(item.exerciseIds);
+                  navigation.navigate('QuickRoutine', {routine: item});
+                }
+              }}
               key={item.id}
               style={{
                 height: DevicePixels[100],
@@ -117,7 +132,7 @@ const WorkoutList: React.FC<{
                 }
                 overlay
               />
-              {item.premium && !profile.premium && (
+              {locked ? (
                 <View
                   style={{
                     position: 'absolute',
@@ -125,22 +140,69 @@ const WorkoutList: React.FC<{
                     left: DevicePixels[10],
                     right: 0,
                     bottom: 0,
-                    
+
                     justifyContent: 'center',
                   }}>
                   <Icon name="lock" color="#fff" size={DevicePixels[40]} />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    top: 0,
+                    bottom: 0,
+                    left: DevicePixels[10],
+                    right: 0,
+                    width: DevicePixels[40],
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      fontSize: DevicePixels[12],
+                      ...globalStyles.textShadow,
+                    }}>
+                    Under
+                  </Text>
+                  <Text
+                    category="h6"
+                    style={{
+                      color: colors.appWhite,
+                      ...globalStyles.textShadow,
+                    }}>
+                    {item.duration}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      fontSize: DevicePixels[12],
+                      ...globalStyles.textShadow,
+                    }}>
+                    mins
+                  </Text>
                 </View>
               )}
               <View
                 style={{
                   position: 'absolute',
-    
-                
+                  justifyContent: 'center',
+                  top: 0,
+                  left: DevicePixels[55],
+                  right: 0,
+                  bottom: 0,
                 }}>
                 <Text
-                  category="h5"
-                  style={[globalStyles.textShadow, {color: '#fff'}]}>
+                  category="h6"
+                  style={{color: colors.appWhite, ...globalStyles.textShadow}}>
                   {item.name}
+                </Text>
+                <Text
+                  category="s1"
+                  style={{color: colors.appWhite, ...globalStyles.textShadow}}>
+                  {`${getLevelString(item.level)} - ${getEquipmentString(
+                    item.equipment,
+                  )} - ${getFocusString(item.focus)}`}
                 </Text>
               </View>
             </TouchableOpacity>
