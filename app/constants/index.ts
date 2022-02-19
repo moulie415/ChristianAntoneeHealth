@@ -8,9 +8,8 @@ export interface GoalItem {
 }
 
 export const goalItems: GoalItem[] = [
-  {title: 'Increase bone density', goal: Goal.BONE_DENSITY},
-  {title: 'Weight management', goal: Goal.WEIGHT},
-  {title: 'Core and lower back strength', goal: Goal.CORE},
+  {title: 'Improve my strength', goal: Goal.STRENGTH},
+  {title: 'Improve my fitness', goal: Goal.FITNESS},
 ];
 
 export const weightChartConfig = {

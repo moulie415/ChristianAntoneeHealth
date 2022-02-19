@@ -163,12 +163,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       tint: colors.appWhite,
       elements: <SelectSex gender={gender} setGender={setGender} />,
     },
-    {
-      color: colors.appBlue,
-      showNext: !!unit,
-      tint: colors.appWhite,
-      elements: <SelectUnit unit={unit} setUnit={setUnit} />,
-    },
+    // {
+    //   color: colors.appBlue,
+    //   showNext: !!unit,
+    //   tint: colors.appWhite,
+    //   elements: <SelectUnit unit={unit} setUnit={setUnit} />,
+    // },
 
     {
       color: colors.appWhite,

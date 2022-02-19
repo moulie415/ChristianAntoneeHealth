@@ -91,50 +91,50 @@ const GoalSummary: React.FC<{
     setViewed();
   }, [setViewed]);
 
-  const getTitle = () => {
-    if (goal === Goal.BONE_DENSITY) {
-      return 'Lets make your bones stronger!';
-    }
-    if (goal === Goal.CORE) {
-      return 'Lets get your core slim and strong!';
-    }
-    return 'Lets keep you strong and lean!';
-  };
+  // const getTitle = () => {
+  //   if (goal === Goal.BONE_DENSITY) {
+  //     return 'Lets make your bones stronger!';
+  //   }
+  //   if (goal === Goal.CORE) {
+  //     return 'Lets get your core slim and strong!';
+  //   }
+  //   return 'Lets keep you strong and lean!';
+  // };
 
-  const workoutCount = useMemo(() => {
-    if (goal === Goal.WEIGHT) {
-      return 4;
-    }
-    return 3;
-  }, [goal]);
+  // const workoutCount = useMemo(() => {
+  //   if (goal === Goal.WEIGHT) {
+  //     return 4;
+  //   }
+  //   return 3;
+  // }, [goal]);
 
-  const timeExercising = useMemo(() => {
-    if (goal === Goal.WEIGHT) {
-      return '120 min';
-    }
-    return '90 min';
-  }, [goal]);
+  // const timeExercising = useMemo(() => {
+  //   if (goal === Goal.WEIGHT) {
+  //     return '120 min';
+  //   }
+  //   return '90 min';
+  // }, [goal]);
 
-  const intensityText = useMemo(() => {
-    let intensity = '';
-    if (goal === Goal.BONE_DENSITY || goal === Goal.CORE) {
-      intensity = 'moderate - hard';
-    } else {
-      intensity = 'hard - very hard';
-    }
-    return `Total time spent in ${intensity} intensity category`;
-  }, [goal]);
+  // const intensityText = useMemo(() => {
+  //   let intensity = '';
+  //   if (goal === Goal.BONE_DENSITY || goal === Goal.CORE) {
+  //     intensity = 'moderate - hard';
+  //   } else {
+  //     intensity = 'hard - very hard';
+  //   }
+  //   return `Total time spent in ${intensity} intensity category`;
+  // }, [goal]);
 
-  const intensityTime = useMemo(() => {
-    if (goal === Goal.WEIGHT) {
-      return '90 min';
-    }
-    return '60 min';
-  }, [goal]);
+  // const intensityTime = useMemo(() => {
+  //   if (goal === Goal.WEIGHT) {
+  //     return '90 min';
+  //   }
+  //   return '60 min';
+  // }, [goal]);
 
   return (
     <Layout style={{flex: 1}}>
-      <Text
+      {/* <Text
         style={{padding: DevicePixels[20], textAlign: 'center'}}
         category="h4">
         {getTitle()}
@@ -213,7 +213,7 @@ const GoalSummary: React.FC<{
             iconStyle={{fontSize: 20}}
           />
         </>
-      )}
+      )} */}
     </Layout>
   );
 };

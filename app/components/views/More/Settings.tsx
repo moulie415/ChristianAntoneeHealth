@@ -30,7 +30,7 @@ import {equals} from 'ramda';
 import DevicePixels from '../../../helpers/DevicePixels';
 
 const isValidGoal = (goal: Goal) =>
-  goal === Goal.BONE_DENSITY || goal === Goal.CORE || goal === Goal.WEIGHT;
+  goal === Goal.STRENGTH || goal === Goal.FITNESS;
 
 const Settings: React.FC<SettingsProps> = ({
   workoutReminders,
@@ -47,9 +47,7 @@ const Settings: React.FC<SettingsProps> = ({
   const [goalReminder, setGoalReminder] = useState(true);
 
   const [goal, setGoal] = useState<Goal>(
-    profile.goal && isValidGoal(profile.goal)
-      ? profile.goal
-      : Goal.BONE_DENSITY,
+    profile.goal && isValidGoal(profile.goal) ? profile.goal : Goal.STRENGTH,
   );
 
   const newProfile = {

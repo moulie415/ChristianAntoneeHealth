@@ -116,6 +116,7 @@ export type StackParamList = {
   AddConnection: undefined;
   Chat: {uid: string};
   GoalSummary: undefined;
+  WhatEquipment: {goal: Goal};
 };
 
 const App: React.FC = () => {

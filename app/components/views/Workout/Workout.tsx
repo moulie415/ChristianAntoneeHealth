@@ -57,16 +57,10 @@ const Workout: React.FC<WorkoutProps> = ({
   };
 
   const getGoalString = (goal: Goal) => {
-    if (goal === Goal.BONE_DENSITY) {
-      return 'Bone density';
+    if (goal === Goal.FITNESS) {
+      return 'Improve my fitness';
     }
-    if (goal === Goal.CORE) {
-      return 'Core and lower back';
-    }
-    if (goal === Goal.WEIGHT) {
-      return 'Weight management';
-    }
-    return 'Strength for everyday';
+    return 'Improve my strength';
   };
 
   return (

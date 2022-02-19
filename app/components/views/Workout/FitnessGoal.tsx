@@ -26,22 +26,16 @@ const FitnessGoal: React.FC<{
     action: () => void;
   }[] = [
     {
-      title: 'Bone density (weight bearing)',
-      key: Goal.BONE_DENSITY,
+      title: 'Improve my strength',
+      key: Goal.STRENGTH,
       image: require('../../../images/Quick_routine_training_focus.jpeg'),
-      action: () => setFitnessGoalAction(Goal.BONE_DENSITY),
+      action: () => setFitnessGoalAction(Goal.STRENGTH),
     },
     {
-      title: 'Weight management',
-      key: Goal.WEIGHT,
+      title: 'Improve my fitness',
+      key: Goal.FITNESS,
       image: require('../../../images/Homepage_activity_tracking.jpeg'),
-      action: () => setFitnessGoalAction(Goal.WEIGHT),
-    },
-    {
-      title: 'Core and lower back strength',
-      key: Goal.CORE,
-      image: require('../../../images/Homepage_fitness_test.jpeg'),
-      action: () => setFitnessGoalAction(Goal.CORE),
+      action: () => setFitnessGoalAction(Goal.FITNESS),
     },
   ];
 
