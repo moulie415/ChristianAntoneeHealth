@@ -42,7 +42,9 @@ const WhatEquipment: React.FC<{
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WhatExperience', {goal, equipment: 'none'})
+            }
             style={{
               margin: DevicePixels[20],
               marginTop: 0,
@@ -61,7 +63,12 @@ const WhatEquipment: React.FC<{
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WhatExperience', {
+                goal,
+                equipment: 'minimal',
+              })
+            }
             style={{
               margin: DevicePixels[20],
               backgroundColor: colors.appBlue,
@@ -79,7 +86,9 @@ const WhatEquipment: React.FC<{
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WhatExperience', {goal, equipment: 'full'})
+            }
             style={{
               margin: DevicePixels[20],
               backgroundColor: colors.appBlue,

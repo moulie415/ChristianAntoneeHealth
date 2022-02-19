@@ -10,8 +10,16 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Layout} from '@ui-kitten/components';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
+import {Level} from '../../../types/Shared';
 
-const WhatExperience: React.FC = () => {
+const WhatExperience: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'WhatExperience'>;
+  route: RouteProp<StackParamList, 'WhatExperience'>;
+}> = ({navigation, route}) => {
+  const {goal, equipment} = route.params;
   return (
     <ImageBackground
       source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
@@ -35,7 +43,13 @@ const WhatExperience: React.FC = () => {
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WorkoutList', {
+                goal,
+                equipment,
+                experience: Level.BEGINNER,
+              })
+            }
             style={{
               margin: DevicePixels[20],
               marginTop: 0,
@@ -54,7 +68,13 @@ const WhatExperience: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WorkoutList', {
+                goal,
+                equipment,
+                experience: Level.INTERMEDIATE,
+              })
+            }
             style={{
               margin: DevicePixels[20],
               backgroundColor: colors.appBlue,
@@ -72,7 +92,13 @@ const WhatExperience: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => 0}
+            onPress={() =>
+              navigation.navigate('WorkoutList', {
+                goal,
+                equipment,
+                experience: Level.ADVANCED,
+              })
+            }
             style={{
               margin: DevicePixels[20],
               backgroundColor: colors.appBlue,

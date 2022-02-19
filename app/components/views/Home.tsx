@@ -82,7 +82,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
               title="Quick routines"
               subtitle="View premade routines"
               image={require('../../images/Homepage_quick_routine.jpeg')}
-              onPress={() => navigation.navigate('QuickRoutines')}
+              onPress={() => 0}
             />
             <HomeCard
               title="View Activity"

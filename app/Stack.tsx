@@ -45,6 +45,7 @@ import GoalSummary from './components/views/GoalSummary';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import Rating from './components/views/Rating';
 import WhatExperience from './components/views/Workout/WhatExperience';
+import WorkoutList from './components/views/Workout/WorkoutList';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -248,6 +249,11 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="WhatExperience"
             component={WhatExperience}
+            options={{headerTitle: ''}}
+          />
+          <Stack.Screen
+            name="WorkoutList"
+            component={WorkoutList}
             options={{headerTitle: ''}}
           />
         </Stack.Group>
