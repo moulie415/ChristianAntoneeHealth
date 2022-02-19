@@ -91,7 +91,6 @@ const WorkoutList: React.FC<{
     );
   });
 
-
   return (
     <View>
       <List
@@ -207,83 +206,6 @@ const WorkoutList: React.FC<{
               </View>
             </TouchableOpacity>
           );
-
-          // <>
-          //   <ListItem
-          //     onPress={() => {
-          //       if (item.premium && !profile.premium) {
-          //         navigation.navigate('Premium');
-          //       } else if (adLoaded && !profile.premium && settings.ads) {
-          //         setSelectedItem(item);
-          //         show();
-          //       } else {
-          //         getExercisesByIdAction(item.exerciseIds);
-          //         navigation.navigate('QuickRoutine', {routine: item});
-          //       }
-          //     }}
-          //     title={item.name}
-          //     description={`${getLevelString(
-          //       item.level,
-          //     )} - ${getEquipmentString(item.equipment)} - ${getFocusString(
-          //       item.focus,
-          //     )}`}
-          //     accessoryLeft={() =>
-          //       !item.premium || profile.premium ? (
-          //         <ImageOverlay
-          //           containerStyle={{
-          //             height: DevicePixels[75],
-          //             width: DevicePixels[75],
-          //           }}
-          //           overlayAlpha={0.4}
-          //           source={
-          //             item.thumbnail
-          //               ? {uri: item.thumbnail.src}
-          //               : require('../../../images/Homepage_quick_routine.jpeg')
-          //           }>
-          //           <View style={{alignItems: 'center'}}>
-          //             <Text
-          //               style={{
-          //                 color: colors.appWhite,
-          //                 fontSize: DevicePixels[12],
-          //               }}>
-          //               {'Under '}
-          //             </Text>
-          //             <Text category="h6" style={{color: colors.appWhite}}>
-          //               {item.duration}
-          //             </Text>
-          //             <Text
-          //               style={{
-          //                 color: colors.appWhite,
-          //                 fontSize: DevicePixels[12],
-          //               }}>
-          //               mins
-          //             </Text>
-          //           </View>
-          //         </ImageOverlay>
-          //       ) : (
-          //         <View
-          //           style={{
-          //             height: DevicePixels[50],
-          //             width: DevicePixels[75],
-          //             alignItems: 'center',
-          //             justifyContent: 'center',
-          //           }}>
-          //           <Icon name="lock" size={DevicePixels[30]} />
-          //         </View>
-          //       )
-          //     }
-          //   />
-          //   {item.premium && !profile.premium && (
-          //     <TouchableOpacity
-          //       onPress={() => navigation.navigate('Premium')}
-          //       style={{
-          //         ...StyleSheet.absoluteFillObject,
-          //         backgroundColor: '#000',
-          //         opacity: 0.5,
-          //       }}
-          //     />
-          //   )}
-          // </>
         }}
       />
     </View>

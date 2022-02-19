@@ -79,10 +79,10 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
               marginBottom: ROW_MARGIN,
             }}>
             <HomeCard
-              title="Quick routines"
-              subtitle="View premade routines"
+              title="Premium"
+              subtitle="Explore premium"
               image={require('../../images/Homepage_quick_routine.jpeg')}
-              onPress={() => 0}
+              onPress={() => navigation.navigate('Premium')}
             />
             <HomeCard
               title="View Activity"
