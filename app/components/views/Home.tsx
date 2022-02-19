@@ -80,7 +80,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
             }}>
             <HomeCard
               title="Premium"
-              subtitle="Explore premium"
+              subtitle="Explore premium features"
               image={require('../../images/Homepage_quick_routine.jpeg')}
               onPress={() => navigation.navigate('Premium')}
             />
