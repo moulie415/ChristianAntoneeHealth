@@ -15,9 +15,9 @@ const Tab3: React.FC<QuickRoutinesListProps> = ({
   const filtered = useMemo(() => {
     return Object.values(quickRoutines).filter(routine => {
       return (
-        (key === 'area' && routine.area === 'full') ||
+        key === 'area' && routine.area === 'full' //||
         // (key === 'focus' && routine.focus === Goal.CORE) ||
-        (key === 'equipment' && routine.equipment === 'none')
+        // (key === 'equipment' && routine.equipment === 'none')
       );
     });
   }, [key, quickRoutines]);

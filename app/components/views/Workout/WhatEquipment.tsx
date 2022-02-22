@@ -43,28 +43,6 @@ const WhatEquipment: React.FC<{
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('WhatExperience', {goal, equipment: 'none'})
-            }
-            style={{
-              margin: DevicePixels[20],
-              marginTop: 0,
-              backgroundColor: colors.appBlue,
-              padding: DevicePixels[10],
-              borderColor: colors.appBlue,
-              borderWidth: DevicePixels[1],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                color: colors.appWhite,
-                fontWeight: 'bold',
-              }}>
-              I don’t have anything
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
               navigation.navigate('WhatExperience', {
                 goal,
                 equipment: 'minimal',

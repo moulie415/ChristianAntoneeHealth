@@ -53,7 +53,6 @@ const sections: {
     items: [
       {id: 'full', name: 'Full equipment'},
       {id: 'minimal', name: 'Minimal equipment'},
-      {id: 'none', name: 'No equipment'},
     ],
     image: require('../../../images/Quick_routine_equipment.jpeg'),
   },
@@ -147,10 +146,7 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                               key,
                             });
                           }
-                          if (
-                            (id === 'full' && key === 'area') ||
-                            id === 'none'
-                          ) {
+                          if (id === 'full' && key === 'area') {
                             // @ts-ignore
                             return navigation.navigate('QuickRoutinesTabs', {
                               screen: 'Tab3',

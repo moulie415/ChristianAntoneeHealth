@@ -1,7 +1,7 @@
 import {Goal, Level} from './Shared';
 
 export type Area = 'upper' | 'lower' | 'full' | 'core';
-export type Equipment = 'full' | 'minimal' | 'none';
+export type Equipment = 'full' | 'minimal';
 
 export default interface QuickRoutine {
   id: string;

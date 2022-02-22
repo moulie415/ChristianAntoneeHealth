@@ -28,25 +28,6 @@ const SelectEquipment: React.FC<{
           paddingBottom: DevicePixels[175],
         }}>
         <TouchableOpacity
-          onPress={() => setEquipment('none')}
-          style={{
-            marginBottom: DevicePixels[20],
-            backgroundColor:
-              equipment === 'none' ? colors.appBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.appBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: equipment === 'none' ? colors.appWhite : colors.appBlue,
-            }}>
-            I don’t have anything
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => setEquipment('minimal')}
           style={{
             marginBottom: DevicePixels[20],

@@ -87,7 +87,7 @@ const WorkoutList: React.FC<{
     return (
       routine.focus === goal &&
       routine.level === experience &&
-      routine.equipment === equipment
+      (routine.equipment === equipment || equipment === 'full')
     );
   });
 
