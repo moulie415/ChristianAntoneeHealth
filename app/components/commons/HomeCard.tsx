@@ -6,9 +6,14 @@ import {
   TouchableHighlight,
   Dimensions,
 } from 'react-native';
+import {connect} from 'react-redux';
 import DevicePixels from '../../helpers/DevicePixels';
 import globalStyles from '../../styles/globalStyles';
+import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
 import ImageOverlay from './ImageOverlay';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import colors from '../../constants/colors';
 
 const {height, width} = Dimensions.get('window');
 
@@ -21,7 +26,9 @@ const HomeCard: React.FC<{
   subtitle: string;
   onPress: () => void;
   image: ImageSourcePropType;
-}> = ({title, subtitle, onPress, image}) => {
+  premium?: boolean;
+  profile: Profile;
+}> = ({title, subtitle, onPress, image, profile, premium}) => {
   return (
     <TouchableHighlight
       style={[
@@ -74,10 +81,22 @@ const HomeCard: React.FC<{
             ]}>
             {subtitle}
           </Text>
+          {premium && !profile.premium && (
+            <Icon
+              style={{marginTop: DevicePixels[10]}}
+              name="lock"
+              size={DevicePixels[20]}
+              color={colors.appWhite}
+            />
+          )}
         </View>
       </Layout>
     </TouchableHighlight>
   );
 };
 
-export default HomeCard;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(HomeCard);

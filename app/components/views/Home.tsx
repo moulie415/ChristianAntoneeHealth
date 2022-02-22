@@ -63,6 +63,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
               title="Saved workouts/tests"
               subtitle="View saved workouts, tests..."
               image={require('../../images/Homepage_Saved_Workouts.jpeg')}
+              premium
               onPress={() => {
                 if (profile.premium) {
                   navigation.navigate('SavedItems');
@@ -89,17 +90,18 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
               subtitle="Track you daily activity"
               image={require('../../images/Homepage_activity_tracking.jpeg')}
               onPress={() => {
-                if (Platform.OS === 'ios') {
-                  Linking.openURL('x-apple-health://');
-                } else {
-                  GoogleFit.isAvailable((err, res) => {
-                    if (err) {
-                      return linkToGoogleFit();
-                    } else {
-                      res ? GoogleFit.openFit() : linkToGoogleFit();
-                    }
-                  });
-                }
+                navigation.navigate('Activity');
+                // if (Platform.OS === 'ios') {
+                //   Linking.openURL('x-apple-health://');
+                // } else {
+                //   GoogleFit.isAvailable((err, res) => {
+                //     if (err) {
+                //       return linkToGoogleFit();
+                //     } else {
+                //       res ? GoogleFit.openFit() : linkToGoogleFit();
+                //     }
+                //   });
+                // }
               }}
             />
           </Layout>

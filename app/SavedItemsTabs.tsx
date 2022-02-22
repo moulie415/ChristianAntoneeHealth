@@ -21,7 +21,7 @@ const SavedItemsTabs = () => {
           tabBarLabel: 'Saved workouts',
           tabBarLabelStyle: {textTransform: 'none'},
         }}
-        component={SavedWorkouts}
+        component={SavedQuickRoutines}
       />
       <SavedItemsTab.Screen
         name="SavedTests"
@@ -31,14 +31,14 @@ const SavedItemsTabs = () => {
         }}
         component={SavedTests}
       />
-      <SavedItemsTab.Screen
+      {/* <SavedItemsTab.Screen
         name="SavedQuickRoutines"
         options={{
           tabBarLabel: 'Saved quick routines',
           tabBarLabelStyle: {textTransform: 'none'},
         }}
         component={SavedQuickRoutines}
-      />
+      /> */}
     </SavedItemsTab.Navigator>
   );
 };

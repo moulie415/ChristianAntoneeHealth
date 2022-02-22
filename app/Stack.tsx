@@ -46,6 +46,8 @@ import WhatEquipment from './components/views/Workout/WhatEquipment';
 import Rating from './components/views/Rating';
 import WhatExperience from './components/views/Workout/WhatExperience';
 import WorkoutList from './components/views/Workout/WorkoutList';
+import Activity from './components/views/Activity/Activity';
+import WeeklyActivity from './components/views/Activity/WeeklyActivity';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -256,6 +258,7 @@ const StackComponent: FunctionComponent = () => {
             component={WorkoutList}
             options={{headerTitle: ''}}
           />
+          <Stack.Screen name="Activity" component={WeeklyActivity} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />
