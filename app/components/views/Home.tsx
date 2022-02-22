@@ -56,7 +56,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
             <HomeCard
               title="Education"
               subtitle="Health and nutrition articles"
-              image={require('../../images/Homepage_Education.jpeg')}
+              image={require('../../images/education.jpeg')}
               onPress={() => navigation.navigate('Education')}
             />
             <HomeCard
