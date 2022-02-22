@@ -1,12 +1,12 @@
 import React from 'react';
 import {Layout, Text} from '@ui-kitten/components';
-import {Dimensions, Linking, Platform, SafeAreaView} from 'react-native';
-import GoogleFit from 'react-native-google-fit';
+import {Dimensions, SafeAreaView} from 'react-native';
+
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeCard from '../commons/HomeCard';
-import {linkToGoogleFit} from '../../helpers/biometrics';
+
 import DevicePixels from '../../helpers/DevicePixels';
 
 const {height, width} = Dimensions.get('window');
@@ -89,20 +89,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
               title="View Activity"
               subtitle="Track you daily activity"
               image={require('../../images/Homepage_activity_tracking.jpeg')}
-              onPress={() => {
-                navigation.navigate('Activity');
-                // if (Platform.OS === 'ios') {
-                //   Linking.openURL('x-apple-health://');
-                // } else {
-                //   GoogleFit.isAvailable((err, res) => {
-                //     if (err) {
-                //       return linkToGoogleFit();
-                //     } else {
-                //       res ? GoogleFit.openFit() : linkToGoogleFit();
-                //     }
-                //   });
-                // }
-              }}
+              onPress={() => navigation.navigate('Activity')}
             />
           </Layout>
         </Layout>

@@ -46,8 +46,13 @@ import WhatEquipment from './components/views/Workout/WhatEquipment';
 import Rating from './components/views/Rating';
 import WhatExperience from './components/views/Workout/WhatExperience';
 import WorkoutList from './components/views/Workout/WorkoutList';
-import Activity from './components/views/Activity/Activity';
 import WeeklyActivity from './components/views/Activity/WeeklyActivity';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Image, Linking, Platform, View} from 'react-native';
+import DevicePixels from './helpers/DevicePixels';
+import GoogleFit from 'react-native-google-fit';
+import {linkToGoogleFit} from './helpers/biometrics';
+import FitHealthIcon from './components/commons/FitHealthIcon';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -258,7 +263,13 @@ const StackComponent: FunctionComponent = () => {
             component={WorkoutList}
             options={{headerTitle: ''}}
           />
-          <Stack.Screen name="Activity" component={WeeklyActivity} />
+          <Stack.Screen
+            name="Activity"
+            component={WeeklyActivity}
+            options={{
+              headerRight: () => <FitHealthIcon />,
+            }}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />
