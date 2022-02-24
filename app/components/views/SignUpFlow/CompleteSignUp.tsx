@@ -49,9 +49,7 @@ const CompleteSignUp: React.FC<{
             I've read the{' '}
             <Text
               onPress={() =>
-                Linking.openURL(
-                  'https://healthandmovement.co.uk/privacy-policy',
-                )
+                Linking.openURL('https://christianantonee.com/privacy-policy')
               }
               style={{
                 textDecorationLine: 'underline',

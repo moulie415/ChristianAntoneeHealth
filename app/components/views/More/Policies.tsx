@@ -15,7 +15,7 @@ const Policies = () => {
       </Text>
       <TouchableOpacity
         onPress={() =>
-          Linking.openURL('https://healthandmovement.co.uk/privacy-policy')
+          Linking.openURL('https://christianantonee.com/privacy-policy')
         }
         style={{
           flexDirection: 'row',

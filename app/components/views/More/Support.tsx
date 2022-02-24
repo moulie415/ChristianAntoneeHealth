@@ -11,7 +11,7 @@ const Support: React.FC<SupportProps> = () => {
       <View style={{justifyContent: 'flex-end', flex: 1}}>
         <Button
           onPress={() =>
-            Linking.openURL('https://healthandmovement.co.uk/contact')
+            Linking.openURL('https://christianantonee.com/contact')
           }
           style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
           Contact Us

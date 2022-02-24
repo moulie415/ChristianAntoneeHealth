@@ -9,14 +9,14 @@ const About: React.FC<AboutProps> = () => {
   return (
     <ScrollView style={{flex: 1}}>
       <TouchableOpacity
-        onPress={() => Linking.openURL('https://healthandmovement.co.uk/')}>
+        onPress={() => Linking.openURL('https://christianantonee.com')}>
         <Text
           style={{
             color: colors.appBlue,
             textAlign: 'center',
             marginTop: DevicePixels[20],
           }}>
-          www.healthandmovement.co.uk
+          christianantonee.com
         </Text>
       </TouchableOpacity>
       <Text
