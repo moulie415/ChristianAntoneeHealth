@@ -304,3 +304,10 @@ export const getEducationCategoryString = (category: Category) => {
       return 'General Lifestyle';
   }
 };
+
+function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+export async function waitMilliseconds(ms: number) {
+  await timeout(ms);
+}

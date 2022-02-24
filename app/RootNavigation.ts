@@ -18,7 +18,7 @@ export function resetToTabs() {
     }),
   );
   if (!store.getState().profile.viewedSummary) {
-    // navigate('GoalSummary');
+    navigate('GoalSummary');
   }
 }
 
