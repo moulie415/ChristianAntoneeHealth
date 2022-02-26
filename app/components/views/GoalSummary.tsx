@@ -29,6 +29,7 @@ const GoalSummary: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'GoalSummary'>;
   viewedSummary: boolean;
 }> = ({profile, setViewedSummary: setViewed, navigation, viewedSummary}) => {
+  const [showProgam, setShowProgram] = useState(viewedSummary);
   const {goal} = profile;
   const goalItems: {text: string; val: string}[] = [
     {
@@ -55,17 +56,21 @@ const GoalSummary: React.FC<{
       for (let i = 0; i <= 4; i += 1) {
         setValue(i / 4);
         await waitMilliseconds(2000);
+        if (i === 4) {
+          await waitMilliseconds(1000);
+          setShowProgram(true);
+        }
       }
     };
-    if (!viewedSummary) {
+    if (!showProgam) {
       increment();
     }
-  }, [viewedSummary]);
+  }, [showProgam]);
 
   return (
     <View style={{backgroundColor: colors.appWhite, flex: 1}}>
-      {value === 1 ? (
-        <View style={{flex: 1}}>
+      {showProgam ? (
+        <Animated.View entering={FadeIn.delay(500)} style={{flex: 1}}>
           <Text
             category="h4"
             style={{margin: DevicePixels[20], textAlign: 'center'}}>
@@ -75,47 +80,53 @@ const GoalSummary: React.FC<{
             if (value * 4 > index) {
               return (
                 <Fragment key={item.text}>
-                  {index === 0 && <Divider />}
                   <Animated.View
                     entering={
-                      Platform.OS === 'ios' ? FadeIn.delay(1000) : undefined
-                    }
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      margin: DevicePixels[10],
-                    }}>
-                    <Icon
-                      name={goal === Goal.STRENGTH ? 'dumbbell' : 'heartbeat'}
-                      size={DevicePixels[20]}
-                      color={colors.appBlue}
-                      style={{marginHorizontal: DevicePixels[10]}}
-                    />
-                    <Text style={{flex: 1}} category="h6">
-                      {item.text}
-                    </Text>
-                    <Text
-                      category="h6"
+                      Platform.OS === 'ios'
+                        ? FadeIn.delay((index + 1) * 500)
+                        : undefined
+                    }>
+                    {index === 0 && <Divider />}
+                    <View
                       style={{
-                        color: colors.appBlue,
-                        marginHorizontal: DevicePixels[10],
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        margin: DevicePixels[10],
                       }}>
-                      {item.val}
-                    </Text>
+                      <Icon
+                        name={goal === Goal.STRENGTH ? 'dumbbell' : 'heartbeat'}
+                        size={DevicePixels[20]}
+                        color={colors.appBlue}
+                        style={{marginHorizontal: DevicePixels[10]}}
+                      />
+                      <Text style={{flex: 1}} category="h6">
+                        {item.text}
+                      </Text>
+                      <Text
+                        category="h6"
+                        style={{
+                          color: colors.appBlue,
+                          marginHorizontal: DevicePixels[10],
+                        }}>
+                        {item.val}
+                      </Text>
+                    </View>
+                    <Divider />
                   </Animated.View>
-                  <Divider />
                 </Fragment>
               );
             }
             return null;
           })}
 
-          <Button
-            onPress={() => navigation.navigate('Activity')}
-            style={{margin: DevicePixels[20]}}>
-            View progress
-          </Button>
-        </View>
+          <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <Button
+              onPress={() => navigation.navigate('Activity')}
+              style={{margin: DevicePixels[20]}}>
+              View progress
+            </Button>
+          </View>
+        </Animated.View>
       ) : (
         <Animated.View
           entering={Platform.OS === 'ios' ? FadeIn.delay(500) : undefined}
@@ -145,27 +156,29 @@ const GoalSummary: React.FC<{
             if (value * 4 > index) {
               return (
                 <Fragment key={item}>
-                  {index === 0 && <Divider />}
                   <Animated.View
                     entering={
                       Platform.OS === 'ios' ? FadeIn.delay(1000) : undefined
-                    }
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      margin: DevicePixels[10],
-                    }}>
-                    <Icon
-                      name="check"
-                      size={DevicePixels[15]}
-                      color={colors.appBlue}
-                      style={{marginHorizontal: DevicePixels[10]}}
-                    />
-                    <Text style={{flex: 1}} category="h5">
-                      {item}
-                    </Text>
+                    }>
+                    {index === 0 && <Divider />}
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        margin: DevicePixels[10],
+                      }}>
+                      <Icon
+                        name="check"
+                        size={DevicePixels[15]}
+                        color={colors.appBlue}
+                        style={{marginHorizontal: DevicePixels[10]}}
+                      />
+                      <Text style={{flex: 1}} category="h5">
+                        {item}
+                      </Text>
+                    </View>
+                    <Divider />
                   </Animated.View>
-                  <Divider />
                 </Fragment>
               );
             }
