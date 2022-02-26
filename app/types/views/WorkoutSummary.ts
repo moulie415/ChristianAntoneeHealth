@@ -19,4 +19,4 @@ export default interface WorkoutSummaryProps {
   saveWorkoutAction: (workout: SavedWorkout) => void;
   workout: Exercise[];
   setShareModalVisibleAction: (payload: boolean) => void;
-};
+}

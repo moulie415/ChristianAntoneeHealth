@@ -23,4 +23,4 @@ export default interface CustomizeExerciseProps {
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
   profile: Profile;
-};
+}

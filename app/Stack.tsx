@@ -246,7 +246,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="GoalSummary"
             component={GoalSummary}
-            options={{headerTitle: 'Goal Summary'}}
+            options={{headerTitle: ''}}
           />
           <Stack.Screen
             name="WhatEquipment"

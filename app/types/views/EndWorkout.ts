@@ -16,4 +16,4 @@ export default interface EndWorkoutProps {
   route: EndWorkoutRouteProp;
   profile: Profile;
   workout: Exercise[];
-}
+};

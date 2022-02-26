@@ -16,4 +16,4 @@ export default interface EndQuickRoutineProps {
   route: EndQuickRoutineRouteProp;
   profile: Profile;
   workout: Exercise[];
-};
+}

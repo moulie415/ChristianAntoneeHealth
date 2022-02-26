@@ -201,7 +201,9 @@ const Chat: React.FC<ChatProps> = ({
 
   return (
     <Animated.View
-      entering={FadeIn.duration(1000).delay(500)}
+      entering={
+        Platform.OS === 'ios' ? FadeIn.duration(1000).delay(500) : undefined
+      }
       style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
         renderCustomView={renderCustomView}

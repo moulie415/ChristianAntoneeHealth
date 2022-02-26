@@ -3,7 +3,10 @@ import {UpdateProfilePayload} from '../../actions/profile';
 import {StackParamList} from '../../App';
 import Profile from '../Profile';
 
-type SettingsNavigationProp = NativeStackNavigationProp<StackParamList, 'Settings'>;
+type SettingsNavigationProp = NativeStackNavigationProp<
+  StackParamList,
+  'Settings'
+>;
 
 export default interface SettingsProps {
   navigation: SettingsNavigationProp;

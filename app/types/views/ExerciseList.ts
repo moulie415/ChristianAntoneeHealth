@@ -25,4 +25,4 @@ export default interface ExerciseListProps {
   setWorkoutAction: (workout: Exercise[]) => void;
   loading: boolean;
   profile: Profile;
-}
+};
