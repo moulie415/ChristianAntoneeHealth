@@ -2,6 +2,7 @@ import React, {ReactNode, useEffect, useRef} from 'react';
 import {View, Dimensions, Animated} from 'react-native';
 import Svg, {Path, Rect} from 'react-native-svg';
 import MaskedView from '@react-native-community/masked-view';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const LiquidProgress: React.FC<{
   backWaveColor?: string;
@@ -9,7 +10,6 @@ const LiquidProgress: React.FC<{
   fill?: number;
   frontWaveColor?: string;
   size?: number;
-  customMask?: null | ReactNode;
 }> = ({
   frontWaveColor,
   backgroundColor,
@@ -17,7 +17,6 @@ const LiquidProgress: React.FC<{
   size,
   fill,
   children,
-  customMask = null,
 }) => {
   const SIZE = size;
   const AnimatedSvg = Animated.createAnimatedComponent(Svg);
@@ -39,31 +38,26 @@ const LiquidProgress: React.FC<{
   }, []);
 
   useEffect(() => {
-    Animated.spring(fillAnim, {
+    Animated.timing(fillAnim, {
       toValue: fill,
       useNativeDriver: true,
-      tension: 20,
+      duration: 1000,
     }).start();
   }, [fill]);
 
-  const px = (number: number) => {
-    return width < 392.72727272727275
-      ? (number * 350) / width
-      : (number * 392.72727272727275) / width;
-  };
   const ProgressBar = () => {
     return (
       <View
         style={{
           position: 'absolute',
-          width: SIZE,
-          height: SIZE,
-          flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',
-          zIndex: px(20),
-          right: SIZE / 1.17,
+          zIndex: 20,
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: -SIZE / 4,
         }}>
         {children}
       </View>
@@ -76,25 +70,21 @@ const LiquidProgress: React.FC<{
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        left: px(-40),
-        top: px(20),
+        // left: px(-40),
+        // top: px(20),
       }}>
       <ProgressBar />
       <MaskedView
         maskElement={
-          <View style={{left: (px(320) * SIZE) / 280}}>
-            {customMask ? (
-              customMask
-            ) : (
-              <View
-                style={{
-                  backgroundColor: 'red',
-                  width: px(SIZE),
-                  height: px(SIZE),
-                  borderRadius: px(SIZE / 2),
-                }}
-              />
-            )}
+          <View style={{left: (320 * SIZE) / 280}}>
+            <View
+              style={{
+                backgroundColor: 'red',
+                width: SIZE,
+                height: SIZE,
+                borderRadius: SIZE / 2,
+              }}
+            />
           </View>
         }>
         <View
@@ -114,20 +104,20 @@ const LiquidProgress: React.FC<{
               ],
             }}>
             <AnimatedSvg
-              width={px(SIZE * 3)}
-              height={px(SIZE)}
+              width={SIZE * 3}
+              height={SIZE}
               style={{
-                left: (px(-100) * SIZE) / 280,
+                left: (-100 * SIZE) / 280,
                 transform: [
                   {
                     translateX: progress.interpolate({
                       inputRange: [0, 1, 2],
-                      outputRange: [0, (px(280) * SIZE) / 280, 0],
+                      outputRange: [0, (280 * SIZE) / 280, 0],
                       extrapolate: 'clamp',
                     }),
                   },
                   {scale: 0.8},
-                  {translateY: px(7)},
+                  {translateY: 7},
                 ],
               }}
               viewBox={'0 0 560 20'}>
@@ -149,15 +139,15 @@ const LiquidProgress: React.FC<{
               />
             </AnimatedSvg>
             <AnimatedSvg
-              width={px(SIZE * 3)}
-              height={px(SIZE)}
+              width={SIZE * 3}
+              height={SIZE}
               style={{
-                left: (px(300) * SIZE) / 280,
+                left: (300 * SIZE) / 280,
                 transform: [
                   {
                     translateX: progress.interpolate({
                       inputRange: [0, 1, 2],
-                      outputRange: [0, (px(-600) * SIZE) / 280, px(0)],
+                      outputRange: [0, (-600 * SIZE) / 280, 0],
                       extrapolate: 'clamp',
                     }),
                   },
@@ -185,10 +175,10 @@ const LiquidProgress: React.FC<{
               />
             </AnimatedSvg>
             <AnimatedSvg
-              width={px(SIZE * 3)}
-              height={px(SIZE * 2)}
+              width={SIZE * 3}
+              height={SIZE * 2}
               style={{
-                transform: [{translateY: (SIZE / 280) * px(-110)}, {scale: 1}],
+                transform: [{translateY: (SIZE / 280) * -110}, {scale: 1}],
                 backgroundColor: 'transparent',
                 position: 'absolute',
               }}

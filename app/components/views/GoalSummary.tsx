@@ -1,94 +1,26 @@
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
-import {Goal, MyRootState} from '../../types/Shared';
+import React, {useEffect, useState} from 'react';
+import {MyRootState} from '../../types/Shared';
 import Profile from '../../types/Profile';
 import {connect} from 'react-redux';
 import {setViewedSummary} from '../../actions/profile';
-import {Divider, Layout} from '@ui-kitten/components';
+import {Layout} from '@ui-kitten/components';
 import Text from '../commons/Text';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {
-  Alert,
-  StyleSheet,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  Animated,
-} from 'react-native';
+import {View} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import LiquidProgress from '../commons/LiquidProgress';
 import {waitMilliseconds} from '../../helpers';
+import Animated, {FadeIn} from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const Row: React.FC<{
-  right?: string | number;
-  left?: string;
-  icon?: string;
-  onPress?: () => void;
-  customLeft?: ReactNode;
-  leftStyle?: TextStyle;
-  rightStyle?: TextStyle;
-  iconStyle?: any;
-}> = ({
-  right,
-  left,
-  icon,
-  onPress,
-  leftStyle,
-  rightStyle,
-  iconStyle,
-  customLeft,
-}) => {
-  return (
-    <>
-      <TouchableOpacity
-        disabled={!onPress}
-        onPress={onPress}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginHorizontal: DevicePixels[20],
-          marginBottom: DevicePixels[10],
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            flex: 1,
-          }}>
-          <Icon
-            name={icon || 'circle'}
-            solid
-            style={[
-              {
-                marginRight: DevicePixels[10],
-                fontSize: DevicePixels[8],
-              },
-              iconStyle,
-            ]}
-          />
-          {customLeft || (
-            <Text
-              style={[
-                {
-                  marginRight: DevicePixels[10],
-                },
-                leftStyle,
-              ]}
-              category="s1">
-              {left}
-            </Text>
-          )}
-        </View>
-        <Text category="h6" style={[{color: colors.appBlue}, rightStyle]}>
-          {right}
-        </Text>
-      </TouchableOpacity>
-      <Divider style={{marginBottom: DevicePixels[10]}} />
-    </>
-  );
-};
+const items = [
+  'Evaluating your profile',
+  'Building your workout plan',
+  'Settings your weekly goals',
+  'Determining your fitness/strength tests',
+];
 
 const GoalSummary: React.FC<{
   profile: Profile;
@@ -103,9 +35,9 @@ const GoalSummary: React.FC<{
 
   useEffect(() => {
     const increment = async () => {
-      for (let i = 0; i <= 1; i += 0.2) {
-        setValue(i);
-        await waitMilliseconds(1000);
+      for (let i = 0; i <= 4; i += 1) {
+        setValue(i / 4);
+        await waitMilliseconds(2000);
       }
     };
     increment();
@@ -116,23 +48,60 @@ const GoalSummary: React.FC<{
       <View
         style={{
           flex: 1,
-          backgroundColor: '#fff',
-          alignItems: 'center',
-          justifyContent: 'center',
         }}>
         <LiquidProgress
-          backgroundColor={'black'}
+          backgroundColor={colors.appGrey}
           frontWaveColor={colors.appBlue}
           backWaveColor={colors.appBlueFaded}
           fill={value}
-          size={290}>
+          size={DevicePixels[100]}>
           <Animated.View
-            style={{alignSelf: 'center', flexDirection: 'row', height: 70}}>
-            <Text style={{color: 'white', fontSize: 47}}>
-              {(value * 100).toFixed(2)}%
+            style={{
+              height: 30,
+              width: DevicePixels[100],
+  
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: DevicePixels[20],
+                textAlign: 'center',
+              }}>
+              {(value * 100).toFixed(0)}%
             </Text>
           </Animated.View>
         </LiquidProgress>
+      </View>
+      <View style={{flex: 4}}>
+        <Text
+          category="h4"
+          style={{margin: DevicePixels[20], textAlign: 'center'}}>
+          Creating your program
+        </Text>
+        {items.map((item, index) => {
+          if (value * 4 > index) {
+            return (
+              <Animated.View
+                entering={FadeIn.duration(1000)}
+                key={item}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  margin: DevicePixels[10],
+                }}>
+                <Icon
+                  name="check"
+                  size={DevicePixels[15]}
+                  style={{marginHorizontal: DevicePixels[10]}}
+                />
+                <Text style={{flex: 1}} category="h6">
+                  {item}
+                </Text>
+              </Animated.View>
+            );
+          }
+          return null;
+        })}
       </View>
     </Layout>
   );
