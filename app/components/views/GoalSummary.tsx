@@ -29,7 +29,7 @@ const GoalSummary: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'GoalSummary'>;
   viewedSummary: boolean;
 }> = ({profile, setViewedSummary: setViewed, navigation, viewedSummary}) => {
-  const [showProgam, setShowProgram] = useState(viewedSummary);
+  const [showProgram, setShowProgram] = useState(viewedSummary);
   const {goal} = profile;
   const goalItems: {text: string; val: string}[] = [
     {
@@ -62,14 +62,14 @@ const GoalSummary: React.FC<{
         }
       }
     };
-    if (!showProgam) {
+    if (!showProgram) {
       increment();
     }
-  }, [showProgam]);
+  }, [showProgram]);
 
   return (
     <View style={{backgroundColor: colors.appWhite, flex: 1}}>
-      {showProgam ? (
+      {showProgram ? (
         <Animated.View entering={FadeIn.delay(500)} style={{flex: 1}}>
           <Text
             category="h4"
