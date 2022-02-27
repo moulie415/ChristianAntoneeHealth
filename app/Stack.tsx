@@ -191,14 +191,14 @@ const StackComponent: FunctionComponent = () => {
             name="QuickRoutines"
             component={QuickRoutines}
             options={({navigation}) => ({
-              headerTitle: 'Quick Routines',
+              headerTitle: '',
             })}
           />
           <Stack.Screen
             name="QuickRoutinesTabs"
             component={QuickRoutinesTabs}
             options={({navigation}) => ({
-              headerTitle: 'Quick Routines',
+              headerTitle: '',
             })}
           />
           <Stack.Screen
@@ -213,14 +213,14 @@ const StackComponent: FunctionComponent = () => {
             name="EndQuickRoutine"
             component={EndQuickRoutine}
             options={({navigation}) => ({
-              headerTitle: 'Quick Routine',
+              headerTitle: '',
             })}
           />
           <Stack.Screen
             name="QuickRoutineSummary"
             component={QuickRoutineSummary}
             options={({navigation}) => ({
-              headerTitle: 'Quick Routine',
+              headerTitle: '',
             })}
           />
           <Stack.Screen
@@ -268,6 +268,7 @@ const StackComponent: FunctionComponent = () => {
             component={WeeklyActivity}
             options={{
               headerRight: () => <FitHealthIcon />,
+              headerTitle: 'Weekly Activity',
             }}
           />
         </Stack.Group>

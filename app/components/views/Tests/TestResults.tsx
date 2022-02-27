@@ -1,5 +1,5 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
 import TestResultsProp from '../../../types/views/TestResults';
@@ -22,6 +22,7 @@ import {
 } from '../../../helpers';
 import {resetToTabs} from '../../../RootNavigation';
 import {saveTest} from '../../../actions/tests';
+import {Alert} from 'react-native';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,
@@ -43,7 +44,41 @@ const TestResults: React.FC<TestResultsProp> = ({
   const [fill, setFill] = useState(
     isTable ? (100 / max) * score : getPercentileFill(percentile),
   );
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    const save = (saved?: boolean) => {
+      saveTestAction({
+        seconds,
+        result: testResult,
+        createddate: moment().unix(),
+        testId: test.id,
+        saved,
+      });
+    };
+    if (profile.premium) {
+      Alert.alert(
+        'Save test result?',
+        'Do you want to save this test result to view later?',
+        [
+          {
+            text: 'No',
+            onPress: () => {
+              save();
+            },
+          },
+          {
+            text: 'Yes',
+            onPress: () => {
+              save(true);
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } else {
+      save();
+    }
+  }, [saveTestAction, test.id, profile.premium, seconds, testResult]);
 
   return (
     <Layout style={{flex: 1, padding: 20}}>
@@ -138,24 +173,6 @@ const TestResults: React.FC<TestResultsProp> = ({
       <Layout style={{flex: 1, justifyContent: 'flex-end'}}>
         <Button onPress={resetToTabs} style={{marginBottom: DevicePixels[10]}}>
           Return Home
-        </Button>
-        <Button
-          disabled={buttonDisabled}
-          onPress={() => {
-            if (profile.premium) {
-              setButtonDisabled(true);
-              saveTestAction({
-                seconds,
-                result: testResult,
-                createddate: moment().unix(),
-                testId: test.id,
-              });
-              resetToTabs();
-            } else {
-              navigation.navigate('Premium');
-            }
-          }}>
-          Save result
         </Button>
       </Layout>
     </Layout>

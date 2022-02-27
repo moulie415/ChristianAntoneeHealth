@@ -113,6 +113,7 @@ import {SettingsState} from '../reducers/settings';
 import {logError} from '../helpers/error';
 import Message from '../types/Message';
 import {WeeklyItems} from '../reducers/profile';
+import {getQuickRoutinesById} from '../actions/quickRoutines';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -472,6 +473,13 @@ function* getWeeklyItems() {
     yield put(setLoading(true));
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
+    const {quickRoutines} = yield select(
+      (state: MyRootState) => state.quickRoutines,
+    );
+    const missingRoutines = Object.values(weeklyItems.quickRoutines)
+      .filter(item => !quickRoutines[item.quickRoutineId])
+      .map(routine => routine.quickRoutineId);
+    yield put(getQuickRoutinesById(missingRoutines));
     yield put(setWeeklyItems(weeklyItems));
     yield put(setLoading(false));
   } catch (e) {

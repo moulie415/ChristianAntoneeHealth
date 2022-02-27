@@ -1,8 +1,15 @@
+import {WeeklyItems} from '../../reducers/profile';
+import Exercise from '../Exercise';
 import Profile from '../Profile';
-import {Sample, StepSample} from '../Shared';
+import QuickRoutine from '../QuickRoutines';
 
 export default interface WeeklyActivityProps {
-  weightSamples: {[key: number]: Sample[]};
-  stepSamples: {[key: number]: StepSample[]};
   profile: Profile;
-};
+  weeklyItems: WeeklyItems;
+  getWeeklyItems: () => void;
+  loading: boolean;
+  quickRoutines: {[key: string]: QuickRoutine};
+  routinesLoading: boolean;
+  exercises: {[key: string]: Exercise};
+  getExercisesById: (ids: string[]) => void;
+}

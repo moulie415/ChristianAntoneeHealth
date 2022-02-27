@@ -1,5 +1,6 @@
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
+import {SetLoggedInAction} from './profile';
 
 export const GET_QUICK_ROUTINES = 'GET_QUICK_ROUTINES';
 export const GET_QUICK_ROUTINES_BY_ID = 'GET_QUICK_ROUTINES_BY_ID';
@@ -77,4 +78,5 @@ export type QuickRoutinesActions =
   | SaveQuickRoutineAction
   | GetSavedQuickRoutinesAction
   | SetSavedQuickRoutinesAction
-  | GetQuickRoutinesByIdAction;
+  | GetQuickRoutinesByIdAction
+  | SetLoggedInAction;

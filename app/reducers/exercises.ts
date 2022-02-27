@@ -15,6 +15,7 @@ import {
   SET_COOL_DOWN,
   SET_SHARE_MODAL_VISIBLE,
 } from '../actions/exercises';
+import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
 import {
@@ -146,6 +147,8 @@ const reducer = (
         ...state,
         shareModalVisible: action.payload,
       };
+    case SET_LOGGED_IN:
+      return action.payload ? state : initialState;
     default:
       return state;
   }

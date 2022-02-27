@@ -1,3 +1,4 @@
+import {SET_LOGGED_IN} from '../actions/profile';
 import {
   QuickRoutinesActions,
   SET_QUICK_ROUTINES,
@@ -31,6 +32,8 @@ const reducer = (
         ...state,
         savedQuickRoutines: {...state.savedQuickRoutines, ...action.payload},
       };
+    case SET_LOGGED_IN:
+      return action.payload ? state : initialState;
     default:
       return state;
   }

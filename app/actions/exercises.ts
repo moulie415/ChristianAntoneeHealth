@@ -8,6 +8,7 @@ import {
   StrengthArea,
   WarmUp,
 } from '../types/Shared';
+import {SetLoggedInAction} from './profile';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
 export const GET_EXERCISES_BY_ID = 'GET_EXERCISES_BY_ID';
@@ -308,4 +309,5 @@ export type ExercisesActions =
   | SetWarmUpAction
   | SetCoolDownAction
   | SetShareModalVisible
-  | ViewWorkoutAction;
+  | ViewWorkoutAction
+  | SetLoggedInAction;

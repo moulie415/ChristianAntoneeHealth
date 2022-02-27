@@ -71,9 +71,9 @@ const SavedQuickRoutines: FunctionComponent<{
                       routine: quickRoutine,
                     });
                   }}
-                  title={`${quickRoutine.name} - ${moment(
-                    item.createddate,
-                  ).format('MMMM Do YYYY')}`}
+                  title={`${quickRoutine.name} - ${moment
+                    .unix(item.createddate)
+                    .format('MMMM Do YYYY')}`}
                   description={`${quickRoutine.exerciseIds?.length} ${
                     quickRoutine.exerciseIds?.length > 1
                       ? 'exercises'

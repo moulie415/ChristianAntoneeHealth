@@ -48,7 +48,9 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
         </Layout>
       </Layout>
 
-      <Button onPress={resetToTabs} style={{margin: DevicePixels[10]}}>
+      <Button
+        onPress={resetToTabs}
+        style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
         Return Home
       </Button>
     </Layout>

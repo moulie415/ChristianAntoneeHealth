@@ -13,6 +13,7 @@ export interface SavedTest {
   seconds?: number;
   result: number;
   testId: string;
+  saved?: boolean;
 }
 
 export interface SavedQuickRoutine {
