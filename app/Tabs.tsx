@@ -56,7 +56,7 @@ const Tabs = () => {
       /> */}
       <Tab.Screen
         options={{
-          tabBarLabel: 'Fitness',
+          tabBarLabel: 'Test',
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="heartbeat" />
           ),
