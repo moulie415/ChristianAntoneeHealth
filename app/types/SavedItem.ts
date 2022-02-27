@@ -4,12 +4,12 @@ export interface SavedWorkout {
   calories: number;
   seconds: number;
   difficulty: number;
-  createddate: Date;
+  createddate: number;
 }
 
 export interface SavedTest {
   id?: string;
-  createddate: Date;
+  createddate: number;
   seconds?: number;
   result: number;
   testId: string;
@@ -20,6 +20,7 @@ export interface SavedQuickRoutine {
   calories: number;
   seconds: number;
   difficulty: number;
-  createddate: Date;
+  createddate: number;
   quickRoutineId: string;
+  saved?: boolean;
 }

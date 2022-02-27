@@ -68,7 +68,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
               seconds,
               workout: workout.map(exercise => exercise.id),
               difficulty,
-              createddate: new Date(),
+              createddate: moment().unix(),
             });
             resetToTabs();
           } else {

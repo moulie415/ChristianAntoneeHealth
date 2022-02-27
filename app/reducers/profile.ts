@@ -19,11 +19,18 @@ import {
   SET_UNREAD,
   SET_APP_STATE,
   SET_VIEWED_SUMMARY,
+  SET_WEEKLY_ITEMS,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile from '../types/Profile';
+import {SavedQuickRoutine, SavedTest} from '../types/SavedItem';
 import {Sample, StepSample} from '../types/Shared';
+
+export interface WeeklyItems {
+  quickRoutines: {[key: string]: SavedQuickRoutine};
+  tests: {[key: string]: SavedTest};
+}
 
 export interface ProfileState {
   step: number;
@@ -42,6 +49,7 @@ export interface ProfileState {
   chats: {[key: string]: Chat};
   state: AppStateStatus;
   viewedSummary: boolean;
+  weeklyItems: WeeklyItems;
 }
 
 const initialState: ProfileState = {
@@ -75,6 +83,10 @@ const initialState: ProfileState = {
   chats: {},
   state: AppState.currentState,
   viewedSummary: false,
+  weeklyItems: {
+    quickRoutines: {},
+    tests: {},
+  },
 };
 
 const reducer = (
@@ -191,6 +203,11 @@ const reducer = (
       return {
         ...state,
         viewedSummary: true,
+      };
+    case SET_WEEKLY_ITEMS:
+      return {
+        ...state,
+        weeklyItems: action.payload,
       };
     default:
       return state;

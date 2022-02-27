@@ -15,5 +15,4 @@ export default interface QuickRoutineSummaryProps {
   navigation: QuickRoutineNavigationProp;
   route: QuickRoutineRouteProp;
   profile: Profile;
-  saveQuickRoutineAction: (quickRoutine: SavedQuickRoutine) => void;
 }

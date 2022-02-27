@@ -3,6 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
 import Profile from '../Profile';
+import {SavedQuickRoutine} from '../SavedItem';
 
 type EndQuickRoutineNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -16,4 +17,5 @@ export default interface EndQuickRoutineProps {
   route: EndQuickRoutineRouteProp;
   profile: Profile;
   workout: Exercise[];
-}
+  saveQuickRoutine: (payload: SavedQuickRoutine) => void;
+};

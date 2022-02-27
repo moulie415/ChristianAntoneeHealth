@@ -2,6 +2,7 @@ import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {AppStateStatus} from 'react-native';
 import PushNotification from 'react-native-push-notification';
+import {WeeklyItems} from '../reducers/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
@@ -34,6 +35,8 @@ export const SET_UNREAD = 'SET_UNREAD';
 export const SET_APP_STATE = 'SET_APP_STATE';
 export const LOAD_EARLIER_MESSAGES = 'LOAD_EARLIER_MESSAGES';
 export const SET_VIEWED_SUMMARY = 'SET_VIEWED_SUMMARY';
+export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
+export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -191,6 +194,15 @@ export interface SetViewedSummaryAction {
   type: typeof SET_VIEWED_SUMMARY;
 }
 
+export interface GetWeeklyItemsAction {
+  type: typeof GET_WEEKLY_ITEMS;
+}
+
+export interface SetWeeklyItemsAction {
+  type: typeof SET_WEEKLY_ITEMS;
+  payload: WeeklyItems;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -217,7 +229,9 @@ export type ProfileActionTypes =
   | SetUnreadAction
   | SetAppStateAction
   | LoadEarlierMessagesAction
-  | SetViewedSummaryAction;
+  | SetViewedSummaryAction
+  | GetWeeklyItemsAction
+  | SetWeeklyItemsAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -393,4 +407,13 @@ export const loadEarlierMessages = (
 
 export const setViewedSummary = (): SetViewedSummaryAction => ({
   type: SET_VIEWED_SUMMARY,
+});
+
+export const getWeeklyItems = (): GetWeeklyItemsAction => ({
+  type: GET_WEEKLY_ITEMS,
+});
+
+export const setWeeklyItems = (payload: WeeklyItems) => ({
+  type: SET_WEEKLY_ITEMS,
+  payload,
 });

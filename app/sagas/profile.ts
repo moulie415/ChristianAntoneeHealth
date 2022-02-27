@@ -60,6 +60,8 @@ import {
   LOAD_EARLIER_MESSAGES,
   LoadEarlierMessagesAction,
   setMessagesObj,
+  GET_WEEKLY_ITEMS,
+  setWeeklyItems,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -110,6 +112,7 @@ import {getSettings} from './settings';
 import {SettingsState} from '../reducers/settings';
 import {logError} from '../helpers/error';
 import Message from '../types/Message';
+import {WeeklyItems} from '../reducers/profile';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -464,6 +467,17 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
   }
 }
 
+function* getWeeklyItems() {
+  try {
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
+    yield put(setWeeklyItems(weeklyItems));
+  } catch (e) {
+    logError(e);
+    Snackbar.show({text: 'Error fetching weekly data'});
+  }
+}
+
 function* getConnections() {
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
@@ -478,7 +492,7 @@ function* getConnections() {
     yield put(setLoading(false));
   } catch (e) {
     Snackbar.show({text: 'Error fetching connections'});
-    console.warn(e.message);
+    logError(e);
     yield put(setLoading(false));
   }
 }
@@ -705,6 +719,7 @@ export default function* profileSaga() {
     throttle(10000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
+    takeLatest(GET_WEEKLY_ITEMS, getWeeklyItems),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

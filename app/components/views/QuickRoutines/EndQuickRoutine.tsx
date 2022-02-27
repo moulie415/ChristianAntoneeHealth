@@ -4,7 +4,7 @@ import React, {useMemo, useState} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {useEffect} from 'react';
 import moment from 'moment';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {
@@ -16,12 +16,15 @@ import {
 import {saveWorkout} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
 import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
+import {saveQuickRoutine} from '../../../actions/quickRoutines';
+import persistStore from 'redux-persist/es/persistStore';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
   navigation,
   profile,
   workout,
+  saveQuickRoutine: saveQuickRoutineAction,
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [calories, setCalories] = useState(0);
@@ -45,13 +48,18 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           startDate,
           endDate,
           calorieEstimate,
-          'Health and Movement quick routine',
+          'Health and Movement workout',
           routine.name,
         );
         setCalories(calorieEstimate);
         setLoading(false);
       } catch (e) {
-        Alert.alert('Error saving quick routine', e.message);
+        Alert.alert(
+          `Error saving workout to ${
+            Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+          }`,
+          e.message,
+        );
         setLoading(false);
       }
     };
@@ -94,7 +102,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           margin: DevicePixels[10],
           marginTop: DevicePixels[20],
         }}>
-        Quick routine Complete!
+        Workout Complete!
       </Text>
       <Text style={{margin: DevicePixels[10]}}>
         Rate your performance to help us understand your fitness level
@@ -126,25 +134,64 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
         <Text style={{fontWeight: 'normal'}}>{` - ${subtext}`}</Text>
       </Text>
       <Input
-        label="Quick routine note"
+        label="workout note"
         textStyle={{minHeight: DevicePixels[50]}}
         style={{margin: DevicePixels[10], marginTop: 0}}
         multiline
-        placeholder="Add details about this quick routine"
+        placeholder="Add details about this workout"
         value={note}
         onChangeText={setNote}
       />
       <Button
         disabled={loading}
         style={{margin: DevicePixels[10]}}
-        onPress={() =>
-          navigation.navigate('QuickRoutineSummary', {
-            calories,
-            seconds,
-            difficulty,
-            routine,
-          })
-        }>
+        onPress={() => {
+          const navigate = () => {
+            navigation.navigate('QuickRoutineSummary', {
+              calories,
+              seconds,
+              difficulty,
+              routine,
+            });
+          };
+
+          const save = (saved?: boolean) => {
+            saveQuickRoutineAction({
+              calories,
+              seconds,
+              difficulty,
+              createddate: moment().unix(),
+              quickRoutineId: routine.id,
+              saved,
+            });
+          };
+          if (profile.premium) {
+            Alert.alert(
+              'Save workout',
+              'Do you wish to save this workout to view later?',
+              [
+                {style: 'cancel', text: 'Cancel'},
+                {
+                  text: 'No',
+                  onPress: () => {
+                    save();
+                    navigate();
+                  },
+                },
+                {
+                  text: 'Yes',
+                  onPress: () => {
+                    save(true);
+                    navigate();
+                  },
+                },
+              ],
+            );
+          } else {
+            save();
+            navigate();
+          }
+        }}>
         Save & Continue
       </Button>
     </Layout>
@@ -156,4 +203,8 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
   workout: exercises.workout,
 });
 
-export default connect(mapStateToProps)(EndQuickRoutine);
+const mapDispatchToProps = {
+  saveQuickRoutine,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EndQuickRoutine);

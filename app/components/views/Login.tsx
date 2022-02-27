@@ -33,9 +33,10 @@ const items: CarouselItem[] = [
   {
     title: 'Targeted Workouts',
     description:
-      'Create custom workouts to target specific areas of the body and types of fitness.',
+      'Select from a variety of exercise routines designed to target specific body parts',
     image: require('../../images/login.jpeg'),
   },
+
   {
     title: 'Track Progress',
     description: `Monitor your activity and track your fitness with your with ${
@@ -48,12 +49,6 @@ const items: CarouselItem[] = [
     description:
       'Measure fitness across 4 key areas, and get recommendations to improve',
     image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
-  },
-  {
-    title: 'Quick routines',
-    description:
-      'Select from a variety of exercise routines designed to target specific body parts',
-    image: require('../../images/1st_Carousel_image_targeted_workouts.jpeg'),
   },
 ];
 

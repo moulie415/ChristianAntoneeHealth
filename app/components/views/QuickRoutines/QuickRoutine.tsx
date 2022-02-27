@@ -319,7 +319,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                 </View>
                 <Button
                   onPress={() => {
-                    Alert.alert('End quick routine', 'Are you sure?', [
+                    Alert.alert('End workout', 'Are you sure?', [
                       {text: 'No', style: 'cancel'},
                       {
                         text: 'Yes',
@@ -333,7 +333,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     ]);
                   }}
                   style={{margin: DevicePixels[10]}}>
-                  End quick routine
+                  End workout
                 </Button>
               </ScrollView>
             );

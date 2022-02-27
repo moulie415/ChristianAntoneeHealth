@@ -12,6 +12,8 @@ import Education from '../types/Education';
 import Snackbar from 'react-native-snackbar';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
+import moment from 'moment';
+import { WeeklyItems } from '../reducers/profile';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -178,7 +180,9 @@ export const getSavedWorkouts = async (uid: string) => {
     .collection('users')
     .doc(uid)
     .collection('savedWorkouts')
-    .limit(10)
+    .where('saved', '==', true)
+    .orderBy('createddate')
+    .limit(20)
     .get();
   return savedWorkouts.docs.reduce((acc: {[id: string]: SavedWorkout}, cur) => {
     const workout: any = cur.data();
@@ -192,7 +196,9 @@ export const getSavedTests = async (uid: string) => {
     .collection('users')
     .doc(uid)
     .collection('savedTests')
-    .limit(10)
+    .where('saved', '==', true)
+    .orderBy('createddate')
+    .limit(20)
     .get();
   return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, cur) => {
     const test: any = cur.data();
@@ -206,7 +212,9 @@ export const getSavedQuickRoutines = async (uid: string) => {
     .collection('users')
     .doc(uid)
     .collection('savedQuickRoutines')
-    .limit(10)
+    .where('saved', '==', true)
+    .orderBy('createddate')
+    .limit(20)
     .get();
   return savedQuickRoutines.docs.reduce(
     (acc: {[id: string]: SavedQuickRoutine}, cur) => {
@@ -216,6 +224,43 @@ export const getSavedQuickRoutines = async (uid: string) => {
     },
     {},
   );
+};
+
+export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
+  const startOfWeek = moment().startOf('isoWeek').unix();
+  const quickRoutinesQuery = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedQuickRoutines')
+    .where('createddate', '>=', startOfWeek)
+    .limit(200)
+    .get();
+  const quickRoutines = quickRoutinesQuery.docs.reduce(
+    (acc: {[id: string]: SavedQuickRoutine}, cur) => {
+      const routine: any = cur.data();
+      acc[cur.id] = {...routine, id: cur.id};
+      return acc;
+    },
+    {},
+  );
+
+  const testsQuery = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedTests')
+    .where('createddate', '>=', startOfWeek)
+    .limit(200)
+    .get();
+  const tests = testsQuery.docs.reduce(
+    (acc: {[id: string]: SavedTest}, cur) => {
+      const test: any = cur.data();
+      acc[cur.id] = {...test, id: cur.id};
+      return acc;
+    },
+    {},
+  );
+
+  return {quickRoutines, tests};
 };
 
 export const getEducation = async () => {

@@ -147,7 +147,7 @@ const TestResults: React.FC<TestResultsProp> = ({
               saveTestAction({
                 seconds,
                 result: testResult,
-                createddate: new Date(),
+                createddate: moment().unix(),
                 testId: test.id,
               });
               resetToTabs();

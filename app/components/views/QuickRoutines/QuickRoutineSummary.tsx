@@ -8,7 +8,6 @@ import {
 import {resetToTabs} from '../../../RootNavigation';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
-import {saveQuickRoutine} from '../../../actions/quickRoutines';
 import {connect} from 'react-redux';
 import QuickRoutineSummaryProps from '../../../types/views/QuickRoutineSummary';
 
@@ -16,10 +15,8 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   route,
   navigation,
   profile,
-  saveQuickRoutineAction,
 }) => {
   const {calories, seconds, difficulty, routine} = route.params;
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   return (
     <Layout style={{flex: 1}}>
       <Layout
@@ -54,26 +51,6 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
       <Button onPress={resetToTabs} style={{margin: DevicePixels[10]}}>
         Return Home
       </Button>
-      <Button
-        disabled={buttonDisabled}
-        onPress={() => {
-          if (profile.premium) {
-            setButtonDisabled(true);
-            saveQuickRoutineAction({
-              calories,
-              seconds,
-              difficulty,
-              createddate: new Date(),
-              quickRoutineId: routine.id,
-            });
-            resetToTabs();
-          } else {
-            navigation.navigate('Premium');
-          }
-        }}
-        style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
-        Save quick routine
-      </Button>
     </Layout>
   );
 };
@@ -82,11 +59,4 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-const mapDispatchToProps = {
-  saveQuickRoutineAction: saveQuickRoutine,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(QuickRoutineSummary);
+export default connect(mapStateToProps)(QuickRoutineSummary);

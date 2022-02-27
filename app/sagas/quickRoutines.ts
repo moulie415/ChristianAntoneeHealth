@@ -25,9 +25,9 @@ function* saveQuickRoutine(action: SaveQuickRoutineAction) {
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield call(api.saveQuickRoutine, action.payload, uid);
-    yield call(Snackbar.show, {text: 'Quick routine saved '});
+    yield call(Snackbar.show, {text: 'Workout saved '});
   } catch (e) {
-    yield call(Snackbar.show, {text: 'Error saving quick routine'});
+    yield call(Snackbar.show, {text: 'Error saving workout'});
   }
 }
 
@@ -43,7 +43,7 @@ function* getSavedQuickRoutines() {
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
-    Snackbar.show({text: 'Error getting saved quick routines'});
+    Snackbar.show({text: 'Error getting saved workouts'});
   }
 }
 
@@ -61,7 +61,7 @@ function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
-    Snackbar.show({text: 'Error fetching quick routines'});
+    Snackbar.show({text: 'Error fetching workouts'});
   }
 }
 
