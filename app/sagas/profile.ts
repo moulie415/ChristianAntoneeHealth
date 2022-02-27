@@ -469,10 +469,13 @@ function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
 
 function* getWeeklyItems() {
   try {
+    yield put(setLoading(true));
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
     yield put(setWeeklyItems(weeklyItems));
+    yield put(setLoading(false));
   } catch (e) {
+    yield put(setLoading(false));
     logError(e);
     Snackbar.show({text: 'Error fetching weekly data'});
   }

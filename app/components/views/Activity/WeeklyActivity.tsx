@@ -13,6 +13,7 @@ import WeeklyActivityProps from '../../../types/views/WeeklyActivity';
 import {getWeightItems} from '../../../helpers';
 import {weightChartConfig} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {getWeeklyItems} from '../../../actions/profile';
 
 const {width} = Dimensions.get('screen');
 const circleSize = width * 0.268;
@@ -219,4 +220,8 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-export default connect(mapStateToProps)(WeeklyActivity);
+const mapDispatchToProps = {
+  getWeeklyItems,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeeklyActivity);
