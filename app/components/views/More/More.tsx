@@ -103,7 +103,7 @@ const More: React.FC<MoreProps> = ({
       icon: 'share-alt',
       onPress: () =>
         Share.share({
-          title: 'Health and Movement',
+          title: 'CA Health',
           url: STORE_LINK,
           message: STORE_LINK,
         }),

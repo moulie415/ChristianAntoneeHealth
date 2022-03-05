@@ -64,7 +64,7 @@ const Slide = ({slide: {color, elements, tint, hideElements}}: SlideProps) => {
         <Image
           // entering={FadeIn.duration(1000)}
           // exiting={FadeOut.duration(1000)}
-          source={require('../../../images/health_and_movement_logo_colour_centred.png')}
+          source={require('../../../images/logo.png')}
           style={styles.image}
           tintColor={tint || colors.appBlue}
           resizeMode="contain"

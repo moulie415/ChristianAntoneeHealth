@@ -48,7 +48,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           startDate,
           endDate,
           calorieEstimate,
-          'Health and Movement workout',
+          'CA Health workout',
           routine.name,
         );
         setCalories(calorieEstimate);

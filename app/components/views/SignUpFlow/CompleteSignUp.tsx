@@ -73,8 +73,8 @@ const CompleteSignUp: React.FC<{
             iconStyle={{color: colors.appWhite}}
           />
           <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
-            I want to join the Health and Movement mailing list and receive
-            relevant articles offers and promotions
+            I want to join the CA Health mailing list and receive relevant
+            articles offers and promotions
           </Text>
         </TouchableOpacity>
 

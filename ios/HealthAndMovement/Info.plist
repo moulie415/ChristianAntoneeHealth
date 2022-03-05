@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Health and Movement</string>
+	<string>CA Health</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -66,7 +66,7 @@
 	<key>FacebookClientToken</key>
 	<string>790defa691a497fe1cdba431a79e26f3</string>
 	<key>FacebookDisplayName</key>
-	<string>Health And Movement</string>
+	<string>CA Health</string>
 	<key>FirebaseDynamicLinksCustomDomains</key>
 	<array>
 		<string>https://healthandmovement.page.link</string>
@@ -281,7 +281,7 @@
 		<string>Ionicons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
-    <string>Feather.ttf</string>
+		<string>Feather.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

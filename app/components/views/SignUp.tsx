@@ -45,10 +45,7 @@ const SignUp: React.FC<SignUpProps> = ({
           opacity: 0.7,
         }}
       />
-      <Image
-        style={styles.logo}
-        source={require('../../images/logo-and-text.png')}
-      />
+      <Image style={styles.logo} source={require('../../images/name.png')} />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
         contentContainerStyle={{

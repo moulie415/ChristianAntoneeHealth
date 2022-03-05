@@ -76,7 +76,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     if (!available && Platform.OS === 'android') {
       Alert.alert(
         'Google Fit not installed',
-        'While not required we recommend you install Google Fit to get the most out of Health and Movement',
+        'While not required we recommend you install Google Fit to get the most out of CA Health',
         [
           {text: 'Cancel', style: 'cancel'},
           {text: 'Install Google Fit', onPress: linkToGoogleFit},

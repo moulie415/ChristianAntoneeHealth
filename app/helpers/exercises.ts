@@ -165,9 +165,9 @@ export const shareWorkout = async (workout: Exercise[], name: string) => {
 
   try {
     const {action} = await Share.share({
-      title: `${name} has shared a Health and Movement workout with you`,
+      title: `${name} has shared a CA Health workout with you`,
       url,
-      message: `${name} has shared a Health and Movement workout with you, click the link to view the workout: ${url}`,
+      message: `${name} has shared a CA Health workout with you, click the link to view the workout: ${url}`,
     });
     if (action === 'sharedAction') {
       Snackbar.show({text: 'Workout shared successfully'});

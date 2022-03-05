@@ -81,7 +81,7 @@ const Premium: React.FC<PremiumProps> = ({
             marginBottom: DevicePixels[10],
           }}
           resizeMode="contain"
-          source={require('../../../images/health_and_movement_logo_colour_centred.png')}
+          source={require('../../../images/logo.png')}
         />
         <Text
           category="h5"

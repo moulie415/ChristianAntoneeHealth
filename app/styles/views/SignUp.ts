@@ -46,9 +46,10 @@ export default StyleSheet.create({
   logo: {
     margin: DevicePixels[10],
     marginTop: DevicePixels[60],
-    height: DevicePixels[79],
-    width: DevicePixels[200],
     alignSelf: 'center',
+    height: DevicePixels[27],
+    width: DevicePixels[250],
+    tintColor: colors.appWhite,
   },
   button: {
     margin: DevicePixels[10],

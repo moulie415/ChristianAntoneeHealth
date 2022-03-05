@@ -37,9 +37,9 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
                 onPress={async () => {
                   try {
                     const {action} = await Share.share({
-                      title: 'Health and Movement',
+                      title: 'CA Health',
                       url: link,
-                      message: `${profile.name} has invited you to connect on Health and Movement, click the link to connect: ${link}`,
+                      message: `${profile.name} has invited you to connect on CA Health, click the link to connect: ${link}`,
                     });
                     if (action === 'sharedAction') {
                       Snackbar.show({text: 'Link shared successfully'});

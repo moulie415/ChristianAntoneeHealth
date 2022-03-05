@@ -34,11 +34,11 @@ export default StyleSheet.create({
   logoContainer: {
     position: 'absolute',
     alignSelf: 'center',
-    top: DevicePixels[50],
+    top: DevicePixels[60],
   },
   logo: {
-
-    height: DevicePixels[79],
-    width: DevicePixels[200],
+    height: DevicePixels[27],
+    width: DevicePixels[250],
+    tintColor: colors.appWhite,
   },
 });

@@ -44,7 +44,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
           startDate,
           endDate,
           calorieEstimate,
-          'Health and Movement workout',
+          'CA Health workout',
           workout.map(e => e.name).join(', '),
         );
         // TODO: save session https://developers.google.com/fit/android/using-sessions#insert-sessions-in-fitness

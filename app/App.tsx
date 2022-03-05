@@ -145,10 +145,11 @@ const App: React.FC = () => {
             ref={navigationRef}
             onReady={() => {
               sagaMiddleware.run(rootSaga);
+              SplashScreen.hide();
             }}>
             <StackComponent />
           </NavigationContainer>
-          {showSplash && (
+          {/* {showSplash && (
             <Video
               onLoad={() => SplashScreen.hide()}
               source={require('./images/splash.mp4')}
@@ -160,7 +161,7 @@ const App: React.FC = () => {
               resizeMode="cover"
               onEnd={() => setShowSplash(false)}
             />
-          )}
+          )} */}
         </ApplicationProvider>
       </Provider>
     </PersistGate>

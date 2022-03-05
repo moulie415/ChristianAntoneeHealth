@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Health and Movement</string>
+    <string name="app_name">CA Health</string>
     <string name="facebook_app_id">212292566660393</string>
     <string name="facebook_client_token">790defa691a497fe1cdba431a79e26f3</string>
     <string name="fb_login_protocol_scheme">fb212292566660393</string>

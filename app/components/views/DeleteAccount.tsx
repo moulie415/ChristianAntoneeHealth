@@ -46,7 +46,7 @@ const DeleteAccount: React.FC<{
         }}>
         {`We're sad to see you go, please enter your email${
           requiresPassword ? ' and password' : ''
-        } to confirm deletion and be aware that this will delete all your Health and Movement data and it will not be recoverable.`}
+        } to confirm deletion and be aware that this will delete all your CA Health data and it will not be recoverable.`}
       </Text>
       <TextInput
         style={{

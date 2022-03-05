@@ -135,10 +135,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       </Swiper>
 
       <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require('../../images/logo-and-text.png')}
-        />
+        <Image style={styles.logo} source={require('../../images/name.png')} />
       </View>
       <View
         style={{
