@@ -63,7 +63,9 @@ export const facebookSignIn = async () => {
     const credentials = await auth().signInWithCredential(facebookCredential);
     return credentials;
   } catch (e) {
-    Alert.alert('Error', e.message);
+    if (e !== 'User cancelled the login process') {
+      Alert.alert('Error', e.message);
+    }
     throw e;
   }
 };
@@ -80,7 +82,9 @@ export const googleSignIn = async () => {
     const credentials = await auth().signInWithCredential(googleCredential);
     return credentials;
   } catch (e) {
-    Alert.alert('Error', e.message);
+    if (e.code !== '12501') {
+      Alert.alert('Error', e.message);
+    }
     throw e;
   }
 };
