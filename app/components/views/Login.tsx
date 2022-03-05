@@ -39,7 +39,7 @@ const items: CarouselItem[] = [
 
   {
     title: 'Track Progress',
-    description: `Monitor your activity and track your fitness with your with ${
+    description: `Monitor your activity and track your fitness in app as well as with ${
       Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
     }`,
     image: require('../../images/2nd_carousel_image_fitness_tracking.jpeg'),
@@ -49,6 +49,12 @@ const items: CarouselItem[] = [
     description:
       'Measure fitness across 4 key areas, and get recommendations to improve',
     image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
+  },
+  {
+    title: 'Stay Connected',
+    description:
+      'Enjoy in-app messaging where you can share exercises, workouts and compare test results',
+    image: require('../../images/Homepage_activity_tracking.jpeg'),
   },
 ];
 
