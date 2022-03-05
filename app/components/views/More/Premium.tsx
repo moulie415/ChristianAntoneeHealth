@@ -1,8 +1,9 @@
-import {Layout, Text, Button} from '@ui-kitten/components';
+import {Layout, Button} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import {Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Purchases, {
+  PACKAGE_TYPE,
   PurchaserInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
@@ -24,13 +25,14 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
+import Text from '../../commons/Text';
 
 const Premium: React.FC<PremiumProps> = ({
   navigation,
   setPremiumAction,
   settings,
 }) => {
-  const [pkg, setPackage] = useState<PurchasesPackage>();
+  const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<PurchaserInfo>();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -43,7 +45,7 @@ const Premium: React.FC<PremiumProps> = ({
           offerings.current !== null &&
           offerings.current.availablePackages.length !== 0
         ) {
-          setPackage(offerings.current.availablePackages[0]);
+          setPackages(offerings.current.availablePackages);
         }
       } catch (e) {
         Alert.alert('Error fetching Premium offerings', e.message);
@@ -52,6 +54,24 @@ const Premium: React.FC<PremiumProps> = ({
     };
     getOfferings();
   }, []);
+
+  const getPackageStrings = (p: PurchasesPackage) => {
+    switch (p.packageType) {
+      case PACKAGE_TYPE.MONTHLY:
+        return {title: 'monthly', alt: 'month'};
+      case PACKAGE_TYPE.ANNUAL:
+        return {title: 'yearly', alt: 'year'};
+    }
+  };
+
+  const monthlyPrice = (p: PurchasesPackage) => {
+    switch (p.packageType) {
+      case PACKAGE_TYPE.ANNUAL:
+        return p.product.price / 12;
+      default:
+        return p.product.price;
+    }
+  };
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -105,29 +125,12 @@ const Premium: React.FC<PremiumProps> = ({
             />
             <View style={{flex: 1}}>
               <Text category="s1" style={{fontWeight: 'bold'}}>
-                Exercise Video Library
+                Workouts
               </Text>
               <Text style={{}}>
-                Customise your workouts with full access to{' '}
-                <Text style={{fontWeight: 'bold'}}>ALL</Text> exercise videos
-              </Text>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
-            <Icon
-              style={{width: DevicePixels[75], textAlign: 'center'}}
-              size={DevicePixels[30]}
-              color={colors.appBlue}
-              name="list-ol"
-            />
-            <View style={{flex: 1}}>
-              <Text category="s1" style={{fontWeight: 'bold'}}>
-                Quick Routines
-              </Text>
-              <Text style={{}}>
-                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> quick
-                routines to select workouts from any training style and target
-                every body part
+                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> workouts to
+                select workouts from any training style and target every body
+                part
               </Text>
             </View>
           </View>
@@ -204,7 +207,7 @@ const Premium: React.FC<PremiumProps> = ({
             </View>
           )}
         </View>
-        {pkg ? (
+        {packages.length ? (
           <>
             {premiumActive ? (
               <View
@@ -224,37 +227,84 @@ const Premium: React.FC<PremiumProps> = ({
               </View>
             ) : (
               <>
-                <Button
+                <View
                   style={{
-                    marginHorizontal: DevicePixels[40],
-                    marginBottom: DevicePixels[5],
-                  }}
-                  onPress={async () => {
-                    try {
-                      setLoading(true);
-                      const {
-                        purchaserInfo,
-                        productIdentifier,
-                      } = await Purchases.purchasePackage(pkg);
-                      if (
-                        typeof purchaserInfo.entitlements.active.Premium !==
-                        'undefined'
-                      ) {
-                        setLoading(false);
-                        navigation.goBack();
-                        setPremiumAction(true);
-                        Snackbar.show({text: 'Premium activated'});
-                      }
-                    } catch (e) {
-                      setLoading(false);
-                      if (!e.userCancelled) {
-                        logError(e);
-                        Alert.alert('Error', e.message);
-                      }
-                    }
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
                   }}>
-                  {`${pkg.product.price_string}/month`}
-                </Button>
+                  {packages.map(p => {
+                    const {title, alt} = getPackageStrings(p);
+                    return (
+                      <TouchableOpacity
+                        onPress={async () => {
+                          try {
+                            setLoading(true);
+                            const {
+                              purchaserInfo,
+                              productIdentifier,
+                            } = await Purchases.purchasePackage(p);
+                            if (
+                              typeof purchaserInfo.entitlements.active
+                                .Premium !== 'undefined'
+                            ) {
+                              setLoading(false);
+                              navigation.goBack();
+                              setPremiumAction(true);
+                              Snackbar.show({text: 'Premium activated'});
+                            }
+                          } catch (e) {
+                            setLoading(false);
+                            if (!e.userCancelled) {
+                              logError(e);
+                              Alert.alert('Error', e.message);
+                            }
+                          }
+                        }}
+                        style={{
+                          borderColor: colors.appBlue,
+                          borderWidth: DevicePixels[3],
+                          height: DevicePixels[100],
+                          width: DevicePixels[125],
+                          borderRadius: DevicePixels[10],
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                        key={p.identifier}>
+                        <Text
+                          category="h6"
+                          style={{
+                            textTransform: 'uppercase',
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                          }}>
+                          {title}
+                        </Text>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            color: colors.appBlue,
+                            fontWeight: 'bold',
+                          }}>
+                          {p.product.price_string}
+                        </Text>
+                        <View
+                          style={{
+                            backgroundColor: colors.appBlue,
+                            padding: DevicePixels[1],
+                            paddingHorizontal: DevicePixels[4],
+                            borderRadius: DevicePixels[5],
+                            marginTop: DevicePixels[2],
+                          }}>
+                          <Text
+                            style={{
+                              textAlign: 'center',
+                              color: colors.appWhite,
+                            }}>{`${monthlyPrice(p).toFixed(2)}/mo`}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
 
                 <TouchableOpacity
                   onPress={async () => {
