@@ -17,7 +17,7 @@ const SelectEquipment: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appWhite,
+          color: colors.appBlue,
         }}>
         What equipment do you have?
       </Text>

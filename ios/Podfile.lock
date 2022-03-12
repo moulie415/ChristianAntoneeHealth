@@ -432,7 +432,7 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
-  - FirebaseCoreDiagnostics (8.12.0):
+  - FirebaseCoreDiagnostics (8.13.0):
     - GoogleDataTransport (~> 9.1)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
@@ -462,7 +462,7 @@ PODS:
   - FirebaseFunctions (8.12.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
-  - FirebaseInstallations (8.12.0):
+  - FirebaseInstallations (8.13.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
@@ -859,27 +859,27 @@ PODS:
   - React-jsinspector (0.67.2)
   - React-logger (0.67.2):
     - glog
-  - react-native-fbsdk-next (7.1.0):
+  - react-native-fbsdk-next (7.3.3):
     - React-Core
-    - react-native-fbsdk-next/Core (= 7.1.0)
-    - react-native-fbsdk-next/Login (= 7.1.0)
-    - react-native-fbsdk-next/Share (= 7.1.0)
-  - react-native-fbsdk-next/Core (7.1.0):
+    - react-native-fbsdk-next/Core (= 7.3.3)
+    - react-native-fbsdk-next/Login (= 7.3.3)
+    - react-native-fbsdk-next/Share (= 7.3.3)
+  - react-native-fbsdk-next/Core (7.3.3):
     - FBSDKCoreKit (~> 12.3.2)
     - React-Core
-  - react-native-fbsdk-next/Login (7.1.0):
+  - react-native-fbsdk-next/Login (7.3.3):
     - FBSDKLoginKit (~> 12.3.2)
     - React-Core
-  - react-native-fbsdk-next/Share (7.1.0):
+  - react-native-fbsdk-next/Share (7.3.3):
     - FBSDKShareKit (~> 12.3.2)
     - React-Core
-  - react-native-flipper (0.126.0):
+  - react-native-flipper (0.138.0):
     - React-Core
   - react-native-image-picker (4.7.3):
     - React-Core
   - react-native-pager-view (5.4.11):
     - React-Core
-  - react-native-safe-area-context (4.0.1):
+  - react-native-safe-area-context (4.1.2):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -988,53 +988,53 @@ PODS:
     - React-Core
   - RNDateTimePicker (5.1.0):
     - React-Core
-  - RNDeviceInfo (8.4.9):
+  - RNDeviceInfo (8.5.0):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (14.5.0):
+  - RNFBAnalytics (14.5.1):
     - Firebase/Analytics (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBApp (14.5.0):
+  - RNFBApp (14.5.1):
     - Firebase/CoreOnly (= 8.12.1)
     - React-Core
-  - RNFBAppCheck (14.5.0):
+  - RNFBAppCheck (14.5.1):
     - Firebase/AppCheck (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBAuth (14.5.0):
+  - RNFBAuth (14.5.1):
     - Firebase/Auth (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (14.5.0):
+  - RNFBCrashlytics (14.5.1):
     - Firebase/Crashlytics (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBDynamicLinks (14.5.0):
+  - RNFBDynamicLinks (14.5.1):
     - Firebase/DynamicLinks (= 8.12.1)
     - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
-  - RNFBFirestore (14.5.0):
+  - RNFBFirestore (14.5.1):
     - Firebase/Firestore (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBFunctions (14.5.0):
+  - RNFBFunctions (14.5.1):
     - Firebase/Functions (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (14.5.0):
+  - RNFBMessaging (14.5.1):
     - Firebase/Messaging (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBStorage (14.5.0):
+  - RNFBStorage (14.5.1):
     - Firebase/Storage (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.2.0):
+  - RNGestureHandler (2.3.1):
     - React-Core
   - RNGoogleSignin (5.0.0):
     - GoogleSignIn (~> 5.0.0)
@@ -1072,12 +1072,12 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.12.0):
+  - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
-  - RNSentry (3.2.13):
+  - RNSentry (3.3.2):
     - React-Core
-    - Sentry (= 7.9.0)
+    - Sentry (= 7.10.1)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.2):
@@ -1095,9 +1095,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.9.0):
-    - Sentry/Core (= 7.9.0)
-  - Sentry/Core (7.9.0)
+  - Sentry (7.10.1):
+    - Sentry/Core (= 7.10.1)
+  - Sentry/Core (7.10.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1439,12 +1439,12 @@ SPEC CHECKSUMS:
   FirebaseAppCheck: b91624d3f8c262eae9bfc1486b640d8c13787abc
   FirebaseAuth: 5250d7bdba35e57cc34ec7ddc525f82b2757f2a0
   FirebaseCore: 8138de860a90ca7eec5e324da5788fb0ebf1d93c
-  FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
+  FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
   FirebaseCrashlytics: 7952ffd988006128325510664b99dc8ca5851dff
   FirebaseDynamicLinks: 98a5f0fe542245a89ec55f646d2581298c29219d
   FirebaseFirestore: dfeb58916ee3ae0ef2453d4849a683672705920c
   FirebaseFunctions: aead53cdd81ce7371043b79250060546c25f9c7c
-  FirebaseInstallations: 25764cf322e77f99449395870a65b2bef88e1545
+  FirebaseInstallations: 60edbf7e11d91ae4c751d26c200dfd037099abe0
   FirebaseMessaging: 23db8bf05585e929ada8af0f0968933c25252808
   FirebaseStorage: 4b75458c35d8b728e4c1fc1371942997456ab299
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -1491,11 +1491,11 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 52beb652bbc61201bd70cbe4f0b8edb607e8da4f
   React-jsinspector: 595f76eba2176ebd8817a1fffd47b84fbdab9383
   React-logger: 23de8ea0f44fa00ee77e96060273225607fd4d78
-  react-native-fbsdk-next: 7fa197c23545e36aa7549ef1ede3a63669981bc5
-  react-native-flipper: 7a3831caa612bd78c18811b22f7a7c9249e2668c
+  react-native-fbsdk-next: 6d497a06fc5c33360f5794b4428a0236789a60e6
+  react-native-flipper: 51a1b8f34ce185e028f8158382c3882d6ea3cccf
   react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
   react-native-pager-view: 7f00d63688f7df9fad86dfb0154814419cc5eb8d
-  react-native-safe-area-context: eec048ba481a7ec7b1bf9d7b7a78fb1103f4806d
+  react-native-safe-area-context: 114e9a74df2643012b9d6cc1460b94f3b6a90780
   react-native-slider: 37e1cf275dab20d3c015e40969aa9f5c309645a8
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
@@ -1525,32 +1525,32 @@ SPEC CHECKSUMS:
   RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 1dd15d7ed1ab7d999056bc77879a42920d139c12
-  RNDeviceInfo: 4944cf8787b9c5bffaf301fda68cc1a2ec003341
+  RNDeviceInfo: a674f06c5a5bd496aebb809cbc3be61cfd612a65
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: afd361a31db57b61853ef321a872a132df0f4519
-  RNFBApp: 06c8447270d295edc431bccd55970d8711a07a42
-  RNFBAppCheck: 352d528a34d40478165d6f4e9e5eb7f2951bb826
-  RNFBAuth: e248a56b1d28d3b53b54b72a296cf9270df1d96e
-  RNFBCrashlytics: 0cfb53fcd558969ee498eb7030ee7065c7dacf8d
-  RNFBDynamicLinks: ae608ba253ddd907e01a2c51384da6ae609d7bf4
-  RNFBFirestore: 7e4fe3b009a193d2f2fb0a19d1d6ab06355d4a09
-  RNFBFunctions: e1cdc731ad9248672ab45e70f751cdae2e963389
-  RNFBMessaging: 8e3575bb0303b43a852bf5decbe99c3272035048
-  RNFBStorage: e061bbb005be42225e95cb62af7768bda4d24e3a
-  RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
+  RNFBAnalytics: 74cd9c60531ed33e5347b2dccafa172ae1a851a4
+  RNFBApp: 5bae3002117e55f3c9aa0fb38175dd16c8046c90
+  RNFBAppCheck: c59c77fa5c46115b7b760e85aeba4dbea1adfb8d
+  RNFBAuth: ed314ff1732011c23041570ac4a98bc6070f9f4d
+  RNFBCrashlytics: 33615211c6c6c4039ae71849091f6ac38ab65aba
+  RNFBDynamicLinks: af1099d827079101afece32aba470ae50d519217
+  RNFBFirestore: 6103ff28c04b6a71faaca286a7f778914c3c7bb4
+  RNFBFunctions: ce53e6f983b38fb87af9934632218a687319212a
+  RNFBMessaging: ae6c40883868cd01fa802395174ec7d61cfa0920
+  RNFBStorage: 495f37ba9f233e3be134c8bc0f31ff011a9eecec
+  RNGestureHandler: 68f660f1080d3300936a67ce5c6879bd8f26ecc2
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: fbae56ea06b0d4bf88df691f26d4b8906f918917
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: 32c91e28f5780937b8efc07ddde1bab8d373fe0b
-  RNScreens: 2559f98b0835103cbef3b26ba77fa61d4bb37ae7
-  RNSentry: 0aa1567f66c20390f3834637fc4f73380dcd0774
+  RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
+  RNSentry: f8c14c77e400a93331b38538f735c2538f8108a8
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
-  Sentry: 2f7e91f247cfb05b05bd01e0b5d0692557a7687b
+  Sentry: ddcd9fde63cfe7e9e2243da59d98daa382413e49
   Yoga: 9b6696970c3289e8dea34b3eda93f23e61fb8121
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

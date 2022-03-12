@@ -17,7 +17,7 @@ const SelectExperience: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appBlue,
+          color: colors.appWhite,
         }}>
         What's your experience level?
       </Text>

@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   image: {
-    height: DevicePixels[125],
-    width: DevicePixels[120],
+    height: DevicePixels[75],
+    width: DevicePixels[75],
   },
   title: {
     fontSize: DevicePixels[48],

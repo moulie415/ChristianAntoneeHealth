@@ -35,6 +35,7 @@ const SelectWeight: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
+          color: colors.appWhite,
         }}>
         What's your weight?
       </Text>
@@ -57,12 +58,15 @@ const SelectWeight: React.FC<{
           style={{
             width: DevicePixels[250],
             height: DevicePixels[200],
+            color: colors.appWhite,
           }}
           selectedValue={weight}
           lineColor="#999999"
+          textColor={colors.appWhite}
           itemStyle={{
             fontSize: DevicePixels[15],
-            color: Platform.OS === 'android' ? '#000' : undefined,
+            // color: Platform.OS === 'android' ? '#000' : undefined,
+            color: colors.appWhite,
           }}
           onValueChange={setWeight}>
           {weights.map(value => (

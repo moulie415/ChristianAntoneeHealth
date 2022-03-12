@@ -43,6 +43,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {resetToWelcome} from '../../../RootNavigation';
 import auth from '@react-native-firebase/auth';
+import LetsBuild from './LetsBuild';
 
 const {width} = Dimensions.get('window');
 
@@ -127,6 +128,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const slides = [
     {
       color: colors.appBlue,
+      showNext: true,
+      elements: <LetsBuild />,
+      tint: colors.appWhite,
+    },
+    {
+      color: colors.appBlack,
       showNext: dry
         ? !!password && !!confirmPassword && password === confirmPassword
         : !!name,
@@ -158,7 +165,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlack,
+      color: colors.appBlue,
       showNext: !!gender,
       tint: colors.appWhite,
       elements: <SelectSex gender={gender} setGender={setGender} />,
@@ -171,7 +178,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     // },
 
     {
-      color: colors.appWhite,
+      color: colors.appBlack,
+      tint: colors.appWhite,
       showNext: !!weight,
       elements: (
         <SelectWeight
@@ -183,9 +191,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlack,
+      color: colors.appWhite,
       showNext: !!height,
-      tint: colors.appWhite,
       elements: (
         <SelectHeight
           height={height}
@@ -202,7 +209,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       elements: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
     {
-      color: colors.appWhite,
+      color: colors.appBlack,
+      tint: colors.appWhite,
       showNext: !!experience,
       elements: (
         <SelectExperience
@@ -212,9 +220,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlack,
+      color: colors.appWhite,
       showNext: !!equipment,
-      tint: colors.appWhite,
+      tint: colors.appBlue,
       elements: (
         <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
       ),
@@ -268,7 +276,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
             }}>
             <Icon
               name="times"
-              color={colors.appWhite}
+              color={colors.appBlue}
               style={{fontSize: DevicePixels[20]}}
             />
           </TouchableOpacity>

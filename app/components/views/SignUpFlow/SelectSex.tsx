@@ -33,16 +33,16 @@ const SelectSex: React.FC<{
           style={{
             marginBottom: DevicePixels[20],
             backgroundColor:
-              gender === 'female' ? colors.appBlue : colors.appWhite,
+              gender === 'female' ? colors.darkBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
           <Text
             style={{
               textAlign: 'center',
-              color: gender === 'female' ? colors.appWhite : colors.appBlue,
+              color: gender === 'female' ? colors.appWhite : colors.darkBlue,
             }}>
             Female
           </Text>
@@ -52,16 +52,16 @@ const SelectSex: React.FC<{
           style={{
             marginBottom: DevicePixels[20],
             backgroundColor:
-              gender === 'male' ? colors.appBlue : colors.appWhite,
+              gender === 'male' ? colors.darkBlue : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
           <Text
             style={{
               textAlign: 'center',
-              color: gender === 'male' ? colors.appWhite : colors.appBlue,
+              color: gender === 'male' ? colors.appWhite : colors.darkBlue,
             }}>
             Male
           </Text>
