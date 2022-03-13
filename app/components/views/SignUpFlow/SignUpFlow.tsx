@@ -276,7 +276,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
             }}>
             <Icon
               name="times"
-              color={colors.appBlue}
+              color={colors.appWhite}
               style={{fontSize: DevicePixels[20]}}
             />
           </TouchableOpacity>
