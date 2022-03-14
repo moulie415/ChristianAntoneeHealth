@@ -44,6 +44,7 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import {resetToWelcome} from '../../../RootNavigation';
 import auth from '@react-native-firebase/auth';
 import LetsBuild from './LetsBuild';
+import Medications from './Medications';
 
 const {width} = Dimensions.get('window');
 
@@ -226,6 +227,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       elements: (
         <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
       ),
+    },
+    {
+      color: colors.appBlue,
+      tint: colors.appWhite,
+      showNext: true,
+      elements: <Medications />,
     },
     {
       color: colors.appBlue,
