@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import {Gender, Unit} from '../../../types/Profile';
+import {Gender, SleepPattern, Unit} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
@@ -45,6 +45,8 @@ import {resetToWelcome} from '../../../RootNavigation';
 import auth from '@react-native-firebase/auth';
 import LetsBuild from './LetsBuild';
 import Medications from './Medications';
+import GeneralLifestyle from './GeneralLifeStyle';
+import SleepPatterns from './SleepPatterns';
 
 const {width} = Dimensions.get('window');
 
@@ -69,6 +71,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState(profile.name || route.params.name || '');
   const [loading, setLoading] = useState(false);
+  const [medications, setMedications] = useState('');
+  const [lifestyle, setLifestyle] = useState('');
+  const [sleepPattern, setSleepPattern] = useState<SleepPattern>();
 
   const {dry} = route.params;
 
@@ -233,6 +238,23 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       tint: colors.appWhite,
       showNext: true,
       elements: <Medications />,
+    },
+    {
+      color: colors.appBlack,
+      tint: colors.appWhite,
+      showNext: true,
+      elements: <GeneralLifestyle />,
+    },
+    {
+      color: colors.appWhite,
+      //tint: colors.appWhite,
+      showNext: !!sleepPattern,
+      elements: (
+        <SleepPatterns
+          sleepPattern={sleepPattern}
+          setSleepPattern={setSleepPattern}
+        />
+      ),
     },
     {
       color: colors.appBlue,

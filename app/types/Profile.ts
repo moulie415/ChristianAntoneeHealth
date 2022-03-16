@@ -4,6 +4,13 @@ export type Gender = 'male' | 'female';
 
 export type Unit = 'metric' | 'imperial';
 
+export enum SleepPattern {
+  FIVE = 1,
+  FIVE_SIX = 2,
+  SEVEN_EIGHT = 3,
+  EIGHT = 4,
+}
+
 export default interface Profile {
   email: string;
   uid: string;
@@ -20,4 +27,5 @@ export default interface Profile {
   admin?: boolean;
   premium?: boolean;
   unread?: {[key: string]: number};
+  sleepPattern?: SleepPattern;
 }

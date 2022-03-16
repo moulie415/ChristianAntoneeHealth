@@ -5,7 +5,7 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
 
-const Medications = () => {
+const GeneralLifestyle = () => {
   return (
     <View>
       <Text
@@ -16,7 +16,7 @@ const Medications = () => {
           width: DevicePixels[250],
           color: colors.appWhite,
         }}>
-        Medications?
+        General lifestyle?
       </Text>
       <View
         style={{
@@ -25,7 +25,7 @@ const Medications = () => {
           paddingBottom: DevicePixels[175],
         }}>
         <Input
-          placeholder="List relevant medications... (optional)"
+          placeholder="e.g. active, sedentary, mixed"
           textStyle={{height: DevicePixels[100]}}
           multiline
         />
@@ -34,4 +34,4 @@ const Medications = () => {
   );
 };
 
-export default Medications;
+export default GeneralLifestyle;
