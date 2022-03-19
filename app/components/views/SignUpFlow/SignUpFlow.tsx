@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import {Gender, SleepPattern, Unit} from '../../../types/Profile';
+import {Gender, SleepPattern, StressLevel, Unit} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
@@ -47,6 +47,7 @@ import LetsBuild from './LetsBuild';
 import Medications from './Medications';
 import GeneralLifestyle from './GeneralLifeStyle';
 import SleepPatterns from './SleepPatterns';
+import StressLevels from './StressLevels';
 
 const {width} = Dimensions.get('window');
 
@@ -74,6 +75,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [medications, setMedications] = useState('');
   const [lifestyle, setLifestyle] = useState('');
   const [sleepPattern, setSleepPattern] = useState<SleepPattern>();
+  const [stressLevel, setStressLevel] = useState<StressLevel>();
 
   const {dry} = route.params;
 
@@ -253,6 +255,17 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         <SleepPatterns
           sleepPattern={sleepPattern}
           setSleepPattern={setSleepPattern}
+        />
+      ),
+    },
+    {
+      color: colors.appBlue,
+      tint: colors.appWhite,
+      showNext: !!stressLevel,
+      elements: (
+        <StressLevels
+          stressLevel={stressLevel}
+          setStressLevel={setStressLevel}
         />
       ),
     },

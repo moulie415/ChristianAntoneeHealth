@@ -4,6 +4,8 @@ export type Gender = 'male' | 'female';
 
 export type Unit = 'metric' | 'imperial';
 
+export type StressLevel = 'low' | 'medium' | 'high';
+
 export enum SleepPattern {
   FIVE = 1,
   FIVE_SIX = 2,
@@ -28,4 +30,5 @@ export default interface Profile {
   premium?: boolean;
   unread?: {[key: string]: number};
   sleepPattern?: SleepPattern;
+  stressLevel?: StressLevel;
 }
