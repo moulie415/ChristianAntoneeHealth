@@ -48,6 +48,8 @@ import Medications from './Medications';
 import GeneralLifestyle from './GeneralLifeStyle';
 import SleepPatterns from './SleepPatterns';
 import StressLevels from './StressLevels';
+import Occupation from './Occupation';
+import PhysicalInjuries from './PhysicalInjuries';
 
 const {width} = Dimensions.get('window');
 
@@ -76,6 +78,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [lifestyle, setLifestyle] = useState('');
   const [sleepPattern, setSleepPattern] = useState<SleepPattern>();
   const [stressLevel, setStressLevel] = useState<StressLevel>();
+  const [occupation, setOccupation] = useState('');
+  const [injuries, setInjuries] = useState('');
 
   const {dry} = route.params;
 
@@ -268,6 +272,20 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           setStressLevel={setStressLevel}
         />
       ),
+    },
+    {
+      color: colors.appBlack,
+      elements: (
+        <Occupation occupation={occupation} setOccupation={setOccupation} />
+      ),
+      showNext: true,
+    },
+    {
+      color: colors.appWhite,
+      elements: (
+        <PhysicalInjuries injuries={injuries} setInjuries={setInjuries} />
+      ),
+      showNext: true,
     },
     {
       color: colors.appBlue,

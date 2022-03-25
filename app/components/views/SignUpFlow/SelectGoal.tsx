@@ -65,6 +65,48 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
             Improve my fitness
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setGoal(Goal.WEIGHT_LOSS)}
+          style={{
+            backgroundColor:
+              goal === Goal.WEIGHT_LOSS ? colors.darkBlue : colors.appWhite,
+            padding: DevicePixels[10],
+            borderColor: colors.darkBlue,
+            borderWidth: DevicePixels[1],
+            borderRadius: DevicePixels[5],
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color:
+                goal === Goal.WEIGHT_LOSS ? colors.appWhite : colors.darkBlue,
+            }}>
+            Weight loss
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setGoal(Goal.INJURY_PREVENTION)}
+          style={{
+            backgroundColor:
+              goal === Goal.INJURY_PREVENTION
+                ? colors.darkBlue
+                : colors.appWhite,
+            padding: DevicePixels[10],
+            borderColor: colors.darkBlue,
+            borderWidth: DevicePixels[1],
+            borderRadius: DevicePixels[5],
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color:
+                goal === Goal.INJURY_PREVENTION
+                  ? colors.appWhite
+                  : colors.darkBlue,
+            }}>
+            Injury prevention/rehabilitation
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

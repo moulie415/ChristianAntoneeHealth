@@ -23,6 +23,8 @@ export enum Level {
 export enum Goal {
   STRENGTH = 'strength',
   FITNESS = 'fitness',
+  WEIGHT_LOSS = 'weightLoss',
+  INJURY_PREVENTION = 'injuryPrevention',
 }
 
 export enum StrengthArea {
