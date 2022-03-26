@@ -13,6 +13,13 @@ export enum SleepPattern {
   EIGHT = 4,
 }
 
+export enum TrainingAvailability {
+  ONE_TWO = 1,
+  TWO_THREE = 2,
+  THREE_FOUR = 3,
+  FOUR_PLUS = 4,
+}
+
 export default interface Profile {
   email: string;
   uid: string;
@@ -31,4 +38,6 @@ export default interface Profile {
   unread?: {[key: string]: number};
   sleepPattern?: SleepPattern;
   stressLevel?: StressLevel;
-}
+  equipment?: string;
+  trainingAvailability?: TrainingAvailability;
+};

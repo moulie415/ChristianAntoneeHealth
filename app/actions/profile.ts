@@ -57,7 +57,7 @@ export interface SignUpPayload {
   unit: Unit;
   gender: Gender;
   experience: Level;
-  equipment: Equipment;
+  equipment: string;
   marketing: boolean;
   goal: Goal;
   password?: string;
@@ -72,7 +72,7 @@ export interface UpdateProfilePayload {
   unit?: Unit;
   marketing?: boolean;
   experience?: Level;
-  equipment?: Equipment;
+  equipment?: string;
   goal?: Goal;
   avatar?: string;
 }

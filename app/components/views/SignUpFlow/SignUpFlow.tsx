@@ -9,7 +9,13 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import {Gender, SleepPattern, StressLevel, Unit} from '../../../types/Profile';
+import {
+  Gender,
+  SleepPattern,
+  StressLevel,
+  TrainingAvailability,
+  Unit,
+} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
 import AccountDetails from './AccountDetails';
@@ -50,6 +56,7 @@ import SleepPatterns from './SleepPatterns';
 import StressLevels from './StressLevels';
 import Occupation from './Occupation';
 import PhysicalInjuries from './PhysicalInjuries';
+import SelectTrainingAvailability from './TrainingAvailability';
 
 const {width} = Dimensions.get('window');
 
@@ -63,7 +70,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
-  const [equipment, setEquipment] = useState<Equipment>();
+  const [equipment, setEquipment] = useState('');
   const [experience, setExperience] = useState<Level>();
   const [marketing, setMarketing] = useState(false);
   const [height, setHeight] = useState<number>(profile.height);
@@ -80,6 +87,11 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [stressLevel, setStressLevel] = useState<StressLevel>();
   const [occupation, setOccupation] = useState('');
   const [injuries, setInjuries] = useState('');
+  const [
+    trainingAvailability,
+    setTrainingAvailability,
+  ] = useState<TrainingAvailability>();
+  const [nutrition, setNutrition] = useState([]);
 
   const {dry} = route.params;
 
@@ -243,13 +255,20 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       color: colors.appBlue,
       tint: colors.appWhite,
       showNext: true,
-      elements: <Medications />,
+      elements: (
+        <Medications
+          medications={medications}
+          setMedications={setMedications}
+        />
+      ),
     },
     {
       color: colors.appBlack,
       tint: colors.appWhite,
       showNext: true,
-      elements: <GeneralLifestyle />,
+      elements: (
+        <GeneralLifestyle lifestyle={lifestyle} setLifestyle={setLifestyle} />
+      ),
     },
     {
       color: colors.appWhite,
@@ -286,6 +305,22 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         <PhysicalInjuries injuries={injuries} setInjuries={setInjuries} />
       ),
       showNext: true,
+    },
+    {
+      color: colors.appBlue,
+      elements: (
+        <SelectTrainingAvailability
+          trainingAvailability={trainingAvailability}
+          setTrainingAvailability={setTrainingAvailability}
+        />
+      ),
+      showNext: !!trainingAvailability,
+    },
+    {
+      color: colors.appBlack,
+      elements: (
+        
+      )
     },
     {
       color: colors.appBlue,

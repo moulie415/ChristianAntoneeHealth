@@ -1,13 +1,13 @@
-import {TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Text from '../../commons/Text';
-import {Equipment} from '../../../types/QuickRoutines';
+import Input from '../../commons/Input';
 
 const SelectEquipment: React.FC<{
-  equipment: Equipment;
-  setEquipment: (equipment: Equipment) => void;
+  equipment: string;
+  setEquipment: (equipment: string) => void;
 }> = ({equipment, setEquipment}) => {
   return (
     <View>
@@ -27,43 +27,13 @@ const SelectEquipment: React.FC<{
           justifyContent: 'flex-end',
           paddingBottom: DevicePixels[175],
         }}>
-        <TouchableOpacity
-          onPress={() => setEquipment('minimal')}
-          style={{
-            marginBottom: DevicePixels[20],
-            backgroundColor:
-              equipment === 'minimal' ? colors.appBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.appBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: equipment === 'minimal' ? colors.appWhite : colors.appBlue,
-            }}>
-            I’ve got a few bits and pieces
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setEquipment('full')}
-          style={{
-            backgroundColor:
-              equipment === 'full' ? colors.appBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.appBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: equipment === 'full' ? colors.appWhite : colors.appBlue,
-            }}>
-            I’ve got access to a gym
-          </Text>
-        </TouchableOpacity>
+        <Input
+          placeholder="e.g. dumbbells, barbells, squat rack..."
+          textStyle={{height: DevicePixels[100]}}
+          multiline
+          onChangeText={setEquipment}
+          value={equipment}
+        />
       </View>
     </View>
   );

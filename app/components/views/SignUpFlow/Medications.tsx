@@ -5,7 +5,10 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
 
-const Medications = () => {
+const Medications: React.FC<{
+  medications: string;
+  setMedications: (medications: string) => void;
+}> = ({medications, setMedications}) => {
   return (
     <View>
       <Text
@@ -28,6 +31,8 @@ const Medications = () => {
           placeholder="List relevant medications... (optional)"
           textStyle={{height: DevicePixels[100]}}
           multiline
+          onChangeText={setMedications}
+          value={medications}
         />
       </View>
     </View>
