@@ -17,7 +17,7 @@ const SleepPatterns: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appWhite,
+          color: colors.appBlue,
         }}>
         Sleep patterns?
       </Text>

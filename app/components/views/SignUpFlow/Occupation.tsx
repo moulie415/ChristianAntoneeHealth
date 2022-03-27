@@ -19,7 +19,7 @@ const Occupation: React.FC<{
           width: DevicePixels[250],
           color: colors.appWhite,
         }}>
-        Medications?
+        Occupation?
       </Text>
       <View
         style={{

@@ -33,10 +33,10 @@ const SelectTrainingAvailability: React.FC<{
             marginBottom: DevicePixels[20],
             backgroundColor:
               trainingAvailability === TrainingAvailability.ONE_TWO
-                ? colors.appBlue
+                ? colors.darkBlue
                 : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -46,7 +46,7 @@ const SelectTrainingAvailability: React.FC<{
               color:
                 trainingAvailability === TrainingAvailability.ONE_TWO
                   ? colors.appWhite
-                  : colors.appBlue,
+                  : colors.darkBlue,
             }}>
             1 - 2
           </Text>
@@ -59,10 +59,10 @@ const SelectTrainingAvailability: React.FC<{
             marginBottom: DevicePixels[20],
             backgroundColor:
               trainingAvailability === TrainingAvailability.TWO_THREE
-                ? colors.appBlue
+                ? colors.darkBlue
                 : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -72,7 +72,7 @@ const SelectTrainingAvailability: React.FC<{
               color:
                 trainingAvailability === TrainingAvailability.TWO_THREE
                   ? colors.appWhite
-                  : colors.appBlue,
+                  : colors.darkBlue,
             }}>
             2 - 3
           </Text>
@@ -85,10 +85,10 @@ const SelectTrainingAvailability: React.FC<{
             marginBottom: DevicePixels[20],
             backgroundColor:
               trainingAvailability === TrainingAvailability.THREE_FOUR
-                ? colors.appBlue
+                ? colors.darkBlue
                 : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -98,7 +98,7 @@ const SelectTrainingAvailability: React.FC<{
               color:
                 trainingAvailability === TrainingAvailability.THREE_FOUR
                   ? colors.appWhite
-                  : colors.appBlue,
+                  : colors.darkBlue,
             }}>
             3 - 4
           </Text>
@@ -111,10 +111,10 @@ const SelectTrainingAvailability: React.FC<{
             marginBottom: DevicePixels[20],
             backgroundColor:
               trainingAvailability === TrainingAvailability.FOUR_PLUS
-                ? colors.appBlue
+                ? colors.darkBlue
                 : colors.appWhite,
             padding: DevicePixels[10],
-            borderColor: colors.appBlue,
+            borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
           }}>
@@ -124,7 +124,7 @@ const SelectTrainingAvailability: React.FC<{
               color:
                 trainingAvailability === TrainingAvailability.FOUR_PLUS
                   ? colors.appWhite
-                  : colors.appBlue,
+                  : colors.darkBlue,
             }}>
             4+
           </Text>

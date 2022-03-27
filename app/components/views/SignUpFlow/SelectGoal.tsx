@@ -4,7 +4,6 @@ import {Goal} from '../../../types/Shared';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
-import Button from '../../commons/Button';
 
 const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
   goal,
@@ -26,7 +25,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         style={{
           flex: 1,
           justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          paddingBottom: DevicePixels[115],
         }}>
         <TouchableOpacity
           onPress={() => setGoal(Goal.STRENGTH)}
@@ -56,6 +55,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
             borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
+            marginBottom: DevicePixels[20],
           }}>
           <Text
             style={{
@@ -74,6 +74,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
             borderColor: colors.darkBlue,
             borderWidth: DevicePixels[1],
             borderRadius: DevicePixels[5],
+            marginBottom: DevicePixels[20],
           }}>
           <Text
             style={{

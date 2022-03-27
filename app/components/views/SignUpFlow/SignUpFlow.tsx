@@ -246,7 +246,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appWhite,
-      showNext: !!equipment,
+      showNext: true,
       tint: colors.appBlue,
       elements: (
         <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
@@ -309,6 +309,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appBlue,
+      tint: colors.appWhite,
       elements: (
         <SelectTrainingAvailability
           trainingAvailability={trainingAvailability}

@@ -41,12 +41,15 @@ const Nutrition: React.FC<{
         Nutritional habits?
       </Text>
       <List
+        style={{backgroundColor: 'transparent'}}
+        //contentContainerStyle={{backgroundColor: 'transparent'}}
         data={items}
         keyExtractor={item => (typeof item === 'string' ? item : item.key)}
         renderItem={({item}) => {
           if (typeof item === 'string') {
             return (
               <ListItem
+                style={{backgroundColor: 'transparent'}}
                 title={item}
                 onPress={() =>
                   nutrition.includes(item)
