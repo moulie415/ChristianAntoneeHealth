@@ -57,6 +57,7 @@ import StressLevels from './StressLevels';
 import Occupation from './Occupation';
 import PhysicalInjuries from './PhysicalInjuries';
 import SelectTrainingAvailability from './TrainingAvailability';
+import Nutrition from './Nutrition';
 
 const {width} = Dimensions.get('window');
 
@@ -318,9 +319,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       color: colors.appBlack,
-      elements: (
-        
-      )
+      elements: <Nutrition nutrition={nutrition} setNutrition={setNutrition} />,
+      showNext: true,
     },
     {
       color: colors.appBlue,
