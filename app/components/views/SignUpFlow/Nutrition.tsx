@@ -1,10 +1,11 @@
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
-import {List, ListItem} from '@ui-kitten/components';
+import {Divider, List, ListItem} from '@ui-kitten/components';
 import Collapsible from 'react-native-collapsible';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Nutrition: React.FC<{
   nutrition: string[];
@@ -29,28 +30,49 @@ const Nutrition: React.FC<{
     'I prefer dairy free foods',
   ];
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Text
         category="h4"
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
+          margin: DevicePixels[20],
+          marginBottom: 0,
           width: DevicePixels[250],
           color: colors.appWhite,
         }}>
         Nutritional habits?
       </Text>
       <List
-        style={{backgroundColor: 'transparent'}}
+        style={{
+          backgroundColor: 'transparent',
+          width: DevicePixels[190],
+          alignSelf: 'center',
+        }}
         //contentContainerStyle={{backgroundColor: 'transparent'}}
         data={items}
         keyExtractor={item => (typeof item === 'string' ? item : item.key)}
+        ItemSeparatorComponent={() => (
+          <Divider style={{backgroundColor: colors.appGrey}} />
+        )}
         renderItem={({item}) => {
           if (typeof item === 'string') {
             return (
               <ListItem
-                style={{backgroundColor: 'transparent'}}
-                title={item}
+                accessoryLeft={() => (
+                  <Icon
+                    name={nutrition.includes(item) ? 'check-square' : 'square'}
+                    size={DevicePixels[15]}
+                    solid={nutrition.includes(item)}
+                    color={colors.appWhite}
+                    style={{marginRight: DevicePixels[10]}}
+                  />
+                )}
+                style={{
+                  backgroundColor: 'transparent',
+                }}
+                title={() => (
+                  <Text style={{color: colors.appWhite}}>{item}</Text>
+                )}
                 onPress={() =>
                   nutrition.includes(item)
                     ? setNutrition(nutrition.filter(i => i !== item))
@@ -62,7 +84,12 @@ const Nutrition: React.FC<{
           return (
             <>
               <ListItem
-                title={item.key}
+                style={{
+                  backgroundColor: 'transparent',
+                }}
+                title={() => (
+                  <Text style={{color: colors.appWhite}}>{item.key}</Text>
+                )}
                 onPress={() => setOpen({...open, [item.key]: !open[item.key]})}
               />
               <Collapsible collapsed={!open[item.key]}>
