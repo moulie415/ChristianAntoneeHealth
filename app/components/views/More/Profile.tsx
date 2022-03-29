@@ -24,7 +24,7 @@ import {
 } from '@ui-kitten/components';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
-import {equals} from 'ramda';
+import * as _ from 'lodash';
 import {getSamples, updateProfile} from '../../../actions/profile';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform} from 'react-native';
@@ -77,7 +77,7 @@ const Profile: React.FC<ProfileProps> = ({
     avatar,
   };
 
-  const equal = equals(newProfile, profile);
+  const equal = _.isEqual(newProfile, profile);
 
   const monthlyWeightSamples = weightSamples[moment().month()];
   const weightItems: {

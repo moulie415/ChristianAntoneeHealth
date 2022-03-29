@@ -26,7 +26,7 @@ import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
 import {goalItems} from '../../../constants';
-import {equals} from 'ramda';
+import * as _ from 'lodash';
 import DevicePixels from '../../../helpers/DevicePixels';
 
 const isValidGoal = (goal: Goal) =>
@@ -55,7 +55,7 @@ const Settings: React.FC<SettingsProps> = ({
     goal,
   };
 
-  const equal = equals(newProfile, profile);
+  const equal  = _.isEqual(newProfile, profile);
   return (
     <Layout style={{flex: 1}}>
       <ScrollView
