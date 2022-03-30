@@ -122,7 +122,10 @@ const Nutrition: React.FC<{
                   <Input
                     placeholder="List supplements here..."
                     multiline
-                    textStyle={{height: DevicePixels[50]}}
+                    textStyle={{
+                      height: DevicePixels[50],
+                      textAlignVertical: 'top',
+                    }}
                     onChangeText={text => {
                       setSupplements(text);
                       updateSupplements(text);

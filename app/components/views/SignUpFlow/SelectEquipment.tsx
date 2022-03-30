@@ -29,7 +29,7 @@ const SelectEquipment: React.FC<{
         }}>
         <Input
           placeholder="e.g. dumbbells, barbells, squat rack..."
-          textStyle={{height: DevicePixels[100]}}
+          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
           multiline
           onChangeText={setEquipment}
           value={equipment}

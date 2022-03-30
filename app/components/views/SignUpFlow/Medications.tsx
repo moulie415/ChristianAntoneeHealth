@@ -29,7 +29,7 @@ const Medications: React.FC<{
         }}>
         <Input
           placeholder="List relevant medications... (optional)"
-          textStyle={{height: DevicePixels[100]}}
+          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
           multiline
           onChangeText={setMedications}
           value={medications}

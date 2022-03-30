@@ -29,7 +29,7 @@ const PhysicalInjuries: React.FC<{
         }}>
         <Input
           placeholder="e.g. acute or chronic conditions"
-          textStyle={{height: DevicePixels[100]}}
+          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
           multiline
           onChangeText={setInjuries}
           value={injuries}

@@ -29,7 +29,7 @@ const Occupation: React.FC<{
         }}>
         <Input
           placeholder="e.g. Doctor, lawyer..."
-          textStyle={{height: DevicePixels[100]}}
+          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
           multiline
         />
       </View>
