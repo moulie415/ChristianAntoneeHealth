@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
@@ -33,14 +33,14 @@ const Nutrition: React.FC<{
     'I prefer dairy free foods',
   ];
 
-  const updateSupplements = useCallback(
-    _.debounce((text: string) => {
-      console.log(nutrition)
-      setNutrition([
-        ...nutrition.filter(i => !i.includes('Supplements:')),
-        `Supplements: ${text}`,
-      ]);
-    }, 1000),
+  const updateSupplements = useMemo(
+    () =>
+      _.debounce(text => {
+        setNutrition([
+          ...nutrition.filter(i => !i.includes('Supplements:')),
+          `Supplements: ${text}`,
+        ]);
+      }, 1000),
     [nutrition, setNutrition],
   );
 
