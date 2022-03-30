@@ -874,19 +874,19 @@ PODS:
   - react-native-fbsdk-next/Share (7.3.3):
     - FBSDKShareKit (~> 12.3.2)
     - React-Core
-  - react-native-flipper (0.138.0):
+  - react-native-flipper (0.140.0):
     - React-Core
   - react-native-image-picker (4.7.3):
     - React-Core
-  - react-native-pager-view (5.4.11):
+  - react-native-pager-view (5.4.15):
     - React-Core
-  - react-native-safe-area-context (4.1.2):
+  - react-native-safe-area-context (4.2.4):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
     - React
     - ReactCommon/turbomodule/core
-  - react-native-slider (4.2.0):
+  - react-native-slider (4.2.1):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
@@ -898,8 +898,6 @@ PODS:
     - React-Core
     - react-native-video/Video (= 5.2.0)
   - react-native-video/Video (5.2.0):
-    - React-Core
-  - react-native-webview (11.17.2):
     - React-Core
   - React-perflogger (0.67.2)
   - React-RCTActionSheet (0.67.2):
@@ -979,17 +977,17 @@ PODS:
     - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNCClipboard (1.9.0):
+  - RNCClipboard (1.8.5):
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPicker (2.2.1):
+  - RNCPicker (2.4.0):
     - React-Core
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
   - RNDateTimePicker (5.1.0):
     - React-Core
-  - RNDeviceInfo (8.5.0):
+  - RNDeviceInfo (8.7.0):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -1035,17 +1033,17 @@ PODS:
     - Firebase/Storage (= 8.14.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.3.1):
+  - RNGestureHandler (2.3.2):
     - React-Core
   - RNGoogleSignin (5.0.0):
     - GoogleSignIn (~> 5.0.0)
     - React-Core
-  - RNPurchases (4.5.2):
+  - RNPurchases (4.5.3):
     - PurchasesHybridCommon (= 2.0.1)
     - React-Core
   - RNRate (1.2.9):
     - React-Core
-  - RNReanimated (2.4.1):
+  - RNReanimated (2.5.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1076,9 +1074,9 @@ PODS:
   - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
-  - RNSentry (3.3.2):
+  - RNSentry (3.4.0):
     - React-Core
-    - Sentry (= 7.10.1)
+    - Sentry (= 7.11.0)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.2):
@@ -1086,8 +1084,8 @@ PODS:
     - RNSound/Core (= 0.11.2)
   - RNSound/Core (0.11.2):
     - React-Core
-  - RNSVG (12.1.1):
-    - React
+  - RNSVG (12.3.0):
+    - React-Core
   - RNVectorIcons (9.1.0):
     - React-Core
   - SDWebImage (5.11.1):
@@ -1096,9 +1094,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.10.1):
-    - Sentry/Core (= 7.10.1)
-  - Sentry/Core (7.10.1)
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1159,7 +1157,6 @@ DEPENDENCIES:
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-version-number (from `../node_modules/react-native-version-number`)
   - react-native-video (from `../node_modules/react-native-video`)
-  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -1324,8 +1321,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-version-number"
   react-native-video:
     :path: "../node_modules/react-native-video"
-  react-native-webview:
-    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -1493,16 +1488,15 @@ SPEC CHECKSUMS:
   React-jsinspector: 595f76eba2176ebd8817a1fffd47b84fbdab9383
   React-logger: 23de8ea0f44fa00ee77e96060273225607fd4d78
   react-native-fbsdk-next: 6d497a06fc5c33360f5794b4428a0236789a60e6
-  react-native-flipper: 51a1b8f34ce185e028f8158382c3882d6ea3cccf
+  react-native-flipper: cfc4ad1de608a27b9dd9f544b820cb1e1897aceb
   react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
-  react-native-pager-view: 7f00d63688f7df9fad86dfb0154814419cc5eb8d
-  react-native-safe-area-context: 114e9a74df2643012b9d6cc1460b94f3b6a90780
-  react-native-slider: 37e1cf275dab20d3c015e40969aa9f5c309645a8
+  react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9
+  react-native-safe-area-context: f98b0b16d1546d208fc293b4661e3f81a895afd9
+  react-native-slider: 241935e3ea8e47599c317f512f96ee8de607d4cb
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
-  react-native-webview: 380c1a03ec94b7ed764dac8db1e7c9952d08c93a
   React-perflogger: 3c9bb7372493e49036f07a82c44c8cf65cbe88db
   React-RCTActionSheet: 052606483045a408693aa7e864410b4a052f541a
   React-RCTAnimation: 08d4cac13222bb1348c687a0158dfd3b577cdb63
@@ -1521,12 +1515,12 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNCClipboard: 99fc8ad669a376b756fbc8098ae2fd05c0ed0668
+  RNCClipboard: cc054ad1e8a33d2a74cd13e565588b4ca928d8fd
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
+  RNCPicker: 6d5d64e7b90c240c779ee0938ec433c11e2dd758
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 1dd15d7ed1ab7d999056bc77879a42920d139c12
-  RNDeviceInfo: a674f06c5a5bd496aebb809cbc3be61cfd612a65
+  RNDeviceInfo: 36286df381fcaf1933ff9d2d3c34ba2abeb2d8d8
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBAnalytics: 776634be8c549e920df68c67907506805efcb6ae
   RNFBApp: 097a31d372b3db15b41c7a1a5c429433b0609e12
@@ -1538,20 +1532,20 @@ SPEC CHECKSUMS:
   RNFBFunctions: d20a865b32be0501e688d4ccaec2465317b4bcf3
   RNFBMessaging: 06a7a73883f3f43da61507dbfcf4db2245c22869
   RNFBStorage: c5e7b02c06014908fa70261836a05fa0ef476d45
-  RNGestureHandler: 68f660f1080d3300936a67ce5c6879bd8f26ecc2
+  RNGestureHandler: 6e757e487a4834e7280e98e9bac66d2d9c575e9c
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
-  RNPurchases: fbae56ea06b0d4bf88df691f26d4b8906f918917
+  RNPurchases: fd7e85ca54a006b0894cfe0698f261bcd499abe3
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
-  RNReanimated: 32c91e28f5780937b8efc07ddde1bab8d373fe0b
+  RNReanimated: 190b6930d5d94832061278e1070bbe313e50c830
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
-  RNSentry: f8c14c77e400a93331b38538f735c2538f8108a8
+  RNSentry: ec3c033c13bcb65c79f19d54ca54c514d1832bb5
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
-  Sentry: ddcd9fde63cfe7e9e2243da59d98daa382413e49
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   Yoga: 9b6696970c3289e8dea34b3eda93f23e61fb8121
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
