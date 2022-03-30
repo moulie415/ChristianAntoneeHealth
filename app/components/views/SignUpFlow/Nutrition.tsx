@@ -7,6 +7,7 @@ import {Divider, Input, List, ListItem} from '@ui-kitten/components';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import _ from 'lodash';
+import { FlatList } from 'react-native-gesture-handler';
 
 const Nutrition: React.FC<{
   nutrition: string[];
@@ -57,7 +58,7 @@ const Nutrition: React.FC<{
         }}>
         Nutritional habits?
       </Text>
-      <List
+      <FlatList
         style={{
           backgroundColor: 'transparent',
           width: DevicePixels[190],
@@ -66,6 +67,7 @@ const Nutrition: React.FC<{
         contentContainerStyle={{
           paddingBottom: DevicePixels[50],
         }}
+        scrollEnabled
         data={items}
         keyExtractor={item => (typeof item === 'string' ? item : item.key)}
         ItemSeparatorComponent={() => (
