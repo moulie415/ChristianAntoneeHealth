@@ -85,7 +85,7 @@ const CompleteSignUp: React.FC<{
             borderColor: colors.darkBlue,
           }}
           disabled={loading || !privacy}>
-          Complete sign up
+          Get my workout plan!
         </Button>
       </View>
     </View>

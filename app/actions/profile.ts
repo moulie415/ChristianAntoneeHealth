@@ -5,7 +5,13 @@ import PushNotification from 'react-native-push-notification';
 import {WeeklyItems} from '../reducers/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import Profile, {Gender, Unit} from '../types/Profile';
+import Profile, {
+  Gender,
+  SleepPattern,
+  StressLevel,
+  TrainingAvailability,
+  Unit,
+} from '../types/Profile';
 import {Equipment} from '../types/QuickRoutines';
 import {Goal, Level, Sample, StepSample} from '../types/Shared';
 
@@ -62,6 +68,14 @@ export interface SignUpPayload {
   goal: Goal;
   password?: string;
   email: string;
+  nutrition: string[];
+  trainingAvailability: TrainingAvailability;
+  injuries: string;
+  occupation: string;
+  stressLevel: StressLevel;
+  sleepPattern: SleepPattern;
+  lifestyle: string;
+  medications: string;
 }
 
 export interface UpdateProfilePayload {

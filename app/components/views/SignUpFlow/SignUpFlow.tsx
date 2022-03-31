@@ -147,6 +147,14 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       experience,
       equipment,
       marketing,
+      nutrition,
+      trainingAvailability,
+      injuries,
+      occupation,
+      stressLevel,
+      sleepPattern,
+      lifestyle,
+      medications,
     });
   };
 
