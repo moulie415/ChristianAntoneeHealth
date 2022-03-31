@@ -282,6 +282,14 @@ function* signUp(action: SignUpAction) {
     password,
     email,
     marketing,
+    nutrition,
+    trainingAvailability,
+    injuries,
+    occupation,
+    stressLevel,
+    sleepPattern,
+    lifestyle,
+    medications,
   } = action.payload;
   try {
     try {
@@ -306,6 +314,14 @@ function* signUp(action: SignUpAction) {
         equipment,
         marketing,
         goal,
+        nutrition,
+        trainingAvailability,
+        injuries,
+        occupation,
+        stressLevel,
+        sleepPattern,
+        lifestyle,
+        medications,
       });
       goBack();
       navigate('Login');
@@ -324,6 +340,14 @@ function* signUp(action: SignUpAction) {
         equipment,
         marketing,
         goal,
+        nutrition,
+        trainingAvailability,
+        injuries,
+        occupation,
+        stressLevel,
+        sleepPattern,
+        lifestyle,
+        medications,
       });
       yield put(
         setProfile({
@@ -338,6 +362,14 @@ function* signUp(action: SignUpAction) {
           equipment,
           marketing,
           goal,
+          nutrition,
+          trainingAvailability,
+          injuries,
+          occupation,
+          stressLevel,
+          sleepPattern,
+          lifestyle,
+          medications,
         }),
       );
       resetToTabs();
@@ -353,6 +385,14 @@ function* signUp(action: SignUpAction) {
       equipment,
       marketing: marketing?.toString(),
       goal,
+      nutrition: nutrition.toString(),
+      trainingAvailability: trainingAvailability.toString(),
+      injuries,
+      occupation,
+      stressLevel,
+      sleepPattern: sleepPattern.toString(),
+      lifestyle,
+      medications,
     });
   } catch (e) {
     Alert.alert('Error', e.nativeErrorMessage || e.message);

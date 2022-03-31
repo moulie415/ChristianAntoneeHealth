@@ -40,9 +40,10 @@ export const SET_READ = 'SET_READ';
 export const SET_UNREAD = 'SET_UNREAD';
 export const SET_APP_STATE = 'SET_APP_STATE';
 export const LOAD_EARLIER_MESSAGES = 'LOAD_EARLIER_MESSAGES';
-export const SET_VIEWED_SUMMARY = 'SET_VIEWED_SUMMARY';
+export const SET_VIEWED_PLAN = 'SET_VIEWED_PLAN';
 export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
+export const REQUEST_PLAN = 'REQUEST_PLAN';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -204,8 +205,8 @@ export interface LoadEarlierMessagesAction {
   payload: {chatId: string; uid: string; startAfter: number};
 }
 
-export interface SetViewedSummaryAction {
-  type: typeof SET_VIEWED_SUMMARY;
+export interface SetViewedPlanAction {
+  type: typeof SET_VIEWED_PLAN;
 }
 
 export interface GetWeeklyItemsAction {
@@ -215,6 +216,10 @@ export interface GetWeeklyItemsAction {
 export interface SetWeeklyItemsAction {
   type: typeof SET_WEEKLY_ITEMS;
   payload: WeeklyItems;
+}
+
+export interface RequestPlanAction {
+  type: typeof REQUEST_PLAN;
 }
 
 export type ProfileActionTypes =
@@ -243,9 +248,10 @@ export type ProfileActionTypes =
   | SetUnreadAction
   | SetAppStateAction
   | LoadEarlierMessagesAction
-  | SetViewedSummaryAction
+  | SetViewedPlanAction
   | GetWeeklyItemsAction
-  | SetWeeklyItemsAction;
+  | SetWeeklyItemsAction
+  | RequestPlanAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -419,15 +425,19 @@ export const loadEarlierMessages = (
   payload: {chatId, uid, startAfter},
 });
 
-export const setViewedSummary = (): SetViewedSummaryAction => ({
-  type: SET_VIEWED_SUMMARY,
+export const setViewedPlan = (): SetViewedPlanAction => ({
+  type: SET_VIEWED_PLAN,
 });
 
 export const getWeeklyItems = (): GetWeeklyItemsAction => ({
   type: GET_WEEKLY_ITEMS,
 });
 
-export const setWeeklyItems = (payload: WeeklyItems) => ({
+export const setWeeklyItems = (payload: WeeklyItems): SetWeeklyItemsAction => ({
   type: SET_WEEKLY_ITEMS,
   payload,
+});
+
+export const requestPlan = (): RequestPlanAction => ({
+  type: REQUEST_PLAN,
 });

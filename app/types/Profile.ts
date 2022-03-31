@@ -20,9 +20,16 @@ export enum TrainingAvailability {
   FOUR_PLUS = 4,
 }
 
+export enum PlanStatus {
+  UNINITIALIZED = 1,
+  PENDING = 2,
+  COMPLETE = 3,
+}
+
 export default interface Profile {
   email: string;
   uid: string;
+  planStatus?: PlanStatus;
   name?: string;
   avatar?: string;
   gender?: Gender;
@@ -40,4 +47,4 @@ export default interface Profile {
   stressLevel?: StressLevel;
   equipment?: string;
   trainingAvailability?: TrainingAvailability;
-};
+}

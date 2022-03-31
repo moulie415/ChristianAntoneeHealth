@@ -7,5 +7,4 @@ type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 export default interface HomeProps {
   navigation: HomeNavigationProp;
   profile: Profile;
-  hasViewedWelcome: boolean;
 };

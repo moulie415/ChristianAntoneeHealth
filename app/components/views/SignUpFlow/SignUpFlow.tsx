@@ -332,8 +332,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       showNext: true,
     },
     {
-      color: colors.appBlue,
-      tint: colors.appWhite,
+      color: colors.appWhite,
+      tint: colors.appBlue,
       showNext: false,
       elements: (
         <CompleteSignUp

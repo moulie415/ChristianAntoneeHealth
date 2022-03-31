@@ -41,17 +41,12 @@ import Connections from './components/views/More/Connections';
 import AddConnection from './components/views/More/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
-import GoalSummary from './components/views/GoalSummary';
+import GetPlan from './components/views/GetPlan';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import Rating from './components/views/Rating';
 import WhatExperience from './components/views/Workout/WhatExperience';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WeeklyActivity from './components/views/Activity/WeeklyActivity';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Image, Linking, Platform, View} from 'react-native';
-import DevicePixels from './helpers/DevicePixels';
-import GoogleFit from 'react-native-google-fit';
-import {linkToGoogleFit} from './helpers/biometrics';
 import FitHealthIcon from './components/commons/FitHealthIcon';
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -244,8 +239,8 @@ const StackComponent: FunctionComponent = () => {
           />
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen
-            name="GoalSummary"
-            component={GoalSummary}
+            name="GetPlan"
+            component={GetPlan}
             options={{headerTitle: ''}}
           />
           <Stack.Screen

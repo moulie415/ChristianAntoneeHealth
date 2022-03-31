@@ -18,12 +18,12 @@ import {
   SET_MESSAGE,
   SET_UNREAD,
   SET_APP_STATE,
-  SET_VIEWED_SUMMARY,
+  SET_VIEWED_PLAN,
   SET_WEEKLY_ITEMS,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import Profile from '../types/Profile';
+import Profile, {PlanStatus} from '../types/Profile';
 import {SavedQuickRoutine, SavedTest} from '../types/SavedItem';
 import {Sample, StepSample} from '../types/Shared';
 
@@ -48,13 +48,18 @@ export interface ProfileState {
   messages: {[key: string]: {[key: string]: Message}};
   chats: {[key: string]: Chat};
   state: AppStateStatus;
-  viewedSummary: boolean;
+  viewedPlan: boolean;
   weeklyItems: WeeklyItems;
 }
 
 const initialState: ProfileState = {
   step: 0,
-  profile: {email: '', uid: '', unread: {}},
+  profile: {
+    email: '',
+    uid: '',
+    unread: {},
+    planStatus: PlanStatus.UNINITIALIZED,
+  },
   loggedIn: false,
   weightSamples: {},
   stepSamples: {},
@@ -82,7 +87,7 @@ const initialState: ProfileState = {
   messages: {},
   chats: {},
   state: AppState.currentState,
-  viewedSummary: false,
+  viewedPlan: false,
   weeklyItems: {
     quickRoutines: {},
     tests: {},
@@ -199,10 +204,10 @@ const reducer = (
         ...state,
         state: action.payload,
       };
-    case SET_VIEWED_SUMMARY:
+    case SET_VIEWED_PLAN:
       return {
         ...state,
-        viewedSummary: true,
+        viewedPlan: true,
       };
     case SET_WEEKLY_ITEMS:
       return {

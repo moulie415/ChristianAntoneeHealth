@@ -17,8 +17,8 @@ export function resetToTabs() {
       routes: [{name: 'Tabs'}],
     }),
   );
-  if (!store.getState().profile.viewedSummary) {
-    navigate('GoalSummary');
+  if (!store.getState().profile.viewedPlan) {
+    navigate('GetPlan');
   }
 }
 

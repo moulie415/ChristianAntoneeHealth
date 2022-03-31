@@ -113,11 +113,6 @@ const More: React.FC<MoreProps> = ({
       icon: 'star',
       onPress: rateApp,
     },
-    {
-      title: 'Weekly program',
-      icon: 'bullseye',
-      onPress: () => navigation.navigate('GoalSummary'),
-    },
     // {
     //   title: 'Report a problem',
     //   icon: 'bug',

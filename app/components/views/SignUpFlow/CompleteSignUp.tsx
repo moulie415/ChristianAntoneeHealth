@@ -22,7 +22,7 @@ const CompleteSignUp: React.FC<{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
           width: DevicePixels[250],
-          color: colors.appWhite,
+          color: colors.appBlue,
         }}>
         Almost there...
       </Text>
@@ -43,9 +43,9 @@ const CompleteSignUp: React.FC<{
           <Checkbox
             checked={privacy}
             onPress={() => setPrivacy(!privacy)}
-            iconStyle={{color: colors.appWhite}}
+            iconStyle={{color: colors.appBlue}}
           />
-          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
+          <Text style={{marginLeft: DevicePixels[10], color: colors.appBlue}}>
             I've read the{' '}
             <Text
               onPress={() =>
@@ -54,7 +54,7 @@ const CompleteSignUp: React.FC<{
               style={{
                 textDecorationLine: 'underline',
                 fontWeight: 'bold',
-                color: colors.appWhite,
+                color: colors.appBlue,
               }}>
               Privacy Policy
             </Text>
@@ -70,21 +70,15 @@ const CompleteSignUp: React.FC<{
           <Checkbox
             checked={marketing}
             onPress={() => setMarketing(!marketing)}
-            iconStyle={{color: colors.appWhite}}
+            iconStyle={{color: colors.appBlue}}
           />
-          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
+          <Text style={{marginLeft: DevicePixels[10], color: colors.appBlue}}>
             I want to join the CA Health mailing list and receive relevant
             articles offers and promotions
           </Text>
         </TouchableOpacity>
 
-        <Button
-          onPress={completeSignUp}
-          style={{
-            backgroundColor: colors.darkBlue,
-            borderColor: colors.darkBlue,
-          }}
-          disabled={loading || !privacy}>
+        <Button onPress={completeSignUp} disabled={loading || !privacy}>
           Get my workout plan!
         </Button>
       </View>
