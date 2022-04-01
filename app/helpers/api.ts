@@ -3,7 +3,7 @@ import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import Exercise from '../types/Exercise';
-import Profile from '../types/Profile';
+import Profile, {PlanStatus} from '../types/Profile';
 import Test from '../types/Test';
 import {CoolDown, Goal, Level, WarmUp} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
@@ -13,7 +13,7 @@ import Snackbar from 'react-native-snackbar';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import moment from 'moment';
-import { WeeklyItems } from '../reducers/profile';
+import {WeeklyItems} from '../reducers/profile';
 
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
@@ -371,4 +371,11 @@ export const setUnread = (uid: string, unread: {[key: string]: number}) => {
 export const getSettings = async () => {
   const snapshot = await db().collection('settings').get();
   return snapshot.docs[0].data();
+};
+
+export const requestPlan = async (uid: string) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .update({planStatus: PlanStatus.PENDING});
 };

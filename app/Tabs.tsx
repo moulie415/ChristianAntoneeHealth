@@ -39,8 +39,8 @@ const Tabs = () => {
           ),
           headerShown: false,
         }}
-        name="GetPlan"
-        key="GetPlan"
+        name="Plan"
+        key="Plan"
         component={WhatsYourGoal}
       />
       <Tab.Screen

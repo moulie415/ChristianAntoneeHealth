@@ -18,7 +18,7 @@ export function resetToTabs() {
     }),
   );
   if (!store.getState().profile.viewedPlan) {
-    navigate('GetPlan');
+    navigate('Plan');
   }
 }
 

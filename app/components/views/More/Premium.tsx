@@ -31,10 +31,12 @@ const Premium: React.FC<PremiumProps> = ({
   navigation,
   setPremiumAction,
   settings,
+  route,
 }) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<PurchaserInfo>();
   const [loading, setLoading] = useState(false);
+  const {onActivated} = route.params;
   useEffect(() => {
     const getOfferings = async () => {
       try {
@@ -251,6 +253,9 @@ const Premium: React.FC<PremiumProps> = ({
                               navigation.goBack();
                               setPremiumAction(true);
                               Snackbar.show({text: 'Premium activated'});
+                              if (onActivated) {
+                                onActivated();
+                              }
                             }
                           } catch (e) {
                             setLoading(false);

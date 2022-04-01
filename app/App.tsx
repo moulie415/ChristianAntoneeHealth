@@ -94,7 +94,7 @@ export type StackParamList = {
   Profile: undefined;
   History: undefined;
   Notifications: undefined;
-  Premium: undefined;
+  Premium: {onActivated?: () => void};
   Support: undefined;
   Terms: undefined;
   Workout: undefined;
@@ -115,7 +115,7 @@ export type StackParamList = {
   Connections: undefined;
   AddConnection: undefined;
   Chat: {uid: string};
-  GetPlan: undefined;
+  Plan: undefined;
   WhatEquipment: {goal: Goal};
   WhatExperience: {goal: Goal; equipment: Equipment};
   WorkoutList: {goal: Goal; equipment: Equipment; experience: Level};

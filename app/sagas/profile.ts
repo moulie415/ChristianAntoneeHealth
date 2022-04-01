@@ -62,10 +62,12 @@ import {
   setMessagesObj,
   GET_WEEKLY_ITEMS,
   setWeeklyItems,
+  REQUEST_PLAN,
+  setPlanStatus,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
-import Profile from '../types/Profile';
+import Profile, {PlanStatus} from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {
@@ -322,6 +324,7 @@ function* signUp(action: SignUpAction) {
         sleepPattern,
         lifestyle,
         medications,
+        planStatus: PlanStatus.UNINITIALIZED,
       });
       goBack();
       navigate('Login');
@@ -348,6 +351,7 @@ function* signUp(action: SignUpAction) {
         sleepPattern,
         lifestyle,
         medications,
+        planStatus: PlanStatus.UNINITIALIZED,
       });
       yield put(
         setProfile({
@@ -370,6 +374,7 @@ function* signUp(action: SignUpAction) {
           sleepPattern,
           lifestyle,
           medications,
+          planStatus: PlanStatus.UNINITIALIZED,
         }),
       );
       resetToTabs();
@@ -643,6 +648,20 @@ function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
   }
 }
 
+function* requestPlanWorker() {
+  try {
+    yield put(setLoading(true));
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    yield call(api.requestPlan, uid);
+    yield put(setPlanStatus(PlanStatus.PENDING));
+    yield put(setLoading(false));
+  } catch (e) {
+    yield put(setLoading(false));
+    logError(e);
+    Snackbar.show({text: 'Error requesting plan'});
+  }
+}
+
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
@@ -771,6 +790,7 @@ export default function* profileSaga() {
     takeLatest(SET_CHATS, chatsWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
     takeLatest(GET_WEEKLY_ITEMS, getWeeklyItems),
+    takeLatest(REQUEST_PLAN, requestPlanWorker),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

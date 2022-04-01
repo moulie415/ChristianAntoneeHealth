@@ -7,6 +7,7 @@ import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {
   Gender,
+  PlanStatus,
   SleepPattern,
   StressLevel,
   TrainingAvailability,
@@ -44,6 +45,7 @@ export const SET_VIEWED_PLAN = 'SET_VIEWED_PLAN';
 export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const REQUEST_PLAN = 'REQUEST_PLAN';
+export const SET_PLAN_STATUS = 'SET_PLAN_STATUS';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -222,6 +224,11 @@ export interface RequestPlanAction {
   type: typeof REQUEST_PLAN;
 }
 
+export interface SetPlanStatus {
+  type: typeof SET_PLAN_STATUS;
+  payload: PlanStatus;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -251,7 +258,8 @@ export type ProfileActionTypes =
   | SetViewedPlanAction
   | GetWeeklyItemsAction
   | SetWeeklyItemsAction
-  | RequestPlanAction;
+  | RequestPlanAction
+  | SetPlanStatus;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -440,4 +448,9 @@ export const setWeeklyItems = (payload: WeeklyItems): SetWeeklyItemsAction => ({
 
 export const requestPlan = (): RequestPlanAction => ({
   type: REQUEST_PLAN,
+});
+
+export const setPlanStatus = (payload: PlanStatus): SetPlanStatus => ({
+  type: SET_PLAN_STATUS,
+  payload,
 });

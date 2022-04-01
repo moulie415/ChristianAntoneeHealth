@@ -1,3 +1,4 @@
+import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import {SettingsState} from '../../reducers/settings';
@@ -11,4 +12,5 @@ export default interface PremiumProps {
   navigation: PremiumNavigationProp;
   setPremiumAction: (premium: boolean) => void;
   settings: SettingsState;
-};
+  route: RouteProp<StackParamList, 'Premium'>;
+}

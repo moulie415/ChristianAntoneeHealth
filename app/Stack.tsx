@@ -41,7 +41,6 @@ import Connections from './components/views/More/Connections';
 import AddConnection from './components/views/More/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
-import GetPlan from './components/views/GetPlan';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import Rating from './components/views/Rating';
 import WhatExperience from './components/views/Workout/WhatExperience';
@@ -238,11 +237,6 @@ const StackComponent: FunctionComponent = () => {
             component={AddConnection}
           />
           <Stack.Screen name="Chat" component={Chat} />
-          <Stack.Screen
-            name="GetPlan"
-            component={GetPlan}
-            options={{headerTitle: ''}}
-          />
           <Stack.Screen
             name="WhatEquipment"
             component={WhatEquipment}
