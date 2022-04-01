@@ -33,6 +33,18 @@ const Tabs = () => {
       />
       <Tab.Screen
         options={{
+          tabBarLabel: 'Plan',
+          tabBarIcon: ({color, size}) => (
+            <Icon color={color} size={size} name="calendar-alt" />
+          ),
+          headerShown: false,
+        }}
+        name="GetPlan"
+        key="GetPlan"
+        component={WhatsYourGoal}
+      />
+      <Tab.Screen
+        options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="dumbbell" />
