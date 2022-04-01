@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Layout, Text} from '@ui-kitten/components';
 import {Dimensions, SafeAreaView} from 'react-native';
 
@@ -16,6 +16,11 @@ const RATIO = height / width;
 const ROW_MARGIN = DevicePixels[10] * RATIO;
 
 const Home: React.FC<HomeProps> = ({navigation, profile}) => {
+  useEffect(() => {
+    if (!profile.viewedPlan) {
+      navigation.navigate('Plan');
+    }
+  }, [navigation, profile.viewedPlan]);
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>

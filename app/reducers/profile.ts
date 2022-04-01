@@ -20,6 +20,7 @@ import {
   SET_APP_STATE,
   SET_VIEWED_PLAN,
   SET_WEEKLY_ITEMS,
+  SET_PLAN_STATUS,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -213,6 +214,11 @@ const reducer = (
       return {
         ...state,
         weeklyItems: action.payload,
+      };
+    case SET_PLAN_STATUS:
+      return {
+        ...state,
+        profile: {...state.profile, planStatus: action.payload},
       };
     default:
       return state;

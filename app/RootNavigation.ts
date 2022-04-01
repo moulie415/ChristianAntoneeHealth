@@ -17,9 +17,6 @@ export function resetToTabs() {
       routes: [{name: 'Tabs'}],
     }),
   );
-  if (!store.getState().profile.viewedPlan) {
-    navigate('Plan');
-  }
 }
 
 export function resetToLogin() {

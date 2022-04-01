@@ -654,6 +654,7 @@ function* requestPlanWorker() {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield call(api.requestPlan, uid);
     yield put(setPlanStatus(PlanStatus.PENDING));
+    Snackbar.show({text: 'Your plan has been requested'});
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));

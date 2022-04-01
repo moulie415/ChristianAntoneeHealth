@@ -1,13 +1,13 @@
 import {View} from 'react-native';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
-import {Divider, Input, List, ListItem} from '@ui-kitten/components';
+import {Divider, Input, ListItem} from '@ui-kitten/components';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import _ from 'lodash';
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 
 const Nutrition: React.FC<{
   nutrition: string[];
@@ -64,6 +64,7 @@ const Nutrition: React.FC<{
           width: DevicePixels[190],
           alignSelf: 'center',
         }}
+        removeClippedSubviews={false}
         contentContainerStyle={{
           paddingBottom: DevicePixels[50],
         }}
