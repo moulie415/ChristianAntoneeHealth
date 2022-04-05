@@ -15,12 +15,12 @@ const RATIO = height / width;
 
 const ROW_MARGIN = DevicePixels[10] * RATIO;
 
-const Home: React.FC<HomeProps> = ({navigation, profile}) => {
+const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
   useEffect(() => {
-    if (!profile.viewedPlan) {
+    if (!viewedPlan) {
       navigation.navigate('Plan');
     }
-  }, [navigation, profile.viewedPlan]);
+  }, [navigation, viewedPlan]);
   return (
     <Layout style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -105,6 +105,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile}) => {
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
+  viewedPlan: profile.viewedPlan,
 });
 
 export default connect(mapStateToProps)(Home);

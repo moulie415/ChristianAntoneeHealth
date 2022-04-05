@@ -10,6 +10,7 @@ import {
   CONNECTION_ID,
   MESSAGE_CHANNEL_ID,
   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
+  PLAN_CHANNEL_ID,
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './app/sagas/profile';
 import {setUnread} from './app/actions/profile';
@@ -28,6 +29,13 @@ PushNotification.configure({
       }
       if (notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID) {
         navigate('Fitness');
+      }
+    }
+    if (notification.data.channelId === PLAN_CHANNEL_ID) {
+      if (navigationRef.current && notification.userInteraction) {
+        navigate('Plan');
+      } else if (notification.foreground) {
+        PushNotification.localNotification(notification);
       }
     }
     if (notification.data.channelId === CONNECTION_ID) {

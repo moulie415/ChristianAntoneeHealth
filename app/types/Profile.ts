@@ -47,5 +47,4 @@ export default interface Profile {
   stressLevel?: StressLevel;
   equipment?: string;
   trainingAvailability?: TrainingAvailability;
-  viewedPlan?: boolean;
 }

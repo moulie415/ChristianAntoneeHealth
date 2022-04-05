@@ -123,7 +123,8 @@ const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   }
 });
 
-type Snapshot = FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
+type Snapshot =
+  FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
   const month = moment().month();
@@ -412,6 +413,7 @@ export const MONTHLY_TEST_REMINDERS_CHANNEL_ID =
   'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
 export const CONNECTION_ID = 'CONNECTION_ID';
 export const MESSAGE_CHANNEL_ID = 'MESSAGE_CHANNEL_ID';
+export const PLAN_CHANNEL_ID = 'PLAN_CHANNEL_ID';
 
 function* getWorkoutReminders() {
   const {workoutReminderTime, monthlyTestReminders} = yield select(
@@ -445,6 +447,11 @@ const channels: {
     channelId: MESSAGE_CHANNEL_ID,
     channelName: 'Messages',
     channelDescription: 'Channel for receiving messages from connections',
+  },
+  {
+    channelId: PLAN_CHANNEL_ID,
+    channelName: 'Plan updates',
+    channelDescription: 'Channel for get notified about your plan updates',
   },
 ];
 

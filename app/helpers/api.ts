@@ -15,6 +15,7 @@ import Message from '../types/Message';
 import moment from 'moment';
 import {WeeklyItems} from '../reducers/profile';
 
+
 export const getUser = (user: FirebaseAuthTypes.User) => {
   return db().collection('users').doc(user.uid).get();
 };

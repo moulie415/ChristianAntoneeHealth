@@ -1,12 +1,12 @@
 import {View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile, {PlanStatus} from '../../types/Profile';
 import Button from '../commons/Button';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
-import {requestPlan} from '../../actions/profile';
+import {requestPlan, setViewedPlan} from '../../actions/profile';
 import Text from '../commons/Text';
 import {Layout, Spinner} from '@ui-kitten/components';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -16,7 +16,17 @@ const Plan: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Plan'>;
   requestPlan: () => void;
   loading: boolean;
-}> = ({profile, navigation, requestPlan: requestPlanAction, loading}) => {
+  setViewedPlan: () => void;
+}> = ({
+  profile,
+  navigation,
+  requestPlan: requestPlanAction,
+  loading,
+  setViewedPlan: setViewedPlanAction,
+}) => {
+  useEffect(() => {
+    setViewedPlanAction();
+  }, [setViewedPlanAction]);
   return (
     <Layout style={{flex: 1}}>
       <Text
@@ -64,6 +74,21 @@ const Plan: React.FC<{
             Request my workout plan
           </Button>
         )}
+        {!profile.premium && profile.planStatus === PlanStatus.UNINITIALIZED && (
+          <Button
+            style={{margin: DevicePixels[20], marginTop: 0}}
+            disabled={loading}
+            accessoryLeft={() => (loading ? <Spinner /> : null)}
+            onPress={() => {
+              navigation.navigate('Premium', {
+                onActivated: () => {
+                  navigation.navigate('Home');
+                },
+              });
+            }}>
+            No thanks, I just want premium
+          </Button>
+        )}
       </View>
     </Layout>
   );
@@ -76,6 +101,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 
 const mapDispatchToProps = {
   requestPlan,
+  setViewedPlan,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Plan);
