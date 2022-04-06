@@ -100,5 +100,9 @@ export interface Plan {
     postWorkout: string;
     general: string;
   };
+  tests: {
+    test: string;
+    dates: string[];
+  }[];
   education: string[];
 }

@@ -1,17 +1,22 @@
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Snackbar from 'react-native-snackbar';
 import {all, call, put, select, takeLatest} from 'redux-saga/effects';
 import {GET_PLAN, setPlan} from '../actions/plan';
 import {setLoading, setPlanStatus} from '../actions/profile';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
-import Profile, {PlanStatus} from '../types/Profile';
+import {PlanStatus} from '../types/Profile';
 import {MyRootState, Plan} from '../types/Shared';
 
 function* getPlanWorker() {
   try {
     yield put(setLoading(true));
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    const user: Profile = yield call(api.getUser, uid);
+    const userDoc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
+      api.getUser,
+      uid,
+    );
+    const user = userDoc.data();
     yield put(setPlanStatus(user.planStatus));
     if (user.planStatus === PlanStatus.COMPLETE) {
       const plan: Plan = yield call(api.getPlan, uid);

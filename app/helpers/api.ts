@@ -389,5 +389,5 @@ export const getPlan = async (uid: string) => {
     .orderBy('lastupdate', 'asc')
     .limit(1)
     .get();
-  return plans.docs[0];
+  return plans.docs[0].data();
 };

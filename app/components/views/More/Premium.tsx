@@ -36,7 +36,7 @@ const Premium: React.FC<PremiumProps> = ({
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<PurchaserInfo>();
   const [loading, setLoading] = useState(false);
-  const {onActivated} = route.params;
+  const onActivated = route.params?.onActivated;
   useEffect(() => {
     const getOfferings = async () => {
       try {
@@ -241,10 +241,8 @@ const Premium: React.FC<PremiumProps> = ({
                         onPress={async () => {
                           try {
                             setLoading(true);
-                            const {
-                              purchaserInfo,
-                              productIdentifier,
-                            } = await Purchases.purchasePackage(p);
+                            const {purchaserInfo, productIdentifier} =
+                              await Purchases.purchasePackage(p);
                             if (
                               typeof purchaserInfo.entitlements.active
                                 .Premium !== 'undefined'

@@ -9,7 +9,7 @@ import FitnessTesting from './components/views/Tests/FitnessTesting';
 import More from './components/views/More/More';
 import MoreIcon from './components/commons/unread/MoreIcon';
 import WhatsYourGoal from './components/views/Workout/WhatsYourGoal';
-import Plan from './components/views/Plan';
+import Plan from './components/views/Plan/Plan';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
