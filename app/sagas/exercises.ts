@@ -258,9 +258,8 @@ export default function* exercisesSaga() {
     takeLatest(VIEW_WORKOUT, viewWorkoutWatcher),
   ]);
 
-  const dynamicLinkChannel: EventChannel<FirebaseDynamicLinksTypes.DynamicLink> = yield call(
-    onDynamicLink,
-  );
+  const dynamicLinkChannel: EventChannel<FirebaseDynamicLinksTypes.DynamicLink> =
+    yield call(onDynamicLink);
 
   while (true) {
     const url: string = yield take(dynamicLinkChannel);

@@ -79,3 +79,26 @@ export enum Equipment {
   LANDMINE = 'landmine',
   EXERCISE_STEP = 'exerciseStep',
 }
+
+export interface Plan {
+  user: string;
+  workouts: {
+    name: string;
+    dates: string[];
+    exercises: {
+      exercise: string;
+      sets: number;
+      reps: number;
+      duration: number;
+      resistanceScale: number;
+      restTime: number;
+      additionalNotes: string;
+    }[];
+  }[];
+  nutrition: {
+    preWorkout: string;
+    postWorkout: string;
+    general: string;
+  };
+  education: string[];
+}

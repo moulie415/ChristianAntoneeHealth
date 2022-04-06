@@ -10,6 +10,7 @@ import {requestPlan, setViewedPlan} from '../../actions/profile';
 import Text from '../commons/Text';
 import {Layout, Spinner} from '@ui-kitten/components';
 import DevicePixels from '../../helpers/DevicePixels';
+import {getPlan} from '../../actions/plan';
 
 const Plan: React.FC<{
   profile: Profile;
@@ -17,16 +18,22 @@ const Plan: React.FC<{
   requestPlan: () => void;
   loading: boolean;
   setViewedPlan: () => void;
+  getPlan: () => void;
 }> = ({
   profile,
   navigation,
   requestPlan: requestPlanAction,
   loading,
   setViewedPlan: setViewedPlanAction,
+  getPlan: getPlanAction,
 }) => {
   useEffect(() => {
     setViewedPlanAction();
   }, [setViewedPlanAction]);
+
+  useEffect(() => {
+    getPlanAction();
+  }, [getPlanAction]);
   return (
     <Layout style={{flex: 1}}>
       <Text
@@ -97,11 +104,13 @@ const Plan: React.FC<{
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   loading: profile.loading,
+  plan: profile.plan,
 });
 
 const mapDispatchToProps = {
   requestPlan,
   setViewedPlan,
+  getPlan,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Plan);

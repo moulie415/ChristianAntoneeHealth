@@ -15,9 +15,8 @@ import Message from '../types/Message';
 import moment from 'moment';
 import {WeeklyItems} from '../reducers/profile';
 
-
-export const getUser = (user: FirebaseAuthTypes.User) => {
-  return db().collection('users').doc(user.uid).get();
+export const getUser = (uid: string) => {
+  return db().collection('users').doc(uid).get();
 };
 
 export const setUser = (user: Profile) => {
@@ -49,8 +48,10 @@ const getExercisesQuery = async (
   warmUp: WarmUp[],
   coolDown: CoolDown[],
 ) => {
-  let warmUpDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[] = [];
-  let coolDownDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[] = [];
+  let warmUpDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[] =
+    [];
+  let coolDownDocs: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>[] =
+    [];
   if (warmUp.length) {
     const warmUpQuery = await db()
       .collection('exercises')
@@ -379,4 +380,14 @@ export const requestPlan = async (uid: string) => {
     .collection('users')
     .doc(uid)
     .update({planStatus: PlanStatus.PENDING});
+};
+
+export const getPlan = async (uid: string) => {
+  const plans = await db()
+    .collection('plans')
+    .where('user', '==', uid)
+    .orderBy('lastupdate', 'asc')
+    .limit(1)
+    .get();
+  return plans.docs[0];
 };

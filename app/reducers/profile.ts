@@ -1,4 +1,5 @@
 import {AppState, AppStateStatus} from 'react-native';
+import {PlanActionTypes, SET_PLAN} from '../actions/plan';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -26,7 +27,7 @@ import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {PlanStatus} from '../types/Profile';
 import {SavedQuickRoutine, SavedTest} from '../types/SavedItem';
-import {Sample, StepSample} from '../types/Shared';
+import {Plan, Sample, StepSample} from '../types/Shared';
 
 export interface WeeklyItems {
   quickRoutines: {[key: string]: SavedQuickRoutine};
@@ -51,6 +52,7 @@ export interface ProfileState {
   state: AppStateStatus;
   viewedPlan: boolean;
   weeklyItems: WeeklyItems;
+  plan?: Plan;
 }
 
 const initialState: ProfileState = {
@@ -97,7 +99,7 @@ const initialState: ProfileState = {
 
 const reducer = (
   state = initialState,
-  action: ProfileActionTypes,
+  action: ProfileActionTypes | PlanActionTypes,
 ): ProfileState => {
   switch (action.type) {
     case SET_PROFILE:
@@ -219,6 +221,11 @@ const reducer = (
       return {
         ...state,
         profile: {...state.profile, planStatus: action.payload},
+      };
+    case SET_PLAN:
+      return {
+        ...state,
+        plan: action.payload,
       };
     default:
       return state;

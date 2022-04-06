@@ -682,7 +682,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
       // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,
-        user,
+        user.uid,
       );
 
       if (doc.exists) {
