@@ -6872,10 +6872,15 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-calendars@^1.1280.0:
-  version "1.1280.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1280.0.tgz#133ab3762c94b819f12e87aa310119711cefb3f0"
-  integrity sha512-WXlFQ2D3qxB26H5DSN8o5kS+ZTSk075GPu60u6xCzgUYUm8+nwCJ4MaO2oPzK+nYBMWYXzgSufXQhtxisU4GNA==
+react-native-calendar-events@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz#6cb78bf712457ca9928dae95b428c91e7b895ae0"
+  integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
+
+react-native-calendars@^1.1281.0:
+  version "1.1281.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1281.0.tgz#8f544784f4772129b57c382540542f16d37cb263"
+  integrity sha512-aG8r4fycwY3edV+93McLDQ233O3liQvz0uPAVhctL6f5U7ZT5cI40JhqAo0/w98k0n2b/SAXdEMMosT0xXadcQ==
   dependencies:
     fs "^0.0.1-security"
     hoist-non-react-statics "^3.3.1"
