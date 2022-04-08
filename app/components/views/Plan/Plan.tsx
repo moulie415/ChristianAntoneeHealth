@@ -68,7 +68,7 @@ const Plan: React.FC<{
   const [routes] = useState([
     {key: 'daily', title: 'Daily'},
     {key: 'weekly', title: 'Weekly'},
-    {key: 'monthly', title: 'Month'},
+    {key: 'monthly', title: 'Monthly'},
   ]);
 
   return (
