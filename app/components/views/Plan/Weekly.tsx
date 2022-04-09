@@ -21,8 +21,8 @@ const Weekly: React.FC<{plan: Plan}> = ({plan}) => {
     ),
   );
 
-  console.log(workouts, tests);
-  return <View />;
+  
+  return <View ></View>;
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
