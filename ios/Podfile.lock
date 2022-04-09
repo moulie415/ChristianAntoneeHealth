@@ -975,6 +975,8 @@ PODS:
     - React-Core
   - RNAppleHealthKit (1.7.0):
     - React
+  - RNCalendarEvents (2.2.0):
+    - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
   - RNCClipboard (1.8.5):
@@ -1174,6 +1176,7 @@ DEPENDENCIES:
   - "RNAdMob (from `../node_modules/@react-native-admob/admob`)"
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - RNAppleHealthKit (from `../node_modules/react-native-health`)
+  - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
@@ -1355,6 +1358,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNAppleHealthKit:
     :path: "../node_modules/react-native-health"
+  RNCalendarEvents:
+    :path: "../node_modules/react-native-calendar-events"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCClipboard:
@@ -1514,6 +1519,7 @@ SPEC CHECKSUMS:
   RNAdMob: 962ba3420181956772020f8dda42f8466f86ea71
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
+  RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCClipboard: cc054ad1e8a33d2a74cd13e565588b4ca928d8fd
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489

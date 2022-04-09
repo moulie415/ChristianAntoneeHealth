@@ -5,6 +5,7 @@ import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Unit} from '../types/Profile';
 import {StepSample} from '../types/Shared';
+import { logError } from './error';
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -375,7 +376,7 @@ export const saveWorkout = (
         },
         (e: Error, res) => {
           if (e) {
-            console.log(e);
+            logError(e);
             reject(e);
             return;
           }

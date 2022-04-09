@@ -1,25 +1,54 @@
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Snackbar from 'react-native-snackbar';
-import {all, call, put, select, takeLatest} from 'redux-saga/effects';
+import {eventChannel, EventChannel} from 'redux-saga';
+import {
+  all,
+  call,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
+} from 'redux-saga/effects';
 import {GET_PLAN, setPlan} from '../actions/plan';
 import {setLoading, setPlanStatus} from '../actions/profile';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
-import {PlanStatus} from '../types/Profile';
+import Profile, {PlanStatus} from '../types/Profile';
 import {MyRootState, Plan} from '../types/Shared';
+import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
-function* getPlanWorker() {
+function onPlanChanged(uid: string) {
+  return eventChannel(emitter => {
+    const subscriber = db()
+      .collection('users')
+      .doc(uid)
+      .onSnapshot(
+        snapshot => {
+          emitter(snapshot);
+        },
+        error => {
+          logError(error);
+        },
+      );
+    return subscriber;
+  });
+}
+
+function* planWatcher(uid: string) {
+  const channel: EventChannel<FirebaseFirestoreTypes.DocumentSnapshot> =
+    yield call(onPlanChanged, uid);
+  while (true) {
+    const user: FirebaseFirestoreTypes.DocumentSnapshot = yield take(channel);
+    yield call(handlePlanUpdate, user.data() as Profile);
+  }
+}
+
+function* handlePlanUpdate(user: Profile) {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    const userDoc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
-      api.getUser,
-      uid,
-    );
-    const user = userDoc.data();
     yield put(setPlanStatus(user.planStatus));
     if (user.planStatus === PlanStatus.COMPLETE) {
-      const plan: Plan = yield call(api.getPlan, uid);
+      const plan: Plan = yield call(api.getPlan, user.uid);
       if (!plan) {
         throw Error('Plan not found');
       }
@@ -30,6 +59,15 @@ function* getPlanWorker() {
     logError(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error fetching plan'});
+  }
+}
+
+function* getPlanWorker() {
+  try {
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    yield fork(planWatcher, uid);
+  } catch (e) {
+    logError(e);
   }
 }
 

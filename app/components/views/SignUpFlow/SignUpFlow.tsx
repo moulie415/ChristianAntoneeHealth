@@ -88,10 +88,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [stressLevel, setStressLevel] = useState<StressLevel>();
   const [occupation, setOccupation] = useState('');
   const [injuries, setInjuries] = useState('');
-  const [
-    trainingAvailability,
-    setTrainingAvailability,
-  ] = useState<TrainingAvailability>();
+  const [trainingAvailability, setTrainingAvailability] =
+    useState<TrainingAvailability>();
   const [nutrition, setNutrition] = useState([]);
 
   const {dry} = route.params;

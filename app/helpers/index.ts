@@ -8,6 +8,7 @@ import {Sample} from '../types/Shared';
 import colors from '../constants/colors';
 import {PercentileTable, Table} from '../types/Test';
 import {Category} from '../types/Education';
+import {logError} from './error';
 
 const {height, width} = Dimensions.get('window');
 
@@ -41,7 +42,7 @@ export const scheduleLocalNotification = (
       channelId: channel,
     });
   } catch (e) {
-    console.log(e.message);
+    logError(e);
   }
 };
 

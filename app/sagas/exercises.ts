@@ -45,6 +45,7 @@ import dynamicLinks, {
 } from '@react-native-firebase/dynamic-links';
 import Profile from '../types/Profile';
 import {alertPremiumFeature} from '../helpers/exercises';
+import { logError } from '../helpers/error';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -131,7 +132,7 @@ export function* getExercisesById(action: GetExercisesByIdAction) {
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
-    console.log(e);
+    logError(e);
     Snackbar.show({text: 'Error fetching exercises'});
   }
 }

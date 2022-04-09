@@ -1,4 +1,4 @@
-import {useWindowDimensions, View} from 'react-native';
+import {SafeAreaView, useWindowDimensions, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -72,7 +72,7 @@ const Plan: React.FC<{
   ]);
 
   return (
-    <Layout style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       {hasPlanLeft ? (
         <TabView
           renderTabBar={props => {
@@ -156,7 +156,7 @@ const Plan: React.FC<{
           </View>
         </>
       )}
-    </Layout>
+    </SafeAreaView>
   );
 };
 

@@ -37,10 +37,8 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
   ).format('YYYY-MM-DD');
 
   const minDate = moment(
-    Math.min(...uniq.map(date => moment(date).valueOf())),
+    Math.min(moment().valueOf(), ...uniq.map(date => moment(date).valueOf())),
   ).format('YYYY-MM-DD');
-
-  console.log(maxDate);
 
   return (
     <View>
