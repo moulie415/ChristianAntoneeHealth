@@ -138,7 +138,7 @@ const More: React.FC<MoreProps> = ({
       <SafeAreaView>
         <List
           data={listItems}
-          ItemSeparatorComponent={() => <Divider />}
+          ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
             <ListItem
               title={item.title}

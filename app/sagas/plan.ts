@@ -9,15 +9,52 @@ import {
   take,
   takeLatest,
 } from 'redux-saga/effects';
+import * as _ from 'lodash';
 import {GET_PLAN, setPlan} from '../actions/plan';
 import {setLoading, setPlanStatus} from '../actions/profile';
-import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
 import Profile, {PlanStatus} from '../types/Profile';
 import {MyRootState, Plan} from '../types/Shared';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 function onPlanChanged(uid: string) {
+  return eventChannel(emitter => {
+    const subscriber = db()
+      .collection('plans')
+      .where('user', '==', uid)
+      .orderBy('lastupdate', 'asc')
+      .limit(1)
+      .onSnapshot(
+        snapshot => {
+          emitter(snapshot.docs[0].data());
+        },
+        error => {
+          logError(error);
+        },
+      );
+    return subscriber;
+  });
+}
+
+function* planWatcher() {
+  const {uid} = yield select((state: MyRootState) => state.profile.profile);
+  const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
+  while (true) {
+    const plan: Plan = yield take(channel);
+    const current: Plan = yield select(
+      (state: MyRootState) => state.profile.plan,
+    );
+    if (
+      current &&
+      !_.isEqual(_.omit(current, 'lastupdate'), _.omit(plan, 'lastupdate'))
+    ) {
+      Snackbar.show({text: 'Your plan has been updated'});
+    }
+    yield put(setPlan(plan));
+  }
+}
+
+function onPlanStatusChanged(uid: string) {
   return eventChannel(emitter => {
     const subscriber = db()
       .collection('users')
@@ -34,9 +71,9 @@ function onPlanChanged(uid: string) {
   });
 }
 
-function* planWatcher(uid: string) {
+function* planStateWatcher(uid: string) {
   const channel: EventChannel<FirebaseFirestoreTypes.DocumentSnapshot> =
-    yield call(onPlanChanged, uid);
+    yield call(onPlanStatusChanged, uid);
   while (true) {
     const user: FirebaseFirestoreTypes.DocumentSnapshot = yield take(channel);
     yield call(handlePlanUpdate, user.data() as Profile);
@@ -48,12 +85,7 @@ function* handlePlanUpdate(user: Profile) {
     yield put(setLoading(true));
     yield put(setPlanStatus(user.planStatus));
     if (user.planStatus === PlanStatus.COMPLETE) {
-      const plan: Plan = yield call(api.getPlan, user.uid);
-      if (!plan) {
-        throw Error('Plan not found');
-      }
-      yield put(setPlan(plan));
-      yield put(setLoading(false));
+      yield fork(planWatcher);
     }
   } catch (e) {
     logError(e);
@@ -65,7 +97,7 @@ function* handlePlanUpdate(user: Profile) {
 function* getPlanWorker() {
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    yield fork(planWatcher, uid);
+    yield fork(planStateWatcher, uid);
   } catch (e) {
     logError(e);
   }

@@ -70,8 +70,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       </Text>
       <DraggableFlatList
         data={workout}
-  
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
         renderItem={renderItem}
         ListFooterComponent={() => (
           <TouchableOpacity

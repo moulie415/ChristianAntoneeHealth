@@ -106,7 +106,7 @@ const Connections: React.FC<{
             a link.
           </Text>
         )}
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
       />
     </Layout>
   );

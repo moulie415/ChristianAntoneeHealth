@@ -106,3 +106,23 @@ export interface Plan {
   }[];
   education: string[];
 }
+
+
+export interface CalendarType {
+  /** Unique calendar ID. */
+  id: string;
+  /** The calendar’s title. */
+  title: string;
+  /** The calendar’s type. */
+  type: string;
+  /** The source object representing the account to which this calendar belongs. */
+  source: string;
+  /** Indicates if the calendar is assigned as primary. */
+  isPrimary: boolean;
+  /** Indicates if the calendar allows events to be written, edited or removed. */
+  allowsModifications: boolean;
+  /** The color assigned to the calendar represented as a hex value. */
+  color: string;
+  /** The event availability settings supported by the calendar. */
+  allowedAvailabilities: string[];
+}

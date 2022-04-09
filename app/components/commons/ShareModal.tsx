@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Card, Divider, List, ListItem, Modal} from '@ui-kitten/components';
+import {Card, Divider, List, ListItem} from '@ui-kitten/components';
 import Button from './Button';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
@@ -21,6 +21,7 @@ import AbsoluteSpinner from './AbsoluteSpinner';
 import {sendMessage} from '../../helpers/api';
 import moment from 'moment';
 import uuid from 'react-native-uuid';
+import Modal from './Modal';
 
 const ShareModal: React.FC<{
   visible: boolean;
@@ -84,9 +85,7 @@ const ShareModal: React.FC<{
   };
 
   return (
-    <Modal
-      backdropStyle={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
-      visible={visible && profile.premium}>
+    <Modal visible={visible && profile.premium}>
       <View
         style={{
           backgroundColor: '#fff',
@@ -105,7 +104,7 @@ const ShareModal: React.FC<{
         <List
           style={{height: DevicePixels[200]}}
           data={Object.values(connections)}
-          ItemSeparatorComponent={() => <Divider />}
+          ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
             <ListItem
               accessoryLeft={() => (
