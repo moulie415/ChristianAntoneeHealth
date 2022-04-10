@@ -26,7 +26,11 @@ function onPlanChanged(uid: string) {
       .limit(1)
       .onSnapshot(
         snapshot => {
-          emitter(snapshot.docs[0].data());
+          if (snapshot.docs[0]) {
+            emitter(snapshot.docs[0].data());
+          } else {
+            emitter({});
+          }
         },
         error => {
           logError(error);
@@ -40,17 +44,21 @@ function* planWatcher() {
   const {uid} = yield select((state: MyRootState) => state.profile.profile);
   const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
   while (true) {
-    const plan: Plan = yield take(channel);
+    const plan: Plan | {} = yield take(channel);
     const current: Plan = yield select(
       (state: MyRootState) => state.profile.plan,
     );
-    if (
-      current &&
-      !_.isEqual(_.omit(current, 'lastupdate'), _.omit(plan, 'lastupdate'))
-    ) {
-      Snackbar.show({text: 'Your plan has been updated'});
+    if (plan === {}) {
+      yield put(setPlan(undefined));
+    } else {
+      if (
+        current &&
+        !_.isEqual(_.omit(current, 'lastupdate'), _.omit(plan, 'lastupdate'))
+      ) {
+        Snackbar.show({text: 'Your plan has been updated'});
+      }
+      yield put(setPlan(plan as Plan));
     }
-    yield put(setPlan(plan));
   }
 }
 
