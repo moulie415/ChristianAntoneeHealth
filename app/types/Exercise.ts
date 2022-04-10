@@ -1,7 +1,7 @@
+import { Area } from './QuickRoutines';
 import {
   Level,
   Goal,
-  StrengthArea,
   FlexibilityArea,
   WarmUp,
   CoolDown,
@@ -23,7 +23,7 @@ export default interface Exercise {
   description: string;
   level?: Level;
   type?: Goal;
-  area?: StrengthArea;
+  area?: Area;
   flexibilityArea?: FlexibilityArea;
   equipment?: EquipmentItem[];
   muscles?: Muscle[];

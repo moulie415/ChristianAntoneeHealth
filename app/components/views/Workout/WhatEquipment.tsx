@@ -15,10 +15,8 @@ import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 
 const WhatEquipment: React.FC<{
-  navigation: NativeStackNavigationProp<StackParamList, 'WhatEquipment'>;
-  route: RouteProp<StackParamList, 'WhatEquipment'>;
-}> = ({navigation, route}) => {
-  const {goal} = route.params;
+  navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
+}> = ({navigation}) => {
   return (
     <ImageBackground
       source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
@@ -43,8 +41,7 @@ const WhatEquipment: React.FC<{
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('WhatExperience', {
-                goal,
+              navigation.navigate('WhatArea', {
                 equipment: 'minimal',
               })
             }
@@ -61,14 +58,16 @@ const WhatEquipment: React.FC<{
                 textAlign: 'center',
                 color: colors.appWhite,
                 fontWeight: 'bold',
+                fontSize: DevicePixels[17],
               }}>
               I’ve got a few bits and pieces
             </Text>
+            <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+              (Dumbbells, exercise ball, exercise mat)
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WhatExperience', {goal, equipment: 'full'})
-            }
+            onPress={() => navigation.navigate('WhatArea', {equipment: 'full'})}
             style={{
               margin: DevicePixels[20],
               backgroundColor: colors.appBlue,
@@ -82,8 +81,13 @@ const WhatEquipment: React.FC<{
                 textAlign: 'center',
                 color: colors.appWhite,
                 fontWeight: 'bold',
+                fontSize: DevicePixels[17],
               }}>
               I’ve got access to a gym
+            </Text>
+            <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+              (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
+              benches Kettlebell etc)
             </Text>
           </TouchableOpacity>
         </View>

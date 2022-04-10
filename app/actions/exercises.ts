@@ -1,13 +1,7 @@
 import Exercise from '../types/Exercise';
+import { Area } from '../types/QuickRoutines';
 import {SavedWorkout} from '../types/SavedItem';
-import {
-  CoolDown,
-  Equipment,
-  Goal,
-  Level,
-  StrengthArea,
-  WarmUp,
-} from '../types/Shared';
+import {CoolDown, Equipment, Goal, Level, WarmUp} from '../types/Shared';
 import {SetLoggedInAction} from './profile';
 
 export const GET_EXERCISES = 'GET_EXERCISES';
@@ -125,7 +119,7 @@ export interface SetFitnessGoalAction {
 
 export interface SetStrengthAreaAction {
   type: typeof SET_STRENGTH_AREA;
-  payload: StrengthArea;
+  payload: Area;
 }
 
 export interface SetLevelAction {
@@ -251,7 +245,7 @@ export const setFitnessGoal = (goal: Goal): SetFitnessGoalAction => ({
   payload: goal,
 });
 
-export const setStrengthArea = (area: StrengthArea): SetStrengthAreaAction => ({
+export const setStrengthArea = (area: Area): SetStrengthAreaAction => ({
   type: SET_STRENGTH_AREA,
   payload: area,
 });

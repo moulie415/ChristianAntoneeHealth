@@ -8,8 +8,9 @@ import Workout from './components/views/Workout/Workout';
 import FitnessTesting from './components/views/Tests/FitnessTesting';
 import More from './components/views/More/More';
 import MoreIcon from './components/commons/unread/MoreIcon';
-import WhatsYourGoal from './components/views/Workout/WhatsYourGoal';
+import WhatArea from './components/views/Workout/WhatArea';
 import Plan from './components/views/Plan/Plan';
+import WhatEquipment from './components/views/Workout/WhatEquipment';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -54,7 +55,7 @@ const Tabs = () => {
         }}
         name="Workout"
         key="Workout"
-        component={WhatsYourGoal}
+        component={WhatEquipment}
       />
       {/* <Tab.Screen
         options={{

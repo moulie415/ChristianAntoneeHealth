@@ -1,6 +1,6 @@
 import {Goal, Level} from './Shared';
 
-export type Area = 'upper' | 'lower' | 'full' | 'core';
+export type Area = 'upper' | 'lower' | 'full';
 export type Equipment = 'full' | 'minimal';
 
 export default interface QuickRoutine {

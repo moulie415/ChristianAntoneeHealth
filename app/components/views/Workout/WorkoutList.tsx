@@ -68,7 +68,7 @@ const WorkoutList: React.FC<{
   profile,
   settings,
 }) => {
-  const {goal, experience, equipment} = route.params;
+  const {area, equipment} = route.params;
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
   const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
 
@@ -85,8 +85,7 @@ const WorkoutList: React.FC<{
 
   const filtered = Object.values(quickRoutines).filter(routine => {
     return (
-      routine.focus === goal &&
-      routine.level === experience &&
+      routine.area === area &&
       (routine.equipment === equipment || equipment === 'full')
     );
   });

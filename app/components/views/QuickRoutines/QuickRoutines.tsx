@@ -31,7 +31,6 @@ const sections: {
       {id: 'upper', name: 'Upper body'},
       {id: 'lower', name: 'Lower body'},
       {id: 'full', name: 'Full body'},
-      {id: 'core', name: 'Abs and core'},
     ],
     image: require('../../../images/Quick_Routine_body_part.jpeg'),
   },
@@ -150,13 +149,6 @@ const QuickRoutines: React.FC<QuickRoutinesProps> = ({
                             // @ts-ignore
                             return navigation.navigate('QuickRoutinesTabs', {
                               screen: 'Tab3',
-                              key,
-                            });
-                          }
-                          if (id === 'core' && key === 'area') {
-                            // @ts-ignore
-                            return navigation.navigate('QuickRoutinesTabs', {
-                              screen: 'Tab4',
                               key,
                             });
                           }

@@ -1,28 +1,27 @@
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Layout} from '@ui-kitten/components';
+import React from 'react';
 import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import colors from '../../../constants/colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Layout} from '@ui-kitten/components';
-import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
-import {RouteProp} from '@react-navigation/native';
-import {Level} from '../../../types/Shared';
+import colors from '../../../constants/colors';
+import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
 
-const WhatExperience: React.FC<{
-  navigation: NativeStackNavigationProp<StackParamList, 'WhatExperience'>;
-  route: RouteProp<StackParamList, 'WhatExperience'>;
+const WhatArea: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'WhatArea'>;
+  route: RouteProp<StackParamList, 'WhatArea'>;
 }> = ({navigation, route}) => {
-  const {goal, equipment} = route.params;
+  const {equipment} = route.params;
   return (
     <ImageBackground
-      source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
+      source={require('../../../images/Fitness_testing_squat.jpeg')}
       style={{flex: 1}}>
       <Layout
         style={{
@@ -39,20 +38,15 @@ const WhatExperience: React.FC<{
             marginTop: DevicePixels[20],
           }}
           category="h3">
-          What's your experience level?
+          What area do you want to focus on?
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('WorkoutList', {
-                goal,
-                equipment,
-                experience: Level.BEGINNER,
-              })
+              navigation.navigate('WorkoutList', {equipment, area: 'upper'})
             }
             style={{
               margin: DevicePixels[20],
-              marginTop: 0,
               backgroundColor: colors.appBlue,
               padding: DevicePixels[10],
               borderColor: colors.appBlue,
@@ -60,24 +54,22 @@ const WhatExperience: React.FC<{
               borderRadius: DevicePixels[5],
             }}>
             <Text
+              category="h5"
               style={{
-                textAlign: 'center',
                 color: colors.appWhite,
                 fontWeight: 'bold',
+                textAlign: 'center'
               }}>
-              No clue what I’m doing
+              UPPER BODY
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('WorkoutList', {
-                goal,
-                equipment,
-                experience: Level.INTERMEDIATE,
-              })
+              navigation.navigate('WorkoutList', {equipment, area: 'lower'})
             }
             style={{
               margin: DevicePixels[20],
+
               backgroundColor: colors.appBlue,
               padding: DevicePixels[10],
               borderColor: colors.appBlue,
@@ -85,21 +77,18 @@ const WhatExperience: React.FC<{
               borderRadius: DevicePixels[5],
             }}>
             <Text
+              category="h5"
               style={{
-                textAlign: 'center',
                 color: colors.appWhite,
                 fontWeight: 'bold',
+                textAlign: 'center'
               }}>
-              I workout every now and again
+              LOWER BODY
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('WorkoutList', {
-                goal,
-                equipment,
-                experience: Level.ADVANCED,
-              })
+              navigation.navigate('WorkoutList', {equipment, area: 'full'})
             }
             style={{
               margin: DevicePixels[20],
@@ -110,12 +99,13 @@ const WhatExperience: React.FC<{
               borderRadius: DevicePixels[5],
             }}>
             <Text
+              category="h5"
               style={{
-                textAlign: 'center',
                 color: colors.appWhite,
                 fontWeight: 'bold',
+                textAlign: 'center'
               }}>
-              I’m a seasoned veteran
+              FULL BODY
             </Text>
           </TouchableOpacity>
         </View>
@@ -124,4 +114,4 @@ const WhatExperience: React.FC<{
   );
 };
 
-export default WhatExperience;
+export default WhatArea;

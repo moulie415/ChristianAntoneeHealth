@@ -17,8 +17,10 @@ import {SavedQuickRoutine} from '../types/SavedItem';
 import {setLoading} from '../actions/exercises';
 
 export function* getQuickRoutines() {
-  const tests: {[key: string]: QuickRoutine} = yield call(api.getQuickRoutines);
-  yield put(setQuickRoutines(tests));
+  const routines: {[key: string]: QuickRoutine} = yield call(
+    api.getQuickRoutines,
+  );
+  yield put(setQuickRoutines(routines));
 }
 
 function* saveQuickRoutine(action: SaveQuickRoutineAction) {

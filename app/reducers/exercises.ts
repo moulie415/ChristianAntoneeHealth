@@ -17,22 +17,16 @@ import {
 } from '../actions/exercises';
 import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
+import {Area} from '../types/QuickRoutines';
 import {SavedWorkout} from '../types/SavedItem';
-import {
-  CoolDown,
-  Equipment,
-  Goal,
-  Level,
-  StrengthArea,
-  WarmUp,
-} from '../types/Shared';
+import {CoolDown, Equipment, Goal, Level, WarmUp} from '../types/Shared';
 
 export interface ExercisesState {
   exercises: {[key: string]: Exercise};
   loading: boolean;
   workout: Exercise[];
   fitnessGoal: Goal;
-  strengthArea: StrengthArea;
+  strengthArea: Area;
   level: Level;
   equipment: Equipment[];
   warmUp: WarmUp[];
@@ -50,7 +44,7 @@ const initialState: ExercisesState = {
   exercises: {},
   workout: [],
   fitnessGoal: Goal.STRENGTH,
-  strengthArea: StrengthArea.UPPER,
+  strengthArea: 'upper',
   level: Level.BEGINNER,
   equipment: [Equipment.NONE],
   warmUp: [],

@@ -41,12 +41,11 @@ import Connections from './components/views/More/Connections';
 import AddConnection from './components/views/More/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
-import WhatEquipment from './components/views/Workout/WhatEquipment';
 import Rating from './components/views/Rating';
-import WhatExperience from './components/views/Workout/WhatExperience';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WeeklyActivity from './components/views/Activity/WeeklyActivity';
 import FitHealthIcon from './components/commons/FitHealthIcon';
+import WhatArea from './components/views/Workout/WhatArea';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -238,13 +237,8 @@ const StackComponent: FunctionComponent = () => {
           />
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen
-            name="WhatEquipment"
-            component={WhatEquipment}
-            options={{headerTitle: ''}}
-          />
-          <Stack.Screen
-            name="WhatExperience"
-            component={WhatExperience}
+            name="WhatArea"
+            component={WhatArea}
             options={{headerTitle: ''}}
           />
           <Stack.Screen

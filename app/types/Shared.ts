@@ -27,12 +27,6 @@ export enum Goal {
   INJURY_PREVENTION = 'injuryPrevention',
 }
 
-export enum StrengthArea {
-  UPPER = 'upper',
-  LOWER = 'lower',
-  FULL = 'full',
-}
-
 export enum WarmUp {
   CIRCULATORY = 'circulatory',
   SOFT_TISSUE = 'softTissue',
