@@ -98,15 +98,16 @@ const Plan: React.FC<{
             My workout plan
           </Text>
 
-          {profile.planStatus === PlanStatus.UNINITIALIZED && (
-            <View style={{margin: DevicePixels[10]}}>
-              <Text>
-                This is your the screen for your personal customized plan, once
-                requested we will try and get your plan to you as soon as we can
-                and once completed it will appear here
-              </Text>
-            </View>
-          )}
+          {profile.planStatus === PlanStatus.UNINITIALIZED ||
+            (!hasPlanLeft && (
+              <View style={{margin: DevicePixels[10]}}>
+                <Text>
+                  This is your the screen for your personal customized plan,
+                  once requested we will try and get your plan to you as soon as
+                  we can and once completed it will appear here
+                </Text>
+              </View>
+            ))}
 
           {profile.planStatus === PlanStatus.PENDING && (
             <View style={{margin: DevicePixels[10], alignItems: 'center'}}>
@@ -118,6 +119,7 @@ const Plan: React.FC<{
             </View>
           )}
           <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View></View>
             {profile.planStatus === PlanStatus.UNINITIALIZED && (
               <Button
                 style={{margin: DevicePixels[20]}}
@@ -137,8 +139,10 @@ const Plan: React.FC<{
                 Request my workout plan
               </Button>
             )}
+
             {!profile.premium &&
-              profile.planStatus === PlanStatus.UNINITIALIZED && (
+              (profile.planStatus === PlanStatus.UNINITIALIZED ||
+                !hasPlanLeft) && (
                 <Button
                   style={{margin: DevicePixels[20], marginTop: 0}}
                   disabled={loading}

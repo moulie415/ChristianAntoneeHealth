@@ -41,24 +41,30 @@ function onPlanChanged(uid: string) {
 }
 
 function* planWatcher() {
-  const {uid} = yield select((state: MyRootState) => state.profile.profile);
-  const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
-  while (true) {
-    const plan: Plan | {} = yield take(channel);
-    const current: Plan = yield select(
-      (state: MyRootState) => state.profile.plan,
-    );
-    if (plan === {}) {
-      yield put(setPlan(undefined));
-    } else {
-      if (
-        current &&
-        !_.isEqual(_.omit(current, 'lastupdate'), _.omit(plan, 'lastupdate'))
-      ) {
-        Snackbar.show({text: 'Your plan has been updated'});
+  try {
+    yield put(setLoading(true));
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
+    while (true) {
+      const plan: Plan | {} = yield take(channel);
+      const current: Plan = yield select(
+        (state: MyRootState) => state.profile.plan,
+      );
+      if (plan === {}) {
+        yield put(setPlan(undefined));
+      } else {
+        if (
+          current &&
+          !_.isEqual(_.omit(current, 'lastupdate'), _.omit(plan, 'lastupdate'))
+        ) {
+          Snackbar.show({text: 'Your plan has been updated'});
+        }
+        yield put(setPlan(plan as Plan));
       }
-      yield put(setPlan(plan as Plan));
+      yield put(setLoading(false));
     }
+  } catch (e) {
+    yield put(setLoading(false));
   }
 }
 
@@ -89,16 +95,9 @@ function* planStateWatcher(uid: string) {
 }
 
 function* handlePlanUpdate(user: Profile) {
-  try {
-    yield put(setLoading(true));
-    yield put(setPlanStatus(user.planStatus));
-    if (user.planStatus === PlanStatus.COMPLETE) {
-      yield fork(planWatcher);
-    }
-  } catch (e) {
-    logError(e);
-    yield put(setLoading(false));
-    Snackbar.show({text: 'Error fetching plan'});
+  yield put(setPlanStatus(user.planStatus));
+  if (user.planStatus === PlanStatus.COMPLETE) {
+    yield fork(planWatcher);
   }
 }
 
