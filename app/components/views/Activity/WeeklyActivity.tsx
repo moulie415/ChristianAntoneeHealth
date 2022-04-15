@@ -40,7 +40,7 @@ const WeeklyActivity: React.FC<WeeklyActivityProps> = ({
     );
 
     const workoutDays = workoutsTowardsGoal.reduce((acc, cur) => {
-      const day = moment.unix(cur.createddate).day();
+      const day = moment(cur.createdate).day();
       if (!acc.includes(day)) {
         return [...acc, day];
       }

@@ -58,7 +58,7 @@ const SavedTests: FunctionComponent<{
               return (
                 <ListItem
                   onPress={() => navigation.navigate('Test', {id: item.testId})}
-                  title={`${test.name} - ${moment(item.createddate).format(
+                  title={`${test.name} - ${moment(item.createdate).format(
                     'MMMM Do YYYY',
                   )}`}
                   description={''}

@@ -72,7 +72,7 @@ const SavedWorkouts: FunctionComponent<{
                     );
                     navigation.navigate('ReviewExercises');
                   }}
-                  title={moment(item.createddate).format('MMMM Do YYYY')}
+                  title={moment(item.createdate).format('MMMM Do YYYY')}
                   description={`${item.workout.length} ${
                     item.workout.length > 1 ? 'exercises' : 'exercise'
                   } completed, ${Math.floor(item.calories)} calories expended`}

@@ -160,7 +160,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
               calories,
               seconds,
               difficulty,
-              createddate: moment().unix(),
+              createdate: new Date(),
               quickRoutineId: routine.id,
               saved,
             });

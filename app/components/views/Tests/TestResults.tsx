@@ -50,7 +50,7 @@ const TestResults: React.FC<TestResultsProp> = ({
       saveTestAction({
         seconds,
         result: testResult,
-        createddate: moment().unix(),
+        createdate: new Date(0),
         testId: test.id,
         saved,
       });

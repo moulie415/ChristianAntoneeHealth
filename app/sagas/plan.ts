@@ -22,8 +22,8 @@ function onPlanChanged(uid: string) {
     const subscriber = db()
       .collection('plans')
       .where('user', '==', uid)
-      .orderBy('lastupdate', 'asc')
-      .limit(1)
+      .orderBy('lastupdate')
+      .limitToLast(1)
       .onSnapshot(
         snapshot => {
           if (snapshot.docs[0]) {

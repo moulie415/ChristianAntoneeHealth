@@ -182,8 +182,8 @@ export const getSavedWorkouts = async (uid: string) => {
     .doc(uid)
     .collection('savedWorkouts')
     .where('saved', '==', true)
-    .orderBy('createddate')
-    .limit(20)
+    .orderBy('createdate')
+    .limitToLast(20)
     .get();
   return savedWorkouts.docs.reduce((acc: {[id: string]: SavedWorkout}, cur) => {
     const workout: any = cur.data();
@@ -198,8 +198,8 @@ export const getSavedTests = async (uid: string) => {
     .doc(uid)
     .collection('savedTests')
     .where('saved', '==', true)
-    .orderBy('createddate')
-    .limit(20)
+    .orderBy('createdate')
+    .limitToLast(20)
     .get();
   return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, cur) => {
     const test: any = cur.data();
@@ -214,8 +214,8 @@ export const getSavedQuickRoutines = async (uid: string) => {
     .doc(uid)
     .collection('savedQuickRoutines')
     .where('saved', '==', true)
-    .orderBy('createddate')
-    .limit(20)
+    .orderBy('createdate')
+    .limitToLast(20)
     .get();
   return savedQuickRoutines.docs.reduce(
     (acc: {[id: string]: SavedQuickRoutine}, cur) => {
@@ -233,7 +233,7 @@ export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
     .collection('users')
     .doc(uid)
     .collection('savedQuickRoutines')
-    .where('createddate', '>=', startOfWeek)
+    .where('createdate', '>=', startOfWeek)
     .limit(200)
     .get();
   const quickRoutines = quickRoutinesQuery.docs.reduce(
@@ -249,7 +249,7 @@ export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
     .collection('users')
     .doc(uid)
     .collection('savedTests')
-    .where('createddate', '>=', startOfWeek)
+    .where('createdate', '>=', startOfWeek)
     .limit(200)
     .get();
   const tests = testsQuery.docs.reduce(
