@@ -100,7 +100,10 @@ import {
   setVideoLoading,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
-import Purchases, {PurchaserInfo} from 'react-native-purchases';
+import Purchases, {
+  PurchaserInfo,
+  PurchasesOfferings,
+} from 'react-native-purchases';
 import {setUserAttributes} from '../helpers/profile';
 import {handleDeepLink} from './exercises';
 import dynamicLinks, {
@@ -116,6 +119,7 @@ import {logError} from '../helpers/error';
 import Message from '../types/Message';
 import {WeeklyItems} from '../reducers/profile';
 import {getQuickRoutinesById} from '../actions/quickRoutines';
+import {setUsedFreePlan} from '../actions/plan';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -210,7 +214,7 @@ function* updateProfile(action: UpdateProfileAction) {
     ...(goal ? {goal} : {}),
     ...(avatar ? {avatar} : {}),
   };
-  yield call(api.updateUser, updateObj);
+  yield call(api.updateUser, updateObj, profile.uid);
   yield put(setProfile(updateObj));
   yield call(Snackbar.show, {text: 'Profile updated'});
   setUserAttributes({
@@ -331,29 +335,33 @@ function* signUp(action: SignUpAction) {
       navigate('Login');
     } else {
       const {profile} = yield select((state: MyRootState) => state.profile);
-      yield call(api.updateUser, {
-        ...profile,
-        signedUp: true,
-        name,
-        dob,
-        weight,
-        unit,
-        height,
-        gender,
-        experience,
-        equipment,
-        marketing,
-        goal,
-        nutrition,
-        trainingAvailability,
-        injuries,
-        occupation,
-        stressLevel,
-        sleepPattern,
-        lifestyle,
-        medications,
-        planStatus: PlanStatus.UNINITIALIZED,
-      });
+      yield call(
+        api.updateUser,
+        {
+          ...profile,
+          signedUp: true,
+          name,
+          dob,
+          weight,
+          unit,
+          height,
+          gender,
+          experience,
+          equipment,
+          marketing,
+          goal,
+          nutrition,
+          trainingAvailability,
+          injuries,
+          occupation,
+          stressLevel,
+          sleepPattern,
+          lifestyle,
+          medications,
+          planStatus: PlanStatus.UNINITIALIZED,
+        },
+        profile.uid,
+      );
       yield put(
         setProfile({
           ...profile,
@@ -658,10 +666,25 @@ function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
 function* requestPlanWorker() {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    yield call(api.requestPlan, uid);
-    yield put(setPlanStatus(PlanStatus.PENDING));
-    Snackbar.show({text: 'Your plan has been requested'});
+    const {uid, usedFreePlan} = yield select(
+      (state: MyRootState) => state.profile.profile,
+    );
+    if (!usedFreePlan) {
+      yield call(api.requestPlan, uid);
+      yield put(setPlanStatus(PlanStatus.PENDING));
+      Snackbar.show({text: 'Your plan has been requested'});
+      yield call(api.updateUser, {usedFreePlan: true}, uid);
+      yield put(setUsedFreePlan(true));
+    } else {
+      const offerings: PurchasesOfferings = yield call(Purchases.getOfferings);
+      const pkg = offerings.current.availablePackages.find(
+        p => p.packageType === 'CUSTOM',
+      );
+      yield call(Purchases.purchasePackage, pkg);
+      yield call(api.requestPlan, uid);
+      yield put(setPlanStatus(PlanStatus.PENDING));
+      Snackbar.show({text: 'Your plan has been requested'});
+    }
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));

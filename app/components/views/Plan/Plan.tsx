@@ -1,4 +1,4 @@
-import {SafeAreaView, useWindowDimensions, View} from 'react-native';
+import {Alert, SafeAreaView, useWindowDimensions, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -17,6 +17,11 @@ import Daily from './Daily';
 import Weekly from './Weekly';
 import Monthly from './Monthly';
 import colors from '../../../constants/colors';
+import Purchases, {
+  PurchaserInfo,
+  PurchasesPackage,
+} from 'react-native-purchases';
+import {logError} from '../../../helpers/error';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -41,10 +46,38 @@ const Plan: React.FC<{
   getPlan: getPlanAction,
   plan,
 }) => {
+  const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+  const [info, setInfo] = useState<PurchaserInfo>();
   useEffect(() => {
     setViewedPlanAction();
     getPlanAction();
   }, [setViewedPlanAction, getPlanAction]);
+
+  
+
+  useEffect(() => {
+    const getOfferings = async () => {
+      try {
+        const purchaserInfo = await Purchases.getPurchaserInfo();
+        setInfo(purchaserInfo);
+        const offerings = await Purchases.getOfferings();
+        if (
+          offerings.current !== null &&
+          offerings.current.availablePackages.length !== 0
+        ) {
+          setPackages(
+            offerings.current.availablePackages.filter(
+              p => p.packageType === 'CUSTOM',
+            ),
+          );
+        }
+      } catch (e) {
+        Alert.alert('Error fetching Premium offerings', e.message);
+        logError(e);
+      }
+    };
+    getOfferings();
+  }, []);
 
   const hasPlanLeft = useMemo(() => {
     return (
@@ -73,7 +106,7 @@ const Plan: React.FC<{
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {hasPlanLeft ? (
+      {hasPlanLeft && profile.premium ? (
         <TabView
           renderTabBar={props => {
             return (
@@ -98,16 +131,20 @@ const Plan: React.FC<{
             My workout plan
           </Text>
 
-          {profile.planStatus === PlanStatus.UNINITIALIZED ||
-            (!hasPlanLeft && (
-              <View style={{margin: DevicePixels[10]}}>
-                <Text>
-                  This is your the screen for your personal customized plan,
-                  once requested we will try and get your plan to you as soon as
-                  we can and once completed it will appear here
+          {(profile.planStatus === PlanStatus.UNINITIALIZED ||
+            !hasPlanLeft) && (
+            <View style={{margin: DevicePixels[20], marginTop: 0}}>
+              <Text style={{lineHeight: 25}}>
+                This is your the screen for your personal customized plan, once
+                requested we will try and get your plan to you as soon as we can
+                and once completed it will appear here.
+                <Text style={{fontWeight: 'bold'}}>
+                  {' '}
+                  Get your first plan free!!
                 </Text>
-              </View>
-            ))}
+              </Text>
+            </View>
+          )}
 
           {profile.planStatus === PlanStatus.PENDING && (
             <View style={{margin: DevicePixels[10], alignItems: 'center'}}>
@@ -119,30 +156,38 @@ const Plan: React.FC<{
             </View>
           )}
           <View style={{flex: 1, justifyContent: 'flex-end'}}>
-            <View></View>
-            {profile.planStatus === PlanStatus.UNINITIALIZED && (
-              <Button
-                style={{margin: DevicePixels[20]}}
-                disabled={loading}
-                accessoryLeft={() => (loading ? <Spinner /> : null)}
-                onPress={() => {
-                  if (profile.premium) {
-                    requestPlanAction();
-                  } else {
-                    navigation.navigate('Premium', {
-                      onActivated: () => {
+            {profile.planStatus !== PlanStatus.PENDING &&
+              !hasPlanLeft &&
+              packages.map(p => {
+                return (
+                  <Button
+                    key={p.identifier}
+                    style={{margin: DevicePixels[20]}}
+                    disabled={loading}
+                    accessoryLeft={() => (loading ? <Spinner /> : null)}
+                    onPress={() => {
+                      if (profile.premium) {
                         requestPlanAction();
-                      },
-                    });
-                  }
-                }}>
-                Request my workout plan
-              </Button>
-            )}
+                      } else {
+                        navigation.navigate('Premium', {
+                          onActivated: () => {
+                            requestPlanAction();
+                          },
+                        });
+                      }
+                    }}>
+                    {`Request my workout plan ${
+                      profile.usedFreePlan
+                        ? '(' + p.product.price_string + ')'
+                        : ''
+                    }`}
+                  </Button>
+                );
+              })}
 
             {!profile.premium &&
-              (profile.planStatus === PlanStatus.UNINITIALIZED ||
-                !hasPlanLeft) && (
+              profile.planStatus !== PlanStatus.PENDING &&
+              !hasPlanLeft && (
                 <Button
                   style={{margin: DevicePixels[20], marginTop: 0}}
                   disabled={loading}

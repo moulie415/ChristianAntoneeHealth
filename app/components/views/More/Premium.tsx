@@ -109,14 +109,14 @@ const Premium: React.FC<PremiumProps> = ({
           resizeMode="contain"
           source={require('../../../images/logo.png')}
         />
-        <Text
+        {/* <Text
           category="h5"
           style={{
             marginBottom: DevicePixels[20],
             textAlign: 'center',
           }}>
           Go Premium!
-        </Text>
+        </Text> */}
         <View
           style={{
             marginHorizontal: DevicePixels[20],
@@ -190,6 +190,24 @@ const Premium: React.FC<PremiumProps> = ({
               <Text style={{}}>
                 Enjoy in-app messaging where you can share exercises, workouts,
                 and compare tests results!
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginBottom: DevicePixels[20]}}>
+            <Icon
+              style={{width: DevicePixels[75], textAlign: 'center'}}
+              size={DevicePixels[30]}
+              color={colors.appBlue}
+              name="calendar-alt"
+            />
+            <View style={{flex: 1}}>
+              <Text category="s1" style={{fontWeight: 'bold'}}>
+                Customized plans
+              </Text>
+              <Text style={{}}>
+                Purchase customized monthly plans tailored specifically to you.
+                Get your first plan{' '}
+                <Text style={{fontWeight: 'bold'}}>FREE</Text> with premium!
               </Text>
             </View>
           </View>

@@ -1,5 +1,5 @@
 import {AppState, AppStateStatus} from 'react-native';
-import {PlanActionTypes, SET_PLAN} from '../actions/plan';
+import {PlanActionTypes, SET_PLAN, SET_USED_FREE_PLAN} from '../actions/plan';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -220,7 +220,18 @@ const reducer = (
     case SET_PLAN_STATUS:
       return {
         ...state,
-        profile: {...state.profile, planStatus: action.payload},
+        profile: {
+          ...state.profile,
+          planStatus: action.payload,
+        },
+      };
+    case SET_USED_FREE_PLAN:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          usedFreePlan: action.payload,
+        },
       };
     case SET_PLAN:
       return {

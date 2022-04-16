@@ -34,10 +34,13 @@ PushNotification.configure({
     if (notification.data.channelId === PLAN_CHANNEL_ID) {
       if (navigationRef.current && notification.userInteraction) {
         navigate('Plan');
+        debugger;
       } else if (notification.foreground) {
         PushNotification.localNotification(notification);
+        debugger;
       }
     }
+    debugger;
     if (notification.data.channelId === CONNECTION_ID) {
       if (navigationRef.current && notification.userInteraction) {
         const premium = store.getState().profile.profile.premium;

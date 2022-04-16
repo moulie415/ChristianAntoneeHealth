@@ -22,8 +22,8 @@ export const setUser = (user: Profile) => {
   return db().collection('users').doc(user.uid).set(user);
 };
 
-export const updateUser = (user: Profile) => {
-  return db().collection('users').doc(user.uid).update(user);
+export const updateUser = (user: object, uid: string) => {
+  return db().collection('users').doc(uid).update(user);
 };
 
 export const createUser = async (

@@ -42,7 +42,6 @@ function onPlanChanged(uid: string) {
 
 function* planWatcher() {
   try {
-    yield put(setLoading(true));
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
     while (true) {
@@ -50,6 +49,7 @@ function* planWatcher() {
       const current: Plan = yield select(
         (state: MyRootState) => state.profile.plan,
       );
+
       if (plan === {}) {
         yield put(setPlan(undefined));
       } else {
@@ -61,10 +61,9 @@ function* planWatcher() {
         }
         yield put(setPlan(plan as Plan));
       }
-      yield put(setLoading(false));
     }
   } catch (e) {
-    yield put(setLoading(false));
+    logError(e);
   }
 }
 
