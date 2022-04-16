@@ -47,7 +47,11 @@ const Premium: React.FC<PremiumProps> = ({
           offerings.current !== null &&
           offerings.current.availablePackages.length !== 0
         ) {
-          setPackages(offerings.current.availablePackages);
+          setPackages(
+            offerings.current.availablePackages.filter(
+              p => p.packageType !== 'CUSTOM',
+            ),
+          );
         }
       } catch (e) {
         Alert.alert('Error fetching Premium offerings', e.message);
