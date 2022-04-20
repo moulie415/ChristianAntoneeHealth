@@ -29,7 +29,6 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import {logError} from '../../../helpers/error';
-import ImageOverlay from '../../commons/ImageOverlay';
 
 const renderScene = SceneMap({
   daily: Daily,

@@ -74,33 +74,36 @@ export enum Equipment {
   EXERCISE_STEP = 'exerciseStep',
 }
 
+export interface PlanWorkout {
+  name: string;
+  dates: string[];
+  exercises: {
+    exercise: string;
+    sets: number;
+    reps: number;
+    duration: number;
+    resistanceScale: number;
+    restTime: number;
+    additionalNotes: string;
+  }[];
+}
+
+export interface PlanTest {
+  test: string;
+  dates: string[];
+}
+
 export interface Plan {
   user: string;
-  workouts: {
-    name: string;
-    dates: string[];
-    exercises: {
-      exercise: string;
-      sets: number;
-      reps: number;
-      duration: number;
-      resistanceScale: number;
-      restTime: number;
-      additionalNotes: string;
-    }[];
-  }[];
+  workouts: PlanWorkout[];
   nutrition: {
     preWorkout: string;
     postWorkout: string;
     general: string;
   };
-  tests: {
-    test: string;
-    dates: string[];
-  }[];
+  tests: PlanTest[];
   education: string[];
 }
-
 
 export interface CalendarType {
   /** Unique calendar ID. */
