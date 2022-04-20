@@ -380,13 +380,3 @@ export const requestPlan = async (uid: string) => {
     .doc(uid)
     .update({planStatus: PlanStatus.PENDING});
 };
-
-export const getPlan = async (uid: string) => {
-  const plans = await db()
-    .collection('plans')
-    .where('user', '==', uid)
-    .orderBy('lastupdate', 'asc')
-    .limit(1)
-    .get();
-  return plans.docs[0].data();
-};

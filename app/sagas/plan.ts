@@ -22,7 +22,7 @@ function onPlanChanged(uid: string) {
     const subscriber = db()
       .collection('plans')
       .where('user', '==', uid)
-      .orderBy('lastupdate')
+      .orderBy('createdate')
       .limitToLast(1)
       .onSnapshot(
         snapshot => {
@@ -49,13 +49,15 @@ function* planWatcher() {
       const current: Plan = yield select(
         (state: MyRootState) => state.profile.plan,
       );
-
       if (plan === {}) {
         yield put(setPlan(undefined));
       } else {
         if (
           current &&
-          !_.isEqual(_.omit(current, 'lastupdate'), _.omit(plan, 'lastupdate'))
+          !_.isEqual(
+            _.omit(current, ['lastupdate', 'createdate']),
+            _.omit(plan, ['lastupdate', 'createdate']),
+          )
         ) {
           Snackbar.show({text: 'Your plan has been updated'});
         }
@@ -95,9 +97,7 @@ function* planStateWatcher(uid: string) {
 
 function* handlePlanUpdate(user: Profile) {
   yield put(setPlanStatus(user.planStatus));
-  if (user.planStatus === PlanStatus.COMPLETE) {
-    yield fork(planWatcher);
-  }
+  yield fork(planWatcher);
 }
 
 function* getPlanWorker() {

@@ -112,7 +112,7 @@ const Plan: React.FC<{
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {hasPlanLeft && profile.premium ? (
+      {hasPlanLeft ? (
         <TabView
           renderTabBar={props => {
             return (
@@ -169,10 +169,13 @@ const Plan: React.FC<{
             {profile.planStatus === PlanStatus.PENDING && (
               <View style={{margin: DevicePixels[10], alignItems: 'center'}}>
                 <Text style={{marginBottom: DevicePixels[10], color: '#fff'}}>
-                  Your plan is currently pending we will notify you when it
-                  becomes available
+                  Your plan is currently{' '}
+                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
+                    PENDING
+                  </Text>{' '}
+                  we will notify you when it becomes available
                 </Text>
-                <Spinner style={{borderColor: '#fff'}} />
+                <Spinner style={{borderColor: '#fff'}} size="giant" />
               </View>
             )}
             <View style={{flex: 1, justifyContent: 'flex-end'}}>

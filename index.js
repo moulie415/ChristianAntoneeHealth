@@ -34,13 +34,14 @@ PushNotification.configure({
     if (notification.data.channelId === PLAN_CHANNEL_ID) {
       if (navigationRef.current && notification.userInteraction) {
         navigate('Plan');
-        debugger;
       } else if (notification.foreground) {
-        PushNotification.localNotification(notification);
-        debugger;
+        PushNotification.localNotification({
+          ...notification,
+          message: notification.message || '',
+          title: notification.title || '',
+        });
       }
     }
-    debugger;
     if (notification.data.channelId === CONNECTION_ID) {
       if (navigationRef.current && notification.userInteraction) {
         const premium = store.getState().profile.profile.premium;
@@ -50,7 +51,11 @@ PushNotification.configure({
           alertPremiumFeature();
         }
       } else if (notification.foreground) {
-        PushNotification.localNotification(notification);
+        PushNotification.localNotification({
+          ...notification,
+          message: notification.message || '',
+          title: notification.title || '',
+        });
       }
     }
     if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
@@ -63,7 +68,11 @@ PushNotification.configure({
         }
       } else if (notification.foreground) {
         const handleMessageNotification = () => {
-          PushNotification.localNotification(notification);
+          PushNotification.localNotification({
+            ...notification,
+            message: notification.message || '',
+            title: notification.title || '',
+          });
           const {unread, premium} = store.getState().profile.profile;
           if (premium) {
             const {uid} = notification.data;
