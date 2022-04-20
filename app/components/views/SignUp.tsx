@@ -109,7 +109,7 @@ const SignUp: React.FC<SignUpProps> = ({
             }
           }}
           accessoryLeft={() =>
-            spinner ? <Spinner style={{backgroundColor: '#fff'}} /> : null
+            spinner ? <Spinner style={{borderColor: '#fff'}} /> : null
           }
           style={styles.button}>
           Log in

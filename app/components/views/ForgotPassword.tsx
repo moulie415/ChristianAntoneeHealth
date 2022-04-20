@@ -53,7 +53,7 @@ const ForgotPassword: React.FC<{
           setLoading(false);
         }}
         accessoryLeft={() =>
-          loading ? <Spinner style={{backgroundColor: '#fff'}} /> : null
+          loading ? <Spinner style={{borderColor: '#fff'}} /> : null
         }
         style={{
           margin: DevicePixels[10],

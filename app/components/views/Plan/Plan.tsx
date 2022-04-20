@@ -1,4 +1,11 @@
-import {Alert, SafeAreaView, useWindowDimensions, View} from 'react-native';
+import {
+  Alert,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -22,6 +29,7 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import {logError} from '../../../helpers/error';
+import ImageOverlay from '../../commons/ImageOverlay';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -52,8 +60,6 @@ const Plan: React.FC<{
     setViewedPlanAction();
     getPlanAction();
   }, [setViewedPlanAction, getPlanAction]);
-
-  
 
   useEffect(() => {
     const getOfferings = async () => {
@@ -124,86 +130,104 @@ const Plan: React.FC<{
           initialLayout={{width: layout.width}}
         />
       ) : (
-        <>
-          <Text
-            category="h4"
-            style={{textAlign: 'center', margin: DevicePixels[20]}}>
-            My workout plan
-          </Text>
+        <ImageBackground
+          style={{flex: 1}}
+          source={require('../../../images/christian.webp')}>
+          <>
+            <Layout
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                backgroundColor: '#000',
+                opacity: 0.5,
+              }}
+            />
+            <Text
+              category="h4"
+              style={{
+                textAlign: 'center',
+                margin: DevicePixels[20],
+                color: '#fff',
+              }}>
+              My workout plan
+            </Text>
 
-          {(profile.planStatus === PlanStatus.UNINITIALIZED ||
-            !hasPlanLeft) && (
-            <View style={{margin: DevicePixels[20], marginTop: 0}}>
-              <Text style={{lineHeight: 25}}>
-                This is your the screen for your personal customized plan, once
-                requested we will try and get your plan to you as soon as we can
-                and once completed it will appear here.
-                <Text style={{fontWeight: 'bold'}}>
-                  {' '}
-                  Get your first plan free!!
+            {(profile.planStatus === PlanStatus.UNINITIALIZED ||
+              !hasPlanLeft) && (
+              <View style={{margin: DevicePixels[20], marginTop: 0}}>
+                <Text style={{lineHeight: 25, color: '#fff'}}>
+                  This is your the screen for your personal customized plan,
+                  once requested we will try and get your plan to you as soon as
+                  we can and once completed it will appear here.
+                  <Text style={{fontWeight: 'bold', color: '#fff'}}>
+                    {' '}
+                    Get your first plan free!!
+                  </Text>
                 </Text>
-              </Text>
-            </View>
-          )}
+              </View>
+            )}
 
-          {profile.planStatus === PlanStatus.PENDING && (
-            <View style={{margin: DevicePixels[10], alignItems: 'center'}}>
-              <Text style={{marginBottom: DevicePixels[10]}}>
-                Your plan is currently pending we will notify you when it
-                becomes available
-              </Text>
-              <Spinner />
-            </View>
-          )}
-          <View style={{flex: 1, justifyContent: 'flex-end'}}>
-            {profile.planStatus !== PlanStatus.PENDING &&
-              !hasPlanLeft &&
-              packages.map(p => {
-                return (
+            {profile.planStatus === PlanStatus.PENDING && (
+              <View style={{margin: DevicePixels[10], alignItems: 'center'}}>
+                <Text style={{marginBottom: DevicePixels[10], color: '#fff'}}>
+                  Your plan is currently pending we will notify you when it
+                  becomes available
+                </Text>
+                <Spinner style={{borderColor: '#fff'}} />
+              </View>
+            )}
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+              {profile.planStatus !== PlanStatus.PENDING &&
+                !hasPlanLeft &&
+                packages.map(p => {
+                  return (
+                    <Button
+                      key={p.identifier}
+                      style={{margin: DevicePixels[20]}}
+                      disabled={loading}
+                      accessoryLeft={() => (loading ? <Spinner /> : null)}
+                      onPress={() => {
+                        if (profile.premium) {
+                          requestPlanAction();
+                        } else {
+                          navigation.navigate('Premium', {
+                            onActivated: () => {
+                              requestPlanAction();
+                            },
+                          });
+                        }
+                      }}>
+                      {`Request my workout plan ${
+                        profile.usedFreePlan
+                          ? '(' + p.product.price_string + ')'
+                          : ''
+                      }`}
+                    </Button>
+                  );
+                })}
+
+              {!profile.premium &&
+                profile.planStatus !== PlanStatus.PENDING &&
+                !hasPlanLeft && (
                   <Button
-                    key={p.identifier}
-                    style={{margin: DevicePixels[20]}}
+                    style={{
+                      margin: DevicePixels[20],
+                      marginTop: 0,
+                    }}
                     disabled={loading}
                     accessoryLeft={() => (loading ? <Spinner /> : null)}
                     onPress={() => {
-                      if (profile.premium) {
-                        requestPlanAction();
-                      } else {
-                        navigation.navigate('Premium', {
-                          onActivated: () => {
-                            requestPlanAction();
-                          },
-                        });
-                      }
+                      navigation.navigate('Premium', {
+                        onActivated: () => {
+                          navigation.navigate('Home');
+                        },
+                      });
                     }}>
-                    {`Request my workout plan ${
-                      profile.usedFreePlan
-                        ? '(' + p.product.price_string + ')'
-                        : ''
-                    }`}
+                    No thanks, I just want premium
                   </Button>
-                );
-              })}
-
-            {!profile.premium &&
-              profile.planStatus !== PlanStatus.PENDING &&
-              !hasPlanLeft && (
-                <Button
-                  style={{margin: DevicePixels[20], marginTop: 0}}
-                  disabled={loading}
-                  accessoryLeft={() => (loading ? <Spinner /> : null)}
-                  onPress={() => {
-                    navigation.navigate('Premium', {
-                      onActivated: () => {
-                        navigation.navigate('Home');
-                      },
-                    });
-                  }}>
-                  No thanks, I just want premium
-                </Button>
-              )}
-          </View>
-        </>
+                )}
+            </View>
+          </>
+        </ImageBackground>
       )}
     </SafeAreaView>
   );
