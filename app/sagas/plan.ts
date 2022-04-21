@@ -97,7 +97,9 @@ function* planStateWatcher(uid: string) {
 
 function* handlePlanUpdate(user: Profile) {
   yield put(setPlanStatus(user.planStatus));
-  yield fork(planWatcher);
+  if (user.planStatus === PlanStatus.COMPLETE) {
+    yield fork(planWatcher);
+  }
 }
 
 function* getPlanWorker() {
