@@ -13,6 +13,7 @@ import Test from '../../../types/Test';
 import {getExercisesById, setWorkout} from '../../../actions/exercises';
 import {navigate} from '../../../RootNavigation';
 import {getTestsById} from '../../../actions/tests';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Daily: React.FC<{
   plan: Plan;
@@ -21,6 +22,7 @@ const Daily: React.FC<{
   exercises: {[key: string]: Exercise};
   tests: {[key: string]: Test};
   getExercisesById: (ids: string[]) => void;
+  getTestsById: (ids: string[]) => void;
   loading: boolean;
   setWorkout: (workout: Exercise[]) => void;
 }> = ({
@@ -28,6 +30,7 @@ const Daily: React.FC<{
   exercises,
   tests: testsObj,
   getExercisesById: getExercisesByIdAction,
+  getTestsById: getTestsByIdAction,
   loading,
   setWorkout: setWorkoutAction,
 }) => {
@@ -73,6 +76,13 @@ const Daily: React.FC<{
     }
   }, [exercises, workouts, getExercisesByIdAction]);
 
+  useEffect(() => {
+    if (tests.length) {
+      const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
+      getTestsByIdAction(missingTestIds);
+    }
+  }, [getTestsByIdAction, tests, testsObj]);
+
   return (
     <View>
       {data.length ? (
@@ -100,7 +110,7 @@ const Daily: React.FC<{
                   }}
                   disabled={loading}
                   title={() => (
-                    <Text category="h5" style={{padding: DevicePixels[5]}}>
+                    <Text category="h6" style={{padding: DevicePixels[5]}}>
                       {item.name}
                     </Text>
                   )}
@@ -135,7 +145,40 @@ const Daily: React.FC<{
                 />
               );
             }
-            return null;
+            return (
+              <ListItem
+                onPress={() => {
+                  navigate('Test', {id: item.test});
+                }}
+                disabled={loading}
+                title={() => (
+                  <Text category="h6" style={{padding: DevicePixels[5]}}>
+                    {testsObj[item.test]?.name || ''}
+                  </Text>
+                )}
+                accessoryLeft={() => (
+                  <ImageOverlay
+                    containerStyle={{
+                      height: DevicePixels[75],
+                      width: DevicePixels[75],
+                    }}
+                    overlayAlpha={0.4}
+                    source={require('../../../images/old_man_stretching.jpeg')}>
+                    <View style={{alignItems: 'center'}}>
+                      {loading ? (
+                        <Spinner style={{borderColor: colors.appWhite}} />
+                      ) : (
+                        <Icon
+                          name="stopwatch"
+                          color={colors.appWhite}
+                          size={DevicePixels[25]}
+                        />
+                      )}
+                    </View>
+                  </ImageOverlay>
+                )}
+              />
+            );
           }}
         />
       ) : (

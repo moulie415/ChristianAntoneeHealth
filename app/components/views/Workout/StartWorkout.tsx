@@ -68,6 +68,17 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     }
   }, [index, navigation, workout]);
 
+  const getResistanceString = (resistance: number) => {
+    if (resistance) {
+      return `/ ${
+        resistance === 0
+          ? 'Bodyweight'
+          : `${resistance} ${profile.unit === 'metric' ? 'kg' : 'lbs'}`
+      }`;
+    }
+    return '';
+  };
+
   return (
     <Layout style={{flex: 1}}>
       <Countdown onComplete={() => setWorkoutStarted(true)} />
@@ -142,13 +153,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 category="h5"
                 style={{textAlign: 'center', marginTop: DevicePixels[10]}}>{`${
                 exercise.reps
-              } reps / ${exercise.sets} sets / ${
-                exercise.resistance === 0
-                  ? 'Bodyweight'
-                  : `${exercise.resistance} ${
-                      profile.unit === 'metric' ? 'kg' : 'lbs'
-                    }`
-              }`}</Text>
+              } reps / ${exercise.sets} sets ${getResistanceString(
+                exercise.resistance,
+              )}`}</Text>
               <View
                 style={{
                   flexDirection: 'row',
