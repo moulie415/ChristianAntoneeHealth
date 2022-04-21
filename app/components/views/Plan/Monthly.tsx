@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import React, {useState} from 'react';
 import {CalendarType, MyRootState, Plan} from '../../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -77,18 +77,19 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
       <Button
         style={{margin: DevicePixels[20]}}
         onPress={async () => {
-          try {
-            const permission = await RNCalendarEvents.requestPermissions();
-            if (permission === 'authorized') {
-              const calendars = await RNCalendarEvents.findCalendars();
+          Alert.alert('Coming soon');
+          // try {
+          //   const permission = await RNCalendarEvents.requestPermissions();
+          //   if (permission === 'authorized') {
+          //     const calendars = await RNCalendarEvents.findCalendars();
 
-              setCalendarList(calendars);
-              setModalVisible(true);
-            }
-          } catch (e) {
-            logError(e);
-            Snackbar.show({text: 'Error syncing calendar'});
-          }
+          //     setCalendarList(calendars);
+          //     setModalVisible(true);
+          //   }
+          // } catch (e) {
+          //   logError(e);
+          //   Snackbar.show({text: 'Error syncing calendar'});
+          // }
         }}>
         Sync with native calendar
       </Button>

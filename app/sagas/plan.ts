@@ -10,12 +10,19 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 import * as _ from 'lodash';
-import {GET_PLAN, setPlan} from '../actions/plan';
+import {
+  GET_PLAN,
+  setPlan,
+  ViewPlanWorkoutAction,
+  VIEW_PLAN_WORKOUT,
+} from '../actions/plan';
 import {setLoading, setPlanStatus} from '../actions/profile';
 import {logError} from '../helpers/error';
 import Profile, {PlanStatus} from '../types/Profile';
 import {MyRootState, Plan} from '../types/Shared';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {getExercisesById} from './exercises';
+import {GET_EXERCISES_BY_ID} from '../actions/exercises';
 
 function onPlanChanged(uid: string) {
   return eventChannel(emitter => {

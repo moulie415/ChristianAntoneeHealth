@@ -37,6 +37,9 @@ export default interface Exercise {
   resistance?: number;
   thumbnail?: Thumbnail;
   video?: Video;
+  resistanceScale?: number;
+  duration?: number;
+  notes?: string;
 }
 
 export type Muscle =
