@@ -124,6 +124,7 @@ const Plan: React.FC<{
                 />
               );
             }}
+            lazy
             navigationState={{index, routes}}
             renderScene={renderScene}
             onIndexChange={setIndex}

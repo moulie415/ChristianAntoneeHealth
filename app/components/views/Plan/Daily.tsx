@@ -17,8 +17,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Daily: React.FC<{
   plan: Plan;
-  viewPlanWorkout: (workout: PlanWorkout) => void;
-  viewPlanTest: (test: PlanTest) => void;
   exercises: {[key: string]: Exercise};
   tests: {[key: string]: Test};
   getExercisesById: (ids: string[]) => void;
