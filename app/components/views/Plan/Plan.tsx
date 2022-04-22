@@ -110,29 +110,31 @@ const Plan: React.FC<{
   ]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <>
       {hasPlanLeft ? (
-        <TabView
-          renderTabBar={props => {
-            return (
-              <TabBar
-                {...props}
-                labelStyle={{textTransform: 'none', color: colors.appBlack}}
-                style={{backgroundColor: colors.appWhite}}
-                indicatorStyle={{backgroundColor: colors.appBlue}}
-              />
-            );
-          }}
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
-        />
+        <SafeAreaView style={{flex: 1}}>
+          <TabView
+            renderTabBar={props => {
+              return (
+                <TabBar
+                  {...props}
+                  labelStyle={{textTransform: 'none', color: colors.appBlack}}
+                  style={{backgroundColor: colors.appWhite}}
+                  indicatorStyle={{backgroundColor: colors.appBlue}}
+                />
+              );
+            }}
+            navigationState={{index, routes}}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{width: layout.width}}
+          />
+        </SafeAreaView>
       ) : (
         <ImageBackground
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
-          <>
+          <SafeAreaView style={{flex: 1}}>
             <Layout
               style={{
                 ...StyleSheet.absoluteFillObject,
@@ -228,10 +230,10 @@ const Plan: React.FC<{
                   </Button>
                 )}
             </View>
-          </>
+          </SafeAreaView>
         </ImageBackground>
       )}
-    </SafeAreaView>
+    </>
   );
 };
 
