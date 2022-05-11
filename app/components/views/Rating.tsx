@@ -66,7 +66,7 @@ const Rating: React.FC<{
           } else {
           }
           navigation.goBack();
-          Snackbar.show({text: 'Thank you'});
+          Snackbar.show({text: 'Thank you!'});
           try {
             await api.sendFeedback(profile.uid, feedback, rating);
           } catch (e) {
