@@ -2,6 +2,7 @@ import {Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
+  Dimensions,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -82,21 +83,24 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   return (
     <Layout style={{flex: 1}}>
       <Countdown onComplete={() => setWorkoutStarted(true)} />
-
-      <PagerView
-        ref={pagerRef}
-        onPageSelected={e => {
-          setIndex(e.nativeEvent.position);
+      <ScrollView
+        contentContainerStyle={{
+          minHeight: Dimensions.get('screen').height + DevicePixels[50],
         }}
-        style={{flex: 1, paddingHorizontal: 0}}>
-        {workout.map((exercise, index) => {
-          const video: {src: string; path: string} | undefined =
-            videos[exercise.id];
-          const next = workout[index + 1];
+        keyboardShouldPersistTaps="always">
+        <PagerView
+          ref={pagerRef}
+          onPageSelected={e => {
+            setIndex(e.nativeEvent.position);
+          }}
+          style={{flex: 1, paddingHorizontal: 0}}>
+          {workout.map((exercise, index) => {
+            const video: {src: string; path: string} | undefined =
+              videos[exercise.id];
+            const next = workout[index + 1];
 
-          return (
-            <ScrollView keyboardShouldPersistTaps="always" key={exercise.id}>
-              <>
+            return (
+              <View>
                 {!loading &&
                 video &&
                 exercise.video &&
@@ -147,194 +151,197 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-              </>
 
-              <Text
-                category="h5"
-                style={{textAlign: 'center', marginTop: DevicePixels[10]}}>{`${
-                exercise.reps
-              } reps / ${exercise.sets} sets ${getResistanceString(
-                exercise.resistance,
-              )}`}</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: DevicePixels[10],
-                }}>
-                <TouchableOpacity
+                <Text
+                  category="h5"
                   style={{
-                    backgroundColor: tabIndex === 0 ? colors.appBlue : '#fff',
-                    padding: DevicePixels[5],
-                    width: DevicePixels[80],
-                    borderWidth: DevicePixels[1],
-                    borderColor: colors.appBlue,
-                    borderTopLeftRadius: DevicePixels[5],
-                    borderBottomLeftRadius: DevicePixels[5],
-                  }}
-                  onPress={() => setTabIndex(0)}>
-                  <Text
-                    style={{
-                      color: tabIndex === 0 ? '#fff' : colors.appBlue,
-                      textAlign: 'center',
-                    }}>
-                    Description
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: tabIndex === 1 ? colors.appBlue : '#fff',
-                    padding: DevicePixels[5],
-                    width: DevicePixels[80],
-                    borderWidth: DevicePixels[1],
-                    borderColor: colors.appBlue,
-                  }}
-                  onPress={() => setTabIndex(1)}>
-                  <Text
-                    style={{
-                      color: tabIndex === 1 ? '#fff' : colors.appBlue,
-                      textAlign: 'center',
-                    }}>
-                    Diagram
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: tabIndex === 2 ? colors.appBlue : '#fff',
-                    padding: DevicePixels[5],
-                    width: DevicePixels[80],
-                    borderWidth: DevicePixels[1],
-                    borderColor: colors.appBlue,
-                    borderTopRightRadius: DevicePixels[5],
-                    borderBottomRightRadius: DevicePixels[5],
-                  }}
-                  onPress={() => setTabIndex(2)}>
-                  <Text
-                    style={{
-                      color: tabIndex === 2 ? '#fff' : colors.appBlue,
-                      textAlign: 'center',
-                    }}>
-                    Notes
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{height: DevicePixels[250]}}>
-                {tabIndex === 0 && (
-                  <ViewMore text={exercise.description} lines={10} />
-                )}
-                {tabIndex === 1 && (
-                  <MusclesDiagram
-                    primary={exercise.muscles}
-                    secondary={exercise.musclesSecondary}
-                  />
-                )}
-                {tabIndex === 2 && (
-                  <TextInput
-                    ref={textInputRef}
-                    style={{
-                      margin: DevicePixels[10],
-                      borderWidth: DevicePixels[1],
-                      height: DevicePixels[100],
-                      textAlignVertical: 'top',
-                      borderRadius: DevicePixels[10],
-                      borderColor: colors.appBlue,
-                      padding: DevicePixels[10],
-                    }}
-                    placeholder="Enter notes here..."
-                    multiline
-                    value={exerciseNotes[exercise.id]}
-                    onChangeText={text =>
-                      setExerciseNoteAction(exercise.id, text)
-                    }
-                  />
-                )}
-              </View>
-
-              <Layout style={{margin: DevicePixels[10]}}>
+                    textAlign: 'center',
+                    marginTop: DevicePixels[10],
+                  }}>{`${exercise.reps} reps / ${
+                  exercise.sets
+                } sets ${getResistanceString(exercise.resistance)}`}</Text>
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: DevicePixels[10],
+                    marginTop: DevicePixels[10],
                   }}>
-                  <Text category="h6">{`Exercise ${index + 1}/${
-                    workout.length
-                  }`}</Text>
-
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      name="stopwatch"
-                      size={DevicePixels[15]}
-                      color={colors.darkBlue}
-                    />
-                    <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
-                      {moment()
-                        .utc()
-                        .startOf('day')
-                        .add({seconds})
-                        .format('mm:ss')}
-                    </Text>
-                  </View>
-                </View>
-                {next && (
-                  <Text category="h6" style={{marginBottom: DevicePixels[10]}}>
-                    Up next
-                  </Text>
-                )}
-                {next && (
                   <TouchableOpacity
-                    onPress={() => pagerRef.current.setPage(index + 1)}
                     style={{
-                      flexDirection: 'row',
-                      flex: 1,
-                      backgroundColor: colors.button,
-                    }}>
-                    <Image
+                      backgroundColor: tabIndex === 0 ? colors.appBlue : '#fff',
+                      padding: DevicePixels[5],
+                      width: DevicePixels[80],
+                      borderWidth: DevicePixels[1],
+                      borderColor: colors.appBlue,
+                      borderTopLeftRadius: DevicePixels[5],
+                      borderBottomLeftRadius: DevicePixels[5],
+                    }}
+                    onPress={() => setTabIndex(0)}>
+                    <Text
                       style={{
-                        height: DevicePixels[70],
-                        width: DevicePixels[90],
+                        color: tabIndex === 0 ? '#fff' : colors.appBlue,
+                        textAlign: 'center',
+                      }}>
+                      Description
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: tabIndex === 1 ? colors.appBlue : '#fff',
+                      padding: DevicePixels[5],
+                      width: DevicePixels[80],
+                      borderWidth: DevicePixels[1],
+                      borderColor: colors.appBlue,
+                    }}
+                    onPress={() => setTabIndex(1)}>
+                    <Text
+                      style={{
+                        color: tabIndex === 1 ? '#fff' : colors.appBlue,
+                        textAlign: 'center',
+                      }}>
+                      Diagram
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: tabIndex === 2 ? colors.appBlue : '#fff',
+                      padding: DevicePixels[5],
+                      width: DevicePixels[80],
+                      borderWidth: DevicePixels[1],
+                      borderColor: colors.appBlue,
+                      borderTopRightRadius: DevicePixels[5],
+                      borderBottomRightRadius: DevicePixels[5],
+                    }}
+                    onPress={() => setTabIndex(2)}>
+                    <Text
+                      style={{
+                        color: tabIndex === 2 ? '#fff' : colors.appBlue,
+                        textAlign: 'center',
+                      }}>
+                      Notes
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{height: DevicePixels[250]}}>
+                  {tabIndex === 0 && (
+                    <ViewMore text={exercise.description} lines={10} />
+                  )}
+                  {tabIndex === 1 && (
+                    <MusclesDiagram
+                      primary={exercise.muscles}
+                      secondary={exercise.musclesSecondary}
+                    />
+                  )}
+                  {tabIndex === 2 && (
+                    <TextInput
+                      ref={textInputRef}
+                      style={{
+                        margin: DevicePixels[10],
+                        borderWidth: DevicePixels[1],
+                        height: DevicePixels[100],
+                        textAlignVertical: 'top',
+                        borderRadius: DevicePixels[10],
+                        borderColor: colors.appBlue,
+                        padding: DevicePixels[10],
                       }}
-                      source={
-                        next.thumbnail
-                          ? {uri: next.thumbnail.src}
-                          : require('../../../images/old_man_stretching.jpeg')
+                      placeholder="Enter notes here..."
+                      multiline
+                      value={exerciseNotes[exercise.id]}
+                      onChangeText={text =>
+                        setExerciseNoteAction(exercise.id, text)
                       }
                     />
-                    <Layout
+                  )}
+                </View>
+
+                <Layout style={{margin: DevicePixels[10]}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: DevicePixels[10],
+                    }}>
+                    <Text category="h6">{`Exercise ${index + 1}/${
+                      workout.length
+                    }`}</Text>
+
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon
+                        name="stopwatch"
+                        size={DevicePixels[15]}
+                        color={colors.darkBlue}
+                      />
+                      <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                        {moment()
+                          .utc()
+                          .startOf('day')
+                          .add({seconds})
+                          .format('mm:ss')}
+                      </Text>
+                    </View>
+                  </View>
+                  {next && (
+                    <Text
+                      category="h6"
+                      style={{marginBottom: DevicePixels[10]}}>
+                      Up next
+                    </Text>
+                  )}
+                  {next && (
+                    <TouchableOpacity
+                      onPress={() => pagerRef.current.setPage(index + 1)}
                       style={{
-                        marginLeft: DevicePixels[20],
-                        justifyContent: 'space-evenly',
+                        flexDirection: 'row',
                         flex: 1,
                         backgroundColor: colors.button,
                       }}>
-                      <Text>{next.name}</Text>
-                      <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
-                    </Layout>
-                  </TouchableOpacity>
-                )}
-              </Layout>
+                      <Image
+                        style={{
+                          height: DevicePixels[70],
+                          width: DevicePixels[90],
+                        }}
+                        source={
+                          next.thumbnail
+                            ? {uri: next.thumbnail.src}
+                            : require('../../../images/old_man_stretching.jpeg')
+                        }
+                      />
+                      <Layout
+                        style={{
+                          marginLeft: DevicePixels[20],
+                          justifyContent: 'space-evenly',
+                          flex: 1,
+                          backgroundColor: colors.button,
+                        }}>
+                        <Text>{next.name}</Text>
+                        <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
+                      </Layout>
+                    </TouchableOpacity>
+                  )}
+                </Layout>
 
-              <Button
-                onPress={() => {
-                  Alert.alert('End Workout', 'Are you sure?', [
-                    {text: 'No', style: 'cancel'},
-                    {
-                      text: 'Yes',
-                      onPress: () => {
-                        navigation.navigate('EndWorkout', {seconds});
+                <Button
+                  onPress={() => {
+                    Alert.alert('End Workout', 'Are you sure?', [
+                      {text: 'No', style: 'cancel'},
+                      {
+                        text: 'Yes',
+                        onPress: () => {
+                          navigation.navigate('EndWorkout', {seconds});
+                        },
                       },
-                    },
-                  ]);
-                }}
-                style={{margin: DevicePixels[10]}}>
-                End workout
-              </Button>
-            </ScrollView>
-          );
-        })}
-      </PagerView>
+                    ]);
+                  }}
+                  style={{margin: DevicePixels[10]}}>
+                  End workout
+                </Button>
+              </View>
+            );
+          })}
+        </PagerView>
+      </ScrollView>
     </Layout>
   );
 };

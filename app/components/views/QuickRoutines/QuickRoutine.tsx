@@ -6,6 +6,7 @@ import {
   Alert,
   TextInput,
   View,
+  Dimensions,
 } from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -106,19 +107,23 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
-        <PagerView
-          ref={pagerRef}
-          onPageSelected={e => {
-            setIndex(e.nativeEvent.position);
+        <ScrollView
+          contentContainerStyle={{
+            minHeight: Dimensions.get('screen').height + DevicePixels[50],
           }}
-          style={{flex: 1, paddingHorizontal: 0}}>
-          {exercises.map((exercise, i) => {
-            const video: {src: string; path: string} | undefined =
-              videos[exercise.id];
-            const next = exercises[index + 1];
-            return (
-              <ScrollView keyboardShouldPersistTaps="always" key={exercise.id}>
-                <>
+          keyboardShouldPersistTaps="always">
+          <PagerView
+            ref={pagerRef}
+            onPageSelected={e => {
+              setIndex(e.nativeEvent.position);
+            }}
+            style={{flex: 1, paddingHorizontal: 0}}>
+            {exercises.map((exercise, i) => {
+              const video: {src: string; path: string} | undefined =
+                videos[exercise.id];
+              const next = exercises[index + 1];
+              return (
+                <View key={exercise.id}>
                   {!loading &&
                   video &&
                   exercise.video &&
@@ -169,105 +174,108 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       />
                     </TouchableOpacity>
                   )}
-                </>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: DevicePixels[10],
-                  }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: tabIndex === 0 ? colors.appBlue : '#fff',
-                      padding: DevicePixels[5],
-                      width: DevicePixels[80],
-                      borderWidth: DevicePixels[1],
-                      borderColor: colors.appBlue,
-                      borderTopLeftRadius: DevicePixels[5],
-                      borderBottomLeftRadius: DevicePixels[5],
-                    }}
-                    onPress={() => setTabIndex(0)}>
-                    <Text
-                      style={{
-                        color: tabIndex === 0 ? '#fff' : colors.appBlue,
-                        textAlign: 'center',
-                      }}>
-                      Description
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: tabIndex === 1 ? colors.appBlue : '#fff',
-                      padding: DevicePixels[5],
-                      width: DevicePixels[80],
-                      borderWidth: DevicePixels[1],
-                      borderColor: colors.appBlue,
-                    }}
-                    onPress={() => setTabIndex(1)}>
-                    <Text
-                      style={{
-                        color: tabIndex === 1 ? '#fff' : colors.appBlue,
-                        textAlign: 'center',
-                      }}>
-                      Diagram
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: tabIndex === 2 ? colors.appBlue : '#fff',
-                      padding: DevicePixels[5],
-                      width: DevicePixels[80],
-                      borderWidth: DevicePixels[1],
-                      borderColor: colors.appBlue,
-                      borderTopRightRadius: DevicePixels[5],
-                      borderBottomRightRadius: DevicePixels[5],
-                    }}
-                    onPress={() => setTabIndex(2)}>
-                    <Text
-                      style={{
-                        color: tabIndex === 2 ? '#fff' : colors.appBlue,
-                        textAlign: 'center',
-                      }}>
-                      Notes
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{height: DevicePixels[275]}}>
-                  {tabIndex === 0 && (
-                    <ViewMore text={exercise.description} lines={10} />
-                  )}
 
-                  {tabIndex === 1 && i === index && (
-                    <MusclesDiagram
-                      primary={exercise.muscles}
-                      secondary={exercise.musclesSecondary}
-                    />
-                  )}
-
-                  {tabIndex === 2 && (
-                    <TextInput
-                      ref={textInputRef}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: DevicePixels[10],
+                    }}>
+                    <TouchableOpacity
                       style={{
-                        margin: DevicePixels[10],
+                        backgroundColor:
+                          tabIndex === 0 ? colors.appBlue : '#fff',
+                        padding: DevicePixels[5],
+                        width: DevicePixels[80],
                         borderWidth: DevicePixels[1],
-                        height: DevicePixels[100],
-                        textAlignVertical: 'top',
-                        borderRadius: DevicePixels[10],
                         borderColor: colors.appBlue,
-                        padding: DevicePixels[10],
+                        borderTopLeftRadius: DevicePixels[5],
+                        borderBottomLeftRadius: DevicePixels[5],
                       }}
-                      placeholder="Enter notes here..."
-                      multiline
-                      value={exerciseNotes[exercise.id]}
-                      onChangeText={text =>
-                        setExerciseNoteAction(exercise.id, text)
-                      }
-                    />
-                  )}
-                </View>
+                      onPress={() => setTabIndex(0)}>
+                      <Text
+                        style={{
+                          color: tabIndex === 0 ? '#fff' : colors.appBlue,
+                          textAlign: 'center',
+                        }}>
+                        Description
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor:
+                          tabIndex === 1 ? colors.appBlue : '#fff',
+                        padding: DevicePixels[5],
+                        width: DevicePixels[80],
+                        borderWidth: DevicePixels[1],
+                        borderColor: colors.appBlue,
+                      }}
+                      onPress={() => setTabIndex(1)}>
+                      <Text
+                        style={{
+                          color: tabIndex === 1 ? '#fff' : colors.appBlue,
+                          textAlign: 'center',
+                        }}>
+                        Diagram
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor:
+                          tabIndex === 2 ? colors.appBlue : '#fff',
+                        padding: DevicePixels[5],
+                        width: DevicePixels[80],
+                        borderWidth: DevicePixels[1],
+                        borderColor: colors.appBlue,
+                        borderTopRightRadius: DevicePixels[5],
+                        borderBottomRightRadius: DevicePixels[5],
+                      }}
+                      onPress={() => setTabIndex(2)}>
+                      <Text
+                        style={{
+                          color: tabIndex === 2 ? '#fff' : colors.appBlue,
+                          textAlign: 'center',
+                        }}>
+                        Notes
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{height: DevicePixels[275]}}>
+                    {tabIndex === 0 && (
+                      <ViewMore text={exercise.description} lines={10} />
+                    )}
 
-                {/* {next && (
+                    {tabIndex === 1 && i === index && (
+                      <MusclesDiagram
+                        primary={exercise.muscles}
+                        secondary={exercise.musclesSecondary}
+                      />
+                    )}
+
+                    {tabIndex === 2 && (
+                      <TextInput
+                        ref={textInputRef}
+                        style={{
+                          margin: DevicePixels[10],
+                          borderWidth: DevicePixels[1],
+                          height: DevicePixels[100],
+                          textAlignVertical: 'top',
+                          borderRadius: DevicePixels[10],
+                          borderColor: colors.appBlue,
+                          padding: DevicePixels[10],
+                        }}
+                        placeholder="Enter notes here..."
+                        multiline
+                        value={exerciseNotes[exercise.id]}
+                        onChangeText={text =>
+                          setExerciseNoteAction(exercise.id, text)
+                        }
+                      />
+                    )}
+                  </View>
+
+                  {/* {next && (
                   <Layout style={{margin: DevicePixels[10]}}>
                     <Text
                       category="h6"
@@ -305,55 +313,56 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </TouchableOpacity>
                   </Layout>
                 )} */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    margin: DevicePixels[10],
-                    marginBottom: 0,
-                  }}>
-                  <Text category="h6">{`Exercise ${index + 1}/${
-                    exercises.length
-                  }`}</Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      margin: DevicePixels[10],
+                      marginBottom: 0,
+                    }}>
+                    <Text category="h6">{`Exercise ${index + 1}/${
+                      exercises.length
+                    }`}</Text>
 
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      name="stopwatch"
-                      size={DevicePixels[15]}
-                      color={colors.darkBlue}
-                    />
-                    <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
-                      {moment()
-                        .utc()
-                        .startOf('day')
-                        .add({seconds})
-                        .format('mm:ss')}
-                    </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon
+                        name="stopwatch"
+                        size={DevicePixels[15]}
+                        color={colors.darkBlue}
+                      />
+                      <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                        {moment()
+                          .utc()
+                          .startOf('day')
+                          .add({seconds})
+                          .format('mm:ss')}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-                <Button
-                  onPress={() => {
-                    Alert.alert('End workout', 'Are you sure?', [
-                      {text: 'No', style: 'cancel'},
-                      {
-                        text: 'Yes',
-                        onPress: () => {
-                          navigation.navigate('EndQuickRoutine', {
-                            seconds,
-                            routine,
-                          });
+                  <Button
+                    onPress={() => {
+                      Alert.alert('End workout', 'Are you sure?', [
+                        {text: 'No', style: 'cancel'},
+                        {
+                          text: 'Yes',
+                          onPress: () => {
+                            navigation.navigate('EndQuickRoutine', {
+                              seconds,
+                              routine,
+                            });
+                          },
                         },
-                      },
-                    ]);
-                  }}
-                  style={{margin: DevicePixels[10]}}>
-                  End workout
-                </Button>
-              </ScrollView>
-            );
-          })}
-        </PagerView>
+                      ]);
+                    }}
+                    style={{margin: DevicePixels[10]}}>
+                    End workout
+                  </Button>
+                </View>
+              );
+            })}
+          </PagerView>
+        </ScrollView>
       )}
       <Modal visible={showModal} onBackDropPress={() => setShowModal(false)}>
         <View
