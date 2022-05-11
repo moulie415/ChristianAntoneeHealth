@@ -378,7 +378,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             category="h6">
             Instructions
           </Text>
-          <Text style={{margin: DevicePixels[10]}}>{routine.instructions}</Text>
+          <Text style={{margin: DevicePixels[10], textAlign: 'center'}}>
+            {routine.instructions}
+          </Text>
           <Button
             onPress={() => setShowModal(false)}
             style={{alignSelf: 'center', marginBottom: DevicePixels[10]}}>
