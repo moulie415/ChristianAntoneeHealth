@@ -85,7 +85,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
       <Countdown onComplete={() => setWorkoutStarted(true)} />
       <ScrollView
         contentContainerStyle={{
-          minHeight: Dimensions.get('screen').height + DevicePixels[50],
+          minHeight: Dimensions.get('screen').height + DevicePixels[100],
         }}
         keyboardShouldPersistTaps="always">
         <PagerView
