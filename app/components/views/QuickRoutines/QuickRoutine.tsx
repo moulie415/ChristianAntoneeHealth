@@ -21,6 +21,7 @@ import PagerView from 'react-native-pager-view';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
+import Modal from '../../commons/Modal';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -39,6 +40,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const pagerRef = useRef<PagerView>();
   const [routineStarted, setRoutineStarted] = useState(false);
   const textInputRef = useRef<TextInput>();
+  const [showModal, setShowModal] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -57,6 +59,23 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       textInputRef.current?.focus();
     }
   }, [tabIndex]);
+
+  useEffect(() => {
+    if (routine.instructions) {
+      navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity onPress={() => setShowModal(true)}>
+            <Icon
+              name="info-circle"
+              color={colors.appBlue}
+              size={DevicePixels[15]}
+            />
+          </TouchableOpacity>
+        ),
+      });
+      setShowModal(true);
+    }
+  }, [navigation, routine.instructions]);
 
   useEffect(() => {
     if (routineStarted) {
@@ -151,10 +170,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </TouchableOpacity>
                   )}
                 </>
-                {!!routine.instructions && !!routine.instructions[index] && (
-                  <Text>!!routine.instructions[index]</Text>
-                )}
-
                 <View
                   style={{
                     flexDirection: 'row',
@@ -340,6 +355,37 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           })}
         </PagerView>
       )}
+      <Modal visible={showModal} onBackDropPress={() => setShowModal(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            width: '90%',
+            alignSelf: 'center',
+            borderRadius: DevicePixels[10],
+          }}>
+          <Icon
+            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+            name="info-circle"
+            color={colors.appBlue}
+            size={DevicePixels[20]}
+          />
+          <Text
+            style={{
+              textAlign: 'center',
+              padding: DevicePixels[15],
+              paddingTop: 0,
+            }}
+            category="h6">
+            Instructions
+          </Text>
+          <Text style={{margin: DevicePixels[10]}}>{routine.instructions}</Text>
+          <Button
+            onPress={() => setShowModal(false)}
+            style={{alignSelf: 'center', marginBottom: DevicePixels[10]}}>
+            OK
+          </Button>
+        </View>
+      </Modal>
     </Layout>
   );
 };

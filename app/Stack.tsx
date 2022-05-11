@@ -257,7 +257,11 @@ const StackComponent: FunctionComponent = () => {
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Premium" component={Premium} />
-          <Stack.Screen name="Rating" component={Rating} />
+          <Stack.Screen
+            name="Rating"
+            component={Rating}
+            options={{headerTitle: 'Rate us'}}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </>

@@ -91,10 +91,10 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
               onPress={() => navigation.navigate('Premium')}
             />
             <HomeCard
-              title="View Activity"
-              subtitle="Track you daily activity"
+              title="Rate the app"
+              subtitle="Let us know what you think"
               image={require('../../images/Homepage_activity_tracking.jpeg')}
-              onPress={() => navigation.navigate('Activity')}
+              onPress={() => navigation.navigate('Rating')}
             />
           </Layout>
         </Layout>

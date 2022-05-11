@@ -380,3 +380,11 @@ export const requestPlan = async (uid: string) => {
     .doc(uid)
     .update({planStatus: PlanStatus.PENDING});
 };
+
+export const sendFeedback = async (
+  uid: string,
+  feedback: string,
+  rating: number,
+) => {
+  return db().collection('feedback').doc(uid).set({feedback, rating});
+};

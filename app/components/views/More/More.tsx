@@ -15,7 +15,6 @@ import {resetToWelcome} from '../../../RootNavigation';
 import {MyRootState} from '../../../types/Shared';
 import Purchases from 'react-native-purchases';
 import {STORE_LINK} from '../../../constants';
-import {rateApp} from '../../../helpers';
 import DevicePixels from '../../../helpers/DevicePixels';
 import messaging from '@react-native-firebase/messaging';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
@@ -111,7 +110,7 @@ const More: React.FC<MoreProps> = ({
     {
       title: 'Rate the app',
       icon: 'star',
-      onPress: rateApp,
+      onPress: () => navigation.navigate('Rating'),
     },
     // {
     //   title: 'Report a problem',
