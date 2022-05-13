@@ -64,3 +64,5 @@ GoogleService-Info.plist
 
 
 sentry.properties
+
+.env

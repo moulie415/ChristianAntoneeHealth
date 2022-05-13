@@ -14,11 +14,17 @@ jobs:
       - name: Run tests
         run: |
           yarn test
-      # - name: Create sentry files
-      #   env:
-      #     SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
-      #   run: |
-      #     exec .github/scripts/create-sentry-files.sh
+      - name: Create sentry files
+        env:
+          SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
+        run: |
+          exec .github/scripts/create-sentry-files.sh
+       - name: Create .env
+        env:
+          FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
+          FACEBOOK_CLIENT_TOKEN: ${{ secrets.FACEBOOK_CLIENT_TOKEN }}
+        run: |
+          exec .github/scripts/create-env.sh
       - name: Bump version
         uses: chkfung/android-version-actions@v1.1
         with:
