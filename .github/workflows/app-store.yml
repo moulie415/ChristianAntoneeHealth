@@ -15,11 +15,11 @@ jobs:
           xcode-version: '13.1'
       - name: Checkout project
         uses: actions/checkout@v2
-      - name: Create sentry files
-        env:
-          SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
-        run: |
-          exec .github/scripts/create-sentry-files.sh
+      # - name: Create sentry files
+      #   env:
+      #     SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
+      #   run: |
+      #     exec .github/scripts/create-sentry-files.sh
       - name: Create .env
         env:
           FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
