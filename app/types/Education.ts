@@ -1,3 +1,4 @@
+
 export default interface Education {
   id: string;
   title: string;
@@ -9,7 +10,7 @@ export default interface Education {
     title: string;
   };
   createdate: Date;
-};
+}
 
 export enum Category {
   GENERAL = 'general',

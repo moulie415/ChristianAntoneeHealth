@@ -4,6 +4,7 @@ import {
   SET_EDUCATION,
   SET_EDUCATION_LOADING,
 } from '../actions/education';
+import {SET_LOGGED_IN} from '../actions/profile';
 
 export interface EducationState {
   education: {[key: string]: Education};
@@ -30,6 +31,9 @@ const reducer = (
         ...state,
         loading: action.payload,
       };
+
+    case SET_LOGGED_IN:
+      return action.payload ? state : initialState;
     default:
       return state;
   }

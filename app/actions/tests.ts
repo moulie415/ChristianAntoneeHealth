@@ -1,5 +1,6 @@
 import {SavedTest} from '../types/SavedItem';
 import Test from '../types/Test';
+import {SetLoggedInAction} from './profile';
 
 export const GET_TESTS = 'GET_TESTS';
 export const GET_TESTS_BY_ID = 'GET_TESTS_BY_ID';
@@ -70,4 +71,5 @@ export type TestsActions =
   | SaveTestAction
   | GetSavedTestsAction
   | SetSavedTestsAction
-  | GetTestsByIdAction;
+  | GetTestsByIdAction
+  | SetLoggedInAction;

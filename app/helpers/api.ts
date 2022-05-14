@@ -187,7 +187,11 @@ export const getSavedWorkouts = async (uid: string) => {
     .get();
   return savedWorkouts.docs.reduce((acc: {[id: string]: SavedWorkout}, cur) => {
     const workout: any = cur.data();
-    acc[cur.id] = {...workout, id: cur.id};
+    acc[cur.id] = {
+      ...workout,
+      id: cur.id,
+      createdate: workout.createdate.toDate(),
+    };
     return acc;
   }, {});
 };
@@ -203,7 +207,7 @@ export const getSavedTests = async (uid: string) => {
     .get();
   return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, cur) => {
     const test: any = cur.data();
-    acc[cur.id] = {...test, id: cur.id};
+    acc[cur.id] = {...test, id: cur.id, createdate: test.createdate.toDate()};
     return acc;
   }, {});
 };
@@ -220,7 +224,11 @@ export const getSavedQuickRoutines = async (uid: string) => {
   return savedQuickRoutines.docs.reduce(
     (acc: {[id: string]: SavedQuickRoutine}, cur) => {
       const routine: any = cur.data();
-      acc[cur.id] = {...routine, id: cur.id};
+      acc[cur.id] = {
+        ...routine,
+        id: cur.id,
+        createdate: routine.createdate.toDate(),
+      };
       return acc;
     },
     {},
@@ -268,7 +276,7 @@ export const getEducation = async () => {
   const education = await db().collection('education').get();
   return education.docs.reduce((acc: {[id: string]: Education}, cur) => {
     const edu: any = cur.data();
-    acc[cur.id] = {...edu, id: cur.id};
+    acc[cur.id] = {...edu, id: cur.id, createdate: edu.createdate.toDate()};
     return acc;
   }, {});
 };
@@ -280,7 +288,7 @@ export const getEducationById = async (ids: string[]) => {
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: Education}, cur) => {
     const test: any = cur.data();
-    acc[cur.id] = {...test, id: cur.id};
+    acc[cur.id] = {...test, id: cur.id, createdate: test.createdate.toDate()};
     return acc;
   }, {});
 };

@@ -222,6 +222,7 @@ const Daily: React.FC<{
                 </Text>
                 {plan.education.map(id => {
                   const item = education[id];
+                  if (!item) return null;
                   return (
                     <View key={id}>
                       <Divider />

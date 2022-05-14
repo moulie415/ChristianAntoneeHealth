@@ -1,4 +1,5 @@
 import Education from '../types/Education';
+import {SetLoggedInAction} from './profile';
 
 export const GET_EDUCATION = 'GET_EDUCATION';
 export const SET_EDUCATION = 'SET_EDUCATION';
@@ -51,4 +52,5 @@ export type EducationActions =
   | GetEducationAction
   | SetEducationAction
   | SetEducationLoadingAction
-  | GetEducationByIdAction;
+  | GetEducationByIdAction
+  | SetLoggedInAction;
