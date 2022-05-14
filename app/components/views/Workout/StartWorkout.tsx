@@ -100,7 +100,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
             const next = workout[index + 1];
 
             return (
-              <View>
+              <View key={exercise.id}>
                 {!loading &&
                 video &&
                 exercise.video &&
