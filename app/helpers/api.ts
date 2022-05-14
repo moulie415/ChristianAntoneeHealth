@@ -273,6 +273,18 @@ export const getEducation = async () => {
   }, {});
 };
 
+export const getEducationById = async (ids: string[]) => {
+  const snapshot = await db()
+    .collection('education')
+    .where(db.FieldPath.documentId(), 'in', ids)
+    .get();
+  return snapshot.docs.reduce((acc: {[id: string]: Education}, cur) => {
+    const test: any = cur.data();
+    acc[cur.id] = {...test, id: cur.id};
+    return acc;
+  }, {});
+};
+
 export const generateLink = async () => {
   try {
     const response = await functions().httpsCallable('generateLink')();

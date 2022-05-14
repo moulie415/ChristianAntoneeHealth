@@ -3,6 +3,7 @@ import Education from '../types/Education';
 export const GET_EDUCATION = 'GET_EDUCATION';
 export const SET_EDUCATION = 'SET_EDUCATION';
 export const SET_EDUCATION_LOADING = 'SET_EDUCATION_LOADING';
+export const GET_EDUCATION_BY_ID = 'GET_EDUCATION_BY_ID';
 
 export interface GetEducationAction {
   type: typeof GET_EDUCATION;
@@ -22,6 +23,11 @@ export const getEducation = (): GetEducationAction => ({
   type: GET_EDUCATION,
 });
 
+export interface GetEducationByIdAction {
+  type: typeof GET_EDUCATION_BY_ID;
+  payload: string[];
+}
+
 export const setEducation = (education: {
   [key: string]: Education;
 }): SetEducationAction => ({
@@ -36,7 +42,13 @@ export const setEducationLoading = (
   payload: loading,
 });
 
+export const getEducationById = (ids: string[]): GetEducationByIdAction => ({
+  type: GET_EDUCATION_BY_ID,
+  payload: ids,
+});
+
 export type EducationActions =
   | GetEducationAction
   | SetEducationAction
-  | SetEducationLoadingAction;
+  | SetEducationLoadingAction
+  | GetEducationByIdAction;

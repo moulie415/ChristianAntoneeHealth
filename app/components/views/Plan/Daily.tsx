@@ -4,7 +4,7 @@ import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Text from '../../commons/Text';
-import {ListItem, Spinner} from '@ui-kitten/components';
+import {Divider, ListItem, Spinner} from '@ui-kitten/components';
 import ImageOverlay from '../../commons/ImageOverlay';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
@@ -14,6 +14,10 @@ import {getExercisesById, setWorkout} from '../../../actions/exercises';
 import {navigate} from '../../../RootNavigation';
 import {getTestsById} from '../../../actions/tests';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import * as _ from 'lodash';
+import Education from '../../../types/Education';
+import {getEducationById} from '../../../actions/education';
+import Image from 'react-native-fast-image';
 
 const Daily: React.FC<{
   plan: Plan;
@@ -23,6 +27,9 @@ const Daily: React.FC<{
   getTestsById: (ids: string[]) => void;
   loading: boolean;
   setWorkout: (workout: Exercise[]) => void;
+  education: {[key: string]: Education};
+  getEducationById: (ids: string[]) => void;
+  educationLoading: boolean;
 }> = ({
   plan,
   exercises,
@@ -31,6 +38,9 @@ const Daily: React.FC<{
   getTestsById: getTestsByIdAction,
   loading,
   setWorkout: setWorkoutAction,
+  education,
+  getEducationById: getEducationByIdAction,
+  educationLoading,
 }) => {
   const workouts = useMemo(() => {
     return (
@@ -80,6 +90,13 @@ const Daily: React.FC<{
       getTestsByIdAction(missingTestIds);
     }
   }, [getTestsByIdAction, tests, testsObj]);
+
+  useEffect(() => {
+    if (plan.education && plan.education.length) {
+      const missingEducationIds = plan.education.filter(id => !education[id]);
+      getEducationByIdAction(missingEducationIds);
+    }
+  }, [plan.education, education, getEducationByIdAction]);
 
   return (
     <View>
@@ -180,25 +197,180 @@ const Daily: React.FC<{
           }}
         />
       ) : (
-        <View>
-          <Text>Nothing scheduled for today</Text>
+        <View style={{padding: DevicePixels[10]}}>
+          <Text style={{textAlign: 'center'}}>
+            No workouts scheduled for today
+          </Text>
         </View>
       )}
+      <View>
+        {plan.education && plan.education.length && (
+          <View>
+            {educationLoading ? (
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: DevicePixels[50],
+                }}>
+                <Spinner />
+              </View>
+            ) : (
+              <View>
+                <Text style={{padding: DevicePixels[5]}} category="h6">
+                  Education
+                </Text>
+                {plan.education.map(id => {
+                  const item = education[id];
+                  return (
+                    <View key={id}>
+                      <Divider />
+                      <ListItem
+                        title={item.title}
+                        onPress={() =>
+                          navigate('EducationArticle', {
+                            education: item,
+                          })
+                        }
+                        description={moment(item.createdate).format(
+                          'DD MMMM YYYY',
+                        )}
+                        accessoryLeft={() => (
+                          <Image
+                            style={{
+                              width: DevicePixels[75],
+                              height: DevicePixels[50],
+                            }}
+                            source={{uri: item.image.src}}
+                          />
+                        )}
+                      />
+                    </View>
+                  );
+                })}
+              </View>
+            )}
+          </View>
+        )}
+        {(plan.nutrition || plan.sleep) && (
+          <Text style={{padding: DevicePixels[5]}} category="h6">
+            Other
+          </Text>
+        )}
+        {plan.nutrition && !_.isEmpty(plan.nutrition) && (
+          <>
+            <Divider />
+            <ListItem
+              title={() => {
+                return (
+                  <Text style={{marginLeft: DevicePixels[10]}} category="h6">
+                    Nutritional planning
+                  </Text>
+                );
+              }}
+              description={() => {
+                return (
+                  <View style={{marginLeft: DevicePixels[10]}}>
+                    {!!plan.nutrition.general && (
+                      <Text>
+                        <Text
+                          style={{fontWeight: 'bold', color: colors.textGrey}}>
+                          General recommendations:{' '}
+                        </Text>
+                        <Text style={{color: colors.textGrey}}>
+                          {plan.nutrition.general}
+                        </Text>
+                      </Text>
+                    )}
+                    {!!plan.nutrition.preWorkout && (
+                      <Text>
+                        <Text
+                          style={{fontWeight: 'bold', color: colors.textGrey}}>
+                          Pre-workout:{' '}
+                        </Text>
+                        <Text style={{color: colors.textGrey}}>
+                          {plan.nutrition.preWorkout}
+                        </Text>
+                      </Text>
+                    )}
+                    {!!plan.nutrition.postWorkout && (
+                      <Text>
+                        <Text
+                          style={{fontWeight: 'bold', color: colors.textGrey}}>
+                          Post-workout:{' '}
+                        </Text>
+                        <Text style={{color: colors.textGrey}}>
+                          {plan.nutrition.postWorkout}
+                        </Text>
+                      </Text>
+                    )}
+                  </View>
+                );
+              }}
+              accessoryLeft={() => (
+                <Icon
+                  name="apple-alt"
+                  size={DevicePixels[20]}
+                  color={colors.appBlue}
+                />
+              )}
+            />
+          </>
+        )}
+        {plan.sleep && !_.isEmpty(plan.sleep) && (
+          <>
+            <Divider />
+            <ListItem
+              title={() => {
+                return (
+                  <Text style={{marginLeft: DevicePixels[10]}} category="h6">
+                    Sleep hygiene
+                  </Text>
+                );
+              }}
+              description={() => {
+                return (
+                  <View style={{marginLeft: DevicePixels[10]}}>
+                    <Text style={{color: colors.textGrey}}>
+                      {plan.sleep.general}
+                    </Text>
+                  </View>
+                );
+              }}
+              accessoryLeft={() => (
+                <Icon
+                  name="bed"
+                  size={DevicePixels[20]}
+                  color={colors.appBlue}
+                />
+              )}
+            />
+          </>
+        )}
+      </View>
     </View>
   );
 };
 
-const mapStateToProps = ({profile, exercises, tests}: MyRootState) => ({
+const mapStateToProps = ({
+  profile,
+  exercises,
+  tests,
+  education,
+}: MyRootState) => ({
   plan: profile.plan,
   exercises: exercises.exercises,
   tests: tests.tests,
   loading: exercises.loading,
+  education: education.education,
+  educationLoading: education.loading,
 });
 
 const mapDispatchToProps = {
   getExercisesById,
   getTestsById,
   setWorkout,
+  getEducationById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Daily);

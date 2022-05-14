@@ -101,6 +101,9 @@ export interface Plan {
     postWorkout: string;
     general: string;
   };
+  sleep: {
+    general: string;
+  };
   tests: PlanTest[];
   education: string[];
 }

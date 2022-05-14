@@ -45,7 +45,15 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
 
   const dates = uniq.reduce((acc, cur) => {
     if (cur) {
-      return {...acc, [cur]: {selected: true}};
+      return {
+        ...acc,
+        [cur]: {
+          selected: true,
+          selectedColor: moment(cur).isBefore(moment())
+            ? colors.button
+            : colors.appBlue,
+        },
+      };
     }
   }, {});
 
@@ -53,9 +61,7 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
     Math.max(...uniq.map(date => moment(date).valueOf())),
   ).format('YYYY-MM-DD');
 
-  const minDate = moment(
-    Math.min(moment().valueOf(), ...uniq.map(date => moment(date).valueOf())),
-  ).format('YYYY-MM-DD');
+  const minDate = moment().format('YYYY-MM-DD');
 
   return (
     <View>
