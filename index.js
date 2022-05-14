@@ -1,5 +1,5 @@
 //import './wdyr';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Platform} from 'react-native';
 import App, {store} from './app/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
@@ -76,7 +76,7 @@ PushNotification.configure({
           const {unread, premium} = store.getState().profile.profile;
           if (premium) {
             const {uid} = notification.data;
-            const newUnread = unread[uid] ? unread[uid] + 1 : 1;
+            const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
             store.dispatch(setUnread({...unread, [uid]: newUnread}));
           }
         };
@@ -102,7 +102,9 @@ PushNotification.configure({
     // process the notification
 
     // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+    if (Platform.OS === 'ios') {
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    }
   },
 
   // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)

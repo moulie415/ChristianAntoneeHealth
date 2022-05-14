@@ -10,6 +10,9 @@ const UnreadConnectionCount: React.FC<{
   unread: {[key: string]: number};
   uid: string;
 }> = ({unread, uid}) => {
+  if (!unread) {
+    return null;
+  }
   const count = unread[uid];
   if (count && count > 0) {
     return (

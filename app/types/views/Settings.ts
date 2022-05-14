@@ -14,8 +14,8 @@ export default interface SettingsProps {
   workoutReminderTime: string;
   setWorkoutRemindersAction: (disabled: boolean) => void;
   setWorkoutReminderTimeAction: (date: Date) => void;
-  monthlyTestReminders: boolean;
-  setMonthlyTestRemindersAction: (enabled: boolean) => void;
+  testReminders: boolean;
+  setTestRemindersAction: (enabled: boolean) => void;
   profile: Profile;
   updateProfileAction: (payload: UpdateProfilePayload) => void;
 }

@@ -36,9 +36,9 @@ import {
   SET_WORKOUT_REMINDER_TIME,
   SetWorkoutReminderTimeAction,
   setWorkoutReminderTime,
-  SET_MONTHLY_TEST_REMINDERS,
-  SetMonthlyTestRemindersAction,
-  setMonthlyTestReminders,
+  SET_TEST_REMINDERS,
+  SetTestRemindersAction,
+  setTestReminders,
   HandleAuthAction,
   HANDLE_AUTH,
   handleAuth,
@@ -415,20 +415,19 @@ function* signUp(action: SignUpAction) {
 }
 
 const WORKOUT_REMINDERS_ID = '1';
-const MONTHLY_TEST_REMINDERS_ID = '2';
+const TEST_REMINDERS_ID = '2';
 export const WORKOUT_REMINDERS_CHANNEL_ID = 'WORKOUT_REMINDER_CHANNEL_ID';
-export const MONTHLY_TEST_REMINDERS_CHANNEL_ID =
-  'MONTHLY_TEST_REMINDERS_CHANNEL_ID';
+export const TEST_REMINDERS_CHANNEL_ID = 'TEST_REMINDERS_CHANNEL_ID';
 export const CONNECTION_ID = 'CONNECTION_ID';
 export const MESSAGE_CHANNEL_ID = 'MESSAGE_CHANNEL_ID';
 export const PLAN_CHANNEL_ID = 'PLAN_CHANNEL_ID';
 
 function* getWorkoutReminders() {
-  const {workoutReminderTime, monthlyTestReminders} = yield select(
+  const {workoutReminderTime, testReminders} = yield select(
     (state: MyRootState) => state.profile,
   );
   yield put(setWorkoutReminderTime(new Date(workoutReminderTime)));
-  yield put(setMonthlyTestReminders(monthlyTestReminders));
+  yield put(setTestReminders(testReminders));
 }
 
 const channels: {
@@ -442,9 +441,9 @@ const channels: {
     channelDescription: 'Daily reminders to workout',
   },
   {
-    channelId: MONTHLY_TEST_REMINDERS_CHANNEL_ID,
-    channelName: 'Monthly reminders',
-    channelDescription: 'Monthly reminders to take a fitness test',
+    channelId: TEST_REMINDERS_CHANNEL_ID,
+    channelName: 'Test reminders',
+    channelDescription: 'Reminders to take a fitness test',
   },
   {
     channelId: CONNECTION_ID,
@@ -510,21 +509,21 @@ function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
   }
 }
 
-function* setMonthlyTestRemindersWorker(action: SetMonthlyTestRemindersAction) {
-  const {monthlyTestReminderTime} = yield select(
+function* setTestRemindersWorker(action: SetTestRemindersAction) {
+  const {testReminderTime} = yield select(
     (state: MyRootState) => state.profile,
   );
   const enabled = action.payload;
   if (enabled) {
     scheduleLocalNotification(
-      'Monthly fitness test reminder',
-      new Date(monthlyTestReminderTime),
-      MONTHLY_TEST_REMINDERS_ID,
-      MONTHLY_TEST_REMINDERS_CHANNEL_ID,
+      'Fitness test reminder',
+      new Date(testReminderTime),
+      TEST_REMINDERS_ID,
+      TEST_REMINDERS_CHANNEL_ID,
       'month',
     );
   } else {
-    PushNotification.cancelLocalNotification(`${MONTHLY_TEST_REMINDERS_ID}`);
+    PushNotification.cancelLocalNotification(`${TEST_REMINDERS_ID}`);
   }
 }
 
@@ -812,7 +811,7 @@ export default function* profileSaga() {
     takeLatest(UPDATE_PROFILE, updateProfile),
     takeLatest(SET_WORKOUT_REMINDERS, setWorkoutRemindersWorker),
     takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
-    takeLatest(SET_MONTHLY_TEST_REMINDERS, setMonthlyTestRemindersWorker),
+    takeLatest(SET_TEST_REMINDERS, setTestRemindersWorker),
     debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),

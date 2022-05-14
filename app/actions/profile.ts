@@ -26,7 +26,7 @@ export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
 export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
-export const SET_MONTHLY_TEST_REMINDERS = 'SET_MONTHLY_TEST_REMINDERS';
+export const SET_TEST_REMINDERS = 'SET_TEST_REMINDERS';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
 export const SET_PREMIUM = 'SET_PREMIUM';
 export const SET_ADMIN = 'SET_ADMIN';
@@ -133,8 +133,8 @@ export interface SetWorkoutReminderTimeAction {
   payload: Date;
 }
 
-export interface SetMonthlyTestRemindersAction {
-  type: typeof SET_MONTHLY_TEST_REMINDERS;
+export interface SetTestRemindersAction {
+  type: typeof SET_TEST_REMINDERS;
   payload: boolean;
 }
 
@@ -240,7 +240,7 @@ export type ProfileActionTypes =
   | UpdateProfileAction
   | SetWorkoutRemindersAction
   | SetWorkoutReminderTimeAction
-  | SetMonthlyTestRemindersAction
+  | SetTestRemindersAction
   | HandleAuthAction
   | SetPremiumAction
   | SetAdminAction
@@ -322,10 +322,8 @@ export const setWorkoutReminderTime = (
   payload,
 });
 
-export const setMonthlyTestReminders = (
-  payload: boolean,
-): SetMonthlyTestRemindersAction => ({
-  type: SET_MONTHLY_TEST_REMINDERS,
+export const setTestReminders = (payload: boolean): SetTestRemindersAction => ({
+  type: SET_TEST_REMINDERS,
   payload,
 });
 

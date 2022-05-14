@@ -9,7 +9,7 @@ import {
   SET_WEEKLY_STEPS,
   SET_WORKOUT_REMINDERS,
   SET_WORKOUT_REMINDER_TIME,
-  SET_MONTHLY_TEST_REMINDERS,
+  SET_TEST_REMINDERS,
   SET_PREMIUM,
   SET_ADMIN,
   SET_CONNECTIONS,
@@ -43,8 +43,8 @@ export interface ProfileState {
   weeklySteps: StepSample[];
   workoutReminders: boolean;
   workoutReminderTime: string;
-  monthlyTestReminders: boolean;
-  monthlyTestReminderTime: string;
+  testReminders: boolean;
+  testReminderTime: string;
   connections: {[key: string]: Profile};
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
@@ -76,8 +76,8 @@ const initialState: ProfileState = {
     0,
     0,
   ).toISOString(),
-  monthlyTestReminders: true,
-  monthlyTestReminderTime: new Date(
+  testReminders: true,
+  testReminderTime: new Date(
     new Date().getFullYear(),
     new Date().getMonth() + 1,
     new Date().getDate(),
@@ -145,10 +145,10 @@ const reducer = (
         ...state,
         workoutReminderTime: action.payload.toISOString(),
       };
-    case SET_MONTHLY_TEST_REMINDERS:
+    case SET_TEST_REMINDERS:
       return {
         ...state,
-        monthlyTestReminders: action.payload,
+        testReminders: action.payload,
       };
     case SET_PREMIUM:
       return {

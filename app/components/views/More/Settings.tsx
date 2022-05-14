@@ -16,7 +16,7 @@ import {Platform, ScrollView, View} from 'react-native';
 import SettingsProps from '../../../types/views/Settings';
 import {Goal, MyRootState} from '../../../types/Shared';
 import {
-  setMonthlyTestReminders,
+  setTestReminders,
   setWorkoutReminders,
   setWorkoutReminderTime,
   updateProfile,
@@ -37,15 +37,13 @@ const Settings: React.FC<SettingsProps> = ({
   setWorkoutRemindersAction,
   workoutReminderTime,
   setWorkoutReminderTimeAction,
-  monthlyTestReminders,
-  setMonthlyTestRemindersAction,
+  testReminders,
+  setTestRemindersAction,
   profile,
   navigation,
   updateProfileAction,
 }) => {
   const [show, setShow] = useState(false);
-  const [goalReminder, setGoalReminder] = useState(true);
-
   const [goal, setGoal] = useState<Goal>(
     profile.goal && isValidGoal(profile.goal) ? profile.goal : Goal.STRENGTH,
   );
@@ -55,7 +53,7 @@ const Settings: React.FC<SettingsProps> = ({
     goal,
   };
 
-  const equal  = _.isEqual(newProfile, profile);
+  const equal = _.isEqual(newProfile, profile);
   return (
     <Layout style={{flex: 1}}>
       <ScrollView
@@ -64,6 +62,7 @@ const Settings: React.FC<SettingsProps> = ({
         <Text style={{margin: DevicePixels[10]}} category="h5">
           Notifications
         </Text>
+        <Divider />
         <Layout
           style={{
             flexDirection: 'row',
@@ -77,6 +76,18 @@ const Settings: React.FC<SettingsProps> = ({
             onChange={setWorkoutRemindersAction}
           />
         </Layout>
+        <Divider />
+        <Layout
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            margin: DevicePixels[10],
+          }}>
+          <Text>Fitness test reminder</Text>
+          <Toggle checked={testReminders} onChange={setTestRemindersAction} />
+        </Layout>
+        <Divider />
         <Layout
           style={{
             flexDirection: 'row',
@@ -109,63 +120,6 @@ const Settings: React.FC<SettingsProps> = ({
             </TouchableOpacity>
           )}
         </Layout>
-        <Layout
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            margin: DevicePixels[10],
-          }}>
-          <Text>Monthly Fitness test reminder</Text>
-          <Toggle
-            checked={monthlyTestReminders}
-            onChange={setMonthlyTestRemindersAction}
-          />
-        </Layout>
-        <Layout
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            margin: DevicePixels[10],
-          }}>
-          <Text>Close to goal reminders</Text>
-          <Toggle checked={goalReminder} onChange={setGoalReminder} />
-        </Layout>
-        <Divider />
-        <Text style={{margin: DevicePixels[10]}} category="h5">
-          Goal Tracking
-        </Text>
-        <Layout style={{margin: DevicePixels[10]}}>
-          <Text
-            style={{
-              marginBottom: DevicePixels[10],
-            }}>
-            What is your main goal for using this app?
-          </Text>
-          <Select
-            value={
-              goal ? goalItems.find(item => item.goal === goal)?.title : ' '
-            }
-            onSelect={index => {
-              if ('row' in index) {
-                setGoal(goalItems[index.row].goal);
-              }
-            }}
-            selectedIndex={
-              new IndexPath(goalItems.findIndex(item => item.goal === goal))
-            }>
-            {goalItems.map(item => {
-              return (
-                <SelectItem
-                  key={item.goal}
-                  selected={item.goal === goal}
-                  title={item.title}
-                />
-              );
-            })}
-          </Select>
-        </Layout>
         <Divider />
       </ScrollView>
       <Button
@@ -191,14 +145,14 @@ const Settings: React.FC<SettingsProps> = ({
 const mapStateToProps = ({profile}: MyRootState) => ({
   workoutReminders: profile.workoutReminders,
   workoutReminderTime: profile.workoutReminderTime,
-  monthlyTestReminders: profile.monthlyTestReminders,
+  testReminders: profile.testReminders,
   profile: profile.profile,
 });
 
 const mapDispatchToProps = {
   setWorkoutRemindersAction: setWorkoutReminders,
   setWorkoutReminderTimeAction: setWorkoutReminderTime,
-  setMonthlyTestRemindersAction: setMonthlyTestReminders,
+  setTestRemindersAction: setTestReminders,
   updateProfileAction: updateProfile,
 };
 
