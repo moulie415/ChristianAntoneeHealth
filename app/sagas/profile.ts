@@ -31,13 +31,7 @@ import {
   setWeeklySteps,
   UPDATE_PROFILE,
   UpdateProfileAction,
-  SET_WORKOUT_REMINDERS,
-  SetWorkoutRemindersAction,
-  SET_WORKOUT_REMINDER_TIME,
-  SetWorkoutReminderTimeAction,
   setWorkoutReminderTime,
-  SET_TEST_REMINDERS,
-  SetTestRemindersAction,
   setTestReminders,
   HandleAuthAction,
   HANDLE_AUTH,
@@ -70,13 +64,7 @@ import {getProfileImage} from '../helpers/images';
 import Profile, {PlanStatus} from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
-import {
-  goBack,
-  navigate,
-  navigateToLoginIfNecessary,
-  navigationRef,
-  resetToTabs,
-} from '../RootNavigation';
+import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
@@ -92,7 +80,6 @@ import {
 import Snackbar from 'react-native-snackbar';
 import {HealthValue} from 'react-native-health';
 import {ActivitySampleResponse} from 'react-native-google-fit';
-import {scheduleLocalNotification} from '../helpers';
 import {
   DownloadVideoAction,
   DOWNLOAD_VIDEO,
@@ -100,10 +87,7 @@ import {
   setVideoLoading,
 } from '../actions/exercises';
 import Exercise from '../types/Exercise';
-import Purchases, {
-  PurchaserInfo,
-  PurchasesOfferings,
-} from 'react-native-purchases';
+import Purchases, {PurchasesOfferings} from 'react-native-purchases';
 import {setUserAttributes} from '../helpers/profile';
 import {handleDeepLink} from './exercises';
 import dynamicLinks, {
@@ -475,58 +459,6 @@ function* createChannels() {
   });
 }
 
-function* setWorkoutRemindersWorker(action: SetWorkoutRemindersAction) {
-  const enabled = action.payload;
-  const {workoutReminderTime} = yield select(
-    (state: MyRootState) => state.profile,
-  );
-
-  if (enabled) {
-    scheduleLocalNotification(
-      'Reminder to workout',
-      workoutReminderTime,
-      WORKOUT_REMINDERS_ID,
-      WORKOUT_REMINDERS_CHANNEL_ID,
-    );
-  } else {
-    PushNotification.cancelLocalNotification(`${WORKOUT_REMINDERS_ID}`);
-  }
-}
-
-function* setWorkoutReminderTimeWorker(action: SetWorkoutReminderTimeAction) {
-  const time = action.payload;
-  const {workoutReminders} = yield select(
-    (state: MyRootState) => state.profile,
-  );
-
-  if (workoutReminders) {
-    scheduleLocalNotification(
-      'Reminder to workout',
-      time,
-      WORKOUT_REMINDERS_ID,
-      WORKOUT_REMINDERS_CHANNEL_ID,
-    );
-  }
-}
-
-function* setTestRemindersWorker(action: SetTestRemindersAction) {
-  const {testReminderTime} = yield select(
-    (state: MyRootState) => state.profile,
-  );
-  const enabled = action.payload;
-  if (enabled) {
-    scheduleLocalNotification(
-      'Fitness test reminder',
-      new Date(testReminderTime),
-      TEST_REMINDERS_ID,
-      TEST_REMINDERS_CHANNEL_ID,
-      'month',
-    );
-  } else {
-    PushNotification.cancelLocalNotification(`${TEST_REMINDERS_ID}`);
-  }
-}
-
 function* getWeeklyItems() {
   try {
     yield put(setLoading(true));
@@ -809,9 +741,6 @@ export default function* profileSaga() {
     takeLatest(SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
     takeLatest(UPDATE_PROFILE, updateProfile),
-    takeLatest(SET_WORKOUT_REMINDERS, setWorkoutRemindersWorker),
-    takeLatest(SET_WORKOUT_REMINDER_TIME, setWorkoutReminderTimeWorker),
-    takeLatest(SET_TEST_REMINDERS, setTestRemindersWorker),
     debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),

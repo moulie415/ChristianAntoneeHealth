@@ -22,23 +22,12 @@ export const truncate = (str: string, n: number) => {
 export const scheduleLocalNotification = (
   message: string,
   date: Date,
-  id: string,
   channel: string,
-  repeatType = 'day',
 ) => {
   try {
-    const fixedDate = moment().isBefore(date)
-      ? moment(date).set('seconds', 0).subtract(1, 'day').utc().toDate()
-      : moment(date).set('seconds', 0).utc().toDate();
-
-    PushNotification.cancelLocalNotification(`${id}`);
     PushNotification.localNotificationSchedule({
       message,
-      date: fixedDate,
-      // @ts-ignore
-      id,
-      // @ts-ignore
-      repeatType,
+      date,
       channelId: channel,
     });
   } catch (e) {

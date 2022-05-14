@@ -98,7 +98,7 @@ const Settings: React.FC<SettingsProps> = ({
           <Text style={{flex: 1}}>Time of reminder</Text>
           {(show || Platform.OS === 'ios') && (
             <DateTimePicker
-              disabled={!workoutReminders}
+              disabled={!workoutReminders && !testReminders}
               style={{width: DevicePixels[100]}}
               testID="dateTimePicker"
               value={new Date(workoutReminderTime)}
@@ -115,7 +115,9 @@ const Settings: React.FC<SettingsProps> = ({
             />
           )}
           {Platform.OS === 'android' && (
-            <TouchableOpacity onPress={() => setShow(true)}>
+            <TouchableOpacity
+              disabled={!workoutReminders && !testReminders}
+              onPress={() => setShow(true)}>
               <Text>{moment(workoutReminderTime).format('HH:mm')}</Text>
             </TouchableOpacity>
           )}
@@ -144,7 +146,7 @@ const Settings: React.FC<SettingsProps> = ({
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   workoutReminders: profile.workoutReminders,
-  workoutReminderTime: profile.workoutReminderTime,
+  workoutReminderTime: profile.reminderTime,
   testReminders: profile.testReminders,
   profile: profile.profile,
 });

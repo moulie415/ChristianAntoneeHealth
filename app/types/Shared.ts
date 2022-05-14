@@ -94,6 +94,7 @@ export interface PlanTest {
 }
 
 export interface Plan {
+  id: string;
   user: string;
   workouts: PlanWorkout[];
   nutrition: {

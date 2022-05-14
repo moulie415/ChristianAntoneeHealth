@@ -42,9 +42,8 @@ export interface ProfileState {
   stepSamples: {[key: number]: StepSample[]};
   weeklySteps: StepSample[];
   workoutReminders: boolean;
-  workoutReminderTime: string;
+  reminderTime: string;
   testReminders: boolean;
-  testReminderTime: string;
   connections: {[key: string]: Profile};
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
@@ -68,7 +67,7 @@ const initialState: ProfileState = {
   stepSamples: {},
   weeklySteps: [],
   workoutReminders: true,
-  workoutReminderTime: new Date(
+  reminderTime: new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
     new Date().getDate() + 1,
@@ -77,14 +76,6 @@ const initialState: ProfileState = {
     0,
   ).toISOString(),
   testReminders: true,
-  testReminderTime: new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() + 1,
-    new Date().getDate(),
-    new Date().getHours(),
-    9,
-    0,
-  ).toISOString(),
   connections: {},
   loading: false,
   messages: {},
@@ -143,7 +134,7 @@ const reducer = (
     case SET_WORKOUT_REMINDER_TIME:
       return {
         ...state,
-        workoutReminderTime: action.payload.toISOString(),
+        reminderTime: action.payload.toISOString(),
       };
     case SET_TEST_REMINDERS:
       return {
