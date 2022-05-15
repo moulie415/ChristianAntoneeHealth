@@ -57,7 +57,7 @@ const Age: React.FC<{
             }}
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             value={moment(dob).toDate()}
-            onChange={(_: Event, d: Date) => {
+            onChange={(event, d: Date) => {
               setShow(Platform.OS === 'ios');
               setDob(d ? d.toISOString() : dob);
             }}

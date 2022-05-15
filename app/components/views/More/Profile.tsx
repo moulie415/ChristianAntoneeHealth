@@ -204,12 +204,13 @@ const Profile: React.FC<ProfileProps> = ({
             <DatePicker
               style={{
                 marginVertical: DevicePixels[5],
+                width: DevicePixels[105],
               }}
               testID="datePicker"
               value={moment(dob).toDate()}
               mode="date"
               display={Platform.OS === 'ios' ? 'compact' : 'default'}
-              onChange={(_: Event, d: Date) => {
+              onChange={(event, d: Date) => {
                 if (d) {
                   setDob(d.toISOString());
                 }

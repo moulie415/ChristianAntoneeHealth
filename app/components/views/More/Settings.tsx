@@ -106,7 +106,7 @@ const Settings: React.FC<SettingsProps> = ({
               mode="time"
               // is24Hour={true}
               display={Platform.OS === 'ios' ? 'compact' : 'default'}
-              onChange={(_: Event, d: Date) => {
+              onChange={(event, d: Date) => {
                 if (d) {
                   setWorkoutReminderTimeAction(d);
                 }
@@ -124,7 +124,7 @@ const Settings: React.FC<SettingsProps> = ({
         </Layout>
         <Divider />
       </ScrollView>
-      <Button
+      {/* <Button
         onPress={() => {
           navigation.goBack();
           updateProfileAction(newProfile);
@@ -139,7 +139,7 @@ const Settings: React.FC<SettingsProps> = ({
           bottom: 0,
         }}>
         Save
-      </Button>
+      </Button> */}
     </Layout>
   );
 };
