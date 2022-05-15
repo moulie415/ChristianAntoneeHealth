@@ -24,11 +24,11 @@ PushNotification.configure({
   onNotification: notification => {
     console.log('NOTIFICATION:', notification);
     if (notification.userInteraction) {
-      if (notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID) {
-        navigate('Workout');
-      }
-      if (notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID) {
-        navigate('Fitness');
+      if (
+        notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID ||
+        notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID
+      ) {
+        navigate('Plan');
       }
     }
     if (notification.data.channelId === PLAN_CHANNEL_ID) {

@@ -41,7 +41,9 @@ export function* schedulePlanReminders() {
     if (plan.workouts && workoutReminders) {
       plan.workouts.forEach(workout => {
         workout.dates.forEach(d => {
-          const date = moment(d).set('hours', moment(reminderTime).hours());
+          const date = moment(d)
+            .set('hours', moment(reminderTime).hours())
+            .set('minutes', moment(reminderTime).minutes());
           scheduleLocalNotification(
             'Reminder to do your workout for today',
             date.toDate(),
