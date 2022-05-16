@@ -44,11 +44,13 @@ export function* schedulePlanReminders() {
           const date = moment(d)
             .set('hours', moment(reminderTime).hours())
             .set('minutes', moment(reminderTime).minutes());
-          scheduleLocalNotification(
-            'Reminder to do your workout for today',
-            date.toDate(),
-            WORKOUT_REMINDERS_CHANNEL_ID,
-          );
+          if (date.isAfter(moment())) {
+            scheduleLocalNotification(
+              'Reminder to do your workout for today',
+              date.toDate(),
+              WORKOUT_REMINDERS_CHANNEL_ID,
+            );
+          }
         });
       });
     }
@@ -56,11 +58,13 @@ export function* schedulePlanReminders() {
       plan.tests.forEach(test => {
         test.dates.forEach(d => {
           const date = moment(d).set('hours', moment(reminderTime).hours());
-          scheduleLocalNotification(
-            'Reminder to do your fitness test for today',
-            date.toDate(),
-            TEST_REMINDERS_CHANNEL_ID,
-          );
+          if (date.isAfter(moment())) {
+            scheduleLocalNotification(
+              'Reminder to do your fitness test for today',
+              date.toDate(),
+              TEST_REMINDERS_CHANNEL_ID,
+            );
+          }
         });
       });
     }
