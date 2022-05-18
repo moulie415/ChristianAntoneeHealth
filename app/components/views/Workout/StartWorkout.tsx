@@ -223,7 +223,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{height: DevicePixels[250]}}>
+                <View>
                   {tabIndex === 0 && (
                     <ViewMore text={exercise.description} lines={10} />
                   )}

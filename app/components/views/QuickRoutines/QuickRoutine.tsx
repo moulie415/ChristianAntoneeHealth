@@ -241,7 +241,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <View style={{height: DevicePixels[275]}}>
+                  <View>
                     {tabIndex === 0 && (
                       <ViewMore text={exercise.description} lines={10} />
                     )}
