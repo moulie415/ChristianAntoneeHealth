@@ -29,9 +29,13 @@ import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import TestType from './types/Test';
 import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import appCheck from '@react-native-firebase/app-check';
+
 import Education from './types/Education';
 import Video from 'react-native-video';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
+import Config from 'react-native-config';
+import {logError} from './helpers/error';
 
 const {height, width} = Dimensions.get('window');
 
@@ -126,12 +130,22 @@ const App: React.FC = () => {
   useEffect(() => {
     // Shake.setInvokeShakeOnShakeDeviceEvent(false);
     Purchases.setDebugLogsEnabled(true);
-    Purchases.setup('qyiMfgjJHVvhxXVRPnXgECYFkphIJwhb');
+    Purchases.setup(
+      Platform.OS === 'ios'
+        ? Config.REVENUE_CAT_IOS_KEY
+        : Config.REVENUE_CAT_ANDROID_KEY,
+    );
     if (!__DEV__) {
       Sentry.init({
-        dsn:
-          'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
+        dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
       });
+    }
+    if (Platform.OS === 'android') {
+      appCheck()
+        .activate(__DEV__ ? Config.APP_CHECK_DEBUG_TOKEN : 'ignored', true)
+        .catch(e => {
+          logError(e);
+        });
     }
   }, []);
   return (
