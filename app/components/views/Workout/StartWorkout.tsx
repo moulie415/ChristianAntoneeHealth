@@ -255,72 +255,69 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   )}
                 </View>
 
-                <Layout style={{margin: DevicePixels[10]}}>
-                  <View
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    margin: DevicePixels[10],
+                    marginBottom: 0,
+                  }}>
+                  <Text category="h6">{`Exercise ${index + 1}/${
+                    workout.length
+                  }`}</Text>
+
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Icon
+                      name="stopwatch"
+                      size={DevicePixels[15]}
+                      color={colors.darkBlue}
+                    />
+                    <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                      {moment()
+                        .utc()
+                        .startOf('day')
+                        .add({seconds})
+                        .format('mm:ss')}
+                    </Text>
+                  </View>
+                </View>
+                {next && (
+                  <Text category="h6" style={{marginBottom: DevicePixels[10]}}>
+                    Up next
+                  </Text>
+                )}
+                {next && (
+                  <TouchableOpacity
+                    onPress={() => pagerRef.current.setPage(index + 1)}
                     style={{
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: DevicePixels[10],
+                      flex: 1,
+                      backgroundColor: colors.button,
                     }}>
-                    <Text category="h6">{`Exercise ${index + 1}/${
-                      workout.length
-                    }`}</Text>
-
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Icon
-                        name="stopwatch"
-                        size={DevicePixels[15]}
-                        color={colors.darkBlue}
-                      />
-                      <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
-                        {moment()
-                          .utc()
-                          .startOf('day')
-                          .add({seconds})
-                          .format('mm:ss')}
-                      </Text>
-                    </View>
-                  </View>
-                  {next && (
-                    <Text
-                      category="h6"
-                      style={{marginBottom: DevicePixels[10]}}>
-                      Up next
-                    </Text>
-                  )}
-                  {next && (
-                    <TouchableOpacity
-                      onPress={() => pagerRef.current.setPage(index + 1)}
+                    <Image
                       style={{
-                        flexDirection: 'row',
+                        height: DevicePixels[70],
+                        width: DevicePixels[90],
+                      }}
+                      source={
+                        next.thumbnail
+                          ? {uri: next.thumbnail.src}
+                          : require('../../../images/old_man_stretching.jpeg')
+                      }
+                    />
+                    <Layout
+                      style={{
+                        marginLeft: DevicePixels[20],
+                        justifyContent: 'space-evenly',
                         flex: 1,
                         backgroundColor: colors.button,
                       }}>
-                      <Image
-                        style={{
-                          height: DevicePixels[70],
-                          width: DevicePixels[90],
-                        }}
-                        source={
-                          next.thumbnail
-                            ? {uri: next.thumbnail.src}
-                            : require('../../../images/old_man_stretching.jpeg')
-                        }
-                      />
-                      <Layout
-                        style={{
-                          marginLeft: DevicePixels[20],
-                          justifyContent: 'space-evenly',
-                          flex: 1,
-                          backgroundColor: colors.button,
-                        }}>
-                        <Text>{next.name}</Text>
-                        <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
-                      </Layout>
-                    </TouchableOpacity>
-                  )}
-                </Layout>
+                      <Text>{next.name}</Text>
+                      <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
+                    </Layout>
+                  </TouchableOpacity>
+                )}
 
                 <Button
                   onPress={() => {

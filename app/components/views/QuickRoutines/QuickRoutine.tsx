@@ -274,45 +274,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       />
                     )}
                   </View>
-
-                  {/* {next && (
-                  <Layout style={{margin: DevicePixels[10]}}>
-                    <Text
-                      category="h6"
-                      style={{marginBottom: DevicePixels[10]}}>
-                      Up next
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => pagerRef.current.setPage(index + 1)}
-                      style={{
-                        flexDirection: 'row',
-                        flex: 1,
-                        backgroundColor: colors.button,
-                      }}>
-                      <Image
-                        style={{
-                          height: DevicePixels[70],
-                          width: DevicePixels[90],
-                        }}
-                        source={
-                          next.thumbnail
-                            ? {uri: next.thumbnail.src}
-                            : require('../../../images/old_man_stretching.jpeg')
-                        }
-                      />
-                      <Layout
-                        style={{
-                          marginLeft: DevicePixels[20],
-                          justifyContent: 'space-evenly',
-                          flex: 1,
-                          backgroundColor: colors.button,
-                        }}>
-                        <Text>{next.name}</Text>
-                        <Text>{`${next.reps} repetitions x${next.sets} sets`}</Text>
-                      </Layout>
-                    </TouchableOpacity>
-                  </Layout>
-                )} */}
+                  
                   <View
                     style={{
                       flexDirection: 'row',
