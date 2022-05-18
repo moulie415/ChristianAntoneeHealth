@@ -49,7 +49,7 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
         ...acc,
         [cur]: {
           selected: true,
-          selectedColor: moment(cur).isBefore(moment())
+          selectedColor: moment(cur).endOf('day').isBefore(moment())
             ? colors.button
             : colors.appBlue,
         },
