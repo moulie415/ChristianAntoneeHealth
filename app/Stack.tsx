@@ -43,8 +43,6 @@ import AddConnectionButton from './components/commons/AddConnectionButton';
 import Chat from './components/views/More/Chat';
 import Rating from './components/views/Rating';
 import WorkoutList from './components/views/Workout/WorkoutList';
-import WeeklyActivity from './components/views/Activity/WeeklyActivity';
-import FitHealthIcon from './components/commons/FitHealthIcon';
 import WhatArea from './components/views/Workout/WhatArea';
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -245,14 +243,6 @@ const StackComponent: FunctionComponent = () => {
             name="WorkoutList"
             component={WorkoutList}
             options={{headerTitle: ''}}
-          />
-          <Stack.Screen
-            name="Activity"
-            component={WeeklyActivity}
-            options={{
-              headerRight: () => <FitHealthIcon />,
-              headerTitle: 'Weekly Activity',
-            }}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>

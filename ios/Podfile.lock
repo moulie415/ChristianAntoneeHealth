@@ -1173,7 +1173,7 @@ PODS:
     - React-Core
   - react-native-image-picker (4.8.3):
     - React-Core
-  - react-native-pager-view (5.4.15):
+  - react-native-pager-view (5.4.17):
     - React-Core
   - react-native-safe-area-context (4.2.5):
     - RCT-Folly
@@ -1801,7 +1801,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk-next: 6d497a06fc5c33360f5794b4428a0236789a60e6
   react-native-flipper: cfc4ad1de608a27b9dd9f544b820cb1e1897aceb
   react-native-image-picker: e95b4785b685cfc06609bc50ed6fb55b59990c99
-  react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9
+  react-native-pager-view: 90de13b1dbf368a4d486f532d72e5f54d479a986
   react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f
   react-native-slider: 2f25c919f1dc309b90e2cc8346b8042ecec2102f
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
