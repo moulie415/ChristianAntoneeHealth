@@ -6,6 +6,7 @@ import {
   takeLatest,
   take,
   all,
+  fork,
 } from 'redux-saga/effects';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
@@ -45,7 +46,8 @@ import dynamicLinks, {
 } from '@react-native-firebase/dynamic-links';
 import Profile from '../types/Profile';
 import {alertPremiumFeature} from '../helpers/exercises';
-import { logError } from '../helpers/error';
+import {logError} from '../helpers/error';
+import {getSavedQuickRoutines} from './quickRoutines';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -103,6 +105,7 @@ export function* saveWorkout(action: SaveWorkoutAction) {
 
 function* getSavedWorkouts() {
   try {
+    yield fork(getSavedQuickRoutines);
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield put(setLoading(true));
     const workouts: {[key: string]: SavedWorkout} = yield call(
@@ -126,7 +129,6 @@ export function* getExercisesById(action: GetExercisesByIdAction) {
         api.getExercisesById,
         ids,
       );
-
       yield put(setExercises(exercises));
     }
     yield put(setLoading(false));

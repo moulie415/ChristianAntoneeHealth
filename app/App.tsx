@@ -87,8 +87,8 @@ export type StackParamList = {
   };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
-  StartWorkout: undefined;
-  EndWorkout: {seconds: number};
+  StartWorkout: {name?: string};
+  EndWorkout: {seconds: number; name?: string};
   WorkoutSummary: {seconds: number; calories: number; difficulty: number};
   Education: undefined;
   EducationArticle: {education: Education};

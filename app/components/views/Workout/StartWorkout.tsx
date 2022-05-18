@@ -24,7 +24,6 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import ViewMore from '../../commons/ViewMore';
-import Animated, {FadeIn} from 'react-native-reanimated';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -35,6 +34,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   videos,
   loading,
   profile,
+  route,
 }) => {
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
@@ -42,7 +42,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const pagerRef = useRef<PagerView>();
   const [workoutStarted, setWorkoutStarted] = useState(false);
   const textInputRef = useRef<TextInput>();
-
+  const name = route.params?.name;
   useEffect(() => {
     downloadVideoAction(workout[index].id);
   }, [index, workout, downloadVideoAction]);
@@ -326,7 +326,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       {
                         text: 'Yes',
                         onPress: () => {
-                          navigation.navigate('EndWorkout', {seconds});
+                          navigation.navigate('EndWorkout', {seconds, name});
                         },
                       },
                     ]);

@@ -121,7 +121,7 @@ const Daily: React.FC<{
                         };
                       }),
                     );
-                    navigate('StartWorkout');
+                    navigate('StartWorkout', {name: item.name});
                   }}
                   disabled={loading}
                   title={() => (
@@ -222,7 +222,9 @@ const Daily: React.FC<{
                 </Text>
                 {plan.education.map(id => {
                   const item = education[id];
-                  if (!item) return null;
+                  if (!item) {
+                    return null;
+                  }
                   return (
                     <View key={id}>
                       <Divider />

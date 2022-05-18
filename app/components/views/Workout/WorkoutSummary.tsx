@@ -59,26 +59,6 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
         Return Home
       </Button>
       <Button
-        disabled={buttonDisabled}
-        onPress={() => {
-          if (profile.premium) {
-            setButtonDisabled(true);
-            saveWorkoutAction({
-              calories,
-              seconds,
-              workout: workout.map(exercise => exercise.id),
-              difficulty,
-              createdate: new Date(),
-            });
-            resetToTabs();
-          } else {
-            navigation.navigate('Premium');
-          }
-        }}
-        style={{margin: DevicePixels[10]}}>
-        Save Workout
-      </Button>
-      <Button
         onPress={() => setShareModalVisibleAction(true)}
         accessoryLeft={() => <Icon name="share-alt" color="#fff" />}
         style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>

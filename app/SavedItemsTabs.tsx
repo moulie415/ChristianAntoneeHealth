@@ -21,7 +21,7 @@ const SavedItemsTabs = () => {
           tabBarLabel: 'Saved workouts',
           tabBarLabelStyle: {textTransform: 'none'},
         }}
-        component={SavedQuickRoutines}
+        component={SavedWorkouts}
       />
       <SavedItemsTab.Screen
         name="SavedTests"

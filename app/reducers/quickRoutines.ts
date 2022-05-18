@@ -25,7 +25,7 @@ const reducer = (
     case SET_QUICK_ROUTINES:
       return {
         ...state,
-        quickRoutines: action.quickRoutines,
+        quickRoutines: {...state.quickRoutines, ...action.quickRoutines},
       };
     case SET_SAVED_QUICK_ROUTINES:
       return {

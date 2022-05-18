@@ -13,20 +13,22 @@ import {
   getDifficultyEmoji,
   getDifficultyText,
 } from '../../../helpers/exercises';
-import {saveWorkout} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
+import {saveWorkout as saveWorkoutAction} from '../../../actions/exercises';
+import {saveWorkout} from '../../../helpers/biometrics';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
   navigation,
   profile,
   workout,
+  saveWorkoutAction: saveAction,
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [calories, setCalories] = useState(0);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds} = route.params;
+  const {seconds, name} = route.params;
   useEffect(() => {
     const getSamples = async () => {
       const startDate = moment().subtract(seconds, 'seconds').toISOString();
@@ -130,13 +132,61 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       <Button
         disabled={loading}
         style={{margin: DevicePixels[10]}}
-        onPress={() =>
-          navigation.navigate('WorkoutSummary', {calories, seconds, difficulty})
-        }>
+        onPress={() => {
+          const navigate = () => {
+            navigation.navigate('WorkoutSummary', {
+              calories,
+              seconds,
+              difficulty,
+            });
+          };
+
+          const save = (saved?: boolean) => {
+            saveAction({
+              calories,
+              seconds,
+              difficulty,
+              createdate: new Date(),
+              workout: workout.map(e => e.id),
+              saved,
+              name,
+            });
+          };
+          if (profile.premium) {
+            Alert.alert(
+              'Save workout',
+              'Do you wish to save this workout to view later?',
+              [
+                {style: 'cancel', text: 'Cancel'},
+                {
+                  text: 'No',
+                  onPress: () => {
+                    save();
+                    navigate();
+                  },
+                },
+                {
+                  text: 'Yes',
+                  onPress: () => {
+                    save(true);
+                    navigate();
+                  },
+                },
+              ],
+            );
+          } else {
+            save();
+            navigate();
+          }
+        }}>
         Save & Continue
       </Button>
     </Layout>
   );
+};
+
+const mapDispatchToProps = {
+  saveWorkoutAction,
 };
 
 const mapStateToProps = ({profile, exercises}: MyRootState) => ({
@@ -144,4 +194,4 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
   workout: exercises.workout,
 });
 
-export default connect(mapStateToProps)(EndWorkout);
+export default connect(mapStateToProps, mapDispatchToProps)(EndWorkout);

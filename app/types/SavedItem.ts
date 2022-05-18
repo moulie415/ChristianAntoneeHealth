@@ -5,6 +5,8 @@ export interface SavedWorkout {
   seconds: number;
   difficulty: number;
   createdate: Date;
+  saved?: boolean;
+  name?: string;
 }
 
 export interface SavedTest {

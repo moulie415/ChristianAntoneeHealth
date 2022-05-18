@@ -82,7 +82,12 @@ export const getExercises = async (
   const docs = await getExercisesQuery(level, goal, warmUp, coolDown);
   return docs.reduce((acc: {[id: string]: Exercise}, cur) => {
     const exercise: any = cur.data();
-    acc[cur.id] = {...exercise, id: cur.id};
+    acc[cur.id] = {
+      ...exercise,
+      id: cur.id,
+      createdate: exercise.createdate?.toDate(),
+      lastupdate: exercise.lastupdate?.toDate(),
+    };
     return acc;
   }, {});
 };
@@ -94,7 +99,12 @@ export const getExercisesById = async (ids: string[]) => {
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
     const exercise: any = cur.data();
-    acc[cur.id] = {...exercise, id: cur.id};
+    acc[cur.id] = {
+      ...exercise,
+      id: cur.id,
+      createdate: exercise.createdate?.toDate(),
+      lastupdate: exercise.lastupdate?.toDate(),
+    };
     return acc;
   }, {});
 };
@@ -115,7 +125,12 @@ export const getTests = async () => {
   const snapshot = await db().collection('tests').get();
   return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
     const test: any = cur.data();
-    acc[cur.id] = {...test, id: cur.id};
+    acc[cur.id] = {
+      ...test,
+      id: cur.id,
+      createdate: test.createdate?.toDate(),
+      lastupdate: test.lastupdate?.toDate(),
+    };
     return acc;
   }, {});
 };
@@ -127,7 +142,12 @@ export const getTestsById = async (ids: string[]) => {
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
     const test: any = cur.data();
-    acc[cur.id] = {...test, id: cur.id};
+    acc[cur.id] = {
+      ...test,
+      id: cur.id,
+      createdate: test.createdate?.toDate(),
+      lastupdate: test.lastupdate?.toDate(),
+    };
     return acc;
   }, {});
 };
@@ -136,7 +156,12 @@ export const getQuickRoutines = async () => {
   const snapshot = await db().collection('quickRoutines').get();
   return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
     const quickRoutine: any = cur.data();
-    acc[cur.id] = {...quickRoutine, id: cur.id};
+    acc[cur.id] = {
+      ...quickRoutine,
+      id: cur.id,
+      createdate: quickRoutine.createdate?.toDate(),
+      lastupdate: quickRoutine.lastupdate?.toDate(),
+    };
     return acc;
   }, {});
 };
@@ -148,7 +173,12 @@ export const getQuickRoutinesById = async (ids: string[]) => {
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
     const quickRoutine: any = cur.data();
-    acc[cur.id] = {...quickRoutine, id: cur.id};
+    acc[cur.id] = {
+      ...quickRoutine,
+      id: cur.id,
+      createdate: quickRoutine.createdate?.toDate(),
+      lastupdate: quickRoutine.lastupdate?.toDate(),
+    };
     return acc;
   }, {});
 };

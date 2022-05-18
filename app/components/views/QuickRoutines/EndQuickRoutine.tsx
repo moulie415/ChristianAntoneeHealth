@@ -134,7 +134,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
         <Text style={{fontWeight: 'normal'}}>{` - ${subtext}`}</Text>
       </Text>
       <Input
-        label="workout note"
+        label="Workout note"
         textStyle={{minHeight: DevicePixels[50]}}
         style={{margin: DevicePixels[10], marginTop: 0}}
         multiline

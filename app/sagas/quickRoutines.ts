@@ -20,6 +20,7 @@ export function* getQuickRoutines() {
   const routines: {[key: string]: QuickRoutine} = yield call(
     api.getQuickRoutines,
   );
+  debugger;
   yield put(setQuickRoutines(routines));
 }
 
@@ -33,7 +34,7 @@ function* saveQuickRoutine(action: SaveQuickRoutineAction) {
   }
 }
 
-function* getSavedQuickRoutines() {
+export function* getSavedQuickRoutines() {
   try {
     yield put(setLoading(true));
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
