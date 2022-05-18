@@ -620,7 +620,9 @@ function* requestPlanWorker() {
   } catch (e) {
     yield put(setLoading(false));
     logError(e);
-    Snackbar.show({text: 'Error requesting plan'});
+    if (!e.userCancelled) {
+      Snackbar.show({text: 'Error requesting plan'});
+    }
   }
 }
 
