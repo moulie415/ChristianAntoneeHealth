@@ -71,7 +71,7 @@
     "react-native-health": "^1.12.0",
     "react-native-image-picker": "^4.8.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
-    "react-native-pager-view": "^5.4.15",
+    "react-native-pager-view": "^5.4.17",
     "react-native-progress": "^5.0.0",
     "react-native-purchases": "^4.5.3",
     "react-native-push-notification": "^8.1.1",
