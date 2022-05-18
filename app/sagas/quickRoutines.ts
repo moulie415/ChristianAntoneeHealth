@@ -1,4 +1,4 @@
-import {call, debounce, put, select, takeLatest} from 'redux-saga/effects';
+import {call, debounce, put, select, takeLatest, throttle} from 'redux-saga/effects';
 import {
   GetQuickRoutinesByIdAction,
   GET_QUICK_ROUTINES,
@@ -69,8 +69,8 @@ function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
 }
 
 export default function* quickRoutinesSaga() {
-  yield takeLatest(GET_QUICK_ROUTINES, getQuickRoutines);
+  yield throttle(5000, GET_QUICK_ROUTINES, getQuickRoutines);
   yield debounce(1000, SAVE_QUICK_ROUTINE, saveQuickRoutine);
-  yield takeLatest(GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
-  yield takeLatest(GET_QUICK_ROUTINES_BY_ID, getQuickRoutinesById);
+  yield throttle(5000, GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
+  yield throttle(5000, GET_QUICK_ROUTINES_BY_ID, getQuickRoutinesById);
 }

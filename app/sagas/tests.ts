@@ -1,5 +1,5 @@
 import Snackbar from 'react-native-snackbar';
-import {takeEvery, call, put, takeLatest, select} from 'redux-saga/effects';
+import {takeEvery, call, put, takeLatest, select, throttle} from 'redux-saga/effects';
 import {setLoading} from '../actions/exercises';
 import {
   GetTestsByIdAction,
@@ -64,8 +64,8 @@ function* getTestsById(action: GetTestsByIdAction) {
 }
 
 export default function* testsSaga() {
-  yield takeLatest(GET_TESTS, getTests);
+  yield throttle(5000, GET_TESTS, getTests);
   yield takeLatest(SAVE_TEST, saveTest);
-  yield takeLatest(GET_SAVED_TESTS, getSavedTests);
-  yield takeLatest(GET_TESTS_BY_ID, getTestsById);
+  yield throttle(5000, GET_SAVED_TESTS, getSavedTests);
+  yield throttle(5000, GET_TESTS_BY_ID, getTestsById);
 }

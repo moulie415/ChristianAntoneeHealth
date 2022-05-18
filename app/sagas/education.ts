@@ -1,5 +1,5 @@
 import Snackbar from 'react-native-snackbar';
-import {call, put, select, takeLatest} from 'redux-saga/effects';
+import {call, put, select, takeLatest, throttle} from 'redux-saga/effects';
 import {
   GetEducationByIdAction,
   GET_EDUCATION,
@@ -44,6 +44,6 @@ function* getEducationById(action: GetEducationByIdAction) {
 }
 
 export default function* eductionSaga() {
-  yield takeLatest(GET_EDUCATION, getEducation);
-  yield takeLatest(GET_EDUCATION_BY_ID, getEducationById);
+  yield throttle(5000, GET_EDUCATION, getEducation);
+  yield throttle(5000, GET_EDUCATION_BY_ID, getEducationById);
 }
