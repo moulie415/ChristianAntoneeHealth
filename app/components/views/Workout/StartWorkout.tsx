@@ -364,7 +364,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
         <View
           style={{
             backgroundColor: '#fff',
-
             alignSelf: 'center',
             borderRadius: DevicePixels[10],
           }}>
