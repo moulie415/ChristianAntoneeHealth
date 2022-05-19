@@ -54,9 +54,9 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         ...workout,
         {
           ...exercise,
-          reps: Number(reps),
-          sets: Number(sets),
-          resistance,
+          reps: String(reps),
+          sets: String(sets),
+          resistance: String(resistance),
         },
       ]);
       Snackbar.show({text: 'Exercise added'});

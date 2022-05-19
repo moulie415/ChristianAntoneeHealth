@@ -1,4 +1,11 @@
-import {call, debounce, put, select, takeLatest, throttle} from 'redux-saga/effects';
+import {
+  call,
+  debounce,
+  put,
+  select,
+  takeLatest,
+  throttle,
+} from 'redux-saga/effects';
 import {
   GetQuickRoutinesByIdAction,
   GET_QUICK_ROUTINES,
@@ -20,7 +27,6 @@ export function* getQuickRoutines() {
   const routines: {[key: string]: QuickRoutine} = yield call(
     api.getQuickRoutines,
   );
-  debugger;
   yield put(setQuickRoutines(routines));
 }
 

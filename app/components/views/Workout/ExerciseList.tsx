@@ -36,7 +36,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     } else {
       setWorkoutAction([
         ...workout,
-        {...exercise, reps: 15, sets: 3, resistance: 0},
+        {...exercise, reps: '15', sets: '3', resistance: '0'},
       ]);
     }
   };

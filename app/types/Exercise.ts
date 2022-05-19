@@ -32,13 +32,13 @@ export default interface Exercise {
   coolDown?: CoolDown;
   live?: boolean;
   premium?: boolean;
-  reps?: number;
-  sets?: number;
-  resistance?: number;
+  reps?: string;
+  sets?: string;
+  resistance?: string;
   thumbnail?: Thumbnail;
   video?: Video;
-  resistanceScale?: number;
-  duration?: number;
+  resistanceScale?: string;
+  duration?: string;
   notes?: string;
 }
 

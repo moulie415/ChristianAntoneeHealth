@@ -1,5 +1,4 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {ImageSourcePropType} from 'react-native';
 
 export const getProfileImage = (user: FirebaseAuthTypes.User) => {
   if (user.photoURL && user.providerData[0]) {
@@ -29,4 +28,12 @@ export const getTestImage = (name: string): any => {
     return require('../images/Fitness_testing_sit_and_reach.jpeg');
   }
   return require('../images/Fitness_testing_squat.jpeg');
+};
+
+export const getImageThumbnail = (src: string) => {
+  if (!src) {
+    return;
+  }
+  const split = src.split('?');
+  return `${split[0]}_200x200?${split[1]}`;
 };

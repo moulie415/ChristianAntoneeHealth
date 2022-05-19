@@ -24,6 +24,8 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import ViewMore from '../../commons/ViewMore';
+import Modal from '../../commons/Modal';
+import ResistanceScaleInfo from './ResistanceScaleInfo';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -41,6 +43,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>();
   const [workoutStarted, setWorkoutStarted] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const textInputRef = useRef<TextInput>();
   const name = route.params?.name;
   useEffect(() => {
@@ -69,15 +72,29 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     }
   }, [index, navigation, workout]);
 
-  const getResistanceString = (resistance: number) => {
-    if (resistance) {
-      return `/ ${
-        resistance === 0
-          ? 'Bodyweight'
-          : `${resistance} ${profile.unit === 'metric' ? 'kg' : 'lbs'}`
-      }`;
+  const ResistanceScale: React.FC<{resistanceScale?: string}> = ({
+    resistanceScale,
+  }) => {
+    if (!resistanceScale) {
+      return null;
     }
-    return '';
+    return (
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text
+          category="h6"
+          style={{
+            textAlign: 'center',
+            marginRight: DevicePixels[5],
+          }}>{`/ resistance scale: ${resistanceScale}`}</Text>
+        <TouchableOpacity onPress={() => setShowModal(true)}>
+          <Icon
+            name="info-circle"
+            color={colors.appBlue}
+            size={DevicePixels[15]}
+          />
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   return (
@@ -151,15 +168,19 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-
-                <Text
-                  category="h5"
+                <View
                   style={{
-                    textAlign: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
                     marginTop: DevicePixels[10],
-                  }}>{`${exercise.reps} reps / ${
-                  exercise.sets
-                } sets ${getResistanceString(exercise.resistance)}`}</Text>
+                  }}>
+                  <Text
+                    category="h6"
+                    style={{
+                      textAlign: 'center',
+                    }}>{`${exercise.reps} reps / ${exercise.sets} sets `}</Text>
+                  <ResistanceScale resistanceScale={exercise.resistanceScale} />
+                </View>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -339,6 +360,37 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           })}
         </PagerView>
       </ScrollView>
+      <Modal visible={showModal} onBackDropPress={() => setShowModal(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+
+            alignSelf: 'center',
+            borderRadius: DevicePixels[10],
+          }}>
+          <Icon
+            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+            name="info-circle"
+            color={colors.appBlue}
+            size={DevicePixels[20]}
+          />
+          <Text
+            style={{
+              textAlign: 'center',
+              padding: DevicePixels[15],
+              paddingTop: 0,
+            }}
+            category="h6">
+            Resistance scale explained
+          </Text>
+          <ResistanceScaleInfo />
+          <Button
+            onPress={() => setShowModal(false)}
+            style={{alignSelf: 'center', margin: DevicePixels[10]}}>
+            OK
+          </Button>
+        </View>
+      </Modal>
     </Layout>
   );
 };

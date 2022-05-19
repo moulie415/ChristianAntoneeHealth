@@ -79,11 +79,11 @@ export interface PlanWorkout {
   dates: string[];
   exercises: {
     exercise: string;
-    sets: number;
-    reps: number;
-    duration: number;
-    resistanceScale: number;
-    restTime: number;
+    sets: string;
+    reps: string;
+    duration: string;
+    resistanceScale: string;
+    restTime: string;
     additionalNotes: string;
   }[];
 }

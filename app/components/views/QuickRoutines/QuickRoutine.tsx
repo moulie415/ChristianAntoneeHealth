@@ -274,7 +274,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       />
                     )}
                   </View>
-                  
+
                   <View
                     style={{
                       flexDirection: 'row',
