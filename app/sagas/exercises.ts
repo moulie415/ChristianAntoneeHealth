@@ -48,7 +48,6 @@ import dynamicLinks, {
 import Profile from '../types/Profile';
 import {alertPremiumFeature} from '../helpers/exercises';
 import {logError} from '../helpers/error';
-import {getSavedQuickRoutines} from './quickRoutines';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -106,7 +105,6 @@ export function* saveWorkout(action: SaveWorkoutAction) {
 
 function* getSavedWorkouts() {
   try {
-    yield fork(getSavedQuickRoutines);
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield put(setLoading(true));
     const workouts: {[key: string]: SavedWorkout} = yield call(

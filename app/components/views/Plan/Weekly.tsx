@@ -76,14 +76,18 @@ const Weekly: React.FC<{
         return [...acc, ...cur.exercises.map(e => e.exercise)];
       }, []);
       const missingExerciseIds = allExercises.filter(id => !exercises[id]);
-      getExercisesByIdAction(missingExerciseIds);
+      if (missingExerciseIds.length) {
+        getExercisesByIdAction(missingExerciseIds);
+      }
     }
   }, [exercises, workouts, getExercisesByIdAction]);
 
   useEffect(() => {
     if (tests.length) {
       const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
-      getTestsByIdAction(missingTestIds);
+      if (missingTestIds.length) {
+        getTestsByIdAction(missingTestIds);
+      }
     }
   }, [getTestsByIdAction, tests, testsObj]);
 

@@ -44,7 +44,9 @@ const SavedTests: FunctionComponent<{
   }, [savedTests, tests]);
 
   useEffect(() => {
-    getTestsByIdAction(missingTests);
+    if (missingTests.length) {
+      getTestsByIdAction(missingTests);
+    }
   }, [getTestsByIdAction, missingTests]);
   return (
     <>

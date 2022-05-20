@@ -81,7 +81,12 @@ function onPlanChanged(uid: string) {
       .onSnapshot(
         snapshot => {
           if (snapshot.docs[0]) {
-            emitter({...snapshot.docs[0].data(), id: snapshot.docs[0].id});
+            emitter({
+              ...snapshot.docs[0].data(),
+              id: snapshot.docs[0].id,
+              createdate: snapshot.docs[0].data().createdate?.toDate(),
+              lastupdate: snapshot.docs[0].data().lastupdate?.toDate(),
+            });
           } else {
             emitter({});
           }

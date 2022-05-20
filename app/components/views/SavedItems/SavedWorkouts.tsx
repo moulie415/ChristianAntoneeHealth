@@ -58,6 +58,10 @@ const SavedWorkouts: FunctionComponent<{
     getSavedWorkoutsAction();
   }, [getSavedWorkoutsAction]);
 
+  useEffect(() => {
+    getSavedQuickRoutinesAction();
+  }, [getSavedQuickRoutinesAction]);
+
   const missingExercises: string[] = useMemo(() => {
     return Object.values(savedWorkouts).reduce((acc, cur) => {
       const missing = cur.workout.filter(exercise => !exercises[exercise]);
@@ -72,13 +76,17 @@ const SavedWorkouts: FunctionComponent<{
   }, [quickRoutines, savedQuickRoutines]);
 
   useEffect(() => {
-    getQuickRoutinesByIdAction(missingRoutines);
+    if (missingRoutines.length) {
+      getQuickRoutinesByIdAction(missingRoutines);
+    }
   }, [getQuickRoutinesByIdAction, missingRoutines]);
 
   useEffect(() => {
-    getExercisesByIdAction(missingExercises);
+    if (missingExercises.length) {
+      getExercisesByIdAction(missingExercises);
+    }
   }, [getExercisesByIdAction, missingExercises]);
-  
+
   return (
     <>
       <Layout>
@@ -99,7 +107,7 @@ const SavedWorkouts: FunctionComponent<{
                           return exercises[id];
                         }),
                       );
-                      navigation.navigate('ReviewExercises');
+                      navigation.navigate('StartWorkout', {name: item.name});
                     }}
                     title={`${item.name ? item.name + ' - ' : ''}${moment(
                       item.createdate,

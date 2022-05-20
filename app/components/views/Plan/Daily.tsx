@@ -80,21 +80,27 @@ const Daily: React.FC<{
         return [...acc, ...cur.exercises.map(e => e.exercise)];
       }, []);
       const missingExerciseIds = allExercises.filter(id => !exercises[id]);
-      getExercisesByIdAction(missingExerciseIds);
+      if (missingExerciseIds.length) {
+        getExercisesByIdAction(missingExerciseIds);
+      }
     }
   }, [exercises, workouts, getExercisesByIdAction]);
 
   useEffect(() => {
     if (tests.length) {
       const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
-      getTestsByIdAction(missingTestIds);
+      if (missingTestIds.length) {
+        getTestsByIdAction(missingTestIds);
+      }
     }
   }, [getTestsByIdAction, tests, testsObj]);
 
   useEffect(() => {
     if (plan.education && plan.education.length) {
       const missingEducationIds = plan.education.filter(id => !education[id]);
-      getEducationByIdAction(missingEducationIds);
+      if (missingEducationIds.length) {
+        getEducationByIdAction(missingEducationIds);
+      }
     }
   }, [plan.education, education, getEducationByIdAction]);
 

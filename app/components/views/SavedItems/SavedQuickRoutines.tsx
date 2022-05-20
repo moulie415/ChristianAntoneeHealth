@@ -51,7 +51,9 @@ const SavedQuickRoutines: FunctionComponent<{
   }, [quickRoutines, savedQuickRoutines]);
 
   useEffect(() => {
-    getQuickRoutinesByIdAction(missingRoutines);
+    if (missingRoutines.length) {
+      getQuickRoutinesByIdAction(missingRoutines);
+    }
   }, [getQuickRoutinesByIdAction, missingRoutines]);
 
   return (
