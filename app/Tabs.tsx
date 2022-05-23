@@ -11,10 +11,13 @@ import MoreIcon from './components/commons/unread/MoreIcon';
 import WhatArea from './components/views/Workout/WhatArea';
 import Plan from './components/views/Plan/Plan';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
+import {connect} from 'react-redux';
+import {MyRootState} from './types/Shared';
+import Profile from './types/Profile';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
-const Tabs = () => {
+const Tabs: React.FC<{profile: Profile}> = ({profile}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -33,18 +36,20 @@ const Tabs = () => {
         key="Home"
         component={Home}
       />
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Plan',
-          tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="calendar-alt" />
-          ),
-          headerShown: false,
-        }}
-        name="Plan"
-        key="Plan"
-        component={Plan}
-      />
+      {profile.admin && (
+        <Tab.Screen
+          options={{
+            tabBarLabel: 'Plan',
+            tabBarIcon: ({color, size}) => (
+              <Icon color={color} size={size} name="calendar-alt" />
+            ),
+            headerShown: false,
+          }}
+          name="Plan"
+          key="Plan"
+          component={Plan}
+        />
+      )}
       <Tab.Screen
         options={{
           tabBarLabel: 'Workout',
@@ -57,17 +62,6 @@ const Tabs = () => {
         key="Workout"
         component={WhatEquipment}
       />
-      {/* <Tab.Screen
-        options={{
-          tabBarLabel: 'Activity',
-          tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="chart-line" />
-          ),
-        }}
-        key="Activity"
-        name="Activity"
-        component={Activity}
-      /> */}
       <Tab.Screen
         options={{
           tabBarLabel: 'Test',
@@ -94,4 +88,8 @@ const Tabs = () => {
   );
 };
 
-export default Tabs;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(Tabs);

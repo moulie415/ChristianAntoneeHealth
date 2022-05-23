@@ -18,7 +18,7 @@ const ROW_MARGIN = DevicePixels[10] * RATIO;
 const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
   useEffect(() => {
     if (!viewedPlan) {
-      navigation.navigate('Plan');
+      // navigation.navigate('Plan');
     }
   }, [navigation, viewedPlan]);
   return (

@@ -79,7 +79,7 @@ const CompleteSignUp: React.FC<{
         </TouchableOpacity>
 
         <Button onPress={completeSignUp} disabled={loading || !privacy}>
-          Get my workout plan!
+          Complete my profile
         </Button>
       </View>
     </View>

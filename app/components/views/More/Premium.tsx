@@ -272,7 +272,7 @@ const Premium: React.FC<PremiumProps> = ({
                               setLoading(false);
                               navigation.goBack();
                               setPremiumAction(true);
-                              Snackbar.show({text: 'Premium activated'});
+                              Snackbar.show({text: 'Premium activated!'});
                               if (onActivated) {
                                 onActivated();
                               }

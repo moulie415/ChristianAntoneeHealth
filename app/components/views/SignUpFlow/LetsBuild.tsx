@@ -15,10 +15,11 @@ const LetsBuild: React.FC = () => {
           marginBottom: DevicePixels[10],
           marginTop: DevicePixels[40],
         }}>
-        Let's build your workout plan
+        Let's build your profile
       </Text>
       <Text style={{color: colors.appWhite}}>
-        (Swipe from right to continue)
+        This will help us tailor you a custom workout plan should you choose to
+        request one (Swipe from right to continue)
       </Text>
     </View>
   );

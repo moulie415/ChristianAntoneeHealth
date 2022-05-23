@@ -44,6 +44,7 @@ const Settings: React.FC<SettingsProps> = ({
   updateProfileAction,
 }) => {
   const [show, setShow] = useState(false);
+  const [marketing, setMarketing] = useState(profile.marketing);
   const [goal, setGoal] = useState<Goal>(
     profile.goal && isValidGoal(profile.goal) ? profile.goal : Goal.STRENGTH,
   );
@@ -51,6 +52,7 @@ const Settings: React.FC<SettingsProps> = ({
   const newProfile = {
     ...profile,
     goal,
+    marketing,
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -123,8 +125,23 @@ const Settings: React.FC<SettingsProps> = ({
           )}
         </Layout>
         <Divider />
+        <Text style={{margin: DevicePixels[10]}} category="h5">
+          Emails
+        </Text>
+        <Layout
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            margin: DevicePixels[10],
+          }}>
+          <Text>Marketing</Text>
+          <Toggle checked={marketing} onChange={setMarketing} />
+        </Layout>
+        <Divider />
       </ScrollView>
-      {/* <Button
+
+      <Button
         onPress={() => {
           navigation.goBack();
           updateProfileAction(newProfile);
@@ -139,7 +156,7 @@ const Settings: React.FC<SettingsProps> = ({
           bottom: 0,
         }}>
         Save
-      </Button> */}
+      </Button>
     </Layout>
   );
 };

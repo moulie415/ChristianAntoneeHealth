@@ -316,7 +316,7 @@ function* signUp(action: SignUpAction) {
         planStatus: PlanStatus.UNINITIALIZED,
       });
       goBack();
-      navigate('Login');
+      navigate('SignUp');
     } else {
       const {profile} = yield select((state: MyRootState) => state.profile);
       yield call(
@@ -395,7 +395,6 @@ function* signUp(action: SignUpAction) {
   } catch (e) {
     Alert.alert('Error', e.nativeErrorMessage || e.message);
   }
-  yield fork(getWorkoutReminders);
 }
 
 const WORKOUT_REMINDERS_ID = '1';
@@ -405,14 +404,6 @@ export const TEST_REMINDERS_CHANNEL_ID = 'TEST_REMINDERS_CHANNEL_ID';
 export const CONNECTION_ID = 'CONNECTION_ID';
 export const MESSAGE_CHANNEL_ID = 'MESSAGE_CHANNEL_ID';
 export const PLAN_CHANNEL_ID = 'PLAN_CHANNEL_ID';
-
-function* getWorkoutReminders() {
-  const {workoutReminderTime, testReminders} = yield select(
-    (state: MyRootState) => state.profile,
-  );
-  yield put(setWorkoutReminderTime(new Date(workoutReminderTime)));
-  yield put(setTestReminders(testReminders));
-}
 
 const channels: {
   channelId: string;
