@@ -87,9 +87,14 @@ export type StackParamList = {
   };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
-  StartWorkout: {name?: string};
-  EndWorkout: {seconds: number; name?: string};
-  WorkoutSummary: {seconds: number; calories: number; difficulty: number};
+  StartWorkout: {name?: string; isLast?: boolean};
+  EndWorkout: {seconds: number; name?: string; isLast?: boolean};
+  WorkoutSummary: {
+    seconds: number;
+    calories: number;
+    difficulty: number;
+    isLast?: boolean;
+  };
   Education: undefined;
   EducationArticle: {education: Education};
   Settings: undefined;

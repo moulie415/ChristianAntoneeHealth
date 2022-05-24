@@ -86,11 +86,13 @@ export interface PlanWorkout {
     restTime: string;
     additionalNotes: string;
   }[];
+  today?: boolean;
 }
 
 export interface PlanTest {
   test: string;
   dates: string[];
+  today?: boolean;
 }
 
 export interface Plan {

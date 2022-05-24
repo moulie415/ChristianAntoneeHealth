@@ -1,6 +1,6 @@
 import {View, SectionList, Alert} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
-import {MyRootState, Plan} from '../../../types/Shared';
+import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -56,7 +56,7 @@ const Weekly: React.FC<{
     );
   }, [plan.tests]);
 
-  const sections = [];
+  const sections: {title: string; data: (PlanWorkout | PlanTest)[]}[] = [];
 
   for (let i = 0; i < 7; i++) {
     const day = moment().add(i, 'days');
@@ -114,7 +114,14 @@ const Weekly: React.FC<{
                         };
                       }),
                     );
-                    navigate('StartWorkout', {name: item.name});
+                    const isLast = !sections.some(section => {
+                      section.data.some(i =>
+                        i.dates.some(date => {
+                          item.dates.some(d => moment(d).isBefore(date));
+                        }),
+                      );
+                    });
+                    navigate('StartWorkout', {name: item.name, isLast});
                   } else {
                     Alert.alert('Workout not due today', 'View early?', [
                       {text: 'Cancel'},
@@ -129,7 +136,14 @@ const Weekly: React.FC<{
                               };
                             }),
                           );
-                          navigate('StartWorkout', {name: item.name});
+                          const isLast = !sections.some(section => {
+                            section.data.some(i =>
+                              i.dates.some(date => {
+                                item.dates.some(d => moment(d).isBefore(date));
+                              }),
+                            );
+                          });
+                          navigate('StartWorkout', {name: item.name, isLast});
                         },
                       },
                     ]);

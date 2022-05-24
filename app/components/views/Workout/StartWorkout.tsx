@@ -46,6 +46,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const [showModal, setShowModal] = useState(false);
   const textInputRef = useRef<TextInput>();
   const name = route.params?.name;
+  const isLast = route.params?.isLast;
   useEffect(() => {
     downloadVideoAction(workout[index].id);
   }, [index, workout, downloadVideoAction]);
@@ -347,7 +348,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       {
                         text: 'Yes',
                         onPress: () => {
-                          navigation.navigate('EndWorkout', {seconds, name});
+                          navigation.navigate('EndWorkout', {
+                            seconds,
+                            name,
+                            isLast,
+                          });
                         },
                       },
                     ]);

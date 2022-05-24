@@ -127,7 +127,14 @@ const Daily: React.FC<{
                         };
                       }),
                     );
-                    navigate('StartWorkout', {name: item.name});
+                    const isLast = !data.some(section => {
+                      section.data.some(i =>
+                        i.dates.some(date => {
+                          item.dates.some(d => moment(d).isBefore(date));
+                        }),
+                      );
+                    });
+                    navigate('StartWorkout', {name: item.name, isLast});
                   }}
                   disabled={loading}
                   title={() => (

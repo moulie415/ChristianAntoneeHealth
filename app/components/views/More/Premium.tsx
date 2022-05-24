@@ -202,7 +202,7 @@ const Premium: React.FC<PremiumProps> = ({
             />
             <View style={{flex: 1}}>
               <Text category="s1" style={{fontWeight: 'bold'}}>
-                Customized plans
+                Customized plans (coming soon)
               </Text>
               <Text style={{}}>
                 Purchase customized monthly plans tailored specifically to you.

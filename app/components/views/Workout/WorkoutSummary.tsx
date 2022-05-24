@@ -1,5 +1,5 @@
 import {Button, Layout, Text} from '@ui-kitten/components';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
@@ -13,6 +13,8 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ShareModal from '../../commons/ShareModal';
+import {Alert} from 'react-native';
+import {requestPlan} from '../../../actions/profile';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,
@@ -21,9 +23,22 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   saveWorkoutAction,
   workout,
   setShareModalVisibleAction,
+  requestPlan: requestPlanAction,
 }) => {
-  const {calories, seconds, difficulty} = route.params;
+  const {calories, seconds, difficulty, isLast} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  useEffect(() => {
+    if (isLast) {
+      Alert.alert(
+        'Want a new plan?',
+        'That was the last workout in your plan do you want to request a new plan?',
+        [
+          {text: 'Yes', onPress: requestPlanAction},
+          {text: 'No', style: 'cancel'},
+        ],
+      );
+    }
+  }, [isLast, requestPlanAction]);
   return (
     <Layout style={{flex: 1}}>
       <Layout
@@ -77,6 +92,7 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
 const mapDispatchToProps = {
   saveWorkoutAction: saveWorkout,
   setShareModalVisibleAction: setShareModalVisible,
+  requestPlan,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutSummary);
