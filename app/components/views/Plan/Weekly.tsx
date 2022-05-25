@@ -37,7 +37,8 @@ const Weekly: React.FC<{
       plan.workouts?.filter(w =>
         w.dates.find(
           d =>
-            moment(d).isAfter(moment().startOf('day')) &&
+            (moment(d).isAfter(moment().startOf('day')) ||
+              moment(d).isSame(moment().startOf('day'))) &&
             moment(d).isBefore(moment().startOf('day').add(7, 'days')),
         ),
       ) || []
@@ -49,7 +50,8 @@ const Weekly: React.FC<{
       plan.tests?.filter(t =>
         t.dates.find(
           d =>
-            moment(d).isAfter(moment().startOf('day')) &&
+            (moment(d).isAfter(moment().startOf('day')) ||
+              moment(d).isSame(moment().startOf('day'))) &&
             moment(d).isBefore(moment().startOf('day').add(7, 'days')),
         ),
       ) || []
