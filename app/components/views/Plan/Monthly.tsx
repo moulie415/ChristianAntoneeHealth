@@ -19,8 +19,12 @@ import {FlatList} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import Snackbar from 'react-native-snackbar';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Test from '../../../types/Test';
 
-const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
+const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
+  plan,
+  tests,
+}) => {
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -83,19 +87,18 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
       <Button
         style={{margin: DevicePixels[20]}}
         onPress={async () => {
-          Alert.alert('Coming soon');
-          // try {
-          //   const permission = await RNCalendarEvents.requestPermissions();
-          //   if (permission === 'authorized') {
-          //     const calendars = await RNCalendarEvents.findCalendars();
+          try {
+            const permission = await RNCalendarEvents.requestPermissions();
+            if (permission === 'authorized') {
+              const calendars = await RNCalendarEvents.findCalendars();
 
-          //     setCalendarList(calendars);
-          //     setModalVisible(true);
-          //   }
-          // } catch (e) {
-          //   logError(e);
-          //   Snackbar.show({text: 'Error syncing calendar'});
-          // }
+              setCalendarList(calendars.filter(c => c.isPrimary));
+              setModalVisible(true);
+            }
+          } catch (e) {
+            logError(e);
+            Snackbar.show({text: 'Error syncing calendar'});
+          }
         }}>
         Sync with native calendar
       </Button>
@@ -128,16 +131,19 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
                     }[] = [];
                     plan.workouts?.forEach(workout => {
                       workout.dates?.forEach(date => {
+                        const title = workout.name || 'CA Health Workout';
                         const event: {
                           title: string;
                           details: CalendarEventWritable;
                         } = {
-                          title: workout.name || 'CA Health Workout',
+                          title,
                           details: {
                             startDate: moment(date)
-                              .startOf('day')
+                              .set('hours', 9)
                               .toISOString(),
-                            // endDate: moment(date).endOf('day').toISOString(),
+                            endDate: moment(date)
+                              .set('hours', 10)
+                              .toISOString(),
                             calendarId: item.id,
                             allDay: true,
                           },
@@ -147,14 +153,20 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
                     });
                     plan.tests?.forEach(test => {
                       test.dates?.forEach(date => {
+                        const testObj = tests[test.test];
+                        const title = testObj ? testObj.name : 'CA Health Test';
                         const event: {
                           title: string;
                           details: CalendarEventWritable;
                         } = {
-                          title: 'CA Health Test',
+                          title,
                           details: {
-                            startDate: moment(date).toISOString(),
-                            // endDate: moment(date).endOf('day').toISOString(),
+                            startDate: moment(date)
+                              .set('hours', 9)
+                              .toISOString(),
+                            endDate: moment(date)
+                              .set('hours', 10)
+                              .toISOString(),
                             calendarId: item.id,
                             allDay: true,
                           },
@@ -170,11 +182,14 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
                         );
                       }),
                     );
+
                     setLoading(false);
                     setModalVisible(false);
+                    Snackbar.show({text: 'Calendar synced successfully'});
                   } catch (e) {
                     setLoading(false);
                     logError(e);
+                    console.log(e);
                     Snackbar.show({text: 'Error syncing calendar'});
                   }
                 }}
@@ -199,8 +214,9 @@ const Monthly: React.FC<{plan: Plan}> = ({plan}) => {
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, tests}: MyRootState) => ({
   plan: profile.plan,
+  tests: tests.tests,
 });
 
 export default connect(mapStateToProps)(Monthly);
