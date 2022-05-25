@@ -88,13 +88,17 @@ const Plan: React.FC<{
     return (
       plan &&
       (plan.workouts?.some(workout =>
-        workout.dates.find(date =>
-          moment(date).isAfter(moment().startOf('day')),
+        workout.dates.find(
+          date =>
+            moment(date).isAfter(moment().startOf('day')) ||
+            moment(date).isSame(moment().startOf('day')),
         ),
       ) ||
         plan.tests?.some(test =>
-          test.dates.find(date =>
-            moment(date).isAfter(moment().startOf('day')),
+          test.dates.find(
+            date =>
+              moment(date).isAfter(moment().startOf('day')) ||
+              moment(date).isSame(moment().startOf('day')),
           ),
         ))
     );
