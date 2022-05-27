@@ -64,7 +64,7 @@ jobs:
           cd ios
           pod install
           sudo gem install fastlane
-          fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement"
+          fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement" -allowProvisioningUpdates
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
