@@ -975,9 +975,9 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Health and Movement Development";
+				PROVISIONING_PROFILE_SPECIFIER = "CA Health Watch Development";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1016,9 +1016,9 @@
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.HealthAndMovement;
 				MARKETING_VERSION = 1.0.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Health and Movement Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "CA Health Watch Distribution";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1056,9 +1056,9 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE_SPECIFIER = "Health and Movement Development";
+				PROVISIONING_PROFILE_SPECIFIER = "CA Health Watch Extension Development";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1097,9 +1097,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE_SPECIFIER = "Health and Movement Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "CA Health Watch Extension Distribution";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
