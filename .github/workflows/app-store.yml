@@ -42,6 +42,7 @@ jobs:
       - name: Import signing certificate
         env:
           SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          WATCH_APP_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
           #SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
         run: |
           exec .github/scripts/import-certificate.sh
@@ -64,7 +65,7 @@ jobs:
           cd ios
           pod install
           sudo gem install fastlane
-          fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement" -allowProvisioningUpdates
+          fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement"
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
