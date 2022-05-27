@@ -12,9 +12,4 @@ security import <(echo $SIGNING_CERTIFICATE_P12_DATA | base64 --decode) \
                 -k build.keychain \
                 -P "" \
                 -T /usr/bin/codesign
-security import <(echo $WATCH_APP_PROVISIONING_PROFILE_DATA | base64 --decode) \
-                -f pkcs12 \
-                -k build.keychain \
-                -P "" \
-                -T /usr/bin/codesign
 security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
