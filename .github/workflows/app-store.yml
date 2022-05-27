@@ -48,8 +48,6 @@ jobs:
       - name: Import provisioning profile
         env:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
-          WATCH_APP_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
-          WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA }}
         run: |
           exec .github/scripts/import-profile.sh
       - name: Set up prod environment
