@@ -1,8 +1,8 @@
 //
 //  ComplicationController.swift
-//  WatchApp WatchKit Extension
+//  CA Health WatchKit Extension
 //
-//  Created by Henry Moule on 26/05/2022.
+//  Created by Henry Moule on 30/05/2022.
 //
 
 import ClockKit
