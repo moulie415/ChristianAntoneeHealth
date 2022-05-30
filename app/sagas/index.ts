@@ -6,6 +6,7 @@ import quickRoutinesSaga from './quickRoutines';
 import educationSaga from './education';
 import appStateSaga from './appState';
 import planSaga from './plan';
+import watchSaga from './watch';
 
 export default function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     fork(educationSaga),
     fork(appStateSaga),
     fork(planSaga),
+    fork(watchSaga),
   ]);
 }

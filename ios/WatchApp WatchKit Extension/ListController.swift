@@ -10,9 +10,14 @@ import Foundation
 import WatchConnectivity
 
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate {
-  var session: WCSession?
-
+class ListController: WKInterfaceController, WCSessionDelegate {
+    @IBOutlet weak var routinesTable: WKInterfaceGroup!
+    var session: WCSession?
+  
+  override init() {
+    super.init()
+    self.getQuickRoutines()
+  }
   
   override func awake(withContext context: Any?) {
       // Configure interface objects here.
@@ -21,10 +26,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
       self.session = WCSession.default
       self.session?.delegate = self
       self.session?.activate()
+      self.getQuickRoutines()
     }
   }
-  
-  
+
   
   // Called when the activation of a session finishes
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -57,23 +62,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
   override func didDeactivate() {
       // This method is called when watch view controller is no longer visible
   }
-  @IBAction func minimalEquipment() {
-    Singleton.instance.equipment = "minimal"
-  }
   
-  @IBAction func fullEquipment() {
-    Singleton.instance.equipment = "full"
+  func getQuickRoutines() {
+    self.session?.sendMessage(["getQuickRoutines" : true], replyHandler: { reply in
+      let routines: NSDictionary = reply["routines"] as! NSDictionary
+      Singleton.instance.routines = routines;
+        
+    })
   }
-  
-  @IBAction func upperBody() {
-    Singleton.instance.area = "upper"
-  }
-  
-  @IBAction func lowerBody() {
-    Singleton.instance.area = "lower"
-  }
-  
-  @IBAction func fullBody() {
-    Singleton.instance.area = "full"
-  }
+
 }

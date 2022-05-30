@@ -5772,6 +5772,11 @@ lodash.merge@^4.6.1, lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
+lodash.sortby@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
+  integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
+
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
@@ -7497,6 +7502,13 @@ react-native-view-more-text@^2.1.0:
   integrity sha512-zmYfgXfIKZDrGpzm/aTfiRn6dRp15MWvil6NsmZp9CTwaDonavgfiSxx5Yzn6ONB7HnIR2CZDyB7JBFUXIHNuA==
   dependencies:
     prop-types "^15.5.7"
+
+react-native-watch-connectivity@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-watch-connectivity/-/react-native-watch-connectivity-1.0.5.tgz#bc6905abd13293a212492bf847072d7736560203"
+  integrity sha512-q7t6vzF2hatswgMxWLxDYlW5fiuBfSxeE+/A3jUqdQyZjzN4a9lLGwK2+aDbTjw7qbwoYQTnddJdN0+UWDk4Cg==
+  dependencies:
+    lodash.sortby "^4.7.0"
 
 react-native-webview@^11.18.2:
   version "11.18.2"
