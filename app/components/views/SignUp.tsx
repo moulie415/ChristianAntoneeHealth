@@ -94,6 +94,7 @@ const SignUp: React.FC<SignUpProps> = ({
                     'Sorry',
                     'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
                   );
+                  setSpinner(false);
                 } else {
                   handleAuthAction(user);
                 }
@@ -102,6 +103,7 @@ const SignUp: React.FC<SignUpProps> = ({
                   'Sorry',
                   'Please enter both your email and your password',
                 );
+                setSpinner(false);
               }
             } catch (e) {
               console.log(e);
