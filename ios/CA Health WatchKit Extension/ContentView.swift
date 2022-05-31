@@ -82,7 +82,7 @@ struct AreaView: View {
   var body: some View {
     VStack {
       Text("Area?")
-      NavigationLink(destination: EmptyView()) {
+      NavigationLink(destination: RoutinesView()) {
         Text("Upper body")
       }
       .simultaneousGesture(TapGesture().onEnded{
@@ -91,7 +91,7 @@ struct AreaView: View {
       .background(
           RoundedRectangle(cornerRadius: 50, style: .continuous).fill(Color("appBlue"))
       )
-      NavigationLink(destination: EmptyView()) {
+      NavigationLink(destination: RoutinesView()) {
         Text("Lower body")
       }
       .simultaneousGesture(TapGesture().onEnded{
@@ -100,7 +100,7 @@ struct AreaView: View {
       .background(
           RoundedRectangle(cornerRadius: 50, style: .continuous).fill(Color("appBlue"))
       )
-      NavigationLink(destination: EmptyView()) {
+      NavigationLink(destination: RoutinesView()) {
         Text("Full body")
       }
       .simultaneousGesture(TapGesture().onEnded{
@@ -113,12 +113,25 @@ struct AreaView: View {
   }
 }
 
+struct RoutinesView: View {
+  
+//  let routines = values?.map({ [val: NSDictionary] in
+//    Routine(title: val["name"])
+//  })
+  var body: some View{
+
+     List(1..<51) {
+         Text("\($0)")     }
+     .listStyle(.carousel)
+  }
+}
+
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-        EquipmentView()
-        AreaView()
+//        EquipmentView()
+//        AreaView()
     }
 }
