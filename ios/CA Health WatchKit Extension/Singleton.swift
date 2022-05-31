@@ -6,5 +6,5 @@ class Singleton {
   var loggedIn: Bool = false;
   var equipment: String?
   var area: String?
-  var routines: NSDictionary?
+  var routines: Array<Dictionary<String, Any>>?
 }

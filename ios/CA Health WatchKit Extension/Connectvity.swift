@@ -29,6 +29,7 @@ class Connectivity: NSObject, WCSessionDelegate {
       if (reply["loggedIn"] != nil) {
         if (reply["loggedIn"] as! Int == 1) {
           Singleton.instance.loggedIn = true
+          self.getQuickRoutines()
         } else {
           Singleton.instance.loggedIn = false
         }
@@ -42,6 +43,7 @@ class Connectivity: NSObject, WCSessionDelegate {
     if (message["loggedIn"] != nil) {
       if (message["loggedIn"] as! Int == 1) {
         Singleton.instance.loggedIn = true
+        self.getQuickRoutines()
       } else {
         Singleton.instance.loggedIn = false
       }
@@ -50,8 +52,12 @@ class Connectivity: NSObject, WCSessionDelegate {
   
   func getQuickRoutines() {
     self.session?.sendMessage(["getQuickRoutines" : true], replyHandler: { reply in
-      let routines: NSDictionary = reply["routines"] as! NSDictionary
-      Singleton.instance.routines = routines;
+      let dict: Dictionary<String, Dictionary<String, Any>> = reply["routines"] as! Dictionary<String, Dictionary<String, Any>>
+      var arr = [Dictionary<String, Any>]()
+      for (_, value) in dict{
+        arr.append(value)
+      }
+      Singleton.instance.routines = arr
     })
   }
 
