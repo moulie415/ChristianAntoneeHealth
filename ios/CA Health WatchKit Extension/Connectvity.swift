@@ -28,8 +28,12 @@ class Connectivity: NSObject, WCSessionDelegate {
     self.session?.sendMessage(["isLoggedIn": true], replyHandler: { reply in
       if (reply["loggedIn"] != nil) {
         if (reply["loggedIn"] as! Int == 1) {
+          let dict: Dictionary<String, Dictionary<String, Any>> = reply["routines"] as! Dictionary<String, Dictionary<String, Any>>
+          self.convertQuickRoutines(dict: dict)
           Singleton.instance.loggedIn = true
-          self.getQuickRoutines()
+          if (Singleton.instance.routines.isEmpty) {
+            self.getQuickRoutines()
+          }
         } else {
           Singleton.instance.loggedIn = false
         }
@@ -42,28 +46,36 @@ class Connectivity: NSObject, WCSessionDelegate {
     print(message)
     if (message["loggedIn"] != nil) {
       if (message["loggedIn"] as! Int == 1) {
+        let dict: Dictionary<String, Dictionary<String, Any>> = message["routines"] as! Dictionary<String, Dictionary<String, Any>>
+        self.convertQuickRoutines(dict: dict)
         Singleton.instance.loggedIn = true
-        self.getQuickRoutines()
+        if (Singleton.instance.routines.isEmpty) {
+          self.getQuickRoutines()
+        }
       } else {
         Singleton.instance.loggedIn = false
       }
     }
   }
   
+  func convertQuickRoutines(dict: Dictionary<String, Dictionary<String, Any>>) {
+    var arr = [Dictionary<String, Any>]()
+    for (_, value) in dict{
+      arr.append(value)
+    }
+    Singleton.instance.routines = arr.map { routine in
+      return Routine(
+        id: routine["id"] as! String,
+        name: routine["name"] as! String,
+        level: routine["level"] as! String
+      )
+    }
+  }
+  
   func getQuickRoutines() {
     self.session?.sendMessage(["getQuickRoutines" : true], replyHandler: { reply in
       let dict: Dictionary<String, Dictionary<String, Any>> = reply["routines"] as! Dictionary<String, Dictionary<String, Any>>
-      var arr = [Dictionary<String, Any>]()
-      for (_, value) in dict{
-        arr.append(value)
-      }
-      Singleton.instance.routines = arr.map { routine in
-        return Routine(
-          id: routine["id"] as! String,
-          name: routine["name"] as! String,
-          level: routine["level"] as! String
-        )
-      }
+      self.convertQuickRoutines(dict: dict)
     })
   }
 

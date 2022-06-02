@@ -101,15 +101,24 @@ struct RoutinesView: View {
 
     List(Singleton.instance.routines) { routine in
       NavigationLink(destination: EmptyView()) {
-        VStack {
+        VStack(alignment: .leading) {
+          Spacer()
           Text(routine.name)
           Text(routine.level).foregroundColor(Color("appBlue"))
+          Spacer()
         }
       }
       .simultaneousGesture(TapGesture().onEnded{
         print("Hello world!")
       })
     }
+  }
+}
+
+struct WorkoutView: View {
+  
+  var body: some View {
+    Text("Test")
   }
 }
 
