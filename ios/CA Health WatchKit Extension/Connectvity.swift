@@ -57,7 +57,13 @@ class Connectivity: NSObject, WCSessionDelegate {
       for (_, value) in dict{
         arr.append(value)
       }
-      Singleton.instance.routines = arr
+      Singleton.instance.routines = arr.map { routine in
+        return Routine(
+          id: routine["id"] as! String,
+          name: routine["name"] as! String,
+          level: routine["level"] as! String
+        )
+      }
     })
   }
 

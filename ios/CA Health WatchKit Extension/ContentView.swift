@@ -9,12 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-//        Text("Hello, World!")
-//            .padding()
-//      List(1..<51) {
-//          Text("\($0)")
-//      }
-//      .listStyle(.carousel)
       VStack {
         Image("logo")
           .resizable()
@@ -28,18 +22,6 @@ struct ContentView: View {
         )
         .padding(.vertical)
         
-//        Button(
-//          action: {
-//
-//          },
-//          label: {
-//            Text("Start workout")
-//          }
-//        )
-//        .background(
-//            RoundedRectangle(cornerRadius: 50, style: .continuous).fill(Color("appBlue"))
-//        )
-//        .padding(.vertical)
       }
 
     }
@@ -113,23 +95,24 @@ struct AreaView: View {
   }
 }
 
-struct Routine : Identifiable {
-  let id: String
-  let name: String
-}
-
 struct RoutinesView: View {
   
   var body: some View {
-    let routines: Array<Routine> = Singleton.instance.routines.map { routine in
-      return Routine(id: routine["id"] as! String, name: routine["name"] as! String)
-    }
-    
-    List(routines) { routine in
-      Text(routine.name)
+
+    List(Singleton.instance.routines) { routine in
+      NavigationLink(destination: EmptyView()) {
+        VStack {
+          Text(routine.name)
+          Text(routine.level).foregroundColor(Color("appBlue"))
+        }
+      }
+      .simultaneousGesture(TapGesture().onEnded{
+        print("Hello world!")
+      })
     }
   }
 }
+
 
 
 
