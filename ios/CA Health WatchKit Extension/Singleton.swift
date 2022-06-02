@@ -6,5 +6,5 @@ class Singleton {
   var loggedIn: Bool = false;
   var equipment: String?
   var area: String?
-  var routines: Array<Dictionary<String, Any>>?
+  var routines: Array<Dictionary<String, Any>> = []
 }

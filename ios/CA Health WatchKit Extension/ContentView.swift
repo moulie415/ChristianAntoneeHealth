@@ -113,16 +113,21 @@ struct AreaView: View {
   }
 }
 
+struct Routine : Identifiable {
+  let id: String
+  let name: String
+}
+
 struct RoutinesView: View {
   
-//  let routines = values?.map({ [val: NSDictionary] in
-//    Routine(title: val["name"])
-//  })
-  var body: some View{
-
-     List(1..<51) {
-         Text("\($0)")     }
-     .listStyle(.carousel)
+  var body: some View {
+    let routines: Array<Routine> = Singleton.instance.routines.map { routine in
+      return Routine(id: routine["id"] as! String, name: routine["name"] as! String)
+    }
+    
+    List(routines) { routine in
+      Text(routine.name)
+    }
   }
 }
 
