@@ -92,6 +92,20 @@ export const getExercises = async (
   }, {});
 };
 
+export const getAllExercises = async () => {
+  const snapshot = await db().collection('exercises').get();
+  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+    const exercise: any = cur.data();
+    acc[cur.id] = {
+      ...exercise,
+      id: cur.id,
+      createdate: exercise.createdate?.toDate(),
+      lastupdate: exercise.lastupdate?.toDate(),
+    };
+    return acc;
+  }, {});
+};
+
 export const getExercisesById = async (ids: string[]) => {
   const snapshot = await db()
     .collection('exercises')

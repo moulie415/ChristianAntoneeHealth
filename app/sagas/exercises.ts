@@ -48,6 +48,7 @@ import dynamicLinks, {
 import Profile from '../types/Profile';
 import {alertPremiumFeature} from '../helpers/exercises';
 import {logError} from '../helpers/error';
+import * as _ from 'lodash';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -121,14 +122,21 @@ function* getSavedWorkouts() {
 
 export function* getExercisesById(action: GetExercisesByIdAction) {
   try {
-    const ids = action.payload;
+    const ids = _.uniq(action.payload);
     yield put(setLoading(true));
     if (ids.length) {
-      const exercises: {[key: string]: Exercise} = yield call(
-        api.getExercisesById,
-        ids,
-      );
-      yield put(setExercises(exercises));
+      if (ids.length > 10) {
+        const exercises: {[key: string]: Exercise} = yield call(
+          api.getAllExercises,
+        );
+        yield put(setExercises(exercises));
+      } else {
+        const exercises: {[key: string]: Exercise} = yield call(
+          api.getExercisesById,
+          ids,
+        );
+        yield put(setExercises(exercises));
+      }
     }
     yield put(setLoading(false));
   } catch (e) {

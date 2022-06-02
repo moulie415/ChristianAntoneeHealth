@@ -110,7 +110,6 @@ export type StackParamList = {
   Policies: undefined;
   Loading: undefined;
   QuickRoutines: undefined;
-  QuickRoutinesTabs: undefined;
   QuickRoutine: {routine: QuickRoutine};
   EndQuickRoutine: {routine: QuickRoutine; seconds: number};
   QuickRoutineSummary: {

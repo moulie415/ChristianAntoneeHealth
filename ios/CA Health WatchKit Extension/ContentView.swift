@@ -13,14 +13,14 @@ struct ContentView: View {
         Image("logo")
           .resizable()
           .scaledToFit()
-        NavigationLink(destination: EquipmentView()) {
-          Text("Start Workout")
-         
-        }
-        .background(
-            RoundedRectangle(cornerRadius: 50, style: .continuous).fill(Color("appBlue"))
-        )
-        .padding(.vertical)
+//        NavigationLink(destination: EquipmentView()) {
+//          Text("Start Workout")
+//
+//        }
+//        .background(
+//            RoundedRectangle(cornerRadius: 50, style: .continuous).fill(Color("appBlue"))
+//        )
+//        .padding(.vertical)
         
       }
 
@@ -28,9 +28,6 @@ struct ContentView: View {
 }
 
 struct EquipmentView: View {
-  init() {
-    print(Singleton.instance.loggedIn)
-  }
     var body: some View {
       VStack {
         Text("Equipment?")
@@ -58,9 +55,6 @@ struct EquipmentView: View {
 }
 
 struct AreaView: View {
-  init() {
-    print(Singleton.instance.loggedIn)
-  }
   var body: some View {
     VStack {
       Text("Area?")
@@ -100,7 +94,7 @@ struct RoutinesView: View {
   var body: some View {
 
     List(Singleton.instance.routines) { routine in
-      NavigationLink(destination: EmptyView()) {
+      NavigationLink(destination: WorkoutView()) {
         VStack(alignment: .leading) {
           Spacer()
           Text(routine.name)
@@ -108,9 +102,7 @@ struct RoutinesView: View {
           Spacer()
         }
       }
-      .simultaneousGesture(TapGesture().onEnded{
-        print("Hello world!")
-      })
+
     }
   }
 }
@@ -118,7 +110,12 @@ struct RoutinesView: View {
 struct WorkoutView: View {
   
   var body: some View {
-    Text("Test")
+    TabView {
+      Text("Page One")
+      Text("Page Two")
+      Text("Page Three")
+    }
+    .tabViewStyle(PageTabViewStyle())
   }
 }
 

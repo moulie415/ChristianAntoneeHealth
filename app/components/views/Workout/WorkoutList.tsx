@@ -21,6 +21,7 @@ import ImageLoader from '../../commons/ImageLoader';
 import globalStyles from '../../../styles/globalStyles';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Exercise from '../../../types/Exercise';
 
 const {height} = Dimensions.get('screen');
 
@@ -59,6 +60,8 @@ const WorkoutList: React.FC<{
   getExercisesById: (ids: string[]) => void;
   profile: Profile;
   settings: SettingsState;
+  exercises: {[key: string]: Exercise};
+  loading: boolean;
 }> = ({
   navigation,
   route,
@@ -67,6 +70,8 @@ const WorkoutList: React.FC<{
   getExercisesById: getExercisesByIdAction,
   profile,
   settings,
+  exercises,
+  loading,
 }) => {
   const {area, equipment} = route.params;
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
@@ -75,6 +80,17 @@ const WorkoutList: React.FC<{
   useEffect(() => {
     getQuickRoutinesAction();
   }, [getQuickRoutinesAction]);
+  useEffect(() => {
+    if (quickRoutines) {
+      const ids = Object.values(quickRoutines).reduce((acc, cur) => {
+        const missing = cur.exerciseIds.filter(e => !exercises[e]);
+        return [...acc, ...missing];
+      }, []);
+      if (ids && ids.length) {
+        getExercisesByIdAction(ids);
+      }
+    }
+  }, [exercises, quickRoutines, getExercisesByIdAction]);
 
   useEffect(() => {
     if (adDismissed && selectedItem) {
@@ -207,14 +223,22 @@ const WorkoutList: React.FC<{
           );
         }}
       />
+      <AbsoluteSpinner loading={loading} />
     </View>
   );
 };
 
-const mapStateToProps = ({quickRoutines, profile, settings}: MyRootState) => ({
+const mapStateToProps = ({
+  quickRoutines,
+  profile,
+  settings,
+  exercises,
+}: MyRootState) => ({
   quickRoutines: quickRoutines.quickRoutines,
   profile: profile.profile,
   settings,
+  exercises: exercises.exercises,
+  loading: exercises.loading,
 });
 
 const mapDispatchToProps = {

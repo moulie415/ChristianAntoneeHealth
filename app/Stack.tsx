@@ -12,11 +12,9 @@ import EndWorkout from './components/views/Workout/EndWorkout';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
 import Policies from './components/views/More/Policies';
 import Test from './components/views/Tests/Test';
-import QuickRoutines from './components/views/QuickRoutines/QuickRoutines';
 import QuickRoutineView from './components/views/QuickRoutines/QuickRoutine';
 import TestResults from './components/views/Tests/TestResults';
 import Tabs from './Tabs';
-import QuickRoutinesTabs from './QuickRoutinesTabs';
 import Login from './components/views/Login';
 import SignUp from './components/views/SignUp';
 import Profile from './components/views/More/Profile';
@@ -174,20 +172,6 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="TestResults"
             component={TestResults}
-            options={({navigation}) => ({
-              headerTitle: '',
-            })}
-          />
-          <Stack.Screen
-            name="QuickRoutines"
-            component={QuickRoutines}
-            options={({navigation}) => ({
-              headerTitle: '',
-            })}
-          />
-          <Stack.Screen
-            name="QuickRoutinesTabs"
-            component={QuickRoutinesTabs}
             options={({navigation}) => ({
               headerTitle: '',
             })}
