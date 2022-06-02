@@ -4,6 +4,7 @@ import {
   Alert,
   Dimensions,
   ScrollView,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
@@ -260,7 +261,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       ref={textInputRef}
                       style={{
                         margin: DevicePixels[10],
-                        borderWidth: DevicePixels[1],
+                        borderWidth: StyleSheet.hairlineWidth,
                         height: DevicePixels[100],
                         textAlignVertical: 'top',
                         borderRadius: DevicePixels[10],

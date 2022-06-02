@@ -9,10 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+
       VStack {
         Image("logo")
           .resizable()
           .scaledToFit()
+
+        Text("Functionality coming soon")
+          .padding(.vertical)
 //        NavigationLink(destination: EquipmentView()) {
 //          Text("Start Workout")
 //

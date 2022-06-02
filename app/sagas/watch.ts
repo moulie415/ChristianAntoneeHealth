@@ -12,19 +12,25 @@ import {
   setQuickRoutines,
   SetSavedQuickRoutinesAction,
   SET_QUICK_ROUTINES,
+  StartQuickRoutineAction,
+  START_QUICK_ROUTINE,
 } from '../actions/quickRoutines';
 import {MyRootState} from '../types/Shared';
 import * as api from '../helpers/api';
 import QuickRoutine from '../types/QuickRoutines';
+import Exercise from '../types/Exercise';
 
 function* loggedInWorker(action: SetLoggedInAction) {
-  const loggedIn = action.payload;
-  const routines: {[key: string]: QuickRoutine} = yield select(
-    (state: MyRootState) => state.quickRoutines.quickRoutines,
-  );
-  const {premium} = yield select((state: MyRootState) => state.profile.profile);
   const reachable: boolean = yield call(getReachability);
   if (reachable) {
+    const loggedIn = action.payload;
+    const routines: {[key: string]: QuickRoutine} = yield select(
+      (state: MyRootState) => state.quickRoutines.quickRoutines,
+    );
+    const {premium} = yield select(
+      (state: MyRootState) => state.profile.profile,
+    );
+
     sendMessage({loggedIn, routines, premium}, error => {
       if (error) {
         console.error(error);
@@ -42,6 +48,16 @@ function* setQuickRoutinesWorker(action: SetSavedQuickRoutinesAction) {
         console.error(error);
       }
     });
+  }
+}
+
+function* startQuickRoutineWorker(action: StartQuickRoutineAction) {
+  const reachable: boolean = yield call(getReachability);
+  const {id, exerciseIds} = action.payload;
+  const {exercises} = yield select((state: MyRootState) => state.exercises);
+  if (reachable) {
+    const workout: Exercise[] = exerciseIds.map(e => exercises[e]);
+    sendMessage({startQuickRoutine: {id}});
   }
 }
 
@@ -83,6 +99,7 @@ export default function* watchSaga() {
     yield all([
       takeLatest(SET_LOGGED_IN, loggedInWorker),
       takeLatest(SET_QUICK_ROUTINES, setQuickRoutinesWorker),
+      takeLatest(START_QUICK_ROUTINE, startQuickRoutineWorker),
     ]);
 
     const messageChannel: EventChannel<MessageEvent> = yield call(onMessage);

@@ -8,6 +8,7 @@ export const SET_QUICK_ROUTINES = 'SET_QUICK_ROUTINES';
 export const SAVE_QUICK_ROUTINE = 'SAVE_QUICK_ROUTINE';
 export const GET_SAVED_QUICK_ROUTINES = 'GET_SAVED_QUICK_ROUTINES';
 export const SET_SAVED_QUICK_ROUTINES = 'SET_SAVED_QUICK_ROUTINES';
+export const START_QUICK_ROUTINE = 'START_QUICK_ROUTINE';
 
 interface SetQuickRoutinesAction {
   type: typeof SET_QUICK_ROUTINES;
@@ -21,6 +22,11 @@ export interface GetTestsAction {
 export interface GetQuickRoutinesByIdAction {
   type: typeof GET_QUICK_ROUTINES_BY_ID;
   payload: string[];
+}
+
+export interface StartQuickRoutineAction {
+  type: typeof START_QUICK_ROUTINE;
+  payload: QuickRoutine;
 }
 
 export const setQuickRoutines = (quickRoutines: {
@@ -71,6 +77,13 @@ export const setSavedQuickRoutine = (savedQuickRoutines: {
 }): SetSavedQuickRoutinesAction => ({
   type: SET_SAVED_QUICK_ROUTINES,
   payload: savedQuickRoutines,
+});
+
+export const startQuickRoutine = (
+  payload: QuickRoutine,
+): StartQuickRoutineAction => ({
+  payload,
+  type: START_QUICK_ROUTINE,
 });
 
 export type QuickRoutinesActions =

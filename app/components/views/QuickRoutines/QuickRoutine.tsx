@@ -7,6 +7,7 @@ import {
   TextInput,
   View,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -258,13 +259,15 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         ref={textInputRef}
                         style={{
                           margin: DevicePixels[10],
-                          borderWidth: DevicePixels[1],
+                          borderWidth: StyleSheet.hairlineWidth,
                           height: DevicePixels[100],
                           textAlignVertical: 'top',
                           borderRadius: DevicePixels[10],
                           borderColor: colors.appBlue,
                           padding: DevicePixels[10],
+                          paddingVertical: DevicePixels[20]
                         }}
+                        
                         placeholder="Enter notes here..."
                         multiline
                         value={exerciseNotes[exercise.id]}

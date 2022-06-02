@@ -7,7 +7,10 @@ import {List} from '@ui-kitten/components';
 import {connect} from 'react-redux';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import QuickRoutine, {Equipment} from '../../../types/QuickRoutines';
-import {getQuickRoutines} from '../../../actions/quickRoutines';
+import {
+  getQuickRoutines,
+  startQuickRoutine,
+} from '../../../actions/quickRoutines';
 import Text from '../../commons/Text';
 import {useInterstitialAd} from '@react-native-admob/admob';
 import {UNIT_ID_INTERSTITIAL} from '../../../constants';
@@ -62,6 +65,7 @@ const WorkoutList: React.FC<{
   settings: SettingsState;
   exercises: {[key: string]: Exercise};
   loading: boolean;
+  startQuickRoutine: (routine: QuickRoutine) => void;
 }> = ({
   navigation,
   route,
@@ -72,6 +76,7 @@ const WorkoutList: React.FC<{
   settings,
   exercises,
   loading,
+  startQuickRoutine: startQuickRoutineAction,
 }) => {
   const {area, equipment} = route.params;
   const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
@@ -96,8 +101,15 @@ const WorkoutList: React.FC<{
     if (adDismissed && selectedItem) {
       getExercisesByIdAction(selectedItem.exerciseIds);
       navigation.navigate('QuickRoutine', {routine: selectedItem});
+      startQuickRoutineAction(selectedItem);
     }
-  }, [adDismissed, navigation, selectedItem, getExercisesByIdAction]);
+  }, [
+    adDismissed,
+    navigation,
+    selectedItem,
+    getExercisesByIdAction,
+    startQuickRoutineAction,
+  ]);
 
   const filtered = Object.values(quickRoutines).filter(routine => {
     return (
@@ -128,6 +140,7 @@ const WorkoutList: React.FC<{
                 } else {
                   getExercisesByIdAction(item.exerciseIds);
                   navigation.navigate('QuickRoutine', {routine: item});
+                  startQuickRoutineAction(item);
                 }
               }}
               key={item.id}
@@ -244,6 +257,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   getQuickRoutines,
   getExercisesById,
+  startQuickRoutine,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutList);
