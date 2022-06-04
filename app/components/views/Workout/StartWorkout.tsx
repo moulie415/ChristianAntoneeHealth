@@ -1,4 +1,4 @@
-import {Button, Layout, Spinner} from '@ui-kitten/components';
+import {Layout, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -27,6 +27,7 @@ import MusclesDiagram from '../../commons/MusclesDiagram';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import ResistanceScaleInfo from './ResistanceScaleInfo';
+import Button from '../../commons/Button';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,

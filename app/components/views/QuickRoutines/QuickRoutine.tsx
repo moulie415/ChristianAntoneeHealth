@@ -1,4 +1,4 @@
-import {Layout, Text, Spinner, Button} from '@ui-kitten/components';
+import {Layout, Text, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ScrollView,
@@ -24,6 +24,7 @@ import MusclesDiagram from '../../commons/MusclesDiagram';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
+import Button from '../../commons/Button';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,

@@ -1,4 +1,4 @@
-import {Button, Layout, Text} from '@ui-kitten/components';
+import {Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import ShareModal from '../../commons/ShareModal';
 import {Alert} from 'react-native';
 import {requestPlan} from '../../../actions/profile';
+import Button from '../../commons/Button';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,

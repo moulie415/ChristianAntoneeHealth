@@ -1,4 +1,4 @@
-import {Button, Layout, Text} from '@ui-kitten/components';
+import {Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -23,6 +23,7 @@ import {
 import {resetToTabs} from '../../../RootNavigation';
 import {saveTest} from '../../../actions/tests';
 import {Alert} from 'react-native';
+import Button from '../../commons/Button';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,

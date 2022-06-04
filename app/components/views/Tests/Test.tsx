@@ -1,4 +1,4 @@
-import {Button, Divider, Input, Layout, Text} from '@ui-kitten/components';
+import {Divider, Input, Layout, Text} from '@ui-kitten/components';
 import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -23,6 +23,7 @@ import ImageLoader from '../../commons/ImageLoader';
 import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
 import {textContent} from 'domutils';
+import Button from '../../commons/Button';
 
 const {width, height} = Dimensions.get('screen');
 

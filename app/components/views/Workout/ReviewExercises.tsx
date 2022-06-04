@@ -1,4 +1,4 @@
-import {Button, Divider, Layout, ListItem, Text} from '@ui-kitten/components';
+import {Divider, Layout, ListItem, Text} from '@ui-kitten/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native';
@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {useInterstitialAd} from '@react-native-admob/admob';
 import ShareModal from '../../commons/ShareModal';
+import Button from '../../commons/Button';
 
 const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,

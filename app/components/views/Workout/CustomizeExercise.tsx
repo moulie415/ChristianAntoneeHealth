@@ -1,4 +1,4 @@
-import {Text, Button, Layout, Spinner, Divider} from '@ui-kitten/components';
+import {Text, Layout, Spinner, Divider} from '@ui-kitten/components';
 import React, {useMemo, useState} from 'react';
 import Snackbar from 'react-native-snackbar';
 import {Dimensions, Platform, ScrollView, View} from 'react-native';
@@ -14,6 +14,7 @@ import {getVideoHeight} from '../../../helpers';
 import DevicePixels from '../../../helpers/DevicePixels';
 import globalStyles from '../../../styles/globalStyles';
 import MusclesDiagram from '../../commons/MusclesDiagram';
+import Button from '../../commons/Button';
 
 const REPS = [...Array(101).keys()];
 REPS.shift();

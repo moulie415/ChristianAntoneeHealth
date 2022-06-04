@@ -4,7 +4,7 @@ import {TouchableOpacity, SafeAreaView, View, Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
-import {Text, Button, Layout, Divider} from '@ui-kitten/components';
+import {Text, Layout, Divider} from '@ui-kitten/components';
 import {Equipment, MyRootState, Goal} from '../../../types/Shared';
 import {setEquipment, setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
@@ -14,6 +14,7 @@ import {capitalizeFirstLetter} from '../../../helpers';
 import EquipmentMenu from './EquipmentMenu';
 import ImageLoader from '../../commons/ImageLoader';
 import globalStyles from '../../../styles/globalStyles';
+import Button from '../../commons/Button';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,

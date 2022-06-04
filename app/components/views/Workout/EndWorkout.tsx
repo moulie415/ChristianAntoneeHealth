@@ -1,4 +1,4 @@
-import {Button, Input, Layout, Text} from '@ui-kitten/components';
+import {Input, Layout, Text} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useMemo, useState} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
@@ -16,6 +16,7 @@ import {
 import DevicePixels from '../../../helpers/DevicePixels';
 import {saveWorkout as saveWorkoutAction} from '../../../actions/exercises';
 import {saveWorkout} from '../../../helpers/biometrics';
+import Button from '../../commons/Button';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
