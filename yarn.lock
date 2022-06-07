@@ -1498,62 +1498,62 @@
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.2.2.tgz"
   integrity sha512-C1ldx1ypQo+uDWx78TUBG0evLVopKYHK2mQencl+vxi4ebMTL+ipJv5MF5mEvmZWLUOAMm5AsoQNHChYUdyWrQ==
 
-"@react-native-firebase/analytics@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-14.10.1.tgz"
-  integrity sha512-vKa7JncPhHoXsZEKB1wNhpF4dQgxT/ak5CEM+efsnvA542Amn9FjCBq+UOdGH5Zxep8HkBQNB9qOQ9Lcodsfiw==
+"@react-native-firebase/analytics@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.11.0.tgz#99a3bb96f0ed6362907a120a40489f9a8bcf9ccd"
+  integrity sha512-hYc2avm4S1vicBdKLtBif87SFGru85LOMPqDblC9GM7cGFRR5WlkOiECvNTzzs+a5Jrfq1zPJsK1YQKxD7CRfQ==
 
-"@react-native-firebase/app-check@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-14.10.1.tgz"
-  integrity sha512-R2JuL0uO1pMKpOlQFi3oqLC4hWzflQKIjelrp6zJlKK5p2pHHNIhciJaWGrsfMatsjnDG6fYZD0spM8AiCI6mw==
+"@react-native-firebase/app-check@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-check/-/app-check-14.11.0.tgz#7e1a7c5ac69f15363bcd91183ed88aa5ffa0b688"
+  integrity sha512-77HKefuMJvJUuK86b07KGNIto1yEZ+jfFxexYErgaTMo49Irzkeg5RK/CGi8Lm5ryUxQ3xoe4OWQ/kPbuZPmZA==
 
-"@react-native-firebase/app@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.10.1.tgz"
-  integrity sha512-sgs7zhzhezTIWqqlDxTRZAQ5sZchCc0nVh9+N3/ZMPTOHK73wF7or/NE1ntFHkH8h7ReFnB/ImWQEN0f1IybQQ==
+"@react-native-firebase/app@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.11.0.tgz#41b1b7d41f51b6880ebad6a12ff87c85bcdab0d6"
+  integrity sha512-LzqgZNx+WcNGYRZG6LB9BkJAx4LE+LsbPF9p65TMSagWYd/iJafoXl4d6KWQeUMIFZQH7Ke/eJ/fIZkc+4eMRw==
   dependencies:
     "@expo/config-plugins" "^4.1.5"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-14.10.1.tgz"
-  integrity sha512-HWg8m2lc8Wuf/bHBHmWo6a/Qyb84FvG8nELWRTJeHOMaQgaPfPTCARp2CTyCFacvl457hesbxFrA0NAxF3F8mw==
+"@react-native-firebase/auth@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-14.11.0.tgz#cc5748777224dd81f87d005a71c887098e0f1e63"
+  integrity sha512-h4JJI3DKKpiVLX+FDiFNprUHquoBkZUZA+bpIZoRGHOr9V8GzcD4IGBs2biWOYYGfEvGZvTVlHXlZOo4rmWEuA==
 
-"@react-native-firebase/crashlytics@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/crashlytics/-/crashlytics-14.10.1.tgz"
-  integrity sha512-AgJ2bZfesGGYH9pUc5LgomN0ZradL+l7btuqgTySUyHXmUI6O/5zmYhGBr9A2gxbVjdaLaEU39afRMaM5UHPDQ==
+"@react-native-firebase/crashlytics@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-14.11.0.tgz#73c9c02154b50bcb34b77d67c7f5e0393ec2ae2e"
+  integrity sha512-HNLJE+XvMt7dNvV5n+M+tDv7n9xER050KtayJoKjzkyFTyPTQzf1IEKqckSZS1PHSG+Sqcbe2nfoMF2GwNAAhA==
   dependencies:
     "@expo/config-plugins" "^4.1.5"
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/dynamic-links@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/dynamic-links/-/dynamic-links-14.10.1.tgz"
-  integrity sha512-9YkdIoMCH5R/Qo6IyoHao8zHdfmwS6PoN1glIfcG/i6mPr6Y7q1V6m/swIrGywVzovZ6VRkQm55wOuxUumJH6A==
+"@react-native-firebase/dynamic-links@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-14.11.0.tgz#fffdeb63a119c770b46deebea9e537ab45dda882"
+  integrity sha512-7+3pbysWjJ2+j7VCJqtJhdjftXUS8sjpQ8+U2/JxInN5YgEZtLUpq1ezv888zpyNgJxgQwI5O1cuZln8ULzdgA==
 
-"@react-native-firebase/firestore@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-14.10.1.tgz"
-  integrity sha512-LCyHgt6opmwmENBegdn1p209e7z/ADTDeE4T9vQjoygqFxWZ3WY24DlwsacoDgiby4U/q+Fq+eIJb/mNJC+wfA==
+"@react-native-firebase/firestore@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.11.0.tgz#fac678ce4c6e8e86ab394067b6423cce7c435a88"
+  integrity sha512-XG7+bLCjbuQtlren/DTTf7WvJ0gcbxp0DRNJ5/m0p8n0+x1fCGlCNpvzwDGQvljxF1JcE/qj22D44DLsJGM8ug==
 
-"@react-native-firebase/functions@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/functions/-/functions-14.10.1.tgz"
-  integrity sha512-a7zn5hMfc9UqSPcdQBzVx9yESJGfgcaR4vYDBB3qbqOsrfxPDGev1jfCDljFu3GeLeN4D0iFuhIzvlmzcUxPeg==
+"@react-native-firebase/functions@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-14.11.0.tgz#5aed97d391a2f0b5ef1105a69ac037868d121f65"
+  integrity sha512-6zhlHSCYslRaJLvjTVoF7u2ttgCzbZGFTiA+FmDI0h4E1rAJfbULcjSzpYypDTdaczr2qb6LxXSGEM9mtk+1oA==
 
-"@react-native-firebase/messaging@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-14.10.1.tgz"
-  integrity sha512-Plwsr7/aLinuW8C9sjtW+fnISJMMsXwohhPT9C52yNR33Hi8AORl/CjP0lSDK0ilkruJxPIzblBmzdH2hez3aQ==
+"@react-native-firebase/messaging@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-14.11.0.tgz#868b64156ea80ec0afc3c9a2b9745f3f777d0eec"
+  integrity sha512-9d3fMXlz+J8mHJk1ouipSGpeH2YeSYYITKnp0WjtrT1VYm/pdW8bVydmfTNigpXw9enUmRoErbzKd+6VlSnvmw==
 
-"@react-native-firebase/storage@^14.10.1":
-  version "14.10.1"
-  resolved "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-14.10.1.tgz"
-  integrity sha512-mgma2htePwpOxj7YUlVI24kHBdHHt4XMNTUW8dfQ52atIqe67DhCbkTSbs4TpW0PftZ/wyjtgwBLraxeic7IqQ==
+"@react-native-firebase/storage@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-14.11.0.tgz#65d652b9696650f3c704d4f4144bb12673483acc"
+  integrity sha512-B8emtJEfNzsxBVyCnJ5f26z4OPU5bQefHgc8mrjUjDvhWqWDstcLumevFKBlm8XFWpqQup3re+JRH/TcQPaB9w==
 
 "@react-native-picker/picker@^1.9.4":
   version "1.16.8"

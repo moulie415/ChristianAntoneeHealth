@@ -1288,47 +1288,49 @@ PODS:
     - React-Core
   - RNDeviceInfo (8.7.1):
     - React-Core
+  - RNEventEmitter (1.0.21):
+    - React
   - RNFastImage (8.5.11):
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBAnalytics (14.10.1):
+  - RNFBAnalytics (14.11.0):
     - Firebase/Analytics (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (14.10.1):
+  - RNFBApp (14.11.0):
     - Firebase/CoreOnly (= 8.15.0)
     - React-Core
-  - RNFBAppCheck (14.10.1):
+  - RNFBAppCheck (14.11.0):
     - Firebase/AppCheck (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBAuth (14.10.1):
+  - RNFBAuth (14.11.0):
     - Firebase/Auth (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (14.10.1):
+  - RNFBCrashlytics (14.11.0):
     - Firebase/Crashlytics (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBDynamicLinks (14.10.1):
+  - RNFBDynamicLinks (14.11.0):
     - Firebase/DynamicLinks (= 8.15.0)
     - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
-  - RNFBFirestore (14.10.1):
+  - RNFBFirestore (14.11.0):
     - Firebase/Firestore (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBFunctions (14.10.1):
+  - RNFBFunctions (14.11.0):
     - Firebase/Functions (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (14.10.1):
+  - RNFBMessaging (14.11.0):
     - Firebase/Messaging (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (14.10.1):
+  - RNFBStorage (14.11.0):
     - Firebase/Storage (= 8.15.0)
     - React-Core
     - RNFBApp
@@ -1382,6 +1384,8 @@ PODS:
     - React-Core
     - RNSound/Core (= 0.11.2)
   - RNSound/Core (0.11.2):
+    - React-Core
+  - RNSpotifyRemote (0.3.11-5):
     - React-Core
   - RNSVG (12.3.0):
     - React-Core
@@ -1485,6 +1489,7 @@ DEPENDENCIES:
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNEventEmitter (from `../node_modules/react-native-events`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -1505,6 +1510,7 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSound (from `../node_modules/react-native-sound`)
+  - RNSpotifyRemote (from `../node_modules/react-native-spotify-remote`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
@@ -1681,6 +1687,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNEventEmitter:
+    :path: "../node_modules/react-native-events"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
   RNFBAnalytics:
@@ -1721,6 +1729,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-snackbar"
   RNSound:
     :path: "../node_modules/react-native-sound"
+  RNSpotifyRemote:
+    :path: "../node_modules/react-native-spotify-remote"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -1839,17 +1849,18 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 04b805a3cb4d386e5e6aff54b47ace7bad706fda
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
+  RNEventEmitter: 557106956ec2f9ccda6940afeea563936385efd3
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBAnalytics: 387736b046abb49c3872bf4c7afdd15158396901
-  RNFBApp: ce36cbcce243d63f2b84d7bad48d82fe118602d0
-  RNFBAppCheck: 7a12af8d4a26d8a20573f79f601237d15bdbe076
-  RNFBAuth: 2456be668b18455edeb5394817c32047f20770b0
-  RNFBCrashlytics: 7828c2014b6962e3e6dee7c552ed11ca4ab6686c
-  RNFBDynamicLinks: 673cd39ce0a61edb607d4d732c2f6b857369642d
-  RNFBFirestore: ee7a9958d2784e1b09f288ebaa453343476e216a
-  RNFBFunctions: bf3a15537fd957dfcc91cdbf557a049c74cd124d
-  RNFBMessaging: 8e23f32b01e9c90e68287b3c2537665377b9e3f1
-  RNFBStorage: 44ff226a5f0a9eb409b2be4509725ca4fb23f901
+  RNFBAnalytics: c26f7580934cb1563eb2239b4997c6aa62f7ccfc
+  RNFBApp: b1b5a80a676a07dea17e778bda7c1e8b69b2f5ec
+  RNFBAppCheck: cf4b84e8265a641d833c9169b5ab26b9dabd0e4e
+  RNFBAuth: e28fb7cd1b956086e68233b9ea19fb97c428f86b
+  RNFBCrashlytics: 357955a1564721ca9001960e57b395c6a319f9be
+  RNFBDynamicLinks: ba0a67362140581aa1745ae1fec40a288c3d6443
+  RNFBFirestore: 20b84abc6368c37297429f810705c203022d8110
+  RNFBFunctions: 558cae123f823432ba92a3f3f803e5056573b309
+  RNFBMessaging: 3f327c8019ec2578b9da937ba6c01db48c81a457
+  RNFBStorage: b96c566326d070860a9470858c6cf54d825b666b
   RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNPurchases: fd7e85ca54a006b0894cfe0698f261bcd499abe3
@@ -1859,6 +1870,7 @@ SPEC CHECKSUMS:
   RNSentry: 2cd1daa124b0d9fd0dfc2cb6094fdd168cb579bc
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
+  RNSpotifyRemote: ab3fcbccaebead1684ba455a1d1bbdd123909faf
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   RNWatch: d3aa95cda8c6fd2098a02e6237493dc389bc42bb

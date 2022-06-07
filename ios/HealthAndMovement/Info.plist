@@ -58,6 +58,14 @@
 				<string>com.HealthAndMovement</string>
 			</array>
 		</dict>
+    <dict>
+    <key>CFBundleURLName</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>cahealth</string>
+    </array>
+  </dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -97,6 +105,7 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+    <string>spotify</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
