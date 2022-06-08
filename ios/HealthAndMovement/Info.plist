@@ -130,6 +130,8 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>So you can save wrokouts with a image from your library</string>
+  <key>NSAppleMusicUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants access to your Music library</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

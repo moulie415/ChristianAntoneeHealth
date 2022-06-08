@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Layout, Text} from '@ui-kitten/components';
-import {Dimensions, SafeAreaView} from 'react-native';
+import {Dimensions, SafeAreaView, NativeModules} from 'react-native';
 
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
@@ -15,6 +15,7 @@ import {
   remote as SpotifyRemote,
 } from 'react-native-spotify-remote';
 import Config from 'react-native-config';
+import * as Itunes from './itunes';
 
 const {height, width} = Dimensions.get('window');
 
@@ -34,12 +35,12 @@ const spotifyConfig: ApiConfig = {
 // then play an epic song
 async function playEpicSong() {
   try {
-    console.log(spotifyConfig)
+    console.log(spotifyConfig);
     const session = await SpotifyAuth.authorize(spotifyConfig);
     await SpotifyRemote.connect(session.accessToken);
     console.log(session);
     const state = await SpotifyRemote.getPlayerState();
-    console.log(state)
+    console.log(state);
     // await SpotifyRemote.playUri('spotify:track:6IA8E2Q5ttcpbuahIejO74');
     //await SpotifyRemote.seek(58000);
   } catch (err) {
@@ -75,7 +76,9 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
               title="New Workout"
               subtitle="Start a new workout now"
               image={require('../../images/Homepage_new_workout.jpeg')}
-              onPress={playEpicSong}
+              onPress={() => {
+                Itunes.getTracks().then(tracks => console.log(tracks));
+              }}
             />
             <HomeCard
               title="Fitness tests"
