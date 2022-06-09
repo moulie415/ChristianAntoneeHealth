@@ -76,9 +76,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
               title="New Workout"
               subtitle="Start a new workout now"
               image={require('../../images/Homepage_new_workout.jpeg')}
-              onPress={() => {
-                Itunes.getTracks().then(tracks => console.log(tracks));
-              }}
+              onPress={() => navigation.navigate('Workout')}
             />
             <HomeCard
               title="Fitness tests"

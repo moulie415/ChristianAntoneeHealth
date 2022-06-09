@@ -25,6 +25,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
+import MusicButton from '../../commons/MusicButton';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -266,9 +267,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           borderRadius: DevicePixels[10],
                           borderColor: colors.appBlue,
                           padding: DevicePixels[10],
-                          paddingVertical: DevicePixels[20]
+                          paddingVertical: DevicePixels[20],
                         }}
-                        
                         placeholder="Enter notes here..."
                         multiline
                         value={exerciseNotes[exercise.id]}
@@ -363,6 +363,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </Button>
         </View>
       </Modal>
+      <MusicButton />
     </Layout>
   );
 };
