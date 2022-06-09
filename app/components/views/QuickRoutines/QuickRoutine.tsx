@@ -26,6 +26,7 @@ import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
 import MusicButton from '../../commons/MusicButton';
+import useApplyHeaderWorkaround from '../../../hooks/UseApplyHeaderWorkaround';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -72,7 +73,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             <Icon
               name="info-circle"
               color={colors.appBlue}
-              size={DevicePixels[15]}
+              size={DevicePixels[20]}
             />
           </TouchableOpacity>
         ),
@@ -104,6 +105,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       navigation.setOptions({headerTitle: exercises[index].name});
     }
   }, [exercises, index, navigation]);
+
+  useApplyHeaderWorkaround(navigation.setOptions);
 
   return (
     <Layout style={{flex: 1}}>

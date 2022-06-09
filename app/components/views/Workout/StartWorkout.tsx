@@ -93,7 +93,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           <Icon
             name="info-circle"
             color={colors.appBlue}
-            size={DevicePixels[15]}
+            size={DevicePixels[20]}
           />
         </TouchableOpacity>
       </View>
