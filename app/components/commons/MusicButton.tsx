@@ -1,5 +1,5 @@
 import {Platform, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -30,21 +30,17 @@ const MusicButton: React.FC<{
 }) => {
   console.log(spotifyPlayerState);
   const [showMenu, setShowMenu] = useState(false);
-  const [showAudioApps, setShowAudioApps] = useState(!audioApp);
-  console.log(spotifyIsConnected);
+  const [showAudioApps, setShowAudioApps] = useState(true);
+
   const renderMusicUI = () => {
     if (loading) {
       return (
-        <View>
-          <Spinner />
+        <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <Spinner size="giant" />
         </View>
       );
     }
-    if (spotifyIsConnected) {
-      <View>
-        <Text>Spotify !!!</Text>
-      </View>;
-    }
+
     if (showAudioApps) {
       return (
         <View style={{flex: 1}}>
@@ -58,7 +54,10 @@ const MusicButton: React.FC<{
                 return (
                   <TouchableOpacity
                     key={app}
-                    onPress={() => setAudioAppAction(app)}
+                    onPress={() => {
+                      setAudioAppAction(app);
+                      setShowAudioApps(false);
+                    }}
                     style={{margin: DevicePixels[20]}}>
                     <Icon
                       name="spotify"
@@ -81,6 +80,14 @@ const MusicButton: React.FC<{
               }
             })}
           </View>
+        </View>
+      );
+    }
+
+    if (spotifyIsConnected) {
+      return (
+        <View style={{}}>
+          <Text style={{color: 'black'}}>Spotify !!!</Text>
         </View>
       );
     }
