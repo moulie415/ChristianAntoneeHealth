@@ -21,6 +21,7 @@ import Text from './Text';
 import {PlayerState, remote} from 'react-native-spotify-remote';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import useInterval from '../../hooks/UseInterval';
+import Itunes from '../../helpers/itunes';
 
 const audioApps: AudioApp[] = ['spotify', 'apple_music'];
 
@@ -83,12 +84,20 @@ const MusicButton: React.FC<{
                     color={colors.spotify}
                     size={DevicePixels[60]}
                   />
+                  <Text
+                    style={{color: colors.appWhite, margin: DevicePixels[5]}}>
+                    Spotify
+                  </Text>
                 </TouchableOpacity>
               );
             }
             if (app === 'apple_music') {
               return (
-                <TouchableOpacity key={app}>
+                <TouchableOpacity
+                  key={app}
+                  onPress={() => {
+                    Itunes.getCurrentTrack().then(track => console.log(track))
+                  }}>
                   <Icon
                     name="apple"
                     color={colors.appGrey}

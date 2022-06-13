@@ -1,9 +1,13 @@
-var React = require('react-native');
+import {NativeModules} from 'react-native';
+const {RNiTunes} = NativeModules;
 
-var {RNiTunes} = require('react-native').NativeModules;
+const defaultGetCurrentTrackOptions = {
+  playerType: 'application',
+  includeArtwork: true,
+};
 
-module.exports = {
-  getPlaylists: function (params) {
+export default {
+  getPlaylists: function (params?: any) {
     return new Promise(resolve => {
       RNiTunes.getPlaylists(params || {}, playlists => {
         resolve(playlists);
@@ -11,7 +15,7 @@ module.exports = {
     });
   },
 
-  getTracks: function (params) {
+  getTracks: function (params?: any) {
     return new Promise(resolve => {
       RNiTunes.getTracks(params || {}, tracks => {
         resolve(tracks);
@@ -19,7 +23,7 @@ module.exports = {
     });
   },
 
-  getArtists: function (params) {
+  getArtists: function (params?: any) {
     return new Promise(resolve => {
       RNiTunes.getArtists(params || {}, tracks => {
         resolve(tracks);
@@ -27,7 +31,7 @@ module.exports = {
     });
   },
 
-  getAlbums: function (params) {
+  getAlbums: function (params?: any) {
     return new Promise(resolve => {
       RNiTunes.getAlbums(params || {}, tracks => {
         resolve(tracks);
@@ -35,21 +39,30 @@ module.exports = {
     });
   },
 
-  getCurrentPlayTime: function (params) {
+  getCurrentPlayTime: function () {
     return new Promise(resolve => {
-      RNiTunes.getCurrentPlayTime(currentPlayTime => {
+      RNiTunes.getCurrentPlayTime((currentPlayTime: number) => {
         resolve(currentPlayTime);
       });
     });
   },
 
-  getCurrentTrack: function () {
+  getCurrentTrack: function (opts?: any) {
     return new Promise((resolve, reject) => {
-      RNiTunes.getCurrentTrack((err, track) => {
+      const mergedOptions = Object.assign(
+        {},
+        defaultGetCurrentTrackOptions,
+        opts,
+      );
+      RNiTunes.getCurrentTrack(mergedOptions, (err: Error, track) => {
         if (!err) {
+          if (track && track.artwork === '') {
+            track.artwork = null;
+          }
           resolve(track);
+        } else {
+          reject(err);
         }
-        reject(err);
       });
     });
   },
@@ -70,7 +83,7 @@ module.exports = {
     RNiTunes.next();
   },
 
-  playTrack: function (trackItem) {
+  playTrack: function (trackItem): Promise<void> {
     return new Promise((resolve, reject) => {
       if (
         !trackItem.hasOwnProperty('title') ||
@@ -81,7 +94,7 @@ module.exports = {
         );
         return;
       }
-      RNiTunes.playTrack(trackItem || {}, err => {
+      RNiTunes.playTrack(trackItem || {}, (err: Error) => {
         if (!err) {
           resolve();
         } else {
@@ -91,7 +104,7 @@ module.exports = {
     });
   },
 
-  playTracks: function (trackItems) {
+  playTracks: function (trackItems): Promise<void> {
     return new Promise((resolve, reject) => {
       if (Array.isArray(trackItems) === false || trackItems.length === 0) {
         reject('No track item have been found');
@@ -105,7 +118,7 @@ module.exports = {
           'All track items should have [title] and [albumTitle] properties',
         );
       }
-      RNiTunes.playTracks(trackItems || [], err => {
+      RNiTunes.playTracks(trackItems || [], (err: Error) => {
         if (!err) {
           resolve();
         } else {
@@ -115,7 +128,7 @@ module.exports = {
     });
   },
 
-  seekTo: function (playingTime) {
+  seekTo: function (playingTime: number) {
     RNiTunes.seekTo(playingTime);
   },
 
