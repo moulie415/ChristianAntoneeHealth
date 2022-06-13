@@ -1,5 +1,5 @@
 import {all, call, fork, put, take, takeLatest} from 'redux-saga/effects';
-import {Alert} from 'react-native';
+import {Alert, Linking} from 'react-native';
 import {
   ApiConfig,
   ApiScope,
@@ -153,7 +153,11 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
     logError(e);
     Alert.alert(
       'Error connecting to Spotify',
-      'Please either start a song in the Spotify app first or fully close the Spotify app',
+      'Please either start a song in the Spotify app first or fully close the Spotify app, do you want to open Spotify now?',
+      [
+        {text: 'Yes', onPress: () => Linking.openURL('spotify://')},
+        {text: 'No'},
+      ],
     );
   }
 

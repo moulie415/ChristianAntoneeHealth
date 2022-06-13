@@ -1,4 +1,4 @@
-import {Platform, TouchableOpacity, View} from 'react-native';
+import {Linking, Platform, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
@@ -16,7 +16,7 @@ import {
   spotifySkipToNext,
   spotifySkipToPrevious,
 } from '../../actions/music';
-import {Spinner} from '@ui-kitten/components';
+import {Divider, Spinner} from '@ui-kitten/components';
 import Text from './Text';
 import {PlayerState, remote} from 'react-native-spotify-remote';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
@@ -48,13 +48,60 @@ const MusicButton: React.FC<{
   spotifySkipToPrevious: spotifySkipToPreviousAction,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [showAudioApps, setShowAudioApps] = useState(true);
+  const [showAudioApps, setShowAudioApps] = useState(!spotifyIsConnected);
 
   useInterval(() => {
     if (spotifyIsConnected) {
       remote.getPlayerState();
     }
   }, 1000);
+
+  const AppList = () => {
+    return (
+      <View style={{flex: 1}}>
+        <Text style={{color: colors.appWhite, padding: DevicePixels[10]}}>
+          Select an audio app
+        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          {audioApps.map(app => {
+            if (app === 'apple_music' && Platform.OS === 'android') {
+              return null;
+            }
+            if (app === 'spotify') {
+              return (
+                <TouchableOpacity
+                  key={app}
+                  onPress={() => {
+                    if (audioApp !== 'spotify') {
+                      setAudioAppAction(app);
+                    }
+                    setShowAudioApps(false);
+                  }}
+                  style={{margin: DevicePixels[20]}}>
+                  <Icon
+                    name="spotify"
+                    color={colors.spotify}
+                    size={DevicePixels[60]}
+                  />
+                </TouchableOpacity>
+              );
+            }
+            if (app === 'apple_music') {
+              return (
+                <TouchableOpacity key={app}>
+                  <Icon
+                    name="apple"
+                    color={colors.appGrey}
+                    size={DevicePixels[30]}
+                  />
+                </TouchableOpacity>
+              );
+            }
+          })}
+        </View>
+      </View>
+    );
+  };
 
   const renderMusicUI = () => {
     if (loading) {
@@ -63,6 +110,10 @@ const MusicButton: React.FC<{
           <Spinner size="giant" />
         </View>
       );
+    }
+
+    if (showAudioApps) {
+      return <AppList />;
     }
 
     if (spotifyIsConnected) {
@@ -77,6 +128,28 @@ const MusicButton: React.FC<{
       };
       return (
         <View style={{}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity
+              style={{padding: DevicePixels[5]}}
+              onPress={() => Linking.openURL('spotify://')}>
+              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                Open Spotify
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{padding: DevicePixels[5]}}
+              onPress={() => setShowAudioApps(true)}>
+              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                Audio apps
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Divider
+            style={{
+              marginBottom: DevicePixels[10],
+              backgroundColor: colors.appGrey,
+            }}
+          />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}} />
             <View
@@ -156,7 +229,6 @@ const MusicButton: React.FC<{
                 alignItems: 'flex-end',
                 justifyContent: 'center',
                 flex: 1,
-
               }}>
               <TouchableOpacity
                 style={{padding: DevicePixels[20]}}
@@ -180,46 +252,7 @@ const MusicButton: React.FC<{
       );
     }
 
-    return (
-      <View style={{flex: 1}}>
-        <Text style={{color: colors.appWhite}}>Select an audio app</Text>
-        <View style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
-          {audioApps.map(app => {
-            if (app === 'apple_music' && Platform.OS === 'android') {
-              return null;
-            }
-            if (app === 'spotify') {
-              return (
-                <TouchableOpacity
-                  key={app}
-                  onPress={() => {
-                    setAudioAppAction(app);
-                    setShowAudioApps(false);
-                  }}
-                  style={{margin: DevicePixels[20]}}>
-                  <Icon
-                    name="spotify"
-                    color={colors.spotify}
-                    size={DevicePixels[60]}
-                  />
-                </TouchableOpacity>
-              );
-            }
-            if (app === 'apple_music') {
-              return (
-                <TouchableOpacity key={app}>
-                  <Icon
-                    name="apple"
-                    color={colors.appGrey}
-                    size={DevicePixels[30]}
-                  />
-                </TouchableOpacity>
-              );
-            }
-          })}
-        </View>
-      </View>
-    );
+    return <AppList />;
   };
 
   const renderButtonIcon = () => {
