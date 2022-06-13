@@ -26,7 +26,6 @@ import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
 import MusicButton from '../../commons/MusicButton';
-import useApplyHeaderWorkaround from '../../../hooks/UseApplyHeaderWorkaround';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -105,8 +104,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       navigation.setOptions({headerTitle: exercises[index].name});
     }
   }, [exercises, index, navigation]);
-
-  useApplyHeaderWorkaround(navigation.setOptions);
 
   return (
     <Layout style={{flex: 1}}>
@@ -193,7 +190,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         backgroundColor:
                           tabIndex === 0 ? colors.appBlue : '#fff',
                         padding: DevicePixels[5],
-                        width: DevicePixels[80],
+                        width: DevicePixels[100],
                         borderWidth: DevicePixels[1],
                         borderColor: colors.appBlue,
                         borderTopLeftRadius: DevicePixels[5],
@@ -213,7 +210,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         backgroundColor:
                           tabIndex === 1 ? colors.appBlue : '#fff',
                         padding: DevicePixels[5],
-                        width: DevicePixels[80],
+                        width: DevicePixels[100],
                         borderWidth: DevicePixels[1],
                         borderColor: colors.appBlue,
                       }}
@@ -231,7 +228,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         backgroundColor:
                           tabIndex === 2 ? colors.appBlue : '#fff',
                         padding: DevicePixels[5],
-                        width: DevicePixels[80],
+                        width: DevicePixels[100],
                         borderWidth: DevicePixels[1],
                         borderColor: colors.appBlue,
                         borderTopRightRadius: DevicePixels[5],
@@ -249,7 +246,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   </View>
                   <View>
                     {tabIndex === 0 && (
-                      <ViewMore text={exercise.description} lines={10} />
+                      <ViewMore text={exercise.description} lines={5} />
                     )}
 
                     {tabIndex === 1 && i === index && (

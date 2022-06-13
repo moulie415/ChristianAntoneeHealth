@@ -31,7 +31,6 @@ import colors from '../../../constants/colors';
 import {viewWorkout} from '../../../actions/exercises';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import useApplyHeaderWorkaround from '../../../hooks/UseApplyHeaderWorkaround';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -200,11 +199,11 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
-  useApplyHeaderWorkaround(navigation.setOptions);
-
   return (
     <Animated.View
-      entering={FadeIn.duration(1000).delay(500)}
+      entering={
+        Platform.OS === 'ios' ? FadeIn.duration(1000).delay(500) : undefined
+      }
       style={{flex: 1, backgroundColor: '#fff'}}>
       <GiftedChat
         renderCustomView={renderCustomView}
