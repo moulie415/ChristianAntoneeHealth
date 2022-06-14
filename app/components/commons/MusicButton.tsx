@@ -1,4 +1,4 @@
-import {Linking, Platform, TouchableOpacity, View} from 'react-native';
+import {Image, Linking, Platform, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
@@ -9,6 +9,10 @@ import {AudioApp} from '../../reducers/music';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import {
+  appleNext,
+  applePause,
+  applePlay,
+  applePrevious,
   setAudioApp,
   spotifyPause,
   spotifyResume,
@@ -21,7 +25,8 @@ import Text from './Text';
 import {PlayerState, remote} from 'react-native-spotify-remote';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import useInterval from '../../hooks/UseInterval';
-import Itunes from '../../helpers/itunes';
+import {PlaybackState, Track} from '../../helpers/itunes';
+import FastImage from 'react-native-fast-image';
 
 const audioApps: AudioApp[] = ['spotify', 'apple_music'];
 
@@ -36,6 +41,12 @@ const MusicButton: React.FC<{
   spotifySkipToNext: () => void;
   spotifySkipToPrevious: () => void;
   spotifySetShuffling: (shuffling: boolean) => void;
+  appleNowPlaying?: Track;
+  applePlaybackState?: PlaybackState;
+  appleNext: () => void;
+  applePrevious: () => void;
+  applePlay: () => void;
+  applePause: () => void;
 }> = ({
   audioApp,
   loading,
@@ -47,9 +58,17 @@ const MusicButton: React.FC<{
   spotifySetShuffling: spotifySetShufflingAction,
   spotifySkipToNext: spotifySkipToNextAction,
   spotifySkipToPrevious: spotifySkipToPreviousAction,
+  appleNowPlaying,
+  applePlaybackState,
+  appleNext: appleNextAction,
+  applePrevious: applePreviousAction,
+  applePlay: applePlayAction,
+  applePause: applePauseAction,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [showAudioApps, setShowAudioApps] = useState(!spotifyIsConnected);
+  const [showAudioApps, setShowAudioApps] = useState(
+    !spotifyIsConnected && audioApp !== 'apple_music',
+  );
 
   useInterval(() => {
     if (spotifyIsConnected) {
@@ -72,20 +91,27 @@ const MusicButton: React.FC<{
               return (
                 <TouchableOpacity
                   key={app}
+                  style={{
+                    marginHorizontal: DevicePixels[5],
+                    alignItems: 'center',
+                  }}
                   onPress={() => {
-                    if (audioApp !== 'spotify') {
+                    if (audioApp !== 'spotify' || !spotifyIsConnected) {
                       setAudioAppAction(app);
                     }
                     setShowAudioApps(false);
-                  }}
-                  style={{margin: DevicePixels[20]}}>
+                  }}>
                   <Icon
                     name="spotify"
                     color={colors.spotify}
-                    size={DevicePixels[60]}
+                    size={DevicePixels[50]}
                   />
                   <Text
-                    style={{color: colors.appWhite, margin: DevicePixels[5]}}>
+                    style={{
+                      color: colors.appWhite,
+                      margin: DevicePixels[5],
+                      textAlign: 'center',
+                    }}>
                     Spotify
                   </Text>
                 </TouchableOpacity>
@@ -95,14 +121,26 @@ const MusicButton: React.FC<{
               return (
                 <TouchableOpacity
                   key={app}
+                  style={{
+                    marginHorizontal: DevicePixels[5],
+                    alignItems: 'center',
+                  }}
                   onPress={() => {
-                    Itunes.getCurrentTrack().then(track => console.log(track))
+                    setAudioAppAction(app);
+                    setShowAudioApps(false);
                   }}>
-                  <Icon
-                    name="apple"
-                    color={colors.appGrey}
-                    size={DevicePixels[30]}
+                  <FastImage
+                    source={require('../../images/apple_music.png')}
+                    style={{height: DevicePixels[50], width: DevicePixels[50]}}
                   />
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      margin: DevicePixels[5],
+                      textAlign: 'center',
+                    }}>
+                    Apple Music
+                  </Text>
                 </TouchableOpacity>
               );
             }
@@ -116,7 +154,7 @@ const MusicButton: React.FC<{
     if (loading) {
       return (
         <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-          <Spinner size="giant" />
+          <Spinner size="giant" style={{borderColor: colors.appWhite}} />
         </View>
       );
     }
@@ -125,7 +163,7 @@ const MusicButton: React.FC<{
       return <AppList />;
     }
 
-    if (spotifyIsConnected) {
+    if (spotifyIsConnected && audioApp === 'spotify') {
       const getShuffleColor = () => {
         if (spotifyPlayerState.playbackOptions.isShuffling) {
           return colors.appBlue;
@@ -261,11 +299,148 @@ const MusicButton: React.FC<{
       );
     }
 
+    if (audioApp === 'apple_music') {
+      return (
+        <View style={{}}>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            {/* <TouchableOpacity
+              style={{padding: DevicePixels[5]}}
+              onPress={() => Linking.openURL('itunes://')}>
+              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                Open Apple Music
+              </Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity
+              style={{padding: DevicePixels[5]}}
+              onPress={() => setShowAudioApps(true)}>
+              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                Audio apps
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Divider
+            style={{
+              marginBottom: DevicePixels[5],
+              backgroundColor: colors.appGrey,
+            }}
+          />
+          {appleNowPlaying && (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {appleNowPlaying.artwork && (
+                <FastImage
+                  source={{uri: appleNowPlaying.artwork}}
+                  style={{
+                    height: DevicePixels[50],
+                    width: DevicePixels[50],
+                    margin: DevicePixels[10],
+                  }}
+                />
+              )}
+              <View>
+                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  {appleNowPlaying.title}
+                </Text>
+                <Text style={{color: colors.textGrey}}>
+                  {appleNowPlaying.albumArtist}
+                </Text>
+              </View>
+            </View>
+          )}
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+              }}>
+              <TouchableOpacity onPress={applePreviousAction}>
+                <Icon
+                  name="step-backward"
+                  size={DevicePixels[30]}
+                  style={{
+                    paddingHorizontal: DevicePixels[20],
+                  }}
+                  color={colors.appWhite}
+                />
+              </TouchableOpacity>
+
+              {/* <AnimatedCircularProgress
+              style={{alignSelf: 'center'}}
+              size={DevicePixels[80]}
+              width={DevicePixels[3]}
+              backgroundWidth={DevicePixels[3]}
+              fill={
+                (100 / spotifyPlayerState.track.duration) *
+                spotifyPlayerState.playbackPosition
+              }
+              rotation={0}
+              tintColor={colors.appBlue}
+              backgroundColor={colors.button}
+              lineCap="round">
+              {fill => ( */}
+              <TouchableOpacity
+                style={{
+                  marginRight:
+                    applePlaybackState === 'paused' ? -DevicePixels[5] : 0,
+                }}
+                onPress={
+                  applePlaybackState === 'paused'
+                    ? applePlayAction
+                    : applePauseAction
+                }>
+                <Icon
+                  name={applePlaybackState === 'paused' ? 'play' : 'pause'}
+                  color={colors.appWhite}
+                  size={DevicePixels[30]}
+                />
+              </TouchableOpacity>
+              {/* )}
+            </AnimatedCircularProgress> */}
+              <TouchableOpacity onPress={appleNextAction}>
+                <Icon
+                  name="step-forward"
+                  color={colors.appWhite}
+                  size={DevicePixels[30]}
+                  style={{
+                    paddingHorizontal: DevicePixels[20],
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+            {/* <View
+            style={{
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              flex: 1,
+            }}>
+            <TouchableOpacity
+              style={{padding: DevicePixels[20]}}
+              disabled={
+                !spotifyPlayerState.playbackRestrictions.canToggleShuffle
+              }
+              onPress={() =>
+                spotifySetShufflingAction(
+                  !spotifyPlayerState.playbackOptions.isShuffling,
+                )
+              }>
+              <Icon
+                name="random"
+                color={getShuffleColor()}
+                size={DevicePixels[30]}
+              />
+            </TouchableOpacity>
+          </View> */}
+          </View>
+        </View>
+      );
+    }
+
     return <AppList />;
   };
 
   const renderButtonIcon = () => {
-    if (spotifyIsConnected) {
+    if (spotifyIsConnected && audioApp === 'spotify') {
       return (
         <TouchableOpacity
           onPress={() => setShowMenu(true)}
@@ -288,6 +463,26 @@ const MusicButton: React.FC<{
             }}
           />
           <Icon name="spotify" color={colors.spotify} size={DevicePixels[50]} />
+        </TouchableOpacity>
+      );
+    }
+    if (audioApp === 'apple_music') {
+      return (
+        <TouchableOpacity
+          onPress={() => setShowMenu(true)}
+          style={{
+            position: 'absolute',
+            top: DevicePixels[20],
+            right: DevicePixels[20],
+
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...globalStyles.boxShadow,
+          }}>
+          <FastImage
+            source={require('../../images/apple_music.png')}
+            style={{height: DevicePixels[50], width: DevicePixels[50]}}
+          />
         </TouchableOpacity>
       );
     }
@@ -359,6 +554,8 @@ const mapStateToProps = ({music}: MyRootState) => ({
   loading: music.loading,
   spotifyPlayerState: music.spotifyPlayerState,
   spotifyIsConnected: music.spotifyIsConnected,
+  appleNowPlaying: music.appleNowPlaying,
+  applePlaybackState: music.applePlaybackState,
 });
 
 const mapDispatchToProps = {
@@ -368,6 +565,10 @@ const mapDispatchToProps = {
   spotifySkipToNext,
   spotifySkipToPrevious,
   spotifySetShuffling,
+  appleNext,
+  applePrevious,
+  applePlay,
+  applePause,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusicButton);

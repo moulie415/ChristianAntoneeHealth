@@ -1,5 +1,5 @@
 import {all, call, fork, put, take, takeLatest} from 'redux-saga/effects';
-import {Alert, Linking} from 'react-native';
+import {Alert, Linking, Platform} from 'react-native';
 import {
   ApiConfig,
   ApiScope,
@@ -10,6 +10,13 @@ import {
 } from 'react-native-spotify-remote';
 import Config from 'react-native-config';
 import {
+  appleSetNowPlaying,
+  appleSetPlaybackState,
+  APPLE_NEXT,
+  APPLE_PAUSE,
+  APPLE_PLAY,
+  APPLE_PREVIOUS,
+  setAudioApp,
   SetAudioAppAction,
   setMusicLoading,
   setSpotifyIsConnected,
@@ -24,6 +31,12 @@ import {
 } from '../actions/music';
 import {logError} from '../helpers/error';
 import {eventChannel, EventChannel} from 'redux-saga';
+import itunes, {
+  AppleMusicListener,
+  PlaybackState,
+  Track,
+} from '../helpers/itunes';
+import Snackbar from 'react-native-snackbar';
 
 const spotifyConfig: ApiConfig = {
   clientID: Config.SPOTIFY_CLIENT_ID,
@@ -51,17 +64,34 @@ function* spotifySkipToPreviousWorker() {
   yield call(SpotifyRemote.skipToPrevious);
 }
 
+function* applePreviousWorker() {
+  yield call(itunes.previous);
+}
+
 function* spotifySkipToNextWorker() {
   yield call(SpotifyRemote.skipToNext);
+}
+
+function* appleNextWorker() {
+  yield call(itunes.next);
 }
 
 function* spotifyResumeWorker() {
   yield call(SpotifyRemote.resume);
 }
 
+function* applePlayWorker() {
+  yield call(itunes.play);
+}
+
 function* spotifyPauseWorker() {
   yield call(SpotifyRemote.pause);
 }
+
+function* applePauseWorker() {
+  yield call(itunes.pause);
+}
+
 function* spotifySetShufflingWorker(action: SpotifySetShufflingAction) {
   yield call(SpotifyRemote.setShuffling, action.payload);
 }
@@ -85,7 +115,7 @@ function onRemoteConnected() {
   });
 }
 
-function* remoteConnectedWorker() {
+function* remoteConnectedWatcher() {
   const channel: EventChannel<{}> = yield call(onRemoteConnected);
   while (true) {
     yield take(channel);
@@ -107,7 +137,7 @@ function onRemoteDisconnected() {
   });
 }
 
-function* remoteDisconnectedWorker() {
+function* remoteDisconnectedWatcher() {
   const channel: EventChannel<{}> = yield call(onRemoteDisconnected);
   while (true) {
     yield take(channel);
@@ -115,10 +145,54 @@ function* remoteDisconnectedWorker() {
   }
 }
 
+function onAppleMusicStateChanged() {
+  return eventChannel(emitter => {
+    const subscription = AppleMusicListener.addListener(
+      'stateChanged',
+      (state: PlaybackState) => {
+        emitter(state);
+      },
+    );
+    return () => subscription.remove();
+  });
+}
+
+function* appleMusicStateWatcher() {
+  const channel: EventChannel<PlaybackState> = yield call(
+    onAppleMusicStateChanged,
+  );
+  while (true) {
+    const state: PlaybackState = yield take(channel);
+    yield put(appleSetPlaybackState(state));
+  }
+}
+
+function onAppleMusicNowPlayingChanged() {
+  return eventChannel(emitter => {
+    const subscription = AppleMusicListener.addListener(
+      'nowPlayingChanged',
+      () => {
+        emitter({});
+      },
+    );
+    return () => subscription.remove();
+  });
+}
+
+function* appleMusicNowPlayingWatcher() {
+  const channel: EventChannel<{}> = yield call(onAppleMusicNowPlayingChanged);
+  while (true) {
+    yield take(channel);
+    const currentTrack: Track = yield call(itunes.getCurrentTrack);
+    yield put(appleSetNowPlaying(currentTrack));
+  }
+}
+
 function* setAudioAppWorker(action: SetAudioAppAction) {
   yield put(setMusicLoading(true));
-  try {
-    if (action.payload === 'spotify') {
+
+  if (action.payload === 'spotify') {
+    try {
       const isConnected: boolean = yield call(SpotifyRemote.isConnectedAsync);
       yield put(setSpotifyIsConnected(isConnected));
       if (!isConnected) {
@@ -148,17 +222,29 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
       }
       const state: PlayerState = yield call(SpotifyRemote.getPlayerState);
       yield put(setSpotifyPlayerState(state));
+    } catch (e) {
+      yield put(setAudioApp(undefined));
+      logError(e);
+      Alert.alert(
+        'Error connecting to Spotify',
+        'Please either start a song in the Spotify app first or fully close the Spotify app, do you want to open Spotify now?',
+        [
+          {text: 'Yes', onPress: () => Linking.openURL('spotify://')},
+          {text: 'No'},
+        ],
+      );
     }
-  } catch (e) {
-    logError(e);
-    Alert.alert(
-      'Error connecting to Spotify',
-      'Please either start a song in the Spotify app first or fully close the Spotify app, do you want to open Spotify now?',
-      [
-        {text: 'Yes', onPress: () => Linking.openURL('spotify://')},
-        {text: 'No'},
-      ],
-    );
+  }
+
+  if (action.payload === 'apple_music') {
+    try {
+      const currentTrack: Track = yield call(itunes.getCurrentTrack);
+      yield put(appleSetNowPlaying(currentTrack));
+      const state: PlaybackState = yield call(itunes.getPlaybackState);
+      yield put(appleSetPlaybackState(state));
+    } catch (e) {
+      Snackbar.show({text: 'Error: error initializing Apple Music'});
+    }
   }
 
   yield put(setMusicLoading(false));
@@ -172,9 +258,18 @@ export default function* musicSaga() {
     takeLatest(SPOTIFY_RESUME, spotifyResumeWorker),
     takeLatest(SPOTIFY_PAUSE, spotifyPauseWorker),
     takeLatest(SPOTIFY_SET_SHUFFLING, spotifySetShufflingWorker),
+    takeLatest(APPLE_NEXT, appleNextWorker),
+    takeLatest(APPLE_PREVIOUS, applePreviousWorker),
+    takeLatest(APPLE_PLAY, applePlayWorker),
+    takeLatest(APPLE_PAUSE, applePauseWorker),
   ]);
 
   yield fork(playerStateChangedWatcher);
-  yield fork(remoteConnectedWorker);
-  yield fork(remoteDisconnectedWorker);
+  yield fork(remoteConnectedWatcher);
+  yield fork(remoteDisconnectedWatcher);
+  if (Platform.OS === 'ios') {
+    yield fork(appleMusicNowPlayingWatcher);
+    yield fork(appleMusicStateWatcher);
+    yield fork(itunes.listenForChanges);
+  }
 }

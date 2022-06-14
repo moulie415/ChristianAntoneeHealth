@@ -1395,7 +1395,7 @@ PODS:
     - React-Core
   - RNVectorIcons (9.1.0):
     - React-Core
-  - RNWatch (1.0.7):
+  - RNWatch (1.0.8):
     - React
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -1879,7 +1879,7 @@ SPEC CHECKSUMS:
   RNSpotifyRemote: ab3fcbccaebead1684ba455a1d1bbdd123909faf
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
-  RNWatch: e2fd2812fb8a4e0bee5c9eae174d9c3e691703a1
+  RNWatch: e98090132d9239f11a5773db7db0e688f538c669
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341

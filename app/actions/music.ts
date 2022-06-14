@@ -1,4 +1,5 @@
 import {PlayerState} from 'react-native-spotify-remote';
+import {PlaybackState, Track} from '../helpers/itunes';
 import {AudioApp} from '../reducers/music';
 import {SetLoggedInAction} from './profile';
 
@@ -11,6 +12,12 @@ export const SPOTIFY_SKIP_TO_NEXT = 'SPOTIFY_SKIP_TO_NEXT';
 export const SPOTIFY_RESUME = 'SPOTIFY_RESUME';
 export const SPOTIFY_PAUSE = 'SPOTIFY_PAUSE';
 export const SPOTIFY_SET_SHUFFLING = 'SPOTIFY_SET_SHUFFLING';
+export const APPLE_SET_NOW_PLAYING = 'APPLE_SET_NOW_PLAYING';
+export const APPLE_SET_PLAYBACK_STATE = 'APPLE_SET_PLAYBACK_STATE';
+export const APPLE_NEXT = 'APPLE_NEXT';
+export const APPLE_PREVIOUS = 'APPLE_PREVIOUS';
+export const APPLE_PLAY = 'APPLE_PLAY';
+export const APPLE_PAUSE = 'APPLE_PAUSE';
 
 export interface SetAudioAppAction {
   type: typeof SET_AUDIO_APP;
@@ -53,6 +60,32 @@ export interface SpotifySetShufflingAction {
   payload: boolean;
 }
 
+export interface AppleSetNowPlayingAction {
+  type: typeof APPLE_SET_NOW_PLAYING;
+  payload: Track;
+}
+
+export interface AppleSetPlaybackStateAction {
+  type: typeof APPLE_SET_PLAYBACK_STATE;
+  payload: PlaybackState;
+}
+
+export interface AppleNextAction {
+  type: typeof APPLE_NEXT;
+}
+
+export interface ApplePreviousAction {
+  type: typeof APPLE_PREVIOUS;
+}
+
+export interface ApplePlayAction {
+  type: typeof APPLE_PLAY;
+}
+
+export interface ApplePauseAction {
+  type: typeof APPLE_PAUSE;
+}
+
 export type MusicActions =
   | SetAudioAppAction
   | SetMusicLoadingAction
@@ -63,7 +96,13 @@ export type MusicActions =
   | SpotifySkipToPreviousAction
   | SpotifySetShufflingAction
   | SpotifyResumeAction
-  | SpotifyPauseAction;
+  | SpotifyPauseAction
+  | AppleSetNowPlayingAction
+  | AppleSetPlaybackStateAction
+  | AppleNextAction
+  | ApplePreviousAction
+  | ApplePlayAction
+  | ApplePauseAction;
 
 export const setAudioApp = (payload: AudioApp): SetAudioAppAction => ({
   type: SET_AUDIO_APP,
@@ -110,4 +149,34 @@ export const spotifyResume = (): SpotifyResumeAction => ({
 
 export const spotifyPause = (): SpotifyPauseAction => ({
   type: SPOTIFY_PAUSE,
+});
+
+export const appleSetNowPlaying = (
+  payload: Track,
+): AppleSetNowPlayingAction => ({
+  type: APPLE_SET_NOW_PLAYING,
+  payload,
+});
+
+export const appleSetPlaybackState = (
+  payload: PlaybackState,
+): AppleSetPlaybackStateAction => ({
+  type: APPLE_SET_PLAYBACK_STATE,
+  payload,
+});
+
+export const appleNext = (): AppleNextAction => ({
+  type: APPLE_NEXT,
+});
+
+export const applePrevious = (): ApplePreviousAction => ({
+  type: APPLE_PREVIOUS,
+});
+
+export const applePlay = (): ApplePlayAction => ({
+  type: APPLE_PLAY,
+});
+
+export const applePause = (): ApplePauseAction => ({
+  type: APPLE_PAUSE,
 });

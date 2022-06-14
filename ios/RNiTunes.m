@@ -2,16 +2,30 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <React/RCTConvert.h>
 
-@interface RNiTunes()
-
-@end
-
 @implementation RNiTunes
 {
-
+  BOOL _hasListeners;
 }
 
 RCT_EXPORT_MODULE()
+
+
+- (NSArray<NSString *> *)supportedEvents
+{
+  return @[@"stateChanged", @"nowPlayingChanged"];
+}
+
+// Will be called when this module's first listener is added.
+- (void)startObserving
+{
+  _hasListeners = YES;
+}
+
+// Will be called when this module's last listener is removed, or on dealloc.
+- (void)stopObserving
+{
+  _hasListeners = NO;
+}
 
 RCT_EXPORT_METHOD(getArtists:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
 
@@ -81,6 +95,7 @@ RCT_EXPORT_METHOD(getCurrentTrack:(NSDictionary *)params successCallback:(RCTRes
       return;
     }
 
+
     MPMediaItem *song = [musicPlayer nowPlayingItem];
   
     if (song == nil) {
@@ -112,6 +127,55 @@ RCT_EXPORT_METHOD(getCurrentTrack:(NSDictionary *)params successCallback:(RCTRes
     track = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title, @"currentPlayTime": currentPlayTime, @"artwork": base64};
     
     successCallback(@[[NSNull null], track]);
+}
+
+-(NSString*)getStringFromPlaybackState:(MPMusicPlaybackState) state
+{
+  switch(state) {
+    case MPMusicPlaybackStateStopped:
+      return @"stopped";
+    case MPMusicPlaybackStatePlaying:
+      return @"playing";
+    case MPMusicPlaybackStatePaused:
+      return @"paused";
+    default:
+      return @"";
+  }
+}
+
+RCT_EXPORT_METHOD(getPlaybackState:(RCTResponseSenderBlock)successCallback) {
+  MPMusicPlayerController * musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+  successCallback(@[[self getStringFromPlaybackState:[musicPlayer playbackState]]]);
+}
+
+RCT_EXPORT_METHOD(listenForChanges) {
+  MPMusicPlayerController * musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+  NSNotificationCenter *notificationCenter = [NSNotificationCenter   defaultCenter];
+  [notificationCenter addObserver:self
+                     selector:@selector(handleNowPlayingItemChanged:)
+                          name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                       object:musicPlayer];
+  [notificationCenter addObserver:self
+                     selector:@selector(handlePlaybackStateChanged:)
+                         name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                       object:musicPlayer];
+}
+
+- (void)handleNowPlayingItemChanged:(id)notification
+{
+  if (_hasListeners) {
+    
+    [self sendEventWithName:@"nowPlayingChanged" body:@{}];
+  }
+}
+
+- (void)handlePlaybackStateChanged:(MPMusicPlaybackState)notification
+{
+  if (_hasListeners) {
+    MPMusicPlayerController * musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+    NSString* state = [self getStringFromPlaybackState:[musicPlayer playbackState]];
+    [self sendEventWithName:@"stateChanged" body:state];
+  }
 }
 
 
@@ -563,8 +627,8 @@ RCT_EXPORT_METHOD(playTrack:(NSDictionary *)trackItem callback:(RCTResponseSende
         if (songQuery.items.count > 0)
         {
             // NSLog(@"song exists! %@");
-            [[MPMusicPlayerController applicationMusicPlayer] setQueueWithQuery: songQuery];
-            [[MPMusicPlayerController applicationMusicPlayer] play];
+            [[MPMusicPlayerController systemMusicPlayer] setQueueWithQuery: songQuery];
+            [[MPMusicPlayerController systemMusicPlayer] play];
 
             callback(@[[NSNull null]]);
         } else {
@@ -607,7 +671,7 @@ RCT_EXPORT_METHOD(playTracks:(NSArray *)tracks successCallback:(RCTResponseSende
         return;
     }
     
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer];
     MPMediaItemCollection *currentQueue = [[MPMediaItemCollection alloc] initWithItems:playlist];
     MPMediaItem *nowPlaying = [[currentQueue items] objectAtIndex:0];
     [musicPlayer setQueueWithItemCollection:currentQueue];
@@ -621,31 +685,31 @@ RCT_EXPORT_METHOD(playTracks:(NSArray *)tracks successCallback:(RCTResponseSende
 RCT_EXPORT_METHOD(play) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
-    [[MPMusicPlayerController applicationMusicPlayer] play];
+    [[MPMusicPlayerController systemMusicPlayer] play];
 }
 
 RCT_EXPORT_METHOD(pause) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
-    [[MPMusicPlayerController applicationMusicPlayer] pause];
+    [[MPMusicPlayerController systemMusicPlayer] pause];
 }
 
 RCT_EXPORT_METHOD(next) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
-    [[MPMusicPlayerController applicationMusicPlayer] skipToNextItem];
+    [[MPMusicPlayerController systemMusicPlayer] skipToNextItem];
 }
 
 RCT_EXPORT_METHOD(previous) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
-    [[MPMusicPlayerController applicationMusicPlayer] skipToPreviousItem];
+    [[MPMusicPlayerController systemMusicPlayer] skipToPreviousItem];
 }
 
 RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer] ;
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer] ;
     double nowPlayingItemDuration = [[[musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyPlaybackDuration]doubleValue];
     double currentTime = (double) [musicPlayer currentPlaybackTime];
     
@@ -656,12 +720,12 @@ RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback) {
 RCT_EXPORT_METHOD(stop) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
-    [[MPMusicPlayerController applicationMusicPlayer] stop];
+    [[MPMusicPlayerController systemMusicPlayer] stop];
 }
 
 
 RCT_EXPORT_METHOD(seekTo:(double)seconds) {
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer] ;
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer] ;
     musicPlayer.currentPlaybackTime = seconds ;
 }
 

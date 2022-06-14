@@ -1,15 +1,29 @@
-import {NativeModules} from 'react-native';
+import {NativeModules, NativeEventEmitter} from 'react-native';
+
 const {RNiTunes} = NativeModules;
+export const AppleMusicListener = new NativeEventEmitter(RNiTunes);
 
 const defaultGetCurrentTrackOptions = {
-  playerType: 'application',
+  playerType: 'system',
   includeArtwork: true,
 };
+
+export interface Track {
+  title: string;
+  albumTitle: string;
+  artwork: string;
+  albumArtist: string;
+  genre: string;
+  duration: number;
+  playCount: number;
+}
+
+export type PlaybackState = 'playing' | 'paused' | 'stopped';
 
 export default {
   getPlaylists: function (params?: any) {
     return new Promise(resolve => {
-      RNiTunes.getPlaylists(params || {}, playlists => {
+      RNiTunes.getPlaylists(params || {}, (playlists: any) => {
         resolve(playlists);
       });
     });
@@ -17,7 +31,7 @@ export default {
 
   getTracks: function (params?: any) {
     return new Promise(resolve => {
-      RNiTunes.getTracks(params || {}, tracks => {
+      RNiTunes.getTracks(params || {}, (tracks: Track[]) => {
         resolve(tracks);
       });
     });
@@ -25,7 +39,7 @@ export default {
 
   getArtists: function (params?: any) {
     return new Promise(resolve => {
-      RNiTunes.getArtists(params || {}, tracks => {
+      RNiTunes.getArtists(params || {}, (tracks: Track[]) => {
         resolve(tracks);
       });
     });
@@ -33,7 +47,7 @@ export default {
 
   getAlbums: function (params?: any) {
     return new Promise(resolve => {
-      RNiTunes.getAlbums(params || {}, tracks => {
+      RNiTunes.getAlbums(params || {}, (tracks: Track[]) => {
         resolve(tracks);
       });
     });
@@ -54,7 +68,7 @@ export default {
         defaultGetCurrentTrackOptions,
         opts,
       );
-      RNiTunes.getCurrentTrack(mergedOptions, (err: Error, track) => {
+      RNiTunes.getCurrentTrack(mergedOptions, (err: Error, track: Track) => {
         if (!err) {
           if (track && track.artwork === '') {
             track.artwork = null;
@@ -83,7 +97,7 @@ export default {
     RNiTunes.next();
   },
 
-  playTrack: function (trackItem): Promise<void> {
+  playTrack: function (trackItem: Track): Promise<void> {
     return new Promise((resolve, reject) => {
       if (
         !trackItem.hasOwnProperty('title') ||
@@ -104,7 +118,7 @@ export default {
     });
   },
 
-  playTracks: function (trackItems): Promise<void> {
+  playTracks: function (trackItems: Track[]): Promise<void> {
     return new Promise((resolve, reject) => {
       if (Array.isArray(trackItems) === false || trackItems.length === 0) {
         reject('No track item have been found');
@@ -134,5 +148,16 @@ export default {
 
   stop: function () {
     RNiTunes.stop();
+  },
+
+  listenForChanges: function () {
+    RNiTunes.listenForChanges();
+  },
+  getPlaybackState: function (): Promise<string> {
+    return new Promise(resolve => {
+      RNiTunes.getPlaybackState((state: string) => {
+        resolve(state);
+      });
+    });
   },
 };
