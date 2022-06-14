@@ -25,6 +25,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
+import MusicButton from '../../commons/MusicButton';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -71,7 +72,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             <Icon
               name="info-circle"
               color={colors.appBlue}
-              size={DevicePixels[15]}
+              size={DevicePixels[20]}
             />
           </TouchableOpacity>
         ),
@@ -189,7 +190,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         backgroundColor:
                           tabIndex === 0 ? colors.appBlue : '#fff',
                         padding: DevicePixels[5],
-                        width: DevicePixels[80],
+                        width: DevicePixels[100],
                         borderWidth: DevicePixels[1],
                         borderColor: colors.appBlue,
                         borderTopLeftRadius: DevicePixels[5],
@@ -209,7 +210,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         backgroundColor:
                           tabIndex === 1 ? colors.appBlue : '#fff',
                         padding: DevicePixels[5],
-                        width: DevicePixels[80],
+                        width: DevicePixels[100],
                         borderWidth: DevicePixels[1],
                         borderColor: colors.appBlue,
                       }}
@@ -227,7 +228,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         backgroundColor:
                           tabIndex === 2 ? colors.appBlue : '#fff',
                         padding: DevicePixels[5],
-                        width: DevicePixels[80],
+                        width: DevicePixels[100],
                         borderWidth: DevicePixels[1],
                         borderColor: colors.appBlue,
                         borderTopRightRadius: DevicePixels[5],
@@ -245,7 +246,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   </View>
                   <View>
                     {tabIndex === 0 && (
-                      <ViewMore text={exercise.description} lines={10} />
+                      <ViewMore text={exercise.description} lines={5} />
                     )}
 
                     {tabIndex === 1 && i === index && (
@@ -266,9 +267,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           borderRadius: DevicePixels[10],
                           borderColor: colors.appBlue,
                           padding: DevicePixels[10],
-                          paddingVertical: DevicePixels[20]
+                          paddingVertical: DevicePixels[20],
                         }}
-                        
                         placeholder="Enter notes here..."
                         multiline
                         value={exerciseNotes[exercise.id]}
@@ -363,6 +363,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </Button>
         </View>
       </Modal>
+      <MusicButton />
     </Layout>
   );
 };

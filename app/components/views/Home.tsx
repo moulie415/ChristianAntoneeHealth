@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react';
 import {Layout, Text} from '@ui-kitten/components';
 import {Dimensions, SafeAreaView} from 'react-native';
-
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeCard from '../commons/HomeCard';
-
 import DevicePixels from '../../helpers/DevicePixels';
 
 const {height, width} = Dimensions.get('window');

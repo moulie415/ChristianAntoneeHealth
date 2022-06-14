@@ -28,6 +28,7 @@ import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import ResistanceScaleInfo from './ResistanceScaleInfo';
 import Button from '../../commons/Button';
+import MusicButton from '../../commons/MusicButton';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -93,7 +94,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           <Icon
             name="info-circle"
             color={colors.appBlue}
-            size={DevicePixels[15]}
+            size={DevicePixels[20]}
           />
         </TouchableOpacity>
       </View>
@@ -195,7 +196,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       backgroundColor: tabIndex === 0 ? colors.appBlue : '#fff',
                       padding: DevicePixels[5],
-                      width: DevicePixels[80],
+                      width: DevicePixels[100],
                       borderWidth: DevicePixels[1],
                       borderColor: colors.appBlue,
                       borderTopLeftRadius: DevicePixels[5],
@@ -214,7 +215,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       backgroundColor: tabIndex === 1 ? colors.appBlue : '#fff',
                       padding: DevicePixels[5],
-                      width: DevicePixels[80],
+                      width: DevicePixels[100],
                       borderWidth: DevicePixels[1],
                       borderColor: colors.appBlue,
                     }}
@@ -231,7 +232,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       backgroundColor: tabIndex === 2 ? colors.appBlue : '#fff',
                       padding: DevicePixels[5],
-                      width: DevicePixels[80],
+                      width: DevicePixels[100],
                       borderWidth: DevicePixels[1],
                       borderColor: colors.appBlue,
                       borderTopRightRadius: DevicePixels[5],
@@ -249,7 +250,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 </View>
                 <View>
                   {tabIndex === 0 && (
-                    <ViewMore text={exercise.description} lines={10} />
+                    <ViewMore text={exercise.description} lines={5} />
                   )}
                   {tabIndex === 1 && (
                     <MusclesDiagram
@@ -397,6 +398,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           </Button>
         </View>
       </Modal>
+      <MusicButton />
     </Layout>
   );
 };
