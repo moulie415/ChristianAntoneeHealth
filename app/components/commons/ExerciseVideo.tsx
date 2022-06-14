@@ -19,26 +19,28 @@ const ExerciseVideo: React.FC<{
           source={{uri: path}}
           controls
           ref={ref}
-          onError={e => logError(new Error(e.error.errorString))}
+          onError={e => console.error(e)}
           style={{height: getVideoHeight()}}
           //repeat
           onEnd={() => {
             ref.current?.seek(0);
           }}
           paused={paused}
+          disableFocus
         />
       ) : (
         <Video
           source={{uri: `file://${path}`}}
           style={{height: getVideoHeight()}}
           ref={ref}
-          onError={e => logError(new Error(e.error.errorString))}
+          onError={e => console.error(e)}
           // repeat
           onEnd={() => {
             ref.current?.seek(0);
           }}
           paused={paused}
           controls
+          disableFocus
         />
       )}
     </>
