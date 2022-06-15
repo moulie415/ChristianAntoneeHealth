@@ -197,6 +197,28 @@ const MusicButton: React.FC<{
               backgroundColor: colors.appGrey,
             }}
           />
+          {spotifyPlayerState && (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {/* {appleNowPlaying.artwork && (
+                <FastImage
+                  source={{uri: appleNowPlaying.artwork}}
+                  style={{
+                    height: DevicePixels[50],
+                    width: DevicePixels[50],
+                    margin: DevicePixels[10],
+                  }}
+                />
+              )} */}
+              <View>
+                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  {spotifyPlayerState.track.name}
+                </Text>
+                <Text style={{color: colors.textGrey}}>
+                  {spotifyPlayerState.track.artist.name}
+                </Text>
+              </View>
+            </View>
+          )}
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}} />
             <View
@@ -225,7 +247,7 @@ const MusicButton: React.FC<{
 
               <AnimatedCircularProgress
                 style={{alignSelf: 'center'}}
-                size={DevicePixels[80]}
+                size={DevicePixels[60]}
                 width={DevicePixels[3]}
                 backgroundWidth={DevicePixels[3]}
                 fill={
@@ -382,15 +404,24 @@ const MusicButton: React.FC<{
               <TouchableOpacity
                 style={{
                   marginRight:
-                    applePlaybackState === 'paused' ? -DevicePixels[5] : 0,
+                    applePlaybackState === 'paused' ||
+                    applePlaybackState === 'stopped'
+                      ? -DevicePixels[5]
+                      : 0,
                 }}
                 onPress={
-                  applePlaybackState === 'paused'
+                  applePlaybackState === 'paused' ||
+                  applePlaybackState === 'stopped'
                     ? applePlayAction
                     : applePauseAction
                 }>
                 <Icon
-                  name={applePlaybackState === 'paused' ? 'play' : 'pause'}
+                  name={
+                    applePlaybackState === 'paused' ||
+                    applePlaybackState === 'stopped'
+                      ? 'play'
+                      : 'pause'
+                  }
                   color={colors.appWhite}
                   size={DevicePixels[30]}
                 />
@@ -519,7 +550,7 @@ const MusicButton: React.FC<{
             right: 0,
             left: 0,
             position: 'absolute',
-            height: DevicePixels[150],
+            height: DevicePixels[200],
             ...globalStyles.boxShadow,
           }}>
           {renderMusicUI()}
