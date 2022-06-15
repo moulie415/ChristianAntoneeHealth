@@ -199,7 +199,7 @@ const MusicButton: React.FC<{
           </View>
           <Divider
             style={{
-              marginBottom: DevicePixels[5],
+              marginBottom: DevicePixels[10],
               backgroundColor: colors.appGrey,
             }}
           />
@@ -363,7 +363,7 @@ const MusicButton: React.FC<{
           </View>
           <Divider
             style={{
-              marginBottom: DevicePixels[5],
+              marginBottom: DevicePixels[10],
               backgroundColor: colors.appGrey,
             }}
           />
