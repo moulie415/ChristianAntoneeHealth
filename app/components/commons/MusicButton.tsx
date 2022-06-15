@@ -4,7 +4,11 @@ import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import globalStyles from '../../styles/globalStyles';
-import Animated, {SlideOutUp, SlideInUp} from 'react-native-reanimated';
+import Animated, {
+  SlideOutUp,
+  SlideInUp,
+  ColorSpace,
+} from 'react-native-reanimated';
 import {AudioApp} from '../../reducers/music';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
@@ -47,6 +51,7 @@ const MusicButton: React.FC<{
   applePrevious: () => void;
   applePlay: () => void;
   applePause: () => void;
+  spotifyArtwork: string;
 }> = ({
   audioApp,
   loading,
@@ -64,6 +69,7 @@ const MusicButton: React.FC<{
   applePrevious: applePreviousAction,
   applePlay: applePlayAction,
   applePause: applePauseAction,
+  spotifyArtwork,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showAudioApps, setShowAudioApps] = useState(
@@ -82,8 +88,8 @@ const MusicButton: React.FC<{
         <Text style={{color: colors.appWhite, padding: DevicePixels[10]}}>
           Select an audio app
         </Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {audioApps.map(app => {
+        <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
+          {audioApps.map((app, index) => {
             if (app === 'apple_music' && Platform.OS === 'android') {
               return null;
             }
@@ -92,7 +98,7 @@ const MusicButton: React.FC<{
                 <TouchableOpacity
                   key={app}
                   style={{
-                    marginHorizontal: DevicePixels[5],
+                    marginHorizontal: DevicePixels[index === 0 ? 10 : 5],
                     alignItems: 'center',
                   }}
                   onPress={() => {
@@ -193,22 +199,38 @@ const MusicButton: React.FC<{
           </View>
           <Divider
             style={{
-              marginBottom: DevicePixels[10],
+              marginBottom: DevicePixels[5],
               backgroundColor: colors.appGrey,
             }}
           />
           {spotifyPlayerState && (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {/* {appleNowPlaying.artwork && (
+              {spotifyArtwork ? (
                 <FastImage
-                  source={{uri: appleNowPlaying.artwork}}
+                  source={{uri: spotifyArtwork}}
                   style={{
                     height: DevicePixels[50],
                     width: DevicePixels[50],
-                    margin: DevicePixels[10],
+                    marginHorizontal: DevicePixels[10],
                   }}
                 />
-              )} */}
+              ) : (
+                <View
+                  style={{
+                    width: DevicePixels[50],
+                    height: DevicePixels[50],
+                    backgroundColor: colors.appBlue,
+                    marginHorizontal: DevicePixels[10],
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Icon
+                    name="music"
+                    size={DevicePixels[30]}
+                    color={colors.appWhite}
+                  />
+                </View>
+              )}
               <View>
                 <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
                   {spotifyPlayerState.track.name}
@@ -219,7 +241,7 @@ const MusicButton: React.FC<{
               </View>
             </View>
           )}
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}} />
             <View
               style={{
@@ -235,7 +257,7 @@ const MusicButton: React.FC<{
                 onPress={spotifySkipToPreviousAction}>
                 <Icon
                   name="step-backward"
-                  size={DevicePixels[30]}
+                  size={DevicePixels[20]}
                   style={{padding: DevicePixels[20]}}
                   color={
                     spotifyPlayerState.playbackRestrictions.canSkipNext
@@ -244,40 +266,39 @@ const MusicButton: React.FC<{
                   }
                 />
               </TouchableOpacity>
-
-              <AnimatedCircularProgress
-                style={{alignSelf: 'center'}}
-                size={DevicePixels[60]}
-                width={DevicePixels[3]}
-                backgroundWidth={DevicePixels[3]}
-                fill={
-                  (100 / spotifyPlayerState.track.duration) *
-                  spotifyPlayerState.playbackPosition
-                }
-                rotation={0}
-                tintColor={colors.appBlue}
-                backgroundColor={colors.button}
-                lineCap="round">
-                {fill => (
-                  <TouchableOpacity
-                    style={{
-                      marginRight: spotifyPlayerState.isPaused
-                        ? -DevicePixels[5]
-                        : 0,
-                    }}
-                    onPress={
-                      spotifyPlayerState.isPaused
-                        ? spotifyResumeAction
-                        : spotifyPauseAction
-                    }>
+              <TouchableOpacity
+                onPress={
+                  spotifyPlayerState.isPaused
+                    ? spotifyResumeAction
+                    : spotifyPauseAction
+                }>
+                <AnimatedCircularProgress
+                  style={{alignSelf: 'center'}}
+                  size={DevicePixels[40]}
+                  width={DevicePixels[3]}
+                  backgroundWidth={DevicePixels[3]}
+                  fill={
+                    (100 / spotifyPlayerState.track.duration) *
+                    spotifyPlayerState.playbackPosition
+                  }
+                  rotation={0}
+                  tintColor={colors.appBlue}
+                  backgroundColor={colors.button}
+                  lineCap="round">
+                  {fill => (
                     <Icon
                       name={spotifyPlayerState.isPaused ? 'play' : 'pause'}
                       color={colors.appWhite}
-                      size={DevicePixels[30]}
+                      size={DevicePixels[20]}
+                      style={{
+                        marginRight: spotifyPlayerState.isPaused
+                          ? -DevicePixels[4]
+                          : 0,
+                      }}
                     />
-                  </TouchableOpacity>
-                )}
-              </AnimatedCircularProgress>
+                  )}
+                </AnimatedCircularProgress>
+              </TouchableOpacity>
               <TouchableOpacity
                 disabled={!spotifyPlayerState.playbackRestrictions.canSkipNext}
                 onPress={spotifySkipToNextAction}>
@@ -288,7 +309,7 @@ const MusicButton: React.FC<{
                       ? colors.appWhite
                       : colors.button
                   }
-                  size={DevicePixels[30]}
+                  size={DevicePixels[20]}
                   style={{padding: DevicePixels[20]}}
                 />
               </TouchableOpacity>
@@ -312,7 +333,7 @@ const MusicButton: React.FC<{
                 <Icon
                   name="random"
                   color={getShuffleColor()}
-                  size={DevicePixels[30]}
+                  size={DevicePixels[20]}
                 />
               </TouchableOpacity>
             </View>
@@ -550,7 +571,7 @@ const MusicButton: React.FC<{
             right: 0,
             left: 0,
             position: 'absolute',
-            height: DevicePixels[200],
+            height: DevicePixels[170],
             ...globalStyles.boxShadow,
           }}>
           {renderMusicUI()}
@@ -587,6 +608,7 @@ const mapStateToProps = ({music}: MyRootState) => ({
   spotifyIsConnected: music.spotifyIsConnected,
   appleNowPlaying: music.appleNowPlaying,
   applePlaybackState: music.applePlaybackState,
+  spotifyArtwork: music.spotifyArtwork,
 });
 
 const mapDispatchToProps = {

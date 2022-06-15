@@ -13,6 +13,7 @@ export const SPOTIFY_SKIP_TO_NEXT = 'SPOTIFY_SKIP_TO_NEXT';
 export const SPOTIFY_RESUME = 'SPOTIFY_RESUME';
 export const SPOTIFY_PAUSE = 'SPOTIFY_PAUSE';
 export const SPOTIFY_SET_SHUFFLING = 'SPOTIFY_SET_SHUFFLING';
+export const SET_SPOTIFY_ARTWORK = 'SET_SPOTIFY_ARTWORK';
 export const APPLE_SET_NOW_PLAYING = 'APPLE_SET_NOW_PLAYING';
 export const APPLE_SET_PLAYBACK_STATE = 'APPLE_SET_PLAYBACK_STATE';
 export const APPLE_NEXT = 'APPLE_NEXT';
@@ -92,6 +93,11 @@ export interface SetSpotifyAccessTokenAction {
   payload: string;
 }
 
+export interface SetSpotifyArtworkAction {
+  type: typeof SET_SPOTIFY_ARTWORK;
+  payload: string;
+}
+
 export type MusicActions =
   | SetAudioAppAction
   | SetMusicLoadingAction
@@ -109,7 +115,8 @@ export type MusicActions =
   | ApplePreviousAction
   | ApplePlayAction
   | ApplePauseAction
-  | SetSpotifyAccessTokenAction;
+  | SetSpotifyAccessTokenAction
+  | SetSpotifyArtworkAction;
 
 export const setAudioApp = (payload: AudioApp): SetAudioAppAction => ({
   type: SET_AUDIO_APP,
@@ -192,5 +199,12 @@ export const setSpotifyAccessToken = (
   payload: string,
 ): SetSpotifyAccessTokenAction => ({
   type: SET_SPOTIFY_ACCESS_TOKEN,
+  payload,
+});
+
+export const setSpotifyArtwork = (
+  payload: string,
+): SetSpotifyArtworkAction => ({
+  type: SET_SPOTIFY_ARTWORK,
   payload,
 });

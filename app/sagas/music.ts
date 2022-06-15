@@ -28,6 +28,7 @@ import {
   SetAudioAppAction,
   setMusicLoading,
   setSpotifyAccessToken,
+  setSpotifyArtwork,
   setSpotifyIsConnected,
   setSpotifyPlayerState,
   SET_AUDIO_APP,
@@ -48,6 +49,7 @@ import itunes, {
 import Snackbar from 'react-native-snackbar';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {MyRootState} from '../types/Shared';
+import axios, {AxiosResponse} from 'axios';
 
 const spotifyConfig: ApiConfig = {
   clientID: Config.SPOTIFY_CLIENT_ID,
@@ -292,24 +294,27 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
   yield put(setMusicLoading(false));
 }
 
-function* getAlbumArt(state: PlayerState) {
+function* getAlbumArt(playerState: PlayerState) {
   try {
-    const {uri} = state.track.album;
+    const {uri} = playerState.track.album;
     const {spotifyAccessToken} = yield select(
       (state: MyRootState) => state.music,
     );
-    debugger;
-    const response: Response = yield call(
-      fetch,
-      `https://api.spotify.com/v1/albums/${uri}`,
+    const id = uri.replace('spotify:album:', '');
+    const response: AxiosResponse = yield call(
+      axios.get,
+      `https://api.spotify.com/v1/albums/${id}`,
       {
         headers: {
-          Authorization: spotifyAccessToken,
+          Authorization: `Bearer ${spotifyAccessToken}`,
           'Content-Type': 'application/json',
         },
       },
     );
+
+    yield put(setSpotifyArtwork(response.data.images[0].url));
   } catch (e) {
+    yield put(setSpotifyArtwork(undefined));
     logError(e);
   }
 }

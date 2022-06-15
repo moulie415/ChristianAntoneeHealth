@@ -6,6 +6,7 @@ import {
   SET_AUDIO_APP,
   SET_MUSIC_LOADING,
   SET_SPOTIFY_ACCESS_TOKEN,
+  SET_SPOTIFY_ARTWORK,
   SET_SPOTIFY_IS_CONNECTED,
   SET_SPOTIFY_PLAYER_STATE,
 } from '../actions/music';
@@ -20,6 +21,7 @@ export interface MusicState {
   spotifyPlayerState?: PlayerState;
   spotifyIsConnected: boolean;
   spotifyAccessToken?: string;
+  spotifyArtwork?: string;
   appleNowPlaying?: Track;
   applePlaybackState?: PlaybackState;
 }
@@ -45,6 +47,8 @@ const reducer = (state = initialState, action: MusicActions): MusicState => {
       return {...state, applePlaybackState: action.payload};
     case SET_SPOTIFY_ACCESS_TOKEN:
       return {...state, spotifyAccessToken: action.payload};
+    case SET_SPOTIFY_ARTWORK:
+      return {...state, spotifyArtwork: action.payload};
     case SET_LOGGED_IN:
       return action.payload ? state : initialState;
     default:

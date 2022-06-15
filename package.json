@@ -47,6 +47,7 @@
     "@ui-kitten/components": "^5.1.2",
     "@ui-kitten/eva-icons": "^5.1.2",
     "@welldone-software/why-did-you-render": "^7.0.1",
+    "axios": "^0.27.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "patch-package": "^6.4.7",
