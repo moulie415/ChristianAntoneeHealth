@@ -400,9 +400,9 @@ const MusicButton: React.FC<{
               <TouchableOpacity onPress={applePreviousAction}>
                 <Icon
                   name="step-backward"
-                  size={DevicePixels[30]}
+                  size={DevicePixels[20]}
                   style={{
-                    paddingHorizontal: DevicePixels[20],
+                    paddingHorizontal: DevicePixels[25],
                   }}
                   color={colors.appWhite}
                 />
@@ -444,7 +444,7 @@ const MusicButton: React.FC<{
                       : 'pause'
                   }
                   color={colors.appWhite}
-                  size={DevicePixels[30]}
+                  size={DevicePixels[20]}
                 />
               </TouchableOpacity>
               {/* )}
@@ -453,9 +453,9 @@ const MusicButton: React.FC<{
                 <Icon
                   name="step-forward"
                   color={colors.appWhite}
-                  size={DevicePixels[30]}
+                  size={DevicePixels[20]}
                   style={{
-                    paddingHorizontal: DevicePixels[20],
+                    paddingHorizontal: DevicePixels[25],
                   }}
                 />
               </TouchableOpacity>
