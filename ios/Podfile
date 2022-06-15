@@ -12,6 +12,9 @@ target 'HealthAndMovement' do
   )
   pod 'GoogleSignIn', '~> 5.0.2'
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"
+
   target 'HealthAndMovementTests' do
     inherit! :complete
     # Pods for testing

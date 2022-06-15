@@ -5,6 +5,7 @@ import {SetLoggedInAction} from './profile';
 
 export const SET_AUDIO_APP = 'SET_AUDIO_APP';
 export const SET_MUSIC_LOADING = 'SET_MUSIC_LOADING';
+export const SET_SPOTIFY_ACCESS_TOKEN = 'SET_SPOTIFY_ACCESS_TOKEN';
 export const SET_SPOTIFY_PLAYER_STATE = 'SET_SPOTIFY_PLAYER_STATE';
 export const SET_SPOTIFY_IS_CONNECTED = 'SET_SPOTIFY_IS_CONNECTED';
 export const SPOTIFY_SKIP_TO_PREVIOUS = 'SPOTIFY_SKIP_TO_PREVIOUS';
@@ -12,6 +13,7 @@ export const SPOTIFY_SKIP_TO_NEXT = 'SPOTIFY_SKIP_TO_NEXT';
 export const SPOTIFY_RESUME = 'SPOTIFY_RESUME';
 export const SPOTIFY_PAUSE = 'SPOTIFY_PAUSE';
 export const SPOTIFY_SET_SHUFFLING = 'SPOTIFY_SET_SHUFFLING';
+export const SET_SPOTIFY_ARTWORK = 'SET_SPOTIFY_ARTWORK';
 export const APPLE_SET_NOW_PLAYING = 'APPLE_SET_NOW_PLAYING';
 export const APPLE_SET_PLAYBACK_STATE = 'APPLE_SET_PLAYBACK_STATE';
 export const APPLE_NEXT = 'APPLE_NEXT';
@@ -86,6 +88,16 @@ export interface ApplePauseAction {
   type: typeof APPLE_PAUSE;
 }
 
+export interface SetSpotifyAccessTokenAction {
+  type: typeof SET_SPOTIFY_ACCESS_TOKEN;
+  payload: string;
+}
+
+export interface SetSpotifyArtworkAction {
+  type: typeof SET_SPOTIFY_ARTWORK;
+  payload: string;
+}
+
 export type MusicActions =
   | SetAudioAppAction
   | SetMusicLoadingAction
@@ -102,7 +114,9 @@ export type MusicActions =
   | AppleNextAction
   | ApplePreviousAction
   | ApplePlayAction
-  | ApplePauseAction;
+  | ApplePauseAction
+  | SetSpotifyAccessTokenAction
+  | SetSpotifyArtworkAction;
 
 export const setAudioApp = (payload: AudioApp): SetAudioAppAction => ({
   type: SET_AUDIO_APP,
@@ -179,4 +193,18 @@ export const applePlay = (): ApplePlayAction => ({
 
 export const applePause = (): ApplePauseAction => ({
   type: APPLE_PAUSE,
+});
+
+export const setSpotifyAccessToken = (
+  payload: string,
+): SetSpotifyAccessTokenAction => ({
+  type: SET_SPOTIFY_ACCESS_TOKEN,
+  payload,
+});
+
+export const setSpotifyArtwork = (
+  payload: string,
+): SetSpotifyArtworkAction => ({
+  type: SET_SPOTIFY_ARTWORK,
+  payload,
 });

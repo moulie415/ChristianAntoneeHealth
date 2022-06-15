@@ -36,7 +36,13 @@ const educationPersistConfig = {
 const musicPersistConfig = {
   key: 'music',
   storage: AsyncStorage,
-  blacklist: ['loading', 'spotifyIsConnected', 'spotifyPlayerState'],
+  blacklist: [
+    'loading',
+    'spotifyIsConnected',
+    'spotifyPlayerState',
+    'appleNowPlaying',
+    'applePlaybackState',
+  ],
 };
 
 const rootReducer = combineReducers({

@@ -702,8 +702,13 @@ RCT_EXPORT_METHOD(next) {
 
 RCT_EXPORT_METHOD(previous) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    
-    [[MPMusicPlayerController systemMusicPlayer] skipToPreviousItem];
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+    double currentTime = (double) [musicPlayer currentPlaybackTime];
+    if (currentTime > 3) {
+      [musicPlayer  skipToBeginning];
+    } else {
+      [musicPlayer  skipToPreviousItem];
+    }
 }
 
 RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback) {

@@ -1,4 +1,12 @@
-import {all, call, fork, put, take, takeLatest} from 'redux-saga/effects';
+import {
+  all,
+  call,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
+} from 'redux-saga/effects';
 import {Alert, Linking, Platform} from 'react-native';
 import {
   ApiConfig,
@@ -19,6 +27,8 @@ import {
   setAudioApp,
   SetAudioAppAction,
   setMusicLoading,
+  setSpotifyAccessToken,
+  setSpotifyArtwork,
   setSpotifyIsConnected,
   setSpotifyPlayerState,
   SET_AUDIO_APP,
@@ -37,6 +47,9 @@ import itunes, {
   Track,
 } from '../helpers/itunes';
 import Snackbar from 'react-native-snackbar';
+import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
+import {MyRootState} from '../types/Shared';
+import axios, {AxiosResponse} from 'axios';
 
 const spotifyConfig: ApiConfig = {
   clientID: Config.SPOTIFY_CLIENT_ID,
@@ -101,6 +114,7 @@ function* playerStateChangedWatcher() {
   while (true) {
     const state: PlayerState = yield take(channel);
     yield put(setSpotifyPlayerState(state));
+    yield call(getAlbumArt, state);
   }
 }
 
@@ -202,6 +216,8 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
         if (existingSession && existingSession.accessToken) {
           try {
             yield call(SpotifyRemote.connect, existingSession.accessToken);
+            yield put(setSpotifyAccessToken(existingSession.accessToken));
+            yield put(setSpotifyIsConnected(true));
           } catch (e) {
             yield call(SpotifyRemote.disconnect);
             yield call(SpotifyAuth.endSession);
@@ -211,6 +227,8 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
             );
 
             yield call(SpotifyRemote.connect, session.accessToken);
+            yield put(setSpotifyAccessToken(session.accessToken));
+            yield put(setSpotifyIsConnected(true));
           }
         } else {
           const session: SpotifySession = yield call(
@@ -218,13 +236,14 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
             spotifyConfig,
           );
           yield call(SpotifyRemote.connect, session.accessToken);
+          yield put(setSpotifyAccessToken(session.accessToken));
+          yield put(setSpotifyIsConnected(true));
         }
       }
       const state: PlayerState = yield call(SpotifyRemote.getPlayerState);
       yield put(setSpotifyPlayerState(state));
+      yield call(getAlbumArt, state);
     } catch (e) {
-      yield put(setAudioApp(undefined));
-      logError(e);
       Alert.alert(
         'Error connecting to Spotify',
         'Please either start a song in the Spotify app first or fully close the Spotify app, do you want to open Spotify now?',
@@ -233,21 +252,71 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
           {text: 'No'},
         ],
       );
+      yield put(setAudioApp(undefined));
+      logError(e);
     }
   }
 
   if (action.payload === 'apple_music') {
     try {
-      const currentTrack: Track = yield call(itunes.getCurrentTrack);
-      yield put(appleSetNowPlaying(currentTrack));
-      const state: PlaybackState = yield call(itunes.getPlaybackState);
-      yield put(appleSetPlaybackState(state));
+      const permission: PermissionStatus = yield call(
+        request,
+        PERMISSIONS.IOS.MEDIA_LIBRARY,
+      );
+      if (permission === 'granted') {
+        const currentTrack: Track = yield call(itunes.getCurrentTrack);
+        if (currentTrack) {
+          yield put(appleSetNowPlaying(currentTrack));
+        } else {
+          const tracks: Track[] = yield call(itunes.getTracks);
+          if (tracks.length) {
+            yield put(appleSetNowPlaying(tracks[0]));
+          } else {
+            Snackbar.show({text: 'Error fetching track from Apple Music'});
+          }
+        }
+        const state: PlaybackState = yield call(itunes.getPlaybackState);
+        yield put(appleSetPlaybackState(state));
+      } else {
+        yield put(setAudioApp(undefined));
+        Alert.alert(
+          'Error',
+          'CA Health does not have access to music library, you can change this via your settings, do you wish to go there now?',
+          [{text: 'Yes', onPress: () => Linking.openSettings()}, {text: 'No'}],
+        );
+      }
     } catch (e) {
+      yield put(setAudioApp(undefined));
       Snackbar.show({text: 'Error: error initializing Apple Music'});
     }
   }
 
   yield put(setMusicLoading(false));
+}
+
+function* getAlbumArt(playerState: PlayerState) {
+  try {
+    const {uri} = playerState.track.album;
+    const {spotifyAccessToken} = yield select(
+      (state: MyRootState) => state.music,
+    );
+    const id = uri.replace('spotify:album:', '');
+    const response: AxiosResponse = yield call(
+      axios.get,
+      `https://api.spotify.com/v1/albums/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${spotifyAccessToken}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    yield put(setSpotifyArtwork(response.data.images[0].url));
+  } catch (e) {
+    yield put(setSpotifyArtwork(undefined));
+    logError(e);
+  }
 }
 
 export default function* musicSaga() {

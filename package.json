@@ -47,6 +47,7 @@
     "@ui-kitten/components": "^5.1.2",
     "@ui-kitten/eva-icons": "^5.1.2",
     "@welldone-software/why-did-you-render": "^7.0.1",
+    "axios": "^0.27.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "patch-package": "^6.4.7",
@@ -74,6 +75,7 @@
     "react-native-image-picker": "^4.8.4",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-pager-view": "^5.4.24",
+    "react-native-permissions": "^3.3.1",
     "react-native-progress": "^5.0.0",
     "react-native-purchases": "^4.6.0",
     "react-native-push-notification": "^8.1.1",
@@ -132,7 +134,7 @@
     "react-native-clean-project": "^4.0.1",
     "react-native-codegen": "^0.0.7",
     "react-test-renderer": "17.0.2",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.3"
   },
   "jest": {
     "preset": "react-native",
