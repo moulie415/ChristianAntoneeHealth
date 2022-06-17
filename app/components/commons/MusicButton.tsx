@@ -183,9 +183,23 @@ const MusicButton: React.FC<{
         <View style={{}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <TouchableOpacity
-              style={{padding: DevicePixels[5]}}
+              style={{
+                padding: DevicePixels[5],
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
               onPress={() => Linking.openURL('spotify://')}>
-              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+              <Icon
+                name="spotify"
+                color={colors.spotify}
+                style={{marginRight: DevicePixels[5]}}
+                size={DevicePixels[15]}
+              />
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: colors.spotify,
+                }}>
                 Open Spotify
               </Text>
             </TouchableOpacity>
@@ -205,39 +219,52 @@ const MusicButton: React.FC<{
           />
           {spotifyPlayerState && (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {spotifyArtwork ? (
-                <FastImage
-                  source={{uri: spotifyArtwork}}
-                  style={{
-                    height: DevicePixels[50],
-                    width: DevicePixels[50],
-                    marginHorizontal: DevicePixels[10],
-                  }}
-                />
-              ) : (
-                <View
-                  style={{
-                    width: DevicePixels[50],
-                    height: DevicePixels[50],
-                    backgroundColor: colors.appBlue,
-                    marginHorizontal: DevicePixels[10],
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Icon
-                    name="music"
-                    size={DevicePixels[30]}
-                    color={colors.appWhite}
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL(spotifyPlayerState.track.album.uri)
+                }>
+                {spotifyArtwork ? (
+                  <FastImage
+                    source={{uri: spotifyArtwork}}
+                    style={{
+                      height: DevicePixels[50],
+                      width: DevicePixels[50],
+                      marginHorizontal: DevicePixels[10],
+                    }}
                   />
-                </View>
-              )}
+                ) : (
+                  <View
+                    style={{
+                      width: DevicePixels[50],
+                      height: DevicePixels[50],
+                      backgroundColor: colors.appBlue,
+                      marginHorizontal: DevicePixels[10],
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Icon
+                      name="music"
+                      size={DevicePixels[30]}
+                      color={colors.appWhite}
+                    />
+                  </View>
+                )}
+              </TouchableOpacity>
               <View>
-                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  {spotifyPlayerState.track.name}
-                </Text>
-                <Text style={{color: colors.textGrey}}>
-                  {spotifyPlayerState.track.artist.name}
-                </Text>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(spotifyPlayerState.track.uri)}>
+                  <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                    {spotifyPlayerState.track.name}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(spotifyPlayerState.track.artist.uri)
+                  }>
+                  <Text style={{color: colors.textGrey}}>
+                    {spotifyPlayerState.track.artist.name}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
