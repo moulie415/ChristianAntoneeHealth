@@ -19,6 +19,6 @@ export default function* rootSaga() {
     fork(appStateSaga),
     fork(planSaga),
     fork(watchSaga),
-    fork(musicSaga),
+    // fork(musicSaga),
   ]);
 }

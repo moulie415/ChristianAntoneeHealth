@@ -363,7 +363,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </Button>
         </View>
       </Modal>
-      <MusicButton />
+      {/* <MusicButton /> */}
     </Layout>
   );
 };

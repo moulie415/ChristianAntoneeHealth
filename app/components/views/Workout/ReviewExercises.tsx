@@ -6,7 +6,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import colors from '../../../constants/colors';
-import {UNIT_ID_INTERSTITIAL} from '../../../constants';
+import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import Exercise from '../../../types/Exercise';
 import ReviewExercisesProps from '../../../types/views/ReviewExercises';
 import {truncate} from '../../../helpers';
@@ -15,9 +15,9 @@ import {connect} from 'react-redux';
 import {setWorkout} from '../../../actions/exercises';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
-import {useInterstitialAd} from '@react-native-admob/admob';
 import ShareModal from '../../commons/ShareModal';
 import Button from '../../commons/Button';
+import {useInterstitialAd} from 'react-native-google-mobile-ads';
 
 const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,
@@ -26,13 +26,30 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   profile,
   settings,
 }) => {
-  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
+  const {load, show, isLoaded, isClosed} = useInterstitialAd(
+    UNIT_ID_INTERSTITIAL,
+    {
+      keywords: AD_KEYWORDS,
+    },
+  );
 
   useEffect(() => {
-    if (adDismissed) {
+    if (settings.ads) {
+      load();
+    }
+  }, [settings.ads, load]);
+
+  useEffect(() => {
+    if (isClosed && settings.ads) {
+      load();
+    }
+  }, [isClosed, load, settings.ads]);
+
+  useEffect(() => {
+    if (isClosed) {
       navigation.navigate('StartWorkout');
     }
-  }, [adDismissed, navigation]);
+  }, [isClosed, navigation]);
 
   const renderItem = useCallback(
     ({item, index, drag, isActive}: RenderItemParams<Exercise>) => {
@@ -104,7 +121,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
       />
       <Button
         onPress={() => {
-          if (!profile.premium && adLoaded && settings.ads) {
+          if (!profile.premium && isLoaded && settings.ads) {
             show();
           } else {
             navigation.navigate('StartWorkout');

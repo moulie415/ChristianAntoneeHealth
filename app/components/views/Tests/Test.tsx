@@ -4,26 +4,19 @@ import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 import {ScrollView, Dimensions} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
-import ExerciseVideo from '../../commons/ExerciseVideo';
-import {SAMPLE_VIDEO_LINK} from '../../../constants/strings';
 import colors from '../../../constants/colors';
 import Countdown from '../../commons/Countdown';
-import ViewMore from '../../commons/ViewMore';
 import Table from '../../commons/Table';
 import DevicePixels from '../../../helpers/DevicePixels';
-import {useInterstitialAd} from '@react-native-admob/admob';
-import {UNIT_ID_INTERSTITIAL} from '../../../constants';
-import globalStyles from '../../../styles/globalStyles';
+import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getTestImage} from '../../../helpers/images';
-import ImageLoader from '../../commons/ImageLoader';
 import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
-import {textContent} from 'domutils';
 import Button from '../../commons/Button';
+import {useInterstitialAd} from 'react-native-google-mobile-ads';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -44,17 +37,34 @@ const Test: React.FC<TestProps> = ({
   const [testNote, setTestNote] = useState('');
   const [start, setStart] = useState(0);
 
-  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
+  const {load, show, isLoaded, isClosed} = useInterstitialAd(
+    UNIT_ID_INTERSTITIAL,
+    {
+      keywords: AD_KEYWORDS,
+    },
+  );
 
   useEffect(() => {
-    if (adDismissed) {
+    if (settings.ads) {
+      load();
+    }
+  }, [settings.ads, load]);
+
+  useEffect(() => {
+    if (isClosed && settings.ads) {
+      load();
+    }
+  }, [isClosed, load, settings.ads]);
+
+  useEffect(() => {
+    if (isClosed) {
       if (test.type === 'untimed') {
         setTestStarted(true);
       } else {
         setShowCountdown(true);
       }
     }
-  }, [adDismissed, navigation, test.type]);
+  }, [isClosed, navigation, test.type]);
 
   useEffect(() => {
     if (
@@ -243,7 +253,7 @@ const Test: React.FC<TestProps> = ({
               if (testStarted) {
                 setComplete(true);
               } else {
-                if (adLoaded && !profile.premium && settings.ads) {
+                if (isLoaded && !profile.premium && settings.ads) {
                   show();
                 } else {
                   if (test.type === 'untimed') {

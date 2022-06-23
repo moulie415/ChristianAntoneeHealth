@@ -12,8 +12,7 @@ import {
   startQuickRoutine,
 } from '../../../actions/quickRoutines';
 import Text from '../../commons/Text';
-import {useInterstitialAd} from '@react-native-admob/admob';
-import {UNIT_ID_INTERSTITIAL} from '../../../constants';
+import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getExercisesById} from '../../../actions/exercises';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -25,6 +24,7 @@ import globalStyles from '../../../styles/globalStyles';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Exercise from '../../../types/Exercise';
+import {useInterstitialAd} from 'react-native-google-mobile-ads';
 
 const {height} = Dimensions.get('screen');
 
@@ -79,8 +79,27 @@ const WorkoutList: React.FC<{
   startQuickRoutine: startQuickRoutineAction,
 }) => {
   const {area, equipment} = route.params;
-  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
+
   const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
+
+  const {load, show, isLoaded, isClosed} = useInterstitialAd(
+    UNIT_ID_INTERSTITIAL,
+    {
+      keywords: AD_KEYWORDS,
+    },
+  );
+
+  useEffect(() => {
+    if (settings.ads) {
+      load();
+    }
+  }, [settings.ads, load]);
+
+  useEffect(() => {
+    if (isClosed && settings.ads) {
+      load();
+    }
+  }, [isClosed, load, settings.ads]);
 
   useEffect(() => {
     getQuickRoutinesAction();
@@ -98,13 +117,13 @@ const WorkoutList: React.FC<{
   }, [exercises, quickRoutines, getExercisesByIdAction]);
 
   useEffect(() => {
-    if (adDismissed && selectedItem) {
+    if (isClosed && selectedItem) {
       getExercisesByIdAction(selectedItem.exerciseIds);
       navigation.navigate('QuickRoutine', {routine: selectedItem});
       startQuickRoutineAction(selectedItem);
     }
   }, [
-    adDismissed,
+    isClosed,
     navigation,
     selectedItem,
     getExercisesByIdAction,
@@ -134,7 +153,7 @@ const WorkoutList: React.FC<{
               onPress={() => {
                 if (item.premium && !profile.premium) {
                   navigation.navigate('Premium');
-                } else if (adLoaded && !profile.premium && settings.ads) {
+                } else if (isLoaded && !profile.premium && settings.ads) {
                   setSelectedItem(item);
                   show();
                 } else {

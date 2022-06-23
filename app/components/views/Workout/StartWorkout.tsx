@@ -398,7 +398,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           </Button>
         </View>
       </Modal>
-      <MusicButton />
+      {/* <MusicButton /> */}
     </Layout>
   );
 };

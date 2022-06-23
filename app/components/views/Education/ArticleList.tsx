@@ -1,4 +1,3 @@
-import {useInterstitialAd} from '@react-native-admob/admob';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {List, ListItem} from '@ui-kitten/components';
 import moment from 'moment';
@@ -8,13 +7,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
-import {UNIT_ID_INTERSTITIAL} from '../../../constants';
+import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Education from '../../../types/Education';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SettingsState} from '../../../reducers/settings';
+import {useInterstitialAd} from 'react-native-google-mobile-ads';
 
 const ArticleList: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
@@ -23,13 +23,30 @@ const ArticleList: React.FC<{
   loading: boolean;
   settings: SettingsState;
 }> = ({navigation, profile, filtered, loading, settings}) => {
-  const {adLoaded, adDismissed, show} = useInterstitialAd(UNIT_ID_INTERSTITIAL);
   const [selectedItem, setSelectedItem] = useState<Education>();
+  const {load, show, isLoaded, isClosed} = useInterstitialAd(
+    UNIT_ID_INTERSTITIAL,
+    {
+      keywords: AD_KEYWORDS,
+    },
+  );
   useEffect(() => {
-    if (adDismissed && selectedItem) {
+    if (settings.ads) {
+      load();
+    }
+  }, [settings.ads, load]);
+
+  useEffect(() => {
+    if (isClosed && settings.ads) {
+      load();
+    }
+  }, [isClosed, load, settings.ads]);
+
+  useEffect(() => {
+    if (isClosed && selectedItem) {
       navigation.navigate('EducationArticle', {education: selectedItem});
     }
-  }, [adDismissed, navigation, selectedItem]);
+  }, [isClosed, navigation, selectedItem]);
 
   const onPress = useCallback(
     (item: Education) => {
@@ -42,7 +59,7 @@ const ArticleList: React.FC<{
       } else if (profile.premium) {
         navigation.navigate('EducationArticle', {education: item});
       } else {
-        if (adLoaded && settings.ads) {
+        if (isLoaded && settings.ads) {
           show();
           setSelectedItem(item);
         } else {
@@ -50,7 +67,7 @@ const ArticleList: React.FC<{
         }
       }
     },
-    [profile.premium, navigation, adLoaded, show, settings.ads],
+    [profile.premium, navigation, isLoaded, show, settings.ads],
   );
   return filtered.length ? (
     <List
