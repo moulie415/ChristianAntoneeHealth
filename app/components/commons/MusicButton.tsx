@@ -31,6 +31,7 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import useInterval from '../../hooks/UseInterval';
 import {PlaybackState, Track} from '../../helpers/itunes';
 import FastImage from 'react-native-fast-image';
+import SpotifyLogo from '../../images/Spotify_logo_with_text.svg';
 
 const audioApps: AudioApp[] = ['spotify', 'apple_music'];
 
@@ -101,11 +102,21 @@ const MusicButton: React.FC<{
                     marginHorizontal: DevicePixels[index === 0 ? 10 : 5],
                     alignItems: 'center',
                   }}
-                  onPress={() => {
-                    if (audioApp !== 'spotify' || !spotifyIsConnected) {
-                      setAudioAppAction(app);
+                  onPress={async () => {
+                    // if (audioApp !== 'spotify' || !spotifyIsConnected) {
+                    //   setAudioAppAction(app);
+                    // }
+                    if (await Linking.canOpenURL('spotify://')) {
+                      setShowAudioApps(false);
+                      Linking.openURL('spotify://');
+                    } else {
+                      setShowAudioApps(false);
+                      Linking.openURL(
+                        Platform.OS === 'ios'
+                          ? 'https://apps.apple.com/us/app/spotify-music-and-podcasts/id324684580'
+                          : 'https://play.google.com/store/apps/details?id=com.spotify.music',
+                      );
                     }
-                    setShowAudioApps(false);
                   }}>
                   <Icon
                     name="spotify"
@@ -132,8 +143,9 @@ const MusicButton: React.FC<{
                     alignItems: 'center',
                   }}
                   onPress={() => {
-                    setAudioAppAction(app);
+                    // setAudioAppAction(app);
                     setShowAudioApps(false);
+                    Linking.openURL('music://');
                   }}>
                   <FastImage
                     source={require('../../images/apple_music.png')}
@@ -182,13 +194,7 @@ const MusicButton: React.FC<{
       return (
         <View style={{}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <TouchableOpacity
-              style={{padding: DevicePixels[5]}}
-              onPress={() => Linking.openURL('spotify://')}>
-              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                Open Spotify
-              </Text>
-            </TouchableOpacity>
+            <View />
             <TouchableOpacity
               style={{padding: DevicePixels[5]}}
               onPress={() => setShowAudioApps(true)}>
@@ -203,44 +209,67 @@ const MusicButton: React.FC<{
               backgroundColor: colors.appGrey,
             }}
           />
-          {spotifyPlayerState && (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {spotifyArtwork ? (
-                <FastImage
-                  source={{uri: spotifyArtwork}}
-                  style={{
-                    height: DevicePixels[50],
-                    width: DevicePixels[50],
-                    marginHorizontal: DevicePixels[10],
-                  }}
-                />
-              ) : (
-                <View
-                  style={{
-                    width: DevicePixels[50],
-                    height: DevicePixels[50],
-                    backgroundColor: colors.appBlue,
-                    marginHorizontal: DevicePixels[10],
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Icon
-                    name="music"
-                    size={DevicePixels[30]}
-                    color={colors.appWhite}
-                  />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {spotifyPlayerState && (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(spotifyPlayerState.track.album.uri)
+                  }>
+                  {spotifyArtwork ? (
+                    <FastImage
+                      source={{uri: spotifyArtwork}}
+                      style={{
+                        height: DevicePixels[50],
+                        width: DevicePixels[50],
+                        marginHorizontal: DevicePixels[10],
+                      }}
+                    />
+                  ) : (
+                    <View
+                      style={{
+                        width: DevicePixels[50],
+                        height: DevicePixels[50],
+                        backgroundColor: colors.appBlue,
+                        marginHorizontal: DevicePixels[10],
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="music"
+                        size={DevicePixels[30]}
+                        color={colors.appWhite}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(spotifyPlayerState.track.uri)
+                    }>
+                    <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                      {spotifyPlayerState.track.name}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(spotifyPlayerState.track.artist.uri)
+                    }>
+                    <Text style={{color: colors.textGrey}}>
+                      {spotifyPlayerState.track.artist.name}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-              )}
-              <View>
-                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  {spotifyPlayerState.track.name}
-                </Text>
-                <Text style={{color: colors.textGrey}}>
-                  {spotifyPlayerState.track.artist.name}
-                </Text>
               </View>
-            </View>
-          )}
+            )}
+            <TouchableOpacity onPress={() => Linking.openURL('spotify://')}>
+              <SpotifyLogo
+                width={DevicePixels[150]}
+                height={DevicePixels[30]}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}} />
             <View
@@ -492,52 +521,52 @@ const MusicButton: React.FC<{
   };
 
   const renderButtonIcon = () => {
-    if (spotifyIsConnected && audioApp === 'spotify') {
-      return (
-        <TouchableOpacity
-          onPress={() => setShowMenu(true)}
-          style={{
-            position: 'absolute',
-            top: DevicePixels[20],
-            right: DevicePixels[20],
+    // if (spotifyIsConnected && audioApp === 'spotify') {
+    //   return (
+    //     <TouchableOpacity
+    //       onPress={() => setShowMenu(true)}
+    //       style={{
+    //         position: 'absolute',
+    //         top: DevicePixels[20],
+    //         right: DevicePixels[20],
 
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...globalStyles.boxShadow,
-          }}>
-          <View
-            style={{
-              height: DevicePixels[40],
-              width: DevicePixels[40],
-              borderRadius: 20,
-              position: 'absolute',
-              backgroundColor: colors.appWhite,
-            }}
-          />
-          <Icon name="spotify" color={colors.spotify} size={DevicePixels[50]} />
-        </TouchableOpacity>
-      );
-    }
-    if (audioApp === 'apple_music') {
-      return (
-        <TouchableOpacity
-          onPress={() => setShowMenu(true)}
-          style={{
-            position: 'absolute',
-            top: DevicePixels[20],
-            right: DevicePixels[20],
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //         ...globalStyles.boxShadow,
+    //       }}>
+    //       <View
+    //         style={{
+    //           height: DevicePixels[40],
+    //           width: DevicePixels[40],
+    //           borderRadius: 20,
+    //           position: 'absolute',
+    //           backgroundColor: colors.appWhite,
+    //         }}
+    //       />
+    //       <Icon name="spotify" color={colors.spotify} size={DevicePixels[50]} />
+    //     </TouchableOpacity>
+    //   );
+    // }
+    // if (audioApp === 'apple_music') {
+    //   return (
+    //     <TouchableOpacity
+    //       onPress={() => setShowMenu(true)}
+    //       style={{
+    //         position: 'absolute',
+    //         top: DevicePixels[20],
+    //         right: DevicePixels[20],
 
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...globalStyles.boxShadow,
-          }}>
-          <FastImage
-            source={require('../../images/apple_music.png')}
-            style={{height: DevicePixels[50], width: DevicePixels[50]}}
-          />
-        </TouchableOpacity>
-      );
-    }
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //         ...globalStyles.boxShadow,
+    //       }}>
+    //       <FastImage
+    //         source={require('../../images/apple_music.png')}
+    //         style={{height: DevicePixels[50], width: DevicePixels[50]}}
+    //       />
+    //     </TouchableOpacity>
+    //   );
+    // }
     return (
       <TouchableOpacity
         onPress={() => setShowMenu(true)}
@@ -571,7 +600,7 @@ const MusicButton: React.FC<{
             right: 0,
             left: 0,
             position: 'absolute',
-            height: DevicePixels[170],
+            height: DevicePixels[130],
             ...globalStyles.boxShadow,
           }}>
           {renderMusicUI()}

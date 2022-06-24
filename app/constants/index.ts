@@ -42,3 +42,5 @@ const getInterstitialId = () => {
 };
 
 export const UNIT_ID_INTERSTITIAL = getInterstitialId();
+
+export const AD_KEYWORDS = ['fitness', 'gym', 'health'];

@@ -252,8 +252,8 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
           {text: 'No'},
         ],
       );
-      yield put(setAudioApp(undefined));
       logError(e);
+      yield put(setAudioApp(undefined));
     }
   }
 
@@ -273,21 +273,22 @@ function* setAudioAppWorker(action: SetAudioAppAction) {
             yield put(appleSetNowPlaying(tracks[0]));
           } else {
             Snackbar.show({text: 'Error fetching track from Apple Music'});
+            yield put(setAudioApp(undefined));
           }
         }
         const state: PlaybackState = yield call(itunes.getPlaybackState);
         yield put(appleSetPlaybackState(state));
       } else {
-        yield put(setAudioApp(undefined));
         Alert.alert(
           'Error',
           'CA Health does not have access to music library, you can change this via your settings, do you wish to go there now?',
           [{text: 'Yes', onPress: () => Linking.openSettings()}, {text: 'No'}],
         );
+        yield put(setAudioApp(undefined));
       }
     } catch (e) {
-      yield put(setAudioApp(undefined));
       Snackbar.show({text: 'Error: error initializing Apple Music'});
+      yield put(setAudioApp(undefined));
     }
   }
 
@@ -314,8 +315,8 @@ function* getAlbumArt(playerState: PlayerState) {
 
     yield put(setSpotifyArtwork(response.data.images[0].url));
   } catch (e) {
-    yield put(setSpotifyArtwork(undefined));
     logError(e);
+    yield put(setSpotifyArtwork(undefined));
   }
 }
 

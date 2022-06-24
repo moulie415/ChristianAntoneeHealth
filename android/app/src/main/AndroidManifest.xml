@@ -48,10 +48,6 @@
       </activity>
       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/FACEBOOK_APP_ID"/>
       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/FACEBOOK_CLIENT_TOKEN"/>
-
-       <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7885763333661292~3504785761"/>
     
     <activity android:name="com.facebook.FacebookActivity"
         android:configChanges=

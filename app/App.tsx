@@ -36,6 +36,7 @@ import Video from 'react-native-video';
 import {Dimensions, Platform} from 'react-native';
 import Config from 'react-native-config';
 import {logError} from './helpers/error';
+import MobileAds from 'react-native-google-mobile-ads';
 
 const {height, width} = Dimensions.get('window');
 
@@ -151,6 +152,13 @@ const App: React.FC = () => {
           logError(e);
         });
     }
+
+    MobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        // Initialization complete!
+        console.log(adapterStatuses);
+      });
   }, []);
   return (
     <PersistGate persistor={persistor}>
