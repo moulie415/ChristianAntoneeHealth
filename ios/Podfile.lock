@@ -611,8 +611,8 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.24)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
-  - FBAEMKit (14.0.0):
-    - FBSDKCoreKit_Basics (= 14.0.0)
+  - FBAEMKit (13.2.0):
+    - FBSDKCoreKit_Basics (= 13.2.0)
   - FBLazyVector (0.67.4)
   - FBReactNativeSpec (0.67.4):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -621,18 +621,18 @@ PODS:
     - React-Core (= 0.67.4)
     - React-jsi (= 0.67.4)
     - ReactCommon/turbomodule/core (= 0.67.4)
-  - FBSDKCoreKit (14.0.0):
-    - FBAEMKit (= 14.0.0)
-    - FBSDKCoreKit_Basics (= 14.0.0)
-  - FBSDKCoreKit_Basics (14.0.0)
-  - FBSDKGamingServicesKit (14.0.0):
-    - FBSDKCoreKit (= 14.0.0)
-    - FBSDKCoreKit_Basics (= 14.0.0)
-    - FBSDKShareKit (= 14.0.0)
-  - FBSDKLoginKit (14.0.0):
-    - FBSDKCoreKit (= 14.0.0)
-  - FBSDKShareKit (14.0.0):
-    - FBSDKCoreKit (= 14.0.0)
+  - FBSDKCoreKit (13.2.0):
+    - FBAEMKit (= 13.2.0)
+    - FBSDKCoreKit_Basics (= 13.2.0)
+  - FBSDKCoreKit_Basics (13.2.0)
+  - FBSDKGamingServicesKit (13.2.0):
+    - FBSDKCoreKit (= 13.2.0)
+    - FBSDKCoreKit_Basics (= 13.2.0)
+    - FBSDKShareKit (= 13.2.0)
+  - FBSDKLoginKit (13.2.0):
+    - FBSDKCoreKit (= 13.2.0)
+  - FBSDKShareKit (13.2.0):
+    - FBSDKCoreKit (= 13.2.0)
   - Firebase/Analytics (8.15.0):
     - Firebase/Core
   - Firebase/AppCheck (8.15.0):
@@ -831,8 +831,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleSignIn (5.0.2):
-    - AppAuth (~> 1.2)
+  - GoogleSignIn (6.1.0):
+    - AppAuth (~> 1.4)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUserMessagingPlatform (2.0.0)
@@ -1161,20 +1161,20 @@ PODS:
     - react-native-config/App (= 1.4.6)
   - react-native-config/App (1.4.6):
     - React-Core
-  - react-native-fbsdk-next (9.0.0):
+  - react-native-fbsdk-next (8.0.5):
     - React-Core
-    - react-native-fbsdk-next/Core (= 9.0.0)
-    - react-native-fbsdk-next/Login (= 9.0.0)
-    - react-native-fbsdk-next/Share (= 9.0.0)
-  - react-native-fbsdk-next/Core (9.0.0):
-    - FBSDKCoreKit (~> 14.0.0)
+    - react-native-fbsdk-next/Core (= 8.0.5)
+    - react-native-fbsdk-next/Login (= 8.0.5)
+    - react-native-fbsdk-next/Share (= 8.0.5)
+  - react-native-fbsdk-next/Core (8.0.5):
+    - FBSDKCoreKit (~> 13.2.0)
     - React-Core
-  - react-native-fbsdk-next/Login (9.0.0):
-    - FBSDKLoginKit (~> 14.0.0)
+  - react-native-fbsdk-next/Login (8.0.5):
+    - FBSDKLoginKit (~> 13.2.0)
     - React-Core
-  - react-native-fbsdk-next/Share (9.0.0):
-    - FBSDKGamingServicesKit (~> 14.0.0)
-    - FBSDKShareKit (~> 14.0.0)
+  - react-native-fbsdk-next/Share (8.0.5):
+    - FBSDKGamingServicesKit (~> 13.2.0)
+    - FBSDKShareKit (~> 13.2.0)
     - React-Core
   - react-native-flipper (0.151.0):
     - React-Core
@@ -1344,8 +1344,8 @@ PODS:
     - Google-Mobile-Ads-SDK (= 9.3.0)
     - GoogleUserMessagingPlatform (= 2.0.0)
     - React-Core
-  - RNGoogleSignin (5.0.0):
-    - GoogleSignIn (~> 5.0.0)
+  - RNGoogleSignin (7.2.2):
+    - GoogleSignIn (~> 6.1.0)
     - React-Core
   - RNPermissions (3.3.1):
     - React-Core
@@ -1442,7 +1442,7 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.99.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.99.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - GoogleSignIn (~> 5.0.2)
+  - GoogleSignIn (~> 6.1.0)
   - hermes-engine (~> 0.9.0)
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.180)
@@ -1512,7 +1512,7 @@ DEPENDENCIES:
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
-  - "RNGoogleSignin (from `../node_modules/@react-native-community/google-signin`)"
+  - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNRate (from `../node_modules/react-native-rate`)
@@ -1728,7 +1728,7 @@ EXTERNAL SOURCES:
   RNGoogleMobileAds:
     :path: "../node_modules/react-native-google-mobile-ads"
   RNGoogleSignin:
-    :path: "../node_modules/@react-native-community/google-signin"
+    :path: "../node_modules/@react-native-google-signin/google-signin"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNPurchases:
@@ -1763,14 +1763,14 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  FBAEMKit: d00064597439e75885c70d9adbcb5f3e9ad84f5d
+  FBAEMKit: c2b2895363b7e57192013d1dc49fdf498b28624c
   FBLazyVector: f7b0632c6437e312acf6349288d9aa4cb6d59030
   FBReactNativeSpec: 0f4e1f4cfeace095694436e7c7fcc5bf4b03a0ff
-  FBSDKCoreKit: e5d3acfffe5063a9d0b967ba2ad1f5afc460cf43
-  FBSDKCoreKit_Basics: 1ff46a12e80f0b66e6c00e1ef32d6a5b5b9008a5
-  FBSDKGamingServicesKit: cfac825e69b78049c9f2b10198da7d20ab6b5a6f
-  FBSDKLoginKit: dbe86ef42ab142f3bd0f1c904a21bb33f31c5569
-  FBSDKShareKit: 2f6a6a1445cc1b8ea0f733e60d02d2f7c4ebf8be
+  FBSDKCoreKit: 58139803d861e72c7661dc875611a759352a55ac
+  FBSDKCoreKit_Basics: 1ffc68326a5ece051d85574f02a0adcf27c2a5f2
+  FBSDKGamingServicesKit: 2af7e19dcfc3459581dec011a230d1eeddc17861
+  FBSDKLoginKit: 19e2a878556c2ee4f20486dc406e582783cd7578
+  FBSDKShareKit: 079497bb0cfeb049dc8ff6aee2702698680a2806
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
   FirebaseAnalytics: 7761cbadb00a717d8d0939363eb46041526474fa
   FirebaseAppCheck: 59853f959315579e696877692e7558a68bd9ee86
@@ -1798,7 +1798,7 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 2c8ad48ccc3839a5927f7d7c51505a7cd4f0b672
   GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
-  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GoogleSignIn: c90b5bec45e780f54c6a8e1e3c182a86e3dda69d
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
@@ -1831,7 +1831,7 @@ SPEC CHECKSUMS:
   React-jsinspector: f4775ea9118cbe1f72b834f0f842baa7a99508d8
   React-logger: a1f028f6d8639a3f364ef80419e5e862e1115250
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
-  react-native-fbsdk-next: 387bc8f17cba10e553c34459ba8e4111190c4a66
+  react-native-fbsdk-next: 79815a5b8f66ab0990fbb370b4a4b5bdf0a15e6c
   react-native-flipper: e6a25115657b5e230779f34dfa465d1619ce05e0
   react-native-image-picker: cffb727cf2f59bd5c0408e30b3dbe0b935f88835
   react-native-pager-view: 95d0418c3c74279840abec6926653d32447bafb6
@@ -1880,7 +1880,7 @@ SPEC CHECKSUMS:
   RNFBStorage: 814adb8c5bf4ff86a0b0641d750a64d6d48d9a75
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNGoogleMobileAds: 2feec54b23bafd7ce3be241251c1ab18d712dfe2
-  RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
+  RNGoogleSignin: d7f8368b82d94f1dec964785d496387ca7f19092
   RNPermissions: 34d678157c800b25b22a488e4d8babb57456e796
   RNPurchases: 58af20b16b1b219117d1472d52e3fa10cf27946c
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
@@ -1899,6 +1899,6 @@ SPEC CHECKSUMS:
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 36ca8abddf6494c51547a70a01e139f3c61a0b49
+PODFILE CHECKSUM: e6212003941403a39b6107b78074db97af529970
 
 COCOAPODS: 1.11.3
