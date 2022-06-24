@@ -102,11 +102,21 @@ const MusicButton: React.FC<{
                     marginHorizontal: DevicePixels[index === 0 ? 10 : 5],
                     alignItems: 'center',
                   }}
-                  onPress={() => {
-                    if (audioApp !== 'spotify' || !spotifyIsConnected) {
-                      setAudioAppAction(app);
+                  onPress={async () => {
+                    // if (audioApp !== 'spotify' || !spotifyIsConnected) {
+                    //   setAudioAppAction(app);
+                    // }
+                    if (await Linking.canOpenURL('spotify://')) {
+                      setShowAudioApps(false);
+                      Linking.openURL('spotify://');
+                    } else {
+                      setShowAudioApps(false);
+                      Linking.openURL(
+                        Platform.OS === 'ios'
+                          ? 'https://apps.apple.com/us/app/spotify-music-and-podcasts/id324684580'
+                          : 'https://play.google.com/store/apps/details?id=com.spotify.music',
+                      );
                     }
-                    setShowAudioApps(false);
                   }}>
                   <Icon
                     name="spotify"
@@ -133,8 +143,9 @@ const MusicButton: React.FC<{
                     alignItems: 'center',
                   }}
                   onPress={() => {
-                    setAudioAppAction(app);
+                    // setAudioAppAction(app);
                     setShowAudioApps(false);
+                    Linking.openURL('music://');
                   }}>
                   <FastImage
                     source={require('../../images/apple_music.png')}
@@ -510,52 +521,52 @@ const MusicButton: React.FC<{
   };
 
   const renderButtonIcon = () => {
-    if (spotifyIsConnected && audioApp === 'spotify') {
-      return (
-        <TouchableOpacity
-          onPress={() => setShowMenu(true)}
-          style={{
-            position: 'absolute',
-            top: DevicePixels[20],
-            right: DevicePixels[20],
+    // if (spotifyIsConnected && audioApp === 'spotify') {
+    //   return (
+    //     <TouchableOpacity
+    //       onPress={() => setShowMenu(true)}
+    //       style={{
+    //         position: 'absolute',
+    //         top: DevicePixels[20],
+    //         right: DevicePixels[20],
 
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...globalStyles.boxShadow,
-          }}>
-          <View
-            style={{
-              height: DevicePixels[40],
-              width: DevicePixels[40],
-              borderRadius: 20,
-              position: 'absolute',
-              backgroundColor: colors.appWhite,
-            }}
-          />
-          <Icon name="spotify" color={colors.spotify} size={DevicePixels[50]} />
-        </TouchableOpacity>
-      );
-    }
-    if (audioApp === 'apple_music') {
-      return (
-        <TouchableOpacity
-          onPress={() => setShowMenu(true)}
-          style={{
-            position: 'absolute',
-            top: DevicePixels[20],
-            right: DevicePixels[20],
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //         ...globalStyles.boxShadow,
+    //       }}>
+    //       <View
+    //         style={{
+    //           height: DevicePixels[40],
+    //           width: DevicePixels[40],
+    //           borderRadius: 20,
+    //           position: 'absolute',
+    //           backgroundColor: colors.appWhite,
+    //         }}
+    //       />
+    //       <Icon name="spotify" color={colors.spotify} size={DevicePixels[50]} />
+    //     </TouchableOpacity>
+    //   );
+    // }
+    // if (audioApp === 'apple_music') {
+    //   return (
+    //     <TouchableOpacity
+    //       onPress={() => setShowMenu(true)}
+    //       style={{
+    //         position: 'absolute',
+    //         top: DevicePixels[20],
+    //         right: DevicePixels[20],
 
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...globalStyles.boxShadow,
-          }}>
-          <FastImage
-            source={require('../../images/apple_music.png')}
-            style={{height: DevicePixels[50], width: DevicePixels[50]}}
-          />
-        </TouchableOpacity>
-      );
-    }
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //         ...globalStyles.boxShadow,
+    //       }}>
+    //       <FastImage
+    //         source={require('../../images/apple_music.png')}
+    //         style={{height: DevicePixels[50], width: DevicePixels[50]}}
+    //       />
+    //     </TouchableOpacity>
+    //   );
+    // }
     return (
       <TouchableOpacity
         onPress={() => setShowMenu(true)}
@@ -589,7 +600,7 @@ const MusicButton: React.FC<{
             right: 0,
             left: 0,
             position: 'absolute',
-            height: DevicePixels[170],
+            height: DevicePixels[130],
             ...globalStyles.boxShadow,
           }}>
           {renderMusicUI()}
