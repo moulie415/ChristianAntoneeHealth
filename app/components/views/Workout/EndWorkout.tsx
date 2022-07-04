@@ -143,7 +143,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
             });
           };
 
-          const save = (saved?: boolean) => {
+          const save = (saved: boolean) => {
             saveAction({
               calories,
               seconds,
@@ -163,7 +163,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
                 {
                   text: 'No',
                   onPress: () => {
-                    save();
+                    save(false);
                     navigate();
                   },
                 },
@@ -177,7 +177,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
               ],
             );
           } else {
-            save();
+            save(false);
             navigate();
           }
         }}>

@@ -17,7 +17,6 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
 import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 import {saveQuickRoutine} from '../../../actions/quickRoutines';
-import persistStore from 'redux-persist/es/persistStore';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
@@ -155,7 +154,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
             });
           };
 
-          const save = (saved?: boolean) => {
+          const save = (saved: boolean) => {
             saveQuickRoutineAction({
               calories,
               seconds,
@@ -174,7 +173,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
                 {
                   text: 'No',
                   onPress: () => {
-                    save();
+                    save(false);
                     navigate();
                   },
                 },
@@ -188,7 +187,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
               ],
             );
           } else {
-            save();
+            save(false);
             navigate();
           }
         }}>
