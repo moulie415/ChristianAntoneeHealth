@@ -262,7 +262,7 @@ export default function* exercisesSaga() {
     takeLatest(ADD_EXERCISE, addExercise),
     takeLatest(DELETE_EXERCISE, deleteExercise),
     takeLatest(UPDATE_EXERCISE, updateExercise),
-    takeLatest(SAVE_WORKOUT, saveWorkout),
+    throttle(5000, SAVE_WORKOUT, saveWorkout),
     throttle(5000, GET_SAVED_WORKOUTS, getSavedWorkouts),
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),
     throttle(5000, VIEW_WORKOUT, viewWorkoutWatcher),

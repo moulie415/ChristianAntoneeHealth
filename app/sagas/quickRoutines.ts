@@ -36,6 +36,7 @@ function* saveQuickRoutine(action: SaveQuickRoutineAction) {
     yield call(api.saveQuickRoutine, action.payload, uid);
     yield call(Snackbar.show, {text: 'Workout saved '});
   } catch (e) {
+    console.log(e)
     yield call(Snackbar.show, {text: 'Error saving workout'});
   }
 }
@@ -76,7 +77,7 @@ function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
 
 export default function* quickRoutinesSaga() {
   yield throttle(5000, GET_QUICK_ROUTINES, getQuickRoutines);
-  yield debounce(1000, SAVE_QUICK_ROUTINE, saveQuickRoutine);
+  yield throttle(5000, SAVE_QUICK_ROUTINE, saveQuickRoutine);
   yield throttle(5000, GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
   yield throttle(5000, GET_QUICK_ROUTINES_BY_ID, getQuickRoutinesById);
 }

@@ -10,7 +10,7 @@ target 'HealthAndMovement' do
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => true
   )
-  pod 'GoogleSignIn', '~> 6.1.0'
+  pod 'GoogleSignIn', '~> 6.2.2'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"

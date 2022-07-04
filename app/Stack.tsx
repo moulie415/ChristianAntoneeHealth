@@ -144,15 +144,14 @@ const StackComponent: FunctionComponent = () => {
             component={EndWorkout}
             options={({navigation}) => ({
               headerTitle: 'Workout',
-              headerLeft: null,
+              headerBackTitle: '',
             })}
           />
           <Stack.Screen
             name="WorkoutSummary"
             component={WorkoutSummary}
             options={({navigation}) => ({
-              headerTitle: 'Workout',
-              headerLeft: null,
+              headerShown: false,
             })}
           />
           <Stack.Screen name="Profile" component={Profile} />
@@ -189,13 +188,14 @@ const StackComponent: FunctionComponent = () => {
             component={EndQuickRoutine}
             options={({navigation}) => ({
               headerTitle: '',
+              headerBackTitle: '',
             })}
           />
           <Stack.Screen
             name="QuickRoutineSummary"
             component={QuickRoutineSummary}
             options={({navigation}) => ({
-              headerTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
