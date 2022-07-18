@@ -22,41 +22,7 @@ import colors from '../../constants/colors';
 import Text from '../commons/Text';
 import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
 import appleAuth from '@invertase/react-native-apple-authentication';
-
-interface CarouselItem {
-  title: string;
-  description: string;
-  image: ImageSourcePropType;
-}
-
-const items: CarouselItem[] = [
-  {
-    title: 'Targeted Workouts',
-    description:
-      'Select from a variety of exercise routines designed to target specific body parts',
-    image: require('../../images/login.jpeg'),
-  },
-
-  {
-    title: 'Track Progress',
-    description: `Monitor your activity and track your fitness in app as well as with ${
-      Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
-    }`,
-    image: require('../../images/2nd_carousel_image_fitness_tracking.jpeg'),
-  },
-  {
-    title: 'Test Fitness',
-    description:
-      'Measure fitness across 4 key areas, and get recommendations to improve',
-    image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
-  },
-  {
-    title: 'Stay Connected',
-    description:
-      'Enjoy in-app messaging where you can share exercises, workouts and compare test results',
-    image: require('../../images/Homepage_activity_tracking.jpeg'),
-  },
-];
+import ImageOverlay from '../commons/ImageOverlay';
 
 const Login: React.FC<LoginProps> = ({navigation}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
@@ -93,49 +59,36 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   const disabled = facebookLoading || googleLoading || appleLoading;
 
   return (
-    <>
-      <Swiper
-        activeDotColor={colors.appBlue}
-        removeClippedSubviews={false}
-        autoplay>
-        {items.map(({title, image, description}) => {
-          return (
-            <ImageBackground key={title} source={image} style={{flex: 1}}>
-              <Layout
-                style={{
-                  ...StyleSheet.absoluteFillObject,
-                  backgroundColor: '#000',
-                  opacity: 0.7,
-                }}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: DevicePixels[220],
-                  margin: DevicePixels[20],
-                  left: 0,
-                  right: 0,
-                }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    textAlign: 'center',
-                    marginBottom: DevicePixels[10],
-                  }}
-                  category="h6">
-                  {title}
-                </Text>
-                <Text style={{color: colors.appWhite, textAlign: 'center'}}>
-                  {description}
-                </Text>
-              </View>
-            </ImageBackground>
-          );
-        })}
-      </Swiper>
-
+    <ImageBackground
+      source={require('../../images/login.jpeg')}
+      blurRadius={5}
+      style={{flex: 1}}>
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require('../../images/name.png')} />
+        <View
+          style={{
+            width: DevicePixels[200],
+            height: DevicePixels[200],
+            borderRadius: DevicePixels[100],
+            backgroundColor: 'rgba(255,255,255, 0.2)',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              width: DevicePixels[175],
+              height: DevicePixels[175],
+              borderRadius: DevicePixels[90],
+              backgroundColor: colors.appWhite,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={require('../../images/logo.png')}
+              style={{width: DevicePixels[85], height: DevicePixels[75]}}
+            />
+          </View>
+        </View>
       </View>
       <View
         style={{
@@ -149,8 +102,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             color: '#fff',
             textAlign: 'center',
             paddingVertical: DevicePixels[10],
-          }}
-          category="h5">
+          }}>
           Continue with
         </Text>
         <View style={{flexDirection: 'row'}}>
@@ -222,8 +174,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           style={{margin: DevicePixels[20], alignSelf: 'center'}}
           onPress={() => navigation.navigate('SignUp')}>
           <Text
+            variant="bold"
             style={{
-              fontWeight: 'bold',
               color: '#fff',
               textDecorationLine: 'underline',
             }}>
@@ -236,8 +188,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             navigation.navigate('SignUpFlow', {dry: true});
           }}>
           <Text
+            variant="bold"
             style={{
-              fontWeight: 'bold',
               color: '#fff',
               textDecorationLine: 'underline',
             }}>
@@ -245,7 +197,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </>
+    </ImageBackground>
   );
 };
 

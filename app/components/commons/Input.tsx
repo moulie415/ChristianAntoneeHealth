@@ -1,8 +1,9 @@
 import React from 'react';
-import {Input as UIInput, InputProps} from '@ui-kitten/components';
+import {TextInput} from 'react-native';
+import {TextInputProps} from 'react-native';
 
-const Input: React.FC<InputProps> = props => {
-  return <UIInput {...props} />;
+const Input: React.FC<TextInputProps> = props => {
+  return <TextInput {...props} />;
 };
 
 export default Input;

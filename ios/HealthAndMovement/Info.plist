@@ -58,14 +58,14 @@
 				<string>com.HealthAndMovement</string>
 			</array>
 		</dict>
-    <dict>
-    <key>CFBundleURLName</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>cahealth</string>
-    </array>
-  </dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>cahealth</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -105,7 +105,7 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
-    <string>spotify</string>
+		<string>spotify</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -127,10 +127,10 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Share workout data with other apps.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>So you can save wrokouts with a image from your library</string>
-  <key>NSAppleMusicUsageDescription</key>
+	<key>NSAppleMusicUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants access to your Music library</string>
 	<key>SKAdNetworkItems</key>
 	<array>
@@ -293,6 +293,24 @@
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
 		<string>Feather.ttf</string>
+		<string>MontserratAlternates-Black.ttf</string>
+		<string>MontserratAlternates-BlackItalic.ttf</string>
+		<string>MontserratAlternates-Bold.ttf</string>
+		<string>MontserratAlternates-BoldItalic.ttf</string>
+		<string>MontserratAlternates-ExtraBold.ttf</string>
+		<string>MontserratAlternates-ExtraBoldItalic.ttf</string>
+		<string>MontserratAlternates-ExtraLight.ttf</string>
+		<string>MontserratAlternates-ExtraLightItalic.ttf</string>
+		<string>MontserratAlternates-Italic.ttf</string>
+		<string>MontserratAlternates-Light.ttf</string>
+		<string>MontserratAlternates-LightItalic.ttf</string>
+		<string>MontserratAlternates-Medium.ttf</string>
+		<string>MontserratAlternates-MediumItalic.ttf</string>
+		<string>MontserratAlternates-Regular.ttf</string>
+		<string>MontserratAlternates-SemiBold.ttf</string>
+		<string>MontserratAlternates-SemiBoldItalic.ttf</string>
+		<string>MontserratAlternates-Thin.ttf</string>
+		<string>MontserratAlternates-ThinItalic.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -313,7 +331,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>NSCalendarsUsageDescription</key>
-  <string>This app requires access to the calendar</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app requires access to the calendar</string>
 </dict>
 </plist>

@@ -1,8 +1,30 @@
 import React from 'react';
-import {Text as UIText, TextProps} from '@ui-kitten/components';
+import {Text, TextProps} from 'react-native';
 
-const Text: React.FC<TextProps> = ({children, ...props}) => {
-  return <UIText {...props}>{children}</UIText>;
+interface Props extends TextProps {
+  variant?: 'bold' | 'italic' | 'bolditalic';
+}
+
+const CAText: React.FC<Props> = ({children, variant, ...props}) => {
+  const getFontFamily = () => {
+    if (variant) {
+      if (variant === 'bolditalic') {
+        return 'MontserratAlternates-BoldItalic';
+      }
+      if (variant === 'bold') {
+        return 'MontserratAlternates-Bold';
+      }
+      if (variant === 'italic') {
+        return 'MontserratAlternates-Italic';
+      }
+    }
+    return 'MontserratAlternates-Regular';
+  };
+  return (
+    <Text {...props} style={[{fontFamily: getFontFamily()}, props.style]}>
+      {children}
+    </Text>
+  );
 };
 
-export default Text;
+export default CAText;

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Button as UIButton, ButtonProps} from '@ui-kitten/components';
 import colors from '../../constants/colors';
+import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 
-const Button: React.FC<ButtonProps> = ({children, ...props}) => {
+const Button: React.FC<TouchableOpacityProps> = ({children, ...props}) => {
   return (
-    <UIButton
+    <TouchableOpacity
       {...props}
       style={[
         {
@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({children, ...props}) => {
         props.style,
       ]}>
       {children}
-    </UIButton>
+    </TouchableOpacity>
   );
 };
 
