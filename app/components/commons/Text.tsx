@@ -1,11 +1,11 @@
 import React from 'react';
-import {Text, TextProps} from 'react-native';
+import {Text as RNText, TextProps} from 'react-native';
 
 interface Props extends TextProps {
   variant?: 'bold' | 'italic' | 'bolditalic';
 }
 
-const CAText: React.FC<Props> = ({children, variant, ...props}) => {
+const Text: React.FC<Props> = ({children, variant, ...props}) => {
   const getFontFamily = () => {
     if (variant) {
       if (variant === 'bolditalic') {
@@ -21,10 +21,10 @@ const CAText: React.FC<Props> = ({children, variant, ...props}) => {
     return 'MontserratAlternates-Regular';
   };
   return (
-    <Text {...props} style={[{fontFamily: getFontFamily()}, props.style]}>
+    <RNText {...props} style={[{fontFamily: getFontFamily()}, props.style]}>
       {children}
-    </Text>
+    </RNText>
   );
 };
 
-export default CAText;
+export default Text;

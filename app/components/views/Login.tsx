@@ -200,18 +200,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
               )}
             </TouchableOpacity>
           </View>
-          {/* <TouchableOpacity
-            style={{margin: DevicePixels[20], alignSelf: 'center'}}
-            onPress={() => navigation.navigate('SignUp')}>
-            <Text
-              variant="bold"
-              style={{
-                color: '#fff',
-                textDecorationLine: 'underline',
-              }}>
-              Log in
-            </Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
             style={{marginTop: DevicePixels[20], alignSelf: 'center'}}
             onPress={() => {
