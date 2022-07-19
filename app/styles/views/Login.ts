@@ -32,9 +32,7 @@ export default StyleSheet.create({
     color: colors.appBlue,
   },
   logoContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: DevicePixels[60],
+   
   },
   logo: {
     height: DevicePixels[27],
