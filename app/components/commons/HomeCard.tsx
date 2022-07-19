@@ -6,6 +6,7 @@ import {
   Dimensions,
   ImageBackground,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -16,49 +17,41 @@ import ImageOverlay from './ImageOverlay';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import Text from './Text';
-import Image, {Source} from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
-const RATIO = height / width;
-
-const CARD_MARGIN = DevicePixels[5] * RATIO;
+const CARD_HEIGHT = DevicePixels[125];
 
 const HomeCard: React.FC<{
   title: string;
   subtitle: string;
   onPress: () => void;
-  image: Source;
+  image: ImageSourcePropType;
   premium?: boolean;
   profile: Profile;
 }> = ({title, subtitle, onPress, image, profile, premium}) => {
   return (
     <TouchableOpacity
-      style={[
-        {
-          height: DevicePixels[150],
-          marginHorizontal: CARD_MARGIN,
-          borderRadius: DevicePixels[15],
-          overflow: 'hidden',
-        },
-      ]}
+      style={{
+        height: CARD_HEIGHT,
+        marginHorizontal: DevicePixels[20],
+        marginBottom: DevicePixels[15],
+        borderRadius: DevicePixels[15],
+        overflow: 'hidden',
+      }}
       onPress={onPress}>
       <Image
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          borderRadius: DevicePixels[15],
+          height: CARD_HEIGHT,
+          width: '100%',
         }}
         source={image}
       />
 
       <ImageBackground
         source={require('../../images/BlackTransparentBackground.png')}
-        resizeMode="cover"
-        blurRadius={10}
+        blurRadius={3}
         style={{
           position: 'absolute',
           alignSelf: 'flex-end',
@@ -66,18 +59,14 @@ const HomeCard: React.FC<{
           top: 0,
           bottom: 0,
           width: width / 2,
+          padding: DevicePixels[10],
         }}>
-        <Text style={[{color: '#fff', textAlign: 'center'}]}>{title}</Text>
         <Text
-          style={[
-            {
-              color: '#fff',
-              opacity: 0.7,
-              textAlign: 'center',
-            },
-          ]}>
-          {subtitle}
+          variant="bold"
+          style={{color: colors.appWhite, fontSize: DevicePixels[18]}}>
+          {title}
         </Text>
+        <Text style={{color: colors.appWhite}}>{subtitle}</Text>
         {premium && !profile.premium && (
           <Icon
             style={{marginTop: DevicePixels[10]}}
