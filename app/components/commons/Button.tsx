@@ -25,7 +25,7 @@ const Button: React.FC<Props> = ({text, ...props}) => {
           height: DevicePixels[60],
           justifyContent: 'center',
         }}
-        colors={['#1C74BB', '#2A3F94']}
+        colors={[colors.appBlueLight, colors.appBlueDark]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         <Text

@@ -1,5 +1,8 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBar,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {StackParamList} from './App';
 import colors from './constants/colors';
@@ -14,15 +17,31 @@ import WhatEquipment from './components/views/Workout/WhatEquipment';
 import {connect} from 'react-redux';
 import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
+import LinearGradient from 'react-native-linear-gradient';
+import Color from 'color';
 
 const Tab = createBottomTabNavigator<StackParamList>();
+
+const color = new Color(colors.appWhite);
 
 const Tabs: React.FC<{profile: Profile}> = ({profile}) => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: colors.appBlue,
-        tabBarInactiveTintColor: '#7c7c7c',
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: colors.appWhite,
+        tabBarInactiveTintColor: color.darken(0.4).toString(),
+        tabBarStyle: {borderTopWidth: 0},
+        tabBarBackground: () => {
+          return (
+            <LinearGradient
+              colors={[colors.appBlueLight, colors.appBlueDark]}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={{flex: 1}}
+            />
+          );
+        },
       }}>
       <Tab.Screen
         options={{

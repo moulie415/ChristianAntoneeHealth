@@ -148,7 +148,6 @@ const Plan: React.FC<{
               }}
             />
             <Text
-              category="h4"
               style={{
                 textAlign: 'center',
                 margin: DevicePixels[20],
@@ -193,6 +192,11 @@ const Plan: React.FC<{
                       key={p.identifier}
                       style={{margin: DevicePixels[20]}}
                       disabled={loading}
+                      text={`Request my workout plan ${
+                        profile.usedFreePlan
+                          ? '(' + p.product.price_string + ')'
+                          : ''
+                      }`}
                       accessoryLeft={() => (loading ? <Spinner /> : null)}
                       onPress={() => {
                         if (profile.premium) {
@@ -205,11 +209,7 @@ const Plan: React.FC<{
                           });
                         }
                       }}>
-                      {`Request my workout plan ${
-                        profile.usedFreePlan
-                          ? '(' + p.product.price_string + ')'
-                          : ''
-                      }`}
+                   
                     </Button>
                   );
                 })}
@@ -223,6 +223,7 @@ const Plan: React.FC<{
                       marginTop: 0,
                     }}
                     disabled={loading}
+                    text="No thanks, I just want premium"
                     accessoryLeft={() => (loading ? <Spinner /> : null)}
                     onPress={() => {
                       navigation.navigate('Premium', {
@@ -231,7 +232,7 @@ const Plan: React.FC<{
                         },
                       });
                     }}>
-                    No thanks, I just want premium
+                 
                   </Button>
                 )}
             </View>
