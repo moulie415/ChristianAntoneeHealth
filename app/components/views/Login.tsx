@@ -102,22 +102,21 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           </View>
 
           <Input
-            style={{
+            containerStyle={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[30],
-              padding: DevicePixels[20],
             }}
             placeholder="Email"
             placeholderTextColor={colors.appWhite}
           />
           <Input
-            style={{
+            containerStyle={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[20],
-              padding: DevicePixels[20],
             }}
             placeholder="Password"
             placeholderTextColor={colors.appWhite}
+            secure
           />
           <Button
             text="Log in"
