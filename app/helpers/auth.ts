@@ -1,4 +1,4 @@
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -85,6 +85,30 @@ export const googleSignIn = async () => {
     if (e.code !== '12501') {
       Alert.alert('Error', e.message);
     }
+    throw e;
+  }
+};
+
+export const signIn = async (
+  username: string,
+  pass: string,
+  handleAuthAction: (user: FirebaseAuthTypes.User) => void,
+) => {
+  try {
+    if (username && pass) {
+      const {user} = await auth().signInWithEmailAndPassword(username, pass);
+      if (!user.emailVerified) {
+        throw Error(
+          'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
+        );
+      } else {
+        handleAuthAction(user);
+      }
+    } else {
+      throw Error('Please enter both your email and your password');
+    }
+  } catch (e) {
+    Alert.alert('Sorry', e.message);
     throw e;
   }
 };

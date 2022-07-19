@@ -6,7 +6,6 @@ import {
   View,
   ImageBackground,
   StyleSheet,
-  ImageSourcePropType,
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -14,20 +13,31 @@ import {connect} from 'react-redux';
 import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
 import DevicePixels from '../../helpers/DevicePixels';
-import {signUp} from '../../actions/profile';
+import {handleAuth, signUp} from '../../actions/profile';
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
-import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
+import {
+  appleSignIn,
+  facebookSignIn,
+  googleSignIn,
+  signIn,
+} from '../../helpers/auth';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import Input from '../commons/Input';
 import Button from '../commons/Button';
 import GoogleLogo from '../../images/google.svg';
 import Spinner from '../commons/Spinner';
 
-const Login: React.FC<LoginProps> = ({navigation}) => {
+const Login: React.FC<LoginProps> = ({
+  navigation,
+  handleAuth: handleAuthAction,
+}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState('');
+  const [pass, setPass] = useState('');
 
   const signInApple = async () => {
     try {
@@ -56,7 +66,16 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     }
   };
 
-  const disabled = facebookLoading || googleLoading || appleLoading;
+  const signInEmail = async () => {
+    try {
+      setLoading(true);
+      await signIn(username, pass, handleAuthAction);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+
+  const disabled = facebookLoading || googleLoading || appleLoading || loading;
 
   return (
     <ImageBackground
@@ -65,14 +84,14 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       style={{
         flex: 1,
       }}>
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <KeyboardAvoidingView style={{flex: 1}} behavior="position">
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: colors.appBlack,
-            opacity: 0.5,
-          }}
-        />
         <View style={{}}>
           <View
             style={{
@@ -83,7 +102,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
               justifyContent: 'center',
               alignSelf: 'center',
               alignItems: 'center',
-              marginTop: DevicePixels[50],
+              marginTop: DevicePixels[30],
             }}>
             <View
               style={{
@@ -102,6 +121,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           </View>
 
           <Input
+            onChangeText={setUsername}
             containerStyle={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[30],
@@ -110,6 +130,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             placeholderTextColor={colors.appWhite}
           />
           <Input
+            onChangeText={setPass}
             containerStyle={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[20],
@@ -118,12 +139,31 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             placeholderTextColor={colors.appWhite}
             secure
           />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgotPassword')}
+            hitSlop={{
+              top: DevicePixels[10],
+              bottom: DevicePixels[10],
+              right: DevicePixels[10],
+              left: DevicePixels[10],
+            }}
+            style={{
+              alignSelf: 'flex-end',
+              marginRight: DevicePixels[20],
+              marginTop: DevicePixels[10],
+            }}>
+            <Text style={{color: colors.appWhite}}>Forgot password?</Text>
+          </TouchableOpacity>
+
           <Button
+            disabled={loading}
+            loading={loading}
             text="Log in"
             style={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[20],
             }}
+            onPress={signInEmail}
           />
           <Text
             style={{
@@ -143,7 +183,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                   width: DevicePixels[70],
                   marginHorizontal: DevicePixels[5],
                   marginLeft: DevicePixels[10],
-                  marginBottom: DevicePixels[5],
                   borderColor: '#36415F',
                   borderWidth: DevicePixels[2],
                   borderRadius: DevicePixels[20],
@@ -166,7 +205,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                 marginHorizontal: DevicePixels[5],
                 marginLeft:
                   Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
-                marginBottom: DevicePixels[5],
                 borderColor: '#36415F',
                 borderWidth: DevicePixels[2],
                 borderRadius: DevicePixels[20],
@@ -187,7 +225,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                 width: DevicePixels[70],
                 marginHorizontal: DevicePixels[5],
                 marginRight: DevicePixels[10],
-                marginBottom: DevicePixels[5],
+
                 borderColor: '#36415F',
                 borderWidth: DevicePixels[2],
                 borderRadius: DevicePixels[20],
@@ -229,6 +267,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 
 const mapDispatchToProps = {
   signUp,
+  handleAuth,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
