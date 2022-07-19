@@ -10,11 +10,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Spinner} from '@ui-kitten/components';
-import Swiper from 'react-native-swiper';
-import {Layout} from '@ui-kitten/components';
 import {connect} from 'react-redux';
-import styles from '../../styles/views/Login';
 import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -23,10 +19,10 @@ import colors from '../../constants/colors';
 import Text from '../commons/Text';
 import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
 import appleAuth from '@invertase/react-native-apple-authentication';
-import ImageOverlay from '../commons/ImageOverlay';
 import Input from '../commons/Input';
 import Button from '../commons/Button';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import GoogleLogo from '../../images/google.svg';
+import Spinner from '../commons/Spinner';
 
 const Login: React.FC<LoginProps> = ({navigation}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
@@ -63,7 +59,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   const disabled = facebookLoading || googleLoading || appleLoading;
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAvoidingView style={{flex: 1}} behavior="height">
       <ImageBackground
         source={require('../../images/login.jpeg')}
         blurRadius={5}
@@ -149,11 +145,14 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                   marginBottom: DevicePixels[5],
                   borderColor: '#36415F',
                   borderWidth: DevicePixels[2],
+                  borderRadius: DevicePixels[20],
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
                 {appleLoading ? (
                   <Spinner />
                 ) : (
-                  <Icon name="apple" color="#fff" size={DevicePixels[20]} />
+                  <Icon name="apple" color="#fff" size={DevicePixels[35]} />
                 )}
               </TouchableOpacity>
             )}
@@ -169,11 +168,14 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                 marginBottom: DevicePixels[5],
                 borderColor: '#36415F',
                 borderWidth: DevicePixels[2],
+                borderRadius: DevicePixels[20],
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
               {facebookLoading ? (
                 <Spinner />
               ) : (
-                <Icon color="#fff" name="facebook-f" size={DevicePixels[20]} />
+                <Icon color="#fff" name="facebook-f" size={DevicePixels[35]} />
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -187,15 +189,18 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
                 marginBottom: DevicePixels[5],
                 borderColor: '#36415F',
                 borderWidth: DevicePixels[2],
+                borderRadius: DevicePixels[20],
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
               {googleLoading ? (
                 <Spinner />
               ) : (
-                <Icon color="#fff" name="google" size={DevicePixels[20]} />
+                <GoogleLogo width={DevicePixels[35]} />
               )}
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{margin: DevicePixels[20], alignSelf: 'center'}}
             onPress={() => navigation.navigate('SignUp')}>
             <Text
@@ -206,24 +211,26 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
               }}>
               Log in
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
-            style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
+            style={{marginTop: DevicePixels[20], alignSelf: 'center'}}
             onPress={() => {
               navigation.navigate('SignUpFlow', {dry: true});
             }}>
-            <Text
-              variant="bold"
-              style={{
-                color: '#fff',
-                textDecorationLine: 'underline',
-              }}>
-              Sign up with email
+            <Text style={{color: 'rgba(255, 255, 255, 0.56)'}}>
+              {"Don't have an account? "}
+              <Text
+                variant="bold"
+                style={{
+                  color: '#fff',
+                }}>
+                Sign up
+              </Text>
             </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
