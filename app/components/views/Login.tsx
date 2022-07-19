@@ -59,11 +59,13 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   const disabled = facebookLoading || googleLoading || appleLoading;
 
   return (
-    <KeyboardAvoidingView style={{flex: 1}} behavior="height">
-      <ImageBackground
-        source={require('../../images/login.jpeg')}
-        blurRadius={5}
-        style={{flex: 1}}>
+    <ImageBackground
+      source={require('../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <KeyboardAvoidingView style={{flex: 1}} behavior="position">
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -203,7 +205,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           <TouchableOpacity
             style={{marginTop: DevicePixels[20], alignSelf: 'center'}}
             onPress={() => {
-              navigation.navigate('SignUpFlow', {dry: true});
+              navigation.navigate('SignUp');
             }}>
             <Text style={{color: 'rgba(255, 255, 255, 0.56)'}}>
               {"Don't have an account? "}
@@ -217,8 +219,8 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
