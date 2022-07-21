@@ -1,73 +1,65 @@
-import {TouchableOpacity, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Gender} from '../../../types/Profile';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
+import Button from '../../commons/Button';
 
 const SelectSex: React.FC<{
   gender: Gender;
   setGender: (gender: Gender) => void;
 }> = ({gender, setGender}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          color: colors.appWhite,
-          marginTop: DevicePixels[30],
-          textAlign: 'center',
-          marginBottom: DevicePixels[10],
-          width: DevicePixels[250],
-        }}>
-        What's your gender?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
-        <TouchableOpacity
+        <Text
+          style={{
+            color: colors.appWhite,
+            marginTop: DevicePixels[30],
+            textAlign: 'center',
+            marginBottom: DevicePixels[20],
+            fontSize: DevicePixels[20],
+          }}>
+          What's your gender?
+        </Text>
+
+        <Button
+          text="Female"
+          style={{marginBottom: DevicePixels[20]}}
           onPress={() => setGender('female')}
-          style={{
-            marginBottom: DevicePixels[20],
-            backgroundColor:
-              gender === 'female' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: gender === 'female' ? colors.appWhite : colors.darkBlue,
-            }}>
-            Female
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          variant={gender === 'female' ? 'primary' : 'secondary'}
+        />
+
+        <Button
+          text="Male"
           onPress={() => setGender('male')}
-          style={{
-            marginBottom: DevicePixels[20],
-            backgroundColor:
-              gender === 'male' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: gender === 'male' ? colors.appWhite : colors.darkBlue,
-            }}>
-            Male
-          </Text>
-        </TouchableOpacity>
+          variant={gender === 'male' ? 'primary' : 'secondary'}
+        />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

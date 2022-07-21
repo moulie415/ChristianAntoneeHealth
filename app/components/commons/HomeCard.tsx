@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  View,
   ImageSourcePropType,
-  TouchableHighlight,
   Dimensions,
   ImageBackground,
   TouchableOpacity,
@@ -10,10 +8,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import DevicePixels from '../../helpers/DevicePixels';
-import globalStyles from '../../styles/globalStyles';
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
-import ImageOverlay from './ImageOverlay';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import Text from './Text';

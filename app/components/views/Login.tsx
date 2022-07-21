@@ -21,12 +21,13 @@ import {
   facebookSignIn,
   googleSignIn,
   signIn,
-} from '../../helpers/auth';
+} from '../../helpers/api';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import Input from '../commons/Input';
 import Button from '../commons/Button';
 import GoogleLogo from '../../images/google.svg';
 import Spinner from '../commons/Spinner';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Login: React.FC<LoginProps> = ({
   navigation,
@@ -36,7 +37,7 @@ const Login: React.FC<LoginProps> = ({
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
   const signInApple = async () => {
@@ -69,7 +70,7 @@ const Login: React.FC<LoginProps> = ({
   const signInEmail = async () => {
     try {
       setLoading(true);
-      await signIn(username, pass, handleAuthAction);
+      await signIn(email, pass, handleAuthAction);
     } catch (e) {
       setLoading(false);
     }
@@ -91,7 +92,7 @@ const Login: React.FC<LoginProps> = ({
           opacity: 0.5,
         }}
       />
-      <KeyboardAvoidingView style={{flex: 1}} behavior="position">
+      <KeyboardAwareScrollView>
         <View style={{}}>
           <View
             style={{
@@ -121,12 +122,15 @@ const Login: React.FC<LoginProps> = ({
           </View>
 
           <Input
-            onChangeText={setUsername}
+            onChangeText={setEmail}
             containerStyle={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[30],
             }}
             placeholder="Email"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
             placeholderTextColor={colors.appWhite}
           />
           <Input
@@ -136,6 +140,8 @@ const Login: React.FC<LoginProps> = ({
               marginTop: DevicePixels[20],
             }}
             placeholder="Password"
+            autoCapitalize="none"
+            autoCorrect={false}
             placeholderTextColor={colors.appWhite}
             secure
           />
@@ -256,7 +262,7 @@ const Login: React.FC<LoginProps> = ({
             </Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 };

@@ -260,8 +260,6 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
 
 function* signUp(action: SignUpAction) {
   const {
-    dry,
-    name,
     dob,
     weight,
     unit,
@@ -270,8 +268,6 @@ function* signUp(action: SignUpAction) {
     equipment,
     experience,
     goal,
-    password,
-    email,
     marketing,
     nutrition,
     trainingAvailability,
@@ -292,10 +288,37 @@ function* signUp(action: SignUpAction) {
     } catch (e) {
       console.log(e);
     }
-    if (dry) {
-      yield call(api.createUser, email, password, {
+
+    const {profile} = yield select((state: MyRootState) => state.profile);
+    yield call(
+      api.updateUser,
+      {
+        ...profile,
         signedUp: true,
-        name,
+        dob,
+        weight,
+        unit,
+        height,
+        gender,
+        experience,
+        equipment,
+        marketing,
+        goal,
+        nutrition,
+        trainingAvailability,
+        injuries,
+        occupation,
+        stressLevel,
+        sleepPattern,
+        lifestyle,
+        medications,
+        planStatus: PlanStatus.UNINITIALIZED,
+      },
+      profile.uid,
+    );
+    yield put(
+      setProfile({
+        ...profile,
         dob,
         weight,
         height,
@@ -314,66 +337,11 @@ function* signUp(action: SignUpAction) {
         lifestyle,
         medications,
         planStatus: PlanStatus.UNINITIALIZED,
-      });
-      goBack();
-      navigate('SignUp');
-    } else {
-      const {profile} = yield select((state: MyRootState) => state.profile);
-      yield call(
-        api.updateUser,
-        {
-          ...profile,
-          signedUp: true,
-          name,
-          dob,
-          weight,
-          unit,
-          height,
-          gender,
-          experience,
-          equipment,
-          marketing,
-          goal,
-          nutrition,
-          trainingAvailability,
-          injuries,
-          occupation,
-          stressLevel,
-          sleepPattern,
-          lifestyle,
-          medications,
-          planStatus: PlanStatus.UNINITIALIZED,
-        },
-        profile.uid,
-      );
-      yield put(
-        setProfile({
-          ...profile,
-          name,
-          dob,
-          weight,
-          height,
-          unit,
-          gender,
-          experience,
-          equipment,
-          marketing,
-          goal,
-          nutrition,
-          trainingAvailability,
-          injuries,
-          occupation,
-          stressLevel,
-          sleepPattern,
-          lifestyle,
-          medications,
-          planStatus: PlanStatus.UNINITIALIZED,
-        }),
-      );
-      resetToTabs();
-    }
+      }),
+    );
+    resetToTabs();
+
     setUserAttributes({
-      name,
       birthday: dob,
       weight: weight?.toString(),
       height: height?.toString(),
@@ -707,7 +675,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield put(setUnread(doc.data().unread));
         }
       } else {
-        navigate('SignUpFlow', {name: user.displayName});
+        navigate('SignUpFlow');
       }
       yield put(setLoggedIn(true));
       yield put(getTests());
@@ -717,7 +685,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         'Account not verified',
         'Please verify your account using the link we sent to your email address, please also check your spam folder',
       );
-      navigate('SignUp');
+      navigate('Login');
     } else {
       yield put(setLoggedIn(false));
       navigate('Login');

@@ -8,7 +8,7 @@ import {StackParamList} from '../../App';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
-import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
+import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
 import {setLoggedIn} from '../../actions/profile';
 
 const DeleteAccount: React.FC<{

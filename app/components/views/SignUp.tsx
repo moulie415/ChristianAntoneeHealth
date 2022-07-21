@@ -1,151 +1,167 @@
 import React, {useState} from 'react';
 import {
   Alert,
-  Image,
   ImageBackground,
+  Platform,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Spinner, Layout, Button, Text} from '@ui-kitten/components';
-import auth from '@react-native-firebase/auth';
-import styles from '../../styles/views/SignUp';
 import SignUpProps from '../../types/views/SignUp';
 import {handleAuth} from '../../actions/profile';
 import DevicePixels from '../../helpers/DevicePixels';
+import colors from '../../constants/colors';
+import Text from '../commons/Text';
+import Input from '../commons/Input';
+import Button from '../commons/Button';
+import {createUser} from '../../helpers/api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SignUp: React.FC<SignUpProps> = ({
   navigation,
   handleAuth: handleAuthAction,
 }) => {
-  const [secure, setSecure] = useState(true);
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [spinner, setSpinner] = useState(false);
+  const [confirm, setConfirm] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const signIn = async (email: string, password: string) => {
+  const signUp = async () => {
     try {
-      return await auth().signInWithEmailAndPassword(email, password);
+      if (pass !== confirm) {
+        Alert.alert('Error', 'Passwords do not match');
+        return;
+      }
+      setLoading(true);
+      const user = await createUser(email, pass, {name});
+      handleAuthAction(user);
     } catch (e) {
+      setLoading(false);
       Alert.alert('Error', e.message);
     }
+  };
+
+  const getAuthString = () => {
+    if (Platform.OS === 'ios') {
+      return 'Google, Facebook or Apple login?';
+    }
+    return 'Google or Facebook login?';
   };
 
   return (
     <ImageBackground
       style={{flex: 1}}
+      blurRadius={2}
       source={require('../../images/sign-up.jpeg')}>
-      <Layout
+      <View
         style={{
           ...StyleSheet.absoluteFillObject,
-          backgroundColor: '#000',
+          backgroundColor: colors.appBlack,
           opacity: 0.7,
         }}
       />
-      <Image style={styles.logo} source={require('../../images/name.png')} />
-      <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="always"
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: 'flex-end',
-        }}>
-        <TextInput
-          style={[
-            styles.input,
-            {
-              borderTopLeftRadius: DevicePixels[5],
-              borderTopRightRadius: DevicePixels[5],
-            },
-          ]}
+      <KeyboardAwareScrollView>
+        <Text
+          variant="bold"
+          style={{
+            color: colors.appWhite,
+            fontSize: DevicePixels[24],
+            margin: DevicePixels[20],
+            marginBottom: 0,
+          }}>
+          Registration
+        </Text>
+        <Text
+          style={{
+            color: colors.appWhite,
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[10],
+          }}>
+          Please enter your personal details, then we will send you a
+          verification email (please remember to check your junk/spam folder).
+        </Text>
+        <Input
+          containerStyle={{
+            marginHorizontal: DevicePixels[20],
+          }}
+          placeholder="Name"
+          onChangeText={setName}
+          placeholderTextColor="#fff"
+          autoCorrect={false}
+        />
+        <Input
+          containerStyle={{
+            marginHorizontal: DevicePixels[20],
+            marginTop: DevicePixels[20],
+          }}
           placeholder="Email"
-          onChangeText={u => setUsername(u)}
+          onChangeText={setEmail}
           placeholderTextColor="#fff"
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="email-address"
         />
-        <TextInput
-          style={[
-            styles.input,
-            {
-              borderBottomLeftRadius: DevicePixels[5],
-              borderBottomRightRadius: DevicePixels[5],
-            },
-          ]}
+        <Input
+          containerStyle={{
+            marginHorizontal: DevicePixels[20],
+            marginTop: DevicePixels[20],
+          }}
           placeholder="Password"
-          secureTextEntry={secure}
+          secure
           placeholderTextColor="#fff"
-          onChangeText={p => setPass(p)}
+          onChangeText={setPass}
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
+        <Input
+          containerStyle={{
+            marginHorizontal: DevicePixels[20],
+            marginTop: DevicePixels[20],
+          }}
+          placeholder="Confirm password"
+          secure
+          placeholderTextColor="#fff"
+          onChangeText={setConfirm}
           autoCorrect={false}
           autoCapitalize="none"
         />
         <Button
-          onPress={async () => {
-            try {
-              if (username && pass) {
-                setSpinner(true);
-                setSecure(true);
-                const {user} = await signIn(username, pass);
-                if (!user.emailVerified) {
-                  Alert.alert(
-                    'Sorry',
-                    'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
-                  );
-                  setSpinner(false);
-                } else {
-                  handleAuthAction(user);
-                }
-              } else {
-                Alert.alert(
-                  'Sorry',
-                  'Please enter both your email and your password',
-                );
-                setSpinner(false);
-              }
-            } catch (e) {
-              console.log(e);
-              setSpinner(false);
-            }
-          }}
-          accessoryLeft={() =>
-            spinner ? <Spinner style={{borderColor: '#fff'}} /> : null
-          }
-          style={styles.button}>
-          Log in
-        </Button>
-
-        <View
+          loading={loading}
+          disabled={loading}
+          onPress={signUp}
+          text="Signup"
           style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: DevicePixels[15],
-            marginBottom: DevicePixels[20],
-          }}>
-          <Text style={{color: '#fff'}}>Not signed up? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#fff',
-                textDecorationLine: 'underline',
-              }}>
-              Sign up
-            </Text>
-          </TouchableOpacity>
-        </View>
+            marginHorizontal: DevicePixels[20],
+            marginTop: DevicePixels[20],
+          }}
+        />
+
         <TouchableOpacity
-          style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
-          onPress={() => navigation.navigate('ForgotPassword')}>
+          style={{marginTop: DevicePixels[10]}}
+          onPress={() => navigation.navigate('Login')}
+          hitSlop={{
+            top: DevicePixels[10],
+            bottom: DevicePixels[10],
+            right: DevicePixels[10],
+            left: DevicePixels[10],
+          }}>
           <Text
             style={{
-              fontWeight: 'bold',
               color: '#fff',
-              textDecorationLine: 'underline',
+              marginHorizontal: DevicePixels[20],
+              textAlign: 'center',
             }}>
-            Forgot password?
+            Already have an account or want to use {getAuthString()}
+            {'  '}
+            <Text
+              variant="bold"
+              style={{
+                color: '#fff',
+              }}>
+              Log in
+            </Text>
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

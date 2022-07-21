@@ -9,9 +9,16 @@ import Spinner from './Spinner';
 interface Props extends TouchableOpacityProps {
   text: string;
   loading?: boolean;
+  variant?: 'primary' | 'secondary';
 }
 
-const Button: React.FC<Props> = ({text, loading, ...props}) => {
+const Button: React.FC<Props> = ({text, loading, variant, ...props}) => {
+  const gradient = () => {
+    if (variant === 'secondary') {
+      return [colors.appWhite, colors.appWhite];
+    }
+    return [colors.appBlueLight, colors.appBlueDark];
+  };
   return (
     <TouchableOpacity
       {...props}
@@ -27,7 +34,7 @@ const Button: React.FC<Props> = ({text, loading, ...props}) => {
           height: DevicePixels[60],
           justifyContent: 'center',
         }}
-        colors={[colors.appBlueLight, colors.appBlueDark]}
+        colors={gradient()}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {loading ? (
@@ -37,7 +44,7 @@ const Button: React.FC<Props> = ({text, loading, ...props}) => {
         ) : (
           <Text
             style={{
-              color: colors.appWhite,
+              color: variant === 'secondary' ? colors.appBlue : colors.appWhite,
               textAlign: 'center',
               fontSize: DevicePixels[15],
             }}>
