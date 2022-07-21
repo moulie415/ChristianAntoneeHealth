@@ -1,4 +1,3 @@
-import {Button, Layout, Text} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import moment from 'moment';
 import {
@@ -10,6 +9,9 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import QuickRoutineSummaryProps from '../../../types/views/QuickRoutineSummary';
+import {View} from 'react-native';
+import Text from '../../commons/Text';
+import Button from '../../commons/Button';
 
 const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   route,
@@ -18,42 +20,43 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
 }) => {
   const {calories, seconds, difficulty, routine} = route.params;
   return (
-    <Layout style={{flex: 1}}>
-      <Layout
+    <View style={{flex: 1}}>
+      <View
         style={{
           justifyContent: 'space-evenly',
           flex: 1,
           alignItems: 'center',
         }}>
-        <Layout style={{alignItems: 'center'}}>
-          <Text category="s1" style={{marginBottom: DevicePixels[20]}}>
-            Calories burned
-          </Text>
-          <Text category="h1">{Math.floor(calories)}</Text>
-        </Layout>
-        <Layout style={{alignItems: 'center'}}>
-          <Text category="s1" style={{marginBottom: DevicePixels[20]}}>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{marginBottom: DevicePixels[20]}}>Calories burned</Text>
+          <Text>{Math.floor(calories)}</Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{marginBottom: DevicePixels[20]}}>
             Time spent active
           </Text>
-          <Text category="h1">
+          <Text>
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
-        </Layout>
-        <Layout style={{alignItems: 'center'}}>
-          <Text category="s1">Intensity</Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text>Intensity</Text>
           <Text style={{fontSize: DevicePixels[100]}}>
             {getDifficultyEmoji(difficulty)}
           </Text>
-          <Text category="s1">{getDifficultyText(difficulty)}</Text>
-        </Layout>
-      </Layout>
+          <Text>{getDifficultyText(difficulty)}</Text>
+        </View>
+      </View>
 
       <Button
+        text="Return Home"
         onPress={resetToTabs}
-        style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
-        Return Home
-      </Button>
-    </Layout>
+        style={{
+          margin: DevicePixels[10],
+          marginBottom: DevicePixels[20],
+        }}
+      />
+    </View>
   );
 };
 

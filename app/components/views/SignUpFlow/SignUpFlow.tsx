@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -55,6 +56,8 @@ import PhysicalInjuries from './PhysicalInjuries';
 import SelectTrainingAvailability from './TrainingAvailability';
 import Nutrition from './Nutrition';
 import Swiper from 'react-native-swiper';
+import BackButton from '../../commons/BackButton';
+import ForwardButton from '../../commons/ForwardButton';
 
 const {width} = Dimensions.get('window');
 
@@ -87,6 +90,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   useInit(async () => {
     setLoading(true);
+
     const available = await isAvailable();
     if (!available && Platform.OS === 'android') {
       Alert.alert(
@@ -199,6 +203,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       key: 'goal',
+      showNext: !!goal,
       component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
     {
@@ -318,7 +323,11 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       <Swiper
         onIndexChanged={setIndex}
         loop={false}
+        removeClippedSubviews={false}
         showsPagination={false}
+        scrollEnabled={false}
+        prevButton={<BackButton disabled />}
+        nextButton={<ForwardButton disabled />}
         showsButtons={slides[index].showNext}>
         {slides.map(slide => {
           return (

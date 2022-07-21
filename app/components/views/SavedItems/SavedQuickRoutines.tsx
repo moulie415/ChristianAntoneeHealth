@@ -1,8 +1,8 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Layout, List, ListItem, Text} from '@ui-kitten/components';
+import {ListItem} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
 import {getExercisesById} from '../../../actions/exercises';
 import {
@@ -17,6 +17,7 @@ import {SavedQuickRoutine} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
+import Text from '../../commons/Text';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -58,9 +59,9 @@ const SavedQuickRoutines: FunctionComponent<{
 
   return (
     <>
-      <Layout>
+      <View>
         {!missingRoutines.length && (
-          <List
+          <FlatList
             data={Object.values(savedQuickRoutines)}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
@@ -98,7 +99,7 @@ const SavedQuickRoutines: FunctionComponent<{
                           style={{color: '#fff', fontSize: DevicePixels[12]}}>
                           {'Duration '}
                         </Text>
-                        <Text category="h6" style={{color: '#fff'}}>
+                        <Text style={{color: '#fff'}}>
                           {moment()
                             .utc()
                             .startOf('day')
@@ -118,7 +119,7 @@ const SavedQuickRoutines: FunctionComponent<{
             }}
           />
         )}
-      </Layout>
+      </View>
       <AbsoluteSpinner loading={loading} />
     </>
   );

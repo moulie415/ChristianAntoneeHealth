@@ -38,7 +38,7 @@ const SelectSex: React.FC<{
         <Text
           style={{
             color: colors.appWhite,
-            marginTop: DevicePixels[30],
+
             textAlign: 'center',
             marginBottom: DevicePixels[20],
             fontSize: DevicePixels[20],

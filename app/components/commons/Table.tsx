@@ -1,4 +1,3 @@
-import {Text} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {useMemo} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
@@ -9,6 +8,7 @@ import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import {Cell, Table as TableType} from '../../types/Test';
 import {Row as RowType} from '../../types/Test';
+import Text from './Text';
 
 const CELL_WIDTH = 100;
 
@@ -87,8 +87,7 @@ const Table: React.FC<{
           style={{
             marginHorizontal: DevicePixels[10],
             marginTop: DevicePixels[10],
-          }}
-          category="s1">
+          }}>
           {title}
         </Text>
       )}

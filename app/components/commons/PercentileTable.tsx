@@ -49,8 +49,7 @@ const PercentileTable: React.FC<{
         <Text
           style={{
             margin: DevicePixels[10],
-          }}
-          category="s1">
+          }}>
           {title}
         </Text>
       )}

@@ -1,6 +1,11 @@
-import {Button, Layout, Spinner, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, TextInput} from 'react-native';
+import {
+  Alert,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -10,6 +15,8 @@ import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
 import {setLoggedIn} from '../../actions/profile';
+import Text from '../commons/Text';
+import Button from '../commons/Button';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
@@ -30,7 +37,7 @@ const DeleteAccount: React.FC<{
     <ImageBackground
       source={require('../../images/login.jpeg')}
       style={{flex: 1}}>
-      <Layout
+      <View
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
@@ -87,6 +94,7 @@ const DeleteAccount: React.FC<{
         />
       )}
       <Button
+        text="Confirm account deletion"
         onPress={async () => {
           setLoading(true);
           try {
@@ -119,9 +127,7 @@ const DeleteAccount: React.FC<{
           }
           setLoading(false);
         }}
-        accessoryLeft={() =>
-          loading ? <Spinner style={{borderColor: '#fff'}} /> : null
-        }
+        loading={loading}
         style={{
           margin: DevicePixels[10],
           marginTop: DevicePixels[5],
@@ -129,9 +135,8 @@ const DeleteAccount: React.FC<{
         }}
         disabled={
           email !== profile.email || (requiresPassword && !password) || loading
-        }>
-        Confirm account deletion
-      </Button>
+        }
+      />
     </ImageBackground>
   );
 };

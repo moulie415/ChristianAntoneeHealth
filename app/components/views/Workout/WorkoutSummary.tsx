@@ -1,4 +1,3 @@
-import {Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
@@ -13,9 +12,10 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ShareModal from '../../commons/ShareModal';
-import {Alert} from 'react-native';
+import {Alert, View} from 'react-native';
 import {requestPlan} from '../../../actions/profile';
 import Button from '../../commons/Button';
+import Text from '../../commons/Text';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,
@@ -41,47 +41,50 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
     }
   }, [isLast, requestPlanAction]);
   return (
-    <Layout style={{flex: 1}}>
-      <Layout
+    <View style={{flex: 1}}>
+      <View
         style={{
           justifyContent: 'space-evenly',
           flex: 1,
           alignItems: 'center',
         }}>
-        <Layout style={{alignItems: 'center'}}>
-          <Text category="s1" style={{marginBottom: DevicePixels[20]}}>
-            Calories burned
-          </Text>
-          <Text category="h1">{Math.floor(calories)}</Text>
-        </Layout>
-        <Layout style={{alignItems: 'center'}}>
-          <Text category="s1" style={{marginBottom: DevicePixels[20]}}>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{marginBottom: DevicePixels[20]}}>Calories burned</Text>
+          <Text>{Math.floor(calories)}</Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{marginBottom: DevicePixels[20]}}>
             Time spent active
           </Text>
-          <Text category="h1">
+          <Text>
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
-        </Layout>
-        <Layout style={{alignItems: 'center'}}>
-          <Text category="s1">Intensity</Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text>Intensity</Text>
           <Text style={{fontSize: DevicePixels[100]}}>
             {getDifficultyEmoji(difficulty)}
           </Text>
-          <Text category="s1">{getDifficultyText(difficulty)}</Text>
-        </Layout>
-      </Layout>
+          <Text>{getDifficultyText(difficulty)}</Text>
+        </View>
+      </View>
 
-      <Button onPress={resetToTabs} style={{margin: DevicePixels[10]}}>
-        Return Home
-      </Button>
       <Button
+        text="Return Home"
+        onPress={resetToTabs}
+        style={{margin: DevicePixels[10]}}
+      />
+      <Button
+        text="Share workout"
         onPress={() => setShareModalVisibleAction(true)}
         accessoryLeft={() => <Icon name="share-alt" color="#fff" />}
-        style={{margin: DevicePixels[10], marginBottom: DevicePixels[20]}}>
-        Share workout
-      </Button>
+        style={{
+          margin: DevicePixels[10],
+          marginBottom: DevicePixels[20],
+        }}
+      />
       <ShareModal title="Share workout" type="workout" workout={workout} />
-    </Layout>
+    </View>
   );
 };
 

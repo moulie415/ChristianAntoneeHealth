@@ -17,6 +17,7 @@ const Input: React.FC<Props> = props => {
       <TextInput
         {...props}
         secureTextEntry={secure}
+        placeholderTextColor={colors.appWhite}
         style={[
           {
             borderColor: colors.appWhite,

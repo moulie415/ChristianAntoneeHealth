@@ -1,11 +1,11 @@
-import {Divider, Layout, List, ListItem} from '@ui-kitten/components';
+import {Divider, ListItem} from '@ui-kitten/components';
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import Profile from '../../../types/Profile';
 import {getConnections} from '../../../actions/profile';
 import Avatar from '../../commons/Avatar';
-import {RefreshControl, View} from 'react-native';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
@@ -56,8 +56,8 @@ const Connections: React.FC<{
     getConnectionsAction();
   }, [getConnectionsAction]);
   return (
-    <Layout style={{flex: 1}}>
-      <List
+    <View style={{flex: 1}}>
+      <FlatList
         data={Object.values(connections)}
         refreshControl={
           <RefreshControl
@@ -99,16 +99,14 @@ const Connections: React.FC<{
           );
         }}
         ListEmptyComponent={() => (
-          <Text
-            style={{textAlign: 'center', padding: DevicePixels[20]}}
-            appearance="hint">
+          <Text style={{textAlign: 'center', padding: DevicePixels[20]}}>
             No connections yet, press the invite button in the top right to send
             a link.
           </Text>
         )}
         ItemSeparatorComponent={Divider}
       />
-    </Layout>
+    </View>
   );
 };
 

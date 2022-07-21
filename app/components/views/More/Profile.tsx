@@ -18,9 +18,7 @@ import {
   Input,
   Select,
   SelectItem,
-  Text,
   Button,
-  Layout,
 } from '@ui-kitten/components';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
@@ -44,6 +42,7 @@ import Snackbar from 'react-native-snackbar';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
 import storage from '@react-native-firebase/storage';
+import Text from '../../commons/Text';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -127,12 +126,12 @@ const Profile: React.FC<ProfileProps> = ({
   );
 
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
         contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
-        <Layout
+        <View
           style={{
             flexDirection: 'row',
             margin: DevicePixels[20],
@@ -194,12 +193,10 @@ const Profile: React.FC<ProfileProps> = ({
               />
             </View>
           </TouchableOpacity>
-          <Text category="h5">{profile.name}</Text>
-        </Layout>
-        <Layout style={{margin: DevicePixels[20]}}>
-          <Text style={{color: colors.textGrey, flex: 1}} category="label">
-            Date of Birth
-          </Text>
+          <Text>{profile.name}</Text>
+        </View>
+        <View style={{margin: DevicePixels[20]}}>
+          <Text style={{color: colors.textGrey, flex: 1}}>Date of Birth</Text>
           {(show || Platform.OS === 'ios') && (
             <DatePicker
               style={{
@@ -287,8 +284,8 @@ const Profile: React.FC<ProfileProps> = ({
             <SelectItem selected={gender === 'male'} title="male" />
             <SelectItem selected={gender === 'female'} title="female" />
           </Select>
-        </Layout>
-        <Text category="h6" style={{margin: DevicePixels[20], marginTop: 0}}>
+        </View>
+        <Text style={{margin: DevicePixels[20], marginTop: 0}}>
           Weight tracking
         </Text>
         <LineChart
@@ -346,7 +343,7 @@ const Profile: React.FC<ProfileProps> = ({
         Save
       </Button>
       <AbsoluteSpinner loading={loading} />
-    </Layout>
+    </View>
   );
 };
 

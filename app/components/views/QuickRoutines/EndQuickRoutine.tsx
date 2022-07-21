@@ -1,10 +1,10 @@
-import {Button, Input, Layout, Text} from '@ui-kitten/components';
+import {Button, Input} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useMemo, useState} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {useEffect} from 'react';
 import moment from 'moment';
-import {Alert, Platform} from 'react-native';
+import {Alert, Platform, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {
@@ -17,6 +17,7 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
 import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 import {saveQuickRoutine} from '../../../actions/quickRoutines';
+import Text from '../../commons/Text';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
@@ -93,9 +94,9 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     return {text: difficultyText, subtext: 'I might die'};
   }, [difficulty]);
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Text
-        category="h5"
+     
         style={{
           textAlign: 'center',
           margin: DevicePixels[10],
@@ -193,7 +194,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
         }}>
         Save & Continue
       </Button>
-    </Layout>
+    </View>
   );
 };
 

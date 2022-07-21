@@ -1,4 +1,4 @@
-import {Layout, List, ListItem, Text} from '@ui-kitten/components';
+import {ListItem} from '@ui-kitten/components';
 import React, {useEffect, useMemo} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -13,6 +13,7 @@ import {truncate} from '../../../helpers';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {FlatList} from 'react-native-gesture-handler';
+import Text from '../../commons/Text';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -58,7 +59,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     [exercises, goal, level, warmUp, coolDown, equipment],
   );
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       {!loading && !filtered.length && (
         <Text style={{textAlign: 'center', margin: 20}}>
           Sorry, no exercises found based on your filter, please try altering
@@ -134,7 +135,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           );
         }}
       />
-    </Layout>
+    </View>
   );
 };
 

@@ -8,9 +8,8 @@ import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
-import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {ApplicationProvider} from '@ui-kitten/components';
 import 'react-native-gesture-handler';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
@@ -163,7 +162,7 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <IconRegistry icons={EvaIconsPack} />
+       
         <ApplicationProvider {...eva} theme={eva.light}>
           <NavigationContainer
             ref={navigationRef}

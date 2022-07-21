@@ -3,7 +3,6 @@ import {View} from 'react-native';
 import colors from '../../constants/colors';
 import DevicePixels from '../../helpers/DevicePixels';
 import Text from './Text';
-import {Layout} from '@ui-kitten/components';
 import {Muscle} from '../../types/Exercise';
 import {
   backMuscles,
@@ -44,14 +43,14 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
   const hasBack = !!back.length || !!backSecondary.length;
 
   return (
-    <Layout
+    <View
       style={{
         borderRadius: 10,
         backgroundColor: '#fff',
         height: DevicePixels[300],
         padding: DevicePixels[10],
       }}>
-      <Text category="h5">Muscles worked</Text>
+      <Text>Muscles worked</Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         <View style={{marginRight: DevicePixels[10]}}>
           <Text>Primary:</Text>
@@ -108,7 +107,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           </View>
         )}
       </View>
-      <Layout
+      <View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
@@ -276,8 +275,8 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
             <DefaultPath d="M6.42,24.11c-.11.18-.41.26-.54.41" />
           </Svg>
         )}
-      </Layout>
-    </Layout>
+      </View>
+    </View>
   );
 };
 

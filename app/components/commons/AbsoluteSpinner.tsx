@@ -1,7 +1,7 @@
-import {Spinner} from '@ui-kitten/components';
 import React from 'react';
 import {View} from 'react-native';
 import globalStyles from '../../styles/globalStyles';
+import Spinner from './Spinner';
 import Text from './Text';
 
 const AbsoluteSpinner: React.FC<{loading: boolean; text?: string}> = ({
@@ -11,7 +11,7 @@ const AbsoluteSpinner: React.FC<{loading: boolean; text?: string}> = ({
   if (loading) {
     return (
       <View style={globalStyles.spinner}>
-        <Spinner size="large" />
+        <Spinner />
         {!!text && <Text>{text}</Text>}
       </View>
     );

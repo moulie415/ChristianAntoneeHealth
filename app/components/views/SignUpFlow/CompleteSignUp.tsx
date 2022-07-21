@@ -1,4 +1,11 @@
-import {Alert, Linking, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  ImageBackground,
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Button from '../../commons/Button';
@@ -15,24 +22,35 @@ const CompleteSignUp: React.FC<{
   const [terms, setTerms] = useState(false);
   const [privacy, setPrivacy] = useState(false);
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appBlue,
-        }}>
-        Almost there...
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[200],
-          width: DevicePixels[250],
+          justifyContent: 'center',
+          margin: DevicePixels[20],
         }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            fontSize: DevicePixels[20],
+            color: colors.appWhite,
+          }}>
+          Almost there...
+        </Text>
+
         <TouchableOpacity
           style={{
             flexDirection: 'row',
@@ -43,18 +61,19 @@ const CompleteSignUp: React.FC<{
           <Checkbox
             checked={privacy}
             onPress={() => setPrivacy(!privacy)}
-            iconStyle={{color: colors.appBlue}}
+            iconStyle={{color: colors.appWhite}}
           />
-          <Text style={{marginLeft: DevicePixels[10], color: colors.appBlue}}>
+          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
             I've read the{' '}
             <Text
               onPress={() =>
                 Linking.openURL('https://christianantonee.com/privacy-policy')
               }
+              variant="bold"
               style={{
                 textDecorationLine: 'underline',
-                fontWeight: 'bold',
-                color: colors.appBlue,
+
+                color: colors.appWhite,
               }}>
               Privacy Policy
             </Text>
@@ -70,19 +89,22 @@ const CompleteSignUp: React.FC<{
           <Checkbox
             checked={marketing}
             onPress={() => setMarketing(!marketing)}
-            iconStyle={{color: colors.appBlue}}
+            iconStyle={{color: colors.appWhite}}
           />
-          <Text style={{marginLeft: DevicePixels[10], color: colors.appBlue}}>
+          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
             I want to join the CA Health mailing list and receive relevant
             articles offers and promotions
           </Text>
         </TouchableOpacity>
 
-        <Button onPress={completeSignUp} disabled={loading || !privacy}>
-          Complete my profile
-        </Button>
+        <Button
+          text="Complete my profile"
+          onPress={completeSignUp}
+          disabled={loading || !privacy}
+          loading={loading}
+        />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

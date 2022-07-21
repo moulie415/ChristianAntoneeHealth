@@ -98,9 +98,7 @@ const Weekly: React.FC<{
       <SectionList
         sections={sections}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={{padding: DevicePixels[5]}} category="h6">
-            {title}
-          </Text>
+          <Text style={{padding: DevicePixels[5]}}>{title}</Text>
         )}
         renderItem={({item}) => {
           if ('name' in item) {
@@ -153,9 +151,7 @@ const Weekly: React.FC<{
                 }}
                 disabled={loading}
                 title={() => (
-                  <Text category="h6" style={{padding: DevicePixels[5]}}>
-                    {item.name}
-                  </Text>
+                  <Text style={{padding: DevicePixels[5]}}>{item.name}</Text>
                 )}
                 accessoryLeft={() => (
                   <ImageOverlay
@@ -170,7 +166,7 @@ const Weekly: React.FC<{
                         <Spinner style={{borderColor: colors.appWhite}} />
                       ) : (
                         <>
-                          <Text category="h6" style={{color: colors.appWhite}}>
+                          <Text style={{color: colors.appWhite}}>
                             {item.exercises.length}
                           </Text>
                           <Text style={{color: colors.appWhite}}>
@@ -205,7 +201,7 @@ const Weekly: React.FC<{
               }}
               disabled={loading}
               title={() => (
-                <Text category="h6" style={{padding: DevicePixels[5]}}>
+                <Text style={{padding: DevicePixels[5]}}>
                   {testsObj[item.test]?.name || ''}
                 </Text>
               )}

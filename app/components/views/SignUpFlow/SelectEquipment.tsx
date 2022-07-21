@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
@@ -10,32 +10,45 @@ const SelectEquipment: React.FC<{
   setEquipment: (equipment: string) => void;
 }> = ({equipment, setEquipment}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appBlue,
-        }}>
-        What equipment do you have?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            fontSize: DevicePixels[20],
+            color: colors.appWhite,
+          }}>
+          What equipment do you have?
+        </Text>
+
         <Input
           placeholder="e.g. dumbbells, barbells, squat rack..."
-          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
+          style={{height: DevicePixels[100], textAlignVertical: 'top'}}
           multiline
           onChangeText={setEquipment}
           value={equipment}
+          placeholderTextColor={colors.appWhite}
         />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

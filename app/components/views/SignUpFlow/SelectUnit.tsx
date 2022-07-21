@@ -12,7 +12,6 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
   return (
     <View>
       <Text
-        category="h4"
         style={{
           color: colors.appWhite,
           marginTop: DevicePixels[30],

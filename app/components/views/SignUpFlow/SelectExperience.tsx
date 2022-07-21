@@ -1,101 +1,69 @@
-import {TouchableOpacity, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {Level} from '../../../types/Shared';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
+import Button from '../../commons/Button';
 
 const SelectExperience: React.FC<{
   experience: Level;
   setExperience: (experience: Level) => void;
 }> = ({experience, setExperience}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appWhite,
-        }}>
-        What's your experience level?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
-        <TouchableOpacity
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            color: colors.appWhite,
+            fontSize: DevicePixels[20],
+          }}>
+          What's your experience level?
+        </Text>
+        <Button
+          text="No clue what I'm doing"
+          style={{marginBottom: DevicePixels[20]}}
           onPress={() => setExperience(Level.BEGINNER)}
-          style={{
-            marginBottom: DevicePixels[20],
-            backgroundColor:
-              experience === Level.BEGINNER ? colors.appBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.appBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                experience === Level.BEGINNER
-                  ? colors.appWhite
-                  : colors.appBlue,
-            }}>
-            No clue what I’m doing
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          variant={experience === Level.BEGINNER ? 'primary' : 'secondary'}
+        />
+        <Button
+          text="I workout every now and again"
+          style={{marginBottom: DevicePixels[20]}}
           onPress={() => setExperience(Level.INTERMEDIATE)}
-          style={{
-            marginBottom: DevicePixels[20],
-            backgroundColor:
-              experience === Level.INTERMEDIATE
-                ? colors.appBlue
-                : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.appBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                experience === Level.INTERMEDIATE
-                  ? colors.appWhite
-                  : colors.appBlue,
-            }}>
-            I workout every now and again
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          variant={experience === Level.INTERMEDIATE ? 'primary' : 'secondary'}
+        />
+        <Button
+          text="I’m a seasoned veteran"
+          style={{marginBottom: DevicePixels[20]}}
           onPress={() => setExperience(Level.ADVANCED)}
-          style={{
-            backgroundColor:
-              experience === Level.ADVANCED ? colors.appBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.appBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                experience === Level.ADVANCED
-                  ? colors.appWhite
-                  : colors.appBlue,
-            }}>
-            I’m a seasoned veteran
-          </Text>
-        </TouchableOpacity>
+          variant={experience === Level.ADVANCED ? 'primary' : 'secondary'}
+        />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

@@ -111,9 +111,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
             paddingBottom: DevicePixels[10],
             borderRadius: DevicePixels[10],
           }}>
-          <Text
-            category="h6"
-            style={{textAlign: 'center', padding: DevicePixels[15]}}>
+          <Text style={{textAlign: 'center', padding: DevicePixels[15]}}>
             Select a calendar to sync with
           </Text>
           <Divider />

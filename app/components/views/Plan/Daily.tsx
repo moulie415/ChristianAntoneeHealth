@@ -110,9 +110,7 @@ const Daily: React.FC<{
         <SectionList
           sections={data}
           renderSectionHeader={({section: {title}}) => (
-            <Text style={{padding: DevicePixels[5]}} category="h6">
-              {title}
-            </Text>
+            <Text style={{padding: DevicePixels[5]}}>{title}</Text>
           )}
           renderItem={({item}) => {
             if ('name' in item) {
@@ -138,9 +136,7 @@ const Daily: React.FC<{
                   }}
                   disabled={loading}
                   title={() => (
-                    <Text category="h6" style={{padding: DevicePixels[5]}}>
-                      {item.name}
-                    </Text>
+                    <Text style={{padding: DevicePixels[5]}}>{item.name}</Text>
                   )}
                   accessoryLeft={() => (
                     <ImageOverlay
@@ -155,9 +151,7 @@ const Daily: React.FC<{
                           <Spinner style={{borderColor: colors.appWhite}} />
                         ) : (
                           <>
-                            <Text
-                              category="h6"
-                              style={{color: colors.appWhite}}>
+                            <Text style={{color: colors.appWhite}}>
                               {item.exercises.length}
                             </Text>
                             <Text style={{color: colors.appWhite}}>
@@ -180,7 +174,7 @@ const Daily: React.FC<{
                 }}
                 disabled={loading}
                 title={() => (
-                  <Text category="h6" style={{padding: DevicePixels[5]}}>
+                  <Text style={{padding: DevicePixels[5]}}>
                     {testsObj[item.test]?.name || ''}
                   </Text>
                 )}
@@ -230,9 +224,7 @@ const Daily: React.FC<{
               </View>
             ) : (
               <View>
-                <Text style={{padding: DevicePixels[5]}} category="h6">
-                  Education
-                </Text>
+                <Text style={{padding: DevicePixels[5]}}>Education</Text>
                 {plan.education.map(id => {
                   const item = education[id];
                   if (!item) {
@@ -269,7 +261,7 @@ const Daily: React.FC<{
           </View>
         )}
         {(plan.nutrition || plan.sleep) && (
-          <Text style={{padding: DevicePixels[5]}} category="h6">
+          <Text style={{padding: DevicePixels[5]}}>
             Other
           </Text>
         )}
@@ -279,7 +271,7 @@ const Daily: React.FC<{
             <ListItem
               title={() => {
                 return (
-                  <Text style={{marginLeft: DevicePixels[10]}} category="h6">
+                  <Text style={{marginLeft: DevicePixels[10]}}>
                     Nutritional planning
                   </Text>
                 );
@@ -339,7 +331,7 @@ const Daily: React.FC<{
             <ListItem
               title={() => {
                 return (
-                  <Text style={{marginLeft: DevicePixels[10]}} category="h6">
+                  <Text style={{marginLeft: DevicePixels[10]}} >
                     Sleep hygiene
                   </Text>
                 );

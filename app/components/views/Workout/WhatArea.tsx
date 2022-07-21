@@ -1,6 +1,5 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Layout} from '@ui-kitten/components';
 import React from 'react';
 import {
   ImageBackground,
@@ -23,7 +22,7 @@ const WhatArea: React.FC<{
     <ImageBackground
       source={require('../../../images/Fitness_testing_squat.jpeg')}
       style={{flex: 1}}>
-      <Layout
+      <View
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
@@ -36,8 +35,7 @@ const WhatArea: React.FC<{
             color: colors.appWhite,
             textAlign: 'center',
             marginTop: DevicePixels[20],
-          }}
-          category="h3">
+          }}>
           What area do you want to focus on?
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
@@ -54,7 +52,6 @@ const WhatArea: React.FC<{
               borderRadius: DevicePixels[5],
             }}>
             <Text
-              category="h5"
               style={{
                 color: colors.appWhite,
                 fontWeight: 'bold',
@@ -77,7 +74,6 @@ const WhatArea: React.FC<{
               borderRadius: DevicePixels[5],
             }}>
             <Text
-              category="h5"
               style={{
                 color: colors.appWhite,
                 fontWeight: 'bold',
@@ -99,7 +95,6 @@ const WhatArea: React.FC<{
               borderRadius: DevicePixels[5],
             }}>
             <Text
-              category="h5"
               style={{
                 color: colors.appWhite,
                 fontWeight: 'bold',

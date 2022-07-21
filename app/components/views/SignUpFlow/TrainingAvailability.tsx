@@ -1,136 +1,106 @@
-import {TouchableOpacity, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import {TrainingAvailability} from '../../../types/Profile';
+import Button from '../../commons/Button';
 
 const SelectTrainingAvailability: React.FC<{
   trainingAvailability: TrainingAvailability;
   setTrainingAvailability: (availability: TrainingAvailability) => void;
 }> = ({trainingAvailability, setTrainingAvailability}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appWhite,
-        }}>
-        How many days each week can you train?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
-        <TouchableOpacity
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            fontSize: DevicePixels[20],
+            color: colors.appWhite,
+          }}>
+          How many days each week can you train?
+        </Text>
+
+        <Button
+          text="1 - 2"
           onPress={() => setTrainingAvailability(TrainingAvailability.ONE_TWO)}
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              trainingAvailability === TrainingAvailability.ONE_TWO
-                ? colors.darkBlue
-                : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                trainingAvailability === TrainingAvailability.ONE_TWO
-                  ? colors.appWhite
-                  : colors.darkBlue,
-            }}>
-            1 - 2
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          }}
+          variant={
+            trainingAvailability === TrainingAvailability.ONE_TWO
+              ? 'primary'
+              : 'secondary'
+          }
+        />
+        <Button
+          text="2 - 3"
           onPress={() =>
             setTrainingAvailability(TrainingAvailability.TWO_THREE)
           }
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              trainingAvailability === TrainingAvailability.TWO_THREE
-                ? colors.darkBlue
-                : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                trainingAvailability === TrainingAvailability.TWO_THREE
-                  ? colors.appWhite
-                  : colors.darkBlue,
-            }}>
-            2 - 3
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          }}
+          variant={
+            trainingAvailability === TrainingAvailability.TWO_THREE
+              ? 'primary'
+              : 'secondary'
+          }
+        />
+        <Button
+          text="3 - 4"
           onPress={() =>
             setTrainingAvailability(TrainingAvailability.THREE_FOUR)
           }
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              trainingAvailability === TrainingAvailability.THREE_FOUR
-                ? colors.darkBlue
-                : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                trainingAvailability === TrainingAvailability.THREE_FOUR
-                  ? colors.appWhite
-                  : colors.darkBlue,
-            }}>
-            3 - 4
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          }}
+          variant={
+            trainingAvailability === TrainingAvailability.THREE_FOUR
+              ? 'primary'
+              : 'secondary'
+          }
+        />
+        <Button
+          text="4+"
           onPress={() =>
             setTrainingAvailability(TrainingAvailability.FOUR_PLUS)
           }
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              trainingAvailability === TrainingAvailability.FOUR_PLUS
-                ? colors.darkBlue
-                : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                trainingAvailability === TrainingAvailability.FOUR_PLUS
-                  ? colors.appWhite
-                  : colors.darkBlue,
-            }}>
-            4+
-          </Text>
-        </TouchableOpacity>
+          }}
+          variant={
+            trainingAvailability === TrainingAvailability.FOUR_PLUS
+              ? 'primary'
+              : 'secondary'
+          }
+        />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

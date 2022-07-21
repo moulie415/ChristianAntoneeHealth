@@ -1,10 +1,16 @@
-import {Button, Layout, Spinner} from '@ui-kitten/components';
 import React, {useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, TextInput} from 'react-native';
+import {
+  Alert,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
+import Button from '../commons/Button';
 
 const ForgotPassword: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ForgotPassword'>;
@@ -15,7 +21,7 @@ const ForgotPassword: React.FC<{
     <ImageBackground
       source={require('../../images/login.jpeg')}
       style={{flex: 1}}>
-      <Layout
+      <View
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
@@ -52,17 +58,15 @@ const ForgotPassword: React.FC<{
           }
           setLoading(false);
         }}
-        accessoryLeft={() =>
-          loading ? <Spinner style={{borderColor: '#fff'}} /> : null
-        }
+        loading={loading}
         style={{
           margin: DevicePixels[10],
           marginTop: DevicePixels[5],
           height: DevicePixels[50],
         }}
-        disabled={!email || loading}>
-        Send password reset email
-      </Button>
+        text="Send password reset email"
+        disabled={!email || loading}
+      />
     </ImageBackground>
   );
 };

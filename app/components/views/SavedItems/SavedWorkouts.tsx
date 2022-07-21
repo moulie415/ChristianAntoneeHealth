@@ -1,6 +1,6 @@
-import {Layout, List, ListItem, Text} from '@ui-kitten/components';
+import {ListItem} from '@ui-kitten/components';
 import React, {FunctionComponent, useEffect, useMemo, useRef} from 'react';
-import {Alert, View} from 'react-native';
+import {Alert, FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {
@@ -23,6 +23,7 @@ import {
 } from '../../../actions/quickRoutines';
 import QuickRoutine from '../../../types/QuickRoutines';
 import * as _ from 'lodash';
+import Text from '../../commons/Text';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -89,9 +90,9 @@ const SavedWorkouts: FunctionComponent<{
 
   return (
     <>
-      <Layout>
+      <View>
         {!loading && (
-          <List
+          <FlatList
             data={[
               ...Object.values(savedWorkouts),
               ...Object.values(savedQuickRoutines),
@@ -131,7 +132,7 @@ const SavedWorkouts: FunctionComponent<{
                             }}>
                             {'Duration '}
                           </Text>
-                          <Text category="h6" style={{color: '#fff'}}>
+                          <Text style={{color: '#fff'}}>
                             {moment()
                               .utc()
                               .startOf('day')
@@ -186,7 +187,7 @@ const SavedWorkouts: FunctionComponent<{
                           style={{color: '#fff', fontSize: DevicePixels[12]}}>
                           {'Duration '}
                         </Text>
-                        <Text category="h6" style={{color: '#fff'}}>
+                        <Text  style={{color: '#fff'}}>
                           {moment()
                             .utc()
                             .startOf('day')
@@ -206,7 +207,7 @@ const SavedWorkouts: FunctionComponent<{
             }}
           />
         )}
-      </Layout>
+      </View>
       <AbsoluteSpinner loading={loading} />
     </>
   );

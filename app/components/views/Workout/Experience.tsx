@@ -1,4 +1,4 @@
-import {Layout, ListItem} from '@ui-kitten/components';
+import {ListItem} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
@@ -28,7 +28,7 @@ const Experience: React.FC<{
   });
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Layout style={{flex: 1}}>
+      <View style={{flex: 1}}>
         <TouchableOpacity
           onPress={() => {
             setItemsCollapsed({0: !itemsCollapsed[0], 1: true, 2: true});
@@ -48,7 +48,7 @@ const Experience: React.FC<{
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+              
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Beginner
             </Text>
@@ -101,7 +101,7 @@ const Experience: React.FC<{
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+              
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Intermediate
             </Text>
@@ -155,7 +155,7 @@ const Experience: React.FC<{
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
+             
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Advanced
             </Text>
@@ -190,7 +190,7 @@ const Experience: React.FC<{
             }}
           />
         </Collapsible>
-      </Layout>
+      </View>
     </SafeAreaView>
   );
 };

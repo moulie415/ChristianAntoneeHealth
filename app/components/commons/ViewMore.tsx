@@ -1,8 +1,8 @@
-import {Text} from '@ui-kitten/components';
 import React from 'react';
 import ViewMoreText from 'react-native-view-more-text';
 import colors from '../../constants/colors';
 import DevicePixels from '../../helpers/DevicePixels';
+import Text from './Text';
 
 const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
   const renderViewMore = (onPress: () => void) => {

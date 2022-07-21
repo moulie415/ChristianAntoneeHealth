@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Card, Divider, List, ListItem} from '@ui-kitten/components';
+import {Divider, ListItem} from '@ui-kitten/components';
 import Button from './Button';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ import {shareWorkout} from '../../helpers/exercises';
 import Exercise from '../../types/Exercise';
 import {setShareModalVisible} from '../../actions/exercises';
 import {getConnections} from '../../actions/profile';
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
@@ -92,16 +92,12 @@ const ShareModal: React.FC<{
           paddingVertical: DevicePixels[10],
           borderRadius: DevicePixels[10],
         }}>
-        <Text category="h5" style={{textAlign: 'center'}}>
-          {title}
-        </Text>
-        <Text
-          appearance="hint"
-          style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
+        <Text style={{textAlign: 'center'}}>{title}</Text>
+        <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
           (Send message to connections)
         </Text>
         <Divider />
-        <List
+        <FlatList
           style={{height: DevicePixels[200]}}
           data={Object.values(connections)}
           ItemSeparatorComponent={Divider}
@@ -141,12 +137,13 @@ const ShareModal: React.FC<{
         <View
           style={{flexDirection: 'row', paddingHorizontal: DevicePixels[10]}}>
           <Button
+            text="Cancel"
             style={{marginRight: DevicePixels[10]}}
-            onPress={() => setVisible(false)}>
-            Cancel
-          </Button>
-          <Button onPress={shareExternal}>Share external</Button>
+            onPress={() => setVisible(false)}
+          />
+          <Button text="Share external" onPress={shareExternal} />
           <Button
+            text="Send"
             style={{marginLeft: DevicePixels[10]}}
             disabled={!selected.length || loading}
             onPress={async () => {
@@ -171,9 +168,8 @@ const ShareModal: React.FC<{
                 });
                 setLoading(false);
               }
-            }}>
-            Send
-          </Button>
+            }}
+          />
         </View>
       </View>
       <AbsoluteSpinner loading={loading} />

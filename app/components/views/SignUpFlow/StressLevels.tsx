@@ -1,92 +1,76 @@
-import {TouchableOpacity, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import {StressLevel} from '../../../types/Profile';
+import Button from '../../commons/Button';
 
 const StressLevels: React.FC<{
   stressLevel: StressLevel;
   setStressLevel: (level: StressLevel) => void;
 }> = ({stressLevel, setStressLevel}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appWhite,
-        }}>
-        Stress level?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
-        <TouchableOpacity
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            color: colors.appWhite,
+            fontSize: DevicePixels[20],
+          }}>
+          Stress level?
+        </Text>
+
+        <Button
           onPress={() => setStressLevel('low')}
+          text="Low"
+          variant={stressLevel === 'low' ? 'primary' : 'secondary'}
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              stressLevel === 'low' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: stressLevel === 'low' ? colors.appWhite : colors.darkBlue,
-            }}>
-            Low
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          }}
+        />
+        <Button
           onPress={() => setStressLevel('medium')}
+          text="Medium"
+          variant={stressLevel === 'medium' ? 'primary' : 'secondary'}
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              stressLevel === 'medium' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color:
-                stressLevel === 'medium' ? colors.appWhite : colors.darkBlue,
-            }}>
-            Medium
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          }}
+        />
+        <Button
           onPress={() => setStressLevel('high')}
+          text="High"
+          variant={stressLevel === 'high' ? 'primary' : 'secondary'}
           style={{
             marginBottom: DevicePixels[20],
-            backgroundColor:
-              stressLevel === 'high' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
-            borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: stressLevel === 'high' ? colors.appWhite : colors.darkBlue,
-            }}>
-            High
-          </Text>
-        </TouchableOpacity>
+          }}
+        />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

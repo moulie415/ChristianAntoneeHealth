@@ -1,4 +1,4 @@
-import {Divider, Layout, ListItem, Toggle} from '@ui-kitten/components';
+import {Divider, ListItem, Toggle} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import Collapsible from 'react-native-collapsible';
@@ -40,7 +40,7 @@ const WarmUpAndCoolDown: React.FC<{
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Layout style={{flex: 1}}>
+      <View style={{flex: 1}}>
         <TouchableOpacity
           onPress={() => {
             setItemsCollapsed({0: !itemsCollapsed[0], 1: true});
@@ -59,9 +59,7 @@ const WarmUpAndCoolDown: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text
-              category="h5"
-              style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
               Warm-up
             </Text>
           </View>
@@ -129,7 +127,6 @@ const WarmUpAndCoolDown: React.FC<{
               justifyContent: 'center',
             }}>
             <Text
-              category="h5"
               style={[globalStyles.textShadow, {color: '#fff'}]}>
               Cool-down
             </Text>
@@ -165,7 +162,7 @@ const WarmUpAndCoolDown: React.FC<{
             )}
           />
         </Collapsible>
-      </Layout>
+      </View>
     </SafeAreaView>
   );
 };

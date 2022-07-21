@@ -1,4 +1,3 @@
-import {Layout, Text, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ScrollView,
@@ -26,6 +25,8 @@ import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
 import MusicButton from '../../commons/MusicButton';
+import Text from '../../commons/Text';
+import Spinner from '../../commons/Spinner';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -106,7 +107,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   }, [exercises, index, navigation]);
 
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
@@ -133,7 +134,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   video.src === exercise.video.src ? (
                     <ExerciseVideo paused path={video.path} />
                   ) : (
-                    <Layout
+                    <View
                       style={{
                         height: getVideoHeight(),
                         marginBottom: DevicePixels[10],
@@ -141,7 +142,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         justifyContent: 'center',
                       }}>
                       <Spinner />
-                    </Layout>
+                    </View>
                   )}
                   {exercises[i + 1] && (
                     <TouchableOpacity
@@ -287,9 +288,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       margin: DevicePixels[10],
                       marginBottom: 0,
                     }}>
-                    <Text category="h6">{`Exercise ${index + 1}/${
-                      exercises.length
-                    }`}</Text>
+                    <Text>{`Exercise ${index + 1}/${exercises.length}`}</Text>
 
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Icon
@@ -297,7 +296,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         size={DevicePixels[15]}
                         color={colors.darkBlue}
                       />
-                      <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                      <Text style={{marginLeft: DevicePixels[5]}}>
                         {moment()
                           .utc()
                           .startOf('day')
@@ -307,6 +306,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </View>
                   </View>
                   <Button
+                    text="End Workout"
                     onPress={() => {
                       Alert.alert('End workout', 'Are you sure?', [
                         {text: 'No', style: 'cancel'},
@@ -321,9 +321,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         },
                       ]);
                     }}
-                    style={{margin: DevicePixels[10]}}>
-                    End workout
-                  </Button>
+                    style={{margin: DevicePixels[10]}}
+                  />
                 </View>
               );
             })}
@@ -349,22 +348,24 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               textAlign: 'center',
               padding: DevicePixels[15],
               paddingTop: 0,
-            }}
-            category="h6">
+            }}>
             Instructions
           </Text>
           <Text style={{margin: DevicePixels[10], textAlign: 'center'}}>
             {routine.instructions}
           </Text>
           <Button
+            text="OK"
             onPress={() => setShowModal(false)}
-            style={{alignSelf: 'center', marginBottom: DevicePixels[10]}}>
-            OK
-          </Button>
+            style={{
+              alignSelf: 'center',
+              marginBottom: DevicePixels[10],
+            }}
+          />
         </View>
       </Modal>
       <MusicButton />
-    </Layout>
+    </View>
   );
 };
 
