@@ -974,11 +974,6 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@eva-design/eva@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@eva-design/eva/-/eva-2.1.1.tgz"
-  integrity sha512-WS1ykETXyq0Kxa0aFlPMBeftEtBeTDv9qEUeQ4VvbTETMc7hsZPSkPr2HudtQhFihiM72GFfwAK6GIAlF6GXdQ==
-
 "@expo/config-plugins@^2.0.0":
   version "2.0.4"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-2.0.4.tgz"
