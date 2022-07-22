@@ -702,7 +702,7 @@ export default function* profileSaga() {
     takeLatest(SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
     takeLatest(UPDATE_PROFILE, updateProfile),
-    debounce(2000, HANDLE_AUTH, handleAuthWorker),
+    debounce(500, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
