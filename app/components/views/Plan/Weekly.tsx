@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
-import {ListItem, Spinner} from '@ui-kitten/components';
 import {getExercisesById, setWorkout} from '../../../actions/exercises';
 import {getTestsById} from '../../../actions/tests';
 import Exercise from '../../../types/Exercise';
@@ -14,6 +13,8 @@ import ImageOverlay from '../../commons/ImageOverlay';
 import colors from '../../../constants/colors';
 import {navigate} from '../../../RootNavigation';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import ListItem from '../../commons/ListItem';
+import Spinner from '../../commons/Spinner';
 
 const Weekly: React.FC<{
   plan: Plan;
@@ -150,10 +151,8 @@ const Weekly: React.FC<{
                   }
                 }}
                 disabled={loading}
-                title={() => (
-                  <Text style={{padding: DevicePixels[5]}}>{item.name}</Text>
-                )}
-                accessoryLeft={() => (
+                title={item.name}
+                accessoryLeft={
                   <ImageOverlay
                     containerStyle={{
                       height: DevicePixels[75],
@@ -178,7 +177,7 @@ const Weekly: React.FC<{
                       )}
                     </View>
                   </ImageOverlay>
-                )}
+                }
               />
             );
           }
@@ -200,12 +199,8 @@ const Weekly: React.FC<{
                 }
               }}
               disabled={loading}
-              title={() => (
-                <Text style={{padding: DevicePixels[5]}}>
-                  {testsObj[item.test]?.name || ''}
-                </Text>
-              )}
-              accessoryLeft={() => (
+              title={testsObj[item.test]?.name || ''}
+              accessoryLeft={
                 <ImageOverlay
                   containerStyle={{
                     height: DevicePixels[75],
@@ -225,7 +220,7 @@ const Weekly: React.FC<{
                     )}
                   </View>
                 </ImageOverlay>
-              )}
+              }
             />
           );
         }}

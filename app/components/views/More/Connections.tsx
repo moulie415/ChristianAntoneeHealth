@@ -1,4 +1,3 @@
-import {Divider, ListItem} from '@ui-kitten/components';
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
@@ -15,6 +14,8 @@ import Message from '../../../types/Message';
 import {getSimplifiedTime} from '../../../helpers/profile';
 import colors from '../../../constants/colors';
 import {truncate} from '../../../helpers';
+import ListItem from '../../commons/ListItem';
+import Divider from '../../commons/Divider';
 
 const getLastMessage = (
   messages: {[key: string]: {[key: string]: Message}},
@@ -75,14 +76,14 @@ const Connections: React.FC<{
               onPress={() => navigation.navigate('Chat', {uid: item.uid})}
               title={item.name}
               description={truncate(lastMessage, 40)}
-              accessoryLeft={() => (
+              accessoryLeft={
                 <Avatar
                   src={item.avatar}
                   name={item.name}
                   size={DevicePixels[40]}
                 />
-              )}
-              accessoryRight={() => (
+              }
+              accessoryRight={
                 <View style={{alignItems: 'center'}}>
                   <Text
                     style={{
@@ -94,7 +95,7 @@ const Connections: React.FC<{
                   </Text>
                   <UnreadConnectionCount uid={item.uid} />
                 </View>
-              )}
+              }
             />
           );
         }}

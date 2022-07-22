@@ -1,4 +1,3 @@
-import {Divider, Input} from '@ui-kitten/components';
 import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -18,6 +17,8 @@ import PercentileTable from '../../commons/PercentileTable';
 import Button from '../../commons/Button';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Text from '../../commons/Text';
+import Input from '../../commons/Input';
+import Divider from '../../commons/Divider';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -162,8 +163,7 @@ const Test: React.FC<TestProps> = ({
             <Input
               value={testNote}
               onChangeText={setTestNote}
-              style={{marginVertical: 5}}
-              textStyle={{minHeight: DevicePixels[50]}}
+              style={{minHeight: DevicePixels[50]}}
               multiline
             />
             <Button

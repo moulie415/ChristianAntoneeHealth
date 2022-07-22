@@ -10,7 +10,6 @@ import {Alert, FlatList, SafeAreaView, Share, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLoggedIn} from '../../../actions/profile';
 import colors from '../../../constants/colors';
-import {Divider, ListItem} from '@ui-kitten/components';
 import {resetToWelcome} from '../../../RootNavigation';
 import {MyRootState} from '../../../types/Shared';
 import Purchases from 'react-native-purchases';
@@ -18,6 +17,8 @@ import {STORE_LINK} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
 import messaging from '@react-native-firebase/messaging';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
+import Divider from '../../commons/Divider';
+import ListItem from '../../commons/ListItem';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -43,7 +44,7 @@ const More: React.FC<MoreProps> = ({
     title: string;
     icon: string;
     onPress?: () => void;
-    accessoryRight?: () => ReactNode;
+    accessoryRight?: ReactNode;
   }[] = [
     {
       title: 'Education',
@@ -65,12 +66,11 @@ const More: React.FC<MoreProps> = ({
           navigation.navigate('Premium');
         }
       },
-      accessoryRight: () =>
-        profile.premium ? (
-          <UnreadRowCount />
-        ) : (
-          <Icon name="lock" size={DevicePixels[15]} />
-        ),
+      accessoryRight: profile.premium ? (
+        <UnreadRowCount />
+      ) : (
+        <Icon name="lock" size={DevicePixels[15]} />
+      ),
     },
     {
       title: 'Premium',
@@ -141,17 +141,15 @@ const More: React.FC<MoreProps> = ({
           renderItem={({item}) => (
             <ListItem
               title={item.title}
-              accessoryLeft={() => (
+              accessoryLeft={
                 <Icon
                   size={DevicePixels[20]}
                   color={colors.appBlack}
                   solid
                   name={item.icon}
                 />
-              )}
-              accessoryRight={
-                item.accessoryRight ? item.accessoryRight : () => null
               }
+              accessoryRight={item.accessoryRight}
               onPress={item.onPress}
             />
           )}

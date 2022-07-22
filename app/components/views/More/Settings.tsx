@@ -1,8 +1,7 @@
-import {Divider, Toggle} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
-import {Platform, ScrollView, View} from 'react-native';
+import {Platform, ScrollView, Switch, View} from 'react-native';
 import SettingsProps from '../../../types/views/Settings';
 import {Goal, MyRootState} from '../../../types/Shared';
 import {
@@ -20,6 +19,7 @@ import * as _ from 'lodash';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import Button from '../../commons/Button';
+import Divider from '../../commons/Divider';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.FITNESS;
@@ -63,9 +63,9 @@ const Settings: React.FC<SettingsProps> = ({
             margin: DevicePixels[10],
           }}>
           <Text>Workout reminders</Text>
-          <Toggle
-            checked={workoutReminders}
-            onChange={setWorkoutRemindersAction}
+          <Switch
+            value={workoutReminders}
+            onValueChange={setWorkoutRemindersAction}
           />
         </View>
         <Divider />
@@ -77,7 +77,10 @@ const Settings: React.FC<SettingsProps> = ({
             margin: DevicePixels[10],
           }}>
           <Text>Fitness test reminder</Text>
-          <Toggle checked={testReminders} onChange={setTestRemindersAction} />
+          <Switch
+            value={testReminders}
+            onValueChange={setTestRemindersAction}
+          />
         </View>
         <Divider />
         <View
@@ -124,7 +127,7 @@ const Settings: React.FC<SettingsProps> = ({
             margin: DevicePixels[10],
           }}>
           <Text>Marketing</Text>
-          <Toggle checked={marketing} onChange={setMarketing} />
+          <Switch value={marketing} onValueChange={setMarketing} />
         </View>
         <Divider />
       </ScrollView>

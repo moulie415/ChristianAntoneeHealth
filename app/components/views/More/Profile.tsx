@@ -13,13 +13,6 @@ import styles from '../../../styles/views/Profile';
 import ProfileProps from '../../../types/views/Profile';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
-import {
-  IndexPath,
-  Input,
-  Select,
-  SelectItem,
-  Button,
-} from '@ui-kitten/components';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
 import * as _ from 'lodash';
@@ -43,6 +36,8 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
 import storage from '@react-native-firebase/storage';
 import Text from '../../commons/Text';
+import Input from '../../commons/Input';
+import Button from '../../commons/Button';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -59,12 +54,6 @@ const Profile: React.FC<ProfileProps> = ({
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [avatar, setAvatar] = useState(profile.avatar);
   const [loading, setLoading] = useState(false);
-  const [selectedUnitIndex, setSelectedUnitIndex] = useState(
-    new IndexPath(profile.unit && profile.unit === 'imperial' ? 1 : 0),
-  );
-  const [selectedGenderIndex, setSelectedGenderIndex] = useState(
-    new IndexPath(gender && gender === 'female' ? 1 : 0),
-  );
 
   const newProfile = {
     ...profile,
@@ -230,21 +219,10 @@ const Profile: React.FC<ProfileProps> = ({
               <Text>{moment(dob).format('DD/MM/YYYY')}</Text>
             </TouchableOpacity>
           )}
+          <Text>Unit</Text>
+          <Text>{unit || 'Select unit'}</Text>
 
-          <Select
-            style={{width: '65%'}}
-            selectedIndex={selectedUnitIndex}
-            onSelect={index => {
-              setSelectedUnitIndex(index as IndexPath);
-              if ('row' in index) {
-                setUnit(index.row === 0 ? 'metric' : 'imperial');
-              }
-            }}
-            value={unit || 'Select unit'}
-            label="Unit">
-            <SelectItem selected={unit === 'metric'} title="metric" />
-            <SelectItem selected={unit === 'imperial'} title="imperial" />
-          </Select>
+          <Text>{`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}</Text>
           <Input
             value={weight?.toString()}
             returnKeyType="done"
@@ -254,9 +232,9 @@ const Profile: React.FC<ProfileProps> = ({
               marginTop: DevicePixels[10],
             }}
             onChangeText={val => setWeight(Number(val.replace(/[^0-9]/g, '')))}
-            label={`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}
             keyboardType="numeric"
           />
+          <Text>{`Height (${unit === 'metric' ? 'cm' : 'inches'})`}</Text>
           <Input
             value={height?.toString()}
             returnKeyType="done"
@@ -266,24 +244,10 @@ const Profile: React.FC<ProfileProps> = ({
               marginTop: DevicePixels[10],
             }}
             onChangeText={val => setHeight(Number(val.replace(/[^0-9]/g, '')))}
-            label={`Height (${unit === 'metric' ? 'cm' : 'inches'})`}
             keyboardType="numeric"
           />
-
-          <Select
-            style={{width: '65%', marginBottom: DevicePixels[10]}}
-            selectedIndex={selectedGenderIndex}
-            onSelect={index => {
-              setSelectedGenderIndex(index as IndexPath);
-              if ('row' in index) {
-                setGender(index.row === 0 ? 'male' : 'female');
-              }
-            }}
-            value={gender || 'Select gender'}
-            label="Gender">
-            <SelectItem selected={gender === 'male'} title="male" />
-            <SelectItem selected={gender === 'female'} title="female" />
-          </Select>
+          <Text>Gender</Text>
+          <Text>{gender || 'Select gender'}</Text>
         </View>
         <Text style={{margin: DevicePixels[20], marginTop: 0}}>
           Weight tracking
@@ -297,13 +261,13 @@ const Profile: React.FC<ProfileProps> = ({
           withShadow={false}
         />
         <Button
+          text=" Delete my account"
           style={{margin: DevicePixels[20]}}
-          status="danger"
-          onPress={() => navigation.navigate('DeleteAccount')}>
-          Delete my account
-        </Button>
+          onPress={() => navigation.navigate('DeleteAccount')}
+        />
       </ScrollView>
       <Button
+        text="Save"
         onPress={async () => {
           try {
             setLoading(true);
@@ -339,9 +303,8 @@ const Profile: React.FC<ProfileProps> = ({
           left: 0,
           right: 0,
           bottom: 0,
-        }}>
-        Save
-      </Button>
+        }}
+      />
       <AbsoluteSpinner loading={loading} />
     </View>
   );

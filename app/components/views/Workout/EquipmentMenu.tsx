@@ -1,4 +1,3 @@
-import {Divider, ListItem} from '@ui-kitten/components';
 import React, {Fragment} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -6,6 +5,8 @@ import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {equipmentItemReadableString} from '../../../helpers/exercises';
 import {Equipment} from '../../../types/Shared';
+import Divider from '../../commons/Divider';
+import ListItem from '../../commons/ListItem';
 
 const EquipmentMenu: React.FC<{
   selectedEquipment: Equipment[];
@@ -25,13 +26,9 @@ const EquipmentMenu: React.FC<{
                     )
                   : setSelectedEquipment([...selectedEquipment, item]);
               }}
-              title={() => (
-                <Text style={{color: selected ? colors.appBlue : '#000'}}>
-                  {equipmentItemReadableString(item)}
-                </Text>
-              )}
-              accessoryRight={() => {
-                return selected ? (
+              title={equipmentItemReadableString(item)}
+              accessoryRight={
+                selected ? (
                   <Icon
                     name="check-circle"
                     size={DevicePixels[20]}
@@ -44,8 +41,8 @@ const EquipmentMenu: React.FC<{
                     size={DevicePixels[20]}
                     color={colors.appBlue}
                   />
-                );
-              }}
+                )
+              }
             />
             <Divider />
           </Fragment>

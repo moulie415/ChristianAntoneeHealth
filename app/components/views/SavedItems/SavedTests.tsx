@@ -1,4 +1,3 @@
-import {ListItem} from '@ui-kitten/components';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
 import {Alert, FlatList, View} from 'react-native';
 import moment from 'moment';
@@ -13,6 +12,7 @@ import Test from '../../../types/Test';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
+import ListItem from '../../commons/ListItem';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -65,7 +65,7 @@ const SavedTests: FunctionComponent<{
                     'MMMM Do YYYY',
                   )}`}
                   description={''}
-                  accessoryLeft={() => (
+                  accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
                         height: DevicePixels[75],
@@ -89,7 +89,7 @@ const SavedTests: FunctionComponent<{
                         </Text>
                       </View>
                     </ImageOverlay>
-                  )}
+                  }
                 />
               );
             }}

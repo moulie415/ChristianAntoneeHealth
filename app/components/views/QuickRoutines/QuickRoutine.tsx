@@ -329,7 +329,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           </PagerView>
         </ScrollView>
       )}
-      <Modal visible={showModal} onBackDropPress={() => setShowModal(false)}>
+      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
         <View
           style={{
             backgroundColor: '#fff',
@@ -358,8 +358,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             text="OK"
             onPress={() => setShowModal(false)}
             style={{
-              alignSelf: 'center',
-              marginBottom: DevicePixels[10],
+              margin: DevicePixels[10],
             }}
           />
         </View>

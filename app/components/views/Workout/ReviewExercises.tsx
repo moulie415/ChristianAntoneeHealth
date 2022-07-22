@@ -1,4 +1,3 @@
-import {Divider, ListItem} from '@ui-kitten/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'react-native-fast-image';
 import {TouchableOpacity, View} from 'react-native';
@@ -19,6 +18,8 @@ import ShareModal from '../../commons/ShareModal';
 import Button from '../../commons/Button';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Text from '../../commons/Text';
+import ListItem from '../../commons/ListItem';
+import Divider from '../../commons/Divider';
 
 const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,
@@ -63,7 +64,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             navigation.navigate('CustomizeExercise', {exercise: item})
           }
           description={truncate(item.description, 75)}
-          accessoryLeft={() => (
+          accessoryLeft={
             <Image
               style={{height: DevicePixels[50], width: DevicePixels[75]}}
               source={
@@ -72,7 +73,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                   : require('../../../images/old_man_stretching.jpeg')
               }
             />
-          )}
+          }
         />
       );
     },

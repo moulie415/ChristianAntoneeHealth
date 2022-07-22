@@ -8,8 +8,6 @@ import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
-import * as eva from '@eva-design/eva';
-import {ApplicationProvider} from '@ui-kitten/components';
 import 'react-native-gesture-handler';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
@@ -162,17 +160,15 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-       
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              sagaMiddleware.run(rootSaga);
-              SplashScreen.hide();
-            }}>
-            <StackComponent />
-          </NavigationContainer>
-          {/* {showSplash && (
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            sagaMiddleware.run(rootSaga);
+            SplashScreen.hide();
+          }}>
+          <StackComponent />
+        </NavigationContainer>
+        {/* {showSplash && (
             <Video
               onLoad={() => SplashScreen.hide()}
               source={require('./images/splash.mp4')}
@@ -185,7 +181,6 @@ const App: React.FC = () => {
               onEnd={() => setShowSplash(false)}
             />
           )} */}
-        </ApplicationProvider>
       </Provider>
     </PersistGate>
   );

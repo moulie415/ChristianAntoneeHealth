@@ -1,5 +1,4 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ListItem} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
 import {FlatList, View} from 'react-native';
@@ -17,6 +16,7 @@ import {SavedQuickRoutine} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
+import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
@@ -82,7 +82,7 @@ const SavedQuickRoutines: FunctionComponent<{
                       ? 'exercises'
                       : 'exercise'
                   }, ${Math.floor(item.calories)} calories expended`}
-                  accessoryLeft={() => (
+                  accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
                         height: DevicePixels[75],
@@ -108,12 +108,12 @@ const SavedQuickRoutines: FunctionComponent<{
                         </Text>
                       </View>
                     </ImageOverlay>
-                  )}
-                  accessoryRight={() => (
+                  }
+                  accessoryRight={
                     <Text style={{fontSize: DevicePixels[30]}}>
                       {getDifficultyEmoji(item.difficulty)}
                     </Text>
-                  )}
+                  }
                 />
               );
             }}

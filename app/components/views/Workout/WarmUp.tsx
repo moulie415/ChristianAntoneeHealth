@@ -1,13 +1,14 @@
-import {Divider, ListItem, Toggle} from '@ui-kitten/components';
 import React, {useState} from 'react';
-import {View, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, SafeAreaView, TouchableOpacity, Switch} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
 import {setCoolDown, setWarmUp} from '../../../actions/exercises';
 import DevicePixels from '../../../helpers/DevicePixels';
 import globalStyles from '../../../styles/globalStyles';
 import {CoolDown, MyRootState, WarmUp} from '../../../types/Shared';
+import Divider from '../../commons/Divider';
 import ImageLoader from '../../commons/ImageLoader';
+import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
 
 const WarmUpAndCoolDown: React.FC<{
@@ -72,12 +73,12 @@ const WarmUpAndCoolDown: React.FC<{
             your muscles and fluid in your joints, helping you get the most out of
             your training session. A brisk walk/jog or a light cycle until you’re
             sweating should suffice."
-            accessoryRight={() => (
-              <Toggle
-                checked={warmUp.includes(WarmUp.CIRCULATORY)}
-                onChange={checked => toggleWarmUp(WarmUp.CIRCULATORY)}
+            accessoryRight={
+              <Switch
+                value={warmUp.includes(WarmUp.CIRCULATORY)}
+                onValueChange={checked => toggleWarmUp(WarmUp.CIRCULATORY)}
               />
-            )}
+            }
           />
           <Divider />
           <ListItem
@@ -86,12 +87,12 @@ const WarmUpAndCoolDown: React.FC<{
             description="Applying pressure to the major muscles in the body in the form of a foam
             roller or a similar myofascial release tool will help to soften muscular
             tension and decrease areas of stiffness.."
-            accessoryRight={() => (
-              <Toggle
-                checked={warmUp.includes(WarmUp.SOFT_TISSUE)}
-                onChange={checked => toggleWarmUp(WarmUp.SOFT_TISSUE)}
+            accessoryRight={
+              <Switch
+                value={warmUp.includes(WarmUp.SOFT_TISSUE)}
+                onValueChange={checked => toggleWarmUp(WarmUp.SOFT_TISSUE)}
               />
-            )}
+            }
           />
           <Divider />
           <ListItem
@@ -100,12 +101,14 @@ const WarmUpAndCoolDown: React.FC<{
             description="Engaging in mobility drills can be a great way to introduce movement to
             muscles, ligaments and joints, and prepare your vascular and nervous
             system to meet the demands of the workout."
-            accessoryRight={() => (
-              <Toggle
-                checked={warmUp.includes(WarmUp.DYNAMIC_STRETCHING)}
-                onChange={checked => toggleWarmUp(WarmUp.DYNAMIC_STRETCHING)}
+            accessoryRight={
+              <Switch
+                value={warmUp.includes(WarmUp.DYNAMIC_STRETCHING)}
+                onValueChange={checked =>
+                  toggleWarmUp(WarmUp.DYNAMIC_STRETCHING)
+                }
               />
-            )}
+            }
           />
         </Collapsible>
         <TouchableOpacity
@@ -126,8 +129,7 @@ const WarmUpAndCoolDown: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text
-              style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
               Cool-down
             </Text>
           </View>
@@ -140,12 +142,12 @@ const WarmUpAndCoolDown: React.FC<{
             will help safely bring your heart and breathing rate down to resting
             levels, and will also help to redistribute fluids that have accumulated
             during the workout."
-            accessoryRight={() => (
-              <Toggle
-                checked={coolDown.includes(CoolDown.CIRCULATORY)}
-                onChange={checked => toggleCoolDown(CoolDown.CIRCULATORY)}
+            accessoryRight={
+              <Switch
+                value={coolDown.includes(CoolDown.CIRCULATORY)}
+                onValueChange={checked => toggleCoolDown(CoolDown.CIRCULATORY)}
               />
-            )}
+            }
           />
           <Divider />
           <ListItem
@@ -154,12 +156,14 @@ const WarmUpAndCoolDown: React.FC<{
             description="Stretching after a workout can help to give your muscles that loose
             feeling and improve your movement by reducing areas that feel tight and
             restricted.."
-            accessoryRight={() => (
-              <Toggle
-                checked={coolDown.includes(CoolDown.STATIC_STRETCHING)}
-                onChange={checked => toggleCoolDown(CoolDown.STATIC_STRETCHING)}
+            accessoryRight={
+              <Switch
+                value={coolDown.includes(CoolDown.STATIC_STRETCHING)}
+                onValueChange={checked =>
+                  toggleCoolDown(CoolDown.STATIC_STRETCHING)
+                }
               />
-            )}
+            }
           />
         </Collapsible>
       </View>

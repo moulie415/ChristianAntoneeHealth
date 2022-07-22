@@ -1,4 +1,3 @@
-import {Input} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useMemo, useState} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
@@ -18,6 +17,7 @@ import {saveWorkout as saveWorkoutAction} from '../../../actions/exercises';
 import {saveWorkout} from '../../../helpers/biometrics';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
+import Input from '../../commons/Input';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
@@ -121,10 +121,9 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
         {text}
         <Text style={{fontWeight: 'normal'}}>{` - ${subtext}`}</Text>
       </Text>
+      <Text>Workout note</Text>
       <Input
-        label="Workout note"
-        textStyle={{minHeight: DevicePixels[50]}}
-        style={{margin: DevicePixels[10], marginTop: 0}}
+        style={{minHeight: DevicePixels[50]}}
         multiline
         placeholder="Add details about your workout"
         value={note}

@@ -1,4 +1,3 @@
-import {ListItem} from '@ui-kitten/components';
 import React, {FunctionComponent, useEffect, useMemo, useRef} from 'react';
 import {Alert, FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -24,6 +23,7 @@ import {
 import QuickRoutine from '../../../types/QuickRoutines';
 import * as _ from 'lodash';
 import Text from '../../commons/Text';
+import ListItem from '../../commons/ListItem';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -116,7 +116,7 @@ const SavedWorkouts: FunctionComponent<{
                     description={`${item.workout.length} ${
                       item.workout.length > 1 ? 'exercises' : 'exercise'
                     }, ${Math.floor(item.calories)} calories expended`}
-                    accessoryLeft={() => (
+                    accessoryLeft={
                       <ImageOverlay
                         containerStyle={{
                           height: DevicePixels[75],
@@ -141,12 +141,12 @@ const SavedWorkouts: FunctionComponent<{
                           </Text>
                         </View>
                       </ImageOverlay>
-                    )}
-                    accessoryRight={() => (
+                    }
+                    accessoryRight={
                       <Text style={{fontSize: DevicePixels[30]}}>
                         {getDifficultyEmoji(item.difficulty)}
                       </Text>
-                    )}
+                    }
                   />
                 );
               }
@@ -170,7 +170,7 @@ const SavedWorkouts: FunctionComponent<{
                       ? 'exercises'
                       : 'exercise'
                   }, ${Math.floor(item.calories)} calories expended`}
-                  accessoryLeft={() => (
+                  accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
                         height: DevicePixels[75],
@@ -187,7 +187,7 @@ const SavedWorkouts: FunctionComponent<{
                           style={{color: '#fff', fontSize: DevicePixels[12]}}>
                           {'Duration '}
                         </Text>
-                        <Text  style={{color: '#fff'}}>
+                        <Text style={{color: '#fff'}}>
                           {moment()
                             .utc()
                             .startOf('day')
@@ -196,12 +196,12 @@ const SavedWorkouts: FunctionComponent<{
                         </Text>
                       </View>
                     </ImageOverlay>
-                  )}
-                  accessoryRight={() => (
+                  }
+                  accessoryRight={
                     <Text style={{fontSize: DevicePixels[30]}}>
                       {getDifficultyEmoji(item.difficulty)}
                     </Text>
-                  )}
+                  }
                 />
               );
             }}

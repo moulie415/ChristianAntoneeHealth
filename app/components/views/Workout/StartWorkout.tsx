@@ -362,7 +362,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           })}
         </PagerView>
       </ScrollView>
-      <Modal visible={showModal} onBackDropPress={() => setShowModal(false)}>
+      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
         <View
           style={{
             backgroundColor: '#fff',
@@ -387,7 +387,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           <Button
             text="OK"
             onPress={() => setShowModal(false)}
-            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+            style={{margin: DevicePixels[10]}}
           />
         </View>
       </Modal>

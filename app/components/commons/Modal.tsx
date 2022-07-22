@@ -1,22 +1,23 @@
 import React from 'react';
-import {Modal as UIModal} from '@ui-kitten/components';
+import {Modal as RNModal, View} from 'react-native';
+import DevicePixels from '../../helpers/DevicePixels';
 
-const Modal: React.FC<{visible?: boolean; onBackDropPress?: () => void}> = ({
+const Modal: React.FC<{visible?: boolean; onRequestClose?: () => void}> = ({
   children,
   visible,
-  onBackDropPress,
+  onRequestClose,
 }) => {
   return (
-    <UIModal
-      backdropStyle={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
-      onBackdropPress={() => {
-        if (onBackDropPress) {
-          onBackDropPress();
-        }
-      }}
+    <RNModal
+      onRequestClose={() => onRequestClose && onRequestClose()}
+      transparent
+      animationType="slide"
+      // backdropStyle={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
       visible={visible}>
-      {children}
-    </UIModal>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        {children}
+      </View>
+    </RNModal>
   );
 };
 

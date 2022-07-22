@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Divider, ListItem} from '@ui-kitten/components';
 import Button from './Button';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
@@ -22,6 +21,8 @@ import {sendMessage} from '../../helpers/api';
 import moment from 'moment';
 import uuid from 'react-native-uuid';
 import Modal from './Modal';
+import Divider from './Divider';
+import ListItem from './ListItem';
 
 const ShareModal: React.FC<{
   visible: boolean;
@@ -103,9 +104,7 @@ const ShareModal: React.FC<{
           ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
             <ListItem
-              accessoryLeft={() => (
-                <Avatar name={item.name} src={item.avatar} />
-              )}
+              accessoryLeft={<Avatar name={item.name} src={item.avatar} />}
               onPress={() => {
                 if (selected.includes(item.uid)) {
                   setSelected(selected.filter(i => i !== item.uid));
@@ -114,7 +113,7 @@ const ShareModal: React.FC<{
                 }
               }}
               title={item.name}
-              accessoryRight={() =>
+              accessoryRight={
                 selected.includes(item.uid) ? (
                   <Icon
                     size={DevicePixels[20]}

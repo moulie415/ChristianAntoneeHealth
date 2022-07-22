@@ -3,11 +3,13 @@ import React, {useMemo, useState} from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
-import {Divider, Input, ListItem} from '@ui-kitten/components';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import _ from 'lodash';
 import {FlatList} from 'react-native-gesture-handler';
+import Divider from '../../commons/Divider';
+import ListItem from '../../commons/ListItem';
+import Input from '../../commons/Input';
 
 const Nutrition: React.FC<{
   nutrition: string[];
@@ -94,7 +96,7 @@ const Nutrition: React.FC<{
             if (typeof item === 'string') {
               return (
                 <ListItem
-                  accessoryLeft={() => (
+                  accessoryLeft={
                     <Icon
                       name={
                         nutrition.includes(item) ? 'check-square' : 'square'
@@ -104,13 +106,11 @@ const Nutrition: React.FC<{
                       color={colors.appWhite}
                       style={{marginRight: DevicePixels[10]}}
                     />
-                  )}
+                  }
                   style={{
                     backgroundColor: 'transparent',
                   }}
-                  title={() => (
-                    <Text style={{color: colors.appWhite}}>{item}</Text>
-                  )}
+                  title={item}
                   onPress={() =>
                     nutrition.includes(item)
                       ? setNutrition(nutrition.filter(i => i !== item))
@@ -125,17 +125,15 @@ const Nutrition: React.FC<{
                   style={{
                     backgroundColor: 'transparent',
                   }}
-                  title={() => (
-                    <Text style={{color: colors.appWhite}}>{item.key}</Text>
-                  )}
-                  accessoryRight={() => (
+                  title={item.key}
+                  accessoryRight={
                     <Icon
                       name={open[item.key] ? 'chevron-down' : 'chevron-right'}
                       size={DevicePixels[15]}
                       color={colors.appWhite}
                       style={{marginRight: DevicePixels[10]}}
                     />
-                  )}
+                  }
                   onPress={() =>
                     setOpen({...open, [item.key]: !open[item.key]})
                   }
@@ -145,7 +143,7 @@ const Nutrition: React.FC<{
                     <Input
                       placeholder="List supplements here..."
                       multiline
-                      textStyle={{
+                      style={{
                         height: DevicePixels[50],
                         textAlignVertical: 'top',
                       }}
@@ -160,7 +158,7 @@ const Nutrition: React.FC<{
                       const option = `${item.key}: ${i}`;
                       return (
                         <ListItem
-                          accessoryLeft={() => (
+                          accessoryLeft={
                             <Icon
                               name={
                                 nutrition.includes(option)
@@ -172,14 +170,12 @@ const Nutrition: React.FC<{
                               color={colors.appWhite}
                               style={{marginRight: DevicePixels[10]}}
                             />
-                          )}
+                          }
                           style={{
                             backgroundColor: 'transparent',
                             marginLeft: DevicePixels[10],
                           }}
-                          title={() => (
-                            <Text style={{color: colors.appWhite}}>{i}</Text>
-                          )}
+                          title={i}
                           key={i}
                           onPress={() => {
                             setNutrition([

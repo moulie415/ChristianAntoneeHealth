@@ -1,4 +1,3 @@
-import {ListItem} from '@ui-kitten/components';
 import React, {useEffect, useMemo} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -14,6 +13,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {FlatList} from 'react-native-gesture-handler';
 import Text from '../../commons/Text';
+import ListItem from '../../commons/ListItem';
 
 const ExerciseList: React.FC<ExerciseListProps> = ({
   exercises,
@@ -95,7 +95,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                 }}
                 title={item.name}
                 description={truncate(item.description, 75)}
-                accessoryLeft={() =>
+                accessoryLeft={
                   !item.premium || profile.premium ? (
                     <Image
                       style={{
