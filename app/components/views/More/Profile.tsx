@@ -38,6 +38,8 @@ import storage from '@react-native-firebase/storage';
 import Text from '../../commons/Text';
 import Input from '../../commons/Input';
 import Button from '../../commons/Button';
+import Header from '../../commons/Header';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -120,70 +122,97 @@ const Profile: React.FC<ProfileProps> = ({
         keyboardShouldPersistTaps="always"
         style={styles.container}
         contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
-        <View
+        <LinearGradient
+          colors={[colors.appBlueLight, colors.appBlueDark]}
           style={{
-            flexDirection: 'row',
-            margin: DevicePixels[20],
-            marginBottom: 0,
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              if (profile.premium) {
-                const MAX_SIZE = 500;
-                const cameraOptions: CameraOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                const imageLibraryOptions: ImageLibraryOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                Alert.alert('Edit profile photo', '', [
-                  {
-                    text: 'Upload from image library',
-                    onPress: () =>
-                      launchImageLibrary(cameraOptions, handlePickerCallback),
-                  },
-                  {
-                    text: 'Take photo',
-                    onPress: () =>
-                      launchCamera(imageLibraryOptions, handlePickerCallback),
-                  },
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                ]);
-              } else {
-                navigation.navigate('Premium');
-              }
-            }}
-            style={{marginRight: DevicePixels[15]}}>
-            <Avatar name={profile.name} src={avatar} size={DevicePixels[50]} />
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                backgroundColor: colors.appBlue,
-                height: DevicePixels[15],
-                width: DevicePixels[15],
-                borderRadius: DevicePixels[8],
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Icon
-                size={DevicePixels[8]}
-                name={profile.premium ? 'pencil-alt' : 'lock'}
-                color="#fff"
+            height: DevicePixels[300],
+            borderBottomLeftRadius: DevicePixels[20],
+            borderBottomRightRadius: DevicePixels[20],
+          }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
+          <Header
+            hasBack
+            title="Profile"
+            right={
+              <TouchableOpacity>
+                <Icon
+                  name="edit"
+                  size={DevicePixels[20]}
+                  color={colors.appWhite}
+                />
+              </TouchableOpacity>
+            }
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              margin: DevicePixels[20],
+              marginBottom: 0,
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                if (profile.premium) {
+                  const MAX_SIZE = 500;
+                  const cameraOptions: CameraOptions = {
+                    mediaType: 'photo',
+                    maxHeight: MAX_SIZE,
+                    maxWidth: MAX_SIZE,
+                  };
+                  const imageLibraryOptions: ImageLibraryOptions = {
+                    mediaType: 'photo',
+                    maxHeight: MAX_SIZE,
+                    maxWidth: MAX_SIZE,
+                  };
+                  Alert.alert('Edit profile photo', '', [
+                    {
+                      text: 'Upload from image library',
+                      onPress: () =>
+                        launchImageLibrary(cameraOptions, handlePickerCallback),
+                    },
+                    {
+                      text: 'Take photo',
+                      onPress: () =>
+                        launchCamera(imageLibraryOptions, handlePickerCallback),
+                    },
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                  ]);
+                } else {
+                  navigation.navigate('Premium');
+                }
+              }}
+              style={{marginRight: DevicePixels[15]}}>
+              <Avatar
+                name={profile.name}
+                src={avatar}
+                size={DevicePixels[50]}
               />
-            </View>
-          </TouchableOpacity>
-          <Text>{profile.name}</Text>
-        </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  backgroundColor: colors.appBlue,
+                  height: DevicePixels[15],
+                  width: DevicePixels[15],
+                  borderRadius: DevicePixels[8],
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Icon
+                  size={DevicePixels[8]}
+                  name={profile.premium ? 'pencil-alt' : 'lock'}
+                  color="#fff"
+                />
+              </View>
+            </TouchableOpacity>
+            <Text>{profile.name}</Text>
+          </View>
+        </LinearGradient>
         <View style={{margin: DevicePixels[20]}}>
           <Text style={{color: colors.textGrey, flex: 1}}>Date of Birth</Text>
           {(show || Platform.OS === 'ios') && (

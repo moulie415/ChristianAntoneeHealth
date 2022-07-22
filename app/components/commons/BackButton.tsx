@@ -7,15 +7,18 @@ import DevicePixels from '../../helpers/DevicePixels';
 const BackButton: React.FC<TouchableOpacityProps> = props => {
   return (
     <TouchableOpacity
-      style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: DevicePixels[40],
-        height: DevicePixels[40],
-        borderRadius: DevicePixels[20],
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-      {...props}>
+      {...props}
+      style={[
+        {
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          width: DevicePixels[40],
+          height: DevicePixels[40],
+          borderRadius: DevicePixels[20],
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        props.style,
+      ]}>
       <Icon
         name="chevron-left"
         color={colors.appWhite}

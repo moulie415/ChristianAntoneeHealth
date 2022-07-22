@@ -154,7 +154,11 @@ const StackComponent: FunctionComponent = () => {
               headerShown: false,
             })}
           />
-          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{headerShown: false}}
+          />
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Support" component={Support} />
           <Stack.Screen name="Terms" component={Terms} />
