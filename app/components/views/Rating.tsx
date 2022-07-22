@@ -47,11 +47,10 @@ const Rating: React.FC<{
       />
       <Input
         placeholder="Give us feedback here (optional)"
-        style={{margin: DevicePixels[20]}}
         value={feedback}
         onChangeText={setFeedback}
         multiline
-        textStyle={{
+        style={{
           height: DevicePixels[50],
           textAlignVertical: 'top',
         }}

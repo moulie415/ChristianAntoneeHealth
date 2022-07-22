@@ -385,10 +385,10 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           </Text>
           <ResistanceScaleInfo />
           <Button
+            text="OK"
             onPress={() => setShowModal(false)}
-            style={{alignSelf: 'center', margin: DevicePixels[10]}}>
-            OK
-          </Button>
+            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+          />
         </View>
       </Modal>
       <MusicButton />

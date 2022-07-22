@@ -77,7 +77,6 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
       <Button
         text="Share workout"
         onPress={() => setShareModalVisibleAction(true)}
-        accessoryLeft={() => <Icon name="share-alt" color="#fff" />}
         style={{
           margin: DevicePixels[10],
           marginBottom: DevicePixels[20],

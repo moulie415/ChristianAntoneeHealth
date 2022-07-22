@@ -1,4 +1,3 @@
-import {ButtonGroup, Input, Spinner} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import {generateLink} from '../../../helpers/api';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -6,34 +5,54 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Button from '../../commons/Button';
 import Snackbar from 'react-native-snackbar';
-import {Share, View} from 'react-native';
+import {ImageBackground, Share, StyleSheet, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../../types/Profile';
 import {logError} from '../../../helpers/error';
+import IconButton from '../../commons/IconButton';
+import Input from '../../commons/Input';
+import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
 
 const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   const [loading, setLoading] = useState(false);
   const [link, setLink] = useState('');
   return (
-    <View style={{flex: 1}}>
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
+      <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
+        Send an invite link to someone you want to connect with, this link will
+        only work once, please only send it to someone you wish to connect with
+      </Text>
       <Input
-        label="Send an invite link to someone you want to connect with, this link will only work once, please only send it to someone you wish to connect with"
         disabled
-        style={{margin: DevicePixels[10]}}
+        containerStyle={{margin: DevicePixels[10]}}
         value={link}
         placeholder="Press button to generate link"
-        accessoryRight={() =>
+        accessoryRight={
           link ? (
-            <ButtonGroup>
-              <Button
+            <>
+              <IconButton
+                icon="clipboard"
+                style={{marginRight: DevicePixels[5]}}
                 onPress={() => {
                   Clipboard.setString(link);
                   Snackbar.show({text: 'Link copied to clipboard!'});
                 }}>
                 <Icon name="clipboard" />
-              </Button>
-              <Button
+              </IconButton>
+              <IconButton
+                icon="share-alt"
                 onPress={async () => {
                   try {
                     const {action} = await Share.share({
@@ -48,27 +67,26 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
                     Snackbar.show({text: 'Error sharing link'});
                     logError(e);
                   }
-                }}>
-                <Icon name="share-alt" />
-              </Button>
-            </ButtonGroup>
+                }}
+              />
+            </>
           ) : null
         }
       />
       <Button
+        text="Generate"
         style={{margin: DevicePixels[10]}}
         disabled={!!link || loading}
-        accessoryLeft={() => (loading ? <Spinner /> : null)}
+        loading={loading}
         onPress={async () => {
           setLoading(true);
           const data = await generateLink();
 
           setLoading(false);
           setLink(data);
-        }}>
-        Generate
-      </Button>
-    </View>
+        }}
+      />
+    </ImageBackground>
   );
 };
 

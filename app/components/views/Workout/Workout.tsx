@@ -295,7 +295,7 @@ const Workout: React.FC<WorkoutProps> = ({
           </View>
         </TouchableOpacity>
         <Button
-          disabled={false}
+          text="Continue"
           onPress={() => {
             if (equipment.length) {
               setWorkoutAction([]);
@@ -310,9 +310,8 @@ const Workout: React.FC<WorkoutProps> = ({
               Alert.alert('Sorry', 'Please specify equipment first');
             }
           }}
-          style={{margin: DevicePixels[10]}}>
-          Continue
-        </Button>
+          style={{margin: DevicePixels[10]}}
+        />
       </SafeAreaView>
       <BottomSheet
         ref={sheetRef}

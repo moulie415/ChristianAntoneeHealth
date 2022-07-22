@@ -85,6 +85,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
         }}
       />
       <Button
+        text="Sync with native calendar"
         style={{margin: DevicePixels[20]}}
         onPress={async () => {
           try {
@@ -99,9 +100,8 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
             logError(e);
             Snackbar.show({text: 'Error syncing calendar'});
           }
-        }}>
-        Sync with native calendar
-      </Button>
+        }}
+      />
       <Modal
         visible={modalVisible}
         onBackDropPress={() => setModalVisible(false)}>

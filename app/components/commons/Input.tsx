@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {TextInputProps} from 'react-native';
 import colors from '../../constants/colors';
@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 interface Props extends TextInputProps {
   secure?: boolean;
   containerStyle?: ViewStyle;
+  disabled?: boolean;
+  accessoryRight?: ReactNode;
 }
 
 const Input: React.FC<Props> = props => {
@@ -17,6 +19,7 @@ const Input: React.FC<Props> = props => {
       <TextInput
         {...props}
         secureTextEntry={secure}
+        editable={!props.disabled}
         placeholderTextColor={colors.appWhite}
         style={[
           {
@@ -48,6 +51,21 @@ const Input: React.FC<Props> = props => {
               size={DevicePixels[20]}
             />
           </TouchableOpacity>
+        </View>
+      )}
+      {!!props.accessoryRight && (
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+
+            height: DevicePixels[70],
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            right: DevicePixels[20],
+          }}>
+          {props.accessoryRight}
         </View>
       )}
     </View>

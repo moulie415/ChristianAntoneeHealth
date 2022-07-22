@@ -197,7 +197,7 @@ const Plan: React.FC<{
                           ? '(' + p.product.price_string + ')'
                           : ''
                       }`}
-                      accessoryLeft={() => (loading ? <Spinner /> : null)}
+                      loading={loading}
                       onPress={() => {
                         if (profile.premium) {
                           requestPlanAction();
@@ -223,7 +223,7 @@ const Plan: React.FC<{
                     }}
                     disabled={loading}
                     text="No thanks, I just want premium"
-                    accessoryLeft={() => (loading ? <Spinner /> : null)}
+                    loading={loading}
                     onPress={() => {
                       navigation.navigate('Premium', {
                         onActivated: () => {

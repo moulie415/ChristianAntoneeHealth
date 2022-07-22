@@ -109,7 +109,7 @@ const Premium: React.FC<PremiumProps> = ({
           source={require('../../../images/logo.png')}
         />
         {/* <Text
-        
+
           style={{
             marginBottom: DevicePixels[20],
             textAlign: 'center',
@@ -129,9 +129,7 @@ const Premium: React.FC<PremiumProps> = ({
               name="dumbbell"
             />
             <View style={{flex: 1}}>
-              <Text style={{fontWeight: 'bold'}}>
-                Workouts
-              </Text>
+              <Text style={{fontWeight: 'bold'}}>Workouts</Text>
               <Text style={{}}>
                 Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> workouts to
                 select workouts from any training style and target every body
@@ -148,9 +146,7 @@ const Premium: React.FC<PremiumProps> = ({
               name="book-open"
             />
             <View style={{flex: 1}}>
-              <Text  style={{fontWeight: 'bold'}}>
-                Educational Articles
-              </Text>
+              <Text style={{fontWeight: 'bold'}}>Educational Articles</Text>
               <Text style={{}}>
                 Gain access to <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
                 educational content
@@ -165,9 +161,7 @@ const Premium: React.FC<PremiumProps> = ({
               name="heartbeat"
             />
             <View style={{flex: 1}}>
-              <Text style={{fontWeight: 'bold'}}>
-                Fitness Testing
-              </Text>
+              <Text style={{fontWeight: 'bold'}}>Fitness Testing</Text>
               <Text style={{}}>
                 See how you rank against others by unlocking{' '}
                 <Text style={{fontWeight: 'bold'}}>ALL</Text> fitness testing
@@ -183,9 +177,7 @@ const Premium: React.FC<PremiumProps> = ({
               name="user-friends"
             />
             <View style={{flex: 1}}>
-              <Text style={{fontWeight: 'bold'}}>
-                Stay connected
-              </Text>
+              <Text style={{fontWeight: 'bold'}}>Stay connected</Text>
               <Text style={{}}>
                 Enjoy in-app messaging where you can share exercises, workouts,
                 and compare tests results!
@@ -220,9 +212,7 @@ const Premium: React.FC<PremiumProps> = ({
                 name="comment-slash"
               />
               <View style={{flex: 1}}>
-                <Text  style={{fontWeight: 'bold'}}>
-                  Remove Ads
-                </Text>
+                <Text style={{fontWeight: 'bold'}}>Remove Ads</Text>
                 <Text style={{}}>
                   Enjoy the full content of the app Ad-free
                 </Text>
@@ -235,17 +225,10 @@ const Premium: React.FC<PremiumProps> = ({
             {premiumActive ? (
               <View
                 style={{alignItems: 'center', paddingBottom: DevicePixels[20]}}>
-                <Text style={{textAlign: 'center'}}>
-                  🎉 Premium active 🎉
-                </Text>
+                <Text style={{textAlign: 'center'}}>🎉 Premium active 🎉</Text>
                 <TouchableOpacity
                   onPress={() => Linking.openURL(info.managementURL)}>
-                  <Text
-                  
-                    style={{textAlign: 'center'}}
-                    status="primary">
-                    Manage subscription
-                  </Text>
+                  <Text style={{textAlign: 'center'}}>Manage subscription</Text>
                 </TouchableOpacity>
               </View>
             ) : (
@@ -295,7 +278,6 @@ const Premium: React.FC<PremiumProps> = ({
                         }}
                         key={p.identifier}>
                         <Text
-                         
                           style={{
                             textTransform: 'uppercase',
                             textAlign: 'center',
