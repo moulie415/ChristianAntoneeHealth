@@ -38,7 +38,7 @@ const ListItem: React.FC<{
       ]}>
       {!!accessoryLeft && accessoryLeft}
       <View style={{justifyContent: 'center', padding: DevicePixels[5]}}>
-        <Text style={{}}>{title}</Text>
+        <Text style={{color: colors.appWhite}}>{title}</Text>
         {!!description && (
           <Text style={{color: colors.textGrey}}>{description}</Text>
         )}

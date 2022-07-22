@@ -39,7 +39,7 @@ const CompleteSignUp: React.FC<{
         style={{
           flex: 1,
           justifyContent: 'center',
-          margin: DevicePixels[20],
+          margin: DevicePixels[50],
         }}>
         <Text
           style={{

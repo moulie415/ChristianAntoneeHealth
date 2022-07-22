@@ -293,7 +293,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     {
       key: 'complete',
-      showNext: false,
+      showNext: true,
       component: (
         <CompleteSignUp
           completeSignUp={completeSignUp}
