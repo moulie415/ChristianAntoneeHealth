@@ -11,6 +11,9 @@ export function navigate(name: keyof StackParamList, params?: any) {
 }
 
 export function resetToTabs() {
+  if (navigationRef.current?.getCurrentRoute().name === 'Tabs') {
+    return;
+  }
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 0,
@@ -19,27 +22,10 @@ export function resetToTabs() {
   );
 }
 
-export function resetToLogin() {
-  navigationRef.current?.dispatch(
-    CommonActions.reset({
-      index: 0,
-      routes: [{name: 'Login'}],
-    }),
-  );
-}
-
-export function navigateToLoginIfNecessary() {
-  if (
-    !navigationRef
-      .getState()
-      ?.routes.map(route => route.name)
-      .includes('Login')
-  ) {
-    navigate('Login');
-  }
-}
-
 export function resetToWelcome() {
+  if (navigationRef.current?.getCurrentRoute().name === 'Login') {
+    return;
+  }
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 0,

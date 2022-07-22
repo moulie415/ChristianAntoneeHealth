@@ -85,7 +85,7 @@ const Nutrition: React.FC<{
           removeClippedSubviews={false}
           contentContainerStyle={{
             paddingBottom: DevicePixels[50],
-            width: DevicePixels[200]
+            width: DevicePixels[200],
           }}
           scrollEnabled
           data={items}
