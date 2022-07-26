@@ -19,6 +19,7 @@ import messaging from '@react-native-firebase/messaging';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
+import {logError} from '../../../helpers/error';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -31,11 +32,15 @@ const More: React.FC<MoreProps> = ({
       {
         text: 'OK',
         onPress: async () => {
-          resetToWelcome();
-          messaging().deleteToken();
-          Purchases.logOut();
-          await auth().signOut();
-          setLoggedInAction(false);
+          try {
+            resetToWelcome();
+            await messaging().deleteToken();
+            await Purchases.logOut();
+            await auth().signOut();
+            setLoggedInAction(false);
+          } catch (e) {
+            logError(e);
+          }
         },
       },
     ]);
