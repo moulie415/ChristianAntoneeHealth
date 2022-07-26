@@ -70,7 +70,7 @@ const StackComponent: FunctionComponent = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            options={{headerTitle: 'Forgot Password'}}
+            options={{headerShown: false}}
             name="ForgotPassword"
             component={ForgotPassword}
           />

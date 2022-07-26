@@ -98,27 +98,27 @@ const Login: React.FC<LoginProps> = ({
           <View style={{}}>
             <View
               style={{
-                width: DevicePixels[200],
-                height: DevicePixels[200],
-                borderRadius: DevicePixels[100],
+                width: DevicePixels[175],
+                height: DevicePixels[175],
+                borderRadius: DevicePixels[90],
                 backgroundColor: 'rgba(255,255,255, 0.2)',
                 justifyContent: 'center',
                 alignSelf: 'center',
                 alignItems: 'center',
-                marginTop: DevicePixels[30],
+                marginTop: DevicePixels[10],
               }}>
               <View
                 style={{
-                  width: DevicePixels[175],
-                  height: DevicePixels[175],
-                  borderRadius: DevicePixels[90],
+                  width: DevicePixels[150],
+                  height: DevicePixels[150],
+                  borderRadius: DevicePixels[75],
                   backgroundColor: colors.appWhite,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                 <Image
                   source={require('../../images/logo.png')}
-                  style={{width: DevicePixels[100], height: DevicePixels[88]}}
+                  style={{width: DevicePixels[90], height: DevicePixels[79]}}
                 />
               </View>
             </View>
@@ -127,7 +127,7 @@ const Login: React.FC<LoginProps> = ({
               onChangeText={setEmail}
               containerStyle={{
                 marginHorizontal: DevicePixels[20],
-                marginTop: DevicePixels[30],
+                marginTop: DevicePixels[20],
               }}
               placeholder="Email"
               autoCapitalize="none"
