@@ -3,6 +3,7 @@ import {
   Alert,
   ImageBackground,
   Platform,
+  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -62,109 +63,111 @@ const SignUp: React.FC<SignUpProps> = ({
           opacity: 0.7,
         }}
       />
-      <KeyboardAwareScrollView>
-        <Text
-          variant="bold"
-          style={{
-            color: colors.appWhite,
-            fontSize: DevicePixels[24],
-            margin: DevicePixels[20],
-            marginBottom: 0,
-          }}>
-          Registration
-        </Text>
-        <Text
-          style={{
-            color: colors.appWhite,
-            margin: DevicePixels[20],
-            marginTop: DevicePixels[10],
-          }}>
-          Please enter your personal details, then we will send you a
-          verification email (please remember to check your junk/spam folder).
-        </Text>
-        <Input
-          containerStyle={{
-            marginHorizontal: DevicePixels[20],
-          }}
-          placeholder="Name"
-          onChangeText={setName}
-          placeholderTextColor="#fff"
-          autoCorrect={false}
-        />
-        <Input
-          containerStyle={{
-            marginHorizontal: DevicePixels[20],
-            marginTop: DevicePixels[20],
-          }}
-          placeholder="Email"
-          onChangeText={setEmail}
-          placeholderTextColor="#fff"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-        />
-        <Input
-          containerStyle={{
-            marginHorizontal: DevicePixels[20],
-            marginTop: DevicePixels[20],
-          }}
-          placeholder="Password"
-          secure
-          placeholderTextColor="#fff"
-          onChangeText={setPass}
-          autoCorrect={false}
-          autoCapitalize="none"
-        />
-        <Input
-          containerStyle={{
-            marginHorizontal: DevicePixels[20],
-            marginTop: DevicePixels[20],
-          }}
-          placeholder="Confirm password"
-          secure
-          placeholderTextColor="#fff"
-          onChangeText={setConfirm}
-          autoCorrect={false}
-          autoCapitalize="none"
-        />
-        <Button
-          loading={loading}
-          disabled={loading}
-          onPress={signUp}
-          text="Signup"
-          style={{
-            marginHorizontal: DevicePixels[20],
-            marginTop: DevicePixels[20],
-          }}
-        />
-
-        <TouchableOpacity
-          style={{marginTop: DevicePixels[10]}}
-          onPress={() => navigation.navigate('Login')}
-          hitSlop={{
-            top: DevicePixels[10],
-            bottom: DevicePixels[10],
-            right: DevicePixels[10],
-            left: DevicePixels[10],
-          }}>
+      <SafeAreaView>
+        <KeyboardAwareScrollView>
+          <Text
+            variant="bold"
+            style={{
+              color: colors.appWhite,
+              fontSize: DevicePixels[24],
+              margin: DevicePixels[20],
+              marginBottom: 0,
+            }}>
+            Registration
+          </Text>
           <Text
             style={{
-              color: '#fff',
-              marginHorizontal: DevicePixels[20],
-              textAlign: 'center',
+              color: colors.appWhite,
+              margin: DevicePixels[20],
+              marginTop: DevicePixels[10],
             }}>
-            Already have an account or want to use {getAuthString()}
-            {'  '}
+            Please enter your personal details, then we will send you a
+            verification email (please remember to check your junk/spam folder).
+          </Text>
+          <Input
+            containerStyle={{
+              marginHorizontal: DevicePixels[20],
+            }}
+            placeholder="Name"
+            onChangeText={setName}
+            placeholderTextColor="#fff"
+            autoCorrect={false}
+          />
+          <Input
+            containerStyle={{
+              marginHorizontal: DevicePixels[20],
+              marginTop: DevicePixels[20],
+            }}
+            placeholder="Email"
+            onChangeText={setEmail}
+            placeholderTextColor="#fff"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+          />
+          <Input
+            containerStyle={{
+              marginHorizontal: DevicePixels[20],
+              marginTop: DevicePixels[20],
+            }}
+            placeholder="Password"
+            secure
+            placeholderTextColor="#fff"
+            onChangeText={setPass}
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
+          <Input
+            containerStyle={{
+              marginHorizontal: DevicePixels[20],
+              marginTop: DevicePixels[20],
+            }}
+            placeholder="Confirm password"
+            secure
+            placeholderTextColor="#fff"
+            onChangeText={setConfirm}
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
+          <Button
+            loading={loading}
+            disabled={loading}
+            onPress={signUp}
+            text="Signup"
+            style={{
+              marginHorizontal: DevicePixels[20],
+              marginTop: DevicePixels[20],
+            }}
+          />
+
+          <TouchableOpacity
+            style={{marginTop: DevicePixels[10]}}
+            onPress={() => navigation.navigate('Login')}
+            hitSlop={{
+              top: DevicePixels[10],
+              bottom: DevicePixels[10],
+              right: DevicePixels[10],
+              left: DevicePixels[10],
+            }}>
             <Text
-              variant="bold"
               style={{
                 color: '#fff',
+                marginHorizontal: DevicePixels[20],
+                textAlign: 'center',
               }}>
-              Log in
+              Already have an account or want to use {getAuthString()}
+              {'  '}
+              <Text
+                variant="bold"
+                style={{
+                  color: '#fff',
+                }}>
+                Log in
+              </Text>
             </Text>
-          </Text>
-        </TouchableOpacity>
-      </KeyboardAwareScrollView>
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     </ImageBackground>
   );
 };
