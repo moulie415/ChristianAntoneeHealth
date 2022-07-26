@@ -38,11 +38,11 @@ const Input: React.FC<Props> = props => {
         <View
           style={{
             position: 'absolute',
-            width: '100%',
             height: DevicePixels[70],
             justifyContent: 'center',
             alignItems: 'flex-end',
             right: DevicePixels[20],
+            width: DevicePixels[30],
           }}>
           <TouchableOpacity onPress={() => setSecure(!secure)}>
             <Icon

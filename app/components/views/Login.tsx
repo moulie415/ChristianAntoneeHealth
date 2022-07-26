@@ -105,7 +105,8 @@ const Login: React.FC<LoginProps> = ({
                 justifyContent: 'center',
                 alignSelf: 'center',
                 alignItems: 'center',
-                marginTop: DevicePixels[10],
+                marginTop:
+                  Platform.OS === 'ios' ? DevicePixels[10] : DevicePixels[30],
               }}>
               <View
                 style={{
