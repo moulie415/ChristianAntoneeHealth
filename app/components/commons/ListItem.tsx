@@ -1,4 +1,4 @@
-import {TouchableOpacity, View, ViewStyle} from 'react-native';
+import {TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
 import Text from './Text';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -13,6 +13,8 @@ const ListItem: React.FC<{
   description?: string;
   disabled?: boolean;
   style?: ViewStyle;
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
 }> = ({
   onPress,
   accessoryLeft,
@@ -22,6 +24,8 @@ const ListItem: React.FC<{
   disabled,
   style,
   onLongPress,
+  titleStyle,
+  descriptionStyle,
 }) => {
   return (
     <TouchableOpacity
@@ -38,9 +42,11 @@ const ListItem: React.FC<{
       ]}>
       {!!accessoryLeft && accessoryLeft}
       <View style={{justifyContent: 'center', padding: DevicePixels[5]}}>
-        <Text style={{color: colors.appWhite}}>{title}</Text>
+        <Text style={[{color: colors.appWhite}, titleStyle]}>{title}</Text>
         {!!description && (
-          <Text style={{color: colors.textGrey}}>{description}</Text>
+          <Text style={[{color: colors.textGrey}, descriptionStyle]}>
+            {description}
+          </Text>
         )}
       </View>
       {!!accessoryRight && (

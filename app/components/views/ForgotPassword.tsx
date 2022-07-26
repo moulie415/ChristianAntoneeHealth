@@ -38,7 +38,7 @@ const ForgotPassword: React.FC<{
         <Input
           style={{
             margin: DevicePixels[20],
-            marginTop: 0
+            marginTop: 0,
           }}
           placeholder="Email"
           onChangeText={e => setEmail(e)}

@@ -5,6 +5,7 @@ import {navigationRef} from '../../RootNavigation';
 import DevicePixels from '../../helpers/DevicePixels';
 import Text from './Text';
 import colors from '../../constants/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Header: React.FC<{
   hasBack?: boolean;

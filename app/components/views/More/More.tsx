@@ -32,9 +32,9 @@ const More: React.FC<MoreProps> = ({
         text: 'OK',
         onPress: async () => {
           resetToWelcome();
-          await auth().signOut();
           messaging().deleteToken();
           Purchases.logOut();
+          await auth().signOut();
           setLoggedInAction(false);
         },
       },
@@ -141,6 +141,7 @@ const More: React.FC<MoreProps> = ({
           renderItem={({item}) => (
             <ListItem
               title={item.title}
+              titleStyle={{color: colors.appBlack}}
               accessoryLeft={
                 <Icon
                   size={DevicePixels[20]}
