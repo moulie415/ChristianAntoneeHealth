@@ -327,9 +327,8 @@ const Workout: React.FC<WorkoutProps> = ({
             borderTopLeftRadius: DevicePixels[5],
             borderTopRightRadius: DevicePixels[5],
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onCancel}>
             <Text
-              onPress={onCancel}
               style={{
                 color: colors.appBlue,
                 padding: DevicePixels[10],

@@ -66,13 +66,12 @@ const CompleteSignUp: React.FC<{
           <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
             I've read the{' '}
             <Text
-              onPress={() =>
+              onPress={() => {
                 Linking.openURL('https://christianantonee.com/privacy-policy')
-              }
-              variant="bold"
+              }}
               style={{
                 textDecorationLine: 'underline',
-
+                fontWeight: 'bold',
                 color: colors.appWhite,
               }}>
               Privacy Policy

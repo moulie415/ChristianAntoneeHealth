@@ -58,8 +58,11 @@ const HomeCard: React.FC<{
           padding: DevicePixels[10],
         }}>
         <Text
-          variant="bold"
-          style={{color: colors.appWhite, fontSize: DevicePixels[18]}}>
+          style={{
+            color: colors.appWhite,
+            fontSize: DevicePixels[18],
+            fontWeight: 'bold',
+          }}>
           {title}
         </Text>
         <Text style={{color: colors.appWhite}}>{subtitle}</Text>

@@ -54,12 +54,13 @@ const SelectHeight: React.FC<{
           What's your height?
         </Text>
         <Text
-          variant="bold"
+      
           style={{
             color: colors.appWhite,
             textAlign: 'center',
             marginBottom: DevicePixels[20],
             fontSize: DevicePixels[30],
+            fontWeight: 'bold',
           }}>
           {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
         </Text>

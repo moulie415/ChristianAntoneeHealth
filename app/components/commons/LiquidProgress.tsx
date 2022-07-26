@@ -104,6 +104,7 @@ const LiquidProgress: React.FC<{
               ],
             }}>
             <AnimatedSvg
+              // @ts-ignore
               width={SIZE * 3}
               height={SIZE}
               style={{
@@ -139,6 +140,7 @@ const LiquidProgress: React.FC<{
               />
             </AnimatedSvg>
             <AnimatedSvg
+              // @ts-ignore
               width={SIZE * 3}
               height={SIZE}
               style={{
@@ -175,6 +177,7 @@ const LiquidProgress: React.FC<{
               />
             </AnimatedSvg>
             <AnimatedSvg
+              // @ts-ignore
               width={SIZE * 3}
               height={SIZE * 2}
               style={{

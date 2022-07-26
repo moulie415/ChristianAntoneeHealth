@@ -69,21 +69,21 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
         </View>
 
         <Text
-          variant="bold"
           style={{
             marginLeft: DevicePixels[20],
             fontSize: DevicePixels[14],
             color: colors.appWhite,
+            fontWeight: 'bold',
           }}>
           {`${greetingMessage()},`}
         </Text>
         <Text
-          variant="bold"
           style={{
             marginLeft: DevicePixels[20],
             marginBottom: DevicePixels[20],
             fontSize: DevicePixels[30],
             color: colors.appWhite,
+            fontWeight: 'bold',
           }}>
           {profile.name?.split(' ')[0] || 'user'}
         </Text>

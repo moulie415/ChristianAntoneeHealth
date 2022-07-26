@@ -66,12 +66,12 @@ const SignUp: React.FC<SignUpProps> = ({
       <SafeAreaView>
         <KeyboardAwareScrollView>
           <Text
-            variant="bold"
             style={{
               color: colors.appWhite,
               fontSize: DevicePixels[24],
               margin: DevicePixels[20],
               marginBottom: 0,
+              fontWeight: 'bold',
             }}>
             Registration
           </Text>
@@ -158,9 +158,9 @@ const SignUp: React.FC<SignUpProps> = ({
               Already have an account or want to use {getAuthString()}
               {'  '}
               <Text
-                variant="bold"
                 style={{
                   color: '#fff',
+                  fontWeight: 'bold',
                 }}>
                 Log in
               </Text>

@@ -22,12 +22,13 @@ const LetsBuild: React.FC = () => {
       <View
         style={{flex: 1, justifyContent: 'center', margin: DevicePixels[40]}}>
         <Text
-          variant="bold"
+     
           style={{
             color: colors.appWhite,
             textAlign: 'center',
             fontSize: DevicePixels[20],
             marginBottom: DevicePixels[10],
+            fontWeight: 'bold',
           }}>
           Let's build your profile
         </Text>

@@ -53,12 +53,12 @@ const SelectWeight: React.FC<{
           What's your weight?
         </Text>
         <Text
-          variant="bold"
           style={{
             color: colors.appWhite,
             textAlign: 'center',
             marginBottom: DevicePixels[20],
             fontSize: DevicePixels[30],
+            fontWeight: 'bold',
           }}>
           {`${weight} ${unit === 'metric' ? 'kg' : 'lbs'}`}
         </Text>

@@ -43,12 +43,12 @@ const Age: React.FC<{
           What's your age?
         </Text>
         <Text
-          variant="bold"
           style={{
             color: colors.appWhite,
             textAlign: 'center',
             marginBottom: DevicePixels[20],
             fontSize: DevicePixels[30],
+            fontWeight: 'bold',
           }}>
           {moment().diff(dob, 'years')}
         </Text>
