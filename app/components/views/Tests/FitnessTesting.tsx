@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import {Layout, Text} from '@ui-kitten/components';
 import globalStyles from '../../../styles/globalStyles';
 import ImageLoader from '../../commons/ImageLoader';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {getTestImage} from '../../../helpers/images';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Text from '../../commons/Text';
 
 const {height} = Dimensions.get('window');
 
@@ -38,7 +38,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
   const [showButton, setShowButton] = useState(true);
   const ref = useRef<ScrollView>(null);
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <ScrollView
         ref={ref}
         onScroll={() => setShowButton(false)}
@@ -88,9 +88,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
                   ...(index % 2 == 0 ? {right: 0} : {}),
                   margin: DevicePixels[1],
                 }}>
-                <Text
-                  category="h5"
-                  style={[globalStyles.textShadow, {color: '#fff'}]}>
+                <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
                   {name}
                 </Text>
               </View>
@@ -119,7 +117,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
           <Icon name="arrow-down" size={DevicePixels[20]} color="#fff" />
         </TouchableOpacity>
       )}
-    </Layout>
+    </View>
   );
 };
 

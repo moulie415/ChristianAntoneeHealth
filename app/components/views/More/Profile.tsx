@@ -13,15 +13,6 @@ import styles from '../../../styles/views/Profile';
 import ProfileProps from '../../../types/views/Profile';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
-import {
-  IndexPath,
-  Input,
-  Select,
-  SelectItem,
-  Text,
-  Button,
-  Layout,
-} from '@ui-kitten/components';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
 import * as _ from 'lodash';
@@ -44,6 +35,12 @@ import Snackbar from 'react-native-snackbar';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
 import storage from '@react-native-firebase/storage';
+import Text from '../../commons/Text';
+import Input from '../../commons/Input';
+import Button from '../../commons/Button';
+import Header from '../../commons/Header';
+import LinearGradient from 'react-native-linear-gradient';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -60,12 +57,6 @@ const Profile: React.FC<ProfileProps> = ({
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [avatar, setAvatar] = useState(profile.avatar);
   const [loading, setLoading] = useState(false);
-  const [selectedUnitIndex, setSelectedUnitIndex] = useState(
-    new IndexPath(profile.unit && profile.unit === 'imperial' ? 1 : 0),
-  );
-  const [selectedGenderIndex, setSelectedGenderIndex] = useState(
-    new IndexPath(gender && gender === 'female' ? 1 : 0),
-  );
 
   const newProfile = {
     ...profile,
@@ -127,79 +118,112 @@ const Profile: React.FC<ProfileProps> = ({
   );
 
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
         contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
-        <Layout
+        <LinearGradient
+          colors={[colors.appBlueLight, colors.appBlueDark]}
           style={{
-            flexDirection: 'row',
-            margin: DevicePixels[20],
-            marginBottom: 0,
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              if (profile.premium) {
-                const MAX_SIZE = 500;
-                const cameraOptions: CameraOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                const imageLibraryOptions: ImageLibraryOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                Alert.alert('Edit profile photo', '', [
-                  {
-                    text: 'Upload from image library',
-                    onPress: () =>
-                      launchImageLibrary(cameraOptions, handlePickerCallback),
-                  },
-                  {
-                    text: 'Take photo',
-                    onPress: () =>
-                      launchCamera(imageLibraryOptions, handlePickerCallback),
-                  },
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                ]);
-              } else {
-                navigation.navigate('Premium');
+            height: DevicePixels[300],
+            borderBottomLeftRadius: DevicePixels[20],
+            borderBottomRightRadius: DevicePixels[20],
+          }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
+          <SafeAreaView>
+            <Header
+              hasBack
+              title="Profile"
+              right={
+                <TouchableOpacity>
+                  <Icon
+                    name="edit"
+                    size={DevicePixels[20]}
+                    color={colors.appWhite}
+                  />
+                </TouchableOpacity>
               }
-            }}
-            style={{marginRight: DevicePixels[15]}}>
-            <Avatar name={profile.name} src={avatar} size={DevicePixels[50]} />
+            />
             <View
               style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                backgroundColor: colors.appBlue,
-                height: DevicePixels[15],
-                width: DevicePixels[15],
-                borderRadius: DevicePixels[8],
+                flexDirection: 'row',
+                margin: DevicePixels[20],
+                marginBottom: 0,
                 alignItems: 'center',
-                justifyContent: 'center',
               }}>
-              <Icon
-                size={DevicePixels[8]}
-                name={profile.premium ? 'pencil-alt' : 'lock'}
-                color="#fff"
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  if (profile.premium) {
+                    const MAX_SIZE = 500;
+                    const cameraOptions: CameraOptions = {
+                      mediaType: 'photo',
+                      maxHeight: MAX_SIZE,
+                      maxWidth: MAX_SIZE,
+                    };
+                    const imageLibraryOptions: ImageLibraryOptions = {
+                      mediaType: 'photo',
+                      maxHeight: MAX_SIZE,
+                      maxWidth: MAX_SIZE,
+                    };
+                    Alert.alert('Edit profile photo', '', [
+                      {
+                        text: 'Upload from image library',
+                        onPress: () =>
+                          launchImageLibrary(
+                            cameraOptions,
+                            handlePickerCallback,
+                          ),
+                      },
+                      {
+                        text: 'Take photo',
+                        onPress: () =>
+                          launchCamera(
+                            imageLibraryOptions,
+                            handlePickerCallback,
+                          ),
+                      },
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                    ]);
+                  } else {
+                    navigation.navigate('Premium');
+                  }
+                }}
+                style={{marginRight: DevicePixels[15]}}>
+                <Avatar
+                  name={profile.name}
+                  src={avatar}
+                  size={DevicePixels[50]}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    backgroundColor: colors.appBlue,
+                    height: DevicePixels[15],
+                    width: DevicePixels[15],
+                    borderRadius: DevicePixels[8],
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Icon
+                    size={DevicePixels[8]}
+                    name={profile.premium ? 'pencil-alt' : 'lock'}
+                    color="#fff"
+                  />
+                </View>
+              </TouchableOpacity>
+              <Text>{profile.name}</Text>
             </View>
-          </TouchableOpacity>
-          <Text category="h5">{profile.name}</Text>
-        </Layout>
-        <Layout style={{margin: DevicePixels[20]}}>
-          <Text style={{color: colors.textGrey, flex: 1}} category="label">
-            Date of Birth
-          </Text>
+          </SafeAreaView>
+        </LinearGradient>
+        <View style={{margin: DevicePixels[20]}}>
+          <Text style={{color: colors.textGrey, flex: 1}}>Date of Birth</Text>
           {(show || Platform.OS === 'ios') && (
             <DatePicker
               style={{
@@ -233,21 +257,10 @@ const Profile: React.FC<ProfileProps> = ({
               <Text>{moment(dob).format('DD/MM/YYYY')}</Text>
             </TouchableOpacity>
           )}
+          <Text>Unit</Text>
+          <Text>{unit || 'Select unit'}</Text>
 
-          <Select
-            style={{width: '65%'}}
-            selectedIndex={selectedUnitIndex}
-            onSelect={index => {
-              setSelectedUnitIndex(index as IndexPath);
-              if ('row' in index) {
-                setUnit(index.row === 0 ? 'metric' : 'imperial');
-              }
-            }}
-            value={unit || 'Select unit'}
-            label="Unit">
-            <SelectItem selected={unit === 'metric'} title="metric" />
-            <SelectItem selected={unit === 'imperial'} title="imperial" />
-          </Select>
+          <Text>{`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}</Text>
           <Input
             value={weight?.toString()}
             returnKeyType="done"
@@ -257,9 +270,9 @@ const Profile: React.FC<ProfileProps> = ({
               marginTop: DevicePixels[10],
             }}
             onChangeText={val => setWeight(Number(val.replace(/[^0-9]/g, '')))}
-            label={`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}
             keyboardType="numeric"
           />
+          <Text>{`Height (${unit === 'metric' ? 'cm' : 'inches'})`}</Text>
           <Input
             value={height?.toString()}
             returnKeyType="done"
@@ -269,26 +282,12 @@ const Profile: React.FC<ProfileProps> = ({
               marginTop: DevicePixels[10],
             }}
             onChangeText={val => setHeight(Number(val.replace(/[^0-9]/g, '')))}
-            label={`Height (${unit === 'metric' ? 'cm' : 'inches'})`}
             keyboardType="numeric"
           />
-
-          <Select
-            style={{width: '65%', marginBottom: DevicePixels[10]}}
-            selectedIndex={selectedGenderIndex}
-            onSelect={index => {
-              setSelectedGenderIndex(index as IndexPath);
-              if ('row' in index) {
-                setGender(index.row === 0 ? 'male' : 'female');
-              }
-            }}
-            value={gender || 'Select gender'}
-            label="Gender">
-            <SelectItem selected={gender === 'male'} title="male" />
-            <SelectItem selected={gender === 'female'} title="female" />
-          </Select>
-        </Layout>
-        <Text category="h6" style={{margin: DevicePixels[20], marginTop: 0}}>
+          <Text>Gender</Text>
+          <Text>{gender || 'Select gender'}</Text>
+        </View>
+        <Text style={{margin: DevicePixels[20], marginTop: 0}}>
           Weight tracking
         </Text>
         <LineChart
@@ -300,13 +299,13 @@ const Profile: React.FC<ProfileProps> = ({
           withShadow={false}
         />
         <Button
+          text=" Delete my account"
           style={{margin: DevicePixels[20]}}
-          status="danger"
-          onPress={() => navigation.navigate('DeleteAccount')}>
-          Delete my account
-        </Button>
+          onPress={() => navigation.navigate('DeleteAccount')}
+        />
       </ScrollView>
       <Button
+        text="Save"
         onPress={async () => {
           try {
             setLoading(true);
@@ -342,11 +341,10 @@ const Profile: React.FC<ProfileProps> = ({
           left: 0,
           right: 0,
           bottom: 0,
-        }}>
-        Save
-      </Button>
+        }}
+      />
       <AbsoluteSpinner loading={loading} />
-    </Layout>
+    </View>
   );
 };
 

@@ -4,7 +4,6 @@ import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Text from '../../commons/Text';
-import {Divider, ListItem, Spinner} from '@ui-kitten/components';
 import ImageOverlay from '../../commons/ImageOverlay';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
@@ -18,6 +17,9 @@ import * as _ from 'lodash';
 import Education from '../../../types/Education';
 import {getEducationById} from '../../../actions/education';
 import Image from 'react-native-fast-image';
+import ListItem from '../../commons/ListItem';
+import Spinner from '../../commons/Spinner';
+import Divider from '../../commons/Divider';
 
 const Daily: React.FC<{
   plan: Plan;
@@ -110,9 +112,7 @@ const Daily: React.FC<{
         <SectionList
           sections={data}
           renderSectionHeader={({section: {title}}) => (
-            <Text style={{padding: DevicePixels[5]}} category="h6">
-              {title}
-            </Text>
+            <Text style={{padding: DevicePixels[5]}}>{title}</Text>
           )}
           renderItem={({item}) => {
             if ('name' in item) {
@@ -137,12 +137,8 @@ const Daily: React.FC<{
                     navigate('StartWorkout', {name: item.name, isLast});
                   }}
                   disabled={loading}
-                  title={() => (
-                    <Text category="h6" style={{padding: DevicePixels[5]}}>
-                      {item.name}
-                    </Text>
-                  )}
-                  accessoryLeft={() => (
+                  title={item.name}
+                  accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
                         height: DevicePixels[75],
@@ -155,9 +151,7 @@ const Daily: React.FC<{
                           <Spinner style={{borderColor: colors.appWhite}} />
                         ) : (
                           <>
-                            <Text
-                              category="h6"
-                              style={{color: colors.appWhite}}>
+                            <Text style={{color: colors.appWhite}}>
                               {item.exercises.length}
                             </Text>
                             <Text style={{color: colors.appWhite}}>
@@ -169,7 +163,7 @@ const Daily: React.FC<{
                         )}
                       </View>
                     </ImageOverlay>
-                  )}
+                  }
                 />
               );
             }
@@ -179,12 +173,8 @@ const Daily: React.FC<{
                   navigate('Test', {id: item.test});
                 }}
                 disabled={loading}
-                title={() => (
-                  <Text category="h6" style={{padding: DevicePixels[5]}}>
-                    {testsObj[item.test]?.name || ''}
-                  </Text>
-                )}
-                accessoryLeft={() => (
+                title={testsObj[item.test]?.name || ''}
+                accessoryLeft={
                   <ImageOverlay
                     containerStyle={{
                       height: DevicePixels[75],
@@ -204,7 +194,7 @@ const Daily: React.FC<{
                       )}
                     </View>
                   </ImageOverlay>
-                )}
+                }
               />
             );
           }}
@@ -230,9 +220,7 @@ const Daily: React.FC<{
               </View>
             ) : (
               <View>
-                <Text style={{padding: DevicePixels[5]}} category="h6">
-                  Education
-                </Text>
+                <Text style={{padding: DevicePixels[5]}}>Education</Text>
                 {plan.education.map(id => {
                   const item = education[id];
                   if (!item) {
@@ -251,7 +239,7 @@ const Daily: React.FC<{
                         description={moment(item.createdate).format(
                           'DD MMMM YYYY',
                         )}
-                        accessoryLeft={() => (
+                        accessoryLeft={
                           <Image
                             style={{
                               width: DevicePixels[75],
@@ -259,7 +247,7 @@ const Daily: React.FC<{
                             }}
                             source={{uri: item.image.src}}
                           />
-                        )}
+                        }
                       />
                     </View>
                   );
@@ -269,97 +257,65 @@ const Daily: React.FC<{
           </View>
         )}
         {(plan.nutrition || plan.sleep) && (
-          <Text style={{padding: DevicePixels[5]}} category="h6">
-            Other
-          </Text>
+          <Text style={{padding: DevicePixels[5]}}>Other</Text>
         )}
         {plan.nutrition && !_.isEmpty(plan.nutrition) && (
           <>
             <Divider />
-            <ListItem
-              title={() => {
-                return (
-                  <Text style={{marginLeft: DevicePixels[10]}} category="h6">
-                    Nutritional planning
-                  </Text>
-                );
-              }}
-              description={() => {
-                return (
-                  <View style={{marginLeft: DevicePixels[10]}}>
-                    {!!plan.nutrition.general && (
-                      <Text>
-                        <Text
-                          style={{fontWeight: 'bold', color: colors.textGrey}}>
-                          General recommendations:{' '}
-                        </Text>
-                        <Text style={{color: colors.textGrey}}>
-                          {plan.nutrition.general}
-                        </Text>
-                      </Text>
-                    )}
-                    {!!plan.nutrition.preWorkout && (
-                      <Text>
-                        <Text
-                          style={{fontWeight: 'bold', color: colors.textGrey}}>
-                          Pre-workout:{' '}
-                        </Text>
-                        <Text style={{color: colors.textGrey}}>
-                          {plan.nutrition.preWorkout}
-                        </Text>
-                      </Text>
-                    )}
-                    {!!plan.nutrition.postWorkout && (
-                      <Text>
-                        <Text
-                          style={{fontWeight: 'bold', color: colors.textGrey}}>
-                          Post-workout:{' '}
-                        </Text>
-                        <Text style={{color: colors.textGrey}}>
-                          {plan.nutrition.postWorkout}
-                        </Text>
-                      </Text>
-                    )}
-                  </View>
-                );
-              }}
-              accessoryLeft={() => (
-                <Icon
-                  name="apple-alt"
-                  size={DevicePixels[20]}
-                  color={colors.appBlue}
-                />
-              )}
+            <Icon
+              name="apple-alt"
+              size={DevicePixels[20]}
+              color={colors.appBlue}
             />
+            <Text>Nutritional planning</Text>
+            <View style={{marginLeft: DevicePixels[10]}}>
+              {!!plan.nutrition.general && (
+                <Text>
+                  <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
+                    General recommendations:{' '}
+                  </Text>
+                  <Text style={{color: colors.textGrey}}>
+                    {plan.nutrition.general}
+                  </Text>
+                </Text>
+              )}
+              {!!plan.nutrition.preWorkout && (
+                <Text>
+                  <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
+                    Pre-workout:{' '}
+                  </Text>
+                  <Text style={{color: colors.textGrey}}>
+                    {plan.nutrition.preWorkout}
+                  </Text>
+                </Text>
+              )}
+              {!!plan.nutrition.postWorkout && (
+                <Text>
+                  <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
+                    Post-workout:{' '}
+                  </Text>
+                  <Text style={{color: colors.textGrey}}>
+                    {plan.nutrition.postWorkout}
+                  </Text>
+                </Text>
+              )}
+            </View>
+            );
           </>
         )}
         {plan.sleep && !_.isEmpty(plan.sleep) && (
           <>
             <Divider />
             <ListItem
-              title={() => {
-                return (
-                  <Text style={{marginLeft: DevicePixels[10]}} category="h6">
-                    Sleep hygiene
-                  </Text>
-                );
-              }}
-              description={() => {
-                return (
-                  <View style={{marginLeft: DevicePixels[10]}}>
-                    <Text style={{color: colors.textGrey}}>
-                      {plan.sleep.general}
-                    </Text>
-                  </View>
-                );
-              }}
-              accessoryLeft={() => (
+              title="Sleep hygiene"
+              description={plan.sleep.general}
+              accessoryLeft={
                 <Icon
                   name="bed"
                   size={DevicePixels[20]}
                   color={colors.appBlue}
                 />
-              )}
+              }
             />
           </>
         )}

@@ -14,7 +14,6 @@ import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import * as api from '../../helpers/api';
 import {logError} from '../../helpers/error';
-import {Layout} from '@ui-kitten/components';
 
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
@@ -37,7 +36,7 @@ const Rating: React.FC<{
     }
   }, [navigation]);
   return (
-    <Layout style={{flex: 1, justifyContent: 'center'}}>
+    <View style={{flex: 1, justifyContent: 'center'}}>
       <StarRating
         containerStyle={{marginHorizontal: DevicePixels[40]}}
         fullStarColor={colors.appBlue}
@@ -48,11 +47,10 @@ const Rating: React.FC<{
       />
       <Input
         placeholder="Give us feedback here (optional)"
-        style={{margin: DevicePixels[20]}}
         value={feedback}
         onChangeText={setFeedback}
         multiline
-        textStyle={{
+        style={{
           height: DevicePixels[50],
           textAlignVertical: 'top',
         }}
@@ -73,10 +71,10 @@ const Rating: React.FC<{
             logError(e);
           }
         }}
-        disabled={!rating || disabled}>
-        Submit
-      </Button>
-    </Layout>
+        text="Submit"
+        disabled={!rating || disabled}
+      />
+    </View>
   );
 };
 

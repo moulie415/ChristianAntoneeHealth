@@ -1,6 +1,5 @@
-import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
-import {Alert, View} from 'react-native';
+import {Alert, FlatList, View} from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {getSavedTests, getTestsById} from '../../../actions/tests';
@@ -12,6 +11,8 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Test from '../../../types/Test';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
+import Text from '../../commons/Text';
+import ListItem from '../../commons/ListItem';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -50,9 +51,9 @@ const SavedTests: FunctionComponent<{
   }, [getTestsByIdAction, missingTests]);
   return (
     <>
-      <Layout>
+      <View>
         {!missingTests.length && (
-          <List
+          <FlatList
             data={Object.values(savedTests)}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
@@ -64,7 +65,7 @@ const SavedTests: FunctionComponent<{
                     'MMMM Do YYYY',
                   )}`}
                   description={''}
-                  accessoryLeft={() => (
+                  accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
                         height: DevicePixels[75],
@@ -77,7 +78,7 @@ const SavedTests: FunctionComponent<{
                           style={{color: '#fff', fontSize: DevicePixels[12]}}>
                           {'Duration '}
                         </Text>
-                        <Text category="h6" style={{color: '#fff'}}>
+                        <Text style={{color: '#fff'}}>
                           {item.seconds
                             ? moment()
                                 .utc()
@@ -88,13 +89,13 @@ const SavedTests: FunctionComponent<{
                         </Text>
                       </View>
                     </ImageOverlay>
-                  )}
+                  }
                 />
               );
             }}
           />
         )}
-      </Layout>
+      </View>
       <AbsoluteSpinner loading={loading} />
     </>
   );

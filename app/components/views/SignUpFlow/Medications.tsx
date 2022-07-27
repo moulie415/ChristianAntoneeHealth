@@ -1,4 +1,4 @@
-import {TouchableOpacity, View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -10,32 +10,44 @@ const Medications: React.FC<{
   setMedications: (medications: string) => void;
 }> = ({medications, setMedications}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appWhite,
-        }}>
-        Medications?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            fontSize: DevicePixels[20],
+            color: colors.appWhite,
+          }}>
+          Medications?
+        </Text>
         <Input
           placeholder="List relevant medications... (optional)"
-          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
+          style={{height: DevicePixels[100], textAlignVertical: 'top'}}
           multiline
           onChangeText={setMedications}
           value={medications}
+          placeholderTextColor={colors.appWhite}
         />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

@@ -1,9 +1,8 @@
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import {List} from '@ui-kitten/components';
 import {connect} from 'react-redux';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import QuickRoutine, {Equipment} from '../../../types/QuickRoutines';
@@ -139,7 +138,7 @@ const WorkoutList: React.FC<{
 
   return (
     <View>
-      <List
+      <FlatList
         ListEmptyComponent={() => (
           <SafeAreaView style={{height: height - DevicePixels[50]}}>
             <AbsoluteSpinner loading />
@@ -212,7 +211,6 @@ const WorkoutList: React.FC<{
                     Under
                   </Text>
                   <Text
-                    category="h6"
                     style={{
                       color: colors.appWhite,
                       ...globalStyles.textShadow,
@@ -239,12 +237,10 @@ const WorkoutList: React.FC<{
                   bottom: 0,
                 }}>
                 <Text
-                  category="h6"
                   style={{color: colors.appWhite, ...globalStyles.textShadow}}>
                   {item.name}
                 </Text>
                 <Text
-                  category="s1"
                   style={{color: colors.appWhite, ...globalStyles.textShadow}}>
                   {`${getLevelString(item.level)} - ${getEquipmentString(
                     item.equipment,

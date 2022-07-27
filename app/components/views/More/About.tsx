@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text} from '@ui-kitten/components';
 import {Linking, ScrollView, TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
 import AboutProps from '../../../types/views/About';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
 
 const About: React.FC<AboutProps> = () => {
   return (
@@ -20,7 +20,7 @@ const About: React.FC<AboutProps> = () => {
         </Text>
       </TouchableOpacity>
       <Text
-        category="h5"
+     
         style={{textAlign: 'center', marginTop: DevicePixels[20]}}>
         About Us
       </Text>

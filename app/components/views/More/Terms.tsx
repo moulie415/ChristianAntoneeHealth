@@ -1,13 +1,13 @@
-import { Layout } from '@ui-kitten/components';
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import TermsProps from '../../../types/views/Terms';
+import Text from '../../commons/Text';
 
 const Terms: React.FC<TermsProps> = () => {
   return (
-    <Layout>
+    <View>
       <Text />
-    </Layout>
+    </View>
   );
 };
 

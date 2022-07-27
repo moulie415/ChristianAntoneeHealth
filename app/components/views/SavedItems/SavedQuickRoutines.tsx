@@ -1,8 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Layout, List, ListItem, Text} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
 import {getExercisesById} from '../../../actions/exercises';
 import {
@@ -17,6 +16,8 @@ import {SavedQuickRoutine} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
+import ListItem from '../../commons/ListItem';
+import Text from '../../commons/Text';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -58,9 +59,9 @@ const SavedQuickRoutines: FunctionComponent<{
 
   return (
     <>
-      <Layout>
+      <View>
         {!missingRoutines.length && (
-          <List
+          <FlatList
             data={Object.values(savedQuickRoutines)}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
@@ -81,7 +82,7 @@ const SavedQuickRoutines: FunctionComponent<{
                       ? 'exercises'
                       : 'exercise'
                   }, ${Math.floor(item.calories)} calories expended`}
-                  accessoryLeft={() => (
+                  accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
                         height: DevicePixels[75],
@@ -98,7 +99,7 @@ const SavedQuickRoutines: FunctionComponent<{
                           style={{color: '#fff', fontSize: DevicePixels[12]}}>
                           {'Duration '}
                         </Text>
-                        <Text category="h6" style={{color: '#fff'}}>
+                        <Text style={{color: '#fff'}}>
                           {moment()
                             .utc()
                             .startOf('day')
@@ -107,18 +108,18 @@ const SavedQuickRoutines: FunctionComponent<{
                         </Text>
                       </View>
                     </ImageOverlay>
-                  )}
-                  accessoryRight={() => (
+                  }
+                  accessoryRight={
                     <Text style={{fontSize: DevicePixels[30]}}>
                       {getDifficultyEmoji(item.difficulty)}
                     </Text>
-                  )}
+                  }
                 />
               );
             }}
           />
         )}
-      </Layout>
+      </View>
       <AbsoluteSpinner loading={loading} />
     </>
   );

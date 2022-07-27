@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -18,11 +19,8 @@ import {
 } from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
-import AccountDetails from './AccountDetails';
 import {signUp} from '../../../actions/profile';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
-import Slider from '../../commons/liquidSwipe/Slider';
-import Slide from '../../commons/liquidSwipe/Slide';
 import Age from './Age';
 import {
   getDateOfBirth,
@@ -42,7 +40,6 @@ import SelectHeight from './SelectHeight';
 import SelectGoal from './SelectGoal';
 import SelectExperience from './SelectExperience';
 import SelectEquipment from './SelectEquipment';
-import {Equipment} from '../../../types/QuickRoutines';
 import * as Progress from 'react-native-progress';
 import CompleteSignUp from './CompleteSignUp';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -58,6 +55,9 @@ import Occupation from './Occupation';
 import PhysicalInjuries from './PhysicalInjuries';
 import SelectTrainingAvailability from './TrainingAvailability';
 import Nutrition from './Nutrition';
+import Swiper from 'react-native-swiper';
+import BackButton from '../../commons/BackButton';
+import ForwardButton from '../../commons/ForwardButton';
 
 const {width} = Dimensions.get('window');
 
@@ -77,10 +77,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [height, setHeight] = useState<number>(profile.height);
   const [gender, setGender] = useState<Gender>(profile.gender);
   const [goal, setGoal] = useState<Goal>(profile.goal);
-  const [email, setEmail] = useState(profile.email);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState(profile.name || route.params.name || '');
   const [loading, setLoading] = useState(false);
   const [medications, setMedications] = useState('');
   const [lifestyle, setLifestyle] = useState('');
@@ -92,10 +88,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     useState<TrainingAvailability>();
   const [nutrition, setNutrition] = useState([]);
 
-  const {dry} = route.params;
-
   useInit(async () => {
     setLoading(true);
+
     const available = await isAvailable();
     if (!available && Platform.OS === 'android') {
       Alert.alert(
@@ -132,16 +127,12 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const completeSignUp = () => {
     setLoading(true);
     signUpAction({
-      name,
       dob,
       weight,
       height,
       unit,
       gender,
       goal,
-      email,
-      dry,
-      password,
       experience,
       equipment,
       marketing,
@@ -158,35 +149,14 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   const slides = [
     {
-      color: colors.appBlue,
       showNext: true,
-      elements: <LetsBuild />,
-      tint: colors.appWhite,
+      key: 'letsBuild',
+      component: <LetsBuild />,
     },
     {
-      color: colors.appBlack,
-      showNext: dry
-        ? !!password && !!confirmPassword && password === confirmPassword
-        : !!name,
-      elements: (
-        <AccountDetails
-          dry={dry}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          name={name}
-          setName={setName}
-          confirmPassword={confirmPassword}
-          setConfirmPassword={setConfirmPassword}
-        />
-      ),
-      tint: colors.appWhite,
-    },
-    {
-      color: colors.appWhite,
       showNext: !!dob,
-      elements: (
+      key: 'age',
+      component: (
         <Age
           dob={dob}
           setDob={setDob}
@@ -196,23 +166,21 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlue,
       showNext: !!gender,
-      tint: colors.appWhite,
-      elements: <SelectSex gender={gender} setGender={setGender} />,
+      key: 'sex',
+      component: <SelectSex gender={gender} setGender={setGender} />,
     },
     // {
     //   color: colors.appBlue,
     //   showNext: !!unit,
     //   tint: colors.appWhite,
-    //   elements: <SelectUnit unit={unit} setUnit={setUnit} />,
+    //   component: <SelectUnit unit={unit} setUnit={setUnit} />,
     // },
 
     {
-      color: colors.appBlack,
-      tint: colors.appWhite,
       showNext: !!weight,
-      elements: (
+      key: 'weight',
+      component: (
         <SelectWeight
           weight={weight}
           setWeight={setWeight}
@@ -222,9 +190,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appWhite,
+      key: 'height',
       showNext: !!height,
-      elements: (
+      component: (
         <SelectHeight
           height={height}
           setHeight={setHeight}
@@ -234,16 +202,14 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlue,
-      tint: colors.appWhite,
+      key: 'goal',
       showNext: !!goal,
-      elements: <SelectGoal goal={goal} setGoal={setGoal} />,
+      component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
     {
-      color: colors.appBlack,
-      tint: colors.appWhite,
+      key: 'experience',
       showNext: !!experience,
-      elements: (
+      component: (
         <SelectExperience
           experience={experience}
           setExperience={setExperience}
@@ -251,18 +217,16 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appWhite,
+      key: 'equipment',
       showNext: true,
-      tint: colors.appBlue,
-      elements: (
+      component: (
         <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
       ),
     },
     {
-      color: colors.appBlue,
-      tint: colors.appWhite,
+      key: 'medications',
       showNext: true,
-      elements: (
+      component: (
         <Medications
           medications={medications}
           setMedications={setMedications}
@@ -270,18 +234,16 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlack,
-      tint: colors.appWhite,
+      key: 'lifestyle',
       showNext: true,
-      elements: (
+      component: (
         <GeneralLifestyle lifestyle={lifestyle} setLifestyle={setLifestyle} />
       ),
     },
     {
-      color: colors.appWhite,
-      //tint: colors.appWhite,
+      key: 'sleep',
       showNext: !!sleepPattern,
-      elements: (
+      component: (
         <SleepPatterns
           sleepPattern={sleepPattern}
           setSleepPattern={setSleepPattern}
@@ -289,10 +251,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlue,
-      tint: colors.appWhite,
+      key: 'stresslevel',
       showNext: !!stressLevel,
-      elements: (
+      component: (
         <StressLevels
           stressLevel={stressLevel}
           setStressLevel={setStressLevel}
@@ -300,23 +261,22 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     {
-      color: colors.appBlack,
-      elements: (
+      key: 'occupation',
+      component: (
         <Occupation occupation={occupation} setOccupation={setOccupation} />
       ),
       showNext: true,
     },
     {
-      color: colors.appWhite,
-      elements: (
+      key: 'injuries',
+      component: (
         <PhysicalInjuries injuries={injuries} setInjuries={setInjuries} />
       ),
       showNext: true,
     },
     {
-      color: colors.appBlue,
-      tint: colors.appWhite,
-      elements: (
+      key: 'training',
+      component: (
         <SelectTrainingAvailability
           trainingAvailability={trainingAvailability}
           setTrainingAvailability={setTrainingAvailability}
@@ -325,15 +285,16 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       showNext: !!trainingAvailability,
     },
     {
-      color: colors.appBlack,
-      elements: <Nutrition nutrition={nutrition} setNutrition={setNutrition} />,
+      key: 'nutrition',
+      component: (
+        <Nutrition nutrition={nutrition} setNutrition={setNutrition} />
+      ),
       showNext: true,
     },
     {
-      color: colors.appWhite,
-      tint: colors.appBlue,
-      showNext: false,
-      elements: (
+      key: 'complete',
+      showNext: true,
+      component: (
         <CompleteSignUp
           completeSignUp={completeSignUp}
           loading={loading}
@@ -345,55 +306,38 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   ];
 
   const [index, setIndex] = useState(0);
-  const prev = slides[index - 1];
-  const next = slides[index + 1];
-  const showNext = slides[index]?.showNext;
 
   useBackHandler(() => true);
 
   return (
-    <>
-      <SafeAreaView
-        style={{flex: 0, backgroundColor: slides[index].tint || colors.appBlue}}
+    <SafeAreaView style={{flex: 1}}>
+      <Progress.Bar
+        width={width}
+        progress={(index + 1) / slides.length}
+        color={colors.appBlue}
+        style={{zIndex: 9}}
+        borderWidth={0}
+        borderRadius={0}
       />
-      <SafeAreaView style={{flex: 1}}>
-        <Progress.Bar
-          width={width}
-          progress={(index + 1) / slides.length}
-          color={slides[index].tint || colors.appBlue}
-          style={{zIndex: 9}}
-          borderWidth={0}
-          borderRadius={0}
-        />
-        {index === 0 && (
-          <TouchableOpacity
-            onPress={() => {
-              auth().signOut();
-              resetToWelcome();
-            }}
-            style={{
-              zIndex: 200,
-              padding: DevicePixels[15],
-              width: DevicePixels[50],
-            }}>
-            <Icon
-              name="times"
-              color={colors.appWhite}
-              style={{fontSize: DevicePixels[20]}}
-            />
-          </TouchableOpacity>
-        )}
-        <Slider
-          key={index}
-          index={index}
-          setIndex={setIndex}
-          current={{slide: slides[index]}}
-          prev={prev && <Slide slide={prev} />}
-          next={next && showNext && <Slide slide={next} />}>
-          <Slide slide={slides[index]!} />
-        </Slider>
-      </SafeAreaView>
-    </>
+
+      <Swiper
+        onIndexChanged={setIndex}
+        loop={false}
+        removeClippedSubviews={false}
+        showsPagination={false}
+        scrollEnabled={false}
+        prevButton={<BackButton disabled />}
+        nextButton={<ForwardButton disabled />}
+        showsButtons={slides[index].showNext}>
+        {slides.map(slide => {
+          return (
+            <View style={{flex: 1}} key={slide.key}>
+              {slide.component}
+            </View>
+          );
+        })}
+      </Swiper>
+    </SafeAreaView>
   );
 };
 

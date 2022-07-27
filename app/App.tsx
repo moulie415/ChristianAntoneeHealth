@@ -8,9 +8,6 @@ import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {NavigationContainer} from '@react-navigation/native';
-import {EvaIconsPack} from '@ui-kitten/eva-icons';
-import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import 'react-native-gesture-handler';
 import rootSaga from './sagas';
 import {navigationRef} from './RootNavigation';
@@ -64,7 +61,7 @@ export type StackParamList = {
   SignUp: undefined;
   ForgotPassword: undefined;
   DeleteAccount: undefined;
-  SignUpFlow: {dry?: boolean; name?: string};
+  SignUpFlow: undefined;
   Tabs: undefined;
   Home: undefined;
   Exercise: {id: string};
@@ -163,17 +160,15 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              sagaMiddleware.run(rootSaga);
-              SplashScreen.hide();
-            }}>
-            <StackComponent />
-          </NavigationContainer>
-          {/* {showSplash && (
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            sagaMiddleware.run(rootSaga);
+            SplashScreen.hide();
+          }}>
+          <StackComponent />
+        </NavigationContainer>
+        {/* {showSplash && (
             <Video
               onLoad={() => SplashScreen.hide()}
               source={require('./images/splash.mp4')}
@@ -186,7 +181,6 @@ const App: React.FC = () => {
               onEnd={() => setShowSplash(false)}
             />
           )} */}
-        </ApplicationProvider>
       </Provider>
     </PersistGate>
   );

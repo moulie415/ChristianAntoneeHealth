@@ -6,11 +6,10 @@ import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import MoreProps from '../../../types/views/More';
 import styles from '../../../styles/views/More';
-import {Alert, SafeAreaView, Share} from 'react-native';
+import {Alert, FlatList, SafeAreaView, Share, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLoggedIn} from '../../../actions/profile';
 import colors from '../../../constants/colors';
-import {Divider, Layout, List, ListItem} from '@ui-kitten/components';
 import {resetToWelcome} from '../../../RootNavigation';
 import {MyRootState} from '../../../types/Shared';
 import Purchases from 'react-native-purchases';
@@ -18,6 +17,9 @@ import {STORE_LINK} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
 import messaging from '@react-native-firebase/messaging';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
+import Divider from '../../commons/Divider';
+import ListItem from '../../commons/ListItem';
+import {logError} from '../../../helpers/error';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -30,11 +32,15 @@ const More: React.FC<MoreProps> = ({
       {
         text: 'OK',
         onPress: async () => {
-          resetToWelcome();
-          await auth().signOut();
-          messaging().deleteToken();
-          Purchases.logOut();
-          setLoggedInAction(false);
+          try {
+            resetToWelcome();
+            await messaging().deleteToken();
+            await Purchases.logOut();
+            await auth().signOut();
+            setLoggedInAction(false);
+          } catch (e) {
+            logError(e);
+          }
         },
       },
     ]);
@@ -43,7 +49,7 @@ const More: React.FC<MoreProps> = ({
     title: string;
     icon: string;
     onPress?: () => void;
-    accessoryRight?: () => ReactNode;
+    accessoryRight?: ReactNode;
   }[] = [
     {
       title: 'Education',
@@ -65,12 +71,11 @@ const More: React.FC<MoreProps> = ({
           navigation.navigate('Premium');
         }
       },
-      accessoryRight: () =>
-        profile.premium ? (
-          <UnreadRowCount />
-        ) : (
-          <Icon name="lock" size={DevicePixels[15]} />
-        ),
+      accessoryRight: profile.premium ? (
+        <UnreadRowCount />
+      ) : (
+        <Icon name="lock" size={DevicePixels[15]} />
+      ),
     },
     {
       title: 'Premium',
@@ -133,31 +138,30 @@ const More: React.FC<MoreProps> = ({
   }
 
   return (
-    <Layout>
+    <View>
       <SafeAreaView>
-        <List
+        <FlatList
           data={listItems}
           ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
             <ListItem
               title={item.title}
-              accessoryLeft={() => (
+              titleStyle={{color: colors.appBlack}}
+              accessoryLeft={
                 <Icon
                   size={DevicePixels[20]}
                   color={colors.appBlack}
                   solid
                   name={item.icon}
                 />
-              )}
-              accessoryRight={
-                item.accessoryRight ? item.accessoryRight : () => null
               }
+              accessoryRight={item.accessoryRight}
               onPress={item.onPress}
             />
           )}
         />
       </SafeAreaView>
-    </Layout>
+    </View>
   );
 };
 

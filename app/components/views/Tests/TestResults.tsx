@@ -1,4 +1,3 @@
-import {Layout, Text} from '@ui-kitten/components';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -22,8 +21,9 @@ import {
 } from '../../../helpers';
 import {resetToTabs} from '../../../RootNavigation';
 import {saveTest} from '../../../actions/tests';
-import {Alert} from 'react-native';
+import {Alert, View} from 'react-native';
 import Button from '../../commons/Button';
+import Text from '../../commons/Text';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,
@@ -82,10 +82,8 @@ const TestResults: React.FC<TestResultsProp> = ({
   }, [saveTestAction, test.id, profile.premium, seconds, testResult]);
 
   return (
-    <Layout style={{flex: 1, padding: 20}}>
-      <Text
-        category="h4"
-        style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
+    <View style={{flex: 1, padding: 20}}>
+      <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
         Test complete!
       </Text>
 
@@ -101,9 +99,9 @@ const TestResults: React.FC<TestResultsProp> = ({
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
-        {fill => <Text category="h4">{score}</Text>}
+        {fill => <Text>{score}</Text>}
       </AnimatedCircularProgress>
-      <Layout
+      <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -130,13 +128,13 @@ const TestResults: React.FC<TestResultsProp> = ({
             )}
           </>
         )}
-        <Text category="h5">
+        <Text>
           {isTable
             ? `${getCategoryString(category)} score`
             : `${capitalizeFirstLetter(percentile)} percentile`}
         </Text>
-      </Layout>
-      <Layout
+      </View>
+      <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -169,14 +167,16 @@ const TestResults: React.FC<TestResultsProp> = ({
             </Text>
           )}
         </Text>
-      </Layout>
+      </View>
 
-      <Layout style={{flex: 1, justifyContent: 'flex-end'}}>
-        <Button onPress={resetToTabs} style={{marginBottom: DevicePixels[10]}}>
-          Return Home
-        </Button>
-      </Layout>
-    </Layout>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <Button
+          text="Return Home"
+          onPress={resetToTabs}
+          style={{marginBottom: DevicePixels[10]}}
+        />
+      </View>
+    </View>
   );
 };
 

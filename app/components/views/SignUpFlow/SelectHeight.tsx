@@ -1,4 +1,4 @@
-import {Platform, View} from 'react-native';
+import {ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {Gender, Unit} from '../../../types/Profile';
 import Picker from '@gregfrench/react-native-wheel-picker';
@@ -28,43 +28,54 @@ const SelectHeight: React.FC<{
   }, [height, gender, setHeight, unit]);
 
   return (
-    <View>
-      <Text
-        category="h4"
-        style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appBlue,
-        }}>
-        What's your height?
-      </Text>
-      <Text
-        category="h1"
-        style={{
-          color: colors.appBlue,
-          textAlign: 'center',
-          marginBottom: DevicePixels[20],
-        }}>
-        {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
-      </Text>
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
       <View
         style={{
-          flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[100],
-        }}>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
+      <View
+        style={{flex: 1, justifyContent: 'center', margin: DevicePixels[40]}}>
+        <Text
+        
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            fontSize: DevicePixels[20],
+            color: colors.appWhite,
+          }}>
+          What's your height?
+        </Text>
+        <Text
+      
+          style={{
+            color: colors.appWhite,
+            textAlign: 'center',
+            marginBottom: DevicePixels[20],
+            fontSize: DevicePixels[30],
+            fontWeight: 'bold',
+          }}>
+          {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
+        </Text>
+
         <Picker
           style={{
-            width: DevicePixels[250],
             height: DevicePixels[200],
           }}
-          textColor="#fff"
           selectedValue={height}
           lineColor="#999999"
+          textColor={colors.appWhite}
           itemStyle={{
             fontSize: DevicePixels[15],
-            color: Platform.OS === 'android' ? '#000' : undefined,
+            // color: Platform.OS === 'android' ? '#000' : undefined,
+            color: colors.appWhite,
           }}
           onValueChange={setHeight}>
           {weights.map(value => (
@@ -78,7 +89,7 @@ const SelectHeight: React.FC<{
           ))}
         </Picker>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

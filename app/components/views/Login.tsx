@@ -6,62 +6,40 @@ import {
   View,
   ImageBackground,
   StyleSheet,
-  ImageSourcePropType,
+  KeyboardAvoidingView,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Spinner, Button} from '@ui-kitten/components';
-import Swiper from 'react-native-swiper';
-import {Layout} from '@ui-kitten/components';
 import {connect} from 'react-redux';
-import styles from '../../styles/views/Login';
 import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
 import DevicePixels from '../../helpers/DevicePixels';
-import {signUp} from '../../actions/profile';
+import {handleAuth, signUp} from '../../actions/profile';
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
-import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/auth';
+import {
+  appleSignIn,
+  facebookSignIn,
+  googleSignIn,
+  signIn,
+} from '../../helpers/api';
 import appleAuth from '@invertase/react-native-apple-authentication';
+import Input from '../commons/Input';
+import Button from '../commons/Button';
+import GoogleLogo from '../../images/google.svg';
+import Spinner from '../commons/Spinner';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-interface CarouselItem {
-  title: string;
-  description: string;
-  image: ImageSourcePropType;
-}
-
-const items: CarouselItem[] = [
-  {
-    title: 'Targeted Workouts',
-    description:
-      'Select from a variety of exercise routines designed to target specific body parts',
-    image: require('../../images/login.jpeg'),
-  },
-
-  {
-    title: 'Track Progress',
-    description: `Monitor your activity and track your fitness in app as well as with ${
-      Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
-    }`,
-    image: require('../../images/2nd_carousel_image_fitness_tracking.jpeg'),
-  },
-  {
-    title: 'Test Fitness',
-    description:
-      'Measure fitness across 4 key areas, and get recommendations to improve',
-    image: require('../../images/3rd_carousel_image_fitness_testing.jpeg'),
-  },
-  {
-    title: 'Stay Connected',
-    description:
-      'Enjoy in-app messaging where you can share exercises, workouts and compare test results',
-    image: require('../../images/Homepage_activity_tracking.jpeg'),
-  },
-];
-
-const Login: React.FC<LoginProps> = ({navigation}) => {
+const Login: React.FC<LoginProps> = ({
+  navigation,
+  handleAuth: handleAuthAction,
+}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
 
   const signInApple = async () => {
     try {
@@ -90,162 +68,210 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     }
   };
 
-  const disabled = facebookLoading || googleLoading || appleLoading;
+  const signInEmail = async () => {
+    try {
+      setLoading(true);
+      await signIn(email, pass, handleAuthAction);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+
+  const disabled = facebookLoading || googleLoading || appleLoading || loading;
 
   return (
-    <>
-      <Swiper
-        activeDotColor={colors.appBlue}
-        removeClippedSubviews={false}
-        autoplay>
-        {items.map(({title, image, description}) => {
-          return (
-            <ImageBackground key={title} source={image} style={{flex: 1}}>
-              <Layout
-                style={{
-                  ...StyleSheet.absoluteFillObject,
-                  backgroundColor: '#000',
-                  opacity: 0.7,
-                }}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: DevicePixels[220],
-                  margin: DevicePixels[20],
-                  left: 0,
-                  right: 0,
-                }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    textAlign: 'center',
-                    marginBottom: DevicePixels[10],
-                  }}
-                  category="h6">
-                  {title}
-                </Text>
-                <Text style={{color: colors.appWhite, textAlign: 'center'}}>
-                  {description}
-                </Text>
-              </View>
-            </ImageBackground>
-          );
-        })}
-      </Swiper>
-
-      <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require('../../images/name.png')} />
-      </View>
+    <ImageBackground
+      source={require('../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
       <View
         style={{
-          position: 'absolute',
-          bottom: DevicePixels[30],
-          left: 0,
-          right: 0,
-        }}>
-        <Text
-          style={{
-            color: '#fff',
-            textAlign: 'center',
-            paddingVertical: DevicePixels[10],
-          }}
-          category="h5">
-          Continue with
-        </Text>
-        <View style={{flexDirection: 'row'}}>
-          {Platform.OS === 'ios' && appleAuth.isSupported && (
-            <Button
-              disabled={disabled}
-              onPress={signInApple}
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
+      <SafeAreaView>
+        <KeyboardAwareScrollView>
+          <View style={{}}>
+            <View
               style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-                height: DevicePixels[50],
-                marginHorizontal: DevicePixels[5],
-                marginLeft: DevicePixels[10],
-                marginBottom: DevicePixels[5],
-                borderColor: '#fff',
+                width: DevicePixels[175],
+                height: DevicePixels[175],
+                borderRadius: DevicePixels[90],
+                backgroundColor: 'rgba(255,255,255, 0.2)',
+                justifyContent: 'center',
+                alignSelf: 'center',
+                alignItems: 'center',
+                marginTop:
+                  Platform.OS === 'ios' ? DevicePixels[10] : DevicePixels[30],
+              }}>
+              <View
+                style={{
+                  width: DevicePixels[150],
+                  height: DevicePixels[150],
+                  borderRadius: DevicePixels[75],
+                  backgroundColor: colors.appWhite,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Image
+                  source={require('../../images/logo.png')}
+                  style={{width: DevicePixels[90], height: DevicePixels[79]}}
+                />
+              </View>
+            </View>
+
+            <Input
+              onChangeText={setEmail}
+              containerStyle={{
+                marginHorizontal: DevicePixels[20],
+                marginTop: DevicePixels[20],
               }}
-              accessoryLeft={() =>
-                appleLoading ? (
+              placeholder="Email"
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              placeholderTextColor={colors.appWhite}
+            />
+            <Input
+              onChangeText={setPass}
+              containerStyle={{
+                marginHorizontal: DevicePixels[20],
+                marginTop: DevicePixels[20],
+              }}
+              placeholder="Password"
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholderTextColor={colors.appWhite}
+              secure
+            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ForgotPassword')}
+              hitSlop={{
+                top: DevicePixels[10],
+                bottom: DevicePixels[10],
+                right: DevicePixels[10],
+                left: DevicePixels[10],
+              }}
+              style={{
+                alignSelf: 'flex-end',
+                marginRight: DevicePixels[20],
+                marginTop: DevicePixels[10],
+              }}>
+              <Text style={{color: colors.appWhite}}>Forgot password?</Text>
+            </TouchableOpacity>
+
+            <Button
+              disabled={loading}
+              loading={loading}
+              text="Log in"
+              style={{
+                marginHorizontal: DevicePixels[20],
+                marginTop: DevicePixels[20],
+              }}
+              onPress={signInEmail}
+            />
+            <Text
+              style={{
+                color: '#fff',
+                textAlign: 'center',
+                paddingVertical: DevicePixels[10],
+              }}>
+              OR
+            </Text>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              {Platform.OS === 'ios' && appleAuth.isSupported && (
+                <TouchableOpacity
+                  disabled={disabled}
+                  onPress={signInApple}
+                  style={{
+                    height: DevicePixels[70],
+                    width: DevicePixels[70],
+                    marginHorizontal: DevicePixels[5],
+                    marginLeft: DevicePixels[10],
+                    borderColor: '#36415F',
+                    borderWidth: DevicePixels[2],
+                    borderRadius: DevicePixels[20],
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {appleLoading ? (
+                    <Spinner />
+                  ) : (
+                    <Icon name="apple" color="#fff" size={DevicePixels[35]} />
+                  )}
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity
+                onPress={signInFacebook}
+                disabled={disabled}
+                style={{
+                  height: DevicePixels[70],
+                  width: DevicePixels[70],
+                  marginHorizontal: DevicePixels[5],
+                  marginLeft:
+                    Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
+                  borderColor: '#36415F',
+                  borderWidth: DevicePixels[2],
+                  borderRadius: DevicePixels[20],
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                {facebookLoading ? (
                   <Spinner />
                 ) : (
-                  <Icon name="apple" color="#fff" size={DevicePixels[20]} />
-                )
-              }
-            />
-          )}
-          <Button
-            onPress={signInFacebook}
-            disabled={disabled}
-            style={{
-              flex: 1,
-              backgroundColor: 'transparent',
-              height: DevicePixels[50],
-              marginHorizontal: DevicePixels[5],
-              marginLeft:
-                Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
-              marginBottom: DevicePixels[5],
-              borderColor: '#fff',
-            }}
-            accessoryLeft={() =>
-              facebookLoading ? (
-                <Spinner />
-              ) : (
-                <Icon color="#fff" name="facebook-f" size={DevicePixels[20]} />
-              )
-            }
-          />
-          <Button
-            onPress={signInGoogle}
-            disabled={disabled}
-            style={{
-              backgroundColor: 'transparent',
-              height: DevicePixels[50],
-              marginHorizontal: DevicePixels[5],
-              marginRight: DevicePixels[10],
-              marginBottom: DevicePixels[5],
-              borderColor: '#fff',
-              flex: 1,
-            }}
-            accessoryLeft={() =>
-              googleLoading ? (
-                <Spinner />
-              ) : (
-                <Icon color="#fff" name="google" size={DevicePixels[20]} />
-              )
-            }
-          />
-        </View>
-        <TouchableOpacity
-          style={{margin: DevicePixels[20], alignSelf: 'center'}}
-          onPress={() => navigation.navigate('SignUp')}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: '#fff',
-              textDecorationLine: 'underline',
-            }}>
-            Log in
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{marginBottom: DevicePixels[20], alignSelf: 'center'}}
-          onPress={() => {
-            navigation.navigate('SignUpFlow', {dry: true});
-          }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: '#fff',
-              textDecorationLine: 'underline',
-            }}>
-            Sign up with email
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </>
+                  <Icon
+                    color="#fff"
+                    name="facebook-f"
+                    size={DevicePixels[35]}
+                  />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={signInGoogle}
+                disabled={disabled}
+                style={{
+                  height: DevicePixels[70],
+                  width: DevicePixels[70],
+                  marginHorizontal: DevicePixels[5],
+                  marginRight: DevicePixels[10],
+
+                  borderColor: '#36415F',
+                  borderWidth: DevicePixels[2],
+                  borderRadius: DevicePixels[20],
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                {googleLoading ? (
+                  <Spinner />
+                ) : (
+                  <GoogleLogo width={DevicePixels[35]} />
+                )}
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={{marginTop: DevicePixels[20], alignSelf: 'center'}}
+              onPress={() => {
+                navigation.navigate('SignUp');
+              }}>
+              <Text style={{color: 'rgba(255, 255, 255, 0.56)'}}>
+                {"Don't have an account? "}
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontWeight: 'bold',
+                  }}>
+                  Sign up
+                </Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
@@ -255,6 +281,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 
 const mapDispatchToProps = {
   signUp,
+  handleAuth,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

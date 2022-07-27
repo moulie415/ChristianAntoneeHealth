@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import {Layout} from '@ui-kitten/components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -21,7 +20,7 @@ const WhatEquipment: React.FC<{
     <ImageBackground
       source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
       style={{flex: 1}}>
-      <Layout
+      <View
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
@@ -35,7 +34,7 @@ const WhatEquipment: React.FC<{
             textAlign: 'center',
             marginTop: DevicePixels[20],
           }}
-          category="h3">
+          >
           What equipment do you have?
         </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>

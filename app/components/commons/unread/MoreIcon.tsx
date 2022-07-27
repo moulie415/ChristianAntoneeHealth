@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Text, Layout} from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Profile from '../../../types/Profile';
+import { View } from 'react-native';
+import Text from '../Text';
 
 const MoreIcon: React.FC<{
   profile: Profile;
@@ -20,7 +21,7 @@ const MoreIcon: React.FC<{
     <>
       <Icon name="ellipsis-h" size={size} color={color} />
       {profile.premium && count > 0 && (
-        <Layout
+        <View
           style={{
             width: DevicePixels[17],
             height: DevicePixels[17],
@@ -40,7 +41,7 @@ const MoreIcon: React.FC<{
             }}>
             {count > 9 ? '9+' : count}
           </Text>
-        </Layout>
+        </View>
       )}
     </>
   );

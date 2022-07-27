@@ -1,4 +1,4 @@
-import {TouchableOpacity, View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -8,32 +8,45 @@ import Input from '../../commons/Input';
 const Occupation: React.FC<{
   occupation: string;
   setOccupation: (occupation: string) => void;
-}> = () => {
+}> = ({occupation, setOccupation}) => {
   return (
-    <View>
-      <Text
-        category="h4"
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
         style={{
-          textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
-          color: colors.appWhite,
-        }}>
-        Occupation?
-      </Text>
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
+      />
       <View
         style={{
           flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          justifyContent: 'center',
+          margin: DevicePixels[50],
         }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: DevicePixels[20],
+            width: DevicePixels[250],
+            color: colors.appWhite,
+            fontSize: DevicePixels[20],
+          }}>
+          Occupation?
+        </Text>
+
         <Input
           placeholder="e.g. Doctor, lawyer..."
-          textStyle={{height: DevicePixels[100], textAlignVertical: 'top'}}
-          multiline
+          value={occupation}
+          onChangeText={setOccupation}
         />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

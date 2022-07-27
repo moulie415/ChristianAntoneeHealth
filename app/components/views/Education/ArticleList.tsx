@@ -1,8 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {List, ListItem} from '@ui-kitten/components';
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
@@ -15,6 +14,7 @@ import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SettingsState} from '../../../reducers/settings';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
+import ListItem from '../../commons/ListItem';
 
 const ArticleList: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
@@ -70,7 +70,7 @@ const ArticleList: React.FC<{
     [profile.premium, navigation, isLoaded, show, settings.ads],
   );
   return filtered.length ? (
-    <List
+    <FlatList
       data={filtered}
       renderItem={({item}) => {
         return (
@@ -79,7 +79,7 @@ const ArticleList: React.FC<{
               title={item.title}
               onPress={() => onPress(item)}
               description={moment(item.createdate).format('DD MMMM YYYY')}
-              accessoryLeft={() =>
+              accessoryLeft={
                 item.premium && !profile.premium ? (
                   <Icon
                     name="lock"

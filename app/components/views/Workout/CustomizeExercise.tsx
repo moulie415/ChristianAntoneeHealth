@@ -1,4 +1,3 @@
-import {Text, Layout, Spinner, Divider} from '@ui-kitten/components';
 import React, {useMemo, useState} from 'react';
 import Snackbar from 'react-native-snackbar';
 import {Dimensions, Platform, ScrollView, View} from 'react-native';
@@ -15,6 +14,8 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import globalStyles from '../../../styles/globalStyles';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import Button from '../../commons/Button';
+import Text from '../../commons/Text';
+import Spinner from '../../commons/Spinner';
 
 const REPS = [...Array(101).keys()];
 REPS.shift();
@@ -73,7 +74,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       video.src === exercise.video.src ? (
         <ExerciseVideo path={video.path} />
       ) : (
-        <Layout
+        <View
           style={{
             height: getVideoHeight(),
             marginBottom: DevicePixels[10],
@@ -81,10 +82,9 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
             justifyContent: 'center',
           }}>
           <Spinner />
-        </Layout>
+        </View>
       )}
       <Text
-        category="h5"
         style={{
           textAlign: 'center',
           margin: DevicePixels[10],
@@ -99,7 +99,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         itemWidth={width - DevicePixels[75]}
         renderItem={({item}: {item: number}) => {
           return (
-            <Layout
+            <View
               style={{
                 marginVertical: DevicePixels[20],
                 borderRadius: 10,
@@ -112,19 +112,19 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                 />
               )}
               {item === 1 && !!exercise.muscles && !!exercise.muscles.length && (
-                <Layout
+                <View
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
                     height: DevicePixels[300],
                     padding: DevicePixels[10],
                   }}>
-                  <Text category="h5">Description</Text>
+                  <Text>Description</Text>
                   <Text>{exercise.description}</Text>
-                </Layout>
+                </View>
               )}
               {item === 2 && !!exercise.muscles && !!exercise.muscles.length && (
-                <Layout
+                <View
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
@@ -132,7 +132,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text category="h5">Reps</Text>
+                  <Text>Reps</Text>
                   <Picker
                     style={{
                       width: DevicePixels[200],
@@ -157,10 +157,10 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                       );
                     })}
                   </Picker>
-                </Layout>
+                </View>
               )}
               {item === 3 && (
-                <Layout
+                <View
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
@@ -168,7 +168,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text category="h5">Sets</Text>
+                  <Text>Sets</Text>
                   <Picker
                     style={{
                       width: DevicePixels[200],
@@ -191,10 +191,10 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                       />
                     ))}
                   </Picker>
-                </Layout>
+                </View>
               )}
               {item === 4 && (
-                <Layout
+                <View
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
@@ -202,7 +202,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text category="h5">Resistance</Text>
+                  <Text>Resistance</Text>
                   <Picker
                     style={{
                       width: DevicePixels[200],
@@ -229,17 +229,21 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                       />
                     ))}
                   </Picker>
-                </Layout>
+                </View>
               )}
-            </Layout>
+            </View>
           );
         }}
       />
-      <Button style={{margin: DevicePixels[10]}} onPress={selectExercise}>
-        {workout.find(e => e.id === exercise.id)
-          ? 'Remove exercise'
-          : 'Add exercise'}
-      </Button>
+      <Button
+        text={
+          workout.find(e => e.id === exercise.id)
+            ? 'Remove exercise'
+            : 'Add exercise'
+        }
+        style={{margin: DevicePixels[10]}}
+        onPress={selectExercise}
+      />
     </ScrollView>
   );
 };

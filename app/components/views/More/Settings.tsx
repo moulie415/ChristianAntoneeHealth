@@ -1,18 +1,7 @@
-import {
-  Divider,
-  Input,
-  Layout,
-  Select,
-  SelectItem,
-  Text,
-  Toggle,
-  Button,
-  IndexPath,
-} from '@ui-kitten/components';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
-import {Platform, ScrollView, View} from 'react-native';
+import {Platform, ScrollView, Switch, View} from 'react-native';
 import SettingsProps from '../../../types/views/Settings';
 import {Goal, MyRootState} from '../../../types/Shared';
 import {
@@ -28,6 +17,9 @@ import colors from '../../../constants/colors';
 import {goalItems} from '../../../constants';
 import * as _ from 'lodash';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Text from '../../commons/Text';
+import Button from '../../commons/Button';
+import Divider from '../../commons/Divider';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.FITNESS;
@@ -57,15 +49,13 @@ const Settings: React.FC<SettingsProps> = ({
 
   const equal = _.isEqual(newProfile, profile);
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
-        <Text style={{margin: DevicePixels[10]}} category="h5">
-          Notifications
-        </Text>
+        <Text style={{margin: DevicePixels[10]}}>Notifications</Text>
         <Divider />
-        <Layout
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -73,13 +63,13 @@ const Settings: React.FC<SettingsProps> = ({
             margin: DevicePixels[10],
           }}>
           <Text>Workout reminders</Text>
-          <Toggle
-            checked={workoutReminders}
-            onChange={setWorkoutRemindersAction}
+          <Switch
+            value={workoutReminders}
+            onValueChange={setWorkoutRemindersAction}
           />
-        </Layout>
+        </View>
         <Divider />
-        <Layout
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -87,10 +77,13 @@ const Settings: React.FC<SettingsProps> = ({
             margin: DevicePixels[10],
           }}>
           <Text>Fitness test reminder</Text>
-          <Toggle checked={testReminders} onChange={setTestRemindersAction} />
-        </Layout>
+          <Switch
+            value={testReminders}
+            onValueChange={setTestRemindersAction}
+          />
+        </View>
         <Divider />
-        <Layout
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -123,12 +116,10 @@ const Settings: React.FC<SettingsProps> = ({
               <Text>{moment(workoutReminderTime).format('HH:mm')}</Text>
             </TouchableOpacity>
           )}
-        </Layout>
+        </View>
         <Divider />
-        <Text style={{margin: DevicePixels[10]}} category="h5">
-          Emails
-        </Text>
-        <Layout
+        <Text style={{margin: DevicePixels[10]}}>Emails</Text>
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -136,8 +127,8 @@ const Settings: React.FC<SettingsProps> = ({
             margin: DevicePixels[10],
           }}>
           <Text>Marketing</Text>
-          <Toggle checked={marketing} onChange={setMarketing} />
-        </Layout>
+          <Switch value={marketing} onValueChange={setMarketing} />
+        </View>
         <Divider />
       </ScrollView>
 
@@ -146,6 +137,7 @@ const Settings: React.FC<SettingsProps> = ({
           navigation.goBack();
           updateProfileAction(newProfile);
         }}
+        text="Save"
         disabled={equal}
         style={{
           margin: DevicePixels[10],
@@ -154,10 +146,9 @@ const Settings: React.FC<SettingsProps> = ({
           left: 0,
           right: 0,
           bottom: 0,
-        }}>
-        Save
-      </Button>
-    </Layout>
+        }}
+      />
+    </View>
   );
 };
 

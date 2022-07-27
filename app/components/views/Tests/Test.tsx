@@ -1,9 +1,8 @@
-import {Divider, Input, Layout, Text} from '@ui-kitten/components';
 import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import {ScrollView, Dimensions} from 'react-native';
+import {ScrollView, Dimensions, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
@@ -17,6 +16,9 @@ import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
 import Button from '../../commons/Button';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
+import Text from '../../commons/Text';
+import Input from '../../commons/Input';
+import Divider from '../../commons/Divider';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -99,7 +101,7 @@ const Test: React.FC<TestProps> = ({
   };
 
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       {showCountdown && (
         <Countdown
           onComplete={() => {
@@ -108,14 +110,14 @@ const Test: React.FC<TestProps> = ({
           }}
         />
       )}
-      <Layout
+      <View
         style={{
           flexDirection: 'row',
           margin: DevicePixels[10],
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Layout
+        <View
           style={{
             flex: 1,
             flexDirection: 'row',
@@ -126,17 +128,15 @@ const Test: React.FC<TestProps> = ({
             size={DevicePixels[25]}
             color={colors.darkBlue}
           />
-          <Text style={{marginLeft: DevicePixels[10]}} category="h5">
-            {getTimeString()}
-          </Text>
-        </Layout>
-      </Layout>
+          <Text style={{marginLeft: DevicePixels[10]}}>{getTimeString()}</Text>
+        </View>
+      </View>
       <ScrollView
         keyboardShouldPersistTaps="always"
         contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
         {complete ? (
-          <Layout style={{margin: 20}}>
-            <Text category="h5" style={{textAlign: 'center', marginBottom: 10}}>
+          <View style={{margin: 20}}>
+            <Text style={{textAlign: 'center', marginBottom: 10}}>
               Test complete!
             </Text>
             {test.type !== 'countup' ? (
@@ -163,11 +163,11 @@ const Test: React.FC<TestProps> = ({
             <Input
               value={testNote}
               onChangeText={setTestNote}
-              style={{marginVertical: 5}}
-              textStyle={{minHeight: DevicePixels[50]}}
+              style={{minHeight: DevicePixels[50]}}
               multiline
             />
             <Button
+              text="See results"
               onPress={() =>
                 navigation.navigate('TestResults', {
                   test,
@@ -177,10 +177,9 @@ const Test: React.FC<TestProps> = ({
                 })
               }
               style={{marginTop: 10}}
-              disabled={!testResult && test.type !== 'countup'}>
-              See results
-            </Button>
-          </Layout>
+              disabled={!testResult && test.type !== 'countup'}
+            />
+          </View>
         ) : (
           <>
             {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
@@ -188,10 +187,8 @@ const Test: React.FC<TestProps> = ({
               source={getTestImage(test.name)}
               style={{height: getVideoHeight()}}
             />
-            <Text category="h6" style={{margin: DevicePixels[10]}}>
-              {test.name}
-            </Text>
-            <Layout
+            <Text style={{margin: DevicePixels[10]}}>{test.name}</Text>
+            <View
               style={{
                 marginHorizontal: DevicePixels[10],
                 marginBottom: DevicePixels[10],
@@ -203,7 +200,7 @@ const Test: React.FC<TestProps> = ({
                   </Text>
                 );
               })}
-            </Layout>
+            </View>
 
             <Divider />
             {test.mens &&
@@ -241,14 +238,13 @@ const Test: React.FC<TestProps> = ({
                 />
               )}
             {test.source && (
-              <Text category="label" style={{margin: DevicePixels[10]}}>
-                {test.source}
-              </Text>
+              <Text style={{margin: DevicePixels[10]}}>{test.source}</Text>
             )}
           </>
         )}
         {!(testStarted && test.type === 'countdown') && !complete && (
           <Button
+            text={testStarted ? 'End' : 'Start'}
             onPress={() => {
               if (testStarted) {
                 setComplete(true);
@@ -266,12 +262,11 @@ const Test: React.FC<TestProps> = ({
             }}
             style={{
               margin: DevicePixels[10],
-            }}>
-            {testStarted ? 'End' : 'Start'}
-          </Button>
+            }}
+          />
         )}
       </ScrollView>
-    </Layout>
+    </View>
   );
 };
 

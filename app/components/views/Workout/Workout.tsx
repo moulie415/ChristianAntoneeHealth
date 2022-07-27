@@ -4,7 +4,6 @@ import {TouchableOpacity, SafeAreaView, View, Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import WorkoutProps from '../../../types/views/Workout';
-import {Text, Layout, Divider} from '@ui-kitten/components';
 import {Equipment, MyRootState, Goal} from '../../../types/Shared';
 import {setEquipment, setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
@@ -15,6 +14,8 @@ import EquipmentMenu from './EquipmentMenu';
 import ImageLoader from '../../commons/ImageLoader';
 import globalStyles from '../../../styles/globalStyles';
 import Button from '../../commons/Button';
+import Text from '../../commons/Text';
+import Divider from '../../commons/Divider';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
@@ -65,7 +66,7 @@ const Workout: React.FC<WorkoutProps> = ({
   };
 
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <TouchableOpacity
           onPress={() => {
@@ -90,11 +91,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text
-              category="h6"
-              style={[globalStyles.textShadow, {color: '#fff'}]}>
-              Goal
-            </Text>
+            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>Goal</Text>
           </View>
           <View
             style={{
@@ -149,9 +146,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text
-              category="h6"
-              style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
               Exercise experience
             </Text>
           </View>
@@ -209,9 +204,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text
-              category="h6"
-              style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
               Available Equipment
             </Text>
           </View>
@@ -267,9 +260,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text
-              category="h6"
-              style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
               Warm-up & Cool-down
             </Text>
           </View>
@@ -304,7 +295,7 @@ const Workout: React.FC<WorkoutProps> = ({
           </View>
         </TouchableOpacity>
         <Button
-          disabled={false}
+          text="Continue"
           onPress={() => {
             if (equipment.length) {
               setWorkoutAction([]);
@@ -319,9 +310,8 @@ const Workout: React.FC<WorkoutProps> = ({
               Alert.alert('Sorry', 'Please specify equipment first');
             }
           }}
-          style={{margin: DevicePixels[10]}}>
-          Continue
-        </Button>
+          style={{margin: DevicePixels[10]}}
+        />
       </SafeAreaView>
       <BottomSheet
         ref={sheetRef}
@@ -337,9 +327,8 @@ const Workout: React.FC<WorkoutProps> = ({
             borderTopLeftRadius: DevicePixels[5],
             borderTopRightRadius: DevicePixels[5],
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onCancel}>
             <Text
-              onPress={onCancel}
               style={{
                 color: colors.appBlue,
                 padding: DevicePixels[10],
@@ -402,7 +391,7 @@ const Workout: React.FC<WorkoutProps> = ({
           )}
         </ScrollView>
       </BottomSheet>
-    </Layout>
+    </View>
   );
 };
 

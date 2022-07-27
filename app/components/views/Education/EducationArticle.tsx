@@ -1,13 +1,13 @@
 import {RouteProp} from '@react-navigation/native';
-import {Layout, Text} from '@ui-kitten/components';
 import RenderHtml from 'react-native-render-html';
 import Image from 'react-native-fast-image';
 import React from 'react';
-import {ScrollView, useWindowDimensions} from 'react-native';
+import {ScrollView, useWindowDimensions, View} from 'react-native';
 import {StackParamList} from '../../../App';
 import DevicePixels from '../../../helpers/DevicePixels';
 import moment from 'moment';
 import {getEducationCategoryString} from '../../../helpers';
+import Text from '../../commons/Text';
 
 const EducationArticle: React.FC<{
   route: RouteProp<StackParamList, 'EducationArticle'>;
@@ -15,13 +15,13 @@ const EducationArticle: React.FC<{
   const {education} = route.params;
   const {width} = useWindowDimensions();
   return (
-    <Layout>
+    <View>
       <ScrollView
         contentContainerStyle={{
           backgroundColor: '#fff',
           padding: DevicePixels[20],
         }}>
-        <Text category="h4">{education.title}</Text>
+        <Text>{education.title}</Text>
         <Text>{`${moment(education.createdate).format(
           'DD MMMM YYYY',
         )}   |   ${getEducationCategoryString(education.category)}`}</Text>
@@ -36,7 +36,7 @@ const EducationArticle: React.FC<{
 
         <RenderHtml contentWidth={width} source={{html: education.body}} />
       </ScrollView>
-    </Layout>
+    </View>
   );
 };
 

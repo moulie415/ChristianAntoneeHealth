@@ -1,25 +1,22 @@
-import {Layout, Text} from '@ui-kitten/components';
 import React from 'react';
 import {
-  View,
   ImageSourcePropType,
-  TouchableHighlight,
   Dimensions,
+  ImageBackground,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import DevicePixels from '../../helpers/DevicePixels';
-import globalStyles from '../../styles/globalStyles';
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
-import ImageOverlay from './ImageOverlay';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
+import Text from './Text';
 
 const {height, width} = Dimensions.get('window');
 
-const RATIO = height / width;
-
-const CARD_MARGIN = DevicePixels[5] * RATIO;
+const CARD_HEIGHT = DevicePixels[125];
 
 const HomeCard: React.FC<{
   title: string;
@@ -30,68 +27,55 @@ const HomeCard: React.FC<{
   profile: Profile;
 }> = ({title, subtitle, onPress, image, profile, premium}) => {
   return (
-    <TouchableHighlight
-      style={[
-        {
-          flex: 1,
-          marginHorizontal: CARD_MARGIN,
-          borderRadius: DevicePixels[25],
-        },
-        globalStyles.boxShadow,
-      ]}
+    <TouchableOpacity
+      style={{
+        height: CARD_HEIGHT,
+        marginHorizontal: DevicePixels[20],
+        marginBottom: DevicePixels[15],
+        borderRadius: DevicePixels[15],
+        overflow: 'hidden',
+      }}
       onPress={onPress}>
-      <Layout style={{flex: 1, borderRadius: DevicePixels[25]}}>
-        <ImageOverlay
-          overlayAlpha={0.5}
-          containerStyle={{
-            flex: 1,
-            width: '100%',
-            borderRadius: DevicePixels[25],
-          }}
-          source={image}
-        />
-        <View
+      <Image
+        style={{
+          position: 'absolute',
+          height: CARD_HEIGHT,
+          width: '100%',
+        }}
+        source={image}
+      />
+
+      <ImageBackground
+        source={require('../../images/BlackTransparentBackground.png')}
+        blurRadius={3}
+        style={{
+          position: 'absolute',
+          alignSelf: 'flex-end',
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: width / 2,
+          padding: DevicePixels[10],
+        }}>
+        <Text
           style={{
-            position: 'absolute',
-            bottom: 0,
-            top: 0,
-            left: 0,
-            right: 0,
-            padding: DevicePixels[5],
-            alignItems: 'center',
-            justifyContent: 'center',
+            color: colors.appWhite,
+            fontSize: DevicePixels[18],
+            fontWeight: 'bold',
           }}>
-          <Text
-            category="h6"
-            style={[
-              globalStyles.textShadow,
-              {color: '#fff', textAlign: 'center'},
-            ]}>
-            {title}
-          </Text>
-          <Text
-            category="s2"
-            style={[
-              globalStyles.textShadow,
-              {
-                color: '#fff',
-                opacity: 0.7,
-                textAlign: 'center',
-              },
-            ]}>
-            {subtitle}
-          </Text>
-          {premium && !profile.premium && (
-            <Icon
-              style={{marginTop: DevicePixels[10]}}
-              name="lock"
-              size={DevicePixels[20]}
-              color={colors.appWhite}
-            />
-          )}
-        </View>
-      </Layout>
-    </TouchableHighlight>
+          {title}
+        </Text>
+        <Text style={{color: colors.appWhite}}>{subtitle}</Text>
+        {premium && !profile.premium && (
+          <Icon
+            style={{marginTop: DevicePixels[10]}}
+            name="lock"
+            size={DevicePixels[20]}
+            color={colors.appWhite}
+          />
+        )}
+      </ImageBackground>
+    </TouchableOpacity>
   );
 };
 

@@ -1,7 +1,6 @@
-import {Divider, Layout, ListItem, Text} from '@ui-kitten/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
@@ -18,6 +17,9 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import ShareModal from '../../commons/ShareModal';
 import Button from '../../commons/Button';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
+import Text from '../../commons/Text';
+import ListItem from '../../commons/ListItem';
+import Divider from '../../commons/Divider';
 
 const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   workout,
@@ -62,7 +64,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             navigation.navigate('CustomizeExercise', {exercise: item})
           }
           description={truncate(item.description, 75)}
-          accessoryLeft={() => (
+          accessoryLeft={
             <Image
               style={{height: DevicePixels[50], width: DevicePixels[75]}}
               source={
@@ -71,7 +73,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                   : require('../../../images/old_man_stretching.jpeg')
               }
             />
-          )}
+          }
         />
       );
     },
@@ -79,11 +81,11 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   );
 
   return (
-    <Layout style={{flex: 1}}>
-      <Text style={{margin: DevicePixels[10], marginBottom: 0}} category="h5">
+    <View style={{flex: 1}}>
+      <Text style={{margin: DevicePixels[10], marginBottom: 0}}>
         Review exercises
       </Text>
-      <Text style={{marginHorizontal: DevicePixels[10]}} appearance="hint">
+      <Text style={{marginHorizontal: DevicePixels[10]}}>
         (Hold and drag to reorder)
       </Text>
       <DraggableFlatList
@@ -94,7 +96,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           <TouchableOpacity
             style={{flexDirection: 'row'}}
             onPress={navigation.goBack}>
-            <Layout
+            <View
               style={{
                 height: DevicePixels[50],
                 width: DevicePixels[75],
@@ -104,9 +106,8 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
                 justifyContent: 'center',
               }}>
               <Icon name="plus" color="#fff" size={DevicePixels[25]} />
-            </Layout>
+            </View>
             <Text
-              category="s1"
               style={{
                 alignSelf: 'center',
                 marginLeft: DevicePixels[10],
@@ -120,6 +121,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         onDragEnd={({data}) => setWorkoutAction(data)}
       />
       <Button
+        text="Start workout"
         onPress={() => {
           if (!profile.premium && isLoaded && settings.ads) {
             show();
@@ -132,11 +134,10 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           bottom: DevicePixels[30],
           left: DevicePixels[10],
           right: DevicePixels[10],
-        }}>
-        Start workout
-      </Button>
+        }}
+      />
       <ShareModal title="Share workout" type="workout" workout={workout} />
-    </Layout>
+    </View>
   );
 };
 

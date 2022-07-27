@@ -24,7 +24,6 @@ import {
   spotifySkipToNext,
   spotifySkipToPrevious,
 } from '../../actions/music';
-import {Divider, Spinner} from '@ui-kitten/components';
 import Text from './Text';
 import {PlayerState, remote} from 'react-native-spotify-remote';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
@@ -32,6 +31,8 @@ import useInterval from '../../hooks/UseInterval';
 import {PlaybackState, Track} from '../../helpers/itunes';
 import FastImage from 'react-native-fast-image';
 import SpotifyLogo from '../../images/Spotify_logo_with_text.svg';
+import Spinner from './Spinner';
+import Divider from './Divider';
 
 const audioApps: AudioApp[] = ['spotify', 'apple_music'];
 
@@ -172,7 +173,7 @@ const MusicButton: React.FC<{
     if (loading) {
       return (
         <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-          <Spinner size="giant" style={{borderColor: colors.appWhite}} />
+          <Spinner style={{borderColor: colors.appWhite}} />
         </View>
       );
     }

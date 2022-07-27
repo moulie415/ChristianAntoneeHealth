@@ -13,13 +13,14 @@ import Button from '../../commons/Button';
 import {logError} from '../../../helpers/error';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Modal from '../../commons/Modal';
-import {Divider, ListItem} from '@ui-kitten/components';
 import Text from '../../commons/Text';
 import {FlatList} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
 import Snackbar from 'react-native-snackbar';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Test from '../../../types/Test';
+import Divider from '../../commons/Divider';
+import ListItem from '../../commons/ListItem';
 
 const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
   plan,
@@ -85,6 +86,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
         }}
       />
       <Button
+        text="Sync with native calendar"
         style={{margin: DevicePixels[20]}}
         onPress={async () => {
           try {
@@ -99,21 +101,18 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
             logError(e);
             Snackbar.show({text: 'Error syncing calendar'});
           }
-        }}>
-        Sync with native calendar
-      </Button>
+        }}
+      />
       <Modal
         visible={modalVisible}
-        onBackDropPress={() => setModalVisible(false)}>
+        onRequestClose={() => setModalVisible(false)}>
         <View
           style={{
             backgroundColor: '#fff',
             paddingBottom: DevicePixels[10],
             borderRadius: DevicePixels[10],
           }}>
-          <Text
-            category="h6"
-            style={{textAlign: 'center', padding: DevicePixels[15]}}>
+          <Text style={{textAlign: 'center', padding: DevicePixels[15]}}>
             Select a calendar to sync with
           </Text>
           <Divider />
@@ -193,14 +192,14 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
                     Snackbar.show({text: 'Error syncing calendar'});
                   }
                 }}
-                accessoryLeft={() => (
+                accessoryLeft={
                   <Icon
                     name="calendar-alt"
                     size={DevicePixels[20]}
                     style={{margin: DevicePixels[5]}}
                     color={colors.appBlue}
                   />
-                )}
+                }
                 key={item.id}
                 title={item.title}
               />

@@ -1,4 +1,3 @@
-import {Layout, Text} from '@ui-kitten/components';
 import React, {Fragment} from 'react';
 import {
   View,
@@ -14,6 +13,7 @@ import {setFitnessGoal, setStrengthArea} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
+import Text from '../../commons/Text';
 
 const FitnessGoal: React.FC<{
   setFitnessGoalAction: (goal: Goal) => void;
@@ -41,7 +41,7 @@ const FitnessGoal: React.FC<{
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Layout style={{flex: 1}}>
+      <View style={{flex: 1}}>
         {sections.map(({title, image, action, key}) => {
           return (
             <Fragment key={key}>
@@ -66,9 +66,7 @@ const FitnessGoal: React.FC<{
                     left: DevicePixels[20],
                     justifyContent: 'center',
                   }}>
-                  <Text
-                    category="h5"
-                    style={[globalStyles.textShadow, {color: '#fff'}]}>
+                  <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
                     {title}
                   </Text>
                 </View>
@@ -76,7 +74,7 @@ const FitnessGoal: React.FC<{
             </Fragment>
           );
         })}
-      </Layout>
+      </View>
     </SafeAreaView>
   );
 };

@@ -1,4 +1,3 @@
-import {Layout, Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -29,6 +28,7 @@ import Modal from '../../commons/Modal';
 import ResistanceScaleInfo from './ResistanceScaleInfo';
 import Button from '../../commons/Button';
 import MusicButton from '../../commons/MusicButton';
+import Spinner from '../../commons/Spinner';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -85,7 +85,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Text
-          category="h6"
           style={{
             textAlign: 'center',
             marginRight: DevicePixels[5],
@@ -102,7 +101,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   };
 
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Countdown onComplete={() => setWorkoutStarted(true)} />
       <ScrollView
         contentContainerStyle={{
@@ -128,7 +127,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 video.src === exercise.video.src ? (
                   <ExerciseVideo paused={!workoutStarted} path={video.path} />
                 ) : (
-                  <Layout
+                  <View
                     style={{
                       height: getVideoHeight(),
                       marginBottom: DevicePixels[10],
@@ -136,7 +135,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       justifyContent: 'center',
                     }}>
                     <Spinner />
-                  </Layout>
+                  </View>
                 )}
                 {workout[index + 1] && (
                   <TouchableOpacity
@@ -179,7 +178,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     marginTop: DevicePixels[10],
                   }}>
                   <Text
-                    category="h6"
                     style={{
                       textAlign: 'center',
                     }}>{`${exercise.reps} reps / ${exercise.sets} sets `}</Text>
@@ -288,9 +286,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     margin: DevicePixels[10],
                     marginBottom: 0,
                   }}>
-                  <Text category="h6">{`Exercise ${index + 1}/${
-                    workout.length
-                  }`}</Text>
+                  <Text>{`Exercise ${index + 1}/${workout.length}`}</Text>
 
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Icon
@@ -298,7 +294,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       size={DevicePixels[15]}
                       color={colors.darkBlue}
                     />
-                    <Text category="h6" style={{marginLeft: DevicePixels[5]}}>
+                    <Text style={{marginLeft: DevicePixels[5]}}>
                       {moment()
                         .utc()
                         .startOf('day')
@@ -308,9 +304,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   </View>
                 </View>
                 {next && (
-                  <Text category="h6" style={{marginBottom: DevicePixels[10]}}>
-                    Up next
-                  </Text>
+                  <Text style={{marginBottom: DevicePixels[10]}}>Up next</Text>
                 )}
                 {next && (
                   <TouchableOpacity
@@ -331,7 +325,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                           : require('../../../images/old_man_stretching.jpeg')
                       }
                     />
-                    <Layout
+                    <View
                       style={{
                         marginLeft: DevicePixels[20],
                         justifyContent: 'space-evenly',
@@ -340,11 +334,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       }}>
                       <Text>{next.name}</Text>
                       <Text>{`${next.reps} reps ${next.sets} sets`}</Text>
-                    </Layout>
+                    </View>
                   </TouchableOpacity>
                 )}
 
                 <Button
+                  text=" End workout"
                   onPress={() => {
                     Alert.alert('End Workout', 'Are you sure?', [
                       {text: 'No', style: 'cancel'},
@@ -360,15 +355,14 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       },
                     ]);
                   }}
-                  style={{margin: DevicePixels[10]}}>
-                  End workout
-                </Button>
+                  style={{margin: DevicePixels[10]}}
+                />
               </View>
             );
           })}
         </PagerView>
       </ScrollView>
-      <Modal visible={showModal} onBackDropPress={() => setShowModal(false)}>
+      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
         <View
           style={{
             backgroundColor: '#fff',
@@ -386,20 +380,19 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
               textAlign: 'center',
               padding: DevicePixels[15],
               paddingTop: 0,
-            }}
-            category="h6">
+            }}>
             Resistance scale explained
           </Text>
           <ResistanceScaleInfo />
           <Button
+            text="OK"
             onPress={() => setShowModal(false)}
-            style={{alignSelf: 'center', margin: DevicePixels[10]}}>
-            OK
-          </Button>
+            style={{margin: DevicePixels[10]}}
+          />
         </View>
       </Modal>
       <MusicButton />
-    </Layout>
+    </View>
   );
 };
 

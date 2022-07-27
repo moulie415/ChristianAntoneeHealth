@@ -1,6 +1,5 @@
-import {Layout} from '@ui-kitten/components';
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -16,7 +15,7 @@ const UnreadConnectionCount: React.FC<{
   const count = unread[uid];
   if (count && count > 0) {
     return (
-      <Layout
+      <View
         style={{
           width: DevicePixels[18],
           height: DevicePixels[18],
@@ -33,7 +32,7 @@ const UnreadConnectionCount: React.FC<{
           }}>
           {count > 9 ? '9+' : count}
         </Text>
-      </Layout>
+      </View>
     );
   }
   return null;

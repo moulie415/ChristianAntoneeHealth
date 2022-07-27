@@ -1,8 +1,14 @@
 import React from 'react';
-import {Text as UIText, TextProps} from '@ui-kitten/components';
+import {Text as RNText, TextProps} from 'react-native';
 
 const Text: React.FC<TextProps> = ({children, ...props}) => {
-  return <UIText {...props}>{children}</UIText>;
+  return (
+    <RNText
+      {...props}
+      style={[{fontFamily: 'MontserratAlternates-Regular'}, props.style]}>
+      {children}
+    </RNText>
+  );
 };
 
 export default Text;

@@ -1,10 +1,8 @@
-import {Button, Input, Layout, Text} from '@ui-kitten/components';
 import Slider from '@react-native-community/slider';
 import React, {useMemo, useState} from 'react';
-import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {useEffect} from 'react';
 import moment from 'moment';
-import {Alert, Platform} from 'react-native';
+import {Alert, Platform, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {
@@ -17,6 +15,10 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
 import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 import {saveQuickRoutine} from '../../../actions/quickRoutines';
+import Text from '../../commons/Text';
+import Input from '../../commons/Input';
+import colors from '../../../constants/colors';
+import Button from '../../commons/Button';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
@@ -93,9 +95,8 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     return {text: difficultyText, subtext: 'I might die'};
   }, [difficulty]);
   return (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Text
-        category="h5"
         style={{
           textAlign: 'center',
           margin: DevicePixels[10],
@@ -132,16 +133,16 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
         {text}
         <Text style={{fontWeight: 'normal'}}>{` - ${subtext}`}</Text>
       </Text>
+      <Text style={{color: colors.appWhite}}>Workout note</Text>
       <Input
-        label="Workout note"
-        textStyle={{minHeight: DevicePixels[50]}}
-        style={{margin: DevicePixels[10], marginTop: 0}}
+        style={{minHeight: DevicePixels[50]}}
         multiline
         placeholder="Add details about this workout"
         value={note}
         onChangeText={setNote}
       />
       <Button
+        text="Save & Continue"
         disabled={loading}
         style={{margin: DevicePixels[10]}}
         onPress={() => {
@@ -190,10 +191,9 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
             save(false);
             navigate();
           }
-        }}>
-        Save & Continue
-      </Button>
-    </Layout>
+        }}
+      />
+    </View>
   );
 };
 

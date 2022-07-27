@@ -70,7 +70,7 @@ const StackComponent: FunctionComponent = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            options={{headerTitle: 'Forgot Password'}}
+            options={{headerShown: false}}
             name="ForgotPassword"
             component={ForgotPassword}
           />
@@ -154,7 +154,11 @@ const StackComponent: FunctionComponent = () => {
               headerShown: false,
             })}
           />
-          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{headerShown: false}}
+          />
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Support" component={Support} />
           <Stack.Screen name="Terms" component={Terms} />

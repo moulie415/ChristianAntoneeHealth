@@ -15,7 +15,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {requestPlan, setViewedPlan} from '../../../actions/profile';
 import Text from '../../commons/Text';
-import {Layout, Spinner} from '@ui-kitten/components';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {getPlan} from '../../../actions/plan';
 import moment from 'moment';
@@ -29,6 +28,7 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import {logError} from '../../../helpers/error';
+import Spinner from '../../commons/Spinner';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -140,7 +140,7 @@ const Plan: React.FC<{
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
           <SafeAreaView style={{flex: 1}}>
-            <Layout
+            <View
               style={{
                 ...StyleSheet.absoluteFillObject,
                 backgroundColor: '#000',
@@ -148,7 +148,6 @@ const Plan: React.FC<{
               }}
             />
             <Text
-              category="h4"
               style={{
                 textAlign: 'center',
                 margin: DevicePixels[20],
@@ -181,7 +180,7 @@ const Plan: React.FC<{
                   </Text>{' '}
                   we will notify you when it becomes available
                 </Text>
-                <Spinner style={{borderColor: '#fff'}} size="giant" />
+                <Spinner style={{borderColor: '#fff'}} />
               </View>
             )}
             <View style={{flex: 1, justifyContent: 'flex-end'}}>
@@ -193,7 +192,12 @@ const Plan: React.FC<{
                       key={p.identifier}
                       style={{margin: DevicePixels[20]}}
                       disabled={loading}
-                      accessoryLeft={() => (loading ? <Spinner /> : null)}
+                      text={`Request my workout plan ${
+                        profile.usedFreePlan
+                          ? '(' + p.product.price_string + ')'
+                          : ''
+                      }`}
+                      loading={loading}
                       onPress={() => {
                         if (profile.premium) {
                           requestPlanAction();
@@ -204,13 +208,8 @@ const Plan: React.FC<{
                             },
                           });
                         }
-                      }}>
-                      {`Request my workout plan ${
-                        profile.usedFreePlan
-                          ? '(' + p.product.price_string + ')'
-                          : ''
-                      }`}
-                    </Button>
+                      }}
+                    />
                   );
                 })}
 
@@ -223,16 +222,16 @@ const Plan: React.FC<{
                       marginTop: 0,
                     }}
                     disabled={loading}
-                    accessoryLeft={() => (loading ? <Spinner /> : null)}
+                    text="No thanks, I just want premium"
+                    loading={loading}
                     onPress={() => {
                       navigation.navigate('Premium', {
                         onActivated: () => {
                           navigation.navigate('Home');
                         },
                       });
-                    }}>
-                    No thanks, I just want premium
-                  </Button>
+                    }}
+                  />
                 )}
             </View>
           </SafeAreaView>

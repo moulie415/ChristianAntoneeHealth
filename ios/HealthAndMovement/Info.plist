@@ -58,14 +58,14 @@
 				<string>com.HealthAndMovement</string>
 			</array>
 		</dict>
-    <dict>
-    <key>CFBundleURLName</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>cahealth</string>
-    </array>
-  </dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>cahealth</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -105,7 +105,7 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
-    <string>spotify</string>
+		<string>spotify</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -127,10 +127,10 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Share workout data with other apps.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>So you can save wrokouts with a image from your library</string>
-  <key>NSAppleMusicUsageDescription</key>
+	<key>NSAppleMusicUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants access to your Music library</string>
 	<key>SKAdNetworkItems</key>
 	<array>
@@ -293,6 +293,10 @@
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
 		<string>Feather.ttf</string>
+		<string>MontserratAlternates-Regular_bold_italic.ttf</string>
+		<string>MontserratAlternates-Regular_bold.ttf</string>
+		<string>MontserratAlternates-Regular_italic.ttf</string>
+		<string>MontserratAlternates-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -313,7 +317,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>NSCalendarsUsageDescription</key>
-  <string>This app requires access to the calendar</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app requires access to the calendar</string>
 </dict>
 </plist>

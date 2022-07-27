@@ -58,8 +58,6 @@ export interface SetLoggedInAction {
 }
 
 export interface SignUpPayload {
-  dry?: boolean;
-  name: string;
   dob: string;
   weight: number;
   height: number;
@@ -69,8 +67,6 @@ export interface SignUpPayload {
   equipment: string;
   marketing: boolean;
   goal: Goal;
-  password?: string;
-  email: string;
   nutrition: string[];
   trainingAvailability: TrainingAvailability;
   injuries: string;
