@@ -32,7 +32,7 @@ const HomeCard: React.FC<{
         height: CARD_HEIGHT,
         marginHorizontal: DevicePixels[20],
         marginBottom: DevicePixels[15],
-        borderRadius: DevicePixels[15],
+        borderRadius: DevicePixels[10],
         overflow: 'hidden',
       }}
       onPress={onPress}>
