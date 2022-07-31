@@ -1290,7 +1290,7 @@ PODS:
     - React-Core
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
-  - RNDateTimePicker (6.2.2):
+  - RNDateTimePicker (6.3.0):
     - React-Core
   - RNDeviceInfo (10.0.2):
     - React-Core
@@ -1386,9 +1386,9 @@ PODS:
   - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.2.0):
+  - RNSentry (4.2.2):
     - React-Core
-    - Sentry (= 7.21.0)
+    - Sentry (= 7.22.0)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.2):
@@ -1410,9 +1410,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.21.0):
-    - Sentry/Core (= 7.21.0)
-  - Sentry/Core (7.21.0)
+  - Sentry (7.22.0):
+    - Sentry/Core (= 7.22.0)
+  - Sentry/Core (7.22.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1870,7 +1870,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNCPicker: 0250e95ad170569a96f5b0555cdd5e65b9084dca
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
-  RNDateTimePicker: b980b1090724ad425c7ceab4e8e6cde72a63f313
+  RNDateTimePicker: 30e5eb06acbabcf031e11e354eb24283f44e1813
   RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
   RNEventEmitter: 557106956ec2f9ccda6940afeea563936385efd3
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
@@ -1892,7 +1892,7 @@ SPEC CHECKSUMS:
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: b5b17149593e7c05e4ec5c0efea1f21e05829510
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSentry: 227b01d7373289c51b8c31b2c8d6bac49f1a4335
+  RNSentry: f03937a2cf86c7029ba31fbbf5618c55d223cd62
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSpotifyRemote: ab3fcbccaebead1684ba455a1d1bbdd123909faf
@@ -1901,7 +1901,7 @@ SPEC CHECKSUMS:
   RNWatch: dae6c858a2051dbdcfb00b9a86cf4d90400263b4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 194d0a2d4d6ef92c9c08c98d998340b0a63efd81
+  Sentry: 30b51086ca9aac23337880152e95538f7e177f7f
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

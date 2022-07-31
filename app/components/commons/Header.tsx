@@ -5,7 +5,6 @@ import {navigationRef} from '../../RootNavigation';
 import DevicePixels from '../../helpers/DevicePixels';
 import Text from './Text';
 import colors from '../../constants/colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Header: React.FC<{
   hasBack?: boolean;
@@ -21,7 +20,12 @@ const Header: React.FC<{
         />
       )}
       {!!title && (
-        <Text style={{color: colors.appWhite, fontSize: DevicePixels[20]}}>
+        <Text
+          style={{
+            color: colors.appWhite,
+            fontSize: DevicePixels[20],
+            fontWeight: 'bold',
+          }}>
           {title}
         </Text>
       )}
