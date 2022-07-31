@@ -135,8 +135,7 @@ const StackComponent: FunctionComponent = () => {
             name="StartWorkout"
             component={StartWorkout}
             options={({navigation}) => ({
-              headerTitle: '',
-              headerBackTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
@@ -183,8 +182,7 @@ const StackComponent: FunctionComponent = () => {
             name="QuickRoutine"
             component={QuickRoutineView}
             options={({navigation}) => ({
-              headerTitle: '',
-              headerBackTitle: '',
+              headerShown: false
             })}
           />
           <Stack.Screen

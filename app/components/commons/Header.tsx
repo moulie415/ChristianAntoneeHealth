@@ -5,14 +5,25 @@ import {navigationRef} from '../../RootNavigation';
 import DevicePixels from '../../helpers/DevicePixels';
 import Text from './Text';
 import colors from '../../constants/colors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Header: React.FC<{
   hasBack?: boolean;
   title?: string;
   right?: ReactNode;
-}> = ({hasBack, title, right}) => {
+  absolute?: boolean;
+}> = ({hasBack, title, right, absolute}) => {
+  const insets = useSafeAreaInsets();
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: absolute ? 'absolute' : 'relative',
+        top: absolute ? insets.top : undefined,
+        left: absolute ? 0 : undefined,
+        zIndex: 1,
+      }}>
       {hasBack && (
         <BackButton
           style={{margin: DevicePixels[20]}}

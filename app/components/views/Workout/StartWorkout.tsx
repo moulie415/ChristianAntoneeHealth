@@ -29,6 +29,7 @@ import ResistanceScaleInfo from './ResistanceScaleInfo';
 import Button from '../../commons/Button';
 import MusicButton from '../../commons/MusicButton';
 import Spinner from '../../commons/Spinner';
+import Header from '../../commons/Header';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -102,6 +103,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
 
   return (
     <View style={{flex: 1}}>
+      <Header hasBack absolute />
       <Countdown onComplete={() => setWorkoutStarted(true)} />
       <ScrollView
         contentContainerStyle={{
@@ -391,7 +393,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           />
         </View>
       </Modal>
-      <MusicButton />
+      {/* <MusicButton /> */}
     </View>
   );
 };
