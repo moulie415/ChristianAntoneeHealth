@@ -180,14 +180,18 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   </TouchableOpacity>
                 )}
                 <ImageBackground
-                  imageStyle={{borderRadius: DevicePixels[30]}}
+                  imageStyle={{
+                    borderTopLeftRadius: DevicePixels[30],
+                    borderTopRightRadius: DevicePixels[30],
+                  }}
                   style={{
                     position: 'absolute',
                     left: 0,
                     right: 0,
                     bottom: 0,
                     top: getVideoHeight() - DevicePixels[30],
-                    borderRadius: DevicePixels[30],
+                    borderTopLeftRadius: DevicePixels[30],
+                    borderTopRightRadius: DevicePixels[30],
                     overflow: 'hidden',
                   }}
                   source={require('../../../images/old-black-background-grunge.png')}>
@@ -195,7 +199,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     <View
                       style={{
                         flexDirection: 'row',
-                        justifyContent: 'space-evenly',
+                        justifyContent: 'center',
                         alignItems: 'center',
                         marginTop: DevicePixels[30],
                       }}>
@@ -203,13 +207,17 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         style={{}}
                         onPress={() => setTabIndex(0)}>
                         <LinearGradient
-                          colors={[colors.appBlueLight, colors.appBlueDark]}
+                          colors={
+                            tabIndex === 0
+                              ? [colors.appBlueLight, colors.appBlueDark]
+                              : ['transparent', 'transparent']
+                          }
                           style={{
                             height: DevicePixels[40],
                             width: DevicePixels[100],
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderRadius: DevicePixels[25]
+                            borderRadius: DevicePixels[25],
                           }}
                           start={{x: 0, y: 0}}
                           end={{x: 1, y: 0}}>
@@ -226,29 +234,75 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(1)}>
-                        <Text
+                        <LinearGradient
+                          colors={
+                            tabIndex === 1
+                              ? [colors.appBlueLight, colors.appBlueDark]
+                              : ['transparent', 'transparent']
+                          }
                           style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                          }}>
-                          Diagram
-                        </Text>
+                            height: DevicePixels[40],
+                            width: DevicePixels[100],
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: DevicePixels[25],
+                          }}
+                          start={{x: 0, y: 0}}
+                          end={{x: 1, y: 0}}>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color: '#fff',
+                              textAlign: 'center',
+                            }}>
+                            Diagram
+                          </Text>
+                        </LinearGradient>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(2)}>
-                        <Text
+                        <LinearGradient
+                          colors={
+                            tabIndex === 2
+                              ? [colors.appBlueLight, colors.appBlueDark]
+                              : ['transparent', 'transparent']
+                          }
                           style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                          }}>
-                          Notes
-                        </Text>
+                            height: DevicePixels[40],
+                            width: DevicePixels[100],
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: DevicePixels[25],
+                          }}
+                          start={{x: 0, y: 0}}
+                          end={{x: 1, y: 0}}>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color: '#fff',
+                              textAlign: 'center',
+                            }}>
+                            Notes
+                          </Text>
+                        </LinearGradient>
                       </TouchableOpacity>
                     </View>
                     <View>
                       {tabIndex === 0 && (
-                        <ViewMore text={exercise.description} lines={5} />
+                        <>
+                          <Text
+                            style={{
+                              color: colors.appWhite,
+                              margin: DevicePixels[10],
+                              fontSize: DevicePixels[20],
+                              marginBottom: 0,
+                              fontWeight: 'bold',
+                            }}>
+                            {exercise.name}
+                          </Text>
+                          <ViewMore text={exercise.description} lines={5} />
+                        </>
                       )}
 
                       {tabIndex === 1 && i === index && (
@@ -281,24 +335,42 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       )}
                     </View>
 
-                    <View
+                    <LinearGradient
+                      colors={[colors.orangeLight, colors.orangeDark]}
+                      start={{x: 0, y: 0}}
+                      end={{x: 1, y: 0}}
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         margin: DevicePixels[10],
-                        marginBottom: 0,
+                        height: DevicePixels[60],
+                        borderRadius: DevicePixels[30],
+                        marginBottom: DevicePixels[10],
                       }}>
-                      <Text>{`Exercise ${index + 1}/${exercises.length}`}</Text>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          color: colors.appWhite,
+                          fontSize: DevicePixels[20],
+                          padding: DevicePixels[15],
+                        }}>{`Exercise ${index + 1}/${exercises.length}`}</Text>
 
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon
                           name="stopwatch"
-                          size={DevicePixels[15]}
-                          color={colors.darkBlue}
+                          size={DevicePixels[20]}
+                          color={colors.appWhite}
                         />
-                        <Text style={{marginLeft: DevicePixels[5]}}>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            color: colors.appWhite,
+                            fontSize: DevicePixels[20],
+                            paddingLeft: DevicePixels[5],
+                            padding: DevicePixels[15],
+                          }}>
                           {moment()
                             .utc()
                             .startOf('day')
@@ -306,7 +378,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                             .format('mm:ss')}
                         </Text>
                       </View>
-                    </View>
+                    </LinearGradient>
                     <Button
                       text="End Workout"
                       onPress={() => {

@@ -12,6 +12,7 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
           margin: DevicePixels[10],
           marginTop: 0,
           color: colors.appBlue,
+          fontWeight: 'bold',
         }}
         onPress={onPress}>
         View more
@@ -26,6 +27,7 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
           margin: DevicePixels[10],
           marginTop: 0,
           color: colors.appBlue,
+          fontWeight: 'bold',
         }}
         onPress={onPress}>
         View less
@@ -37,8 +39,12 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
       renderViewMore={renderViewMore}
       renderViewLess={renderViewLess}
       numberOfLines={lines || 3}
-      textStyle={{margin: DevicePixels[10], marginBottom: 0, lineHeight: 25}}>
-      <Text>{text}</Text>
+      textStyle={{
+        margin: DevicePixels[10],
+        marginBottom: 0,
+  
+      }}>
+      <Text style={{color: colors.appWhite}}>{text}</Text>
     </ViewMoreText>
   );
 };

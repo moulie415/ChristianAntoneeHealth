@@ -16,7 +16,7 @@ const DefaultPath: React.FC<{d: string}> = ({d}) => {
   return (
     <Path
       fill="none"
-      stroke="#000"
+      stroke="#ffffff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={0.1}
@@ -46,7 +46,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
     <View
       style={{
         borderRadius: 10,
-        backgroundColor: '#fff',
+    
         height: DevicePixels[300],
         padding: DevicePixels[10],
       }}>

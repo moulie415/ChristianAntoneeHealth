@@ -16,4 +16,6 @@ export default {
   muscleSecondary: '#b7d6f6',
   appWhite: '#fff',
   spotify: '#1DB954',
+  orangeLight: '#FFA841',
+  orangeDark: '#E9632A',
 };
