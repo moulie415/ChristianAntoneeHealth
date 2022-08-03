@@ -104,6 +104,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   return (
     <View style={{flex: 1}}>
       <Header hasBack absolute />
+      
       <Countdown onComplete={() => setWorkoutStarted(true)} />
       <ScrollView
         contentContainerStyle={{

@@ -30,6 +30,7 @@ import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
+import Input from '../../commons/Input';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -112,7 +113,32 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   return (
     <View style={{flex: 1}}>
       <Header hasBack absolute />
-
+      {routine.instructions && (
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            right: DevicePixels[20],
+            top: DevicePixels[20],
+            zIndex: 1,
+          }}
+          onPress={() => setShowModal(true)}>
+          <View
+            style={{
+              width: DevicePixels[40],
+              height: DevicePixels[40],
+              borderRadius: DevicePixels[20],
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(255, 255, 255, 0.4)',
+            }}>
+            <Icon
+              name="info-circle"
+              color={colors.appBlue}
+              size={DevicePixels[35]}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
@@ -313,17 +339,12 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       )}
 
                       {tabIndex === 2 && (
-                        <TextInput
+                        <Input
                           ref={textInputRef}
                           style={{
-                            margin: DevicePixels[10],
-                            borderWidth: StyleSheet.hairlineWidth,
                             height: DevicePixels[100],
                             textAlignVertical: 'top',
-                            borderRadius: DevicePixels[10],
-                            borderColor: colors.appBlue,
-                            padding: DevicePixels[10],
-                            paddingVertical: DevicePixels[20],
+                            margin: DevicePixels[10],
                           }}
                           placeholder="Enter notes here..."
                           multiline

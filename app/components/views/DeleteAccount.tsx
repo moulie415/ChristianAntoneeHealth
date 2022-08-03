@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Alert,
-  ImageBackground,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -17,6 +11,7 @@ import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
 import {setLoggedIn} from '../../actions/profile';
 import Text from '../commons/Text';
 import Button from '../commons/Button';
+import Input from '../commons/Input';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
@@ -55,16 +50,9 @@ const DeleteAccount: React.FC<{
           requiresPassword ? ' and password' : ''
         } to confirm deletion and be aware that this will delete all your CA Health data and it will not be recoverable.`}
       </Text>
-      <TextInput
+      <Input
         style={{
-          borderRadius: DevicePixels[5],
           margin: DevicePixels[10],
-          marginBottom: DevicePixels[10],
-          borderWidth: 0,
-          backgroundColor: 'rgba(255,255,255,0.3)',
-          paddingLeft: DevicePixels[10],
-          height: DevicePixels[50],
-          color: '#fff',
         }}
         placeholder="Email"
         onChangeText={e => setEmail(e)}
@@ -74,17 +62,8 @@ const DeleteAccount: React.FC<{
         keyboardType="email-address"
       />
       {requiresPassword && (
-        <TextInput
-          style={{
-            borderRadius: DevicePixels[5],
-            margin: DevicePixels[10],
-            marginBottom: DevicePixels[20],
-            borderWidth: 0,
-            backgroundColor: 'rgba(255,255,255,0.3)',
-            paddingLeft: DevicePixels[10],
-            height: DevicePixels[50],
-            color: '#fff',
-          }}
+        <Input
+          style={{margin: DevicePixels[10]}}
           placeholder="Password"
           onChangeText={p => setPassword(p)}
           placeholderTextColor="#fff"
@@ -131,7 +110,6 @@ const DeleteAccount: React.FC<{
         style={{
           margin: DevicePixels[10],
           marginTop: DevicePixels[5],
-          height: DevicePixels[50],
         }}
         disabled={
           email !== profile.email || (requiresPassword && !password) || loading

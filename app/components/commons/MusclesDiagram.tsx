@@ -45,48 +45,19 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
   return (
     <View
       style={{
-        borderRadius: 10,
-        backgroundColor: '#fff',
         height: DevicePixels[300],
-        padding: DevicePixels[10],
       }}>
-      <Text>Muscles worked</Text>
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        <View style={{marginRight: DevicePixels[10]}}>
-          <Text>Primary:</Text>
-          <View style={{flexDirection: 'row'}}>
-            {primary.map(muscle => (
-              <View
-                key={muscle}
-                style={{
-                  backgroundColor: colors.appBlue,
-                  padding: 2,
-                  paddingHorizontal: 5,
-                  borderRadius: 10,
-                  marginTop: 2,
-                  marginRight: 5,
-                }}>
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontSize: 10,
-                    textAlign: 'center',
-                  }}>
-                  {muscleReadableString(muscle).toUpperCase()}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </View>
-        {secondary && (
-          <View>
-            <Text>Secondary: </Text>
+      <View style={{margin: DevicePixels[20]}}>
+        <Text style={{color: colors.appWhite}}>Muscles worked</Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          <View style={{marginRight: DevicePixels[10]}}>
+            <Text style={{color: colors.appWhite}}>Primary:</Text>
             <View style={{flexDirection: 'row'}}>
-              {secondary.map(muscle => (
+              {primary.map(muscle => (
                 <View
                   key={muscle}
                   style={{
-                    backgroundColor: colors.appLightBlue,
+                    backgroundColor: colors.appBlue,
                     padding: 2,
                     paddingHorizontal: 5,
                     borderRadius: 10,
@@ -105,14 +76,45 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
               ))}
             </View>
           </View>
-        )}
+          {secondary && (
+            <View>
+              <Text>Secondary: </Text>
+              <View style={{flexDirection: 'row'}}>
+                {secondary.map(muscle => (
+                  <View
+                    key={muscle}
+                    style={{
+                      backgroundColor: colors.appLightBlue,
+                      padding: 2,
+                      paddingHorizontal: 5,
+                      borderRadius: 10,
+                      marginTop: 2,
+                      marginRight: 5,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#fff',
+                        fontSize: 10,
+                        textAlign: 'center',
+                      }}>
+                      {muscleReadableString(muscle).toUpperCase()}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          )}
+        </View>
       </View>
       <View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: DevicePixels[20],
+          backgroundColor: '#fff',
+          marginHorizontal: DevicePixels[20],
+          paddingVertical: DevicePixels[10],
           flexDirection: 'row',
+          borderRadius: DevicePixels[10],
         }}>
         {hasFront && (
           <Svg width="50%" height={DevicePixels[175]} viewBox="0 0 12.62 47.06">
