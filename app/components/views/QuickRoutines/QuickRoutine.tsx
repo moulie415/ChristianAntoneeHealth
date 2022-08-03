@@ -70,17 +70,17 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
 
   useEffect(() => {
     if (routine.instructions) {
-      navigation.setOptions({
-        headerRight: () => (
-          <TouchableOpacity onPress={() => setShowModal(true)}>
-            <Icon
-              name="info-circle"
-              color={colors.appBlue}
-              size={DevicePixels[20]}
-            />
-          </TouchableOpacity>
-        ),
-      });
+      // navigation.setOptions({
+      //   headerRight: () => (
+      //     <TouchableOpacity onPress={() => setShowModal(true)}>
+      //       <Icon
+      //         name="info-circle"
+      //         color={colors.appBlue}
+      //         size={DevicePixels[20]}
+      //       />
+      //     </TouchableOpacity>
+      //   ),
+      // });
       setShowModal(true);
     }
   }, [navigation, routine.instructions]);

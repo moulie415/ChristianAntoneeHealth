@@ -1073,10 +1073,10 @@
   resolved "https://registry.npmjs.org/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
-"@gorhom/bottom-sheet@^4.4.2":
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.2.tgz#16e4a1271574c13c0b6ab970256767262c1cd35f"
-  integrity sha512-KpHWP/DYMGk3T+i6NshrPWpe9M/WzBlNk34Hadvw9+7MZPOkKJVDYcmuSfUzCG2kRNaPnGGbJJFO8dhwtOYbig==
+"@gorhom/bottom-sheet@^4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.3.tgz#4c31f214342faa0ba9cd453a98f8c1e0e780c428"
+  integrity sha512-ZEbCLbvLaEVNa9c+om/o9Le0q7o9GkEM7smhuoFkqj9CIjv3XbpZof7uEKV86yyta+ONAInNYrCdVSpYQ1Rjkg==
   dependencies:
     "@gorhom/portal" "1.0.13"
     invariant "^2.2.4"
@@ -1578,10 +1578,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.3.0.tgz#51bd03137c8ad3d686dc7276e8336ea4a7198923"
-  integrity sha512-X646oaloVFpDVrdGMcxtcLIL6k6p0cpZ2w2CvYFX9imjtk/gwIjJaxdRyjqM7F8o5FWSqK9X6z8HPRKWsbfelQ==
+"@react-native-community/datetimepicker@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.3.1.tgz#217fc1fa1f989038f88efd6394ec34aa79b60c9d"
+  integrity sha512-WdSc34CwKTK7ied9En9yxs6WHN5bBdw2hGgWr4rqJcfC7qAOQCV+JA7iFxN7Ob1wxE/7gsTX2hZG8tmd62PH1g==
   dependencies:
     invariant "^2.2.4"
 
@@ -7573,10 +7573,10 @@ react-native-fbsdk-next@^8.0.5:
     "@expo/config-plugins" "^4.0.4"
     xml2js "^0.4.23"
 
-react-native-flipper@^0.154.0:
-  version "0.154.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.154.0.tgz#724f8cada8d31e7e9512c9fe54d4f46421de1e16"
-  integrity sha512-YxVKEuOF4FDobPA+OyE27u9S4Sd8TghhGc493dPJ3MS6r3G9JAGsKSC4+tEFTV2SgC55FNFLLxhdfFUquzARZQ==
+react-native-flipper@^0.157.0:
+  version "0.157.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.157.0.tgz#e9f92c4fea1bb7fc0f17f38ef35be197e7d33028"
+  integrity sha512-jnOV/Gb1OwPCSycrpKHGXnmtGhDMvSxsvbUI7Nlukthn+T7xsWPveitijT1Z+PGDIPNqbjz2OT4R7CB1Kuu9jA==
 
 react-native-gesture-handler@^2.5.0:
   version "2.5.0"
