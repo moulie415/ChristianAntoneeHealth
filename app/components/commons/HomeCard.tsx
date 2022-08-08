@@ -68,7 +68,7 @@ const HomeCard: React.FC<{
         <Text style={{color: colors.appWhite}}>{subtitle}</Text>
         {premium && !profile.premium && (
           <Icon
-            style={{marginTop: DevicePixels[10]}}
+            style={{marginTop: DevicePixels[10], alignSelf: 'flex-end'}}
             name="lock"
             size={DevicePixels[20]}
             color={colors.appWhite}

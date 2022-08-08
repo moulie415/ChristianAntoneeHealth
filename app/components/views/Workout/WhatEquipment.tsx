@@ -18,26 +18,27 @@ const WhatEquipment: React.FC<{
 }> = ({navigation}) => {
   return (
     <ImageBackground
-      source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
       style={{flex: 1}}>
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
-          backgroundColor: '#000',
-          opacity: 0.7,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
         }}
       />
       <SafeAreaView style={{flex: 1}}>
-        <Text
-          style={{
-            color: colors.appWhite,
-            textAlign: 'center',
-            marginTop: DevicePixels[20],
-          }}
-          >
-          What equipment do you have?
-        </Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text
+            style={{
+              color: colors.appWhite,
+              marginHorizontal: DevicePixels[20],
+              fontSize: DevicePixels[22],
+              fontWeight: 'bold'
+            }}>
+            What equipment do you have?
+          </Text>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('WhatArea', {

@@ -113,32 +113,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   return (
     <View style={{flex: 1}}>
       <Header hasBack absolute />
-      {routine.instructions && (
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            right: DevicePixels[20],
-            top: DevicePixels[20],
-            zIndex: 1,
-          }}
-          onPress={() => setShowModal(true)}>
-          <View
-            style={{
-              width: DevicePixels[40],
-              height: DevicePixels[40],
-              borderRadius: DevicePixels[20],
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(255, 255, 255, 0.4)',
-            }}>
-            <Icon
-              name="info-circle"
-              color={colors.appBlue}
-              size={DevicePixels[35]}
-            />
-          </View>
-        </TouchableOpacity>
-      )}
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
@@ -317,16 +291,31 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     <View>
                       {tabIndex === 0 && (
                         <>
-                          <Text
+                          <View
                             style={{
-                              color: colors.appWhite,
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
                               margin: DevicePixels[10],
-                              fontSize: DevicePixels[20],
                               marginBottom: 0,
-                              fontWeight: 'bold',
                             }}>
-                            {exercise.name}
-                          </Text>
+                            <Text
+                              style={{
+                                color: colors.appWhite,
+                                fontSize: DevicePixels[20],
+                                fontWeight: 'bold',
+                              }}>
+                              {exercise.name}
+                            </Text>
+                            <TouchableOpacity
+                              onPress={() => setShowModal(true)}>
+                              <Icon
+                                name="info-circle"
+                                color={colors.appWhite}
+                                size={DevicePixels[30]}
+                              />
+                            </TouchableOpacity>
+                          </View>
                           <ViewMore text={exercise.description} lines={5} />
                         </>
                       )}

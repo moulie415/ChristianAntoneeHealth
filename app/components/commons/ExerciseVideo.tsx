@@ -11,9 +11,7 @@ import moment from 'moment';
 const ExerciseVideo: React.FC<{
   path: string;
   paused?: boolean;
-  onPause?: () => void;
-  onPlay?: () => void;
-}> = ({path, paused: startedPaused, onPause, onPlay}) => {
+}> = ({path, paused: startedPaused}) => {
   const [paused, setPaused] = useState(startedPaused);
   const [hideTime, setHideTime] = useState(moment().unix());
   const ref = useRef<Video>();
@@ -53,7 +51,7 @@ const ExerciseVideo: React.FC<{
       {showControls && (
         <TouchableOpacity
           onPress={() => {
-            setHideTime(moment().unix());
+            setHideTime(paused ? moment().unix() - 3 : moment().unix());
             setPaused(!paused);
           }}
           style={{
