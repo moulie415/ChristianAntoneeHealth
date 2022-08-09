@@ -921,15 +921,15 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
-  - libwebp (1.2.1):
-    - libwebp/demux (= 1.2.1)
-    - libwebp/mux (= 1.2.1)
-    - libwebp/webp (= 1.2.1)
-  - libwebp/demux (1.2.1):
+  - libwebp (1.2.3):
+    - libwebp/demux (= 1.2.3)
+    - libwebp/mux (= 1.2.3)
+    - libwebp/webp (= 1.2.3)
+  - libwebp/demux (1.2.3):
     - libwebp/webp
-  - libwebp/mux (1.2.1):
+  - libwebp/mux (1.2.3):
     - libwebp/demux
-  - libwebp/webp (1.2.1)
+  - libwebp/webp (1.2.3)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -1180,7 +1180,7 @@ PODS:
     - React-Core
   - react-native-flipper (0.157.0):
     - React-Core
-  - react-native-image-picker (4.8.4):
+  - react-native-image-picker (4.8.5):
     - React-Core
   - react-native-pager-view (5.4.25):
     - React-Core
@@ -1190,7 +1190,7 @@ PODS:
     - RCTTypeSafety
     - React
     - ReactCommon/turbomodule/core
-  - react-native-slider (4.2.4):
+  - react-native-slider (4.3.0):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
@@ -1351,7 +1351,7 @@ PODS:
     - React-Core
   - RNPermissions (3.6.0):
     - React-Core
-  - RNPurchases (4.6.1):
+  - RNPurchases (4.6.2):
     - PurchasesHybridCommon (= 2.0.1)
     - React-Core
   - RNRate (1.2.9):
@@ -1386,9 +1386,9 @@ PODS:
   - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.2.2):
+  - RNSentry (4.2.3):
     - React-Core
-    - Sentry (= 7.22.0)
+    - Sentry (= 7.23.0)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.2):
@@ -1410,9 +1410,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.22.0):
-    - Sentry/Core (= 7.22.0)
-  - Sentry/Core (7.22.0)
+  - Sentry (7.23.0):
+    - Sentry/Core (= 7.23.0)
+  - Sentry/Core (7.23.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1815,7 +1815,7 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
-  libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
+  libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   Permission-MediaLibrary: ed0054dbd841f3ed5a2debb4eda9ebe069b43cc1
@@ -1839,10 +1839,10 @@ SPEC CHECKSUMS:
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
   react-native-fbsdk-next: 79815a5b8f66ab0990fbb370b4a4b5bdf0a15e6c
   react-native-flipper: cc9cdf47db2bbe0d9227eeec4f93e2290e55674b
-  react-native-image-picker: cffb727cf2f59bd5c0408e30b3dbe0b935f88835
+  react-native-image-picker: cd420f97f6ed6ff74fc4686d27dbcfdbd051db91
   react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
   react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
-  react-native-slider: cecabb58ecffad671d2ad3ccc58c7f4d2d029e95
+  react-native-slider: 70c5d4eaa12c27cc5be1ef6ee198d41a52484944
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
@@ -1888,11 +1888,11 @@ SPEC CHECKSUMS:
   RNGoogleMobileAds: ad5ed70608dd943e5d2954ebd24c390aca8d1b28
   RNGoogleSignin: b2179ba653c759b936404a7746fc5302f9de6a5a
   RNPermissions: de7b7c3fe1680d974ac7a85e3e97aa539c0e68ea
-  RNPurchases: 80db47ee6da394f92713dff35738e94fe62828a3
+  RNPurchases: b626cf0e68fe06b5f3c5e4e33667cc68a5397491
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: b5b17149593e7c05e4ec5c0efea1f21e05829510
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSentry: f03937a2cf86c7029ba31fbbf5618c55d223cd62
+  RNSentry: 6798624706227656d942849d593f89c8ca3bdde5
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSpotifyRemote: ab3fcbccaebead1684ba455a1d1bbdd123909faf
@@ -1901,7 +1901,7 @@ SPEC CHECKSUMS:
   RNWatch: dae6c858a2051dbdcfb00b9a86cf4d90400263b4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 30b51086ca9aac23337880152e95538f7e177f7f
+  Sentry: a0d4563fa4ddacba31fdcc35daaa8573d87224d6
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
