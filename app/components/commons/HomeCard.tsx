@@ -5,6 +5,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Image,
+  View,
 } from 'react-native';
 import {connect} from 'react-redux';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -65,15 +66,23 @@ const HomeCard: React.FC<{
           }}>
           {title}
         </Text>
-        <Text style={{color: colors.appWhite}}>{subtitle}</Text>
-        {premium && !profile.premium && (
-          <Icon
-            style={{marginTop: DevicePixels[10], alignSelf: 'flex-end'}}
-            name="lock"
-            size={DevicePixels[20]}
-            color={colors.appWhite}
-          />
-        )}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Text style={{color: colors.appWhite, flex: 3}}>{subtitle}</Text>
+          {premium && !profile.premium && (
+            <View style={{flex: 1}}>
+              <Icon
+                name="lock"
+                size={DevicePixels[20]}
+                color={colors.appWhite}
+              />
+            </View>
+          )}
+        </View>
       </ImageBackground>
     </TouchableOpacity>
   );
