@@ -54,9 +54,9 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Profile')}
               style={{
-                width: DevicePixels[40],
-                height: DevicePixels[40],
-                borderRadius: DevicePixels[20],
+                width: DevicePixels[42],
+                height: DevicePixels[42],
+                borderRadius: DevicePixels[21],
                 backgroundColor: colors.appWhite,
                 justifyContent: 'center',
                 alignItems: 'center',
