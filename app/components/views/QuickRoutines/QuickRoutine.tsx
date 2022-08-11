@@ -140,6 +140,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       marginBottom: DevicePixels[10],
                       alignItems: 'center',
                       justifyContent: 'center',
+                      backgroundColor: 'rgba(0,0,0,0.2)',
                     }}>
                     <Spinner color={colors.appBlue} />
                   </View>
