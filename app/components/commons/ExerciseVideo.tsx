@@ -78,15 +78,10 @@ const ExerciseVideo: React.FC<{
           onPress={() => ref.current?.presentFullscreenPlayer()}
           style={{
             position: 'absolute',
-            top: '37%',
+            top: '35%',
             right: DevicePixels[20],
           }}>
-          <Icon
-            name="expand"
-            color={colors.appWhite}
-            size={DevicePixels[30]}
-            style={{marginRight: paused ? -DevicePixels[3] : 0}}
-          />
+          <Icon name="expand" color={colors.appWhite} size={DevicePixels[30]} />
         </TouchableOpacity>
       )}
     </>
