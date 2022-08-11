@@ -66,7 +66,7 @@ const FitnessGoal: React.FC<{
                     left: DevicePixels[20],
                     justifyContent: 'center',
                   }}>
-                  <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
+                  <Text style={[{color: '#fff'}]}>
                     {title}
                   </Text>
                 </View>

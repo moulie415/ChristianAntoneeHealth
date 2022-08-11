@@ -88,9 +88,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
                   ...(index % 2 == 0 ? {right: 0} : {}),
                   margin: DevicePixels[1],
                 }}>
-                <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
-                  {name}
-                </Text>
+                <Text style={[{color: '#fff'}]}>{name}</Text>
               </View>
             </TouchableOpacity>
           );

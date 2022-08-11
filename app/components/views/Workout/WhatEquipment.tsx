@@ -35,7 +35,7 @@ const WhatEquipment: React.FC<{
               color: colors.appWhite,
               marginHorizontal: DevicePixels[20],
               fontSize: DevicePixels[22],
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             }}>
             What equipment do you have?
           </Text>
@@ -47,48 +47,91 @@ const WhatEquipment: React.FC<{
             }
             style={{
               margin: DevicePixels[20],
-              backgroundColor: colors.appBlue,
-              padding: DevicePixels[10],
-              borderColor: colors.appBlue,
-              borderWidth: DevicePixels[1],
-              borderRadius: DevicePixels[5],
+              marginBottom: DevicePixels[10],
             }}>
-            <Text
+            <ImageBackground
+              imageStyle={{borderRadius: DevicePixels[10]}}
               style={{
-                textAlign: 'center',
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                fontSize: DevicePixels[17],
-              }}>
-              I’ve got a few bits and pieces
-            </Text>
-            <Text style={{color: colors.appWhite, textAlign: 'center'}}>
-              (Dumbbells, exercise ball, exercise mat)
-            </Text>
+                height: DevicePixels[200],
+                justifyContent: 'flex-end',
+              }}
+              source={require('../../../images/bits-and-pieces.jpg')}>
+              <ImageBackground
+                source={require('../../../images/BlackTransparentBackground.png')}
+                blurRadius={3}
+                imageStyle={{
+                  borderBottomLeftRadius: DevicePixels[10],
+                  borderBottomRightRadius: DevicePixels[10],
+                }}
+                style={{
+                  padding: DevicePixels[20],
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    fontSize: DevicePixels[20],
+                    marginBottom: DevicePixels[10],
+                  }}>
+                  I’ve got a few bits and pieces
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                    fontSize: DevicePixels[10],
+                  }}>
+                  (Dumbbells, exercise ball, exercise mat)
+                </Text>
+              </ImageBackground>
+            </ImageBackground>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => navigation.navigate('WhatArea', {equipment: 'full'})}
             style={{
               margin: DevicePixels[20],
-              backgroundColor: colors.appBlue,
-              padding: DevicePixels[10],
-              borderColor: colors.appBlue,
-              borderWidth: DevicePixels[1],
-              borderRadius: DevicePixels[5],
+              marginTop: DevicePixels[10],
             }}>
-            <Text
+            <ImageBackground
+              imageStyle={{borderRadius: DevicePixels[10]}}
               style={{
-                textAlign: 'center',
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                fontSize: DevicePixels[17],
-              }}>
-              I’ve got access to a gym
-            </Text>
-            <Text style={{color: colors.appWhite, textAlign: 'center'}}>
-              (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
-              benches Kettlebell etc)
-            </Text>
+                height: DevicePixels[200],
+                justifyContent: 'flex-end',
+              }}
+              source={require('../../../images/access-to-gym.jpg')}>
+              <ImageBackground
+                source={require('../../../images/BlackTransparentBackground.png')}
+                blurRadius={3}
+                imageStyle={{
+                  borderBottomLeftRadius: DevicePixels[10],
+                  borderBottomRightRadius: DevicePixels[10],
+                }}
+                style={{
+                  padding: DevicePixels[20],
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    fontSize: DevicePixels[20],
+                    marginBottom: DevicePixels[10],
+                  }}>
+                  I’ve got access to a gym
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                    fontSize: DevicePixels[10],
+                  }}>
+                  (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
+                  benches Kettlebell etc)
+                </Text>
+              </ImageBackground>
+            </ImageBackground>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

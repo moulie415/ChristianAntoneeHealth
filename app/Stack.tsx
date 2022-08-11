@@ -223,12 +223,12 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="WhatArea"
             component={WhatArea}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="WorkoutList"
             component={WorkoutList}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>

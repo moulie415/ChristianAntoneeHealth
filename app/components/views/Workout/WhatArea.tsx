@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 
 const WhatArea: React.FC<{
@@ -20,90 +21,127 @@ const WhatArea: React.FC<{
   const {equipment} = route.params;
   return (
     <ImageBackground
-      source={require('../../../images/Fitness_testing_squat.jpeg')}
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
       style={{flex: 1}}>
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
-          backgroundColor: '#000',
-          opacity: 0.7,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
         }}
       />
       <SafeAreaView style={{flex: 1}}>
+        <Header hasBack />
         <Text
           style={{
             color: colors.appWhite,
-            textAlign: 'center',
-            marginTop: DevicePixels[20],
+            margin: DevicePixels[20],
+            fontSize: DevicePixels[22],
+            fontWeight: 'bold',
           }}>
           What area do you want to focus on?
         </Text>
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WorkoutList', {equipment, area: 'upper'})
-            }
-            style={{
-              margin: DevicePixels[20],
-              backgroundColor: colors.appBlue,
-              padding: DevicePixels[10],
-              borderColor: colors.appBlue,
-              borderWidth: DevicePixels[1],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              UPPER BODY
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WorkoutList', {equipment, area: 'lower'})
-            }
-            style={{
-              margin: DevicePixels[20],
 
-              backgroundColor: colors.appBlue,
-              padding: DevicePixels[10],
-              borderColor: colors.appBlue,
-              borderWidth: DevicePixels[1],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              LOWER BODY
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WorkoutList', {equipment, area: 'full'})
-            }
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WorkoutList', {equipment, area: 'upper'})
+          }
+          style={{
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[5],
+            borderRadius: DevicePixels[5],
+          }}>
+          <ImageBackground
+            imageStyle={{borderRadius: DevicePixels[10]}}
             style={{
-              margin: DevicePixels[20],
-              backgroundColor: colors.appBlue,
-              padding: DevicePixels[10],
-              borderColor: colors.appBlue,
-              borderWidth: DevicePixels[1],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              FULL BODY
-            </Text>
-          </TouchableOpacity>
-        </View>
+              height: DevicePixels[120],
+              justifyContent: 'flex-end',
+            }}
+            source={require('../../../images/upper-body.jpg')}>
+            <ImageBackground
+              source={require('../../../images/BlackTransparentBackground.png')}
+              blurRadius={3}
+              style={{height: DevicePixels[120], justifyContent: 'center'}}
+              imageStyle={{borderRadius: DevicePixels[10]}}>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[25],
+                  fontSize: DevicePixels[22],
+                }}>
+                UPPER BODY
+              </Text>
+            </ImageBackground>
+          </ImageBackground>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WorkoutList', {equipment, area: 'lower'})
+          }
+          style={{
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[5],
+            borderRadius: DevicePixels[5],
+          }}>
+          <ImageBackground
+            imageStyle={{borderRadius: DevicePixels[10]}}
+            style={{
+              height: DevicePixels[120],
+              justifyContent: 'flex-end',
+            }}
+            source={require('../../../images/lower-body.jpg')}>
+            <ImageBackground
+              source={require('../../../images/BlackTransparentBackground.png')}
+              blurRadius={3}
+              style={{height: DevicePixels[120], justifyContent: 'center'}}
+              imageStyle={{borderRadius: DevicePixels[10]}}>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[25],
+                  fontSize: DevicePixels[22],
+                }}>
+                LOWER BODY
+              </Text>
+            </ImageBackground>
+          </ImageBackground>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WorkoutList', {equipment, area: 'full'})
+          }
+          style={{
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[5],
+            borderRadius: DevicePixels[5],
+          }}>
+          <ImageBackground
+            imageStyle={{borderRadius: DevicePixels[10]}}
+            style={{
+              height: DevicePixels[120],
+              justifyContent: 'flex-end',
+            }}
+            source={require('../../../images/full-body.jpg')}>
+            <ImageBackground
+              source={require('../../../images/BlackTransparentBackground.png')}
+              blurRadius={3}
+              style={{height: DevicePixels[120], justifyContent: 'center'}}
+              imageStyle={{borderRadius: DevicePixels[10]}}>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[25],
+                  fontSize: DevicePixels[22],
+                }}>
+                FULL BODY
+              </Text>
+            </ImageBackground>
+          </ImageBackground>
+        </TouchableOpacity>
       </SafeAreaView>
     </ImageBackground>
   );

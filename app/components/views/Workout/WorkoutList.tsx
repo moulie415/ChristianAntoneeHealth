@@ -1,4 +1,11 @@
-import {Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
@@ -18,12 +25,11 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Profile from '../../../types/Profile';
 import {SettingsState} from '../../../reducers/settings';
 import colors from '../../../constants/colors';
-import ImageLoader from '../../commons/ImageLoader';
-import globalStyles from '../../../styles/globalStyles';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Exercise from '../../../types/Exercise';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
+import Header from '../../commons/Header';
 
 const {height} = Dimensions.get('screen');
 
@@ -136,123 +142,136 @@ const WorkoutList: React.FC<{
     );
   });
 
-  return (
-    <View>
-      <FlatList
-        ListEmptyComponent={() => (
-          <SafeAreaView style={{height: height - DevicePixels[50]}}>
-            <AbsoluteSpinner loading />
-          </SafeAreaView>
-        )}
-        data={filtered}
-        renderItem={({item, index}) => {
-          const locked = item.premium && !profile.premium;
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                if (item.premium && !profile.premium) {
-                  navigation.navigate('Premium');
-                } else if (isLoaded && !profile.premium && settings.ads) {
-                  setSelectedItem(item);
-                  show();
-                } else {
-                  getExercisesByIdAction(item.exerciseIds);
-                  navigation.navigate('QuickRoutine', {routine: item});
-                  startQuickRoutineAction(item);
-                }
-              }}
-              key={item.id}
-              style={{
-                height: DevicePixels[100],
-                marginBottom: DevicePixels[1],
-              }}>
-              <ImageLoader
-                style={{width: '100%', flex: 1}}
-                delay={index * 200}
-                resizeMode="cover"
-                source={
-                  item.thumbnail
-                    ? {uri: item.thumbnail.src}
-                    : require('../../../images/Homepage_quick_routine.jpeg')
-                }
-                overlay
-              />
-              {locked ? (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: DevicePixels[10],
-                    right: 0,
-                    bottom: 0,
+  const getImage = (level: Level) => {
+    if (level === Level.INTERMEDIATE) {
+      return require('../../../images/intermediate.jpg');
+    }
+    if (level === Level.ADVANCED) {
+      return require('../../../images/advanced.jpg');
+    }
+    return require('../../../images/beginner.jpg');
+  };
 
-                    justifyContent: 'center',
-                  }}>
-                  <Icon name="lock" color="#fff" size={DevicePixels[40]} />
-                </View>
-              ) : (
-                <View
-                  style={{
-                    position: 'absolute',
-                    justifyContent: 'center',
-                    top: 0,
-                    bottom: 0,
-                    left: DevicePixels[10],
-                    right: 0,
-                    width: DevicePixels[40],
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      fontSize: DevicePixels[12],
-                      ...globalStyles.textShadow,
-                    }}>
-                    Under
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      ...globalStyles.textShadow,
-                    }}>
-                    {item.duration}
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      fontSize: DevicePixels[12],
-                      ...globalStyles.textShadow,
-                    }}>
-                    mins
-                  </Text>
-                </View>
-              )}
-              <View
-                style={{
-                  position: 'absolute',
-                  justifyContent: 'center',
-                  top: 0,
-                  left: DevicePixels[55],
-                  right: 0,
-                  bottom: 0,
-                }}>
-                <Text
-                  style={{color: colors.appWhite, ...globalStyles.textShadow}}>
-                  {item.name}
-                </Text>
-                <Text
-                  style={{color: colors.appWhite, ...globalStyles.textShadow}}>
-                  {`${getLevelString(item.level)} - ${getEquipmentString(
-                    item.equipment,
-                  )} - ${getFocusString(item.focus)}`}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
+  return (
+    <ImageBackground
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
         }}
       />
-      <AbsoluteSpinner loading={loading} />
-    </View>
+      <SafeAreaView style={{flex: 1}}>
+        <Header hasBack />
+        <FlatList
+          ListEmptyComponent={() => (
+            <SafeAreaView style={{height: height - DevicePixels[50]}}>
+              <AbsoluteSpinner loading />
+            </SafeAreaView>
+          )}
+          data={filtered}
+          renderItem={({item, index}) => {
+            const locked = item.premium && !profile.premium;
+
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  if (item.premium && !profile.premium) {
+                    navigation.navigate('Premium');
+                  } else if (isLoaded && !profile.premium && settings.ads) {
+                    setSelectedItem(item);
+                    show();
+                  } else {
+                    getExercisesByIdAction(item.exerciseIds);
+                    navigation.navigate('QuickRoutine', {routine: item});
+                    startQuickRoutineAction(item);
+                  }
+                }}
+                key={item.id}
+                style={{
+                  marginBottom: DevicePixels[1],
+                }}>
+                <ImageBackground
+                  style={{
+                    height: DevicePixels[120],
+                    marginHorizontal: DevicePixels[10],
+                    marginBottom: DevicePixels[10],
+                  }}
+                  borderRadius={DevicePixels[10]}
+                  source={getImage(item.level)}>
+                  <ImageBackground
+                    source={require('../../../images/BlackTransparentBackground.png')}
+                    blurRadius={3}
+                    style={{
+                      height: DevicePixels[120],
+                      justifyContent: 'center',
+                      padding: DevicePixels[10],
+                    }}
+                    borderRadius={DevicePixels[10]}>
+                    {locked ? (
+                      <View style={{}}>
+                        <Icon
+                          name="lock"
+                          color="#fff"
+                          size={DevicePixels[40]}
+                        />
+                      </View>
+                    ) : (
+                      <View style={{marginBottom: DevicePixels[5]}}>
+                        <Text
+                          style={{
+                            color: colors.appWhite,
+                            fontSize: DevicePixels[12],
+                          }}>
+                          Under
+                        </Text>
+                        <Text
+                          style={{
+                            color: colors.appWhite,
+                            fontSize: DevicePixels[12],
+                          }}>
+                          <Text style={{fontWeight: 'bold'}}>
+                            {item.duration}
+                          </Text>
+                          {' mins'}
+                        </Text>
+                      </View>
+                    )}
+                    <View
+                      style={{
+                        width: DevicePixels[220],
+                      }}>
+                      <Text
+                        style={{
+                          color: colors.appWhite,
+                          fontSize: DevicePixels[16],
+                          fontWeight: 'bold',
+                          marginBottom: DevicePixels[5],
+                        }}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        style={{
+                          color: colors.appWhite,
+                          fontSize: DevicePixels[12],
+                        }}>
+                        {`${getLevelString(item.level)} - ${getEquipmentString(
+                          item.equipment,
+                        )} - ${getFocusString(item.focus)}`}
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                </ImageBackground>
+              </TouchableOpacity>
+            );
+          }}
+        />
+        <AbsoluteSpinner loading={loading} />
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

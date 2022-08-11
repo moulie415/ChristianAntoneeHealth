@@ -141,7 +141,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                    <Spinner />
+                    <Spinner color={colors.appBlue} />
                   </View>
                 )}
 
@@ -346,7 +346,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     </View>
 
                     <LinearGradient
-                      colors={[colors.orangeLight, colors.orangeDark]}
+                      colors={[colors.secondaryLight, colors.secondaryDark]}
                       start={{x: 0, y: 0}}
                       end={{x: 1, y: 0}}
                       style={{
