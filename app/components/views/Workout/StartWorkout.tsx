@@ -104,7 +104,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   return (
     <View style={{flex: 1}}>
       <Header hasBack absolute />
-      
+
       <Countdown onComplete={() => setWorkoutStarted(true)} />
       <ScrollView
         contentContainerStyle={{
@@ -128,7 +128,10 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                 video &&
                 exercise.video &&
                 video.src === exercise.video.src ? (
-                  <ExerciseVideo paused={!workoutStarted} path={video.path} />
+                  <ExerciseVideo
+                    paused={!workoutStarted}
+                    path={exercise.video.src}
+                  />
                 ) : (
                   <View
                     style={{

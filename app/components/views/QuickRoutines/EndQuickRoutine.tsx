@@ -1,4 +1,4 @@
-import Slider from '@react-native-community/slider';
+import {Slider} from '@miblanchard/react-native-slider';
 import React, {useMemo, useState} from 'react';
 import {useEffect} from 'react';
 import moment from 'moment';
@@ -112,7 +112,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
       </Text>
 
       <Slider
-        style={{
+        containerStyle={{
           height: DevicePixels[40],
           flexDirection: 'row',
           margin: DevicePixels[10],
@@ -121,7 +121,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
         maximumValue={3}
         step={1}
         value={difficulty}
-        onValueChange={setDifficulty}
+        onValueChange={val => setDifficulty(val as number)}
       />
       <Text
         style={{

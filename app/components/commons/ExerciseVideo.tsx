@@ -7,6 +7,7 @@ import DevicePixels from '../../helpers/DevicePixels';
 import {logError} from '../../helpers/error';
 import colors from '../../constants/colors';
 import moment from 'moment';
+import convertToProxyURL from 'react-native-video-cache';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -16,37 +17,22 @@ const ExerciseVideo: React.FC<{
   const [hideTime, setHideTime] = useState(moment().unix());
   const ref = useRef<Video>();
   const showControls = paused || moment().unix() < hideTime + 3;
+
   return (
     <>
-      {Platform.OS === 'ios' ? (
-        <Video
-          source={{uri: path}}
-          ref={ref}
-          onError={e => console.error(e)}
-          style={{height: getVideoHeight()}}
-          //repeat
-          onEnd={() => {
-            ref.current?.seek(0);
-          }}
-          paused={paused}
-          onTouchStart={() => setHideTime(moment().unix())}
-          disableFocus
-        />
-      ) : (
-        <Video
-          source={{uri: `file://${path}`}}
-          style={{height: getVideoHeight()}}
-          ref={ref}
-          onError={e => console.error(e)}
-          // repeat
-          onEnd={() => {
-            ref.current?.seek(0);
-          }}
-          paused={paused}
-          onTouchStart={() => setHideTime(moment().unix())}
-          disableFocus
-        />
-      )}
+      <Video
+        source={{uri: convertToProxyURL(path)}}
+        style={{height: getVideoHeight()}}
+        ref={ref}
+        onError={e => console.error(e)}
+        // repeat
+        onEnd={() => {
+          ref.current?.seek(0);
+        }}
+        paused={paused}
+        onTouchStart={() => setHideTime(moment().unix())}
+        disableFocus
+      />
 
       {showControls && (
         <TouchableOpacity

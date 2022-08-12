@@ -58,12 +58,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   }, [exercisesObj, routine.exerciseIds]);
 
   useEffect(() => {
-    if (exercisesObj[routine.exerciseIds[index]]) {
-      downloadVideoAction(routine.exerciseIds[index]);
-    }
-  }, [index, downloadVideoAction, routine.exerciseIds, exercisesObj]);
-
-  useEffect(() => {
     if (tabIndex === 2) {
       textInputRef.current?.focus();
     }
@@ -71,17 +65,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
 
   useEffect(() => {
     if (routine.instructions) {
-      // navigation.setOptions({
-      //   headerRight: () => (
-      //     <TouchableOpacity onPress={() => setShowModal(true)}>
-      //       <Icon
-      //         name="info-circle"
-      //         color={colors.appBlue}
-      //         size={DevicePixels[20]}
-      //       />
-      //     </TouchableOpacity>
-      //   ),
-      // });
       setShowModal(true);
     }
   }, [navigation, routine.instructions]);
@@ -123,16 +106,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           }}
           style={{flex: 1, paddingHorizontal: 0}}>
           {exercises.map((exercise, i) => {
-            const video: {src: string; path: string} | undefined =
-              videos[exercise.id];
             const next = exercises[index + 1];
             return (
               <View key={exercise.id}>
-                {!loading &&
-                video &&
-                exercise.video &&
-                video.src === exercise.video.src ? (
-                  <ExerciseVideo paused path={video.path} />
+                {!loading && exercise.video ? (
+                  <ExerciseVideo paused path={exercise.video.src} />
                 ) : (
                   <View
                     style={{
