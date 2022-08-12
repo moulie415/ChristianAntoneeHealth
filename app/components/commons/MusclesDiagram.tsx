@@ -47,12 +47,21 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
       style={{
         height: DevicePixels[300],
       }}>
-      <View style={{margin: DevicePixels[20]}}>
-        <Text style={{color: colors.appWhite}}>Muscles worked</Text>
+      <View style={{margin: DevicePixels[20], marginTop: DevicePixels[5]}}>
+        <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+          Muscles worked
+        </Text>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           <View style={{marginRight: DevicePixels[10]}}>
-            <Text style={{color: colors.appWhite}}>Primary:</Text>
-            <View style={{flexDirection: 'row'}}>
+            <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+              Primary:
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginVertical: DevicePixels[5],
+              }}>
               {primary.map(muscle => (
                 <View
                   key={muscle}
@@ -61,7 +70,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
                     padding: 2,
                     paddingHorizontal: 5,
                     borderRadius: 10,
-                    marginTop: 2,
+                    marginVertical: 2,
                     marginRight: 5,
                   }}>
                   <Text
@@ -69,6 +78,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
                       color: '#fff',
                       fontSize: 10,
                       textAlign: 'center',
+                      fontWeight: 'bold',
                     }}>
                     {muscleReadableString(muscle).toUpperCase()}
                   </Text>
@@ -78,13 +88,20 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           </View>
           {secondary && (
             <View>
-              <Text>Secondary: </Text>
-              <View style={{flexDirection: 'row'}}>
+              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                Secondary:{' '}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  marginTop: DevicePixels[5],
+                }}>
                 {secondary.map(muscle => (
                   <View
                     key={muscle}
                     style={{
-                      backgroundColor: colors.appLightBlue,
+                      backgroundColor: colors.muscleSecondary,
                       padding: 2,
                       paddingHorizontal: 5,
                       borderRadius: 10,
@@ -93,9 +110,10 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
                     }}>
                     <Text
                       style={{
-                        color: '#fff',
+                        color: colors.appBlue,
                         fontSize: 10,
                         textAlign: 'center',
+                        fontWeight: 'bold',
                       }}>
                       {muscleReadableString(muscle).toUpperCase()}
                     </Text>
