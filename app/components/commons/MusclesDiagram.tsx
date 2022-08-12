@@ -43,10 +43,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
   const hasBack = !!back.length || !!backSecondary.length;
 
   return (
-    <View
-      style={{
-        height: DevicePixels[300],
-      }}>
+    <View style={{}}>
       <View style={{margin: DevicePixels[20], marginTop: DevicePixels[5]}}>
         <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
           Muscles worked
@@ -133,9 +130,10 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           paddingVertical: DevicePixels[10],
           flexDirection: 'row',
           borderRadius: DevicePixels[10],
+          marginBottom: DevicePixels[10]
         }}>
         {hasFront && (
-          <Svg width="50%" height={DevicePixels[175]} viewBox="0 0 12.62 47.06">
+          <Svg width="50%" height={DevicePixels[150]} viewBox="0 0 12.62 47.06">
             {front.map(m => (
               <MuscleFill key={m} muscle={m} />
             ))}
@@ -231,7 +229,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           </Svg>
         )}
         {hasBack && (
-          <Svg width="50%" height={DevicePixels[175]} viewBox="0 0 12.62 47.06">
+          <Svg width="50%" height={DevicePixels[150]} viewBox="0 0 12.62 47.06">
             {back.map(m => (
               <MuscleFill key={m} muscle={m} back />
             ))}
