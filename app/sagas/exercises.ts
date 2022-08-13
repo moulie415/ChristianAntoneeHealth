@@ -98,7 +98,9 @@ export function* saveWorkout(action: SaveWorkoutAction) {
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield call(api.saveWorkout, action.payload, uid);
-    yield call(Snackbar.show, {text: 'Workout saved'});
+    if (action.payload.saved) {
+      yield call(Snackbar.show, {text: 'Workout saved'});
+    }
   } catch (e) {
     yield call(Snackbar.show, {text: 'Error saving workout'});
   }

@@ -1,5 +1,12 @@
 import Snackbar from 'react-native-snackbar';
-import {takeEvery, call, put, takeLatest, select, throttle} from 'redux-saga/effects';
+import {
+  takeEvery,
+  call,
+  put,
+  takeLatest,
+  select,
+  throttle,
+} from 'redux-saga/effects';
 import {setLoading} from '../actions/exercises';
 import {
   GetTestsByIdAction,
@@ -25,7 +32,9 @@ function* saveTest(action: SaveTestAction) {
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield call(api.saveTest, action.payload, uid);
-    yield call(Snackbar.show, {text: 'Test saved '});
+    if (action.payload.saved) {
+      yield call(Snackbar.show, {text: 'Test saved'});
+    }
   } catch (e) {
     yield call(Snackbar.show, {text: 'Error saving test'});
   }

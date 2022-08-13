@@ -35,7 +35,6 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
       source={require('../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
-
       <ScrollView>
         <SafeAreaView>
           <View

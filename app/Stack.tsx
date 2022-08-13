@@ -179,7 +179,7 @@ const StackComponent: FunctionComponent = () => {
             name="TestResults"
             component={TestResults}
             options={({navigation}) => ({
-              headerTitle: '',
+              headerShown: false
             })}
           />
           <Stack.Screen

@@ -9,6 +9,7 @@ import {useEffect} from 'react';
 import {View} from 'react-native';
 import {logError} from '../../helpers/error';
 import Text from './Text';
+import DevicePixels from '../../helpers/DevicePixels';
 
 const countdown = new Sound('countdown.wav', Sound.MAIN_BUNDLE, e => {
   if (e) {
@@ -57,7 +58,16 @@ const Countdown: FunctionComponent<{onComplete?: () => void}> = ({
           duration={5}
           children={({remainingTime}) => {
             const seconds = remainingTime % 60;
-            return <Text style={{color: '#fff'}}>{seconds}</Text>;
+            return (
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  fontSize: DevicePixels[30],
+                }}>
+                {seconds}
+              </Text>
+            );
           }}
           trailColor="transparent"
           colors={colors.appBlue}
