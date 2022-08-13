@@ -2,7 +2,7 @@ import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import {ScrollView, Dimensions, View} from 'react-native';
+import {ImageBackground, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
@@ -11,7 +11,6 @@ import Countdown from '../../commons/Countdown';
 import Table from '../../commons/Table';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
-import {getTestImage} from '../../../helpers/images';
 import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
 import Button from '../../commons/Button';
@@ -19,8 +18,9 @@ import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Text from '../../commons/Text';
 import Input from '../../commons/Input';
 import Divider from '../../commons/Divider';
-
-const {width, height} = Dimensions.get('screen');
+import Header from '../../commons/Header';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -29,7 +29,7 @@ const Test: React.FC<TestProps> = ({
   navigation,
   settings,
 }) => {
-  const {id} = route.params;
+  const {id, index} = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
   const [seconds, setSeconds] = useState(test.time || 0);
@@ -38,6 +38,8 @@ const Test: React.FC<TestProps> = ({
   const [testResult, setTestResult] = useState<number>();
   const [testNote, setTestNote] = useState('');
   const [start, setStart] = useState(0);
+
+  const insets = useSafeAreaInsets();
 
   const {load, show, isLoaded, isClosed} = useInterstitialAd(
     UNIT_ID_INTERSTITIAL,
@@ -110,162 +112,223 @@ const Test: React.FC<TestProps> = ({
           }}
         />
       )}
+
+      <Image
+        source={require('../../../images/test.jpg')}
+        style={{
+          height: getVideoHeight(),
+        }}
+      />
+      <Header hasBack absolute />
       <View
         style={{
           flexDirection: 'row',
           margin: DevicePixels[10],
           justifyContent: 'space-between',
           alignItems: 'center',
+          position: 'absolute',
+          top: DevicePixels[10] + insets.top,
         }}>
         <View
           style={{
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'flex-end',
+            alignItems: 'center',
           }}>
           <Icon
             name="stopwatch"
-            size={DevicePixels[25]}
-            color={colors.darkBlue}
+            size={DevicePixels[30]}
+            color={colors.appWhite}
           />
-          <Text style={{marginLeft: DevicePixels[10]}}>{getTimeString()}</Text>
+          <Text
+            style={{
+              marginLeft: DevicePixels[10],
+              color: colors.appWhite,
+              fontSize: DevicePixels[22],
+              fontWeight: 'bold',
+            }}>
+            {getTimeString()}
+          </Text>
         </View>
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="always"
-        contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
-        {complete ? (
-          <View style={{margin: 20}}>
-            <Text style={{textAlign: 'center', marginBottom: 10}}>
-              Test complete!
-            </Text>
-            {test.type !== 'countup' ? (
-              <Text>Enter result of test below</Text>
-            ) : (
-              <Text style={{fontSize: 20, marginBottom: 10}}>
-                Your result:{' '}
-                <Text style={{fontWeight: 'bold', fontSize: 20}}>
-                  {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
-                </Text>
-              </Text>
-            )}
-            {test.type !== 'countup' && (
-              <Input
-                value={testResult?.toString()}
-                onChangeText={val =>
-                  setTestResult(Number(val.replace(/[^0-9]/g, '')))
-                }
-                keyboardType="numeric"
-                style={{width: 100, marginVertical: 5}}
-              />
-            )}
-            <Text>Test note</Text>
-            <Input
-              value={testNote}
-              onChangeText={setTestNote}
-              style={{minHeight: DevicePixels[50]}}
-              multiline
-            />
-            <Button
-              text="See results"
-              onPress={() =>
-                navigation.navigate('TestResults', {
-                  test,
-                  testResult,
-                  seconds,
-                  testNote,
-                })
-              }
-              style={{marginTop: 10}}
-              disabled={!testResult && test.type !== 'countup'}
-            />
-          </View>
-        ) : (
-          <>
-            {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
-            <Image
-              source={getTestImage(test.name)}
-              style={{height: getVideoHeight()}}
-            />
-            <Text style={{margin: DevicePixels[10]}}>{test.name}</Text>
-            <View
-              style={{
-                marginHorizontal: DevicePixels[10],
-                marginBottom: DevicePixels[10],
-              }}>
-              {test.how?.map(h => {
-                return (
-                  <Text style={{}} key={h}>
-                    {h}
-                  </Text>
-                );
-              })}
-            </View>
 
-            <Divider />
-            {test.mens &&
-              'age' in test.mens &&
-              (profile.gender === 'male' || !profile.gender) && (
-                <Table
-                  table={test.mens}
-                  metric={test.metric}
-                  title="Mens table"
+      <ImageBackground
+        imageStyle={{
+          borderTopLeftRadius: DevicePixels[30],
+          borderTopRightRadius: DevicePixels[30],
+          top: -DevicePixels[30],
+        }}
+        style={{paddingBottom: 220}}
+        source={require('../../../images/old-black-background-grunge.png')}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{paddingBottom: 220}}>
+          {complete ? (
+            <View style={{margin: 20}}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  marginBottom: 10,
+                  color: colors.appWhite,
+                  fontSize: DevicePixels[20],
+                  fontWeight: 'bold',
+                }}>
+                Test complete!
+              </Text>
+              {test.type !== 'countup' ? (
+                <Text style={{color: colors.appWhite}}>
+                  Enter result of test below
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 20,
+                    marginBottom: 10,
+                    color: colors.appWhite,
+                  }}>
+                  Your result:{' '}
+                  <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                    {moment()
+                      .utc()
+                      .startOf('day')
+                      .add({seconds})
+                      .format('mm:ss')}
+                  </Text>
+                </Text>
+              )}
+              {test.type !== 'countup' && (
+                <Input
+                  value={testResult?.toString()}
+                  onChangeText={val =>
+                    setTestResult(Number(val.replace(/[^0-9]/g, '')))
+                  }
+                  keyboardType="numeric"
+                  style={{width: 100, marginVertical: 5}}
                 />
               )}
-            {test.womens &&
-              'age' in test.womens &&
-              (profile.gender === 'female' || !profile.gender) && (
-                <Table
-                  table={test.womens}
-                  metric={test.metric}
-                  title="Women's table"
-                />
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  marginBottom: DevicePixels[10],
+                }}>
+                Test note
+              </Text>
+              <Input value={testNote} onChangeText={setTestNote} multiline />
+              <Button
+                text="See results"
+                onPress={() =>
+                  navigation.navigate('TestResults', {
+                    test,
+                    testResult,
+                    seconds,
+                    testNote,
+                  })
+                }
+                style={{marginTop: 10}}
+                disabled={!testResult && test.type !== 'countup'}
+              />
+            </View>
+          ) : (
+            <>
+              {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
+
+              <Text
+                style={{
+                  margin: DevicePixels[10],
+                  fontSize: DevicePixels[20],
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                }}>
+                {test.name}
+              </Text>
+              <View
+                style={{
+                  marginHorizontal: DevicePixels[10],
+                  marginBottom: DevicePixels[10],
+                }}>
+                {test.how?.map(h => {
+                  return (
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        fontSize: DevicePixels[11],
+                      }}
+                      key={h}>
+                      {h}
+                    </Text>
+                  );
+                })}
+              </View>
+
+              <Divider />
+              {test.mens &&
+                'age' in test.mens &&
+                (profile.gender === 'male' || !profile.gender) && (
+                  <Table
+                    table={test.mens}
+                    metric={test.metric}
+                    title="Mens table"
+                  />
+                )}
+              {test.womens &&
+                'age' in test.womens &&
+                (profile.gender === 'female' || !profile.gender) && (
+                  <Table
+                    table={test.womens}
+                    metric={test.metric}
+                    title="Women's table"
+                  />
+                )}
+              {test.mens &&
+                '10th' in test.mens &&
+                (profile.gender === 'male' || !profile.gender) && (
+                  <PercentileTable
+                    table={test.mens}
+                    title="Mens percentile table"
+                  />
+                )}
+              {test.womens &&
+                '10th' in test.womens &&
+                (profile.gender === 'female' || !profile.gender) && (
+                  <PercentileTable
+                    table={test.womens}
+                    title="Women's percentile table"
+                  />
+                )}
+              {test.source && (
+                <Text
+                  style={{margin: DevicePixels[10], color: colors.appWhite}}>
+                  {test.source}
+                </Text>
               )}
-            {test.mens &&
-              '10th' in test.mens &&
-              (profile.gender === 'male' || !profile.gender) && (
-                <PercentileTable
-                  table={test.mens}
-                  title="Mens percentile table"
-                />
-              )}
-            {test.womens &&
-              '10th' in test.womens &&
-              (profile.gender === 'female' || !profile.gender) && (
-                <PercentileTable
-                  table={test.womens}
-                  title="Women's percentile table"
-                />
-              )}
-            {test.source && (
-              <Text style={{margin: DevicePixels[10]}}>{test.source}</Text>
-            )}
-          </>
-        )}
-        {!(testStarted && test.type === 'countdown') && !complete && (
-          <Button
-            text={testStarted ? 'End' : 'Start'}
-            onPress={() => {
-              if (testStarted) {
-                setComplete(true);
-              } else {
-                if (isLoaded && !profile.premium && settings.ads) {
-                  show();
+            </>
+          )}
+          {!(testStarted && test.type === 'countdown') && !complete && (
+            <Button
+              text={testStarted ? 'End' : 'Start'}
+              onPress={() => {
+                if (testStarted) {
+                  setComplete(true);
                 } else {
-                  if (test.type === 'untimed') {
-                    setTestStarted(true);
+                  if (isLoaded && !profile.premium && settings.ads) {
+                    show();
                   } else {
-                    setShowCountdown(true);
+                    if (test.type === 'untimed') {
+                      setTestStarted(true);
+                    } else {
+                      setShowCountdown(true);
+                    }
                   }
                 }
-              }
-            }}
-            style={{
-              margin: DevicePixels[10],
-            }}
-          />
-        )}
-      </ScrollView>
+              }}
+              style={{
+                margin: DevicePixels[10],
+              }}
+            />
+          )}
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };

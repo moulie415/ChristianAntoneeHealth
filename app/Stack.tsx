@@ -170,7 +170,11 @@ const StackComponent: FunctionComponent = () => {
             options={{headerTitle: ''}}
           />
           <Stack.Screen name="Policies" component={Policies} />
-          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen
+            name="Test"
+            component={Test}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="TestResults"
             component={TestResults}

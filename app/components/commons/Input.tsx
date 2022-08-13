@@ -32,6 +32,7 @@ const Input: React.FC<Props> = props => {
             fontFamily: 'MontserratAlternates-Regular',
             color: colors.appWhite,
             padding: DevicePixels[20],
+            paddingTop: props.multiline ? DevicePixels[10] : DevicePixels[20],
           },
           props.style,
         ]}

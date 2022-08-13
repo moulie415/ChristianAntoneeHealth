@@ -157,13 +157,6 @@ const WorkoutList: React.FC<{
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
         <FlatList
@@ -190,10 +183,7 @@ const WorkoutList: React.FC<{
                     startQuickRoutineAction(item);
                   }
                 }}
-                key={item.id}
-                style={{
-                  marginBottom: DevicePixels[1],
-                }}>
+                key={item.id}>
                 <ImageBackground
                   style={{
                     height: DevicePixels[120],

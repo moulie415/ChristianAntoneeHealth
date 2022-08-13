@@ -24,13 +24,6 @@ const WhatArea: React.FC<{
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
         <Text

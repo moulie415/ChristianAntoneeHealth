@@ -87,6 +87,8 @@ const Table: React.FC<{
           style={{
             marginHorizontal: DevicePixels[10],
             marginTop: DevicePixels[10],
+            color: colors.appWhite,
+            fontWeight: 'bold',
           }}>
           {title}
         </Text>
@@ -109,12 +111,13 @@ const Table: React.FC<{
                   style={{
                     padding: DevicePixels[2],
                     borderWidth: StyleSheet.hairlineWidth,
+                    borderColor: colors.appWhite,
                     width: CELL_WIDTH,
                     textAlign: 'center',
                     fontWeight: 'bold',
                     fontSize: DevicePixels[12],
                     backgroundColor: isAgeIndex ? colors.appBlue : undefined,
-                    color: isAgeIndex ? '#fff' : undefined,
+                    color: colors.appWhite,
                   }}>
                   {cell}
                 </Text>
@@ -129,11 +132,13 @@ const Table: React.FC<{
                     key={Math.random()}
                     style={{
                       padding: DevicePixels[2],
+                      borderColor: colors.appWhite,
                       borderWidth: StyleSheet.hairlineWidth,
                       width: CELL_WIDTH,
                       textAlign: 'center',
                       fontWeight: index === 0 ? 'bold' : 'normal',
                       fontSize: DevicePixels[12],
+                      color: colors.appWhite,
                     }}>
                     {cell}
                   </Text>

@@ -115,6 +115,16 @@ const Premium: React.FC<PremiumProps> = ({
               style={{
                 margin: DevicePixels[20],
               }}>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: DevicePixels[25],
+                  marginBottom: DevicePixels[10],
+                }}>
+                PREMIUM
+              </Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -411,7 +421,9 @@ const Premium: React.FC<PremiumProps> = ({
                                       ? colors.appBlue
                                       : colors.secondaryDark,
                                   fontSize: DevicePixels[16],
-                                }}>{`${monthlyPrice(p).toFixed(2)}/mo`}</Text>
+                                }}>{`${p.product.price_string[0]}${monthlyPrice(
+                                p,
+                              ).toFixed(2)}/mo`}</Text>
                             </View>
                           </View>
                         </TouchableOpacity>
