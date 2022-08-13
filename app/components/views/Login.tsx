@@ -105,8 +105,7 @@ const Login: React.FC<LoginProps> = ({
                 justifyContent: 'center',
                 alignSelf: 'center',
                 alignItems: 'center',
-                marginTop:
-                  Platform.OS === 'ios' ? DevicePixels[10] : DevicePixels[30],
+                marginTop: DevicePixels[60],
               }}>
               <View
                 style={{
@@ -128,7 +127,7 @@ const Login: React.FC<LoginProps> = ({
               onChangeText={setEmail}
               containerStyle={{
                 marginHorizontal: DevicePixels[20],
-                marginTop: DevicePixels[20],
+                marginTop: DevicePixels[60],
               }}
               placeholder="Email"
               autoCapitalize="none"

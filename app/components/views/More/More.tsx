@@ -29,7 +29,7 @@ import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
 import {logError} from '../../../helpers/error';
 import Text from '../../commons/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -167,6 +167,7 @@ const More: React.FC<MoreProps> = ({
       <SafeAreaView>
         <FlatList
           data={listItems}
+          contentContainerStyle={{marginTop: DevicePixels[20]}}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={item.onPress}

@@ -161,7 +161,11 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Support" component={Support} />
           <Stack.Screen name="Terms" component={Terms} />
-          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen
+            name="Settings"
+            component={Settings}
+            options={{headerShown: false}}
+          />
           <Stack.Screen name="About" component={About} />
           <Stack.Screen name="Education" component={EducationTabs} />
           <Stack.Screen
@@ -179,7 +183,7 @@ const StackComponent: FunctionComponent = () => {
             name="TestResults"
             component={TestResults}
             options={({navigation}) => ({
-              headerShown: false
+              headerShown: false,
             })}
           />
           <Stack.Screen

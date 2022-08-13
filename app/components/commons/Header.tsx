@@ -34,7 +34,7 @@ const Header: React.FC<{
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: DevicePixels[20],
+            fontSize: DevicePixels[22],
             fontWeight: 'bold',
           }}>
           {title}
