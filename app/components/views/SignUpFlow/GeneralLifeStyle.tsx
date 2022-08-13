@@ -10,45 +10,31 @@ const GeneralLifestyle: React.FC<{
   setLifestyle: (lifestyle: string) => void;
 }> = ({lifestyle, setLifestyle}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+          fontSize: DevicePixels[20],
+          color: colors.appWhite,
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-            fontSize: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          General lifestyle?
-        </Text>
+        General lifestyle?
+      </Text>
 
-        <Input
-          placeholder="e.g. active, sedentary, mixed"
-          style={{height: DevicePixels[100], textAlignVertical: 'top'}}
-          multiline
-          onChangeText={setLifestyle}
-          value={lifestyle}
-          placeholderTextColor={colors.appWhite}
-        />
-      </View>
-    </ImageBackground>
+      <Input
+        placeholder="e.g. active, sedentary, mixed"
+        style={{height: DevicePixels[100], textAlignVertical: 'top'}}
+        multiline
+        onChangeText={setLifestyle}
+        value={lifestyle}
+        placeholderTextColor={colors.appWhite}
+      />
+    </View>
   );
 };
 

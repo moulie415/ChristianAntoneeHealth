@@ -6,7 +6,15 @@ import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import MoreProps from '../../../types/views/More';
 import styles from '../../../styles/views/More';
-import {Alert, FlatList, SafeAreaView, Share, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  ImageBackground,
+  Share,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLoggedIn} from '../../../actions/profile';
 import colors from '../../../constants/colors';
@@ -20,6 +28,8 @@ import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
 import {logError} from '../../../helpers/error';
+import Text from '../../commons/Text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -74,7 +84,12 @@ const More: React.FC<MoreProps> = ({
       accessoryRight: profile.premium ? (
         <UnreadRowCount />
       ) : (
-        <Icon name="lock" size={DevicePixels[15]} />
+        <Icon
+          name="lock"
+          size={DevicePixels[20]}
+          style={{marginRight: DevicePixels[10]}}
+          color={colors.appWhite}
+        />
       ),
     },
     {
@@ -138,30 +153,61 @@ const More: React.FC<MoreProps> = ({
   }
 
   return (
-    <View>
+    <ImageBackground
+      source={require('../../../images/premium.jpg')}
+      blurRadius={7}
+      style={{flex: 1}}>
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: '#000',
+          opacity: 0.8,
+        }}
+      />
       <SafeAreaView>
         <FlatList
           data={listItems}
-          ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
-            <ListItem
-              title={item.title}
-              titleStyle={{color: colors.appBlack}}
-              accessoryLeft={
+            <TouchableOpacity
+              onPress={item.onPress}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: DevicePixels[10],
+              }}>
+              <View
+                style={{
+                  height: DevicePixels[35],
+                  width: DevicePixels[35],
+                  backgroundColor: '#212121',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: DevicePixels[5],
+                }}>
                 <Icon
                   size={DevicePixels[20]}
-                  color={colors.appBlack}
+                  color={colors.appWhite}
                   solid
                   name={item.icon}
                 />
-              }
-              accessoryRight={item.accessoryRight}
-              onPress={item.onPress}
-            />
+              </View>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: DevicePixels[18],
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[15],
+                }}>
+                {item.title}
+              </Text>
+              <View style={{alignItems: 'flex-end', flex: 1}}>
+                {item.accessoryRight}
+              </View>
+            </TouchableOpacity>
           )}
         />
       </SafeAreaView>
-    </View>
+    </ImageBackground>
   );
 };
 

@@ -10,44 +10,30 @@ const PhysicalInjuries: React.FC<{
   setInjuries: (injuries: string) => void;
 }> = ({injuries, setInjuries}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+          fontSize: DevicePixels[20],
+          color: colors.appWhite,
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-            fontSize: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          Physical injuries?
-        </Text>
+        Physical injuries?
+      </Text>
 
-        <Input
-          placeholder="e.g. acute or chronic conditions"
-          style={{height: DevicePixels[100], textAlignVertical: 'top'}}
-          multiline
-          onChangeText={setInjuries}
-          value={injuries}
-        />
-      </View>
-    </ImageBackground>
+      <Input
+        placeholder="e.g. acute or chronic conditions"
+        style={{height: DevicePixels[100], textAlignVertical: 'top'}}
+        multiline
+        onChangeText={setInjuries}
+        value={injuries}
+      />
+    </View>
   );
 };
 

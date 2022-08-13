@@ -47,7 +47,7 @@ const Button: React.FC<Props> = ({text, loading, variant, ...props}) => {
             style={{
               color: variant === 'secondary' ? colors.appBlue : colors.appWhite,
               textAlign: 'center',
-              fontSize: DevicePixels[15],
+              fontSize: DevicePixels[20],
             }}>
             {text}
           </Text>

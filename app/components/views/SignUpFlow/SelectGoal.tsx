@@ -16,60 +16,46 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
   setGoal,
 }) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+          fontSize: DevicePixels[20],
+          color: colors.appWhite,
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-            fontSize: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          What's your goal?
-        </Text>
-        <Button
-          text="Improve my strength"
-          style={{marginBottom: DevicePixels[20]}}
-          onPress={() => setGoal(Goal.STRENGTH)}
-          variant={goal === Goal.STRENGTH ? 'primary' : 'secondary'}
-        />
-        <Button
-          text="Improve my fitness"
-          style={{marginBottom: DevicePixels[20]}}
-          onPress={() => setGoal(Goal.FITNESS)}
-          variant={goal === Goal.FITNESS ? 'primary' : 'secondary'}
-        />
-        <Button
-          text=" Weight loss"
-          style={{marginBottom: DevicePixels[20]}}
-          onPress={() => setGoal(Goal.WEIGHT_LOSS)}
-          variant={goal === Goal.WEIGHT_LOSS ? 'primary' : 'secondary'}
-        />
-        <Button
-          text="Injury prevention/rehabilitation"
-          style={{marginBottom: DevicePixels[20]}}
-          onPress={() => setGoal(Goal.INJURY_PREVENTION)}
-          variant={goal === Goal.INJURY_PREVENTION ? 'primary' : 'secondary'}
-        />
-      </View>
-    </ImageBackground>
+        What's your goal?
+      </Text>
+      <Button
+        text="Improve my strength"
+        style={{marginBottom: DevicePixels[20]}}
+        onPress={() => setGoal(Goal.STRENGTH)}
+        variant={goal === Goal.STRENGTH ? 'primary' : 'secondary'}
+      />
+      <Button
+        text="Improve my fitness"
+        style={{marginBottom: DevicePixels[20]}}
+        onPress={() => setGoal(Goal.FITNESS)}
+        variant={goal === Goal.FITNESS ? 'primary' : 'secondary'}
+      />
+      <Button
+        text=" Weight loss"
+        style={{marginBottom: DevicePixels[20]}}
+        onPress={() => setGoal(Goal.WEIGHT_LOSS)}
+        variant={goal === Goal.WEIGHT_LOSS ? 'primary' : 'secondary'}
+      />
+      <Button
+        text="Injury prevention/rehabilitation"
+        style={{marginBottom: DevicePixels[20]}}
+        onPress={() => setGoal(Goal.INJURY_PREVENTION)}
+        variant={goal === Goal.INJURY_PREVENTION ? 'primary' : 'secondary'}
+      />
+    </View>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {LineChart} from 'react-native-chart-kit';
@@ -118,7 +119,7 @@ const Profile: React.FC<ProfileProps> = ({
   );
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#040404'}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}

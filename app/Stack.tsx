@@ -77,7 +77,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="DeleteAccount"
             component={DeleteAccount}
-            options={{headerTitle: 'Delete Account'}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="SignUpFlow"

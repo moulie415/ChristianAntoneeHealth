@@ -15,18 +15,18 @@ const UnreadRowCount: React.FC<{unread: {[key: string]: number}}> = ({
       <View
         style={{
           marginLeft: DevicePixels[5],
-          width: DevicePixels[18],
-          height: DevicePixels[18],
-          borderRadius: DevicePixels[9],
+          width: DevicePixels[30],
+          height: DevicePixels[30],
+          borderRadius: DevicePixels[15],
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: colors.appRed,
+          backgroundColor: colors.appBlack,
         }}>
         <Text
           style={{
-            fontSize: DevicePixels[10],
+            fontSize: DevicePixels[20],
             fontWeight: 'bold',
-            color: '#fff',
+            color: colors.appWhite,
           }}>
           {count > 9 ? '9+' : count}
         </Text>

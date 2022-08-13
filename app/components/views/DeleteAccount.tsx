@@ -12,6 +12,8 @@ import {setLoggedIn} from '../../actions/profile';
 import Text from '../commons/Text';
 import Button from '../commons/Button';
 import Input from '../commons/Input';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from '../commons/Header';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
@@ -31,6 +33,7 @@ const DeleteAccount: React.FC<{
   return (
     <ImageBackground
       source={require('../../images/login.jpeg')}
+      blurRadius={5}
       style={{flex: 1}}>
       <View
         style={{
@@ -39,82 +42,91 @@ const DeleteAccount: React.FC<{
           opacity: 0.7,
         }}
       />
-      <Text
-        style={{
-          color: '#fff',
-          margin: DevicePixels[10],
-          fontWeight: 'bold',
-          lineHeight: DevicePixels[20],
-        }}>
-        {`We're sad to see you go, please enter your email${
-          requiresPassword ? ' and password' : ''
-        } to confirm deletion and be aware that this will delete all your CA Health data and it will not be recoverable.`}
-      </Text>
-      <Input
-        style={{
-          margin: DevicePixels[10],
-        }}
-        placeholder="Email"
-        onChangeText={e => setEmail(e)}
-        placeholderTextColor="#fff"
-        autoCapitalize="none"
-        autoCorrect={false}
-        keyboardType="email-address"
-      />
-      {requiresPassword && (
+      <SafeAreaView>
+        <Header hasBack title="Delete account" />
+        <Text
+          style={{
+            color: '#fff',
+            margin: DevicePixels[10],
+            fontWeight: 'bold',
+            lineHeight: DevicePixels[20],
+          }}>
+          {`We're sad to see you go, please enter your email${
+            requiresPassword ? ' and password' : ''
+          } to confirm deletion and be aware that this will delete all your CA Health data and it will not be recoverable.`}
+        </Text>
         <Input
-          style={{margin: DevicePixels[10]}}
-          placeholder="Password"
-          onChangeText={p => setPassword(p)}
+          style={{
+            margin: DevicePixels[10],
+          }}
+          placeholder="Email"
+          onChangeText={e => setEmail(e)}
           placeholderTextColor="#fff"
           autoCapitalize="none"
           autoCorrect={false}
-          secureTextEntry
+          keyboardType="email-address"
         />
-      )}
-      <Button
-        text="Confirm account deletion"
-        onPress={async () => {
-          setLoading(true);
-          try {
-            const user = auth().currentUser;
-            if (requiresPassword) {
-              await auth().signInWithEmailAndPassword(email, password);
+        {requiresPassword && (
+          <Input
+            style={{margin: DevicePixels[10]}}
+            placeholder="Password"
+            onChangeText={p => setPassword(p)}
+            placeholderTextColor="#fff"
+            autoCapitalize="none"
+            autoCorrect={false}
+            secure
+          />
+        )}
+        <Button
+          text="Confirm account deletion"
+          onPress={async () => {
+            setLoading(true);
+            try {
+              const user = auth().currentUser;
+              if (requiresPassword) {
+                await auth().signInWithEmailAndPassword(email, password);
+              }
+              if (
+                user?.providerData?.find(
+                  data => data.providerId === 'google.com',
+                )
+              ) {
+                await googleSignIn();
+              }
+              if (
+                user?.providerData?.find(
+                  data => data.providerId === 'facebook.com',
+                )
+              ) {
+                await facebookSignIn();
+              }
+              if (
+                user?.providerData?.find(
+                  data => data.providerId === 'apple.com',
+                )
+              ) {
+                await appleSignIn();
+              }
+              await user.delete();
+              setLoggedInAction(false);
+              Alert.alert('Success', 'Your account has been deleted');
+            } catch (e) {
+              Alert.alert('Error', e.message);
             }
-            if (
-              user?.providerData?.find(data => data.providerId === 'google.com')
-            ) {
-              await googleSignIn();
-            }
-            if (
-              user?.providerData?.find(
-                data => data.providerId === 'facebook.com',
-              )
-            ) {
-              await facebookSignIn();
-            }
-            if (
-              user?.providerData?.find(data => data.providerId === 'apple.com')
-            ) {
-              await appleSignIn();
-            }
-            await user.delete();
-            setLoggedInAction(false);
-            Alert.alert('Success', 'Your account has been deleted');
-          } catch (e) {
-            Alert.alert('Error', e.message);
+            setLoading(false);
+          }}
+          loading={loading}
+          style={{
+            margin: DevicePixels[10],
+            marginTop: DevicePixels[5],
+          }}
+          disabled={
+            email !== profile.email ||
+            (requiresPassword && !password) ||
+            loading
           }
-          setLoading(false);
-        }}
-        loading={loading}
-        style={{
-          margin: DevicePixels[10],
-          marginTop: DevicePixels[5],
-        }}
-        disabled={
-          email !== profile.email || (requiresPassword && !password) || loading
-        }
-      />
+        />
+      </SafeAreaView>
     </ImageBackground>
   );
 };

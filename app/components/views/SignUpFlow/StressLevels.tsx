@@ -16,61 +16,47 @@ const StressLevels: React.FC<{
   setStressLevel: (level: StressLevel) => void;
 }> = ({stressLevel, setStressLevel}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+          color: colors.appWhite,
+          fontSize: DevicePixels[20],
+        }}>
+        Stress level?
+      </Text>
+
+      <Button
+        onPress={() => setStressLevel('low')}
+        text="Low"
+        variant={stressLevel === 'low' ? 'primary' : 'secondary'}
+        style={{
+          marginBottom: DevicePixels[20],
         }}
       />
-      <View
+      <Button
+        onPress={() => setStressLevel('medium')}
+        text="Medium"
+        variant={stressLevel === 'medium' ? 'primary' : 'secondary'}
         style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
-        }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-            color: colors.appWhite,
-            fontSize: DevicePixels[20],
-          }}>
-          Stress level?
-        </Text>
-
-        <Button
-          onPress={() => setStressLevel('low')}
-          text="Low"
-          variant={stressLevel === 'low' ? 'primary' : 'secondary'}
-          style={{
-            marginBottom: DevicePixels[20],
-          }}
-        />
-        <Button
-          onPress={() => setStressLevel('medium')}
-          text="Medium"
-          variant={stressLevel === 'medium' ? 'primary' : 'secondary'}
-          style={{
-            marginBottom: DevicePixels[20],
-          }}
-        />
-        <Button
-          onPress={() => setStressLevel('high')}
-          text="High"
-          variant={stressLevel === 'high' ? 'primary' : 'secondary'}
-          style={{
-            marginBottom: DevicePixels[20],
-          }}
-        />
-      </View>
-    </ImageBackground>
+          marginBottom: DevicePixels[20],
+        }}
+      />
+      <Button
+        onPress={() => setStressLevel('high')}
+        text="High"
+        variant={stressLevel === 'high' ? 'primary' : 'secondary'}
+        style={{
+          marginBottom: DevicePixels[20],
+        }}
+      />
+    </View>
   );
 };
 

@@ -7,6 +7,8 @@ import {
   View,
   TouchableOpacity,
   Image,
+  StyleSheet,
+  ImageBackground,
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -310,34 +312,48 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   useBackHandler(() => true);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Progress.Bar
-        width={width}
-        progress={(index + 1) / slides.length}
-        color={colors.appBlue}
-        style={{zIndex: 9}}
-        borderWidth={0}
-        borderRadius={0}
+    <ImageBackground
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
+      style={{
+        flex: 1,
+      }}>
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: colors.appBlack,
+          opacity: 0.5,
+        }}
       />
+      <SafeAreaView style={{flex: 1}}>
+        <Progress.Bar
+          width={width}
+          progress={(index + 1) / slides.length}
+          color={colors.appBlue}
+          style={{zIndex: 9}}
+          borderWidth={0}
+          borderRadius={0}
+        />
 
-      <Swiper
-        onIndexChanged={setIndex}
-        loop={false}
-        removeClippedSubviews={false}
-        showsPagination={false}
-        scrollEnabled={false}
-        prevButton={<BackButton disabled />}
-        nextButton={<ForwardButton disabled />}
-        showsButtons={slides[index].showNext}>
-        {slides.map(slide => {
-          return (
-            <View style={{flex: 1}} key={slide.key}>
-              {slide.component}
-            </View>
-          );
-        })}
-      </Swiper>
-    </SafeAreaView>
+        <Swiper
+          onIndexChanged={setIndex}
+          loop={false}
+          removeClippedSubviews={false}
+          showsPagination={false}
+          scrollEnabled={false}
+          prevButton={<BackButton disabled />}
+          nextButton={<ForwardButton disabled />}
+          showsButtons={slides[index].showNext}>
+          {slides.map(slide => {
+            return (
+              <View style={{flex: 1}} key={slide.key}>
+                {slide.component}
+              </View>
+            );
+          })}
+        </Swiper>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
