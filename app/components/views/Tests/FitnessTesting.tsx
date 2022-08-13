@@ -46,7 +46,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
                   if (premium && !profile.premium) {
                     navigation.navigate('Premium');
                   } else {
-                    navigation.navigate('Test', {id, index});
+                    navigation.navigate('Test', {id});
                   }
                 }}
                 key={name}>

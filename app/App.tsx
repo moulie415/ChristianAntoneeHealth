@@ -66,7 +66,7 @@ export type StackParamList = {
   Home: undefined;
   Exercise: {id: string};
   Fitness: undefined;
-  Test: {id: string; index: number};
+  Test: {id: string};
   TestResults: {
     testResult: number;
     testNote: string;

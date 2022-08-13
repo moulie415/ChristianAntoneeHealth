@@ -29,7 +29,7 @@ const Test: React.FC<TestProps> = ({
   navigation,
   settings,
 }) => {
-  const {id, index} = route.params;
+  const {id} = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
   const [seconds, setSeconds] = useState(test.time || 0);
