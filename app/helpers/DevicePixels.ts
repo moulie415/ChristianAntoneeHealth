@@ -1,7 +1,7 @@
-import {Dimensions, PixelRatio} from 'react-native';
+import {PixelRatio} from 'react-native';
 
-const {height, width} = Dimensions.get('window');
-const {height: fullHeight, width: fullWidth} = Dimensions.get('screen');
+const width = 375;
+const height = 667;
 
 const CURRENT_RESOLUTION = Math.sqrt(height * height + width * width);
 
@@ -132,20 +132,7 @@ const create = (designSize = {width: 414, height: 736}) => {
 };
 
 const calculateUnit = create(DEFAULT_SCREENSIZE);
-const DevicePixels: {[key: number]: number} = {};
-
-export function getDevicePixels(i: number) {
-  if (DevicePixels[i]) {
-    return DevicePixels[i];
-  }
-
-  DevicePixels[i] = PixelRatio.roundToNearestPixel(calculateUnit(i));
-  return DevicePixels[i];
-}
-
-export function getDevicePixelsNoRounding(i: number) {
-  return calculateUnit(i);
-}
+const DevicePixels: any = {};
 
 for (let i = 0; i < 1000; i++) {
   DevicePixels[i] = PixelRatio.roundToNearestPixel(calculateUnit(i));

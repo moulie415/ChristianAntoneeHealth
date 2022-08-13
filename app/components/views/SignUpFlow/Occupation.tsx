@@ -10,43 +10,29 @@ const Occupation: React.FC<{
   setOccupation: (occupation: string) => void;
 }> = ({occupation, setOccupation}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+          width: DevicePixels[250],
+          color: colors.appWhite,
+          fontSize: DevicePixels[20],
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-            width: DevicePixels[250],
-            color: colors.appWhite,
-            fontSize: DevicePixels[20],
-          }}>
-          Occupation?
-        </Text>
+        Occupation?
+      </Text>
 
-        <Input
-          placeholder="e.g. Doctor, lawyer..."
-          value={occupation}
-          onChangeText={setOccupation}
-        />
-      </View>
-    </ImageBackground>
+      <Input
+        placeholder="e.g. Doctor, lawyer..."
+        value={occupation}
+        onChangeText={setOccupation}
+      />
+    </View>
   );
 };
 

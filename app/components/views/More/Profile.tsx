@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {LineChart} from 'react-native-chart-kit';
@@ -118,7 +119,7 @@ const Profile: React.FC<ProfileProps> = ({
   );
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#040404'}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
@@ -193,32 +194,56 @@ const Profile: React.FC<ProfileProps> = ({
                     navigation.navigate('Premium');
                   }
                 }}
-                style={{marginRight: DevicePixels[15]}}>
+                style={{
+                  width: DevicePixels[90],
+                  height: DevicePixels[90],
+                  borderRadius: DevicePixels[45],
+                  backgroundColor: colors.appWhite,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: DevicePixels[10],
+                }}>
                 <Avatar
                   name={profile.name}
                   src={avatar}
-                  size={DevicePixels[50]}
+                  size={DevicePixels[80]}
                 />
                 <View
                   style={{
                     position: 'absolute',
                     top: 0,
                     right: 0,
-                    backgroundColor: colors.appBlue,
-                    height: DevicePixels[15],
-                    width: DevicePixels[15],
-                    borderRadius: DevicePixels[8],
+                    backgroundColor: colors.appWhite,
+                    height: DevicePixels[30],
+                    width: DevicePixels[30],
+                    borderRadius: DevicePixels[15],
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
                   <Icon
-                    size={DevicePixels[8]}
+                    size={DevicePixels[15]}
                     name={profile.premium ? 'pencil-alt' : 'lock'}
-                    color="#fff"
+                    color={colors.appBlue}
                   />
                 </View>
               </TouchableOpacity>
-              <Text>{profile.name}</Text>
+              <View>
+                <Text
+                  style={{
+                    fontSize: DevicePixels[25],
+                    fontWeight: 'bold',
+                    color: colors.appWhite,
+                  }}>
+                  {profile.name}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: DevicePixels[19],
+                    color: colors.appWhite,
+                  }}>
+                  {moment(dob).format('DD MMM YYYY')}
+                </Text>
+              </View>
             </View>
           </SafeAreaView>
         </LinearGradient>

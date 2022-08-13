@@ -48,154 +48,134 @@ const Nutrition: React.FC<{
   );
 
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+
+          fontSize: DevicePixels[20],
+          color: colors.appWhite,
+        }}>
+        Nutritional habits?
+      </Text>
+      <FlatList
+        style={{
+          backgroundColor: 'transparent',
+
+          alignSelf: 'center',
+        }}
+        removeClippedSubviews={false}
+        contentContainerStyle={{
+          paddingBottom: DevicePixels[50],
+          width: DevicePixels[250],
+        }}
+        scrollEnabled
+        data={items}
+        keyExtractor={item => (typeof item === 'string' ? item : item.key)}
+        ItemSeparatorComponent={() => (
+          <Divider style={{backgroundColor: colors.appGrey}} />
+        )}
+        renderItem={({item}) => {
+          if (typeof item === 'string') {
+            return (
+              <ListItem
+                accessoryLeft={
+                  <Icon
+                    name={nutrition.includes(item) ? 'check-square' : 'square'}
+                    size={DevicePixels[15]}
+                    solid={nutrition.includes(item)}
+                    color={colors.appWhite}
+                  />
+                }
+                style={{
+                  backgroundColor: 'transparent',
+                }}
+                title={item}
+                onPress={() =>
+                  nutrition.includes(item)
+                    ? setNutrition(nutrition.filter(i => i !== item))
+                    : setNutrition([...nutrition, item])
+                }
+              />
+            );
+          }
+          return (
+            <>
+              <ListItem
+                style={{
+                  backgroundColor: 'transparent',
+                }}
+                title={item.key}
+                accessoryRight={
+                  <Icon
+                    name={open[item.key] ? 'chevron-down' : 'chevron-right'}
+                    size={DevicePixels[15]}
+                    color={colors.appWhite}
+                    style={{marginRight: DevicePixels[10]}}
+                  />
+                }
+                onPress={() => setOpen({...open, [item.key]: !open[item.key]})}
+              />
+              <Collapsible collapsed={!open[item.key]}>
+                {item.key === 'Supplements' ? (
+                  <Input
+                    placeholder="List supplements here..."
+                    multiline
+                    style={{
+                      height: DevicePixels[50],
+                      textAlignVertical: 'top',
+                    }}
+                    onChangeText={text => {
+                      setSupplements(text);
+                      updateSupplements(text);
+                    }}
+                    value={supplements}
+                  />
+                ) : (
+                  item.items.map(i => {
+                    const option = `${item.key}: ${i}`;
+                    return (
+                      <ListItem
+                        accessoryLeft={
+                          <Icon
+                            name={
+                              nutrition.includes(option)
+                                ? 'check-square'
+                                : 'square'
+                            }
+                            size={DevicePixels[15]}
+                            solid={nutrition.includes(option)}
+                            color={colors.appWhite}
+                            style={{marginRight: DevicePixels[10]}}
+                          />
+                        }
+                        style={{
+                          backgroundColor: 'transparent',
+                          marginLeft: DevicePixels[10],
+                        }}
+                        title={i}
+                        key={i}
+                        onPress={() => {
+                          setNutrition([
+                            ...nutrition.filter(opt => !opt.includes(item.key)),
+                            ...(nutrition.includes(option) ? [] : [option]),
+                          ]);
+                        }}
+                      />
+                    );
+                  })
+                )}
+              </Collapsible>
+            </>
+          );
         }}
       />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-        }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-
-            fontSize: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          Nutritional habits?
-        </Text>
-        <FlatList
-          style={{
-            backgroundColor: 'transparent',
-
-            alignSelf: 'center',
-          }}
-          removeClippedSubviews={false}
-          contentContainerStyle={{
-            paddingBottom: DevicePixels[50],
-            width: DevicePixels[200],
-          }}
-          scrollEnabled
-          data={items}
-          keyExtractor={item => (typeof item === 'string' ? item : item.key)}
-          ItemSeparatorComponent={() => (
-            <Divider style={{backgroundColor: colors.appGrey}} />
-          )}
-          renderItem={({item}) => {
-            if (typeof item === 'string') {
-              return (
-                <ListItem
-                  accessoryLeft={
-                    <Icon
-                      name={
-                        nutrition.includes(item) ? 'check-square' : 'square'
-                      }
-                      size={DevicePixels[15]}
-                      solid={nutrition.includes(item)}
-                      color={colors.appWhite}
-                    />
-                  }
-                  style={{
-                    backgroundColor: 'transparent',
-                  }}
-                  title={item}
-                  onPress={() =>
-                    nutrition.includes(item)
-                      ? setNutrition(nutrition.filter(i => i !== item))
-                      : setNutrition([...nutrition, item])
-                  }
-                />
-              );
-            }
-            return (
-              <>
-                <ListItem
-                  style={{
-                    backgroundColor: 'transparent',
-                  }}
-                  title={item.key}
-                  accessoryRight={
-                    <Icon
-                      name={open[item.key] ? 'chevron-down' : 'chevron-right'}
-                      size={DevicePixels[15]}
-                      color={colors.appWhite}
-                      style={{marginRight: DevicePixels[10]}}
-                    />
-                  }
-                  onPress={() =>
-                    setOpen({...open, [item.key]: !open[item.key]})
-                  }
-                />
-                <Collapsible collapsed={!open[item.key]}>
-                  {item.key === 'Supplements' ? (
-                    <Input
-                      placeholder="List supplements here..."
-                      multiline
-                      style={{
-                        height: DevicePixels[50],
-                        textAlignVertical: 'top',
-                      }}
-                      onChangeText={text => {
-                        setSupplements(text);
-                        updateSupplements(text);
-                      }}
-                      value={supplements}
-                    />
-                  ) : (
-                    item.items.map(i => {
-                      const option = `${item.key}: ${i}`;
-                      return (
-                        <ListItem
-                          accessoryLeft={
-                            <Icon
-                              name={
-                                nutrition.includes(option)
-                                  ? 'check-square'
-                                  : 'square'
-                              }
-                              size={DevicePixels[15]}
-                              solid={nutrition.includes(option)}
-                              color={colors.appWhite}
-                              style={{marginRight: DevicePixels[10]}}
-                            />
-                          }
-                          style={{
-                            backgroundColor: 'transparent',
-                            marginLeft: DevicePixels[10],
-                          }}
-                          title={i}
-                          key={i}
-                          onPress={() => {
-                            setNutrition([
-                              ...nutrition.filter(
-                                opt => !opt.includes(item.key),
-                              ),
-                              ...(nutrition.includes(option) ? [] : [option]),
-                            ]);
-                          }}
-                        />
-                      );
-                    })
-                  )}
-                </Collapsible>
-              </>
-            );
-          }}
-        />
-      </View>
-    </ImageBackground>
+    </View>
   );
 };
 

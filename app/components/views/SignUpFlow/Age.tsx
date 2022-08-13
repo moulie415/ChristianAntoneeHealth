@@ -14,68 +14,55 @@ const Age: React.FC<{
   showDatePicker: boolean;
 }> = ({dob, setDob, setShowDatePicker: setShow, showDatePicker: show}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[40],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[40],
+          textAlign: 'center',
+          marginBottom: DevicePixels[20],
+          fontSize: DevicePixels[20],
+          color: colors.appWhite,
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginBottom: DevicePixels[20],
-            fontSize: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          What's your age?
-        </Text>
-        <Text
-          style={{
-            color: colors.appWhite,
-            textAlign: 'center',
-            marginBottom: DevicePixels[20],
-            fontSize: DevicePixels[30],
-            fontWeight: 'bold',
-          }}>
-          {moment().diff(dob, 'years')}
-        </Text>
-        {Platform.OS === 'android' && (
-          <Button
-            style={{width: DevicePixels[175], alignSelf: 'center'}}
-            text="Select date of birth"
-            onPress={() => {
-              setShow(true);
-            }}
-          />
-        )}
+        What's your age?
+      </Text>
+      <Text
+        style={{
+          color: colors.appWhite,
+          textAlign: 'center',
+          marginBottom: DevicePixels[20],
+          fontSize: DevicePixels[30],
+          fontWeight: 'bold',
+        }}>
+        {moment().diff(dob, 'years')}
+      </Text>
+      {Platform.OS === 'android' && (
+        <Button
+          style={{width: DevicePixels[175], alignSelf: 'center'}}
+          text="Select date of birth"
+          onPress={() => {
+            setShow(true);
+          }}
+        />
+      )}
 
-        {(show || Platform.OS === 'ios') && (
-          <DatePicker
-            mode="date"
-            style={{}}
-            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-            value={moment(dob).toDate()}
-            onChange={(event, d: Date) => {
-              setShow(Platform.OS === 'ios');
-              setDob(d ? d.toISOString() : dob);
-            }}
-          />
-        )}
-      </View>
-    </ImageBackground>
+      {(show || Platform.OS === 'ios') && (
+        <DatePicker
+          mode="date"
+          style={{}}
+          textColor={colors.appWhite}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          value={moment(dob).toDate()}
+          onChange={(event, d: Date) => {
+            setShow(Platform.OS === 'ios');
+            setDob(d ? d.toISOString() : dob);
+          }}
+        />
+      )}
+    </View>
   );
 };
 

@@ -1,4 +1,4 @@
-import Slider from '@react-native-community/slider';
+import {Slider} from '@miblanchard/react-native-slider';
 import React, {useMemo, useState} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {useEffect} from 'react';
@@ -100,7 +100,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       </Text>
 
       <Slider
-        style={{
+        containerStyle={{
           height: DevicePixels[40],
           flexDirection: 'row',
           margin: DevicePixels[10],
@@ -109,7 +109,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
         maximumValue={3}
         step={1}
         value={difficulty}
-        onValueChange={setDifficulty}
+        onValueChange={val => setDifficulty(val as number)}
       />
       <Text
         style={{

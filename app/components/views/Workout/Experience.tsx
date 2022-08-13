@@ -47,7 +47,7 @@ const Experience: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[{color: '#fff'}]}>
               Beginner
             </Text>
           </View>
@@ -98,7 +98,7 @@ const Experience: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[{color: '#fff'}]}>
               Intermediate
             </Text>
           </View>
@@ -150,7 +150,7 @@ const Experience: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[{color: '#fff'}]}>
               Advanced
             </Text>
           </View>

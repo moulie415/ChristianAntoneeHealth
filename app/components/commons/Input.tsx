@@ -10,10 +10,12 @@ interface Props extends TextInputProps {
   containerStyle?: ViewStyle;
   disabled?: boolean;
   accessoryRight?: ReactNode;
+  ref?: any;
 }
 
 const Input: React.FC<Props> = props => {
   const [secure, setSecure] = useState(props.secure);
+
   return (
     <View style={props.containerStyle}>
       <TextInput
@@ -30,6 +32,7 @@ const Input: React.FC<Props> = props => {
             fontFamily: 'MontserratAlternates-Regular',
             color: colors.appWhite,
             padding: DevicePixels[20],
+            paddingTop: props.multiline ? DevicePixels[10] : DevicePixels[20],
           },
           props.style,
         ]}

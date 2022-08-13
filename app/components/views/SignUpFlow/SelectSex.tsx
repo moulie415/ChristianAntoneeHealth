@@ -16,50 +16,36 @@ const SelectSex: React.FC<{
   setGender: (gender: Gender) => void;
 }> = ({gender, setGender}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
+          color: colors.appWhite,
+
+          textAlign: 'center',
+          marginBottom: DevicePixels[20],
+          fontSize: DevicePixels[20],
         }}>
-        <Text
-          style={{
-            color: colors.appWhite,
+        What's your gender?
+      </Text>
 
-            textAlign: 'center',
-            marginBottom: DevicePixels[20],
-            fontSize: DevicePixels[20],
-          }}>
-          What's your gender?
-        </Text>
+      <Button
+        text="Female"
+        style={{marginBottom: DevicePixels[20]}}
+        onPress={() => setGender('female')}
+        variant={gender === 'female' ? 'primary' : 'secondary'}
+      />
 
-        <Button
-          text="Female"
-          style={{marginBottom: DevicePixels[20]}}
-          onPress={() => setGender('female')}
-          variant={gender === 'female' ? 'primary' : 'secondary'}
-        />
-
-        <Button
-          text="Male"
-          onPress={() => setGender('male')}
-          variant={gender === 'male' ? 'primary' : 'secondary'}
-        />
-      </View>
-    </ImageBackground>
+      <Button
+        text="Male"
+        onPress={() => setGender('male')}
+        variant={gender === 'male' ? 'primary' : 'secondary'}
+      />
+    </View>
   );
 };
 

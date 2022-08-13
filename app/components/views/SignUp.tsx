@@ -18,6 +18,7 @@ import Input from '../commons/Input';
 import Button from '../commons/Button';
 import {createUser} from '../../helpers/api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Header from '../commons/Header';
 
 const SignUp: React.FC<SignUpProps> = ({
   navigation,
@@ -65,21 +66,12 @@ const SignUp: React.FC<SignUpProps> = ({
       />
       <SafeAreaView>
         <KeyboardAwareScrollView>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: DevicePixels[24],
-              margin: DevicePixels[20],
-              marginBottom: 0,
-              fontWeight: 'bold',
-            }}>
-            Registration
-          </Text>
+          <Header title="Registration" hasBack />
           <Text
             style={{
               color: colors.appWhite,
               margin: DevicePixels[20],
-              marginTop: DevicePixels[10],
+              marginTop: 0,
             }}>
             Please enter your personal details, then we will send you a
             verification email (please remember to check your junk/spam folder).

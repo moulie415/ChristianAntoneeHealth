@@ -10,44 +10,30 @@ const Medications: React.FC<{
   setMedications: (medications: string) => void;
 }> = ({medications, setMedications}) => {
   return (
-    <ImageBackground
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
+    <View
       style={{
         flex: 1,
+        justifyContent: 'center',
+        margin: DevicePixels[50],
       }}>
-      <View
+      <Text
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          margin: DevicePixels[50],
+          textAlign: 'center',
+          marginVertical: DevicePixels[20],
+          fontSize: DevicePixels[20],
+          color: colors.appWhite,
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginVertical: DevicePixels[20],
-            fontSize: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          Medications?
-        </Text>
-        <Input
-          placeholder="List relevant medications... (optional)"
-          style={{height: DevicePixels[100], textAlignVertical: 'top'}}
-          multiline
-          onChangeText={setMedications}
-          value={medications}
-          placeholderTextColor={colors.appWhite}
-        />
-      </View>
-    </ImageBackground>
+        Medications?
+      </Text>
+      <Input
+        placeholder="List relevant medications... (optional)"
+        style={{height: DevicePixels[100], textAlignVertical: 'top'}}
+        multiline
+        onChangeText={setMedications}
+        value={medications}
+        placeholderTextColor={colors.appWhite}
+      />
+    </View>
   );
 };
 

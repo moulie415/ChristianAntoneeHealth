@@ -60,7 +60,7 @@ const WarmUpAndCoolDown: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[{color: '#fff'}]}>
               Warm-up
             </Text>
           </View>
@@ -129,7 +129,7 @@ const WarmUpAndCoolDown: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
+            <Text style={[{color: '#fff'}]}>
               Cool-down
             </Text>
           </View>

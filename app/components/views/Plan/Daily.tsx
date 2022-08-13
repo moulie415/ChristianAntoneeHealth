@@ -207,7 +207,7 @@ const Daily: React.FC<{
         </View>
       )}
       <View>
-        {plan.education && plan.education.length && (
+        {!!plan.education && !!plan.education.length && (
           <View>
             {educationLoading ? (
               <View
@@ -256,10 +256,10 @@ const Daily: React.FC<{
             )}
           </View>
         )}
-        {(plan.nutrition || plan.sleep) && (
+        {(!!plan.nutrition || !!plan.sleep) && (
           <Text style={{padding: DevicePixels[5]}}>Other</Text>
         )}
-        {plan.nutrition && !_.isEmpty(plan.nutrition) && (
+        {!!plan.nutrition && !_.isEmpty(plan.nutrition) && (
           <>
             <Divider />
             <Icon
@@ -300,10 +300,9 @@ const Daily: React.FC<{
                 </Text>
               )}
             </View>
-            );
           </>
         )}
-        {plan.sleep && !_.isEmpty(plan.sleep) && (
+        {!!plan.sleep && !_.isEmpty(plan.sleep) && (
           <>
             <Divider />
             <ListItem

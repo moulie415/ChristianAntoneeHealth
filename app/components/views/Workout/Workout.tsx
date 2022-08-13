@@ -91,7 +91,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>Goal</Text>
+            <Text style={[{color: '#fff'}]}>Goal</Text>
           </View>
           <View
             style={{
@@ -107,7 +107,7 @@ const Workout: React.FC<WorkoutProps> = ({
                 color: '#fff',
                 marginRight: DevicePixels[20],
                 fontWeight: 'bold',
-                ...globalStyles.textShadow,
+   
               }}>
               {getGoalString(fitnessGoal)}
             </Text>
@@ -146,9 +146,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
-              Exercise experience
-            </Text>
+            <Text style={[{color: '#fff'}]}>Exercise experience</Text>
           </View>
           <View
             style={{
@@ -164,7 +162,6 @@ const Workout: React.FC<WorkoutProps> = ({
                 color: '#fff',
                 marginRight: DevicePixels[20],
                 fontWeight: 'bold',
-                ...globalStyles.textShadow,
               }}>
               {capitalizeFirstLetter(level)}
             </Text>
@@ -204,9 +201,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
-              Available Equipment
-            </Text>
+            <Text style={[{color: '#fff'}]}>Available Equipment</Text>
           </View>
           <View
             style={{
@@ -222,7 +217,6 @@ const Workout: React.FC<WorkoutProps> = ({
                 color: '#fff',
                 marginRight: DevicePixels[20],
                 fontWeight: 'bold',
-                ...globalStyles.textShadow,
               }}>
               {availableEquipmentString()}
             </Text>
@@ -260,9 +254,7 @@ const Workout: React.FC<WorkoutProps> = ({
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[globalStyles.textShadow, {color: '#fff'}]}>
-              Warm-up & Cool-down
-            </Text>
+            <Text style={[{color: '#fff'}]}>Warm-up & Cool-down</Text>
           </View>
           <View
             style={{
@@ -278,7 +270,6 @@ const Workout: React.FC<WorkoutProps> = ({
                 color: '#fff',
                 marginRight: DevicePixels[20],
                 fontWeight: 'bold',
-                ...globalStyles.textShadow,
               }}>
               {warmUp.length + coolDown.length + ' selected'}
             </Text>

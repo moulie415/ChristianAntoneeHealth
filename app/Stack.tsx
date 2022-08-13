@@ -77,7 +77,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="DeleteAccount"
             component={DeleteAccount}
-            options={{headerTitle: 'Delete Account'}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="SignUpFlow"
@@ -135,8 +135,7 @@ const StackComponent: FunctionComponent = () => {
             name="StartWorkout"
             component={StartWorkout}
             options={({navigation}) => ({
-              headerTitle: '',
-              headerBackTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
@@ -162,7 +161,11 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Support" component={Support} />
           <Stack.Screen name="Terms" component={Terms} />
-          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen
+            name="Settings"
+            component={Settings}
+            options={{headerShown: false}}
+          />
           <Stack.Screen name="About" component={About} />
           <Stack.Screen name="Education" component={EducationTabs} />
           <Stack.Screen
@@ -171,20 +174,23 @@ const StackComponent: FunctionComponent = () => {
             options={{headerTitle: ''}}
           />
           <Stack.Screen name="Policies" component={Policies} />
-          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen
+            name="Test"
+            component={Test}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="TestResults"
             component={TestResults}
             options={({navigation}) => ({
-              headerTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
             name="QuickRoutine"
             component={QuickRoutineView}
             options={({navigation}) => ({
-              headerTitle: '',
-              headerBackTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
@@ -225,16 +231,20 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="WhatArea"
             component={WhatArea}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="WorkoutList"
             component={WorkoutList}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Premium"
+            component={Premium}
+            options={{headerShown: false}}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
-          <Stack.Screen name="Premium" component={Premium} />
           <Stack.Screen
             name="Rating"
             component={Rating}

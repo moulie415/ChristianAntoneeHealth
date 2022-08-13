@@ -21,9 +21,10 @@ import {
 } from '../../../helpers';
 import {resetToTabs} from '../../../RootNavigation';
 import {saveTest} from '../../../actions/tests';
-import {Alert, View} from 'react-native';
+import {Alert, ImageBackground, View} from 'react-native';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,
@@ -37,8 +38,8 @@ const TestResults: React.FC<TestResultsProp> = ({
   const age = profile.dob && moment().diff(profile.dob, 'years');
   const col = isTable && getTableColumn(table, age);
   const score = testResult || seconds;
-  const category = isTable && getTableCategory(table, col, score);
-  const max = isTable && getTableMax(table, col);
+  const category = isTable && col && getTableCategory(table, col, score);
+  const max = isTable && col && getTableMax(table, col);
   const average = isTable && getTableAverage(table, col);
   const percentile = !isTable && getPercentile(table, score);
 
@@ -47,11 +48,11 @@ const TestResults: React.FC<TestResultsProp> = ({
   );
 
   useEffect(() => {
-    const save = (saved?: boolean) => {
+    const save = (saved: boolean) => {
       saveTestAction({
         seconds,
         result: testResult,
-        createdate: new Date(0),
+        createdate: new Date(),
         testId: test.id,
         saved,
       });
@@ -64,7 +65,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           {
             text: 'No',
             onPress: () => {
-              save();
+              save(false);
             },
           },
           {
@@ -77,106 +78,141 @@ const TestResults: React.FC<TestResultsProp> = ({
         {cancelable: false},
       );
     } else {
-      save();
+      save(false);
     }
   }, [saveTestAction, test.id, profile.premium, seconds, testResult]);
 
-  return (
-    <View style={{flex: 1, padding: 20}}>
-      <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
-        Test complete!
-      </Text>
-
-      <AnimatedCircularProgress
-        style={{alignSelf: 'center'}}
-        size={DevicePixels[120]}
-        width={DevicePixels[15]}
-        backgroundWidth={DevicePixels[5]}
-        fill={fill}
-        tintColor={getCategoryColor(category || percentile)}
-        // tintColorSecondary={colors.appBlueFaded}
-        backgroundColor={colors.appGrey}
-        arcSweepAngle={240}
-        rotation={240}
-        lineCap="round">
-        {fill => <Text>{score}</Text>}
-      </AnimatedCircularProgress>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        {!percentile && (
-          <>
-            {getScoreIcon(category || percentile) === '-' ? (
-              <Text
-                style={{
-                  fontSize: DevicePixels[30],
-                  marginRight: DevicePixels[10],
-                }}>
-                -
-              </Text>
-            ) : (
-              <Icon
-                style={{
-                  fontSize: DevicePixels[20],
-                  marginRight: DevicePixels[10],
-                }}
-                name={getScoreIcon(category || percentile)}
-              />
-            )}
-          </>
-        )}
-        <Text>
-          {isTable
-            ? `${getCategoryString(category)} score`
-            : `${capitalizeFirstLetter(percentile)} percentile`}
+  if (!category) {
+    return (
+      <View style={{flex: 1, padding: 20}}>
+        <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
+          Sorry, your age is out of the range to see the results for this test,
+          please make sure you've set your age correctly on your profile
         </Text>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginHorizontal: 10,
-          marginTop: 20,
-        }}>
-        <Icon
-          style={{fontSize: 20, marginHorizontal: 10}}
-          name="tachometer-alt"
-        />
+    );
+  }
+
+  return (
+    <ImageBackground
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, padding: 20}}>
         <Text
           style={{
-            fontSize: 16,
-            flex: 1,
+            textAlign: 'center',
+            marginBottom: DevicePixels[10],
+            color: colors.appWhite,
+            fontWeight: 'bold',
+            fontSize: DevicePixels[20],
           }}>
-          {isTable ? 'You score is ' : 'You scored in the '}
-          <Text style={{fontWeight: 'bold'}}>
-            {isTable ? getCategoryString(category) : `${percentile}`}
-          </Text>
-          {isTable
-            ? ` for your age (${age}) and gender! `
-            : ' percentile for your gender'}
-          {average ? (
-            <Text>{`The average for your age and gender is between ${average.lower} and ${average.higher}`}</Text>
-          ) : (
-            <Text>
-              {percentile === 'bottom'
-                ? ''
-                : `This means you scored higher than ${percentile}% of people for your gender`}
+          Test complete!
+        </Text>
+
+        <AnimatedCircularProgress
+          style={{alignSelf: 'center'}}
+          size={DevicePixels[120]}
+          width={DevicePixels[15]}
+          backgroundWidth={DevicePixels[5]}
+          fill={fill}
+          tintColor={getCategoryColor(category || percentile)}
+          // tintColorSecondary={colors.appBlueFaded}
+          backgroundColor={colors.appWhite}
+          arcSweepAngle={240}
+          rotation={240}
+          lineCap="round">
+          {fill => (
+            <Text
+              style={{
+                fontSize: DevicePixels[30],
+                color: colors.appWhite,
+                fontWeight: 'bold',
+              }}>
+              {score}
             </Text>
           )}
-        </Text>
-      </View>
+        </AnimatedCircularProgress>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          {!percentile && (
+            <>
+              {getScoreIcon(category || percentile) === '-' ? (
+                <Text
+                  style={{
+                    fontSize: DevicePixels[30],
+                    marginRight: DevicePixels[10],
+                    color: colors.appWhite,
+                  }}>
+                  -
+                </Text>
+              ) : (
+                <Icon
+                  style={{
+                    fontSize: DevicePixels[20],
+                    marginRight: DevicePixels[10],
+                    color: colors.appWhite,
+                  }}
+                  name={getScoreIcon(category || percentile)}
+                />
+              )}
+            </>
+          )}
+          <Text style={{color: colors.appWhite}}>
+            {isTable
+              ? `${getCategoryString(category)} score`
+              : `${capitalizeFirstLetter(percentile)} percentile`}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginHorizontal: 10,
+            marginTop: 20,
+          }}>
+          <Icon
+            style={{fontSize: 20, marginHorizontal: 10, color: colors.appWhite}}
+            name="tachometer-alt"
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              flex: 1,
+              color: colors.appWhite,
+            }}>
+            {isTable ? 'You score is ' : 'You scored in the '}
+            <Text style={{fontWeight: 'bold'}}>
+              {isTable ? getCategoryString(category) : `${percentile}`}
+            </Text>
+            {isTable
+              ? ` for your age (${age}) and gender! `
+              : ' percentile for your gender'}
+            {average ? (
+              <Text>{`The average for your age and gender is between ${average.lower} and ${average.higher}`}</Text>
+            ) : (
+              <Text>
+                {percentile === 'bottom'
+                  ? ''
+                  : `This means you scored higher than ${percentile}% of people for your gender`}
+              </Text>
+            )}
+          </Text>
+        </View>
 
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <Button
-          text="Return Home"
-          onPress={resetToTabs}
-          style={{marginBottom: DevicePixels[10]}}
-        />
-      </View>
-    </View>
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <Button
+            text="Return Home"
+            onPress={resetToTabs}
+            style={{marginBottom: DevicePixels[10]}}
+          />
+        </View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

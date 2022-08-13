@@ -31,18 +31,11 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
     }
   }, [navigation, viewedPlan]);
   return (
-    <ScrollView>
-      <ImageBackground
-        source={require('../../images/login.jpeg')}
-        blurRadius={5}
-        style={{flex: 1}}>
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: colors.appBlack,
-            opacity: 0.5,
-          }}
-        />
+    <ImageBackground
+      source={require('../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <ScrollView>
         <SafeAreaView>
           <View
             style={{
@@ -54,9 +47,9 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Profile')}
               style={{
-                width: DevicePixels[40],
-                height: DevicePixels[40],
-                borderRadius: DevicePixels[20],
+                width: DevicePixels[42],
+                height: DevicePixels[42],
+                borderRadius: DevicePixels[21],
                 backgroundColor: colors.appWhite,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -135,8 +128,8 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
             onPress={() => navigation.navigate('Rating')}
           />
         </SafeAreaView>
-      </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
