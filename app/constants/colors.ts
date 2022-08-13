@@ -7,7 +7,7 @@ export default {
   appBlue: '#2A5DC2',
   appBlueFaded: '#5A89DA',
   darkBlue: '#242b43',
-  appBlack: '#000',
+  appBlack: '#040404',
   appGrey: '#505050',
   appRed: '#d13f64',
   appGreen: '#6ee1b9',

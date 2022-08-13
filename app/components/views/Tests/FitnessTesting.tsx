@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+
 const FitnessTesting: React.FC<FitnessTestingProps> = ({
   navigation,
   tests,
