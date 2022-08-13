@@ -1,4 +1,4 @@
-import React, {ReactNode, RefObject, useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {TextInputProps} from 'react-native';
 import colors from '../../constants/colors';
@@ -10,11 +10,12 @@ interface Props extends TextInputProps {
   containerStyle?: ViewStyle;
   disabled?: boolean;
   accessoryRight?: ReactNode;
-  ref?: RefObject<TextInput>;
+  ref?: any;
 }
 
 const Input: React.FC<Props> = props => {
   const [secure, setSecure] = useState(props.secure);
+
   return (
     <View style={props.containerStyle}>
       <TextInput

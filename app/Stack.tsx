@@ -182,7 +182,7 @@ const StackComponent: FunctionComponent = () => {
             name="QuickRoutine"
             component={QuickRoutineView}
             options={({navigation}) => ({
-              headerShown: false
+              headerShown: false,
             })}
           />
           <Stack.Screen
@@ -230,9 +230,13 @@ const StackComponent: FunctionComponent = () => {
             component={WorkoutList}
             options={{headerShown: false}}
           />
+          <Stack.Screen
+            name="Premium"
+            component={Premium}
+            options={{headerShown: false}}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
-          <Stack.Screen name="Premium" component={Premium} />
           <Stack.Screen
             name="Rating"
             component={Rating}

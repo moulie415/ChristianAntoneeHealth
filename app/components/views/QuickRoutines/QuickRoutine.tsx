@@ -3,10 +3,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-  TextInput,
   View,
-  Dimensions,
-  StyleSheet,
   ImageBackground,
 } from 'react-native';
 import moment from 'moment';
@@ -48,7 +45,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>();
   const [routineStarted, setRoutineStarted] = useState(false);
-  const textInputRef = useRef<TextInput>();
   const [showModal, setShowModal] = useState(false);
 
   const exercises = useMemo(() => {
@@ -56,12 +52,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       return exercisesObj[id];
     });
   }, [exercisesObj, routine.exerciseIds]);
-
-  useEffect(() => {
-    if (tabIndex === 2) {
-      textInputRef.current?.focus();
-    }
-  }, [tabIndex]);
 
   useEffect(() => {
     if (routine.instructions) {
@@ -308,7 +298,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
 
                       {tabIndex === 2 && (
                         <Input
-                          ref={textInputRef}
                           style={{
                             height: DevicePixels[100],
                             textAlignVertical: 'top',
