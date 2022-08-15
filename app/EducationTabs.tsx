@@ -49,7 +49,7 @@ const EducationTabs: React.FC<{
                   {...props}
                   renderTabBarItem={props => {
                     return (
-                      <TouchableOpacity onPress={props.onPress}>
+                      <TouchableOpacity key={props.key} onPress={props.onPress}>
                         <LinearGradient
                           colors={
                             props.key === routes[index].key
