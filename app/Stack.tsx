@@ -248,7 +248,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="Rating"
             component={Rating}
-            options={{headerTitle: 'Rate us'}}
+            options={{headerShown: false}}
           />
         </Stack.Group>
       </Stack.Navigator>
