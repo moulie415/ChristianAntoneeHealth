@@ -118,7 +118,8 @@ const Settings: React.FC<SettingsProps> = ({
             />
           </View>
 
-          <View
+          <TouchableOpacity
+            onPress={() => setShow(true)}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -160,10 +161,12 @@ const Settings: React.FC<SettingsProps> = ({
               <TouchableOpacity
                 disabled={!workoutReminders && !testReminders}
                 onPress={() => setShow(true)}>
-                <Text>{moment(workoutReminderTime).format('HH:mm')}</Text>
+                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  {moment(workoutReminderTime).format('HH:mm')}
+                </Text>
               </TouchableOpacity>
             )}
-          </View>
+          </TouchableOpacity>
 
           <Text
             style={{

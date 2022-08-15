@@ -37,7 +37,11 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
-      <ScrollView contentContainerStyle={{marginTop: DevicePixels[20]}}>
+      <ScrollView
+        contentContainerStyle={{
+          marginTop: DevicePixels[20],
+          paddingBottom: DevicePixels[20],
+        }}>
         <SafeAreaView>
           {items.map(({name, image, id, premium}, index) => {
             return (

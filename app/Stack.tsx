@@ -166,12 +166,20 @@ const StackComponent: FunctionComponent = () => {
             component={Settings}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="About" component={About} />
-          <Stack.Screen name="Education" component={EducationTabs} />
+          <Stack.Screen
+            name="About"
+            component={About}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Education"
+            component={EducationTabs}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="EducationArticle"
             component={EducationArticle}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
           />
           <Stack.Screen name="Policies" component={Policies} />
           <Stack.Screen
@@ -243,14 +251,13 @@ const StackComponent: FunctionComponent = () => {
             component={Premium}
             options={{headerShown: false}}
           />
-        </Stack.Group>
-        <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen
             name="Rating"
             component={Rating}
             options={{headerShown: false}}
           />
         </Stack.Group>
+        {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
       </Stack.Navigator>
     </>
   );

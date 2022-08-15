@@ -73,16 +73,17 @@ const HomeCard: React.FC<{
             justifyContent: 'space-between',
           }}>
           <Text style={{color: colors.appWhite, flex: 3}}>{subtitle}</Text>
-          {premium && !profile.premium && (
-            <View style={{flex: 1}}>
-              <Icon
-                name="lock"
-                size={DevicePixels[20]}
-                color={colors.appWhite}
-              />
-            </View>
-          )}
         </View>
+        {premium && !profile.premium && (
+          <View
+            style={{
+              position: 'absolute',
+              bottom: DevicePixels[15],
+              right: DevicePixels[15],
+            }}>
+            <Icon name="lock" size={DevicePixels[20]} color={colors.appWhite} />
+          </View>
+        )}
       </ImageBackground>
     </TouchableOpacity>
   );

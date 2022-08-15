@@ -1,5 +1,5 @@
 import {View, ImageBackground} from 'react-native';
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -23,7 +23,7 @@ const Rating: React.FC<{
 }> = ({navigation, profile}) => {
   const [rating, setRating] = useState<number>();
   const [feedback, setFeedback] = useState('');
-  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <ImageBackground
@@ -31,10 +31,21 @@ const Rating: React.FC<{
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Rate us" />
-        <View style={{flex: 1, justifyContent: 'center'}}>
+      </SafeAreaView>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <View
+          style={{
+            padding: DevicePixels[20],
+            paddingTop: DevicePixels[40],
+            borderTopLeftRadius: DevicePixels[30],
+            borderTopRightRadius: DevicePixels[30],
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            height: DevicePixels[450],
+          }}>
           <StarRating
             containerStyle={{marginHorizontal: DevicePixels[40]}}
-            fullStarColor={colors.appBlue}
+            fullStarColor="#FFC24C"
+            emptyStarColor="#6a4f1f"
             rating={rating}
             selectedStar={star => {
               setRating(star);
@@ -46,14 +57,15 @@ const Rating: React.FC<{
             onChangeText={setFeedback}
             multiline
             style={{
-              height: DevicePixels[50],
+              height: DevicePixels[200],
+              marginVertical: DevicePixels[20],
               textAlignVertical: 'top',
             }}
           />
           <Button
-            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+            style={{margin: DevicePixels[10]}}
             onPress={async () => {
-              setDisabled(true);
+              setLoading(true);
               if (rating > 3) {
                 rateApp();
               } else {
@@ -67,10 +79,11 @@ const Rating: React.FC<{
               }
             }}
             text="Submit"
-            disabled={!rating || disabled}
+            loading={loading}
+            disabled={!rating || loading}
           />
         </View>
-      </SafeAreaView>
+      </View>
     </ImageBackground>
   );
 };
