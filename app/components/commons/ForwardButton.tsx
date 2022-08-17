@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from 'react-native';
+import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DevicePixels from '../../helpers/DevicePixels';

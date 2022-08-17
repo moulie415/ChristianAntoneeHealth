@@ -1,4 +1,4 @@
-import {Goal} from './Shared';
+import {Goal, Level} from './Shared';
 
 export type Gender = 'male' | 'female';
 
@@ -48,4 +48,5 @@ export default interface Profile {
   equipment?: string;
   trainingAvailability?: TrainingAvailability;
   usedFreePlan?: boolean;
+  experience?: Level;
 }

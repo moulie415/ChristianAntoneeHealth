@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
+import Profile from '../../types/Profile';
 
 const getImage = (level: Level) => {
   if (level === Level.INTERMEDIATE) {
@@ -48,12 +49,14 @@ const getLevelString = (level: Level) => {
 const WorkoutCard: React.FC<{
   item: QuickRoutine | PlanWorkout;
   onPress: () => void;
-  premium: boolean;
-}> = ({item, onPress, premium}) => {
-  const locked = 'premium' in item && item.premium && !premium;
+  profile: Profile;
+  disabled?: boolean;
+}> = ({item, onPress, profile, disabled}) => {
+  const locked = 'premium' in item && item.premium && !profile.premium;
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={disabled}
       key={'id' in item ? item.id : item.name}>
       <ImageBackground
         style={{
@@ -62,7 +65,7 @@ const WorkoutCard: React.FC<{
           marginBottom: DevicePixels[10],
         }}
         borderRadius={DevicePixels[10]}
-        source={getImage(item.level)}>
+        source={getImage('level' in item ? item.level : profile.experience)}>
         <ImageBackground
           source={require('../../images/BlackTransparentBackground.png')}
           blurRadius={3}
@@ -140,7 +143,7 @@ const WorkoutCard: React.FC<{
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
-  premium: profile.profile.premium,
+  profile: profile.profile,
 });
 
 export default connect(mapStateToProps)(WorkoutCard);

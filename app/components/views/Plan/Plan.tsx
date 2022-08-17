@@ -167,7 +167,7 @@ const Plan: React.FC<{
                       backgroundColor: 'transparent',
                     }}
                     contentContainerStyle={{
-                      marginBottom: DevicePixels[20],
+                      marginVertical: DevicePixels[20],
                       justifyContent: 'space-evenly',
                     }}
                     indicatorStyle={{backgroundColor: 'transparent'}}

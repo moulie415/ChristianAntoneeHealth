@@ -4,7 +4,13 @@ import {MyRootState} from '../../../types/Shared';
 import Profile from '../../../types/Profile';
 import {getConnections} from '../../../actions/profile';
 import Avatar from '../../commons/Avatar';
-import {FlatList, RefreshControl, View} from 'react-native';
+import {
+  FlatList,
+  ImageBackground,
+  RefreshControl,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
@@ -16,6 +22,8 @@ import colors from '../../../constants/colors';
 import {truncate} from '../../../helpers';
 import ListItem from '../../commons/ListItem';
 import Divider from '../../commons/Divider';
+import Header from '../../commons/Header';
+import AddConnectionButton from '../../commons/AddConnectionButton';
 
 const getLastMessage = (
   messages: {[key: string]: {[key: string]: Message}},
@@ -57,57 +65,73 @@ const Connections: React.FC<{
     getConnectionsAction();
   }, [getConnectionsAction]);
   return (
-    <View style={{flex: 1}}>
-      <FlatList
-        data={Object.values(connections)}
-        refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={getConnectionsAction}
-          />
-        }
-        renderItem={({item}) => {
-          const {lastMessage, createdAt, italicize} = getLastMessage(
-            messages,
-            item.uid,
-          );
-          return (
-            <ListItem
-              onPress={() => navigation.navigate('Chat', {uid: item.uid})}
-              title={item.name}
-              description={truncate(lastMessage, 40)}
-              accessoryLeft={
-                <Avatar
-                  src={item.avatar}
-                  name={item.name}
-                  size={DevicePixels[40]}
-                />
-              }
-              accessoryRight={
-                <View style={{alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      fontSize: DevicePixels[10],
-                      color: colors.textGrey,
-                      marginBottom: DevicePixels[5],
-                    }}>
-                    {getSimplifiedTime(createdAt)}
-                  </Text>
-                  <UnreadConnectionCount uid={item.uid} />
-                </View>
-              }
+    <ImageBackground
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <SafeAreaView>
+        <Header
+          hasBack
+          title="Connections"
+          right={<AddConnectionButton navigation={navigation} />}
+        />
+        <FlatList
+          data={Object.values(connections)}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={getConnectionsAction}
             />
-          );
-        }}
-        ListEmptyComponent={() => (
-          <Text style={{textAlign: 'center', padding: DevicePixels[20]}}>
-            No connections yet, press the invite button in the top right to send
-            a link.
-          </Text>
-        )}
-        ItemSeparatorComponent={Divider}
-      />
-    </View>
+          }
+          renderItem={({item}) => {
+            const {lastMessage, createdAt, italicize} = getLastMessage(
+              messages,
+              item.uid,
+            );
+            return (
+              <ListItem
+                onPress={() => navigation.navigate('Chat', {uid: item.uid})}
+                title={item.name}
+                description={truncate(lastMessage, 40)}
+                accessoryLeft={
+                  <Avatar
+                    src={item.avatar}
+                    name={item.name}
+                    size={DevicePixels[40]}
+                  />
+                }
+                accessoryRight={
+                  <View style={{alignItems: 'center'}}>
+                    <Text
+                      style={{
+                        fontSize: DevicePixels[10],
+                        color: colors.textGrey,
+                        marginBottom: DevicePixels[5],
+                      }}>
+                      {getSimplifiedTime(createdAt)}
+                    </Text>
+                    <UnreadConnectionCount uid={item.uid} />
+                  </View>
+                }
+              />
+            );
+          }}
+          ListEmptyComponent={() => (
+            <Text
+              style={{
+                textAlign: 'center',
+                padding: DevicePixels[20],
+                color: colors.appWhite,
+                fontSize: DevicePixels[20]
+              }}>
+              No connections yet, press the invite button in the top right to
+              send a link.
+            </Text>
+          )}
+          ItemSeparatorComponent={Divider}
+        />
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

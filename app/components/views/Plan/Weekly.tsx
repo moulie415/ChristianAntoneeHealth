@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import ListItem from '../../commons/ListItem';
 import Spinner from '../../commons/Spinner';
 import WorkoutCard from '../../commons/WorkoutCard';
+import TestCard from '../../commons/TestCard';
 
 const Weekly: React.FC<{
   plan: Plan;
@@ -100,12 +101,21 @@ const Weekly: React.FC<{
       <SectionList
         sections={sections}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={{padding: DevicePixels[5]}}>{title}</Text>
+          <Text
+            style={{
+              padding: DevicePixels[5],
+              marginLeft: DevicePixels[10],
+              color: colors.appWhite,
+              fontWeight: 'bold',
+            }}>
+            {title}
+          </Text>
         )}
         renderItem={({item}) => {
           if ('name' in item) {
             return (
               <WorkoutCard
+                key={item.name}
                 item={item}
                 onPress={() => {
                   if (item.today) {
@@ -156,7 +166,9 @@ const Weekly: React.FC<{
             );
           }
           return (
-            <ListItem
+            <TestCard
+              key={item.test}
+              item={testsObj[item.test]}
               onPress={() => {
                 if (item.today) {
                   navigate('Test', {id: item.test});
@@ -172,29 +184,6 @@ const Weekly: React.FC<{
                   ]);
                 }
               }}
-              disabled={loading}
-              title={testsObj[item.test]?.name || ''}
-              accessoryLeft={
-                <ImageOverlay
-                  containerStyle={{
-                    height: DevicePixels[75],
-                    width: DevicePixels[75],
-                  }}
-                  overlayAlpha={0.4}
-                  source={require('../../../images/old_man_stretching.jpeg')}>
-                  <View style={{alignItems: 'center'}}>
-                    {loading ? (
-                      <Spinner style={{borderColor: colors.appWhite}} />
-                    ) : (
-                      <Icon
-                        name="stopwatch"
-                        color={colors.appWhite}
-                        size={DevicePixels[25]}
-                      />
-                    )}
-                  </View>
-                </ImageOverlay>
-              }
             />
           );
         }}

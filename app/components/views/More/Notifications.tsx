@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import NotificationsProps from '../../../types/views/Notifications';
+import Text from '../../commons/Text';
 
 const Notifications: React.FC<NotificationsProps> = () => {
   return (

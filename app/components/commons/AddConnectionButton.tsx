@@ -12,7 +12,7 @@ const AddConnectionButton: FunctionComponent<{
   return (
     <TouchableOpacity onPress={() => navigation.navigate('AddConnection')}>
       <Icon
-        color={colors.appBlue}
+        color={colors.appWhite}
         size={DevicePixels[20]}
         style={{padding: DevicePixels[10]}}
         name="user-plus"

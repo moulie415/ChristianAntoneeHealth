@@ -15,6 +15,7 @@ import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import TestCard from '../../commons/TestCard';
 
 const FitnessTesting: React.FC<FitnessTestingProps> = ({
   navigation,
@@ -43,69 +44,19 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
           paddingBottom: DevicePixels[20],
         }}>
         <SafeAreaView>
-          {items.map(({name, image, id, premium}, index) => {
+          {Object.values(tests).map((item, index) => {
             return (
-              <TouchableOpacity
+              <TestCard
+                key={item.id}
+                item={item}
                 onPress={() => {
-                  if (premium && !profile.premium) {
+                  if (item.premium && !profile.premium) {
                     navigation.navigate('Premium');
                   } else {
-                    navigation.navigate('Test', {id});
+                    navigation.navigate('Test', {id: item.id});
                   }
                 }}
-                key={name}>
-                <ImageBackground
-                  style={{
-                    height: DevicePixels[140],
-                    marginHorizontal: DevicePixels[15],
-                    marginBottom: DevicePixels[10],
-                  }}
-                  borderRadius={DevicePixels[10]}
-                  source={image}>
-                  <ImageBackground
-                    source={require('../../../images/BlackTransparentBackground.png')}
-                    blurRadius={3}
-                    style={{
-                      height: DevicePixels[140],
-                      justifyContent: 'center',
-                      padding: DevicePixels[10],
-                    }}
-                    borderRadius={DevicePixels[10]}>
-                    {premium && !profile.premium && (
-                      <View
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          bottom: 0,
-                          margin: DevicePixels[10],
-                        }}>
-                        <Icon
-                          name="lock"
-                          color="#fff"
-                          size={DevicePixels[30]}
-                        />
-                      </View>
-                    )}
-                    <View
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        width: DevicePixels[200],
-                        margin: DevicePixels[20],
-                      }}>
-                      <Text
-                        style={{
-                          color: colors.appWhite,
-                          fontSize: DevicePixels[16],
-                          fontWeight: 'bold',
-                        }}>
-                        {name}
-                      </Text>
-                    </View>
-                  </ImageBackground>
-                </ImageBackground>
-              </TouchableOpacity>
+              />
             );
           })}
         </SafeAreaView>

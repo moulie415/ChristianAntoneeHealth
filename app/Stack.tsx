@@ -159,7 +159,11 @@ const StackComponent: FunctionComponent = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen name="Notifications" component={Notifications} />
-          <Stack.Screen name="Support" component={Support} />
+          <Stack.Screen
+            name="Support"
+            component={Support}
+            options={{headerShown: false}}
+          />
           <Stack.Screen name="Terms" component={Terms} />
           <Stack.Screen
             name="Settings"
@@ -181,7 +185,11 @@ const StackComponent: FunctionComponent = () => {
             component={EducationArticle}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="Policies" component={Policies} />
+          <Stack.Screen
+            name="Policies"
+            component={Policies}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="Test"
             component={Test}
@@ -205,8 +213,7 @@ const StackComponent: FunctionComponent = () => {
             name="EndQuickRoutine"
             component={EndQuickRoutine}
             options={({navigation}) => ({
-              headerTitle: '',
-              headerBackTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
@@ -224,18 +231,18 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="Connections"
             component={Connections}
-            options={({navigation}) => ({
-              headerRight: () => (
-                <AddConnectionButton navigation={navigation} />
-              ),
-            })}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="AddConnection"
-            options={{headerTitle: 'Add Connection'}}
+            options={{headerShown: false}}
             component={AddConnection}
           />
-          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen
+            name="Chat"
+            component={Chat}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="WhatArea"
             component={WhatArea}

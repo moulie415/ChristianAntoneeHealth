@@ -21,6 +21,7 @@ import ListItem from '../../commons/ListItem';
 import Spinner from '../../commons/Spinner';
 import Divider from '../../commons/Divider';
 import WorkoutCard from '../../commons/WorkoutCard';
+import TestCard from '../../commons/TestCard';
 
 const Daily: React.FC<{
   plan: Plan;
@@ -127,6 +128,8 @@ const Daily: React.FC<{
             if ('name' in item) {
               return (
                 <WorkoutCard
+                  key={item.name}
+                  disabled={loading}
                   item={item}
                   onPress={() => {
                     setWorkoutAction(
@@ -150,33 +153,13 @@ const Daily: React.FC<{
               );
             }
             return (
-              <ListItem
+              <TestCard
+                key={item.test}
+                item={testsObj[item.test]}
+                disabled={loading}
                 onPress={() => {
                   navigate('Test', {id: item.test});
                 }}
-                disabled={loading}
-                title={testsObj[item.test]?.name || ''}
-                accessoryLeft={
-                  <ImageOverlay
-                    containerStyle={{
-                      height: DevicePixels[75],
-                      width: DevicePixels[75],
-                    }}
-                    overlayAlpha={0.4}
-                    source={require('../../../images/old_man_stretching.jpeg')}>
-                    <View style={{alignItems: 'center'}}>
-                      {loading ? (
-                        <Spinner style={{borderColor: colors.appWhite}} />
-                      ) : (
-                        <Icon
-                          name="stopwatch"
-                          color={colors.appWhite}
-                          size={DevicePixels[25]}
-                        />
-                      )}
-                    </View>
-                  </ImageOverlay>
-                }
               />
             );
           }}

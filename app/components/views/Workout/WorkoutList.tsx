@@ -123,6 +123,7 @@ const WorkoutList: React.FC<{
           renderItem={({item}) => {
             return (
               <WorkoutCard
+                key={item.id}
                 item={item}
                 onPress={() => {
                   if (item.premium && !profile.premium) {
