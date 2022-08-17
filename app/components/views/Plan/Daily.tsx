@@ -20,6 +20,7 @@ import Image from 'react-native-fast-image';
 import ListItem from '../../commons/ListItem';
 import Spinner from '../../commons/Spinner';
 import Divider from '../../commons/Divider';
+import WorkoutCard from '../../commons/WorkoutCard';
 
 const Daily: React.FC<{
   plan: Plan;
@@ -112,12 +113,21 @@ const Daily: React.FC<{
         <SectionList
           sections={data}
           renderSectionHeader={({section: {title}}) => (
-            <Text style={{padding: DevicePixels[5]}}>{title}</Text>
+            <Text
+              style={{
+                padding: DevicePixels[5],
+                marginLeft: DevicePixels[10],
+                color: colors.appWhite,
+                fontWeight: 'bold',
+              }}>
+              {title}
+            </Text>
           )}
           renderItem={({item}) => {
             if ('name' in item) {
               return (
-                <ListItem
+                <WorkoutCard
+                  item={item}
                   onPress={() => {
                     setWorkoutAction(
                       item.exercises.map(e => {
@@ -136,34 +146,6 @@ const Daily: React.FC<{
                     });
                     navigate('StartWorkout', {name: item.name, isLast});
                   }}
-                  disabled={loading}
-                  title={item.name}
-                  accessoryLeft={
-                    <ImageOverlay
-                      containerStyle={{
-                        height: DevicePixels[75],
-                        width: DevicePixels[75],
-                      }}
-                      overlayAlpha={0.4}
-                      source={require('../../../images/old_man_stretching.jpeg')}>
-                      <View style={{alignItems: 'center'}}>
-                        {loading ? (
-                          <Spinner style={{borderColor: colors.appWhite}} />
-                        ) : (
-                          <>
-                            <Text style={{color: colors.appWhite}}>
-                              {item.exercises.length}
-                            </Text>
-                            <Text style={{color: colors.appWhite}}>
-                              {item.exercises.length > 1
-                                ? 'exercises'
-                                : 'exercise'}
-                            </Text>
-                          </>
-                        )}
-                      </View>
-                    </ImageOverlay>
-                  }
                 />
               );
             }
@@ -220,7 +202,15 @@ const Daily: React.FC<{
               </View>
             ) : (
               <View>
-                <Text style={{padding: DevicePixels[5]}}>Education</Text>
+                <Text
+                  style={{
+                    padding: DevicePixels[5],
+                    marginLeft: DevicePixels[10],
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                  }}>
+                  Education
+                </Text>
                 {plan.education.map(id => {
                   const item = education[id];
                   if (!item) {
@@ -257,7 +247,15 @@ const Daily: React.FC<{
           </View>
         )}
         {(!!plan.nutrition || !!plan.sleep) && (
-          <Text style={{padding: DevicePixels[5]}}>Other</Text>
+          <Text
+            style={{
+              padding: DevicePixels[5],
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              marginLeft: DevicePixels[10],
+            }}>
+            Other
+          </Text>
         )}
         {!!plan.nutrition && !_.isEmpty(plan.nutrition) && (
           <>
@@ -267,7 +265,15 @@ const Daily: React.FC<{
               size={DevicePixels[20]}
               color={colors.appBlue}
             />
-            <Text>Nutritional planning</Text>
+            <Text
+              style={{
+                padding: DevicePixels[5],
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                marginLeft: DevicePixels[10],
+              }}>
+              Nutritional planning
+            </Text>
             <View style={{marginLeft: DevicePixels[10]}}>
               {!!plan.nutrition.general && (
                 <Text>

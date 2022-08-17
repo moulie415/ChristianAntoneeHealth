@@ -15,6 +15,7 @@ import {navigate} from '../../../RootNavigation';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ListItem from '../../commons/ListItem';
 import Spinner from '../../commons/Spinner';
+import WorkoutCard from '../../commons/WorkoutCard';
 
 const Weekly: React.FC<{
   plan: Plan;
@@ -104,7 +105,8 @@ const Weekly: React.FC<{
         renderItem={({item}) => {
           if ('name' in item) {
             return (
-              <ListItem
+              <WorkoutCard
+                item={item}
                 onPress={() => {
                   if (item.today) {
                     setWorkoutAction(
@@ -150,34 +152,6 @@ const Weekly: React.FC<{
                     ]);
                   }
                 }}
-                disabled={loading}
-                title={item.name}
-                accessoryLeft={
-                  <ImageOverlay
-                    containerStyle={{
-                      height: DevicePixels[75],
-                      width: DevicePixels[75],
-                    }}
-                    overlayAlpha={0.4}
-                    source={require('../../../images/old_man_stretching.jpeg')}>
-                    <View style={{alignItems: 'center'}}>
-                      {loading ? (
-                        <Spinner style={{borderColor: colors.appWhite}} />
-                      ) : (
-                        <>
-                          <Text style={{color: colors.appWhite}}>
-                            {item.exercises.length}
-                          </Text>
-                          <Text style={{color: colors.appWhite}}>
-                            {item.exercises.length > 1
-                              ? 'exercises'
-                              : 'exercise'}
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                  </ImageOverlay>
-                }
               />
             );
           }
