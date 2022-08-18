@@ -60,6 +60,7 @@ import Nutrition from './Nutrition';
 import Swiper from 'react-native-swiper';
 import BackButton from '../../commons/BackButton';
 import ForwardButton from '../../commons/ForwardButton';
+import Header from '../../commons/Header';
 
 const {width} = Dimensions.get('window');
 
@@ -69,26 +70,33 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   profile,
   signUp: signUpAction,
 }) => {
+  const fromProfile = route.params?.fromProfile;
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
-  const [equipment, setEquipment] = useState('');
-  const [experience, setExperience] = useState<Level>();
-  const [marketing, setMarketing] = useState(false);
-  const [height, setHeight] = useState<number>(profile.height);
-  const [gender, setGender] = useState<Gender>(profile.gender);
-  const [goal, setGoal] = useState<Goal>(profile.goal);
+  const [equipment, setEquipment] = useState(profile.equipment || '');
+  const [experience, setExperience] = useState<Level>(
+    profile.experience || null,
+  );
+  const [marketing, setMarketing] = useState(profile.marketing || false);
+  const [height, setHeight] = useState<number>(profile.height || null);
+  const [gender, setGender] = useState<Gender>(profile.gender || null);
+  const [goal, setGoal] = useState<Goal>(profile.goal || null);
   const [loading, setLoading] = useState(false);
-  const [medications, setMedications] = useState('');
-  const [lifestyle, setLifestyle] = useState('');
-  const [sleepPattern, setSleepPattern] = useState<SleepPattern>();
-  const [stressLevel, setStressLevel] = useState<StressLevel>();
-  const [occupation, setOccupation] = useState('');
-  const [injuries, setInjuries] = useState('');
+  const [medications, setMedications] = useState(profile.medications || '');
+  const [lifestyle, setLifestyle] = useState(profile.lifestyle || '');
+  const [sleepPattern, setSleepPattern] = useState<SleepPattern>(
+    profile.sleepPattern || null,
+  );
+  const [stressLevel, setStressLevel] = useState<StressLevel>(
+    profile.stressLevel || null,
+  );
+  const [occupation, setOccupation] = useState(profile.occupation || '');
+  const [injuries, setInjuries] = useState(profile.injuries || '');
   const [trainingAvailability, setTrainingAvailability] =
-    useState<TrainingAvailability>();
-  const [nutrition, setNutrition] = useState([]);
+    useState<TrainingAvailability>(profile.trainingAvailability || null);
+  const [nutrition, setNutrition] = useState(profile.nutrition || []);
 
   useInit(async () => {
     setLoading(true);
@@ -146,6 +154,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       sleepPattern,
       lifestyle,
       medications,
+      fromProfile,
     });
   };
 
@@ -334,7 +343,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           borderWidth={0}
           borderRadius={0}
         />
-
+        {fromProfile && <Header hasBack />}
         <Swiper
           onIndexChanged={setIndex}
           loop={false}

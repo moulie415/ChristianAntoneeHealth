@@ -1,7 +1,14 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
-import {TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  ImageBackground,
+  View,
+  Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
@@ -15,6 +22,10 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SettingsState} from '../../../reducers/settings';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import ListItem from '../../commons/ListItem';
+import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
+
+const {height, width} = Dimensions.get('window');
 
 const ArticleList: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
@@ -74,37 +85,68 @@ const ArticleList: React.FC<{
       data={filtered}
       renderItem={({item}) => {
         return (
-          <>
-            <ListItem
-              title={item.title}
-              onPress={() => onPress(item)}
-              description={moment(item.createdate).format('DD MMMM YYYY')}
-              accessoryLeft={
-                item.premium && !profile.premium ? (
+          <TouchableOpacity
+            style={{
+              height: DevicePixels[125],
+              marginHorizontal: DevicePixels[20],
+              marginBottom: DevicePixels[15],
+              borderRadius: DevicePixels[10],
+              overflow: 'hidden',
+            }}
+            onPress={() => onPress(item)}>
+            <Image
+              style={{
+                position: 'absolute',
+                height: DevicePixels[125],
+                width: '100%',
+              }}
+              source={{uri: item.image.src}}
+            />
+
+            <ImageBackground
+              source={require('../../../images/BlackTransparentBackground.png')}
+              blurRadius={3}
+              style={{
+                position: 'absolute',
+                alignSelf: 'flex-end',
+                right: 0,
+                top: 0,
+                bottom: 0,
+                width: width / 1.5,
+                padding: DevicePixels[10],
+              }}>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: DevicePixels[10],
+                }}>
+                {moment(item.createdate).format('DD MMMM YYYY')}
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: DevicePixels[16],
+                  fontWeight: 'bold',
+                }}>
+                {item.title}
+              </Text>
+
+              {item.premium && !profile.premium && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: DevicePixels[15],
+                    right: DevicePixels[15],
+                  }}>
                   <Icon
                     name="lock"
-                    size={DevicePixels[30]}
-                    style={{margin: DevicePixels[10]}}
+                    size={DevicePixels[20]}
+                    color={colors.appWhite}
                   />
-                ) : (
-                  <Image
-                    style={{width: DevicePixels[75], height: DevicePixels[50]}}
-                    source={{uri: item.image.src}}
-                  />
-                )
-              }
-            />
-            {item.premium && !profile.premium && (
-              <TouchableOpacity
-                onPress={() => onPress(item)}
-                style={{
-                  ...StyleSheet.absoluteFillObject,
-                  backgroundColor: '#000',
-                  opacity: 0.7,
-                }}
-              />
-            )}
-          </>
+                </View>
+              )}
+            </ImageBackground>
+          </TouchableOpacity>
         );
       }}
     />

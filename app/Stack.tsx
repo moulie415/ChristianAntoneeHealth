@@ -159,21 +159,37 @@ const StackComponent: FunctionComponent = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen name="Notifications" component={Notifications} />
-          <Stack.Screen name="Support" component={Support} />
+          <Stack.Screen
+            name="Support"
+            component={Support}
+            options={{headerShown: false}}
+          />
           <Stack.Screen name="Terms" component={Terms} />
           <Stack.Screen
             name="Settings"
             component={Settings}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="About" component={About} />
-          <Stack.Screen name="Education" component={EducationTabs} />
+          <Stack.Screen
+            name="About"
+            component={About}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Education"
+            component={EducationTabs}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="EducationArticle"
             component={EducationArticle}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
           />
-          <Stack.Screen name="Policies" component={Policies} />
+          <Stack.Screen
+            name="Policies"
+            component={Policies}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="Test"
             component={Test}
@@ -197,8 +213,7 @@ const StackComponent: FunctionComponent = () => {
             name="EndQuickRoutine"
             component={EndQuickRoutine}
             options={({navigation}) => ({
-              headerTitle: '',
-              headerBackTitle: '',
+              headerShown: false,
             })}
           />
           <Stack.Screen
@@ -216,18 +231,18 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="Connections"
             component={Connections}
-            options={({navigation}) => ({
-              headerRight: () => (
-                <AddConnectionButton navigation={navigation} />
-              ),
-            })}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="AddConnection"
-            options={{headerTitle: 'Add Connection'}}
+            options={{headerShown: false}}
             component={AddConnection}
           />
-          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen
+            name="Chat"
+            component={Chat}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="WhatArea"
             component={WhatArea}
@@ -243,14 +258,13 @@ const StackComponent: FunctionComponent = () => {
             component={Premium}
             options={{headerShown: false}}
           />
-        </Stack.Group>
-        <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen
             name="Rating"
             component={Rating}
-            options={{headerTitle: 'Rate us'}}
+            options={{headerShown: false}}
           />
         </Stack.Group>
+        {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
       </Stack.Navigator>
     </>
   );

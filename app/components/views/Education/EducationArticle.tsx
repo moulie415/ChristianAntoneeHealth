@@ -8,6 +8,9 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import moment from 'moment';
 import {getEducationCategoryString} from '../../../helpers';
 import Text from '../../commons/Text';
+import Header from '../../commons/Header';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import colors from '../../../constants/colors';
 
 const EducationArticle: React.FC<{
   route: RouteProp<StackParamList, 'EducationArticle'>;
@@ -16,25 +19,41 @@ const EducationArticle: React.FC<{
   const {width} = useWindowDimensions();
   return (
     <View>
-      <ScrollView
-        contentContainerStyle={{
-          backgroundColor: '#fff',
-          padding: DevicePixels[20],
-        }}>
-        <Text>{education.title}</Text>
-        <Text>{`${moment(education.createdate).format(
-          'DD MMMM YYYY',
-        )}   |   ${getEducationCategoryString(education.category)}`}</Text>
+      <ScrollView contentContainerStyle={{}}>
         <Image
           style={{
-            height: DevicePixels[250],
-            marginTop: DevicePixels[20],
+            height: DevicePixels[350],
             marginBottom: DevicePixels[10],
           }}
           source={{uri: education.image.src}}
         />
 
-        <RenderHtml contentWidth={width} source={{html: education.body}} />
+        <Header hasBack absolute />
+
+        <View
+          style={{
+            padding: DevicePixels[20],
+            borderTopLeftRadius: DevicePixels[30],
+            borderTopRightRadius: DevicePixels[30],
+            marginTop: -DevicePixels[35],
+            backgroundColor: colors.appWhite,
+          }}>
+          <Text
+            style={{
+              fontSize: DevicePixels[20],
+              fontWeight: 'bold',
+              marginBottom: DevicePixels[10],
+            }}>
+            {education.title}
+          </Text>
+          <Text style={{fontSize: DevicePixels[12]}}>{`${moment(
+            education.createdate,
+          ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
+            education.category,
+          )}`}</Text>
+
+          <RenderHtml contentWidth={width} source={{html: education.body}} />
+        </View>
       </ScrollView>
     </View>
   );

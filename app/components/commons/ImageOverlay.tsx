@@ -3,13 +3,13 @@ import {
   Dimensions,
   ImageBackground,
   StyleSheet,
-  Text,
   View,
   ImageSourcePropType,
   TextStyle,
   ViewStyle,
 } from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
+import Text from './Text';
 
 const {width} = Dimensions.get('window');
 

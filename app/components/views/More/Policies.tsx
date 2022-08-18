@@ -1,38 +1,47 @@
 import React from 'react';
-import {Linking, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, Linking, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
+import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 
 const Policies = () => {
   return (
-    <View style={{flex: 1}}>
-      <Text style={{textAlign: 'center', marginTop: DevicePixels[20]}}>
-        Policies and Terms
-      </Text>
-      <TouchableOpacity
-        onPress={() =>
-          Linking.openURL('https://christianantonee.com/privacy-policy')
-        }
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginVertical: DevicePixels[20],
-        }}>
-        <Icon
-          style={{marginLeft: DevicePixels[20]}}
-          name="file"
-          color={colors.appBlue}
-          size={DevicePixels[30]}
-        />
-        <Text
-        
-          style={{color: colors.appBlue, marginLeft: DevicePixels[10]}}>
-          Privacy Policy
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <ImageBackground
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <SafeAreaView>
+        <Header hasBack title="Policies and Terms" />
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL('https://christianantonee.com/privacy-policy')
+          }
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: DevicePixels[20],
+          }}>
+          <Icon
+            style={{marginLeft: DevicePixels[20]}}
+            name="file"
+            color={colors.appWhite}
+            size={DevicePixels[30]}
+          />
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              marginLeft: DevicePixels[10],
+              textDecorationLine: 'underline'
+            }}>
+            Privacy Policy
+          </Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

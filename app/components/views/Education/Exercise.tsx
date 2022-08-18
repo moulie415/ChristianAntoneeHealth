@@ -15,7 +15,6 @@ const Exercise: React.FC<{
       e => e.category === Category.EXERCISE,
     );
   }, [education]);
-
   return <ArticleList filtered={filtered} navigation={navigation} />;
 };
 

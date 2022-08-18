@@ -3,7 +3,7 @@ import React, {useMemo, useState} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {useEffect} from 'react';
 import moment from 'moment';
-import {Alert, View} from 'react-native';
+import {Alert, ImageBackground, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {
@@ -18,6 +18,11 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import Input from '../../commons/Input';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from '../../commons/Header';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import colors from '../../../constants/colors';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
@@ -83,106 +88,177 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     return {text: difficultyText, subtext: 'I might die'};
   }, [difficulty]);
   return (
-    <View style={{flex: 1}}>
-      <Text
-        style={{
-          textAlign: 'center',
-          margin: DevicePixels[10],
-          marginTop: DevicePixels[20],
-        }}>
-        Workout Complete!
-      </Text>
-      <Text style={{margin: DevicePixels[10]}}>
-        Rate your performance to help us understand your fitness level
-      </Text>
-      <Text style={{fontSize: DevicePixels[100], textAlign: 'center'}}>
-        {emoji}
-      </Text>
+    <ImageBackground
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
+        <Header hasBack title="Workout Complete!" />
+        <LinearGradient
+          colors={['#4795E3', '#1A1B1F']}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0.5}}
+          style={{
+            height: DevicePixels[154],
+            width: DevicePixels[154],
+            borderRadius: DevicePixels[78],
+            alignSelf: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <LinearGradient
+            colors={['#294195', '#121617']}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0.5}}
+            style={{
+              height: DevicePixels[150],
+              width: DevicePixels[150],
+              borderRadius: DevicePixels[75],
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon
+              name="check"
+              color={colors.appWhite}
+              size={DevicePixels[70]}
+            />
+          </LinearGradient>
+        </LinearGradient>
+        <Text
+          style={{
+            margin: DevicePixels[10],
+            marginTop: DevicePixels[20],
+            color: colors.appWhite,
+          }}>
+          Rate your performance to help us understand your fitness level
+        </Text>
 
-      <Slider
-        containerStyle={{
-          height: DevicePixels[40],
-          flexDirection: 'row',
-          margin: DevicePixels[10],
-        }}
-        minimumValue={0}
-        maximumValue={3}
-        step={1}
-        value={difficulty}
-        onValueChange={val => setDifficulty(val as number)}
-      />
-      <Text
-        style={{
-          fontWeight: 'bold',
-          margin: DevicePixels[10],
-          height: DevicePixels[50],
-          textAlign: 'center',
-        }}>
-        {text}
-        <Text style={{fontWeight: 'normal'}}>{` - ${subtext}`}</Text>
-      </Text>
-      <Text>Workout note</Text>
-      <Input
-        style={{minHeight: DevicePixels[50]}}
-        multiline
-        placeholder="Add details about your workout"
-        value={note}
-        onChangeText={setNote}
-      />
-      <Button
-        text="Save & Continue"
-        disabled={loading}
-        style={{margin: DevicePixels[10]}}
-        onPress={() => {
-          const navigate = () => {
-            navigation.navigate('WorkoutSummary', {
-              calories,
-              seconds,
-              difficulty,
-              isLast,
-            });
-          };
-
-          const save = (saved: boolean) => {
-            saveAction({
-              calories,
-              seconds,
-              difficulty,
-              createdate: new Date(),
-              workout: workout.map(e => e.id),
-              saved,
-              name,
-            });
-          };
-          if (profile.premium) {
-            Alert.alert(
-              'Save workout',
-              'Do you wish to save this workout to view later?',
-              [
-                {style: 'cancel', text: 'Cancel'},
-                {
-                  text: 'No',
-                  onPress: () => {
-                    save(false);
-                    navigate();
-                  },
-                },
-                {
-                  text: 'Yes',
-                  onPress: () => {
-                    save(true);
-                    navigate();
-                  },
-                },
-              ],
+        <Slider
+          minimumValue={0}
+          maximumValue={3}
+          step={1}
+          value={difficulty}
+          renderThumbComponent={() => {
+            return (
+              <View
+                style={{
+                  backgroundColor: colors.appWhite,
+                  height: DevicePixels[30],
+                  width: DevicePixels[30],
+                  borderRadius: DevicePixels[15],
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <LinearGradient
+                  colors={['#294195', '#121617']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0.5}}
+                  style={{
+                    height: DevicePixels[26],
+                    width: DevicePixels[26],
+                    borderRadius: DevicePixels[13],
+                  }}
+                />
+              </View>
             );
-          } else {
-            save(false);
-            navigate();
+          }}
+          minimumTrackTintColor={colors.appBlue}
+          maximumTrackTintColor={colors.appWhite}
+          containerStyle={{marginHorizontal: DevicePixels[20]}}
+          onValueChange={val =>
+            typeof val === 'object' && setDifficulty(val[0])
           }
-        }}
-      />
-    </View>
+        />
+
+        <View
+          style={{
+            margin: DevicePixels[10],
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <Text
+            style={{
+              fontSize: DevicePixels[30],
+              textAlign: 'center',
+              margin: DevicePixels[10],
+            }}>
+            {emoji}
+          </Text>
+          <Text style={{color: colors.appWhite, fontWeight: 'bold', flex: 1}}>
+            {text}
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'normal',
+              }}>{` - ${subtext}`}</Text>
+          </Text>
+        </View>
+        <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
+          Workout note
+        </Text>
+        <Input
+          style={{minHeight: DevicePixels[50], margin: DevicePixels[10]}}
+          multiline
+          placeholder="Add details about this workout"
+          value={note}
+          onChangeText={setNote}
+        />
+        <Button
+          text="Save & Continue"
+          disabled={loading}
+          style={{margin: DevicePixels[10]}}
+          onPress={() => {
+            const navigate = () => {
+              navigation.navigate('WorkoutSummary', {
+                calories,
+                seconds,
+                difficulty,
+                isLast,
+              });
+            };
+
+            const save = (saved: boolean) => {
+              saveAction({
+                calories,
+                seconds,
+                difficulty,
+                createdate: new Date(),
+                workout: workout.map(e => e.id),
+                saved,
+                name,
+              });
+            };
+            if (profile.premium) {
+              Alert.alert(
+                'Save workout',
+                'Do you wish to save this workout to view later?',
+                [
+                  {style: 'cancel', text: 'Cancel'},
+                  {
+                    text: 'No',
+                    onPress: () => {
+                      save(false);
+                      navigate();
+                    },
+                  },
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      save(true);
+                      navigate();
+                    },
+                  },
+                ],
+              );
+            } else {
+              save(false);
+              navigate();
+            }
+          }}
+        />
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

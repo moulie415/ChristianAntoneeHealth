@@ -1,17 +1,12 @@
 import React from 'react';
-import {
-  BottomTabBar,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {StackParamList} from './App';
 import colors from './constants/colors';
 import Home from './components/views/Home';
-import Workout from './components/views/Workout/Workout';
 import FitnessTesting from './components/views/Tests/FitnessTesting';
 import More from './components/views/More/More';
 import MoreIcon from './components/commons/unread/MoreIcon';
-import WhatArea from './components/views/Workout/WhatArea';
 import Plan from './components/views/Plan/Plan';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import {connect} from 'react-redux';
@@ -24,7 +19,10 @@ const Tab = createBottomTabNavigator<StackParamList>();
 
 const color = new Color(colors.appWhite);
 
-const Tabs: React.FC<{profile: Profile}> = ({profile}) => {
+const Tabs: React.FC<{profile: Profile; plansEnabled: boolean}> = ({
+  profile,
+  plansEnabled,
+}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -55,7 +53,7 @@ const Tabs: React.FC<{profile: Profile}> = ({profile}) => {
         key="Home"
         component={Home}
       />
-      {profile.admin && (
+      {(profile.admin || plansEnabled) && (
         <Tab.Screen
           options={{
             tabBarLabel: 'Plan',
@@ -107,8 +105,9 @@ const Tabs: React.FC<{profile: Profile}> = ({profile}) => {
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: MyRootState) => ({
   profile: profile.profile,
+  plansEnabled: settings.plansEnabled,
 });
 
 export default connect(mapStateToProps)(Tabs);

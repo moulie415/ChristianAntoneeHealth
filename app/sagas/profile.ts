@@ -277,6 +277,7 @@ function* signUp(action: SignUpAction) {
     sleepPattern,
     lifestyle,
     medications,
+    fromProfile,
   } = action.payload;
   try {
     try {
@@ -339,7 +340,11 @@ function* signUp(action: SignUpAction) {
         planStatus: PlanStatus.UNINITIALIZED,
       }),
     );
-    resetToTabs();
+    if (fromProfile) {
+      goBack();
+    } else {
+      resetToTabs();
+    }
 
     setUserAttributes({
       birthday: dob,
@@ -521,15 +526,20 @@ function* sendMessage(action: SendMessageAction) {
 }
 
 function* setRead(action: SetReadAction) {
-  const otherUid = action.payload;
-  const {uid} = yield select((state: MyRootState) => state.profile.profile);
-  const current: {[key: string]: number} = yield select(
-    (state: MyRootState) => state.profile.profile.unread,
-  );
-  if (current) {
-    const unread = {...current, [otherUid]: 0};
-    yield call(api.setUnread, uid, unread);
-    yield put(setUnread(unread));
+  try {
+    const otherUid = action.payload;
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const current: {[key: string]: number} = yield select(
+      (state: MyRootState) => state.profile.profile.unread,
+    );
+    if (current) {
+      const unread = {...current, [otherUid]: 0};
+      yield call(api.setUnread, uid, unread);
+      yield put(setUnread(unread));
+    }
+  } catch (e) {
+    console.warn(e);
+    logError(e);
   }
 }
 
@@ -702,7 +712,7 @@ export default function* profileSaga() {
     takeLatest(SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
     takeLatest(UPDATE_PROFILE, updateProfile),
-    debounce(500, HANDLE_AUTH, handleAuthWorker),
+    debounce(3000, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(30000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),

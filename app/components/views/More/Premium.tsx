@@ -266,7 +266,9 @@ const Premium: React.FC<PremiumProps> = ({
                       color: colors.appWhite,
                       fontSize: DevicePixels[18],
                     }}>
-                    Customized plans (coming soon)
+                    {`Customized plans ${
+                      !settings.plansEnabled ? '(coming soon)' : ''
+                    }`}
                   </Text>
                   <Text
                     style={{

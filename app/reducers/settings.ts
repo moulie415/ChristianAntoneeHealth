@@ -3,11 +3,13 @@ import {SettingsActions, SET_SETTINGS} from '../actions/settings';
 export interface SettingsState {
   ads: boolean;
   admins: string[];
+  plansEnabled: boolean;
 }
 
 const initialState: SettingsState = {
   ads: true,
   admins: [],
+  plansEnabled: false,
 };
 
 const reducer = (

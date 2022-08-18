@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';

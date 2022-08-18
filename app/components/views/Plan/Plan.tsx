@@ -3,6 +3,7 @@ import {
   ImageBackground,
   SafeAreaView,
   StyleSheet,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -29,6 +30,7 @@ import Purchases, {
 } from 'react-native-purchases';
 import {logError} from '../../../helpers/error';
 import Spinner from '../../commons/Spinner';
+import LinearGradient from 'react-native-linear-gradient';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -116,25 +118,70 @@ const Plan: React.FC<{
   return (
     <>
       {hasPlanLeft ? (
-        <SafeAreaView style={{flex: 1}}>
-          <TabView
-            renderTabBar={props => {
-              return (
-                <TabBar
-                  {...props}
-                  labelStyle={{textTransform: 'none', color: colors.appBlack}}
-                  style={{backgroundColor: colors.appWhite}}
-                  indicatorStyle={{backgroundColor: colors.appBlue}}
-                />
-              );
-            }}
-            lazy
-            navigationState={{index, routes}}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{width: layout.width}}
-          />
-        </SafeAreaView>
+        <ImageBackground
+          source={require('../../../images/old-black-background-grunge.png')}
+          style={{flex: 1}}>
+          <SafeAreaView style={{flex: 1}}>
+            <TabView
+              renderTabBar={props => {
+                return (
+                  <TabBar
+                    {...props}
+                    renderTabBarItem={props => {
+                      return (
+                        <TouchableOpacity
+                          key={props.key}
+                          onPress={props.onPress}>
+                          <LinearGradient
+                            colors={
+                              props.key === routes[index].key
+                                ? [colors.appBlueLight, colors.appBlueDark]
+                                : ['transparent', 'transparent']
+                            }
+                            style={{
+                              height: DevicePixels[45],
+                              paddingHorizontal: DevicePixels[20],
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: DevicePixels[25],
+                            }}
+                            start={{x: 0, y: 0}}
+                            end={{x: 1, y: 0}}>
+                            <Text
+                              style={{
+                                fontWeight: 'bold',
+                                color: '#fff',
+                                textAlign: 'center',
+                              }}>
+                              {props.route?.title}
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                      );
+                    }}
+                    labelStyle={{
+                      textTransform: 'none',
+                      color: colors.appBlack,
+                    }}
+                    style={{
+                      backgroundColor: 'transparent',
+                    }}
+                    contentContainerStyle={{
+                      marginVertical: DevicePixels[20],
+                      justifyContent: 'space-evenly',
+                    }}
+                    indicatorStyle={{backgroundColor: 'transparent'}}
+                  />
+                );
+              }}
+              lazy
+              navigationState={{index, routes}}
+              renderScene={renderScene}
+              onIndexChange={setIndex}
+              initialLayout={{width: layout.width}}
+            />
+          </SafeAreaView>
+        </ImageBackground>
       ) : (
         <ImageBackground
           style={{flex: 1}}
@@ -192,7 +239,7 @@ const Plan: React.FC<{
                       key={p.identifier}
                       style={{margin: DevicePixels[20]}}
                       disabled={loading}
-                      text={`Request my workout plan ${
+                      text={`Request workout plan ${
                         profile.usedFreePlan
                           ? '(' + p.product.price_string + ')'
                           : ''

@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {MyRootState} from '../../../types/Shared';
+import Text from '../Text';
 
 const UnreadConnectionCount: React.FC<{
   unread: {[key: string]: number};

@@ -47,9 +47,7 @@ const Experience: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[{color: '#fff'}]}>
-              Beginner
-            </Text>
+            <Text style={[{color: '#fff'}]}>Beginner</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[0]}>
@@ -98,9 +96,7 @@ const Experience: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[{color: '#fff'}]}>
-              Intermediate
-            </Text>
+            <Text style={[{color: '#fff'}]}>Intermediate</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[1]}>
@@ -150,9 +146,7 @@ const Experience: React.FC<{
               left: DevicePixels[20],
               justifyContent: 'center',
             }}>
-            <Text style={[{color: '#fff'}]}>
-              Advanced
-            </Text>
+            <Text style={[{color: '#fff'}]}>Advanced</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[2]}>

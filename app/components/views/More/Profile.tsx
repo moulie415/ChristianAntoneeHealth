@@ -127,7 +127,7 @@ const Profile: React.FC<ProfileProps> = ({
         <LinearGradient
           colors={[colors.appBlueLight, colors.appBlueDark]}
           style={{
-            height: DevicePixels[300],
+            height: DevicePixels[350],
             borderBottomLeftRadius: DevicePixels[20],
             borderBottomRightRadius: DevicePixels[20],
           }}
@@ -138,7 +138,10 @@ const Profile: React.FC<ProfileProps> = ({
               hasBack
               title="Profile"
               right={
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('SignUpFlow', {fromProfile: true})
+                  }>
                   <Icon
                     name="edit"
                     size={DevicePixels[20]}
@@ -245,74 +248,62 @@ const Profile: React.FC<ProfileProps> = ({
                 </Text>
               </View>
             </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                marginTop: DevicePixels[20],
+              }}>
+              <View>
+                <Text
+                  style={{
+                    fontSize: DevicePixels[30],
+                    fontWeight: 'bold',
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                  }}>
+                  {profile.weight}
+                </Text>
+                <Text
+                  style={{fontSize: DevicePixels[17], color: colors.appWhite}}>
+                  Weight (kg)
+                </Text>
+              </View>
+              <View
+                style={{
+                  height: DevicePixels[30],
+                  width: DevicePixels[5],
+                  backgroundColor: 'rgba(255,255,255,0.5)',
+                  borderRadius: DevicePixels[20],
+                  alignSelf: 'center',
+                }}
+              />
+              <View>
+                <Text
+                  style={{
+                    fontSize: DevicePixels[30],
+                    fontWeight: 'bold',
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                  }}>
+                  {profile.height}
+                </Text>
+                <Text
+                  style={{fontSize: DevicePixels[17], color: colors.appWhite}}>
+                  Height (cm)
+                </Text>
+              </View>
+            </View>
           </SafeAreaView>
         </LinearGradient>
-        <View style={{margin: DevicePixels[20]}}>
-          <Text style={{color: colors.textGrey, flex: 1}}>Date of Birth</Text>
-          {(show || Platform.OS === 'ios') && (
-            <DatePicker
-              style={{
-                marginVertical: DevicePixels[5],
-                width: DevicePixels[105],
-              }}
-              testID="datePicker"
-              value={moment(dob).toDate()}
-              mode="date"
-              display={Platform.OS === 'ios' ? 'compact' : 'default'}
-              onChange={(event, d: Date) => {
-                if (d) {
-                  setDob(d.toISOString());
-                }
-                setShow(Platform.OS === 'ios');
-              }}
-            />
-          )}
-          {Platform.OS === 'android' && (
-            <TouchableOpacity
-              style={{
-                width: '40%',
-                marginVertical: DevicePixels[5],
-                borderWidth: DevicePixels[1],
-                padding: DevicePixels[7],
-                borderRadius: DevicePixels[3],
-                borderColor: '#ebebeb',
-                backgroundColor: '#fafafa',
-              }}
-              onPress={() => setShow(true)}>
-              <Text>{moment(dob).format('DD/MM/YYYY')}</Text>
-            </TouchableOpacity>
-          )}
-          <Text>Unit</Text>
-          <Text>{unit || 'Select unit'}</Text>
 
-          <Text>{`Weight (${unit === 'metric' ? 'kg' : 'lbs'})`}</Text>
-          <Input
-            value={weight?.toString()}
-            returnKeyType="done"
-            style={{
-              width: '30%',
-              marginRight: DevicePixels[20],
-              marginTop: DevicePixels[10],
-            }}
-            onChangeText={val => setWeight(Number(val.replace(/[^0-9]/g, '')))}
-            keyboardType="numeric"
-          />
-          <Text>{`Height (${unit === 'metric' ? 'cm' : 'inches'})`}</Text>
-          <Input
-            value={height?.toString()}
-            returnKeyType="done"
-            style={{
-              width: '30%',
-              marginRight: DevicePixels[20],
-              marginTop: DevicePixels[10],
-            }}
-            onChangeText={val => setHeight(Number(val.replace(/[^0-9]/g, '')))}
-            keyboardType="numeric"
-          />
-          <Text>Gender</Text>
-          <Text>{gender || 'Select gender'}</Text>
-        </View>
-        <Text style={{margin: DevicePixels[20], marginTop: 0}}>
+        <Text
+          style={{
+            margin: DevicePixels[20],
+            color: colors.appWhite,
+            fontWeight: 'bold',
+            fontSize: DevicePixels[24],
+          }}>
           Weight tracking
         </Text>
         <LineChart
@@ -324,6 +315,7 @@ const Profile: React.FC<ProfileProps> = ({
           withShadow={false}
         />
         <Button
+          variant="danger"
           text=" Delete my account"
           style={{margin: DevicePixels[20]}}
           onPress={() => navigation.navigate('DeleteAccount')}

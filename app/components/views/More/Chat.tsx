@@ -22,7 +22,7 @@ import {
   setRead,
 } from '../../../actions/profile';
 import Message from '../../../types/Message';
-import {Platform, TouchableOpacity} from 'react-native';
+import {ImageBackground, Platform, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -31,6 +31,8 @@ import colors from '../../../constants/colors';
 import {viewWorkout} from '../../../actions/exercises';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from '../../commons/Header';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -72,16 +74,6 @@ const Chat: React.FC<ChatProps> = ({
 }) => {
   const {uid} = route.params;
   const ref = useRef<GiftedChat>();
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: connection.name,
-      headerRight: () => (
-        <TouchableOpacity>
-          <Avatar src={connection.avatar} name={connection.name} />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation, connection.name, connection.avatar]);
 
   useEffect(() => {
     setReadAction(uid);
@@ -200,37 +192,58 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   return (
-    <Animated.View
-      entering={
-        Platform.OS === 'ios' ? FadeIn.duration(1000).delay(500) : undefined
-      }
-      style={{flex: 1, backgroundColor: '#fff'}}>
-      <GiftedChat
-        renderCustomView={renderCustomView}
-        ref={ref}
-        messagesContainerStyle={{
-          paddingTop: Platform.OS === 'ios' ? 0 : DevicePixels[50],
-        }}
-        loadEarlier={showLoadEarlier}
-        isLoadingEarlier={loading}
-        onLoadEarlier={loadEarlier}
-        renderMessageText={renderMessageText}
-        messages={sortMessages()}
-        user={{_id: profile.uid, name: profile.name, avatar: profile.avatar}}
-        inverted={false}
-        renderAvatar={renderAvatar}
-        onSend={msgs => {
-          const message: Message = {
-            ...msgs[0],
-            type: 'text',
-            pending: true,
-            createdAt: moment().valueOf(),
-          };
-          sendMessageAction(message, chatId, uid);
-        }}
-      />
-      <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
-    </Animated.View>
+    <ImageBackground
+      source={require('../../../images/old-black-background-grunge.png')}
+      blurRadius={5}
+      style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
+        <Header
+          title={connection.name}
+          hasBack
+          right={
+            <TouchableOpacity>
+              <Avatar src={connection.avatar} name={connection.name} />
+            </TouchableOpacity>
+          }
+        />
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(500)}
+          style={{flex: 1}}>
+          <GiftedChat
+            renderCustomView={renderCustomView}
+            ref={ref}
+            messagesContainerStyle={{
+              paddingTop: Platform.OS === 'ios' ? 0 : DevicePixels[50],
+            }}
+            loadEarlier={showLoadEarlier}
+            isLoadingEarlier={loading}
+            onLoadEarlier={loadEarlier}
+            renderMessageText={renderMessageText}
+            messages={sortMessages()}
+            user={{
+              _id: profile.uid,
+              name: profile.name,
+              avatar: profile.avatar,
+            }}
+            inverted={false}
+            renderAvatar={renderAvatar}
+            onSend={msgs => {
+              const message: Message = {
+                ...msgs[0],
+                type: 'text',
+                pending: true,
+                createdAt: moment().valueOf(),
+              };
+              sendMessageAction(message, chatId, uid);
+            }}
+          />
+          <AbsoluteSpinner
+            loading={exercisesLoading}
+            text="Fetching exercises"
+          />
+        </Animated.View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

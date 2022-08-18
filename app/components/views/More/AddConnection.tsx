@@ -14,6 +14,8 @@ import IconButton from '../../commons/IconButton';
 import Input from '../../commons/Input';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
+import Header from '../../commons/Header';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   const [loading, setLoading] = useState(false);
@@ -23,69 +25,78 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
-      />
-      <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
-        Send an invite link to someone you want to connect with, this link will
-        only work once, please only send it to someone you wish to connect with
-      </Text>
-      <Input
-        disabled
-        containerStyle={{margin: DevicePixels[10]}}
-        value={link}
-        placeholder="Press button to generate link"
-        accessoryRight={
-          link ? (
-            <>
-              <IconButton
-                icon="clipboard"
-                style={{marginRight: DevicePixels[5]}}
-                onPress={() => {
-                  Clipboard.setString(link);
-                  Snackbar.show({text: 'Link copied to clipboard!'});
-                }}>
-                <Icon name="clipboard" />
-              </IconButton>
-              <IconButton
-                icon="share-alt"
-                onPress={async () => {
-                  try {
-                    const {action} = await Share.share({
-                      title: 'CA Health',
-                      url: link,
-                      message: `${profile.name} has invited you to connect on CA Health, click the link to connect: ${link}`,
-                    });
-                    if (action === 'sharedAction') {
-                      Snackbar.show({text: 'Link shared successfully'});
+      <SafeAreaView style={{flex: 1}}>
+        <Header title="Add connection" hasBack />
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: colors.appBlack,
+            opacity: 0.5,
+          }}
+        />
+        <Text
+          style={{
+            color: colors.appWhite,
+            margin: DevicePixels[10],
+            marginTop: 0,
+          }}>
+          Send an invite link to someone you want to connect with, this link
+          will only work once, please only send it to someone you wish to
+          connect with
+        </Text>
+        <Input
+          disabled
+          containerStyle={{margin: DevicePixels[10]}}
+          value={link}
+          placeholder="Press button to generate link"
+          accessoryRight={
+            link ? (
+              <>
+                <IconButton
+                  icon="clipboard"
+                  style={{marginRight: DevicePixels[5]}}
+                  onPress={() => {
+                    Clipboard.setString(link);
+                    Snackbar.show({text: 'Link copied to clipboard!'});
+                  }}>
+                  <Icon name="clipboard" />
+                </IconButton>
+                <IconButton
+                  icon="share-alt"
+                  onPress={async () => {
+                    try {
+                      const {action} = await Share.share({
+                        title: 'CA Health',
+                        url: link,
+                        message: `${profile.name} has invited you to connect on CA Health, click the link to connect: ${link}`,
+                      });
+                      if (action === 'sharedAction') {
+                        Snackbar.show({text: 'Link shared successfully'});
+                      }
+                    } catch (e) {
+                      Snackbar.show({text: 'Error sharing link'});
+                      logError(e);
                     }
-                  } catch (e) {
-                    Snackbar.show({text: 'Error sharing link'});
-                    logError(e);
-                  }
-                }}
-              />
-            </>
-          ) : null
-        }
-      />
-      <Button
-        text="Generate"
-        style={{margin: DevicePixels[10]}}
-        disabled={!!link || loading}
-        loading={loading}
-        onPress={async () => {
-          setLoading(true);
-          const data = await generateLink();
+                  }}
+                />
+              </>
+            ) : null
+          }
+        />
+        <Button
+          text="Generate"
+          style={{margin: DevicePixels[10]}}
+          disabled={!!link || loading}
+          loading={loading}
+          onPress={async () => {
+            setLoading(true);
+            const data = await generateLink();
 
-          setLoading(false);
-          setLink(data);
-        }}
-      />
+            setLoading(false);
+            setLink(data);
+          }}
+        />
+      </SafeAreaView>
     </ImageBackground>
   );
 };
