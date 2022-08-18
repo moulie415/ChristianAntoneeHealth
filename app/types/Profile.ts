@@ -49,4 +49,9 @@ export default interface Profile {
   trainingAvailability?: TrainingAvailability;
   usedFreePlan?: boolean;
   experience?: Level;
+  medications?: string;
+  nutrition?: string[];
+  injuries?: string;
+  occupation?: string;
+  lifestyle?: string;
 }

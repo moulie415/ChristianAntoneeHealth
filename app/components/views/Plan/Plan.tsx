@@ -239,7 +239,7 @@ const Plan: React.FC<{
                       key={p.identifier}
                       style={{margin: DevicePixels[20]}}
                       disabled={loading}
-                      text={`Request my workout plan ${
+                      text={`Request workout plan ${
                         profile.usedFreePlan
                           ? '(' + p.product.price_string + ')'
                           : ''

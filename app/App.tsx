@@ -61,7 +61,7 @@ export type StackParamList = {
   SignUp: undefined;
   ForgotPassword: undefined;
   DeleteAccount: undefined;
-  SignUpFlow: undefined;
+  SignUpFlow: {fromProfile?: boolean};
   Tabs: undefined;
   Home: undefined;
   Exercise: {id: string};

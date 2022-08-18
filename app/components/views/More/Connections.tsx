@@ -92,6 +92,7 @@ const Connections: React.FC<{
               <ListItem
                 onPress={() => navigation.navigate('Chat', {uid: item.uid})}
                 title={item.name}
+                style={{padding: DevicePixels[10]}}
                 description={truncate(lastMessage, 40)}
                 accessoryLeft={
                   <Avatar

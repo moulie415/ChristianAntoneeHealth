@@ -12,7 +12,7 @@ const Support: React.FC<SupportProps> = () => {
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
-      <SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Support" />
         <View style={{justifyContent: 'flex-end', flex: 1}}>
           <Button
@@ -21,8 +21,7 @@ const Support: React.FC<SupportProps> = () => {
               Linking.openURL('https://christianantonee.com/contact')
             }
             style={{
-              margin: DevicePixels[10],
-              marginBottom: DevicePixels[20],
+              margin: DevicePixels[20],
             }}
           />
         </View>

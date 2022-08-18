@@ -277,6 +277,7 @@ function* signUp(action: SignUpAction) {
     sleepPattern,
     lifestyle,
     medications,
+    fromProfile,
   } = action.payload;
   try {
     try {
@@ -339,7 +340,11 @@ function* signUp(action: SignUpAction) {
         planStatus: PlanStatus.UNINITIALIZED,
       }),
     );
-    resetToTabs();
+    if (fromProfile) {
+      goBack();
+    } else {
+      resetToTabs();
+    }
 
     setUserAttributes({
       birthday: dob,

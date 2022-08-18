@@ -75,6 +75,7 @@ export interface SignUpPayload {
   sleepPattern: SleepPattern;
   lifestyle: string;
   medications: string;
+  fromProfile?: boolean;
 }
 
 export interface UpdateProfilePayload {

@@ -35,12 +35,14 @@ const SleepPatterns: React.FC<{
       <Button
         onPress={() => setSleepPattern(SleepPattern.FIVE)}
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         text=" minimal rest (less than 5 hours)"
         variant={sleepPattern === SleepPattern.FIVE ? 'primary' : 'secondary'}
       />
       <Button
         onPress={() => setSleepPattern(SleepPattern.FIVE_SIX)}
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         text="I get just about what I need (5-6 hours)"
         variant={
           sleepPattern === SleepPattern.FIVE_SIX ? 'primary' : 'secondary'
@@ -49,6 +51,7 @@ const SleepPatterns: React.FC<{
       <Button
         onPress={() => setSleepPattern(SleepPattern.SEVEN_EIGHT)}
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         text="I sleep well (7-8 hours)"
         variant={
           sleepPattern === SleepPattern.SEVEN_EIGHT ? 'primary' : 'secondary'
@@ -57,6 +60,7 @@ const SleepPatterns: React.FC<{
       <Button
         text="I’m a sleep warrior (8+ hours)"
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         onPress={() => setSleepPattern(SleepPattern.EIGHT)}
         variant={sleepPattern === SleepPattern.EIGHT ? 'primary' : 'secondary'}
       />
