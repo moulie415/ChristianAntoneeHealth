@@ -28,6 +28,7 @@ import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../commons/Input';
+import FastImage from 'react-native-fast-image';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -148,11 +149,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-                <ImageBackground
-                  imageStyle={{
-                    borderTopLeftRadius: DevicePixels[30],
-                    borderTopRightRadius: DevicePixels[30],
-                  }}
+                <FastImage
                   style={{
                     position: 'absolute',
                     left: 0,
@@ -376,7 +373,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       style={{margin: DevicePixels[10]}}
                     />
                   </ScrollView>
-                </ImageBackground>
+                </FastImage>
               </View>
             );
           })}

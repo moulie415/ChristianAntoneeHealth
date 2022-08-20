@@ -23,6 +23,7 @@ import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../constants/colors';
+import FastImage from 'react-native-fast-image';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
@@ -88,7 +89,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     return {text: difficultyText, subtext: 'I might die'};
   }, [difficulty]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -209,6 +210,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
           disabled={loading}
           style={{margin: DevicePixels[10]}}
           onPress={() => {
+            setLoading(true);
             const navigate = () => {
               navigation.navigate('WorkoutSummary', {
                 calories,
@@ -234,7 +236,11 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
                 'Save workout',
                 'Do you wish to save this workout to view later?',
                 [
-                  {style: 'cancel', text: 'Cancel'},
+                  {
+                    style: 'cancel',
+                    text: 'Cancel',
+                    onPress: () => setLoading(false),
+                  },
                   {
                     text: 'No',
                     onPress: () => {
@@ -258,7 +264,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
           }}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

@@ -940,7 +940,7 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.180)
-  - Permission-MediaLibrary (3.6.0):
+  - Permission-MediaLibrary (3.6.1):
     - RNPermissions
   - PromisesObjC (2.1.1)
   - Purchases (3.14.1):
@@ -1182,17 +1182,17 @@ PODS:
     - FBSDKGamingServicesKit (~> 13.2.0)
     - FBSDKShareKit (~> 13.2.0)
     - React-Core
-  - react-native-flipper (0.157.0):
+  - react-native-flipper (0.161.0):
     - React-Core
   - react-native-image-picker (4.8.5):
     - React-Core
   - react-native-pager-view (5.4.25):
     - React-Core
-  - react-native-safe-area-context (4.3.1):
+  - react-native-safe-area-context (4.3.3):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
+    - React-Core
     - ReactCommon/turbomodule/core
   - react-native-spinkit (1.4.1):
     - React
@@ -1291,11 +1291,11 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPicker (2.4.3):
+  - RNCPicker (2.4.4):
     - React-Core
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
-  - RNDateTimePicker (6.3.1):
+  - RNDateTimePicker (6.3.2):
     - React-Core
   - RNDeviceInfo (10.0.2):
     - React-Core
@@ -1354,7 +1354,7 @@ PODS:
   - RNGoogleSignin (8.0.0):
     - GoogleSignIn (~> 6.2.2)
     - React-Core
-  - RNPermissions (3.6.0):
+  - RNPermissions (3.6.1):
     - React-Core
   - RNPurchases (4.6.2):
     - PurchasesHybridCommon (= 2.0.1)
@@ -1388,10 +1388,10 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.15.0):
+  - RNScreens (3.16.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.2.3):
+  - RNSentry (4.2.4):
     - React-Core
     - Sentry (= 7.23.0)
   - RNSnackbar (2.4.0):
@@ -1403,7 +1403,7 @@ PODS:
     - React-Core
   - RNSpotifyRemote (0.3.11-5):
     - React-Core
-  - RNSVG (12.4.3):
+  - RNSVG (13.0.0):
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
@@ -1827,7 +1827,7 @@ SPEC CHECKSUMS:
   libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
-  Permission-MediaLibrary: ed0054dbd841f3ed5a2debb4eda9ebe069b43cc1
+  Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Purchases: b714751c386c2204d2d5aafaa903fd424a25cd59
   PurchasesCoreSwift: 2cf98c52dd4b785177539fbfd1c32f60c89eafe7
@@ -1847,10 +1847,10 @@ SPEC CHECKSUMS:
   React-logger: a1f028f6d8639a3f364ef80419e5e862e1115250
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
   react-native-fbsdk-next: 79815a5b8f66ab0990fbb370b4a4b5bdf0a15e6c
-  react-native-flipper: cc9cdf47db2bbe0d9227eeec4f93e2290e55674b
+  react-native-flipper: ea555c5b21d9d15814999327aecf31b98ac87079
   react-native-image-picker: cd420f97f6ed6ff74fc4686d27dbcfdbd051db91
   react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
-  react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
+  react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
@@ -1877,9 +1877,9 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: a99807a74d9cd65c394f6e2a6c843a377b355b4d
+  RNCPicker: 0b65be85fe7954fbb2062ef079e3d1cde252d888
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
-  RNDateTimePicker: 95e0cb71cba4c2f08c62444029f834e6168a2b96
+  RNDateTimePicker: 4f1fc917f5af9d9ae4c5fc0c63a4474d61338693
   RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
   RNEventEmitter: 557106956ec2f9ccda6940afeea563936385efd3
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
@@ -1896,16 +1896,16 @@ SPEC CHECKSUMS:
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNGoogleMobileAds: ad5ed70608dd943e5d2954ebd24c390aca8d1b28
   RNGoogleSignin: b2179ba653c759b936404a7746fc5302f9de6a5a
-  RNPermissions: de7b7c3fe1680d974ac7a85e3e97aa539c0e68ea
+  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNPurchases: b626cf0e68fe06b5f3c5e4e33667cc68a5397491
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: b5b17149593e7c05e4ec5c0efea1f21e05829510
-  RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSentry: 6798624706227656d942849d593f89c8ca3bdde5
+  RNScreens: ee31ecdf23fe81e93c74feaa086cf173d758ab58
+  RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSpotifyRemote: ab3fcbccaebead1684ba455a1d1bbdd123909faf
-  RNSVG: f3b60aeeaa81960e2e0536c3a9eef50b667ef3a9
+  RNSVG: 42a0c731b11179ebbd27a3eeeafa7201ebb476ff
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNWatch: dae6c858a2051dbdcfb00b9a86cf4d90400263b4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d

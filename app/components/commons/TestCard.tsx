@@ -9,6 +9,7 @@ import {MyRootState} from '../../types/Shared';
 import Profile from '../../types/Profile';
 import {getTestImage} from '../../helpers/images';
 import Text from './Text';
+import FastImage from 'react-native-fast-image';
 
 const TestCard: React.FC<{
   item: Test;
@@ -25,23 +26,23 @@ const TestCard: React.FC<{
   }
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
-      <ImageBackground
+      <FastImage
         style={{
           height: DevicePixels[140],
           marginHorizontal: DevicePixels[15],
           marginBottom: DevicePixels[10],
+          borderRadius: DevicePixels[10],
         }}
-        borderRadius={DevicePixels[10]}
         source={image}>
-        <ImageBackground
+        <FastImage
           source={require('../../images/BlackTransparentBackground.png')}
           blurRadius={3}
           style={{
             height: DevicePixels[140],
             justifyContent: 'center',
             padding: DevicePixels[10],
-          }}
-          borderRadius={DevicePixels[10]}>
+            borderRadius: DevicePixels[10],
+          }}>
           {item.premium && !profile.premium && (
             <View
               style={{
@@ -70,8 +71,8 @@ const TestCard: React.FC<{
               {item.name}
             </Text>
           </View>
-        </ImageBackground>
-      </ImageBackground>
+        </FastImage>
+      </FastImage>
     </TouchableOpacity>
   );
 };

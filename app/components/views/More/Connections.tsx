@@ -24,6 +24,7 @@ import ListItem from '../../commons/ListItem';
 import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
 import AddConnectionButton from '../../commons/AddConnectionButton';
+import FastImage from 'react-native-fast-image';
 
 const getLastMessage = (
   messages: {[key: string]: {[key: string]: Message}},
@@ -65,7 +66,7 @@ const Connections: React.FC<{
     getConnectionsAction();
   }, [getConnectionsAction]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -132,7 +133,7 @@ const Connections: React.FC<{
           ItemSeparatorComponent={Divider}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

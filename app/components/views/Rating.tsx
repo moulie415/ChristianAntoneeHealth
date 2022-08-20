@@ -16,6 +16,7 @@ import * as api from '../../helpers/api';
 import {logError} from '../../helpers/error';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
@@ -26,9 +27,7 @@ const Rating: React.FC<{
   const [loading, setLoading] = useState(false);
 
   return (
-    <ImageBackground
-      source={require('../../images/premium.jpg')}
-      style={{flex: 1}}>
+    <FastImage source={require('../../images/premium.jpg')} style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Rate us" />
       </SafeAreaView>
@@ -84,7 +83,7 @@ const Rating: React.FC<{
           />
         </View>
       </View>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

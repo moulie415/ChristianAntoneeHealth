@@ -15,6 +15,7 @@ import Button from '../commons/Button';
 import Input from '../commons/Input';
 import colors from '../../constants/colors';
 import Header from '../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 const ForgotPassword: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ForgotPassword'>;
@@ -22,7 +23,7 @@ const ForgotPassword: React.FC<{
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -67,7 +68,7 @@ const ForgotPassword: React.FC<{
           disabled={!email || loading}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

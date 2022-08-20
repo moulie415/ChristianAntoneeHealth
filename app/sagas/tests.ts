@@ -74,7 +74,7 @@ function* getTestsById(action: GetTestsByIdAction) {
 
 export default function* testsSaga() {
   yield throttle(5000, GET_TESTS, getTests);
-  yield takeLatest(SAVE_TEST, saveTest);
+  yield throttle(5000, SAVE_TEST, saveTest);
   yield throttle(5000, GET_SAVED_TESTS, getSavedTests);
   yield throttle(5000, GET_TESTS_BY_ID, getTestsById);
 }

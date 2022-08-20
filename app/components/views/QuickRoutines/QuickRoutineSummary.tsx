@@ -15,6 +15,7 @@ import Button from '../../commons/Button';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import colors from '../../../constants/colors';
+import FastImage from 'react-native-fast-image';
 
 const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   route,
@@ -23,7 +24,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
 }) => {
   const {calories, seconds, difficulty, routine} = route.params;
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -114,7 +115,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
           }}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

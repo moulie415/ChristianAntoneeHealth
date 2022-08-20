@@ -226,7 +226,7 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen
             name="SavedItems"
             component={SavedItemsTabs}
-            options={{headerTitle: ''}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="Connections"

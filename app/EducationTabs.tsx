@@ -17,6 +17,7 @@ import Text from './components/commons/Text';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from './App';
+import FastImage from 'react-native-fast-image';
 
 const EducationTabs: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
@@ -36,7 +37,7 @@ const EducationTabs: React.FC<{
     {key: 'nutritional', title: 'Nutritional Info'},
   ]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('./images/old-black-background-grunge.png')}
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -94,7 +95,7 @@ const EducationTabs: React.FC<{
           initialLayout={{width: layout.width}}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

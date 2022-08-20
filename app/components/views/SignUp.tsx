@@ -19,6 +19,7 @@ import Button from '../commons/Button';
 import {createUser} from '../../helpers/api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Header from '../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 const SignUp: React.FC<SignUpProps> = ({
   navigation,
@@ -53,7 +54,7 @@ const SignUp: React.FC<SignUpProps> = ({
   };
 
   return (
-    <ImageBackground
+    <FastImage
       style={{flex: 1}}
       blurRadius={2}
       source={require('../../images/sign-up.jpeg')}>
@@ -160,7 +161,7 @@ const SignUp: React.FC<SignUpProps> = ({
           </TouchableOpacity>
         </KeyboardAwareScrollView>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

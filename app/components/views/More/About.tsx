@@ -3,7 +3,9 @@ import {
   ImageBackground,
   Linking,
   ScrollView,
+  StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import colors from '../../../constants/colors';
 import AboutProps from '../../../types/views/About';
@@ -11,25 +13,34 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 const About: React.FC<AboutProps> = () => {
   return (
     <>
-      <ImageBackground
+      <FastImage
         source={require('../../../images/beginner.jpg')}
+        blurRadius={3}
         style={{height: DevicePixels[200]}}>
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: '#000',
+            opacity: 0.7,
+          }}
+        />
         <SafeAreaView>
           <Header hasBack title="About us" />
         </SafeAreaView>
-      </ImageBackground>
-      <ImageBackground
+      </FastImage>
+      <FastImage
         source={require('../../../images/old-black-background-grunge.png')}
-        imageStyle={{
+        style={{
+          flex: 1,
           borderTopLeftRadius: DevicePixels[30],
           borderTopRightRadius: DevicePixels[30],
           marginTop: -DevicePixels[30],
-        }}
-        style={{flex: 1}}>
+        }}>
         <TouchableOpacity
           onPress={() => Linking.openURL('https://christianantonee.com')}>
           <Text
@@ -64,7 +75,7 @@ const About: React.FC<AboutProps> = () => {
             'After returning to the UK Christian obtained a qualification as an Osteopath from the British College of Osteopathic Medicine and is currently pursuing a MSc in Clinical Pain management from The University of Edinburgh. By combining principles in exercise prescription, manual therapy and nutrition Christian takes a movement based approach to treating your pain and dysfunction, with a special interest in repetitive strain injuries, sports injuries and neck/low back pain.'
           }
         </Text>
-      </ImageBackground>
+      </FastImage>
     </>
   );
 };

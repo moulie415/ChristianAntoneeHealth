@@ -8,6 +8,7 @@ import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
 import Profile from '../../types/Profile';
+import FastImage from 'react-native-fast-image';
 
 const getImage = (level: Level) => {
   if (level === Level.INTERMEDIATE) {
@@ -58,23 +59,23 @@ const WorkoutCard: React.FC<{
       onPress={onPress}
       disabled={disabled}
       key={'id' in item ? item.id : item.name}>
-      <ImageBackground
+      <FastImage
         style={{
           height: DevicePixels[120],
           marginHorizontal: DevicePixels[10],
           marginBottom: DevicePixels[10],
+          borderRadius: DevicePixels[10],
         }}
-        borderRadius={DevicePixels[10]}
         source={getImage('level' in item ? item.level : profile.experience)}>
-        <ImageBackground
+        <FastImage
           source={require('../../images/BlackTransparentBackground.png')}
           blurRadius={3}
           style={{
             height: DevicePixels[120],
             justifyContent: 'center',
             padding: DevicePixels[10],
-          }}
-          borderRadius={DevicePixels[10]}>
+            borderRadius: DevicePixels[10],
+          }}>
           {locked ? (
             <View style={{}}>
               <Icon name="lock" color="#fff" size={DevicePixels[40]} />
@@ -136,8 +137,8 @@ const WorkoutCard: React.FC<{
               </Text>
             )}
           </View>
-        </ImageBackground>
-      </ImageBackground>
+        </FastImage>
+      </FastImage>
     </TouchableOpacity>
   );
 };

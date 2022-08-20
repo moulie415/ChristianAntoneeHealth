@@ -1,5 +1,6 @@
 import React from 'react';
 import {ImageBackground, Linking, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../constants/colors';
@@ -9,7 +10,7 @@ import Text from '../../commons/Text';
 
 const Policies = () => {
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -41,7 +42,7 @@ const Policies = () => {
           </Text>
         </TouchableOpacity>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 
