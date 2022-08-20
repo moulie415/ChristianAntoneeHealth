@@ -12,12 +12,13 @@ import Text from '../../commons/Text';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
 }> = ({navigation}) => {
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -42,22 +43,20 @@ const WhatEquipment: React.FC<{
               margin: DevicePixels[20],
               marginBottom: DevicePixels[10],
             }}>
-            <ImageBackground
-              imageStyle={{borderRadius: DevicePixels[10]}}
+            <FastImage
               style={{
                 height: DevicePixels[200],
                 justifyContent: 'flex-end',
+                borderRadius: DevicePixels[10],
               }}
               source={require('../../../images/bits-and-pieces.jpg')}>
-              <ImageBackground
+              <FastImage
                 source={require('../../../images/BlackTransparentBackground.png')}
                 blurRadius={3}
-                imageStyle={{
-                  borderBottomLeftRadius: DevicePixels[10],
-                  borderBottomRightRadius: DevicePixels[10],
-                }}
                 style={{
                   padding: DevicePixels[20],
+                  borderBottomLeftRadius: DevicePixels[10],
+                  borderBottomRightRadius: DevicePixels[10],
                 }}>
                 <Text
                   style={{
@@ -77,8 +76,8 @@ const WhatEquipment: React.FC<{
                   }}>
                   (Dumbbells, exercise ball, exercise mat)
                 </Text>
-              </ImageBackground>
-            </ImageBackground>
+              </FastImage>
+            </FastImage>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -87,22 +86,20 @@ const WhatEquipment: React.FC<{
               margin: DevicePixels[20],
               marginTop: DevicePixels[10],
             }}>
-            <ImageBackground
-              imageStyle={{borderRadius: DevicePixels[10]}}
+            <FastImage
               style={{
                 height: DevicePixels[200],
                 justifyContent: 'flex-end',
+                borderRadius: DevicePixels[10]
               }}
               source={require('../../../images/access-to-gym.jpg')}>
-              <ImageBackground
+              <FastImage
                 source={require('../../../images/BlackTransparentBackground.png')}
                 blurRadius={3}
-                imageStyle={{
-                  borderBottomLeftRadius: DevicePixels[10],
-                  borderBottomRightRadius: DevicePixels[10],
-                }}
                 style={{
                   padding: DevicePixels[20],
+                  borderBottomLeftRadius: DevicePixels[10],
+                  borderBottomRightRadius: DevicePixels[10],
                 }}>
                 <Text
                   style={{
@@ -123,12 +120,12 @@ const WhatEquipment: React.FC<{
                   (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
                   benches Kettlebell etc)
                 </Text>
-              </ImageBackground>
-            </ImageBackground>
+              </FastImage>
+            </FastImage>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

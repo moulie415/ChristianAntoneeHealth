@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Linking, ImageBackground} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import DevicePixels from '../../../helpers/DevicePixels';
 import SupportProps from '../../../types/views/Support';
@@ -8,7 +9,7 @@ import Header from '../../commons/Header';
 
 const Support: React.FC<SupportProps> = () => {
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -26,7 +27,7 @@ const Support: React.FC<SupportProps> = () => {
           />
         </View>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

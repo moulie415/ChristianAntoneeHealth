@@ -24,6 +24,7 @@ import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
+import FastImage from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
@@ -94,7 +95,7 @@ const ArticleList: React.FC<{
               overflow: 'hidden',
             }}
             onPress={() => onPress(item)}>
-            <Image
+            <FastImage
               style={{
                 position: 'absolute',
                 height: DevicePixels[125],
@@ -103,7 +104,7 @@ const ArticleList: React.FC<{
               source={{uri: item.image.src}}
             />
 
-            <ImageBackground
+            <FastImage
               source={require('../../../images/BlackTransparentBackground.png')}
               blurRadius={3}
               style={{
@@ -145,7 +146,7 @@ const ArticleList: React.FC<{
                   />
                 </View>
               )}
-            </ImageBackground>
+            </FastImage>
           </TouchableOpacity>
         );
       }}

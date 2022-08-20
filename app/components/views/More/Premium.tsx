@@ -28,6 +28,7 @@ import Text from '../../commons/Text';
 import Header from '../../commons/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
 
 const Premium: React.FC<PremiumProps> = ({
   navigation,
@@ -98,7 +99,7 @@ const Premium: React.FC<PremiumProps> = ({
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/premium.jpg')}
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -482,7 +483,7 @@ const Premium: React.FC<PremiumProps> = ({
         </View>
         <AbsoluteSpinner loading={loading} />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 const mapStateToProps = ({settings}: MyRootState) => ({

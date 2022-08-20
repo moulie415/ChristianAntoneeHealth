@@ -13,6 +13,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
+import SavedTestCard from '../../commons/SavedTestCard';
+import {openSettings} from 'react-native-permissions';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -57,41 +59,7 @@ const SavedTests: FunctionComponent<{
             data={Object.values(savedTests)}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
-              const test = tests[item.testId];
-              return (
-                <ListItem
-                  onPress={() => navigation.navigate('Test', {id: item.testId})}
-                  title={`${test.name} - ${moment(item.createdate).format(
-                    'MMMM Do YYYY',
-                  )}`}
-                  description={''}
-                  accessoryLeft={
-                    <ImageOverlay
-                      containerStyle={{
-                        height: DevicePixels[75],
-                        width: DevicePixels[75],
-                      }}
-                      overlayAlpha={0.4}
-                      source={require('../../../images/old_man_stretching.jpeg')}>
-                      <View style={{alignItems: 'center'}}>
-                        <Text
-                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
-                          {'Duration '}
-                        </Text>
-                        <Text style={{color: '#fff'}}>
-                          {item.seconds
-                            ? moment()
-                                .utc()
-                                .startOf('day')
-                                .add({seconds: item.seconds})
-                                .format('mm:ss')
-                            : 'N/A'}
-                        </Text>
-                      </View>
-                    </ImageOverlay>
-                  }
-                />
-              );
+              return <SavedTestCard item={item} navigation={navigation} />;
             }}
           />
         )}

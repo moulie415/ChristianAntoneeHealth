@@ -29,6 +29,7 @@ import Button from '../commons/Button';
 import GoogleLogo from '../../images/google.svg';
 import Spinner from '../commons/Spinner';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import FastImage from 'react-native-fast-image';
 
 const Login: React.FC<LoginProps> = ({
   navigation,
@@ -80,7 +81,7 @@ const Login: React.FC<LoginProps> = ({
   const disabled = facebookLoading || googleLoading || appleLoading || loading;
 
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../images/login.jpeg')}
       blurRadius={5}
       style={{
@@ -270,7 +271,7 @@ const Login: React.FC<LoginProps> = ({
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

@@ -33,6 +33,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -192,7 +193,7 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -243,7 +244,7 @@ const Chat: React.FC<ChatProps> = ({
           />
         </Animated.View>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

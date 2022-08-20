@@ -34,6 +34,7 @@ import Header from '../../commons/Header';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../commons/Input';
+import FastImage from 'react-native-fast-image';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -171,11 +172,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-                <ImageBackground
-                  imageStyle={{
-                    borderTopLeftRadius: DevicePixels[30],
-                    borderTopRightRadius: DevicePixels[30],
-                  }}
+                <FastImage
                   style={{
                     position: 'absolute',
                     left: 0,
@@ -415,7 +412,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       style={{margin: DevicePixels[10]}}
                     />
                   </ScrollView>
-                </ImageBackground>
+                </FastImage>
               </View>
             );
           })}

@@ -17,6 +17,7 @@ import {greetingMessage} from '../../helpers';
 import colors from '../../constants/colors';
 import Avatar from '../commons/Avatar';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import FastImage from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
@@ -31,7 +32,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
     }
   }, [navigation, viewedPlan]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -129,7 +130,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
           />
         </SafeAreaView>
       </ScrollView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

@@ -16,12 +16,13 @@ import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Header from '../../commons/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import FastImage from 'react-native-fast-image';
 
 const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   const [loading, setLoading] = useState(false);
   const [link, setLink] = useState('');
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -97,7 +98,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
           }}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

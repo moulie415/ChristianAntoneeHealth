@@ -1583,10 +1583,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@^6.3.1":
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.3.1.tgz#217fc1fa1f989038f88efd6394ec34aa79b60c9d"
-  integrity sha512-WdSc34CwKTK7ied9En9yxs6WHN5bBdw2hGgWr4rqJcfC7qAOQCV+JA7iFxN7Ob1wxE/7gsTX2hZG8tmd62PH1g==
+"@react-native-community/datetimepicker@^6.3.2":
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.3.2.tgz#850e2663b764093268db51adf96897f5b518fac6"
+  integrity sha512-z9LieDDi+u+10uLKZWvpzfgVeCv/05v1CH0059Tx7KlJGQx8DiNwtGJLyUxB+WDalcEb+7xiCFut7vxnWWyIiA==
   dependencies:
     invariant "^2.2.4"
 
@@ -1693,10 +1693,10 @@
   resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.8.tgz"
   integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
 
-"@react-native-picker/picker@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.3.tgz#36a2efae4b874e5b4479fd4f089e7e0bae0c1a79"
-  integrity sha512-YdfRdYdu3jwkeSuBpNMlxQb8HE6zqLmBKwzU8l/RszXRNcXLZQdiq+fR56hHpwjNc+L447eJrnovC5n6cnbkzg==
+"@react-native-picker/picker@^2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.4.tgz#4e4d2ec4b040e24d8b99c6be8f8b3201bb29fad3"
+  integrity sha512-sz5CPAE8cu//RGOSK4tIcbVi/uNihznrIk4D656/5iz5cqg1zHbVeaQf1eLJRlT7EW1KCH40nk3z4Fzqjmaarw==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -1880,10 +1880,10 @@
     localforage "^1.8.1"
     tslib "^1.9.3"
 
-"@sentry/react-native@^4.2.3":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/@sentry/react-native/-/react-native-4.2.3.tgz#3542917639a35dfe1403d7eee8c0eb21f119998f"
-  integrity sha512-I0IdNlgrTqR0z0nEMzI2xTWcAzraZRhqoBm+6ltLhGLX5/0tADVNiW/431nSta5xknSvc3EGpZZJ/gsv4CS8ZQ==
+"@sentry/react-native@^4.2.4":
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@sentry/react-native/-/react-native-4.2.4.tgz#f4641135681c178e91e832663448b264bd9cce52"
+  integrity sha512-GXP6XxFOBC58eojuUjFZ2u+u/bDNV1DD0+7TAlqNHvgjsr8/FPN0ZysewdFjFDvf9wrJsJcWpPeQd+IqddVzQg==
   dependencies:
     "@sentry/browser" "7.9.0"
     "@sentry/cli" "1.74.4"
@@ -2200,10 +2200,10 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.11.tgz"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
-"@types/lodash@^4.14.182":
-  version "4.14.182"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.182.tgz"
-  integrity sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==
+"@types/lodash@^4.14.184":
+  version "4.14.184"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.184.tgz#23f96cd2a21a28e106dc24d825d4aa966de7a9fe"
+  integrity sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==
 
 "@types/node@*":
   version "17.0.23"
@@ -7463,10 +7463,10 @@ react-native-calendar-events@^2.2.0:
   resolved "https://registry.npmjs.org/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz"
   integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
 
-react-native-calendars@^1.1287.0:
-  version "1.1287.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1287.0.tgz#0abfbe55269f98d2186357f5dc6eb1edbeca80e7"
-  integrity sha512-8B6Oad+4we8WCHl6Y42ZUq0Uj9UM+Z+qotoNIJPEXpTqGKIVnRawSAF4B7gFw76ctsa1pUdJT2CZcajmVKLxKA==
+react-native-calendars@^1.1288.0:
+  version "1.1288.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1288.0.tgz#1ff3ecd9a5f9a8b6ccf2e7c8b38e967413ea08ae"
+  integrity sha512-ZyTghahqUhz0SqF7XOhXiCzUU635ZBIej3N2bg7yAfHfFWu0fAgZZV4elm9Q+eE7v8qrXGo4f+H1w5GtPGl5UQ==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     immutable "^4.0.0-rc.12"
@@ -7573,10 +7573,10 @@ react-native-fbsdk-next@^8.0.5:
     "@expo/config-plugins" "^4.0.4"
     xml2js "^0.4.23"
 
-react-native-flipper@^0.157.0:
-  version "0.157.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.157.0.tgz#e9f92c4fea1bb7fc0f17f38ef35be197e7d33028"
-  integrity sha512-jnOV/Gb1OwPCSycrpKHGXnmtGhDMvSxsvbUI7Nlukthn+T7xsWPveitijT1Z+PGDIPNqbjz2OT4R7CB1Kuu9jA==
+react-native-flipper@^0.161.0:
+  version "0.161.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.161.0.tgz#816dd567883a30b894c5f8bc4b92f86303a550ce"
+  integrity sha512-AouPbb40n0HODRbOokcZOJPsx42gLXZvQo7xX8RuO0zvVJGCgalgAUcdWeQgjalDIcOdjd4FWUeUvC++6cqYKA==
 
 react-native-gesture-handler@^2.5.0:
   version "2.5.0"
@@ -7668,10 +7668,10 @@ react-native-parsed-text@0.0.22:
   dependencies:
     prop-types "^15.7.x"
 
-react-native-permissions@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.6.0.tgz#4b284b6374fdb8b9b6702c6a0719bfb1a97aa7ff"
-  integrity sha512-aiancYU5eAC3lCtdAFNz/8OQAShAXSgFJAcNrsspXiMulL4zjClIa52uWMi5NTU4skU0KoWG5rCfqjxWAkJL8w==
+react-native-permissions@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.6.1.tgz#73adcc1cef8cd57a9ef167b4507405f4ff5749c4"
+  integrity sha512-fzPpPQXeD34inUccqtoResSwYubfrwUguP4qrVUUv8+KSMjYSaHGoS5HaIJLZHlN9gO+TvLJZ2L5ZljTsb6qnQ==
 
 react-native-progress@^5.0.0:
   version "5.0.0"
@@ -7733,15 +7733,20 @@ react-native-render-html@^6.3.4:
     stringify-entities "^3.1.0"
     urijs "^1.19.6"
 
-react-native-safe-area-context@^4.2.4, react-native-safe-area-context@^4.3.1:
+react-native-safe-area-context@^4.2.4:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.3.1.tgz#5cf97b25b395e0d09bc1f828920cd7da0d792ade"
   integrity sha512-cEr7fknJCToTrSyDCVNg0GRdRMhyLeQa2NZwVCuzEQcWedOw/59ExomjmzCE4rxrKXs6OJbyfNtFRNyewDaHuA==
 
-react-native-screens@^3.15.0:
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.15.0.tgz#78e42c8df72851b1ff235ddf5434b961ae123ca5"
-  integrity sha512-ezC5TibsUYyqPuuHpZoM3iEl6bRzCVBMJeGaFkn7xznuOt1VwkZVub0BvafIEYR/+AQC/RjxzMSQPs1qal0+wA==
+react-native-safe-area-context@^4.3.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.3.3.tgz#a0f1e3116ded39efc1b78a46a6d89c71169827e4"
+  integrity sha512-xwsloGLDUzeTN40TIh4Te/zRePSnBAuWlLIiEW3RYE9gHHYslqQWpfK7N24SdAQEH3tHZ+huoYNjo2GQJO/vnQ==
+
+react-native-screens@^3.16.0:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.16.0.tgz#34fe23f4b386c2a4bf29a33b915c81f3ebf60ba7"
+  integrity sha512-h87K/r6Oj4VQkDiICorG8/4LscQfBfFwPCluAW4zmbQILSZGc/NWqWSFV1mOQlpDrqOsc1DohBmnsmV6imMkbQ==
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
@@ -7802,10 +7807,10 @@ react-native-svg-transformer@^1.0.0:
     "@svgr/plugin-svgo" "^6.1.2"
     path-dirname "^1.0.2"
 
-react-native-svg@^12.4.3:
-  version "12.4.3"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.4.3.tgz#d383c6f587f6f3f3664413ae0e73134e91d11317"
-  integrity sha512-8OF+vvXsI854YlHBOQkanNcyio+7oQO0nQsS/Noji2VmPoMnLiJiMaxmOD9RHxGkbbo7lzbYWdxVdNibjN/8IA==
+react-native-svg@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.0.0.tgz#a26d28446aeb7e4bed7e1bb1cb42f2eb5462e652"
+  integrity sha512-CkWB8BYGjvmGiLqqJRHfTH8/Q5tJyhltUYCmi20sqOCbjfTR5dkQUUafV0oUOhvK2lS+zuB9Dpf1Beo92rls5Q==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"

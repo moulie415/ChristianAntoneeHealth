@@ -31,6 +31,7 @@ import Purchases, {
 import {logError} from '../../../helpers/error';
 import Spinner from '../../commons/Spinner';
 import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -118,7 +119,7 @@ const Plan: React.FC<{
   return (
     <>
       {hasPlanLeft ? (
-        <ImageBackground
+        <FastImage
           source={require('../../../images/old-black-background-grunge.png')}
           style={{flex: 1}}>
           <SafeAreaView style={{flex: 1}}>
@@ -181,9 +182,9 @@ const Plan: React.FC<{
               initialLayout={{width: layout.width}}
             />
           </SafeAreaView>
-        </ImageBackground>
+        </FastImage>
       ) : (
-        <ImageBackground
+        <FastImage
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
           <SafeAreaView style={{flex: 1}}>
@@ -282,7 +283,7 @@ const Plan: React.FC<{
                 )}
             </View>
           </SafeAreaView>
-        </ImageBackground>
+        </FastImage>
       )}
     </>
   );

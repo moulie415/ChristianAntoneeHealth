@@ -1,11 +1,11 @@
 import React from 'react';
 import Spinner from 'react-native-spinkit';
 import colors from '../../constants/colors';
-import {ImageBackground} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const Loading = () => {
   return (
-    <ImageBackground
+    <FastImage
       style={{
         width: '100%',
         height: '100%',
@@ -15,7 +15,7 @@ const Loading = () => {
       }}
       source={require('../../images/loading.jpg')}>
       <Spinner type="ChasingDots" color={colors.appBlue} />
-    </ImageBackground>
+    </FastImage>
   );
 };
 

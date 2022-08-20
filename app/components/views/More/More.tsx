@@ -30,6 +30,7 @@ import ListItem from '../../commons/ListItem';
 import {logError} from '../../../helpers/error';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import FastImage from 'react-native-fast-image';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -153,7 +154,7 @@ const More: React.FC<MoreProps> = ({
   }
 
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/premium.jpg')}
       blurRadius={7}
       style={{flex: 1}}>
@@ -208,7 +209,7 @@ const More: React.FC<MoreProps> = ({
           )}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

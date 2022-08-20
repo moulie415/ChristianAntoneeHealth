@@ -18,6 +18,7 @@ import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
+import FastImage from 'react-native-fast-image';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,
@@ -43,7 +44,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
     }
   }, [isLast, requestPlanAction]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -148,7 +149,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
         />
         <ShareModal title="Share workout" type="workout" workout={workout} />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

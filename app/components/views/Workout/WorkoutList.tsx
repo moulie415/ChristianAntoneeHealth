@@ -21,6 +21,7 @@ import Exercise from '../../../types/Exercise';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Header from '../../commons/Header';
 import WorkoutCard from '../../commons/WorkoutCard';
+import FastImage from 'react-native-fast-image';
 
 const {height} = Dimensions.get('screen');
 
@@ -107,7 +108,7 @@ const WorkoutList: React.FC<{
   });
 
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -143,7 +144,7 @@ const WorkoutList: React.FC<{
         />
         <AbsoluteSpinner loading={loading} />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

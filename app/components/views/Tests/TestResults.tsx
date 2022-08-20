@@ -25,6 +25,8 @@ import {Alert, ImageBackground, View} from 'react-native';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import useThrottle from '../../../hooks/UseThrottle';
+import FastImage from 'react-native-fast-image';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,
@@ -47,16 +49,17 @@ const TestResults: React.FC<TestResultsProp> = ({
     isTable ? (100 / max) * score : getPercentileFill(percentile),
   );
 
+  const save = useThrottle((saved: boolean) => {
+    saveTestAction({
+      seconds,
+      result: testResult,
+      createdate: new Date(),
+      testId: test.id,
+      saved,
+    });
+  }, 5000);
+
   useEffect(() => {
-    const save = (saved: boolean) => {
-      saveTestAction({
-        seconds,
-        result: testResult,
-        createdate: new Date(),
-        testId: test.id,
-        saved,
-      });
-    };
     if (profile.premium) {
       Alert.alert(
         'Save test result?',
@@ -94,7 +97,7 @@ const TestResults: React.FC<TestResultsProp> = ({
   }
 
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -212,7 +215,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           />
         </View>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

@@ -2,11 +2,7 @@ import React, {useState} from 'react';
 import General from './components/views/Education/General';
 import Exercise from './components/views/Education/Exercise';
 import Nutritional from './components/views/Education/Nutritional';
-import {
-  ImageBackground,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
+import {TouchableOpacity, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './components/commons/Header';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
@@ -17,6 +13,7 @@ import Text from './components/commons/Text';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from './App';
+import FastImage from 'react-native-fast-image';
 
 const EducationTabs: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
@@ -36,7 +33,7 @@ const EducationTabs: React.FC<{
     {key: 'nutritional', title: 'Nutritional Info'},
   ]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('./images/old-black-background-grunge.png')}
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
@@ -94,7 +91,7 @@ const EducationTabs: React.FC<{
           initialLayout={{width: layout.width}}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

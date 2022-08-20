@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   View,
+  ImageURISource,
 } from 'react-native';
 import {connect} from 'react-redux';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -14,6 +15,7 @@ import {MyRootState} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import Text from './Text';
+import FastImage, { Source } from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
@@ -23,7 +25,7 @@ const HomeCard: React.FC<{
   title: string;
   subtitle: string;
   onPress: () => void;
-  image: ImageSourcePropType;
+  image: Source | number;
   premium?: boolean;
   profile: Profile;
 }> = ({title, subtitle, onPress, image, profile, premium}) => {
@@ -37,7 +39,7 @@ const HomeCard: React.FC<{
         overflow: 'hidden',
       }}
       onPress={onPress}>
-      <Image
+      <FastImage
         style={{
           position: 'absolute',
           height: CARD_HEIGHT,
@@ -46,7 +48,7 @@ const HomeCard: React.FC<{
         source={image}
       />
 
-      <ImageBackground
+      <FastImage
         source={require('../../images/BlackTransparentBackground.png')}
         blurRadius={3}
         style={{
@@ -84,7 +86,7 @@ const HomeCard: React.FC<{
             <Icon name="lock" size={DevicePixels[20]} color={colors.appWhite} />
           </View>
         )}
-      </ImageBackground>
+      </FastImage>
     </TouchableOpacity>
   );
 };

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -14,6 +14,7 @@ import Button from '../commons/Button';
 import Input from '../commons/Input';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
@@ -31,7 +32,7 @@ const DeleteAccount: React.FC<{
     }
   }, []);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -80,6 +81,12 @@ const DeleteAccount: React.FC<{
         <Button
           text="Confirm account deletion"
           onPress={async () => {
+            if (profile.admin) {
+              return Alert.alert(
+                'Account deletion via app disabled for admins',
+                'Please contact the developer if this needs to be done',
+              );
+            }
             setLoading(true);
             try {
               const user = auth().currentUser;
@@ -127,7 +134,7 @@ const DeleteAccount: React.FC<{
           }
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

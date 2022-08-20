@@ -21,6 +21,7 @@ import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -153,13 +154,13 @@ const Test: React.FC<TestProps> = ({
         </View>
       </View>
 
-      <ImageBackground
-        imageStyle={{
+      <FastImage
+        style={{
+          paddingBottom: 220,
           borderTopLeftRadius: DevicePixels[30],
           borderTopRightRadius: DevicePixels[30],
           top: -DevicePixels[30],
         }}
-        style={{paddingBottom: 220}}
         source={require('../../../images/old-black-background-grunge.png')}>
         <ScrollView
           keyboardShouldPersistTaps="always"
@@ -328,7 +329,7 @@ const Test: React.FC<TestProps> = ({
             />
           )}
         </ScrollView>
-      </ImageBackground>
+      </FastImage>
     </View>
   );
 };

@@ -61,6 +61,7 @@ import Swiper from 'react-native-swiper';
 import BackButton from '../../commons/BackButton';
 import ForwardButton from '../../commons/ForwardButton';
 import Header from '../../commons/Header';
+import FastImage from 'react-native-fast-image';
 
 const {width} = Dimensions.get('window');
 
@@ -321,7 +322,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   useBackHandler(() => true);
 
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
       style={{
@@ -362,7 +363,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           })}
         </Swiper>
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

@@ -23,6 +23,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import FastImage from 'react-native-fast-image';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
@@ -99,7 +100,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     return {text: difficultyText, subtext: 'I might die'};
   }, [difficulty]);
   return (
-    <ImageBackground
+    <FastImage
       source={require('../../../images/old-black-background-grunge.png')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -220,6 +221,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           disabled={loading}
           style={{margin: DevicePixels[10]}}
           onPress={() => {
+            setLoading(true);
             const navigate = () => {
               navigation.navigate('QuickRoutineSummary', {
                 calories,
@@ -244,7 +246,11 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
                 'Save workout',
                 'Do you wish to save this workout to view later?',
                 [
-                  {style: 'cancel', text: 'Cancel'},
+                  {
+                    style: 'cancel',
+                    text: 'Cancel',
+                    onPress: () => setLoading(false),
+                  },
                   {
                     text: 'No',
                     onPress: () => {
@@ -268,7 +274,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           }}
         />
       </SafeAreaView>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

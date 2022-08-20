@@ -8,8 +8,9 @@ import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
 import Profile from '../../types/Profile';
+import FastImage from 'react-native-fast-image';
 
-const getImage = (level: Level) => {
+export const getImage = (level: Level) => {
   if (level === Level.INTERMEDIATE) {
     return require('../../images/intermediate.jpg');
   }
@@ -19,7 +20,7 @@ const getImage = (level: Level) => {
   return require('../../images/beginner.jpg');
 };
 
-const getEquipmentString = (equipment: Equipment) => {
+export const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
     return 'Full Equipment';
   }
@@ -29,14 +30,14 @@ const getEquipmentString = (equipment: Equipment) => {
   return 'No Equipment';
 };
 
-const getFocusString = (focus: Goal) => {
+export const getFocusString = (focus: Goal) => {
   if (focus === Goal.FITNESS) {
     return 'Fitness';
   }
   return 'Strength';
 };
 
-const getLevelString = (level: Level) => {
+export const getLevelString = (level: Level) => {
   if (level === 'beginner') {
     return 'Beginner';
   }
@@ -58,23 +59,23 @@ const WorkoutCard: React.FC<{
       onPress={onPress}
       disabled={disabled}
       key={'id' in item ? item.id : item.name}>
-      <ImageBackground
+      <FastImage
         style={{
           height: DevicePixels[120],
           marginHorizontal: DevicePixels[10],
           marginBottom: DevicePixels[10],
+          borderRadius: DevicePixels[10],
         }}
-        borderRadius={DevicePixels[10]}
         source={getImage('level' in item ? item.level : profile.experience)}>
-        <ImageBackground
+        <FastImage
           source={require('../../images/BlackTransparentBackground.png')}
           blurRadius={3}
           style={{
             height: DevicePixels[120],
             justifyContent: 'center',
             padding: DevicePixels[10],
-          }}
-          borderRadius={DevicePixels[10]}>
+            borderRadius: DevicePixels[10],
+          }}>
           {locked ? (
             <View style={{}}>
               <Icon name="lock" color="#fff" size={DevicePixels[40]} />
@@ -136,8 +137,8 @@ const WorkoutCard: React.FC<{
               </Text>
             )}
           </View>
-        </ImageBackground>
-      </ImageBackground>
+        </FastImage>
+      </FastImage>
     </TouchableOpacity>
   );
 };
