@@ -32,7 +32,7 @@ index d86f66f..bd1ccde 100644
      }
  
 diff --git a/node_modules/react-native-fast-image/dist/index.cjs.js b/node_modules/react-native-fast-image/dist/index.cjs.js
-index 2a49562..ebe77e7 100644
+index 2a49562..51f2409 100644
 --- a/node_modules/react-native-fast-image/dist/index.cjs.js
 +++ b/node_modules/react-native-fast-image/dist/index.cjs.js
 @@ -43,6 +43,7 @@ function FastImageBase({
@@ -43,7 +43,14 @@ index 2a49562..ebe77e7 100644
    forwardedRef,
    ...props
  }) {
-@@ -62,7 +63,8 @@ function FastImageBase({
+@@ -56,13 +57,14 @@ function FastImageBase({
+       ref: forwardedRef
+     }, /*#__PURE__*/React__default['default'].createElement(reactNative.Image, _extends__default['default']({}, props, {
+       style: reactNative.StyleSheet.absoluteFill,
+-      source: resolvedSource,
++      source:{...resolvedSource, blurRadius },
+       onLoadStart: onLoadStart,
+       onProgress: onProgress,
        onLoad: onLoad,
        onError: onError,
        onLoadEnd: onLoadEnd,
@@ -53,7 +60,14 @@ index 2a49562..ebe77e7 100644
      })), children);
    }
  
-@@ -79,7 +81,8 @@ function FastImageBase({
+@@ -73,13 +75,14 @@ function FastImageBase({
+   }, /*#__PURE__*/React__default['default'].createElement(FastImageView, _extends__default['default']({}, props, {
+     tintColor: tintColor,
+     style: reactNative.StyleSheet.absoluteFill,
+-    source: resolvedSource,
++    source:{...resolvedSource, blurRadius },
+     onFastImageLoadStart: onLoadStart,
+     onFastImageProgress: onProgress,
      onFastImageLoad: onLoad,
      onFastImageError: onError,
      onFastImageLoadEnd: onLoadEnd,
@@ -84,7 +98,7 @@ index 8a91257..274af72 100644
  declare const FastImage: React.ComponentType<FastImageProps> & FastImageStaticProperties;
  export default FastImage;
 diff --git a/node_modules/react-native-fast-image/dist/index.js b/node_modules/react-native-fast-image/dist/index.js
-index 1fc0e9d..c7bc627 100644
+index 1fc0e9d..a997a48 100644
 --- a/node_modules/react-native-fast-image/dist/index.js
 +++ b/node_modules/react-native-fast-image/dist/index.js
 @@ -36,6 +36,7 @@ function FastImageBase({
@@ -95,7 +109,14 @@ index 1fc0e9d..c7bc627 100644
    forwardedRef,
    ...props
  }) {
-@@ -55,7 +56,8 @@ function FastImageBase({
+@@ -49,13 +50,14 @@ function FastImageBase({
+       ref: forwardedRef
+     }, /*#__PURE__*/React.createElement(Image, _extends({}, props, {
+       style: StyleSheet.absoluteFill,
+-      source: resolvedSource,
++      source: {...resolvedSource, blurRadius },
+       onLoadStart: onLoadStart,
+       onProgress: onProgress,
        onLoad: onLoad,
        onError: onError,
        onLoadEnd: onLoadEnd,
@@ -105,7 +126,14 @@ index 1fc0e9d..c7bc627 100644
      })), children);
    }
  
-@@ -72,7 +74,8 @@ function FastImageBase({
+@@ -66,13 +68,14 @@ function FastImageBase({
+   }, /*#__PURE__*/React.createElement(FastImageView, _extends({}, props, {
+     tintColor: tintColor,
+     style: StyleSheet.absoluteFill,
+-    source: resolvedSource,
++    source: {...resolvedSource, blurRadius },
+     onFastImageLoadStart: onLoadStart,
+     onFastImageProgress: onProgress,
      onFastImageLoad: onLoad,
      onFastImageError: onError,
      onFastImageLoadEnd: onLoadEnd,
