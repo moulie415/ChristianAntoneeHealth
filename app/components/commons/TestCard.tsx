@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, ImageBackground} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Test from '../../types/Test';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -18,12 +18,12 @@ const TestCard: React.FC<{
   tests: {[key: string]: Test};
   disabled?: boolean;
 }> = ({item, onPress, profile, tests, disabled}) => {
-  const image = getTestImage(
-    Object.values(tests).findIndex(i => i.id === item.id),
-  );
   if (!item) {
     return null;
   }
+  const image = getTestImage(
+    Object.values(tests).findIndex(i => i.id === item.id),
+  );
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
       <FastImage

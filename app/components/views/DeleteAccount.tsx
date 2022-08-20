@@ -20,7 +20,7 @@ const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
   profile: Profile;
   setLoggedIn: (loggedIn: boolean) => void;
-}> = ({profile, setLoggedIn: setLoggedInAction, settings}) => {
+}> = ({profile, setLoggedIn: setLoggedInAction}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);

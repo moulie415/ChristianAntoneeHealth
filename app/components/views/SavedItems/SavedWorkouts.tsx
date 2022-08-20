@@ -24,6 +24,7 @@ import QuickRoutine from '../../../types/QuickRoutines';
 import * as _ from 'lodash';
 import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
+import SavedWorkoutCard from '../../commons/SavedWorkoutCard';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -99,111 +100,7 @@ const SavedWorkouts: FunctionComponent<{
             ]}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
-              if ('workout' in item) {
-                return (
-                  <ListItem
-                    onPress={() => {
-                      setWorkoutAction(
-                        item.workout.map(id => {
-                          return exercises[id];
-                        }),
-                      );
-                      navigation.navigate('StartWorkout', {name: item.name});
-                    }}
-                    title={`${item.name ? item.name + ' - ' : ''}${moment(
-                      item.createdate,
-                    ).format('MMMM Do YYYY')}`}
-                    description={`${item.workout.length} ${
-                      item.workout.length > 1 ? 'exercises' : 'exercise'
-                    }, ${Math.floor(item.calories)} calories expended`}
-                    accessoryLeft={
-                      <ImageOverlay
-                        containerStyle={{
-                          height: DevicePixels[75],
-                          width: DevicePixels[75],
-                        }}
-                        overlayAlpha={0.4}
-                        source={require('../../../images/old_man_stretching.jpeg')}>
-                        <View style={{alignItems: 'center'}}>
-                          <Text
-                            style={{
-                              color: '#fff',
-                              fontSize: DevicePixels[12],
-                            }}>
-                            {'Duration '}
-                          </Text>
-                          <Text style={{color: '#fff'}}>
-                            {moment()
-                              .utc()
-                              .startOf('day')
-                              .add({seconds: item.seconds})
-                              .format('mm:ss')}
-                          </Text>
-                        </View>
-                      </ImageOverlay>
-                    }
-                    accessoryRight={
-                      <Text style={{fontSize: DevicePixels[30]}}>
-                        {getDifficultyEmoji(item.difficulty)}
-                      </Text>
-                    }
-                  />
-                );
-              }
-              const quickRoutine = quickRoutines[item.quickRoutineId];
-              if (!quickRoutine) {
-                return null;
-              }
-              return (
-                <ListItem
-                  onPress={() => {
-                    getExercisesByIdAction(quickRoutine.exerciseIds);
-                    navigation.navigate('QuickRoutine', {
-                      routine: quickRoutine,
-                    });
-                  }}
-                  title={`${quickRoutine.name} - ${moment(
-                    item.createdate,
-                  ).format('MMMM Do YYYY')}`}
-                  description={`${quickRoutine.exerciseIds?.length} ${
-                    quickRoutine.exerciseIds?.length > 1
-                      ? 'exercises'
-                      : 'exercise'
-                  }, ${Math.floor(item.calories)} calories expended`}
-                  accessoryLeft={
-                    <ImageOverlay
-                      containerStyle={{
-                        height: DevicePixels[75],
-                        width: DevicePixels[75],
-                      }}
-                      overlayAlpha={0.4}
-                      source={
-                        quickRoutine.thumbnail
-                          ? {uri: quickRoutine.thumbnail.src}
-                          : require('../../../images/old_man_stretching.jpeg')
-                      }>
-                      <View style={{alignItems: 'center'}}>
-                        <Text
-                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
-                          {'Duration '}
-                        </Text>
-                        <Text style={{color: '#fff'}}>
-                          {moment()
-                            .utc()
-                            .startOf('day')
-                            .add({seconds: item.seconds})
-                            .format('mm:ss')}
-                        </Text>
-                      </View>
-                    </ImageOverlay>
-                  }
-                  accessoryRight={
-                    <Text style={{fontSize: DevicePixels[30]}}>
-                      {getDifficultyEmoji(item.difficulty)}
-                    </Text>
-                  }
-                />
-              );
+              return <SavedWorkoutCard item={item} navigation={navigation} />;
             }}
           />
         )}

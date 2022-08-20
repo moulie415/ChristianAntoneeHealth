@@ -10,7 +10,7 @@ import Text from './Text';
 import Profile from '../../types/Profile';
 import FastImage from 'react-native-fast-image';
 
-const getImage = (level: Level) => {
+export const getImage = (level: Level) => {
   if (level === Level.INTERMEDIATE) {
     return require('../../images/intermediate.jpg');
   }
@@ -20,7 +20,7 @@ const getImage = (level: Level) => {
   return require('../../images/beginner.jpg');
 };
 
-const getEquipmentString = (equipment: Equipment) => {
+export const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
     return 'Full Equipment';
   }
@@ -30,14 +30,14 @@ const getEquipmentString = (equipment: Equipment) => {
   return 'No Equipment';
 };
 
-const getFocusString = (focus: Goal) => {
+export const getFocusString = (focus: Goal) => {
   if (focus === Goal.FITNESS) {
     return 'Fitness';
   }
   return 'Strength';
 };
 
-const getLevelString = (level: Level) => {
+export const getLevelString = (level: Level) => {
   if (level === 'beginner') {
     return 'Beginner';
   }

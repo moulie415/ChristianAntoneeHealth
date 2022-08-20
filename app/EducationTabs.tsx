@@ -2,11 +2,7 @@ import React, {useState} from 'react';
 import General from './components/views/Education/General';
 import Exercise from './components/views/Education/Exercise';
 import Nutritional from './components/views/Education/Nutritional';
-import {
-  ImageBackground,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
+import {TouchableOpacity, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './components/commons/Header';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
