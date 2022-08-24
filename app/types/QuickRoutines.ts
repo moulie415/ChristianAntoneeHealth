@@ -1,4 +1,4 @@
-import {Goal, Level} from './Shared';
+import {Level} from './Shared';
 
 export type Area = 'upper' | 'lower' | 'full';
 export type Equipment = 'full' | 'minimal';
@@ -9,7 +9,6 @@ export default interface QuickRoutine {
   area: Area;
   duration: number;
   equipment: Equipment;
-  focus: Goal;
   level: Level;
   premium: boolean;
   exerciseIds: string[];

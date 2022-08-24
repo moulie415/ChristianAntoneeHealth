@@ -134,7 +134,7 @@ const WorkoutList: React.FC<{
                     show();
                   } else {
                     getExercisesByIdAction(item.exerciseIds);
-                    navigation.navigate('QuickRoutine', {routine: item});
+                    navigation.navigate('PreQuickRoutine', {routine: item});
                     startQuickRoutineAction(item);
                   }
                 }}

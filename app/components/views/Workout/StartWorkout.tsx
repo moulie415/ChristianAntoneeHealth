@@ -51,21 +51,18 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const [tabIndex, setTabIndex] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>();
-  const [workoutStarted, setWorkoutStarted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const textInputRef = useRef<TextInput>();
   const name = route.params?.name;
   const isLast = route.params?.isLast;
 
   useEffect(() => {
-    if (workoutStarted) {
-      const start = moment().unix();
-      const intervalID = setInterval(() => {
-        setSeconds(Math.floor(moment().unix() - start));
-      }, 1000);
-      return () => clearInterval(intervalID);
-    }
-  }, [workoutStarted]);
+    const start = moment().unix();
+    const intervalID = setInterval(() => {
+      setSeconds(Math.floor(moment().unix() - start));
+    }, 1000);
+    return () => clearInterval(intervalID);
+  }, []);
 
   useEffect(() => {
     if (tabIndex === 2) {
@@ -109,7 +106,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
     <View style={{flex: 1}}>
       <Header hasBack absolute />
 
-      <Countdown onComplete={() => setWorkoutStarted(true)} />
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
@@ -213,7 +209,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                           <Text
                             style={{
                               fontWeight: 'bold',
-                              color: '#fff',
+                              color: colors.appWhite,
                               textAlign: 'center',
                             }}>
                             Description

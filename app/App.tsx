@@ -85,6 +85,7 @@ export type StackParamList = {
   };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
+  PreWorkout: {name?: string; isLast?: boolean};
   StartWorkout: {name?: string; isLast?: boolean};
   EndWorkout: {seconds: number; name?: string; isLast?: boolean};
   WorkoutSummary: {
@@ -108,6 +109,7 @@ export type StackParamList = {
   Policies: undefined;
   Loading: undefined;
   QuickRoutines: undefined;
+  PreQuickRoutine: {routine: QuickRoutine};
   QuickRoutine: {routine: QuickRoutine};
   EndQuickRoutine: {routine: QuickRoutine; seconds: number};
   QuickRoutineSummary: {
