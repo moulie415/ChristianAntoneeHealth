@@ -30,13 +30,6 @@ export const getEquipmentString = (equipment: Equipment) => {
   return 'No Equipment';
 };
 
-export const getFocusString = (focus: Goal) => {
-  if (focus === Goal.FITNESS) {
-    return 'Fitness';
-  }
-  return 'Strength';
-};
-
 export const getLevelString = (level: Level) => {
   if (level === 'beginner') {
     return 'Beginner';
@@ -66,15 +59,18 @@ const WorkoutCard: React.FC<{
           marginBottom: DevicePixels[10],
           borderRadius: DevicePixels[10],
         }}
-        source={getImage('level' in item ? item.level : profile.experience)}>
-        <FastImage
-          source={require('../../images/BlackTransparentBackground.png')}
-          blurRadius={3}
+        source={
+          'thumbnail' in item && item.thumbnail
+            ? {uri: item.thumbnail.src}
+            : getImage('level' in item ? item.level : profile.experience)
+        }>
+        <View
           style={{
             height: DevicePixels[120],
             justifyContent: 'center',
             padding: DevicePixels[10],
             borderRadius: DevicePixels[10],
+            backgroundColor: 'rgba(0,0,0,0.7)',
           }}>
           {locked ? (
             <View style={{}}>
@@ -114,7 +110,7 @@ const WorkoutCard: React.FC<{
           )}
           <View
             style={{
-              width: DevicePixels[220],
+              width: DevicePixels[250],
             }}>
             <Text
               style={{
@@ -133,11 +129,11 @@ const WorkoutCard: React.FC<{
                 }}>
                 {`${getLevelString(item.level)} - ${getEquipmentString(
                   item.equipment,
-                )} - ${getFocusString(item.focus)}`}
+                )}`}
               </Text>
             )}
           </View>
-        </FastImage>
+        </View>
       </FastImage>
     </TouchableOpacity>
   );

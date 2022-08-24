@@ -76,6 +76,18 @@ const Connections: React.FC<{
           title="Connections"
           right={<AddConnectionButton navigation={navigation} />}
         />
+        {Object.values(connections).length === 0 && (
+          <Text
+            style={{
+              textAlign: 'center',
+              padding: DevicePixels[20],
+              color: colors.appWhite,
+              fontSize: DevicePixels[20],
+            }}>
+            No connections yet, press the invite button in the top right to send
+            a link.
+          </Text>
+        )}
         <FlatList
           data={Object.values(connections)}
           refreshControl={
@@ -118,18 +130,6 @@ const Connections: React.FC<{
               />
             );
           }}
-          ListEmptyComponent={() => (
-            <Text
-              style={{
-                textAlign: 'center',
-                padding: DevicePixels[20],
-                color: colors.appWhite,
-                fontSize: DevicePixels[20]
-              }}>
-              No connections yet, press the invite button in the top right to
-              send a link.
-            </Text>
-          )}
           ItemSeparatorComponent={Divider}
         />
       </SafeAreaView>

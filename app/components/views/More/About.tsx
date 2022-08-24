@@ -50,6 +50,7 @@ const About: React.FC<AboutProps> = () => {
               textDecorationLine: 'underline',
               fontSize: DevicePixels[20],
               textAlign: 'center',
+              marginTop: DevicePixels[20]
             }}>
             christianantonee.com
           </Text>

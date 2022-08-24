@@ -3,12 +3,7 @@ import React from 'react';
 import {SavedQuickRoutine, SavedWorkout} from '../../types/SavedItem';
 import FastImage from 'react-native-fast-image';
 import DevicePixels from '../../helpers/DevicePixels';
-import {
-  getEquipmentString,
-  getFocusString,
-  getImage,
-  getLevelString,
-} from './WorkoutCard';
+import {getEquipmentString, getImage, getLevelString} from './WorkoutCard';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
@@ -143,7 +138,7 @@ const SavedWorkoutCard: React.FC<{
                 }}>
                 {`${getLevelString(quickRoutine.level)} - ${getEquipmentString(
                   quickRoutine.equipment,
-                )} - ${getFocusString(quickRoutine.focus)}`}
+                )}`}
               </Text>
             )}
           </View>
