@@ -108,7 +108,7 @@ function* planWatcher() {
       const current: Plan = yield select(
         (state: MyRootState) => state.profile.plan,
       );
-      if (plan === {}) {
+      if (_.isEmpty(plan)) {
         yield put(setPlan(undefined));
       } else {
         if (

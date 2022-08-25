@@ -5,10 +5,7 @@ import {
   Dimensions,
   SafeAreaView,
   View,
-  TouchableOpacity,
-  Image,
   StyleSheet,
-  ImageBackground,
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -34,7 +31,6 @@ import {
   linkToGoogleFit,
 } from '../../../helpers/biometrics';
 import {logError} from '../../../helpers/error';
-import SelectUnit from './SelectUnit';
 import SelectWeight from './SelectWeight';
 import SelectSex from './SelectSex';
 import useInit from '../../../hooks/UseInit';
@@ -44,10 +40,6 @@ import SelectExperience from './SelectExperience';
 import SelectEquipment from './SelectEquipment';
 import * as Progress from 'react-native-progress';
 import CompleteSignUp from './CompleteSignUp';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import DevicePixels from '../../../helpers/DevicePixels';
-import {resetToWelcome} from '../../../RootNavigation';
-import auth from '@react-native-firebase/auth';
 import LetsBuild from './LetsBuild';
 import Medications from './Medications';
 import GeneralLifestyle from './GeneralLifeStyle';

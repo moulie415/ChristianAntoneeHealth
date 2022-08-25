@@ -41,7 +41,7 @@ const Age: React.FC<{
       </Text>
       {Platform.OS === 'android' && (
         <Button
-          style={{width: DevicePixels[175], alignSelf: 'center'}}
+          style={{alignSelf: 'center'}}
           text="Select date of birth"
           onPress={() => {
             setShow(true);

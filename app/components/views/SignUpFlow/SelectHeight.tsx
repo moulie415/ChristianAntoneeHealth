@@ -1,12 +1,10 @@
-import {ImageBackground, Platform, StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import React, {useEffect} from 'react';
 import {Gender, Unit} from '../../../types/Profile';
-import Picker from '@gregfrench/react-native-wheel-picker';
+import {Picker} from 'react-native-wheel-pick';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-
-const PickerItem = Picker.Item;
 
 const weights = [...Array(501).keys()];
 
@@ -48,28 +46,20 @@ const SelectHeight: React.FC<{
         }}>
         {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
       </Text>
-
+      {/* @ts-ignore */}
       <Picker
-        style={{
-          height: DevicePixels[200],
-        }}
-        selectedValue={height}
-        lineColor="#999999"
+        style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
         textColor={colors.appWhite}
-        itemStyle={{
-          fontSize: DevicePixels[15],
-          // color: Platform.OS === 'android' ? '#000' : undefined,
-          color: colors.appWhite,
-        }}
-        onValueChange={setHeight}>
-        {weights.map(value => (
-          <PickerItem
-            label={`${value.toString()} ${unit === 'metric' ? 'cm' : 'inches'}`}
-            value={value}
-            key={value}
-          />
-        ))}
-      </Picker>
+        itemStyle={{color: colors.appWhite}}
+        selectedValue={String(height)}
+        pickerData={weights.map(value => {
+          return {
+            label: `${value.toString()} ${unit === 'metric' ? 'cm' : 'inches'}`,
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setHeight(Number(val))}
+      />
     </View>
   );
 };

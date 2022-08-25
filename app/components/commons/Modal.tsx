@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Modal as RNModal, View} from 'react-native';
 import DevicePixels from '../../helpers/DevicePixels';
 
-const Modal: React.FC<{visible?: boolean; onRequestClose?: () => void}> = ({
-  children,
-  visible,
-  onRequestClose,
-}) => {
+const Modal: React.FC<{
+  visible?: boolean;
+  onRequestClose?: () => void;
+  children: ReactNode;
+}> = ({children, visible, onRequestClose}) => {
   return (
     <RNModal
       onRequestClose={() => onRequestClose && onRequestClose()}
