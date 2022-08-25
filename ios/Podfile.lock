@@ -1182,9 +1182,9 @@ PODS:
     - FBSDKGamingServicesKit (~> 13.2.0)
     - FBSDKShareKit (~> 13.2.0)
     - React-Core
-  - react-native-flipper (0.161.0):
+  - react-native-flipper (0.162.0):
     - React-Core
-  - react-native-image-picker (4.8.5):
+  - react-native-image-picker (4.10.0):
     - React-Core
   - react-native-pager-view (5.4.25):
     - React-Core
@@ -1287,7 +1287,7 @@ PODS:
     - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNCClipboard (1.10.0):
+  - RNCClipboard (1.11.0):
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
@@ -1345,7 +1345,7 @@ PODS:
     - Firebase/Storage (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.5.0):
+  - RNGestureHandler (2.6.0):
     - React-Core
   - RNGoogleMobileAds (7.0.1):
     - Google-Mobile-Ads-SDK (= 9.6.0)
@@ -1361,7 +1361,7 @@ PODS:
     - React-Core
   - RNRate (1.2.9):
     - React-Core
-  - RNReanimated (2.9.1):
+  - RNReanimated (2.10.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1388,7 +1388,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.16.0):
+  - RNScreens (3.17.0):
     - React-Core
     - React-RCTImage
   - RNSentry (4.2.4):
@@ -1847,8 +1847,8 @@ SPEC CHECKSUMS:
   React-logger: a1f028f6d8639a3f364ef80419e5e862e1115250
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
   react-native-fbsdk-next: 79815a5b8f66ab0990fbb370b4a4b5bdf0a15e6c
-  react-native-flipper: ea555c5b21d9d15814999327aecf31b98ac87079
-  react-native-image-picker: cd420f97f6ed6ff74fc4686d27dbcfdbd051db91
+  react-native-flipper: 7eeb9b59b667dd0619372c7349cf7c78032d1de2
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
   react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
@@ -1875,7 +1875,7 @@ SPEC CHECKSUMS:
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
+  RNCClipboard: 4b8bec7c195e27bcec746f52dff7601161683249
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNCPicker: 0b65be85fe7954fbb2062ef079e3d1cde252d888
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
@@ -1893,14 +1893,14 @@ SPEC CHECKSUMS:
   RNFBFunctions: 0e7c0a20c35fca0f828b2eeec8d0ff1718390e68
   RNFBMessaging: 3e2682ea5e15fe86da24d16d16019395a881f33c
   RNFBStorage: 814adb8c5bf4ff86a0b0641d750a64d6d48d9a75
-  RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
+  RNGestureHandler: 920eb17f5b1e15dae6e5ed1904045f8f90e0b11e
   RNGoogleMobileAds: ad5ed70608dd943e5d2954ebd24c390aca8d1b28
   RNGoogleSignin: b2179ba653c759b936404a7746fc5302f9de6a5a
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNPurchases: b626cf0e68fe06b5f3c5e4e33667cc68a5397491
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
-  RNReanimated: b5b17149593e7c05e4ec5c0efea1f21e05829510
-  RNScreens: ee31ecdf23fe81e93c74feaa086cf173d758ab58
+  RNReanimated: c38d82b0e910e2478439686c58c02bac6e4232e9
+  RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
   RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
