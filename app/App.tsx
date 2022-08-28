@@ -3,7 +3,6 @@ import reducer from './reducers';
 import {Provider} from 'react-redux';
 import Purchases from 'react-native-purchases';
 import {PersistGate} from 'redux-persist/lib/integration/react';
-// import Shake from '@shakebugs/react-native-shake';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -34,6 +33,7 @@ import {Dimensions, Platform} from 'react-native';
 import Config from 'react-native-config';
 import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
+import Instabug from 'instabug-reactnative';
 
 const {height, width} = Dimensions.get('window');
 
@@ -151,6 +151,18 @@ const App: React.FC = () => {
           logError(e);
         });
     }
+
+    Instabug.isRunningLive(isLive => {
+      if (isLive) {
+        Instabug.start(Config.INSTABUG_PROD_TOKEN, [
+          Instabug.invocationEvent.none,
+        ]);
+      } else {
+        Instabug.start(Config.INSTABUG_DEV_TOKEN, [
+          Instabug.invocationEvent.none,
+        ]);
+      }
+    });
 
     MobileAds()
       .initialize()

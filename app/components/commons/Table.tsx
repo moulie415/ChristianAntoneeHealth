@@ -1,6 +1,7 @@
 import moment from 'moment';
-import React, {useMemo} from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import React, {useMemo, useState} from 'react';
+import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -9,15 +10,18 @@ import {MyRootState} from '../../types/Shared';
 import {Cell, Table as TableType} from '../../types/Test';
 import {Row as RowType} from '../../types/Test';
 import Text from './Text';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import Divider from './Divider';
 
 const CELL_WIDTH = 100;
 
 const Table: React.FC<{
   table: TableType;
-  title?: string;
+  title: string;
   metric?: string;
   profile: Profile;
 }> = ({table, title, metric, profile}) => {
+  const [collapsed, setCollapsed] = useState(true);
   const {tableHead, tableData, ageIndex} = useMemo(() => {
     let aIndex;
     const getRowArr = (
@@ -82,74 +86,88 @@ const Table: React.FC<{
 
   return (
     <>
-      {title && (
+      <TouchableOpacity
+        onPress={() => setCollapsed(!collapsed)}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <Text
           style={{
-            marginHorizontal: DevicePixels[10],
-            marginTop: DevicePixels[10],
+            margin: DevicePixels[10],
             color: colors.appWhite,
             fontWeight: 'bold',
           }}>
-          {title}
+          {title || 'Table'}
         </Text>
-      )}
-      <ScrollView
-        horizontal
-        style={{
-          paddingVertical: DevicePixels[10],
-          marginHorizontal: DevicePixels[10],
-        }}>
-        <View>
-          <View style={{flexDirection: 'row'}}>
-            {tableHead.map((cell, index) => {
-              const shiftedIndex = index - 1;
-              const isAgeIndex =
-                ageIndex !== undefined && shiftedIndex === ageIndex;
-              return (
-                <Text
-                  key={Math.random()}
-                  style={{
-                    padding: DevicePixels[2],
-                    borderWidth: StyleSheet.hairlineWidth,
-                    borderColor: colors.appWhite,
-                    width: CELL_WIDTH,
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    fontSize: DevicePixels[12],
-                    backgroundColor: isAgeIndex ? colors.appBlue : undefined,
-                    color: colors.appWhite,
-                  }}>
-                  {cell}
-                </Text>
-              );
-            })}
-          </View>
-          {tableData.map(row => {
-            return (
-              <View key={row[0]} style={{flexDirection: 'row'}}>
-                {row.map((cell, index) => (
+        <Icon
+          style={{padding: DevicePixels[10]}}
+          name={collapsed ? 'plus' : 'minus'}
+          color={colors.appWhite}
+          size={DevicePixels[20]}
+        />
+      </TouchableOpacity>
+      <Collapsible collapsed={collapsed}>
+        <ScrollView
+          horizontal
+          style={{
+            paddingVertical: DevicePixels[10],
+            marginHorizontal: DevicePixels[10],
+          }}>
+          <View>
+            <View style={{flexDirection: 'row'}}>
+              {tableHead.map((cell, index) => {
+                const shiftedIndex = index - 1;
+                const isAgeIndex =
+                  ageIndex !== undefined && shiftedIndex === ageIndex;
+                return (
                   <Text
                     key={Math.random()}
                     style={{
                       padding: DevicePixels[2],
-                      borderColor: colors.appWhite,
                       borderWidth: StyleSheet.hairlineWidth,
+                      borderColor: colors.appWhite,
                       width: CELL_WIDTH,
                       textAlign: 'center',
-                      fontWeight: index === 0 ? 'bold' : 'normal',
+                      fontWeight: 'bold',
                       fontSize: DevicePixels[12],
+                      backgroundColor: isAgeIndex ? colors.appBlue : undefined,
                       color: colors.appWhite,
                     }}>
                     {cell}
                   </Text>
-                ))}
-              </View>
-            );
-          })}
-        </View>
+                );
+              })}
+            </View>
+            {tableData.map(row => {
+              return (
+                <View key={row[0]} style={{flexDirection: 'row'}}>
+                  {row.map((cell, index) => (
+                    <Text
+                      key={Math.random()}
+                      style={{
+                        padding: DevicePixels[2],
+                        borderColor: colors.appWhite,
+                        borderWidth: StyleSheet.hairlineWidth,
+                        width: CELL_WIDTH,
+                        textAlign: 'center',
+                        fontWeight: index === 0 ? 'bold' : 'normal',
+                        fontSize: DevicePixels[12],
+                        color: colors.appWhite,
+                      }}>
+                      {cell}
+                    </Text>
+                  ))}
+                </View>
+              );
+            })}
+          </View>
 
-        <View />
-      </ScrollView>
+          <View />
+        </ScrollView>
+      </Collapsible>
+      <Divider />
     </>
   );
 };

@@ -27,7 +27,9 @@ const Rating: React.FC<{
   const [loading, setLoading] = useState(false);
 
   return (
-    <FastImage source={require('../../images/premium.jpg')} style={{flex: 1}}>
+    <FastImage
+      source={require('../../images/premium.jpg')}
+      style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Rate us" />
       </SafeAreaView>

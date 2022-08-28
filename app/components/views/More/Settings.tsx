@@ -193,8 +193,9 @@ const Settings: React.FC<SettingsProps> = ({
                 color: colors.appWhite,
                 fontSize: DevicePixels[16],
                 fontWeight: 'bold',
+                width: '80%'
               }}>
-              Marketing
+              Receive offers and info on future updates
             </Text>
             <Toggle value={marketing} onValueChange={setMarketing} />
           </View>

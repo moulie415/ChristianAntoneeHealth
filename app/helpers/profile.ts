@@ -1,10 +1,8 @@
 import Purchases from 'react-native-purchases';
-import crashlytics from '@react-native-firebase/crashlytics';
 import moment from 'moment';
 
 export const setUserAttributes = (attributes: {[key: string]: string}) => {
   Purchases.setAttributes(attributes);
-  crashlytics().setAttributes(attributes);
 };
 
 export const getSimplifiedTime = (createdAt: number) => {

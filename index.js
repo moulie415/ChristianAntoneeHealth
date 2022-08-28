@@ -4,7 +4,6 @@ import App, {store} from './app/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-//import Shake from '@shakebugs/react-native-shake';
 import {navigate, navigationRef} from './app/RootNavigation';
 import {
   CONNECTION_ID,

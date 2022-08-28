@@ -2,7 +2,6 @@ import Sound from 'react-native-sound';
 import React from 'react';
 import {FunctionComponent} from 'react';
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
-import crashlytics from '@react-native-firebase/crashlytics';
 import colors from '../../constants/colors';
 import {useState} from 'react';
 import {useEffect} from 'react';
