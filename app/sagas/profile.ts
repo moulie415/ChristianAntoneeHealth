@@ -1,7 +1,5 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-// import Shake from '@shakebugs/react-native-shake';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import crashlytics from '@react-native-firebase/crashlytics';
 import PushNotification from 'react-native-push-notification';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
@@ -625,7 +623,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
         yield call(api.setUser, userObj);
       }
       const {purchaserInfo, created} = yield call(Purchases.logIn, user.uid);
-      crashlytics().setUserId(user.uid);
       yield call(getSettings);
       const settings: SettingsState = yield select(
         (state: MyRootState) => state.settings,

@@ -1,0 +1,17 @@
+diff --git a/node_modules/react-native-collapsible/index.d.ts b/node_modules/react-native-collapsible/index.d.ts
+index 26f8d56..7acf736 100644
+--- a/node_modules/react-native-collapsible/index.d.ts
++++ b/node_modules/react-native-collapsible/index.d.ts
+@@ -93,6 +93,12 @@ export interface CollapsibleProps {
+    * Function called when the animation finished
+    */
+   onAnimationEnd?: () => void;
++
++  /**
++   * Children! https://github.com/oblador/react-native-collapsible/issues/436
++   */
++  children?: React.ReactNode;
++
+ }
+
+ export default class Collapsible extends React.Component<CollapsibleProps> {}

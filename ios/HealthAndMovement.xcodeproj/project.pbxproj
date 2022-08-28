@@ -34,7 +34,7 @@
 		0AC669642851598000AB9B29 /* RNiTunes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC669632851598000AB9B29 /* RNiTunes.m */; };
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* appdelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1FCB3D0E2E974C08A01C142D /* MontserratAlternates-Regular_bold_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D061EAE97E3849EB89C12E9E /* MontserratAlternates-Regular_bold_italic.ttf */; };
@@ -175,7 +175,7 @@
 		0AFA94C72438B073003ADDE3 /* Health and Movement.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Health and Movement.entitlements"; path = "HealthAndMovement/Health and Movement.entitlements"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CA Health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CA Health.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = HealthAndMovement/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = HealthAndMovement/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = appdelegate.mm; path = HealthAndMovement/appdelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HealthAndMovement/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HealthAndMovement/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HealthAndMovement/main.m; sourceTree = "<group>"; };
@@ -331,7 +331,7 @@
 				0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB01A68108700A75B9A /* appdelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -494,11 +494,11 @@
 				2478CCB5B849BF7DCD902FE1 /* [CP-User] [RNFB] Core Configuration */,
 				D16102B9BF3FE72AAB941A36 /* [CP] Copy Pods Resources */,
 				2AF9C38EB1203D4EF8B6057B /* [CP] Embed Pods Frameworks */,
-				AE87C4FB5F293924F6997314 /* [CP-User] [RNFB] Crashlytics Configuration */,
 				AD05436B2F3E43999A228698 /* Upload Debug Symbols to Sentry */,
 				0A0FAB9D283FDCEE00DF1236 /* Embed Watch Content */,
 				0AC66951284FDFE200AB9B29 /* Embed Frameworks */,
 				8BE5E331C3F29E3CDD688150 /* [CP-User] [RNGoogleMobileAds] Configuration */,
+				7CC59AA3045D65464D7E250B /* [CP-User] [instabug-reactnative] Upload Sourcemap */,
 			);
 			buildRules = (
 			);
@@ -673,7 +673,9 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/FBSDKLoginKit",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/FBSDKShareKit",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNInstabug/Instabug.framework/Instabug",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -685,7 +687,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -747,6 +751,16 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HealthAndMovement-HealthAndMovementTests/Pods-HealthAndMovement-HealthAndMovementTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7CC59AA3045D65464D7E250B /* [CP-User] [instabug-reactnative] Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] [instabug-reactnative] Upload Sourcemap";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\ncd ${PROJECT_DIR}\ncd ..\nif [ -s \"$HOME/.nvm/nvm.sh\" ]; then\n. \"$HOME/.nvm/nvm.sh\"\nelif [ -x \"$(command -v brew)\" ] && [ -s \"$(brew --prefix nvm)/nvm.sh\" ]; then\n. \"$(brew --prefix nvm)/nvm.sh\"\nfi\nexport NODE_BINARY=node\n\nINSTABUG_SOURCEMAPS_UPLOAD_DISABLE=$(echo $INSTABUG_SOURCEMAPS_UPLOAD_DISABLE | tr 'A-Z' 'a-z')\nif [ \"${INSTABUG_SOURCEMAPS_UPLOAD_DISABLE}\" = \"true\" ]; then\n    echo \"Instabug: Environment variable INSTABUG_SOURCEMAPS_UPLOAD_DISABLE was set to true, skipping sourcemap upload\"\n    exit 0\nfi\n\nif [ ! \"$INFOPLIST_FILE\" ] || [ -z \"$INFOPLIST_FILE\" ]; then\n    echo \"Instabug: INFOPLIST_FILE not found in Xcode build settings, skipping sourcemap upload\"\n    exit 0\nfi\n\nif [ ! \"${PROJECT_DIR}\" ] || [ -z \"${PROJECT_DIR}\" ]; then\n    echo \"Instabug: PROJECT_DIR not found in Xcode build settings, skipping sourcemap upload\"\n    exit 0\nfi\n\nPLIST_ABS_PATH=\"$PROJECT_DIR/$INFOPLIST_FILE\"\necho \"Instabug: PLIST_ABS_PATH: $PLIST_ABS_PATH\"\n\nif [ ! \"${INSTABUG_APP_TOKEN}\" ] || [ -z \"${INSTABUG_APP_TOKEN}\" ]; then\n    echo \"Instabug: Looking for Token...\"\n    INSTABUG_APP_TOKEN=$(grep -r --exclude-dir={node_modules,ios,android} \"Instabug.start[WithToken]*([\\\"\\'][0-9a-zA-Z]*[\\\"\\']\" ./ -m 1 | grep -o \"[\\\"\\'][0-9a-zA-Z]*[\\\"\\']\" | cut -d \"\\\"\" -f 2 | cut -d \"'\" -f 2)\nfi\n\nif [ ! \"${INSTABUG_APP_TOKEN}\" ] || [ -z \"${INSTABUG_APP_TOKEN}\" ]; then\n    echo \"Instabug: INSTABUG_APP_TOKEN not found. Make sure you've added the SDK initialization line Instabug.start Or added the environment variable INSTABUG_APP_TOKEN\"\n    exit 0\nelse\n    if [ ! \"${INSTABUG_APP_VERSION_CODE}\" ] || [ -z \"${INSTABUG_APP_VERSION_CODE}\" ]; then\n        INSTABUG_APP_VERSION_CODE=$(/usr/libexec/PlistBuddy -c 'print CFBundleVersion' ${PLIST_ABS_PATH} )\n        if [ ! \"${INSTABUG_APP_VERSION_CODE}\" ] || [ -z \"${INSTABUG_APP_VERSION_CODE}\" ]; then\n            echo \"CFBundleVersion could not be found, please upload the sourcemap files manually\"\n            exit 0\n        fi\n        INSTABUG_APP_VERSION_CODE_ENV=$(grep -o '$(.*)' <<< $INSTABUG_APP_VERSION_CODE | cut -d \"(\" -f2 | cut -d \")\" -f1)\n        if !([ ! \"${INSTABUG_APP_VERSION_CODE_ENV}\" ] || [ -z \"${INSTABUG_APP_VERSION_CODE_ENV}\" ]); then\n            INSTABUG_APP_VERSION_CODE=${!INSTABUG_APP_VERSION_CODE_ENV}\n            if [ ! \"${INSTABUG_APP_VERSION_CODE}\" ] || [ -z \"${INSTABUG_APP_VERSION_CODE}\" ]; then\n                echo \"Environment variable $INSTABUG_APP_VERSION_CODE_ENV was specified inside Info.plist but was not found, please upload the sourcemap files manually\" \n                exit 0\n            fi\n        fi\n    fi\n    if [ ! \"${INSTABUG_APP_VERSION_NAME}\" ] || [ -z \"${INSTABUG_APP_VERSION_NAME}\" ]; then\n        INSTABUG_APP_VERSION_NAME=$(/usr/libexec/PlistBuddy -c 'print CFBundleShortVersionString' ${PLIST_ABS_PATH} )\n        if [ ! \"${INSTABUG_APP_VERSION_NAME}\" ] || [ -z \"${INSTABUG_APP_VERSION_NAME}\" ]; then\n            echo \"CFBundleShortVersionString could not be found, please upload the sourcemap files manually\"\n            exit 0\n        fi\n        INSTABUG_APP_VERSION_NAME_ENV=$(grep -o '$(.*)' <<< $INSTABUG_APP_VERSION_NAME | cut -d \"(\" -f2 | cut -d \")\" -f1)\n        if !([ ! \"${INSTABUG_APP_VERSION_NAME_ENV}\" ] || [ -z \"${INSTABUG_APP_VERSION_NAME_ENV}\" ]); then\n            INSTABUG_APP_VERSION_NAME=${!INSTABUG_APP_VERSION_NAME_ENV}\n            if [ ! \"${INSTABUG_APP_VERSION_NAME}\" ] || [ -z \"${INSTABUG_APP_VERSION_NAME}\" ]; then\n                echo \"Environment variable $INSTABUG_APP_VERSION_NAME_ENV was specified inside Info.plist but was not found, please upload the sourcemap files manually\" \n                exit 0\n            fi\n        fi\n    fi\n    if [ -z \"${INSTABUG_ENTRY_FILE}\" ]; then \n        ENTRY_FILE='index.js'\n    else \n        ENTRY_FILE=${INSTABUG_ENTRY_FILE}\n    fi\n    if [ ! -f $ENTRY_FILE ]; then\n        echo \"Instabug: err: entry file not found. Make sure\" \"\\\"${ENTRY_FILE}\\\"\" \"exists in your projects root directory. Or add the environment variable INSTABUG_ENTRY_FILE with the name of your entry file\"\n        exit 0\n    fi\n    VERSION='{\"code\":\"'\"$INSTABUG_APP_VERSION_CODE\"'\",\"name\":\"'\"$INSTABUG_APP_VERSION_NAME\"'\"}'\n    echo \"Instabug: Token:\" \"\\\"\"${INSTABUG_APP_TOKEN}\"\\\"\"\n    echo \"Instabug: VERSION: $VERSION\"\n    echo \"Instabug: Entry file found\" \"\\\"\"${ENTRY_FILE}\"\\\"\"\n    echo \"Instabug: Generating sourcemap files...\"\n\n    #Generate ios sourcemap\n    npx react-native bundle --platform ios \\\n    --entry-file $ENTRY_FILE \\\n    --dev false \\\n    --bundle-output ./ios/main.jsbundle \\\n    --sourcemap-output ./ios-sourcemap.json\n    echo \"Instabug: Uploading files...\"\n    #Upload ios sourcemap\n    curl -X POST 'https://api.instabug.com/api/sdk/v3/symbols_files' -F \"app_version=${VERSION}\" -F \"symbols_file=@./ios-sourcemap.json\"  -F \"application_token=${INSTABUG_APP_TOKEN}\"  -F \"platform=react_native\"  -F \"os=ios\" \n    rm -rf ios-sourcemap.json\n    echo \nfi\n";
+		};
 		8BE5E331C3F29E3CDD688150 /* [CP-User] [RNGoogleMobileAds] Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -774,20 +788,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
-		AE87C4FB5F293924F6997314 /* [CP-User] [RNFB] Crashlytics Configuration */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[CP-User] [RNFB] Crashlytics Configuration";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\nif [[ ${PODS_ROOT} ]]; then\n  echo \"info: Exec FirebaseCrashlytics Run from Pods\"\n  \"${PODS_ROOT}/FirebaseCrashlytics/run\"\nelse\n  echo \"info: Exec FirebaseCrashlytics Run from framework\"\n  \"${PROJECT_DIR}/FirebaseCrashlytics.framework/run\"\nfi\n";
-		};
 		C0F176393C99AC3CC4140F44 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -802,7 +802,9 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/FBSDKLoginKit",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/FBSDKShareKit",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RNInstabug/Instabug.framework/Instabug",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -814,7 +816,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -946,7 +950,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */,
 				0AC669642851598000AB9B29 /* RNiTunes.m in Sources */,
 				0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -1347,6 +1351,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1403,6 +1408,7 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

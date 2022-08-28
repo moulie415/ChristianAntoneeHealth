@@ -34,23 +34,27 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
       <Button
         text="Improve my strength"
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         onPress={() => setGoal(Goal.STRENGTH)}
         variant={goal === Goal.STRENGTH ? 'primary' : 'secondary'}
       />
       <Button
         text="Improve my fitness"
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         onPress={() => setGoal(Goal.FITNESS)}
         variant={goal === Goal.FITNESS ? 'primary' : 'secondary'}
       />
       <Button
         text=" Weight loss"
         style={{marginBottom: DevicePixels[20]}}
+        textStyle={{fontSize: DevicePixels[15]}}
         onPress={() => setGoal(Goal.WEIGHT_LOSS)}
         variant={goal === Goal.WEIGHT_LOSS ? 'primary' : 'secondary'}
       />
       <Button
         text="Injury prevention/rehabilitation"
+        textStyle={{fontSize: DevicePixels[15]}}
         style={{marginBottom: DevicePixels[20]}}
         onPress={() => setGoal(Goal.INJURY_PREVENTION)}
         variant={goal === Goal.INJURY_PREVENTION ? 'primary' : 'secondary'}

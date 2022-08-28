@@ -104,9 +104,7 @@ const ArticleList: React.FC<{
               source={{uri: item.image.src}}
             />
 
-            <FastImage
-              source={require('../../../images/BlackTransparentBackground.png')}
-              blurRadius={3}
+            <View
               style={{
                 position: 'absolute',
                 alignSelf: 'flex-end',
@@ -115,6 +113,7 @@ const ArticleList: React.FC<{
                 bottom: 0,
                 width: width / 1.5,
                 padding: DevicePixels[10],
+                backgroundColor: 'rgba(0,0,0,0.7)',
               }}>
               <Text
                 style={{
@@ -146,7 +145,7 @@ const ArticleList: React.FC<{
                   />
                 </View>
               )}
-            </FastImage>
+            </View>
           </TouchableOpacity>
         );
       }}

@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import Snackbar from 'react-native-snackbar';
 import {Dimensions, Platform, ScrollView, View} from 'react-native';
-import Picker from '@gregfrench/react-native-wheel-picker';
+import {Picker} from 'react-native-wheel-pick';
 import CustomizeExerciseProps from '../../../types/views/CustomExercise';
 import Carousel from 'react-native-snap-carousel';
 import {Goal, MyRootState} from '../../../types/Shared';
@@ -16,13 +16,12 @@ import MusclesDiagram from '../../commons/MusclesDiagram';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
+import colors from '../../../constants/colors';
 
 const REPS = [...Array(101).keys()];
 REPS.shift();
 const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const RESISTANCE = [...Array(301).keys()];
-
-const PickerItem = Picker.Item;
 
 const {width, height} = Dimensions.get('screen');
 
@@ -133,30 +132,25 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     alignItems: 'center',
                   }}>
                   <Text>Reps</Text>
+                  {/* @ts-ignore */}
                   <Picker
                     style={{
-                      width: DevicePixels[200],
                       height: DevicePixels[200],
+                      backgroundColor: 'transparent',
                     }}
-                    selectedValue={reps}
-                    lineColor="#999999"
-                    itemStyle={{
-                      fontSize: DevicePixels[15],
-                      color: Platform.OS === 'android' ? '#000' : undefined,
-                    }}
-                    onValueChange={setReps}>
-                    {REPS.map(value => {
-                      return (
-                        <PickerItem
-                          label={`${value.toString()} ${
-                            value === 1 ? 'rep' : 'reps'
-                          }`}
-                          value={value}
-                          key={value}
-                        />
-                      );
+                    textColor={colors.appWhite}
+                    itemStyle={{color: colors.appWhite}}
+                    selectedValue={String(reps)}
+                    pickerData={REPS.map(value => {
+                      return {
+                        label: `${value.toString()} ${
+                          value === 1 ? 'rep' : 'reps'
+                        }`,
+                        value: String(value),
+                      };
                     })}
-                  </Picker>
+                    onValueChange={val => setReps(Number(val))}
+                  />
                 </View>
               )}
               {item === 3 && (
@@ -169,28 +163,25 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     alignItems: 'center',
                   }}>
                   <Text>Sets</Text>
+                  {/* @ts-ignore */}
                   <Picker
                     style={{
-                      width: DevicePixels[200],
                       height: DevicePixels[200],
+                      backgroundColor: 'transparent',
                     }}
-                    selectedValue={sets}
-                    lineColor="#999999"
-                    itemStyle={{
-                      fontSize: DevicePixels[15],
-                      color: Platform.OS === 'android' ? '#000' : undefined,
-                    }}
-                    onValueChange={setSets}>
-                    {SETS.map(value => (
-                      <PickerItem
-                        label={`${value.toString()} ${
+                    textColor={colors.appWhite}
+                    itemStyle={{color: colors.appWhite}}
+                    selectedValue={String(sets)}
+                    pickerData={SETS.map(value => {
+                      return {
+                        label: `${value.toString()} ${
                           value === 1 ? 'set' : 'sets'
-                        }`}
-                        value={value}
-                        key={value}
-                      />
-                    ))}
-                  </Picker>
+                        }`,
+                        value: String(value),
+                      };
+                    })}
+                    onValueChange={val => setSets(Number(val))}
+                  />
                 </View>
               )}
               {item === 4 && (
@@ -203,32 +194,28 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                     alignItems: 'center',
                   }}>
                   <Text>Resistance</Text>
+                  {/* @ts-ignore */}
                   <Picker
                     style={{
-                      width: DevicePixels[200],
                       height: DevicePixels[200],
+                      backgroundColor: 'transparent',
                     }}
-                    selectedValue={resistance}
-                    lineColor="#999999"
-                    itemStyle={{
-                      fontSize: DevicePixels[15],
-                      color: Platform.OS === 'android' ? '#000' : undefined,
-                    }}
-                    onValueChange={setResistance}>
-                    {RESISTANCE.map(value => (
-                      <PickerItem
-                        label={
+                    textColor={colors.appWhite}
+                    itemStyle={{color: colors.appWhite}}
+                    selectedValue={String(resistance)}
+                    pickerData={RESISTANCE.map(value => {
+                      return {
+                        label:
                           value === 0
                             ? 'Bodyweight'
                             : `${value.toString()} ${
                                 profile.unit === 'metric' ? 'kg' : 'lbs'
-                              }`
-                        }
-                        value={value}
-                        key={value}
-                      />
-                    ))}
-                  </Picker>
+                              }`,
+                        value: String(value),
+                      };
+                    })}
+                    onValueChange={val => setResistance(Number(val))}
+                  />
                 </View>
               )}
             </View>

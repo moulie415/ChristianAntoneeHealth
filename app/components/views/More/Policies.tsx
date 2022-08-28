@@ -41,6 +41,7 @@ const Policies = () => {
             Privacy Policy
           </Text>
         </TouchableOpacity>
+        
       </SafeAreaView>
     </FastImage>
   );

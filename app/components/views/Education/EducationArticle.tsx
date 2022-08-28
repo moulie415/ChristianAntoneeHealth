@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import RenderHtml from 'react-native-render-html';
 import Image from 'react-native-fast-image';
 import React from 'react';
-import {ScrollView, useWindowDimensions, View} from 'react-native';
+import {ScrollView, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {StackParamList} from '../../../App';
 import DevicePixels from '../../../helpers/DevicePixels';
 import moment from 'moment';
@@ -25,8 +25,15 @@ const EducationArticle: React.FC<{
             height: DevicePixels[350],
             marginBottom: DevicePixels[10],
           }}
-          source={{uri: education.image.src}}
-        />
+          source={{uri: education.image.src}}>
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              backgroundColor: '#000',
+              opacity: 0.7,
+            }}
+          />
+        </Image>
 
         <Header hasBack absolute />
 

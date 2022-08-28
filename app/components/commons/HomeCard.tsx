@@ -15,7 +15,7 @@ import {MyRootState} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import Text from './Text';
-import FastImage, { Source } from 'react-native-fast-image';
+import FastImage, {Source} from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
@@ -48,9 +48,7 @@ const HomeCard: React.FC<{
         source={image}
       />
 
-      <FastImage
-        source={require('../../images/BlackTransparentBackground.png')}
-        blurRadius={3}
+      <View
         style={{
           position: 'absolute',
           alignSelf: 'flex-end',
@@ -59,6 +57,7 @@ const HomeCard: React.FC<{
           bottom: 0,
           width: width / 2,
           padding: DevicePixels[10],
+          backgroundColor: 'rgba(0,0,0,0.7)',
         }}>
         <Text
           style={{
@@ -86,7 +85,7 @@ const HomeCard: React.FC<{
             <Icon name="lock" size={DevicePixels[20]} color={colors.appWhite} />
           </View>
         )}
-      </FastImage>
+      </View>
     </TouchableOpacity>
   );
 };

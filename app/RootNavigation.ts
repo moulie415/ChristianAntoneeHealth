@@ -1,10 +1,10 @@
 import {CommonActions} from '@react-navigation/core';
 import {createNavigationContainerRef} from '@react-navigation/native';
-import {StackParamList, store} from './App';
+import {StackParamList} from './App';
 
 export const navigationRef = createNavigationContainerRef<StackParamList>();
 
-export function navigate(name: keyof StackParamList, params?: any) {
+export function navigate(name: any, params?: any) {
   if (navigationRef.current) {
     navigationRef.current?.navigate(name, params);
   }

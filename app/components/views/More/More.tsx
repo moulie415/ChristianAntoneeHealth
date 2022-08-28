@@ -1,7 +1,5 @@
 import React, {ReactNode} from 'react';
 import auth from '@react-native-firebase/auth';
-// import Shake from '@shakebugs/react-native-shake';
-import crashlytics from '@react-native-firebase/crashlytics';
 import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import MoreProps from '../../../types/views/More';
@@ -9,7 +7,6 @@ import styles from '../../../styles/views/More';
 import {
   Alert,
   FlatList,
-  ImageBackground,
   Share,
   StyleSheet,
   TouchableOpacity,
@@ -25,12 +22,11 @@ import {STORE_LINK} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
 import messaging from '@react-native-firebase/messaging';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
-import Divider from '../../commons/Divider';
-import ListItem from '../../commons/ListItem';
 import {logError} from '../../../helpers/error';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
+import * as Sentry from '@sentry/react-native';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -114,11 +110,6 @@ const More: React.FC<MoreProps> = ({
       onPress: () => navigation.navigate('Support'),
     },
     {
-      title: 'Policies',
-      icon: 'check-circle',
-      onPress: () => navigation.navigate('Policies'),
-    },
-    {
       title: 'Share the app',
       icon: 'share-alt',
       onPress: () =>
@@ -149,7 +140,7 @@ const More: React.FC<MoreProps> = ({
     listItems.push({
       title: 'Force crash (admin)',
       icon: 'car-crash',
-      onPress: crashlytics().crash,
+      onPress: () => Sentry.nativeCrash(),
     });
   }
 
