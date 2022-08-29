@@ -13,6 +13,7 @@ export default interface ProfileProps {
   navigation: ProfileNavigationProp;
   profile: Profile;
   weightSamples: {[key: number]: Sample[]};
+  heightSamples: {[key: number]: Sample[]};
   updateProfileAction: (payload: UpdateProfilePayload) => void;
   getSamplesAction: () => void;
 }

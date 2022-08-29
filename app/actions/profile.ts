@@ -21,6 +21,7 @@ export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const SIGN_UP = 'SIGN_UP';
 export const GET_SAMPLES = 'GET_SAMPLES';
 export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
+export const SET_MONTHLY_HEIGHT_SAMPLES = 'SET_MONTHLY_HEIGHT_SAMPLES';
 export const SET_MONTHLY_STEP_SAMPLES = 'SET_MONTHLY_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
@@ -107,6 +108,11 @@ export interface GetSamplesAction {
 
 export interface SetMonthlyWeightSamplesAction {
   type: typeof SET_MONTHLY_WEIGHT_SAMPLES;
+  payload: {samples: Sample[]; month: number};
+}
+
+export interface SetMonthlyHeightSamplesAction {
+  type: typeof SET_MONTHLY_HEIGHT_SAMPLES;
   payload: {samples: Sample[]; month: number};
 }
 
@@ -256,7 +262,8 @@ export type ProfileActionTypes =
   | GetWeeklyItemsAction
   | SetWeeklyItemsAction
   | RequestPlanAction
-  | SetPlanStatus;
+  | SetPlanStatus
+  | SetMonthlyHeightSamplesAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -289,6 +296,14 @@ export const setMonthlyWeightSamples = (
   month: number,
 ): SetMonthlyWeightSamplesAction => ({
   type: SET_MONTHLY_WEIGHT_SAMPLES,
+  payload: {samples, month},
+});
+
+export const setMonthlyHeightSamples = (
+  samples: Sample[],
+  month: number,
+): SetMonthlyHeightSamplesAction => ({
+  type: SET_MONTHLY_HEIGHT_SAMPLES,
   payload: {samples, month},
 });
 

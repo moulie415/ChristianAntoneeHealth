@@ -5,7 +5,8 @@ import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Unit} from '../types/Profile';
 import {StepSample} from '../types/Shared';
-import { logError } from './error';
+import {logError} from './error';
+import ListItem from '../components/commons/ListItem';
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -166,6 +167,44 @@ export const getWeightSamples = async (unit: Unit, months = 1) => {
     unit: unit === 'imperial' ? 'pound' : 'kg',
   });
   return response;
+};
+
+export const getHeightSamples = async (unit: Unit, months = 1) => {
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.getHeightSamples(
+        {
+          startDate: moment()
+            .subtract(months, 'month')
+            .startOf('day')
+            .toISOString(),
+          endDate: moment().endOf('day').toISOString(),
+          // @ts-ignore
+          unit: unit === 'imperial' ? 'inch' : 'meter',
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(
+              unit === 'imperial'
+                ? results
+                : results.map(result => {
+                    return {...result, value: result.value * 100};
+                  }),
+            );
+          }
+        },
+      );
+    });
+  }
+  const response = await GoogleFit.getHeightSamples({
+    startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
+    endDate: moment().endOf('day').toISOString(),
+  });
+  return response.map(item => {
+    return {...item, value: item.value * 100};
+  });
 };
 
 export const getStepSamples = async (months = 1) => {

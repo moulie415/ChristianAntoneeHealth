@@ -22,6 +22,7 @@ import {
   SET_VIEWED_PLAN,
   SET_WEEKLY_ITEMS,
   SET_PLAN_STATUS,
+  SET_MONTHLY_HEIGHT_SAMPLES,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -39,6 +40,7 @@ export interface ProfileState {
   profile: Profile;
   loggedIn: boolean;
   weightSamples: {[key: number]: Sample[]};
+  heightSamples: {[key: number]: Sample[]};
   stepSamples: {[key: number]: StepSample[]};
   weeklySteps: StepSample[];
   workoutReminders: boolean;
@@ -64,6 +66,7 @@ const initialState: ProfileState = {
   },
   loggedIn: false,
   weightSamples: {},
+  heightSamples: {},
   stepSamples: {},
   weeklySteps: [],
   workoutReminders: true,
@@ -110,6 +113,14 @@ const reducer = (
         ...state,
         weightSamples: {
           ...state.weightSamples,
+          [action.payload.month]: action.payload.samples,
+        },
+      };
+    case SET_MONTHLY_HEIGHT_SAMPLES:
+      return {
+        ...state,
+        heightSamples: {
+          ...state.heightSamples,
           [action.payload.month]: action.payload.samples,
         },
       };

@@ -24,9 +24,13 @@ const Button: React.FC<Props> = ({
   loading,
   variant,
   textStyle,
+  disabled,
   ...props
 }) => {
   const gradient = () => {
+    if (disabled) {
+      return [colors.appGrey, colors.appGrey];
+    }
     if (variant === 'secondary') {
       return [colors.appWhite, colors.appWhite];
     }
@@ -38,9 +42,10 @@ const Button: React.FC<Props> = ({
   return (
     <TouchableOpacity
       {...props}
+      disabled={disabled}
       style={[
         {
-          ...(props.disabled ? {} : {backgroundColor: colors.appBlue}),
+          ...(disabled ? {} : {backgroundColor: colors.appBlue}),
         },
         {
           borderRadius: DevicePixels[10],
