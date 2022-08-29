@@ -105,7 +105,9 @@ const Support: React.FC<SupportProps> = () => {
         <TouchableOpacity
           onPress={() => {
             try {
-              Linking.openURL('mailto:info@christianantonee.com');
+              Linking.openURL(
+                'mailto:info@christianantonee.com?subject=CA Health',
+              );
             } catch (e) {
               Linking.openURL('https://christianantonee.com/contact');
             }
