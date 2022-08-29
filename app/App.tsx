@@ -69,7 +69,6 @@ export type StackParamList = {
   Test: {id: string};
   TestResults: {
     testResult: number;
-    testNote: string;
     test: TestType;
     seconds: number;
   };

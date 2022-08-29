@@ -77,14 +77,13 @@ const SavedTestCard: React.FC<{
               {`${moment(item.createdate).format('MMMM Do YYYY')}`}
             </Text>
             <Text style={{color: '#fff'}}>
-              {'Duration '}
-              {item.seconds
-                ? moment()
+              {test.type === 'countup'
+                ? `Seconds: ${moment()
                     .utc()
                     .startOf('day')
                     .add({seconds: item.seconds})
-                    .format('mm:ss')
-                : 'N/A'}
+                    .format('mm:ss')}`
+                : `Score ${item.result}`}
             </Text>
           </View>
           <View

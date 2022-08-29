@@ -103,6 +103,17 @@ const Test: React.FC<TestProps> = ({
     return moment().utc().startOf('day').add({seconds}).format('mm:ss');
   };
 
+  const getButtonString = () => {
+    if (test.type === 'untimed') {
+      return 'Record result';
+    }
+    if (testStarted) {
+      return 'End';
+    } else {
+      return 'Start';
+    }
+  };
+
   return (
     <View style={{flex: 1}}>
       {showCountdown && (
@@ -208,14 +219,6 @@ const Test: React.FC<TestProps> = ({
                   style={{width: 100, marginVertical: 5}}
                 />
               )}
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  marginBottom: DevicePixels[10],
-                }}>
-                Test note
-              </Text>
-              <Input value={testNote} onChangeText={setTestNote} multiline />
               <Button
                 text="See results"
                 onPress={() =>
@@ -223,7 +226,6 @@ const Test: React.FC<TestProps> = ({
                     test,
                     testResult,
                     seconds,
-                    testNote,
                   })
                 }
                 style={{marginTop: 10}}
@@ -307,7 +309,7 @@ const Test: React.FC<TestProps> = ({
           )}
           {!(testStarted && test.type === 'countdown') && !complete && (
             <Button
-              text={testStarted ? 'End' : 'Start'}
+              text={getButtonString()}
               onPress={() => {
                 if (testStarted) {
                   setComplete(true);
@@ -317,10 +319,26 @@ const Test: React.FC<TestProps> = ({
                   } else {
                     if (test.type === 'untimed') {
                       setTestStarted(true);
+                      setComplete(true);
                     } else {
                       setShowCountdown(true);
                     }
                   }
+                }
+              }}
+              style={{
+                margin: DevicePixels[10],
+              }}
+            />
+          )}
+          {testStarted && test.type !== 'untimed' && !complete && (
+            <Button
+              text="Restart"
+              onPress={() => {
+                if (test.type === 'countup') {
+                  setSeconds(0);
+                } else {
+                  setSeconds(test.time);
                 }
               }}
               style={{
