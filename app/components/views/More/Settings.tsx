@@ -6,6 +6,7 @@ import SettingsProps from '../../../types/views/Settings';
 import {Goal, MyRootState} from '../../../types/Shared';
 import {
   setTestReminders,
+  setTestReminderTime,
   setWorkoutReminders,
   setWorkoutReminderTime,
   updateProfile,
@@ -37,9 +38,15 @@ const Settings: React.FC<SettingsProps> = ({
   profile,
   navigation,
   updateProfileAction,
+  testReminderTime,
+  setTestReminderTimeAction,
 }) => {
-  const [show, setShow] = useState(false);
+  const [showWorkoutDate, setShowWorkoutDate] = useState(false);
+  const [showTestDate, setShowTestDate] = useState(false);
+  const [workoutDate, setWorkoutDate] = useState(new Date(workoutReminderTime));
+  const [testDate, setTestDate] = useState(new Date(testReminderTime));
   const [marketing, setMarketing] = useState(profile.marketing);
+  const [loading, setLoading] = useState(false);
   const [goal, setGoal] = useState<Goal>(
     profile.goal && isValidGoal(profile.goal) ? profile.goal : Goal.STRENGTH,
   );
@@ -50,7 +57,11 @@ const Settings: React.FC<SettingsProps> = ({
     marketing,
   };
 
-  const equal = _.isEqual(newProfile, profile);
+  const equal =
+    _.isEqual(newProfile, profile) &&
+    _.isEqual(workoutDate.toISOString(), workoutReminderTime) &&
+    _.isEqual(testDate.toISOString(), testReminderTime);
+
   return (
     <View style={{flex: 1, backgroundColor: colors.appBlack}}>
       <SafeAreaView>
@@ -119,7 +130,8 @@ const Settings: React.FC<SettingsProps> = ({
           </View>
 
           <TouchableOpacity
-            onPress={() => setShow(true)}
+            onPress={() => setShowTestDate(true)}
+            disabled={Platform.OS === 'ios'}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -137,32 +149,83 @@ const Settings: React.FC<SettingsProps> = ({
                 fontSize: DevicePixels[16],
                 fontWeight: 'bold',
               }}>
-              Time of reminder
+              Time of workout reminder
             </Text>
-            {(show || Platform.OS === 'ios') && (
+            {(showWorkoutDate || Platform.OS === 'ios') && (
               <DateTimePicker
-                disabled={!workoutReminders && !testReminders}
+                disabled={!workoutReminders}
                 style={{width: DevicePixels[90]}}
                 testID="dateTimePicker"
-                value={new Date(workoutReminderTime)}
+                value={new Date(workoutDate)}
                 // placeholderText="Select date"
                 mode="time"
                 // is24Hour={true}
                 display={Platform.OS === 'ios' ? 'compact' : 'default'}
                 onChange={(event, d: Date) => {
                   if (d) {
-                    setWorkoutReminderTimeAction(d);
+                    setWorkoutDate(d);
                   }
-                  setShow(Platform.OS === 'ios');
+                  setShowWorkoutDate(Platform.OS === 'ios');
                 }}
               />
             )}
             {Platform.OS === 'android' && (
               <TouchableOpacity
-                disabled={!workoutReminders && !testReminders}
-                onPress={() => setShow(true)}>
+                disabled={!workoutReminders}
+                onPress={() => setShowWorkoutDate(true)}>
                 <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  {moment(workoutReminderTime).format('HH:mm')}
+                  {moment(workoutDate).format('HH:mm')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setShowTestDate(true)}
+            disabled={Platform.OS === 'ios'}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              margin: DevicePixels[10],
+              backgroundColor: '#212121',
+              height: DevicePixels[60],
+              paddingHorizontal: DevicePixels[10],
+              borderRadius: DevicePixels[5],
+            }}>
+            <Text
+              style={{
+                flex: 1,
+                color: colors.appWhite,
+                fontSize: DevicePixels[16],
+                fontWeight: 'bold',
+              }}>
+              Time of test reminder
+            </Text>
+            {(showTestDate || Platform.OS === 'ios') && (
+              <DateTimePicker
+                disabled={!testReminders}
+                style={{width: DevicePixels[90]}}
+                testID="dateTimePicker"
+                value={new Date(testDate)}
+                // placeholderText="Select date"
+                mode="time"
+                // is24Hour={true}
+                display={Platform.OS === 'ios' ? 'compact' : 'default'}
+                onChange={(event, d: Date) => {
+                  if (d) {
+                    setTestDate(d);
+                  }
+                  setShowTestDate(Platform.OS === 'ios');
+                }}
+              />
+            )}
+            {Platform.OS === 'android' && (
+              <TouchableOpacity
+                disabled={!testReminders}
+                onPress={() => setShowTestDate(true)}>
+                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  {moment(testDate).format('HH:mm')}
                 </Text>
               </TouchableOpacity>
             )}
@@ -193,7 +256,7 @@ const Settings: React.FC<SettingsProps> = ({
                 color: colors.appWhite,
                 fontSize: DevicePixels[16],
                 fontWeight: 'bold',
-                width: '80%'
+                width: '80%',
               }}>
               Receive offers and info on future updates
             </Text>
@@ -203,11 +266,14 @@ const Settings: React.FC<SettingsProps> = ({
 
         <Button
           onPress={() => {
+            setLoading(true);
             navigation.goBack();
+            setTestReminderTimeAction(testDate);
+            setWorkoutReminderTimeAction(workoutDate);
             updateProfileAction(newProfile);
           }}
           text="Save"
-          disabled={equal}
+          disabled={equal || loading}
           style={{
             margin: DevicePixels[10],
             marginBottom: DevicePixels[20],
@@ -225,6 +291,7 @@ const Settings: React.FC<SettingsProps> = ({
 const mapStateToProps = ({profile}: MyRootState) => ({
   workoutReminders: profile.workoutReminders,
   workoutReminderTime: profile.reminderTime,
+  testReminderTime: profile.testReminderTime,
   testReminders: profile.testReminders,
   profile: profile.profile,
 });
@@ -232,6 +299,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 const mapDispatchToProps = {
   setWorkoutRemindersAction: setWorkoutReminders,
   setWorkoutReminderTimeAction: setWorkoutReminderTime,
+  setTestReminderTimeAction: setTestReminderTime,
   setTestRemindersAction: setTestReminders,
   updateProfileAction: updateProfile,
 };

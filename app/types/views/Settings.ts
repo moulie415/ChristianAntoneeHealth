@@ -12,8 +12,10 @@ export default interface SettingsProps {
   navigation: SettingsNavigationProp;
   workoutReminders: boolean;
   workoutReminderTime: string;
+  testReminderTime: string;
   setWorkoutRemindersAction: (disabled: boolean) => void;
   setWorkoutReminderTimeAction: (date: Date) => void;
+  setTestReminderTimeAction: (date: Date) => void;
   testReminders: boolean;
   setTestRemindersAction: (enabled: boolean) => void;
   profile: Profile;

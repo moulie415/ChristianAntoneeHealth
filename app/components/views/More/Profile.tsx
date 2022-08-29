@@ -130,8 +130,6 @@ const Profile: React.FC<ProfileProps> = ({
 
   const latestBMI = weightItems?.data[weightItems.data.length - 1];
 
-  console.log(latestBMI);
-
   return (
     <View style={{flex: 1, backgroundColor: '#040404'}}>
       <ScrollView
@@ -331,33 +329,36 @@ const Profile: React.FC<ProfileProps> = ({
           }}
           withShadow={false}
         />
-        <Text
-          style={{
-            color: colors.appWhite,
-            fontSize: DevicePixels[16],
-            marginHorizontal: DevicePixels[20],
-            marginVertical: DevicePixels[10],
-          }}>
-          Your current BMI is{' '}
-          <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
-        </Text>
+        {latestBMI && (
+          <>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: DevicePixels[16],
+                marginHorizontal: DevicePixels[20],
+                marginVertical: DevicePixels[10],
+              }}>
+              Your current BMI is{' '}
+              <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
+            </Text>
 
-        <Text
-          onPress={() =>
-            Linking.openURL(
-              'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
-            )
-          }
-          style={{
-            color: colors.appWhite,
-            fontWeight: 'bold',
-            textDecorationLine: 'underline',
-            marginHorizontal: DevicePixels[20],
-            marginBottom: DevicePixels[20],
-          }}>
-          What does this mean?
-        </Text>
-
+            <Text
+              onPress={() =>
+                Linking.openURL(
+                  'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
+                )
+              }
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                textDecorationLine: 'underline',
+                marginHorizontal: DevicePixels[20],
+                marginBottom: DevicePixels[20],
+              }}>
+              What does this mean?
+            </Text>
+          </>
+        )}
         <Button
           variant="danger"
           text=" Delete my account"

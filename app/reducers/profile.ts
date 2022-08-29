@@ -45,6 +45,7 @@ export interface ProfileState {
   weeklySteps: StepSample[];
   workoutReminders: boolean;
   reminderTime: string;
+  testReminderTime: string;
   testReminders: boolean;
   connections: {[key: string]: Profile};
   loading: boolean;
@@ -71,6 +72,14 @@ const initialState: ProfileState = {
   weeklySteps: [],
   workoutReminders: true,
   reminderTime: new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate() + 1,
+    9,
+    0,
+    0,
+  ).toISOString(),
+  testReminderTime: new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
     new Date().getDate() + 1,
