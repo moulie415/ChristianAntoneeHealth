@@ -17,7 +17,6 @@
 
     <queries>
       <package android:name="com.google.android.apps.fitness" />
-       <package android:name="com.spotify.music" />
     </queries>
 
     <application

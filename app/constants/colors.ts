@@ -14,7 +14,6 @@ export default {
   musclePrimary: '#1c7ad9',
   muscleSecondary: '#b7d6f6',
   appWhite: '#fff',
-  spotify: '#1DB954',
   secondaryLight: '#FFA841',
   secondaryDark: '#E9632A',
 };

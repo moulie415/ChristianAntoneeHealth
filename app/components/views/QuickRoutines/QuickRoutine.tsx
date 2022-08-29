@@ -22,7 +22,6 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
-import MusicButton from '../../commons/MusicButton';
 import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
@@ -165,7 +164,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     <View
                       style={{
                         flexDirection: 'row',
-                        justifyContent: 'center',
+                        justifyContent: 'space-evenly',
                         alignItems: 'center',
                         marginTop: DevicePixels[30],
                       }}>
@@ -225,33 +224,12 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           </Text>
                         </LinearGradient>
                       </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => setTabIndex(2)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 2
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
-                          style={{
-                            height: DevicePixels[40],
-                            width: DevicePixels[100],
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
-                          }}
-                          start={{x: 0, y: 0}}
-                          end={{x: 1, y: 0}}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: '#fff',
-                              textAlign: 'center',
-                            }}>
-                            Notes
-                          </Text>
-                        </LinearGradient>
+                      <TouchableOpacity onPress={() => setShowModal(true)}>
+                        <Icon
+                          name="info-circle"
+                          color={colors.appWhite}
+                          size={DevicePixels[30]}
+                        />
                       </TouchableOpacity>
                     </View>
                     <View>
@@ -273,14 +251,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                               }}>
                               {exercise.name}
                             </Text>
-                            <TouchableOpacity
-                              onPress={() => setShowModal(true)}>
-                              <Icon
-                                name="info-circle"
-                                color={colors.appWhite}
-                                size={DevicePixels[30]}
-                              />
-                            </TouchableOpacity>
                           </View>
                           <ViewMore text={exercise.description} lines={5} />
                         </>
@@ -290,22 +260,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                         <MusclesDiagram
                           primary={exercise.muscles}
                           secondary={exercise.musclesSecondary}
-                        />
-                      )}
-
-                      {tabIndex === 2 && (
-                        <Input
-                          style={{
-                            height: DevicePixels[100],
-                            textAlignVertical: 'top',
-                            margin: DevicePixels[10],
-                          }}
-                          placeholder="Enter notes here..."
-                          multiline
-                          value={exerciseNotes[exercise.id]}
-                          onChangeText={text =>
-                            setExerciseNoteAction(exercise.id, text)
-                          }
                         />
                       )}
                     </View>

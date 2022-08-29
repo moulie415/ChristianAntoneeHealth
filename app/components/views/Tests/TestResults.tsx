@@ -34,7 +34,7 @@ const TestResults: React.FC<TestResultsProp> = ({
   saveTestAction,
   navigation,
 }) => {
-  const {test, testResult, testNote, seconds} = route.params;
+  const {test, testResult, seconds} = route.params;
   const table = profile.gender === 'male' ? test.mens : test.womens;
   const isTable = 'age' in table;
   const age = profile.dob && moment().diff(profile.dob, 'years');

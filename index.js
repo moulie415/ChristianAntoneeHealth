@@ -129,8 +129,3 @@ PushNotification.configure({
 });
 
 AppRegistry.registerComponent(appName, () => App);
-
-// Shake.start(
-//   '9omC5WlFxzpDL4MZ7eD67j0zbMD70fK8C03UdezX',
-//   'deQnccqkNEQETAX3VPgNgA7QgmUY1mDTCmyR6kR4gdpEc5aXhVbCj2I',
-// );

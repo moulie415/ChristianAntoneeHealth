@@ -34,9 +34,8 @@ export function* schedulePlanReminders() {
   const plan: Plan | undefined = yield select(
     (state: MyRootState) => state.profile.plan,
   );
-  const {testReminders, workoutReminders, reminderTime} = yield select(
-    (state: MyRootState) => state.profile,
-  );
+  const {testReminders, workoutReminders, reminderTime, testReminderTime} =
+    yield select((state: MyRootState) => state.profile);
   if (plan) {
     if (plan.workouts && workoutReminders) {
       plan.workouts.forEach(workout => {
@@ -57,7 +56,9 @@ export function* schedulePlanReminders() {
     if (plan.tests && testReminders) {
       plan.tests.forEach(test => {
         test.dates.forEach(d => {
-          const date = moment(d).set('hours', moment(reminderTime).hours());
+          const date = moment(d)
+            .set('hours', moment(testReminderTime).hours())
+            .set('minutes', moment(testReminderTime).minutes());
           if (date.isAfter(moment())) {
             scheduleLocalNotification(
               'Reminder to do your fitness test for today',
@@ -176,6 +177,7 @@ export default function* planSaga() {
     takeLatest(GET_PLAN, getPlanWorker),
     takeLatest(SET_WORKOUT_REMINDERS, schedulePlanReminders),
     takeLatest(SET_WORKOUT_REMINDER_TIME, schedulePlanReminders),
+    takeLatest(SET_TEST_REMINDERS, schedulePlanReminders),
     takeLatest(SET_TEST_REMINDERS, schedulePlanReminders),
   ]);
 }

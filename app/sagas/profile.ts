@@ -56,6 +56,7 @@ import {
   setWeeklyItems,
   REQUEST_PLAN,
   setPlanStatus,
+  setMonthlyHeightSamples,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -66,6 +67,7 @@ import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {Alert, Platform} from 'react-native';
 import {
   getActivitySamples,
+  getHeightSamples,
   getStepSamples,
   getWeeklySteps,
   getWeightSamples,
@@ -142,6 +144,9 @@ function* getSamplesWorker() {
   const {unit} = yield select((state: MyRootState) => state.profile.profile);
   const weightSamples: Sample[] = yield call(getWeightSamples, unit);
   yield put(setMonthlyWeightSamples(weightSamples, month));
+
+  const heightSamples: Sample[] = yield call(getHeightSamples, unit);
+  yield put(setMonthlyHeightSamples(heightSamples, month));
 
   const activitySamples: HealthValue[] | ActivitySampleResponse[] = yield call(
     getActivitySamples,
@@ -602,7 +607,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
         (user.providerData?.[0] &&
           user.providerData?.[0].providerId !== 'password'))
     ) {
-      // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,
         user.uid,

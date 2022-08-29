@@ -77,6 +77,70 @@ export const getWeightItems = (
   return {data, labels, minMax: [lowest - 5, highest + 5]};
 };
 
+export const getBMIItems = (
+  profile: Profile,
+  monthlyWeightSamples: Sample[],
+  monthlyHeightSamples: Sample[],
+) => {
+  const labels = [];
+  const data = [];
+  const profileHeight = profile.height;
+  const profileWeight = profile.weight;
+  let prevWeight = profileWeight;
+  let prevHeight = profileHeight;
+
+  let lowest =
+    profileWeight && profileHeight ? getBMI(profileHeight, profileWeight) : 0;
+  let highest =
+    profileWeight && profileHeight ? getBMI(profileHeight, profileWeight) : 0;
+
+  for (let i = 6; i >= 0; i--) {
+    const day = moment().subtract(i, 'days');
+    const dayOfYear = day.dayOfYear();
+    const weightSample =
+      (monthlyWeightSamples &&
+        monthlyWeightSamples.find(
+          s => moment(s.startDate).dayOfYear() === dayOfYear,
+        )?.value) ||
+      prevWeight;
+    const heightSample =
+      (monthlyHeightSamples &&
+        monthlyHeightSamples.find(
+          s => moment(s.startDate).dayOfYear() === dayOfYear,
+        )?.value) ||
+      prevHeight;
+    if (i === 6) {
+      const bmi = getBMI(heightSample, weightSample);
+      if (bmi > highest) {
+        highest = bmi;
+      }
+      if (bmi < lowest) {
+        lowest = bmi;
+      }
+      data.push(bmi);
+      prevWeight = weightSample;
+      prevHeight = heightSample;
+    } else {
+      const bmi = getBMI(heightSample, weightSample);
+      data.push(bmi);
+      if (bmi > highest) {
+        highest = bmi;
+      }
+      if (bmi < lowest) {
+        lowest = bmi;
+      }
+    }
+    labels.push(day.format('dd'));
+  }
+  return {data, labels, minMax: [lowest - 5, highest + 5]};
+};
+
+const getBMI = (h: number, w: number) => {
+  const val = w / Math.pow(h / 100, 2);
+  // convert to one decimal place
+  return Math.round(val * 10) / 10;
+};
+
 export const rateApp = () => {
   Rate.rate(
     {

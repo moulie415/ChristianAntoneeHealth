@@ -1200,8 +1200,6 @@ PODS:
     - React
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-version-number (0.3.6):
-    - React
   - react-native-video (6.0.0-alpha.1):
     - React-Core
     - react-native-video/Video (= 6.0.0-alpha.1)
@@ -1402,8 +1400,6 @@ PODS:
     - RNSound/Core (= 0.11.2)
   - RNSound/Core (0.11.2):
     - React-Core
-  - RNSpotifyRemote (0.3.11-5):
-    - React-Core
   - RNSVG (13.0.0):
     - React-Core
   - RNVectorIcons (9.2.0):
@@ -1481,7 +1477,6 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-spinkit (from `../node_modules/react-native-spinkit`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
-  - react-native-version-number (from `../node_modules/react-native-version-number`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-video-cache (from `../node_modules/react-native-video-cache`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -1532,7 +1527,6 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSound (from `../node_modules/react-native-sound`)
-  - RNSpotifyRemote (from `../node_modules/react-native-spotify-remote`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
@@ -1661,8 +1655,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-spinkit"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
-  react-native-version-number:
-    :path: "../node_modules/react-native-version-number"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-video-cache:
@@ -1763,8 +1755,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-snackbar"
   RNSound:
     :path: "../node_modules/react-native-sound"
-  RNSpotifyRemote:
-    :path: "../node_modules/react-native-spotify-remote"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -1860,7 +1850,6 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
   react-native-video: bb6f12a7198db53b261fefb5d609dc77417acc8b
   react-native-video-cache: 1f3d0b6841c9cc962ded4ba70b412f121c8e9620
   react-native-webview: e771bc375f789ebfa02a26939a57dbc6fa897336
@@ -1911,7 +1900,6 @@ SPEC CHECKSUMS:
   RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
-  RNSpotifyRemote: ab3fcbccaebead1684ba455a1d1bbdd123909faf
   RNSVG: 42a0c731b11179ebbd27a3eeeafa7201ebb476ff
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNWatch: dae6c858a2051dbdcfb00b9a86cf4d90400263b4

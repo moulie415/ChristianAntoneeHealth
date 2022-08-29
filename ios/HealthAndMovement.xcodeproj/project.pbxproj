@@ -28,9 +28,6 @@
 		0A8219072844F8B600C94F96 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8219062844F8B600C94F96 /* Singleton.swift */; };
 		0AB82E48278E202400DBEE1A /* notif.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AB82E47278E202400DBEE1A /* notif.wav */; };
 		0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABF7D9925FCF2D0008BB70F /* File.swift */; };
-		0AC6694E284FDEE600AB9B29 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC6694C284FDEE600AB9B29 /* SpotifyiOS.xcframework */; };
-		0AC6694F284FDFE200AB9B29 /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC6694C284FDEE600AB9B29 /* SpotifyiOS.xcframework */; };
-		0AC66950284FDFE200AB9B29 /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC6694C284FDEE600AB9B29 /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0AC669642851598000AB9B29 /* RNiTunes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC669632851598000AB9B29 /* RNiTunes.m */; };
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
@@ -40,8 +37,8 @@
 		1FCB3D0E2E974C08A01C142D /* MontserratAlternates-Regular_bold_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D061EAE97E3849EB89C12E9E /* MontserratAlternates-Regular_bold_italic.ttf */; };
 		3B6A5EC74C744A0EA61D661B /* MontserratAlternates-Regular_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AD4BA247C049729EF0346E /* MontserratAlternates-Regular_bold.ttf */; };
 		5CD423F926804C13B09F3B3A /* MontserratAlternates-Regular_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E260AC1E4BB4057A457FDD1 /* MontserratAlternates-Regular_italic.ttf */; };
-		A59E211C4AB0866A337564C7 /* libPods-HealthAndMovement-HealthAndMovementTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5010891A3438AD92C5335291 /* libPods-HealthAndMovement-HealthAndMovementTests.a */; };
 		B1C6086D7EBF12B779D04F81 /* libPods-HealthAndMovement.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E70BB5F63061D8619F41533 /* libPods-HealthAndMovement.a */; };
+		B2C2A31D0315F0BC0D0D1EDA /* libPods-HealthAndMovement-HealthAndMovementTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5010891A3438AD92C5335291 /* libPods-HealthAndMovement-HealthAndMovementTests.a */; };
 		DAF95037B7784E8C9CFCE5EC /* MontserratAlternates-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD9EB138C2534F24B6693B77 /* MontserratAlternates-Regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -90,17 +87,6 @@
 				0A8218DF2844D0B300C94F96 /* CA Health WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0AC66951284FDFE200AB9B29 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0AC66950284FDFE200AB9B29 /* SpotifyiOS.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -167,7 +153,6 @@
 		0AB82E47278E202400DBEE1A /* notif.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = notif.wav; path = ../app/audio/notif.wav; sourceTree = "<group>"; };
 		0ABF7D9825FCF2D0008BB70F /* HealthAndMovement-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HealthAndMovement-Bridging-Header.h"; sourceTree = "<group>"; };
 		0ABF7D9925FCF2D0008BB70F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		0AC6694C284FDEE600AB9B29 /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SpotifyiOS.xcframework; path = "../node_modules/react-native-spotify-remote/ios/external/SpotifySDK/SpotifyiOS.xcframework"; sourceTree = "<group>"; };
 		0AC669632851598000AB9B29 /* RNiTunes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNiTunes.m; sourceTree = "<group>"; };
 		0AC66965285159AB00AB9B29 /* RNiTunes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNiTunes.h; sourceTree = "<group>"; };
 		0AC9281126BEBEE20027F8AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -193,12 +178,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00E356EB1AD99517003FC87E /* Frameworks */ = {
+		004119BE537150FC9DCDB12A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AC6694E284FDEE600AB9B29 /* SpotifyiOS.xcframework in Frameworks */,
-				A59E211C4AB0866A337564C7 /* libPods-HealthAndMovement-HealthAndMovementTests.a in Frameworks */,
+				B2C2A31D0315F0BC0D0D1EDA /* libPods-HealthAndMovement-HealthAndMovementTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,7 +199,6 @@
 			files = (
 				0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */,
 				B1C6086D7EBF12B779D04F81 /* libPods-HealthAndMovement.a in Frameworks */,
-				0AC6694F284FDFE200AB9B29 /* SpotifyiOS.xcframework in Frameworks */,
 				0A24F535261784EB00859CAB /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +340,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0AC6694C284FDEE600AB9B29 /* SpotifyiOS.xcframework */,
 				0AC9281126BEBEE20027F8AD /* StoreKit.framework */,
 				0A24F534261784EB00859CAB /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
@@ -432,10 +414,10 @@
 			buildPhases = (
 				E19C914532B279B64D606821 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
-				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				4EDA28D59508515673D1221D /* [CP] Copy Pods Resources */,
 				C0F176393C99AC3CC4140F44 /* [CP] Embed Pods Frameworks */,
+				004119BE537150FC9DCDB12A /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -496,7 +478,6 @@
 				2AF9C38EB1203D4EF8B6057B /* [CP] Embed Pods Frameworks */,
 				AD05436B2F3E43999A228698 /* Upload Debug Symbols to Sentry */,
 				0A0FAB9D283FDCEE00DF1236 /* Embed Watch Content */,
-				0AC66951284FDFE200AB9B29 /* Embed Frameworks */,
 				8BE5E331C3F29E3CDD688150 /* [CP-User] [RNGoogleMobileAds] Configuration */,
 				7CC59AA3045D65464D7E250B /* [CP-User] [instabug-reactnative] Upload Sourcemap */,
 			);

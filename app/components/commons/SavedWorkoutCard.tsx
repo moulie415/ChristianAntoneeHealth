@@ -61,7 +61,7 @@ const SavedWorkoutCard: React.FC<{
       key={item.id}>
       <FastImage
         style={{
-          height: DevicePixels[120],
+          height: DevicePixels[140],
           marginHorizontal: DevicePixels[10],
           marginBottom: DevicePixels[10],
           borderRadius: DevicePixels[10],
@@ -73,11 +73,18 @@ const SavedWorkoutCard: React.FC<{
           source={require('../../images/BlackTransparentBackground.png')}
           blurRadius={3}
           style={{
-            height: DevicePixels[120],
+            height: DevicePixels[140],
             justifyContent: 'center',
             padding: DevicePixels[10],
             borderRadius: DevicePixels[10],
           }}>
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontSize: DevicePixels[16],
+            }}>
+            {`${moment(item.createdate).format('MMMM Do YYYY')}`}
+          </Text>
           <View
             style={{
               marginBottom: DevicePixels[5],

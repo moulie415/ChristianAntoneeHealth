@@ -21,11 +21,13 @@ export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const SIGN_UP = 'SIGN_UP';
 export const GET_SAMPLES = 'GET_SAMPLES';
 export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
+export const SET_MONTHLY_HEIGHT_SAMPLES = 'SET_MONTHLY_HEIGHT_SAMPLES';
 export const SET_MONTHLY_STEP_SAMPLES = 'SET_MONTHLY_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
 export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
+export const SET_TEST_REMINDER_TIME = 'SET_TEST_REMINDER_TIME';
 export const SET_TEST_REMINDERS = 'SET_TEST_REMINDERS';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
 export const SET_PREMIUM = 'SET_PREMIUM';
@@ -110,6 +112,11 @@ export interface SetMonthlyWeightSamplesAction {
   payload: {samples: Sample[]; month: number};
 }
 
+export interface SetMonthlyHeightSamplesAction {
+  type: typeof SET_MONTHLY_HEIGHT_SAMPLES;
+  payload: {samples: Sample[]; month: number};
+}
+
 export interface SetMonthlyStepSamplesAction {
   type: typeof SET_MONTHLY_STEP_SAMPLES;
   payload: {samples: StepSample[]; month: number};
@@ -127,6 +134,11 @@ export interface SetWorkoutRemindersAction {
 
 export interface SetWorkoutReminderTimeAction {
   type: typeof SET_WORKOUT_REMINDER_TIME;
+  payload: Date;
+}
+
+export interface SetTestReminderTimeAction {
+  type: typeof SET_TEST_REMINDER_TIME;
   payload: Date;
 }
 
@@ -237,6 +249,7 @@ export type ProfileActionTypes =
   | UpdateProfileAction
   | SetWorkoutRemindersAction
   | SetWorkoutReminderTimeAction
+  | SetTestReminderTimeAction
   | SetTestRemindersAction
   | HandleAuthAction
   | SetPremiumAction
@@ -256,7 +269,8 @@ export type ProfileActionTypes =
   | GetWeeklyItemsAction
   | SetWeeklyItemsAction
   | RequestPlanAction
-  | SetPlanStatus;
+  | SetPlanStatus
+  | SetMonthlyHeightSamplesAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -292,6 +306,14 @@ export const setMonthlyWeightSamples = (
   payload: {samples, month},
 });
 
+export const setMonthlyHeightSamples = (
+  samples: Sample[],
+  month: number,
+): SetMonthlyHeightSamplesAction => ({
+  type: SET_MONTHLY_HEIGHT_SAMPLES,
+  payload: {samples, month},
+});
+
 export const setMonthlyStepSamples = (
   samples: StepSample[],
   month: number,
@@ -316,6 +338,13 @@ export const setWorkoutReminderTime = (
   payload: Date,
 ): SetWorkoutReminderTimeAction => ({
   type: SET_WORKOUT_REMINDER_TIME,
+  payload,
+});
+
+export const setTestReminderTime = (
+  payload: Date,
+): SetTestReminderTimeAction => ({
+  type: SET_TEST_REMINDER_TIME,
   payload,
 });
 

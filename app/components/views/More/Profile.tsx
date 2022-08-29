@@ -6,6 +6,7 @@ import {
   View,
   Alert,
   ImageBackground,
+  Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {LineChart} from 'react-native-chart-kit';
@@ -20,7 +21,7 @@ import * as _ from 'lodash';
 import {getSamples, updateProfile} from '../../../actions/profile';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform} from 'react-native';
-import {getWeightItems} from '../../../helpers';
+import {getBMIItems, getWeightItems} from '../../../helpers';
 import {weightChartConfig} from '../../../constants';
 import {isAvailable, isEnabled} from '../../../helpers/biometrics';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -42,10 +43,16 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Modal from '../../commons/Modal';
+import {Picker} from 'react-native-wheel-pick';
+
+const heights = [...Array(501).keys()];
+const weights = [...Array(501).keys()];
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
   weightSamples,
+  heightSamples,
   navigation,
   updateProfileAction,
   getSamplesAction,
@@ -58,6 +65,8 @@ const Profile: React.FC<ProfileProps> = ({
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [avatar, setAvatar] = useState(profile.avatar);
   const [loading, setLoading] = useState(false);
+  const [showHeightModal, setShowHeightModal] = useState(false);
+  const [showWeightModal, setShowWeightModal] = useState(false);
 
   const newProfile = {
     ...profile,
@@ -72,12 +81,13 @@ const Profile: React.FC<ProfileProps> = ({
   const equal = _.isEqual(newProfile, profile);
 
   const monthlyWeightSamples = weightSamples[moment().month()];
+  const monthlyHeightSamples = heightSamples[moment().month()];
   const weightItems: {
     labels: string[];
     data: number[];
     minMax: number[];
   } = useMemo(() => {
-    return getWeightItems(profile, monthlyWeightSamples);
+    return getBMIItems(profile, monthlyWeightSamples, monthlyHeightSamples);
   }, [monthlyWeightSamples, profile]);
 
   const weightData = {
@@ -117,6 +127,8 @@ const Profile: React.FC<ProfileProps> = ({
     },
     [],
   );
+
+  const latestBMI = weightItems?.data[weightItems.data.length - 1];
 
   return (
     <View style={{flex: 1, backgroundColor: '#040404'}}>
@@ -254,7 +266,7 @@ const Profile: React.FC<ProfileProps> = ({
                 justifyContent: 'space-evenly',
                 marginTop: DevicePixels[20],
               }}>
-              <View>
+              <TouchableOpacity onPress={() => setShowWeightModal(true)}>
                 <Text
                   style={{
                     fontSize: DevicePixels[30],
@@ -262,13 +274,13 @@ const Profile: React.FC<ProfileProps> = ({
                     color: colors.appWhite,
                     textAlign: 'center',
                   }}>
-                  {profile.weight}
+                  {weight}
                 </Text>
                 <Text
                   style={{fontSize: DevicePixels[17], color: colors.appWhite}}>
                   Weight (kg)
                 </Text>
-              </View>
+              </TouchableOpacity>
               <View
                 style={{
                   height: DevicePixels[30],
@@ -278,7 +290,7 @@ const Profile: React.FC<ProfileProps> = ({
                   alignSelf: 'center',
                 }}
               />
-              <View>
+              <TouchableOpacity onPress={() => setShowHeightModal(true)}>
                 <Text
                   style={{
                     fontSize: DevicePixels[30],
@@ -286,13 +298,13 @@ const Profile: React.FC<ProfileProps> = ({
                     color: colors.appWhite,
                     textAlign: 'center',
                   }}>
-                  {profile.height}
+                  {height}
                 </Text>
                 <Text
                   style={{fontSize: DevicePixels[17], color: colors.appWhite}}>
                   Height (cm)
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </SafeAreaView>
         </LinearGradient>
@@ -304,7 +316,7 @@ const Profile: React.FC<ProfileProps> = ({
             fontWeight: 'bold',
             fontSize: DevicePixels[24],
           }}>
-          Weight tracking
+          BMI tracking
         </Text>
         <LineChart
           data={weightData}
@@ -312,8 +324,41 @@ const Profile: React.FC<ProfileProps> = ({
           height={DevicePixels[200]}
           chartConfig={weightChartConfig}
           // withVerticalLines={false}
+          formatYLabel={label => {
+            return label.slice(0, -1);
+          }}
           withShadow={false}
         />
+        {latestBMI && (
+          <>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: DevicePixels[16],
+                marginHorizontal: DevicePixels[20],
+                marginVertical: DevicePixels[10],
+              }}>
+              Your current BMI is{' '}
+              <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
+            </Text>
+
+            <Text
+              onPress={() =>
+                Linking.openURL(
+                  'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
+                )
+              }
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                textDecorationLine: 'underline',
+                marginHorizontal: DevicePixels[20],
+                marginBottom: DevicePixels[20],
+              }}>
+              What does this mean?
+            </Text>
+          </>
+        )}
         <Button
           variant="danger"
           text=" Delete my account"
@@ -360,6 +405,68 @@ const Profile: React.FC<ProfileProps> = ({
           bottom: 0,
         }}
       />
+      <Modal
+        visible={showHeightModal}
+        onRequestClose={() => setShowHeightModal(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            width: '90%',
+            alignSelf: 'center',
+            borderRadius: DevicePixels[10],
+          }}>
+          <Picker
+            style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
+            /* @ts-ignore */
+            selectedValue={String(height)}
+            pickerData={heights.map(value => {
+              return {
+                label: `${value.toString()} ${
+                  unit === 'metric' ? 'cm' : 'inches'
+                }`,
+                value: String(value),
+              };
+            })}
+            onValueChange={val => setHeight(Number(val))}
+          />
+          <Button
+            text="Close"
+            style={{margin: DevicePixels[10]}}
+            onPress={() => setShowHeightModal(false)}
+          />
+        </View>
+      </Modal>
+      <Modal
+        visible={showWeightModal}
+        onRequestClose={() => setShowWeightModal(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            width: '90%',
+            alignSelf: 'center',
+            borderRadius: DevicePixels[10],
+          }}>
+          <Picker
+            style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
+            /* @ts-ignore */
+            selectedValue={String(weight)}
+            pickerData={weights.map(value => {
+              return {
+                label: `${value.toString()} ${
+                  unit === 'metric' ? 'kg' : 'lbs'
+                }`,
+                value: String(value),
+              };
+            })}
+            onValueChange={val => setWeight(Number(val))}
+          />
+          <Button
+            text="Close"
+            style={{margin: DevicePixels[10]}}
+            onPress={() => setShowWeightModal(false)}
+          />
+        </View>
+      </Modal>
       <AbsoluteSpinner loading={loading} />
     </View>
   );
@@ -368,6 +475,7 @@ const Profile: React.FC<ProfileProps> = ({
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   weightSamples: profile.weightSamples,
+  heightSamples: profile.heightSamples,
 });
 
 const mapDispatchToProps = {

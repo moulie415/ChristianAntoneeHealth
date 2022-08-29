@@ -25,10 +25,6 @@ jobs:
           REVENUE_CAT_ANDROID_KEY: ${{ secrets.REVENUE_CAT_ANDROID_KEY }}
           FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
           FACEBOOK_CLIENT_TOKEN: ${{ secrets.FACEBOOK_CLIENT_TOKEN }}
-          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-          SPOTIFY_REDIRECT_URL: ${{ secrets.SPOTIFY_REDIRECT_URL }}
-          SPOTIFY_TOKEN_REFRESH_URL: ${{ secrets.SPOTIFY_TOKEN_REFRESH_URL }}
-          SPOTIFY_TOKEN_SWAP_URL: ${{ secrets.SPOTIFY_TOKEN_SWAP_URL }}
           INSTABUG_DEV_TOKEN: ${{ secrets.INSTABUG_DEV_TOKEN }}
           INSTABUG_PROD_TOKEN: ${{ secrets.INSTABUG_PROD_TOKEN }}
         run: |

@@ -69,7 +69,6 @@ export type StackParamList = {
   Test: {id: string};
   TestResults: {
     testResult: number;
-    testNote: string;
     test: TestType;
     seconds: number;
   };
@@ -132,7 +131,6 @@ const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // Shake.setInvokeShakeOnShakeDeviceEvent(false);
     Purchases.setDebugLogsEnabled(true);
     Purchases.setup(
       Platform.OS === 'ios'

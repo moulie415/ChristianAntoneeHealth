@@ -1,10 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
-  Dimensions,
-  ImageBackground,
   ScrollView,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
@@ -28,7 +25,6 @@ import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import ResistanceScaleInfo from './ResistanceScaleInfo';
 import Button from '../../commons/Button';
-import MusicButton from '../../commons/MusicButton';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';

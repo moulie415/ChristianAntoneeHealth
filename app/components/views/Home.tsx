@@ -44,7 +44,10 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
               justifyContent: 'space-between',
               margin: DevicePixels[20],
             }}>
-            <View />
+            <FastImage
+              source={require('../../images/logo.png')}
+              style={{width: DevicePixels[57], height: DevicePixels[50]}}
+            />
             <TouchableOpacity
               onPress={() => navigation.navigate('Profile')}
               style={{

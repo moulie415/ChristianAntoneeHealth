@@ -249,39 +249,41 @@ const Premium: React.FC<PremiumProps> = ({
                   </Text>
                 </View>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: DevicePixels[20],
-                }}>
-                <Icon
-                  style={{marginRight: DevicePixels[10]}}
-                  size={DevicePixels[20]}
-                  color={colors.appWhite}
-                  name="calendar-alt"
-                />
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: colors.appWhite,
-                      fontSize: DevicePixels[18],
-                    }}>
-                    {`Customized plans ${
-                      !settings.plansEnabled ? '(coming soon)' : ''
-                    }`}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: DevicePixels[10],
-                      color: colors.appWhite,
-                    }}>
-                    Purchase customized monthly plans tailored specifically to
-                    you. Get your first plan{' '}
-                    <Text style={{fontWeight: 'bold'}}>FREE</Text> with premium!
-                  </Text>
+              {settings.plansEnabled && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginBottom: DevicePixels[20],
+                  }}>
+                  <Icon
+                    style={{marginRight: DevicePixels[10]}}
+                    size={DevicePixels[20]}
+                    color={colors.appWhite}
+                    name="calendar-alt"
+                  />
+                  &
+                  <View style={{flex: 1}}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: colors.appWhite,
+                        fontSize: DevicePixels[18],
+                      }}>
+                      Customized plans
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: DevicePixels[10],
+                        color: colors.appWhite,
+                      }}>
+                      Purchase customized monthly plans tailored specifically to
+                      you. Get your first plan{' '}
+                      <Text style={{fontWeight: 'bold'}}>FREE</Text> with
+                      premium!
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              )}
               {settings.ads && (
                 <View
                   style={{
