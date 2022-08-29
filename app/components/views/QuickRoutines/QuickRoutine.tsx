@@ -22,7 +22,6 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
-import MusicButton from '../../commons/MusicButton';
 import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';

@@ -132,7 +132,6 @@ const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // Shake.setInvokeShakeOnShakeDeviceEvent(false);
     Purchases.setDebugLogsEnabled(true);
     Purchases.setup(
       Platform.OS === 'ios'

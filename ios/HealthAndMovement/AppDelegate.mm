@@ -11,7 +11,6 @@
 #import <UserNotifications/UserNotifications.h>
 #import "RCTAppleHealthKit.h"
 #import <React/RCTLinkingManager.h>
-#import <RNSpotifyRemote.h>
 #import "AVFoundation/AVFoundation.h"
 
 #import <React/RCTAppSetupUtils.h>
@@ -81,7 +80,6 @@
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
   return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] ||
                                     [RNGoogleSignin application:application openURL:url options:options] ||
-              [[RNSpotifyRemoteAuth sharedInstance] application:application openURL:url options:options] ||
                                     [RCTLinkingManager application:application openURL:url options:options];
 }
 

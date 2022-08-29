@@ -7745,13 +7745,6 @@ react-native-splash-screen@^3.3.0:
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz#3af71ed17afe50fee69590a45aec399d071ead02"
   integrity sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==
 
-react-native-spotify-remote@0.3.11-5:
-  version "0.3.11-5"
-  resolved "https://registry.yarnpkg.com/react-native-spotify-remote/-/react-native-spotify-remote-0.3.11-5.tgz#2638c7fecec28f8e7cc42b850cfc4271c84aa506"
-  integrity sha512-6i6ibtIJOX8BywxlSWmb3GKOVCL6kCASFdDtnvfdVz35BtL/IPdxCd/jk4/v1yqm3HU6EWjNyS1d91m/Yk0R+g==
-  dependencies:
-    react-native-events "^1.0.21"
-
 react-native-star-rating@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-star-rating/-/react-native-star-rating-1.1.0.tgz#57fcd023c63e947427c4dbbd1c8f4cc49e5c48ce"
@@ -7831,11 +7824,6 @@ react-native-vector-icons@^9.2.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
-
-react-native-version-number@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/react-native-version-number/-/react-native-version-number-0.3.6.tgz#dd8b1435fc217df0a166d7e4a61fdc993f3e7437"
-  integrity sha512-TdyXiK90NiwmSbmAUlUBOV6WI1QGoqtvZZzI5zQY4fKl67B3ZrZn/h+Wy/OYIKKFMfePSiyfeIs8LtHGOZ/NgA==
 
 react-native-video-cache@^2.7.3:
   version "2.7.3"

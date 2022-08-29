@@ -6,7 +6,6 @@ import tests from './tests';
 import quickRoutines from './quickRoutines';
 import education from './education';
 import settings from './settings';
-import music from './music';
 import {combineReducers} from 'redux';
 
 const config = {
@@ -33,18 +32,6 @@ const educationPersistConfig = {
   blacklist: ['loading'],
 };
 
-const musicPersistConfig = {
-  key: 'music',
-  storage: AsyncStorage,
-  blacklist: [
-    'loading',
-    'spotifyIsConnected',
-    'spotifyPlayerState',
-    'appleNowPlaying',
-    'applePlaybackState',
-  ],
-};
-
 const rootReducer = combineReducers({
   profile: persistReducer(profilePersistConfig, profile),
   exercises: persistReducer(exercisesPersistConfig, exercises),
@@ -52,7 +39,6 @@ const rootReducer = combineReducers({
   quickRoutines,
   education: persistReducer(educationPersistConfig, education),
   settings,
-  music: persistReducer(musicPersistConfig, music),
 });
 
 export default persistReducer(config, rootReducer);

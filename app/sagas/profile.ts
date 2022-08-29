@@ -602,7 +602,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
         (user.providerData?.[0] &&
           user.providerData?.[0].providerId !== 'password'))
     ) {
-      // Shake.setMetadata('uid', user.uid);
       const doc: FirebaseFirestoreTypes.DocumentSnapshot = yield call(
         api.getUser,
         user.uid,

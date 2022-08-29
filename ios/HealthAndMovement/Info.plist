@@ -105,7 +105,6 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
-		<string>spotify</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -121,7 +120,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>So you can save workouts with a photo</string>
+	<string>So you can take a photo for your profile picture</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Read and understand health data.</string>
 	<key>NSHealthUpdateUsageDescription</key>
@@ -129,9 +128,11 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>So you can save wrokouts with a image from your library</string>
+	<string>So you can upload a photo for your profile picture</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants access to your Music library</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>So you can record audio when reporting a problem with the app</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

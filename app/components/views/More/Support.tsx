@@ -103,9 +103,13 @@ const Support: React.FC<SupportProps> = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            Linking.openURL('https://christianantonee.com/contact')
-          }
+          onPress={() => {
+            try {
+              Linking.openURL('mailto:info@christianantonee.com');
+            } catch (e) {
+              Linking.openURL('https://christianantonee.com/contact');
+            }
+          }}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -137,7 +141,6 @@ const Support: React.FC<SupportProps> = () => {
             Contact us
           </Text>
         </TouchableOpacity>
-
       </SafeAreaView>
     </FastImage>
   );

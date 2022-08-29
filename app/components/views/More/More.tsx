@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react';
 import auth from '@react-native-firebase/auth';
-import VersionNumber from 'react-native-version-number';
 import {connect} from 'react-redux';
 import MoreProps from '../../../types/views/More';
 import styles from '../../../styles/views/More';
@@ -27,6 +26,7 @@ import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import * as Sentry from '@sentry/react-native';
+import {getBuildNumber, getVersion} from 'react-native-device-info';
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -124,14 +124,9 @@ const More: React.FC<MoreProps> = ({
       icon: 'star',
       onPress: () => navigation.navigate('Rating'),
     },
-    // {
-    //   title: 'Report a problem',
-    //   icon: 'bug',
-    //   onPress: () => Shake.show(),
-    // },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
     {
-      title: `v${VersionNumber.appVersion} (${VersionNumber.buildVersion})`,
+      title: `v${getVersion()} (${getBuildNumber()})`,
       icon: 'code',
     },
   ];
