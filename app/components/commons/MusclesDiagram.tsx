@@ -16,10 +16,10 @@ const DefaultPath: React.FC<{d: string}> = ({d}) => {
   return (
     <Path
       fill="none"
-      stroke="#000"
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={0.1}
+      strokeWidth={0.2}
       d={d}
     />
   );
@@ -125,12 +125,11 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#fff',
           marginHorizontal: DevicePixels[20],
           paddingVertical: DevicePixels[10],
           flexDirection: 'row',
           borderRadius: DevicePixels[10],
-          marginBottom: DevicePixels[10]
+          marginBottom: DevicePixels[10],
         }}>
         {hasFront && (
           <Svg width="50%" height={DevicePixels[150]} viewBox="0 0 12.62 47.06">
