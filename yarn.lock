@@ -897,15 +897,13 @@
   resolved "https://registry.yarnpkg.com/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
-"@gorhom/bottom-sheet@^4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.3.tgz#4c31f214342faa0ba9cd453a98f8c1e0e780c428"
-  integrity sha512-ZEbCLbvLaEVNa9c+om/o9Le0q7o9GkEM7smhuoFkqj9CIjv3XbpZof7uEKV86yyta+ONAInNYrCdVSpYQ1Rjkg==
+"@gorhom/bottom-sheet@^4.4.4":
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.4.tgz#101edc2ad815be73a4122d342ce8b65167e1f67c"
+  integrity sha512-1hJDbdgUMpNVHvOGi6/bWC2CUCz08nzi7XlQpZdl663dVq/kex6Hd0gc7Af5QCJdoeUpWoAvANjWzgDO/Ck8mQ==
   dependencies:
     "@gorhom/portal" "1.0.13"
     invariant "^2.2.4"
-    nanoid "^3.3.3"
-    react-native-redash "^16.1.1"
 
 "@gorhom/portal@1.0.13":
   version "1.0.13"
@@ -2109,10 +2107,10 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-vector-icons@^6.4.11":
-  version "6.4.11"
-  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.11.tgz#8783d4248377aec14e06420397037b96ff242684"
-  integrity sha512-jUy9CsTu1Cl3k6WRE7GnqBRHbuSv55PRVfMEel+fF73HKpF8g5JmTzTVMBDX8NfY3PlfIY5VlxiqWZxdjm38Pg==
+"@types/react-native-vector-icons@^6.4.12":
+  version "6.4.12"
+  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.12.tgz#4b9c63bf85eb42fca7c5b0a55ec317900e4fb427"
+  integrity sha512-gSXtv3NMOsRwSXJ/gvGebm7CNjHbkeFKCse9h/Pvi+x2yjCLOkJR1FBfec06DhaFJpsK7Y8WRQpwOS0eLqx5Rg==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -2333,11 +2331,6 @@ abortcontroller-polyfill@^1.4.0:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.3.tgz#1b5b487bd6436b5b764fd52a612509702c3144b5"
   integrity sha512-zetDJxd89y3X99Kvo4qFx8GKlt6GsvN3UcRZHwU6iFA/0KiOmhkTVhe8oRoTBiTVPZu09x3vCra47+w8Yz1+2Q==
-
-abs-svg-path@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/abs-svg-path/-/abs-svg-path-0.1.1.tgz#df601c8e8d2ba10d4a76d625e236a9a39c2723bf"
-  integrity sha512-d8XPSGjfyzlXC3Xx891DJRyZfqk5JU0BJrDQcsWomFIV1/BIzPW5HDH5iDdWpqWaav0YVIEzT1RHTwWr0FFshA==
 
 absolute-path@^0.0.0:
   version "0.0.0"
@@ -6558,7 +6551,7 @@ mute-stream@0.0.7:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
   integrity sha512-r65nCZhrbXXb6dXOACihYApHw2Q6pV0M3V0PSxd74N0+D8nzAdEAITq2oAjA1jVnKI+tGvEBUpqiMh0+rW6zDQ==
 
-nanoid@^3.1.23, nanoid@^3.3.1, nanoid@^3.3.3:
+nanoid@^3.1.23, nanoid@^3.3.1:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
@@ -6675,13 +6668,6 @@ normalize-path@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
-
-normalize-svg-path@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/normalize-svg-path/-/normalize-svg-path-1.1.0.tgz#0e614eca23c39f0cffe821d6be6cd17e569a766c"
-  integrity sha512-r9KHKG2UUeB5LoTouwDzBy2VxXlHsiM6fyLQvnJa0S5hrhzqElH/CH7TUGhT1fVvIYBIKf3OpY4YJ4CK+iaqHg==
-  dependencies:
-    svg-arc-to-cubic-bezier "^3.0.0"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -7049,11 +7035,6 @@ parse-json@^5.0.0:
     error-ex "^1.3.1"
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
-
-parse-svg-path@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/parse-svg-path/-/parse-svg-path-0.1.2.tgz#7a7ec0d1eb06fa5325c7d3e009b859a09b5d49eb"
-  integrity sha512-JyPSBnkTJ0AI8GGJLfMXvKq42cj5c006fnLz6fXy6zfoVjJizi8BNTpu8on8ziI1cKy9d9DGNuY17Ce7wuejpQ==
 
 parse5@6.0.1:
   version "6.0.1"
@@ -7424,10 +7405,10 @@ react-native-calendar-events@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz#6cb78bf712457ca9928dae95b428c91e7b895ae0"
   integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
 
-react-native-calendars@^1.1288.2:
-  version "1.1288.2"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1288.2.tgz#42e41f7bfb25f1be0bbb01b12435fddfbae8e836"
-  integrity sha512-GzQ8+qeMfICms8LjMov+zH4Ne4fy/gHQbXjUfWiR/fqs0NqtIxYYGyujj9bObqXSH/ZRQafmJVKUc4Yv2F5tvA==
+react-native-calendars@^1.1289.0:
+  version "1.1289.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1289.0.tgz#f3c2687053aeed51d95738afc5e797c3a6c862e0"
+  integrity sha512-qaqRliQxM+05kCPd04d7xryRxpFC/XHgxyOThSeZRdEXP29AQLrWDHZNhUUXALe2pVWNTJIzt6jnWsgs2gAmYg==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     immutable "^4.0.0-rc.12"
@@ -7500,10 +7481,10 @@ react-native-countdown-circle-timer@^2.5.4:
   resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-2.5.4.tgz#9e6ff6b2ee22e2025fcd9a845d9ee7f48cdb3cec"
   integrity sha512-wiO+s8EwEMfPt4G16zBWGpIiMwEQQRtSv8shgr7m7QkV69tmKlLrHquesYZjGvLNOQhYRAIZPJSf1ZJNZi1FDA==
 
-react-native-device-info@^10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.0.2.tgz#17cd96df277cca5a22fb80409527c181a08d4ed1"
-  integrity sha512-6XY8EctYqNEX6EHDoHxz3yONOYxCHKrgEdStP7HZDYzFXb1JB5BFt7UbXDWrmihXUZDv06sBsjN26+Tp0EajXw==
+react-native-device-info@^10.1.1:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.1.1.tgz#ef9795638e4e1427b8e92b37e1ff85dda5a2192f"
+  integrity sha512-yvFzqDXGgDx+9sU098iF4dKBge1z3sDULmemL3na32pz41uQhvqSCMdRa6WlH7WFM8RFBSPq5IMnn9EBKtiAFg==
 
 react-native-draggable-flatlist@*, react-native-draggable-flatlist@^3.1.2:
   version "3.1.2"
@@ -7678,15 +7659,6 @@ react-native-reanimated@^2.10.0:
     setimmediate "^1.0.5"
     string-hash-64 "^1.0.3"
 
-react-native-redash@^16.1.1:
-  version "16.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.3.0.tgz#a9112ff1b0e0b506a2e2ae50967597e73b69d343"
-  integrity sha512-dhmeYbQ/usGzxZSGZmzmRuIFF2LrtJUKqgseKgf9Jdj0JQ7VM20m/LqTg60+wjxeiyAh2D/vKsQ2U7rMkuoplQ==
-  dependencies:
-    abs-svg-path "^0.1.1"
-    normalize-svg-path "^1.0.1"
-    parse-svg-path "^0.1.2"
-
 react-native-render-html@^6.3.4:
   version "6.3.4"
   resolved "https://registry.yarnpkg.com/react-native-render-html/-/react-native-render-html-6.3.4.tgz#01684897bed2de84829e540a1dbb3a7bdf9d0e57"
@@ -7764,10 +7736,10 @@ react-native-svg-transformer@^1.0.0:
     "@svgr/plugin-svgo" "^6.1.2"
     path-dirname "^1.0.2"
 
-react-native-svg@^13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.0.0.tgz#a26d28446aeb7e4bed7e1bb1cb42f2eb5462e652"
-  integrity sha512-CkWB8BYGjvmGiLqqJRHfTH8/Q5tJyhltUYCmi20sqOCbjfTR5dkQUUafV0oUOhvK2lS+zuB9Dpf1Beo92rls5Q==
+react-native-svg@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.1.0.tgz#2bad1dbee4c093af4abf45b356571715ae5f1c17"
+  integrity sha512-drYa+0piaQ27xFEp1MxRBSu6eHbR37qQITKTHNOmPv1NhPUyZ5tH4ICWe7aTLlB2u6KEhpSHl63HJi3jpZFtvw==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"
@@ -7854,10 +7826,10 @@ react-native-watch-connectivity@^1.0.11:
   dependencies:
     lodash.sortby "^4.7.0"
 
-react-native-webview@^11.23.0:
-  version "11.23.0"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.23.0.tgz#603a584236da2e993906e6a094f165dcac3a1fdb"
-  integrity sha512-mGrgsMnYcQONvQy59xpBn87sKqkCsSkqIDRo+c2Ov4ISYl1j90wFBs+qViVJRWdoNHVuoCAZ4nZkJ65mhDpHhA==
+react-native-webview@^11.23.1:
+  version "11.23.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.23.1.tgz#6a4bf2620e491dd4fecf4e6dc079005117fae12c"
+  integrity sha512-bmqsdg4RYOUYD37R9XTrQALm7eD62KbLNPRfgvpLGd1SjaurvAjjsLrLN4mt6yOtKOMKeZvlcAl3x6De6cCQsA==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
@@ -8916,11 +8888,6 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
-
-svg-arc-to-cubic-bezier@^3.0.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/svg-arc-to-cubic-bezier/-/svg-arc-to-cubic-bezier-3.2.0.tgz#390c450035ae1c4a0104d90650304c3bc814abe6"
-  integrity sha512-djbJ/vZKZO+gPoSDThGNpKDO+o+bAeA4XQKovvkNCqnIS2t+S4qnLAGQhyyrulhCFRl1WWzAp0wUDV8PpTVU3g==
 
 svg-parser@^2.0.4:
   version "2.0.4"
