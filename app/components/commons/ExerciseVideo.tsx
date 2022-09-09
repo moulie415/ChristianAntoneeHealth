@@ -8,6 +8,7 @@ import {logError} from '../../helpers/error';
 import colors from '../../constants/colors';
 import moment from 'moment';
 import convertToProxyURL from 'react-native-video-cache';
+import {Slider} from '@miblanchard/react-native-slider';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -25,10 +26,10 @@ const ExerciseVideo: React.FC<{
         style={{height: getVideoHeight()}}
         ref={ref}
         onError={e => console.error(e)}
-        // repeat
-        onEnd={() => {
-          ref.current?.seek(0);
-        }}
+        repeat
+        // onEnd={() => {
+        //   ref.current?.seek(0);
+        // }}
         paused={paused}
         onTouchStart={() => setHideTime(moment().unix())}
         disableFocus
