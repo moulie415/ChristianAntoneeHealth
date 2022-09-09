@@ -164,7 +164,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-                <FastImage
+                <View
                   style={{
                     position: 'absolute',
                     left: 0,
@@ -174,8 +174,8 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     borderTopLeftRadius: DevicePixels[30],
                     borderTopRightRadius: DevicePixels[30],
                     overflow: 'hidden',
-                  }}
-                  source={require('../../../images/old-black-background-grunge.png')}>
+                    backgroundColor: colors.appGrey,
+                  }}>
                   <ScrollView keyboardShouldPersistTaps="always">
                     <View
                       style={{
@@ -404,7 +404,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       style={{margin: DevicePixels[10]}}
                     />
                   </ScrollView>
-                </FastImage>
+                </View>
               </View>
             );
           })}

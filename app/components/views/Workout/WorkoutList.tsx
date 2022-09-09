@@ -1,4 +1,4 @@
-import {Dimensions, FlatList, ImageBackground} from 'react-native';
+import {Dimensions, FlatList, ImageBackground, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
@@ -22,6 +22,7 @@ import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Header from '../../commons/Header';
 import WorkoutCard from '../../commons/WorkoutCard';
 import FastImage from 'react-native-fast-image';
+import colors from '../../../constants/colors';
 
 const {height} = Dimensions.get('screen');
 
@@ -108,10 +109,7 @@ const WorkoutList: React.FC<{
   });
 
   return (
-    <FastImage
-      source={require('../../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
         <FlatList
@@ -144,7 +142,7 @@ const WorkoutList: React.FC<{
         />
         <AbsoluteSpinner loading={loading} />
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 

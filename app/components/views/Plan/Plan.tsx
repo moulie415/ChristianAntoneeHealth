@@ -119,9 +119,7 @@ const Plan: React.FC<{
   return (
     <>
       {hasPlanLeft ? (
-        <FastImage
-          source={require('../../../images/old-black-background-grunge.png')}
-          style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
             <TabView
               renderTabBar={props => {
@@ -182,7 +180,7 @@ const Plan: React.FC<{
               initialLayout={{width: layout.width}}
             />
           </SafeAreaView>
-        </FastImage>
+        </View>
       ) : (
         <FastImage
           style={{flex: 1}}

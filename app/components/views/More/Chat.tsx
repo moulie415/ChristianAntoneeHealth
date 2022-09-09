@@ -22,7 +22,7 @@ import {
   setRead,
 } from '../../../actions/profile';
 import Message from '../../../types/Message';
-import {ImageBackground, Platform, TouchableOpacity} from 'react-native';
+import {ImageBackground, Platform, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -193,10 +193,7 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   return (
-    <FastImage
-      source={require('../../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header
           title={connection.name}
@@ -244,7 +241,7 @@ const Chat: React.FC<ChatProps> = ({
           />
         </Animated.View>
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 

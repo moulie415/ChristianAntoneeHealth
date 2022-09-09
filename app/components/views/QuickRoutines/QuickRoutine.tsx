@@ -158,9 +158,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     borderTopLeftRadius: DevicePixels[30],
                     borderTopRightRadius: DevicePixels[30],
                     overflow: 'hidden',
-                    backgroundColor: colors.appGrey
-                  }}
-                >
+                    backgroundColor: colors.appGrey,
+                  }}>
                   <ScrollView keyboardShouldPersistTaps="always">
                     <View
                       style={{

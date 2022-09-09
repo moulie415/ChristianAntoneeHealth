@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import SavedWorkouts from './components/views/SavedItems/SavedWorkouts';
 import SavedTests from './components/views/SavedItems/SavedTests';
-import {TouchableOpacity, useWindowDimensions} from 'react-native';
+import {TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from './App';
@@ -29,9 +29,7 @@ const SavedItemsTabs: React.FC<{
     {key: 'savedTests', title: 'Saved tests'},
   ]);
   return (
-    <FastImage
-      source={require('./images/old-black-background-grunge.png')}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
         <TabView
@@ -90,7 +88,7 @@ const SavedItemsTabs: React.FC<{
           initialLayout={{width: layout.width}}
         />
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 

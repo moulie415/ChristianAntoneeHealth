@@ -21,6 +21,7 @@ import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 
 const Test: React.FC<TestProps> = ({
@@ -165,16 +166,17 @@ const Test: React.FC<TestProps> = ({
         </View>
       </View>
 
-      <FastImage
+      <View
         style={{
           paddingBottom: 220,
           borderTopLeftRadius: DevicePixels[30],
           borderTopRightRadius: DevicePixels[30],
+          backgroundColor: colors.appGrey,
           top: -DevicePixels[30],
-        }}
-        source={require('../../../images/old-black-background-grunge.png')}>
-        <ScrollView
-          keyboardShouldPersistTaps="always"
+        }}>
+        <KeyboardAwareScrollView
+          // keyboardShouldPersistTaps="always"
+          extraScrollHeight={DevicePixels[75]}
           contentContainerStyle={{paddingBottom: 220}}>
           {complete ? (
             <View style={{margin: 20}}>
@@ -346,8 +348,8 @@ const Test: React.FC<TestProps> = ({
               }}
             />
           )}
-        </ScrollView>
-      </FastImage>
+        </KeyboardAwareScrollView>
+      </View>
     </View>
   );
 };
