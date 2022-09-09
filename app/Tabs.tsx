@@ -30,6 +30,7 @@ const Tabs: React.FC<{profile: Profile; plansEnabled: boolean}> = ({
         tabBarActiveTintColor: colors.appWhite,
         tabBarInactiveTintColor: color.darken(0.4).toString(),
         tabBarStyle: {borderTopWidth: 0, backgroundColor: colors.appGrey},
+        lazy: false,
       }}>
       <Tab.Screen
         options={{
