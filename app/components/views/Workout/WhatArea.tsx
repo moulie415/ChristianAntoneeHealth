@@ -21,10 +21,7 @@ const WhatArea: React.FC<{
 }> = ({navigation, route}) => {
   const {equipment} = route.params;
   return (
-    <FastImage
-      source={require('../../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
         <Text
@@ -146,7 +143,7 @@ const WhatArea: React.FC<{
           </FastImage>
         </TouchableOpacity>
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 

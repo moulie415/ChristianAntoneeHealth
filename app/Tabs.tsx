@@ -29,17 +29,7 @@ const Tabs: React.FC<{profile: Profile; plansEnabled: boolean}> = ({
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.appWhite,
         tabBarInactiveTintColor: color.darken(0.4).toString(),
-        tabBarStyle: {borderTopWidth: 0},
-        tabBarBackground: () => {
-          return (
-            <LinearGradient
-              colors={[colors.appBlueLight, colors.appBlueDark]}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={{flex: 1}}
-            />
-          );
-        },
+        tabBarStyle: {borderTopWidth: 0, backgroundColor: colors.appGrey},
       }}>
       <Tab.Screen
         options={{

@@ -1,12 +1,12 @@
 import React from 'react';
 import FitnessTestingProps from '../../../types/views/FitnessTesting';
-import {ScrollView, ImageBackground} from 'react-native';
+import {ScrollView, ImageBackground, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import DevicePixels from '../../../helpers/DevicePixels';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TestCard from '../../commons/TestCard';
-import FastImage from 'react-native-fast-image';
+import colors from '../../../constants/colors';
 
 const FitnessTesting: React.FC<FitnessTestingProps> = ({
   navigation,
@@ -14,10 +14,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
   profile,
 }) => {
   return (
-    <FastImage
-      source={require('../../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView
         contentContainerStyle={{
           marginTop: DevicePixels[20],
@@ -41,7 +38,7 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
           })}
         </SafeAreaView>
       </ScrollView>
-    </FastImage>
+    </View>
   );
 };
 

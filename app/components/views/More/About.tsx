@@ -33,12 +33,12 @@ const About: React.FC<AboutProps> = () => {
           <Header hasBack title="About us" />
         </SafeAreaView>
       </FastImage>
-      <FastImage
-        source={require('../../../images/old-black-background-grunge.png')}
+      <View
         style={{
           flex: 1,
           borderTopLeftRadius: DevicePixels[30],
           borderTopRightRadius: DevicePixels[30],
+          backgroundColor: colors.appGrey,
           marginTop: -DevicePixels[30],
         }}>
         <TouchableOpacity
@@ -76,7 +76,7 @@ const About: React.FC<AboutProps> = () => {
             'After returning to the UK Christian obtained a qualification as an Osteopath from the British College of Osteopathic Medicine and is currently pursuing a MSc in Clinical Pain management from The University of Edinburgh. By combining principles in exercise prescription, manual therapy and nutrition Christian takes a movement based approach to treating your pain and dysfunction, with a special interest in repetitive strain injuries, sports injuries and neck/low back pain.'
           }
         </Text>
-      </FastImage>
+      </View>
     </>
   );
 };

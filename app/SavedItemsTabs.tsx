@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import SavedWorkouts from './components/views/SavedItems/SavedWorkouts';
 import SavedTests from './components/views/SavedItems/SavedTests';
-import {TouchableOpacity, useWindowDimensions} from 'react-native';
+import {TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from './App';
@@ -29,9 +29,7 @@ const SavedItemsTabs: React.FC<{
     {key: 'savedTests', title: 'Saved tests'},
   ]);
   return (
-    <FastImage
-      source={require('./images/old-black-background-grunge.png')}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
         <TabView
@@ -43,21 +41,18 @@ const SavedItemsTabs: React.FC<{
                 renderTabBarItem={props => {
                   return (
                     <TouchableOpacity key={props.key} onPress={props.onPress}>
-                      <LinearGradient
-                        colors={
-                          props.key === routes[index].key
-                            ? [colors.appBlueLight, colors.appBlueDark]
-                            : ['transparent', 'transparent']
-                        }
+                      <View
                         style={{
                           height: DevicePixels[45],
                           paddingHorizontal: DevicePixels[20],
                           alignItems: 'center',
                           justifyContent: 'center',
                           borderRadius: DevicePixels[25],
-                        }}
-                        start={{x: 0, y: 0}}
-                        end={{x: 1, y: 0}}>
+                          backgroundColor:
+                            props.key === routes[index].key
+                              ? colors.textGrey
+                              : colors.appGrey,
+                        }}>
                         <Text
                           style={{
                             fontWeight: 'bold',
@@ -66,7 +61,7 @@ const SavedItemsTabs: React.FC<{
                           }}>
                           {props.route?.title}
                         </Text>
-                      </LinearGradient>
+                      </View>
                     </TouchableOpacity>
                   );
                 }}
@@ -90,7 +85,7 @@ const SavedItemsTabs: React.FC<{
           initialLayout={{width: layout.width}}
         />
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 

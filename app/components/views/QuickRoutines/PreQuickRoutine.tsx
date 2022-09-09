@@ -46,13 +46,13 @@ const PreQuickRoutine: React.FC<{
           <Header hasBack />
         </SafeAreaView>
       </FastImage>
-      <FastImage
-        source={require('../../../images/old-black-background-grunge.png')}
+      <View
         style={{
           flex: 1,
           borderTopLeftRadius: DevicePixels[30],
           borderTopRightRadius: DevicePixels[30],
           marginTop: -DevicePixels[30],
+          backgroundColor: colors.appGrey
         }}>
         <Text
           style={{
@@ -171,7 +171,7 @@ const PreQuickRoutine: React.FC<{
             navigation.navigate('QuickRoutine', {routine: route.params.routine})
           }
         />
-      </FastImage>
+      </View>
     </>
   );
 };

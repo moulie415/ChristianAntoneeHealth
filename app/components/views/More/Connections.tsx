@@ -66,10 +66,7 @@ const Connections: React.FC<{
     getConnectionsAction();
   }, [getConnectionsAction]);
   return (
-    <FastImage
-      source={require('../../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
         <Header
           hasBack
@@ -133,7 +130,7 @@ const Connections: React.FC<{
           ItemSeparatorComponent={Divider}
         />
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 

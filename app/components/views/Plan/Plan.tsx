@@ -119,9 +119,7 @@ const Plan: React.FC<{
   return (
     <>
       {hasPlanLeft ? (
-        <FastImage
-          source={require('../../../images/old-black-background-grunge.png')}
-          style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
             <TabView
               renderTabBar={props => {
@@ -133,21 +131,18 @@ const Plan: React.FC<{
                         <TouchableOpacity
                           key={props.key}
                           onPress={props.onPress}>
-                          <LinearGradient
-                            colors={
-                              props.key === routes[index].key
-                                ? [colors.appBlueLight, colors.appBlueDark]
-                                : ['transparent', 'transparent']
-                            }
+                          <View
                             style={{
                               height: DevicePixels[45],
                               paddingHorizontal: DevicePixels[20],
                               alignItems: 'center',
                               justifyContent: 'center',
                               borderRadius: DevicePixels[25],
-                            }}
-                            start={{x: 0, y: 0}}
-                            end={{x: 1, y: 0}}>
+                              backgroundColor:
+                                props.key === routes[index].key
+                                  ? colors.textGrey
+                                  : colors.appGrey,
+                            }}>
                             <Text
                               style={{
                                 fontWeight: 'bold',
@@ -156,7 +151,7 @@ const Plan: React.FC<{
                               }}>
                               {props.route?.title}
                             </Text>
-                          </LinearGradient>
+                          </View>
                         </TouchableOpacity>
                       );
                     }}
@@ -182,7 +177,7 @@ const Plan: React.FC<{
               initialLayout={{width: layout.width}}
             />
           </SafeAreaView>
-        </FastImage>
+        </View>
       ) : (
         <FastImage
           style={{flex: 1}}

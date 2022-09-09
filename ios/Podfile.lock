@@ -1209,7 +1209,7 @@ PODS:
   - react-native-video/Video (6.0.0-alpha.1):
     - PromisesSwift
     - React-Core
-  - react-native-webview (11.23.0):
+  - react-native-webview (11.23.1):
     - React-Core
   - React-perflogger (0.68.3)
   - React-RCTActionSheet (0.68.3):
@@ -1298,7 +1298,7 @@ PODS:
     - React-Core
   - RNDateTimePicker (6.3.2):
     - React-Core
-  - RNDeviceInfo (10.0.2):
+  - RNDeviceInfo (10.1.1):
     - React-Core
   - RNEventEmitter (1.0.21):
     - React
@@ -1400,7 +1400,7 @@ PODS:
     - RNSound/Core (= 0.11.2)
   - RNSound/Core (0.11.2):
     - React-Core
-  - RNSVG (13.0.0):
+  - RNSVG (13.1.0):
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
@@ -1852,7 +1852,7 @@ SPEC CHECKSUMS:
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: bb6f12a7198db53b261fefb5d609dc77417acc8b
   react-native-video-cache: 1f3d0b6841c9cc962ded4ba70b412f121c8e9620
-  react-native-webview: e771bc375f789ebfa02a26939a57dbc6fa897336
+  react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: fa15d1d29ff7557ee25ea48f7f59e65896fb3215
   React-RCTActionSheet: e83515333352a3cc19c146e3c7a63a8a9269da8f
   React-RCTAnimation: 8032daa2846e3db7ac28c4c5a207d0bfb5e1e3ad
@@ -1876,7 +1876,7 @@ SPEC CHECKSUMS:
   RNCPicker: 0b65be85fe7954fbb2062ef079e3d1cde252d888
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 4f1fc917f5af9d9ae4c5fc0c63a4474d61338693
-  RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
+  RNDeviceInfo: 89bc4fe36cf4c8955965609b140d29a335d5350d
   RNEventEmitter: 557106956ec2f9ccda6940afeea563936385efd3
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBAnalytics: e332a2d0b4c28884dbeacbe21fe68688abdf34b9
@@ -1900,7 +1900,7 @@ SPEC CHECKSUMS:
   RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
-  RNSVG: 42a0c731b11179ebbd27a3eeeafa7201ebb476ff
+  RNSVG: 1153e8eeb34c788841016c517dba9f57f20b762f
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNWatch: dae6c858a2051dbdcfb00b9a86cf4d90400263b4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d

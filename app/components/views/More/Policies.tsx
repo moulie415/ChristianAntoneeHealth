@@ -10,10 +10,7 @@ import Text from '../../commons/Text';
 
 const Policies = () => {
   return (
-    <FastImage
-      source={require('../../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
         <Header hasBack title="Policies and Terms" />
         <TouchableOpacity
@@ -43,7 +40,7 @@ const Policies = () => {
         </TouchableOpacity>
         
       </SafeAreaView>
-    </FastImage>
+    </View>
   );
 };
 
