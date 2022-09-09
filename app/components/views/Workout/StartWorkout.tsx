@@ -187,21 +187,16 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(0)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 0
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
+                        <View
                           style={{
                             height: DevicePixels[40],
                             width: DevicePixels[100],
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: DevicePixels[25],
-                          }}
-                          start={{x: 0, y: 0}}
-                          end={{x: 1, y: 0}}>
+                            backgroundColor:
+                              tabIndex === 0 ? colors.textGrey : colors.appGrey,
+                          }}>
                           <Text
                             style={{
                               fontWeight: 'bold',
@@ -210,26 +205,21 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             }}>
                             Description
                           </Text>
-                        </LinearGradient>
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(1)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 1
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
+                        <View
                           style={{
                             height: DevicePixels[40],
                             width: DevicePixels[100],
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: DevicePixels[25],
-                          }}
-                          start={{x: 0, y: 0}}
-                          end={{x: 1, y: 0}}>
+                            backgroundColor:
+                              tabIndex === 1 ? colors.textGrey : colors.appGrey,
+                          }}>
                           <Text
                             style={{
                               fontWeight: 'bold',
@@ -238,26 +228,21 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             }}>
                             Diagram
                           </Text>
-                        </LinearGradient>
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(2)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 2
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
+                        <View
                           style={{
                             height: DevicePixels[40],
                             width: DevicePixels[100],
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: DevicePixels[25],
-                          }}
-                          start={{x: 0, y: 0}}
-                          end={{x: 1, y: 0}}>
+                            backgroundColor:
+                              tabIndex === 2 ? colors.textGrey : colors.appGrey,
+                          }}>
                           <Text
                             style={{
                               fontWeight: 'bold',
@@ -266,7 +251,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             }}>
                             Notes
                           </Text>
-                        </LinearGradient>
+                        </View>
                       </TouchableOpacity>
                     </View>
                     <View>
@@ -340,10 +325,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       )}
                     </View>
 
-                    <LinearGradient
-                      colors={[colors.secondaryLight, colors.secondaryDark]}
-                      start={{x: 0, y: 0}}
-                      end={{x: 1, y: 0}}
+                    <View
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -352,6 +334,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                         height: DevicePixels[60],
                         borderRadius: DevicePixels[30],
                         marginBottom: DevicePixels[10],
+                        backgroundColor: colors.textGrey,
                       }}>
                       <Text
                         style={{
@@ -383,7 +366,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             .format('mm:ss')}
                         </Text>
                       </View>
-                    </LinearGradient>
+                    </View>
                     <Button
                       text="End Workout"
                       onPress={() => {
