@@ -16,7 +16,7 @@ const DefaultPath: React.FC<{d: string}> = ({d}) => {
   return (
     <Path
       fill="none"
-      stroke="#fff"
+      stroke={colors.textGrey}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={0.2}
@@ -132,7 +132,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           marginBottom: DevicePixels[10],
         }}>
         {hasFront && (
-          <Svg width="50%" height={DevicePixels[150]} viewBox="0 0 12.62 47.06">
+          <Svg width="50%" height={DevicePixels[200]} viewBox="0 0 12.62 47.06">
             {front.map(m => (
               <MuscleFill key={m} muscle={m} />
             ))}
@@ -228,7 +228,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           </Svg>
         )}
         {hasBack && (
-          <Svg width="50%" height={DevicePixels[150]} viewBox="0 0 12.62 47.06">
+          <Svg width="50%" height={DevicePixels[200]} viewBox="0 0 12.62 47.06">
             {back.map(m => (
               <MuscleFill key={m} muscle={m} back />
             ))}

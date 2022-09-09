@@ -32,41 +32,20 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
     }
   }, [navigation, viewedPlan]);
   return (
-    <FastImage
-      source={require('../../images/old-black-background-grunge.png')}
-      blurRadius={5}
-      style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView>
         <SafeAreaView>
-          <View
+          <FastImage
+            source={require('../../images/logo.png')}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              margin: DevicePixels[20],
-            }}>
-            <FastImage
-              source={require('../../images/logo.png')}
-              style={{width: DevicePixels[57], height: DevicePixels[50]}}
-            />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Profile')}
-              style={{
-                width: DevicePixels[42],
-                height: DevicePixels[42],
-                borderRadius: DevicePixels[21],
-                backgroundColor: colors.appWhite,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Avatar
-                src={profile.avatar}
-                size={DevicePixels[38]}
-                name={profile.name}
-              />
-            </TouchableOpacity>
-          </View>
+              width: DevicePixels[95],
+              height: DevicePixels[83],
+              margin: DevicePixels[40],
+              alignSelf: 'center',
+            }}
+          />
 
-          <Text
+          {/* <Text
             style={{
               marginLeft: DevicePixels[20],
               fontSize: DevicePixels[14],
@@ -74,8 +53,8 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
               fontWeight: 'bold',
             }}>
             {`${greetingMessage()},`}
-          </Text>
-          <Text
+          </Text> */}
+          {/* <Text
             style={{
               marginLeft: DevicePixels[20],
               marginBottom: DevicePixels[20],
@@ -84,7 +63,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
               fontWeight: 'bold',
             }}>
             {profile.name?.split(' ')[0] || 'user'}
-          </Text>
+          </Text> */}
 
           <HomeCard
             title="New Workout"
@@ -133,7 +112,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
           />
         </SafeAreaView>
       </ScrollView>
-    </FastImage>
+    </View>
   );
 };
 

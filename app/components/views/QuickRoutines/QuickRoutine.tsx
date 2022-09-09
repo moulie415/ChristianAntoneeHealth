@@ -148,7 +148,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-                <FastImage
+                <View
                   style={{
                     position: 'absolute',
                     left: 0,
@@ -158,8 +158,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     borderTopLeftRadius: DevicePixels[30],
                     borderTopRightRadius: DevicePixels[30],
                     overflow: 'hidden',
+                    backgroundColor: colors.appGrey
                   }}
-                  source={require('../../../images/old-black-background-grunge.png')}>
+                >
                   <ScrollView keyboardShouldPersistTaps="always">
                     <View
                       style={{
@@ -327,7 +328,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       style={{margin: DevicePixels[10]}}
                     />
                   </ScrollView>
-                </FastImage>
+                </View>
               </View>
             );
           })}

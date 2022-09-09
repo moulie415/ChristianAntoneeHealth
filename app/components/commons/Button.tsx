@@ -27,17 +27,17 @@ const Button: React.FC<Props> = ({
   disabled,
   ...props
 }) => {
-  const gradient = () => {
+  const getColor = () => {
     if (disabled) {
-      return [colors.appGrey, colors.appGrey];
+      return colors.textGrey;
     }
     if (variant === 'secondary') {
-      return [colors.appWhite, colors.appWhite];
+      return colors.appWhite;
     }
     if (variant === 'danger') {
-      return [colors.appRed, colors.appRed];
+      return colors.appRed;
     }
-    return [colors.appBlueLight, colors.appBlueDark];
+    return colors.textGrey;
   };
   return (
     <TouchableOpacity
@@ -53,15 +53,13 @@ const Button: React.FC<Props> = ({
         },
         props.style,
       ]}>
-      <LinearGradient
+      <View
         style={{
           height: DevicePixels[60],
           justifyContent: 'center',
           padding: DevicePixels[10],
-        }}
-        colors={gradient()}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
+          backgroundColor: getColor(),
+        }}>
         {loading ? (
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Spinner />
@@ -80,7 +78,7 @@ const Button: React.FC<Props> = ({
             {text}
           </Text>
         )}
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 };
