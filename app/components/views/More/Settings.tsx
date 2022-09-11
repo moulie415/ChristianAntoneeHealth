@@ -40,6 +40,7 @@ const Settings: React.FC<SettingsProps> = ({
   updateProfileAction,
   testReminderTime,
   setTestReminderTimeAction,
+  settings,
 }) => {
   const [showWorkoutDate, setShowWorkoutDate] = useState(false);
   const [showTestDate, setShowTestDate] = useState(false);
@@ -69,168 +70,180 @@ const Settings: React.FC<SettingsProps> = ({
         <ScrollView
           keyboardShouldPersistTaps="always"
           contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
-          <Text
-            style={{
-              margin: DevicePixels[10],
-              fontSize: DevicePixels[22],
-              color: colors.appWhite,
-              fontWeight: 'bold',
-            }}>
-            Notifications
-          </Text>
+          {(settings.plansEnabled || profile.admin) && (
+            <>
+              <Text
+                style={{
+                  margin: DevicePixels[10],
+                  fontSize: DevicePixels[22],
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                }}>
+                Notifications
+              </Text>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: DevicePixels[10],
-              backgroundColor: '#212121',
-              height: DevicePixels[60],
-              paddingHorizontal: DevicePixels[10],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: DevicePixels[16],
-                fontWeight: 'bold',
-              }}>
-              Workout reminders
-            </Text>
-            <Toggle
-              value={workoutReminders}
-              onValueChange={setWorkoutRemindersAction}
-            />
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: DevicePixels[10],
-              backgroundColor: '#212121',
-              height: DevicePixels[60],
-              paddingHorizontal: DevicePixels[10],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: DevicePixels[16],
-                fontWeight: 'bold',
-              }}>
-              Fitness test reminder
-            </Text>
-            <Toggle
-              value={testReminders}
-              onValueChange={setTestRemindersAction}
-            />
-          </View>
-
-          <TouchableOpacity
-            onPress={() => setShowTestDate(true)}
-            disabled={Platform.OS === 'ios'}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: DevicePixels[10],
-              backgroundColor: '#212121',
-              height: DevicePixels[60],
-              paddingHorizontal: DevicePixels[10],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                flex: 1,
-                color: colors.appWhite,
-                fontSize: DevicePixels[16],
-                fontWeight: 'bold',
-              }}>
-              Time of workout reminder
-            </Text>
-            {(showWorkoutDate || Platform.OS === 'ios') && (
-              <DateTimePicker
-                disabled={!workoutReminders}
-                style={{width: DevicePixels[90]}}
-                testID="dateTimePicker"
-                value={new Date(workoutDate)}
-                // placeholderText="Select date"
-                mode="time"
-                // is24Hour={true}
-                display={Platform.OS === 'ios' ? 'compact' : 'default'}
-                onChange={(event, d: Date) => {
-                  if (d) {
-                    setWorkoutDate(d);
-                  }
-                  setShowWorkoutDate(Platform.OS === 'ios');
-                }}
-              />
-            )}
-            {Platform.OS === 'android' && (
-              <TouchableOpacity
-                disabled={!workoutReminders}
-                onPress={() => setShowWorkoutDate(true)}>
-                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  {moment(workoutDate).format('HH:mm')}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: DevicePixels[10],
+                  backgroundColor: '#212121',
+                  height: DevicePixels[60],
+                  paddingHorizontal: DevicePixels[10],
+                  borderRadius: DevicePixels[5],
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: DevicePixels[16],
+                    fontWeight: 'bold',
+                  }}>
+                  Workout reminders
                 </Text>
-              </TouchableOpacity>
-            )}
-          </TouchableOpacity>
+                <Toggle
+                  value={workoutReminders}
+                  onValueChange={setWorkoutRemindersAction}
+                />
+              </View>
 
-          <TouchableOpacity
-            onPress={() => setShowTestDate(true)}
-            disabled={Platform.OS === 'ios'}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: DevicePixels[10],
-              backgroundColor: '#212121',
-              height: DevicePixels[60],
-              paddingHorizontal: DevicePixels[10],
-              borderRadius: DevicePixels[5],
-            }}>
-            <Text
-              style={{
-                flex: 1,
-                color: colors.appWhite,
-                fontSize: DevicePixels[16],
-                fontWeight: 'bold',
-              }}>
-              Time of test reminder
-            </Text>
-            {(showTestDate || Platform.OS === 'ios') && (
-              <DateTimePicker
-                disabled={!testReminders}
-                style={{width: DevicePixels[90]}}
-                testID="dateTimePicker"
-                value={new Date(testDate)}
-                // placeholderText="Select date"
-                mode="time"
-                // is24Hour={true}
-                display={Platform.OS === 'ios' ? 'compact' : 'default'}
-                onChange={(event, d: Date) => {
-                  if (d) {
-                    setTestDate(d);
-                  }
-                  setShowTestDate(Platform.OS === 'ios');
-                }}
-              />
-            )}
-            {Platform.OS === 'android' && (
-              <TouchableOpacity
-                disabled={!testReminders}
-                onPress={() => setShowTestDate(true)}>
-                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  {moment(testDate).format('HH:mm')}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: DevicePixels[10],
+                  backgroundColor: '#212121',
+                  height: DevicePixels[60],
+                  paddingHorizontal: DevicePixels[10],
+                  borderRadius: DevicePixels[5],
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: DevicePixels[16],
+                    fontWeight: 'bold',
+                  }}>
+                  Fitness test reminder
                 </Text>
-              </TouchableOpacity>
-            )}
-          </TouchableOpacity>
+                <Toggle
+                  value={testReminders}
+                  onValueChange={setTestRemindersAction}
+                />
+              </View>
 
+              <TouchableOpacity
+                onPress={() => setShowTestDate(true)}
+                disabled={Platform.OS === 'ios'}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: DevicePixels[10],
+                  backgroundColor: '#212121',
+                  height: DevicePixels[60],
+                  paddingHorizontal: DevicePixels[10],
+                  borderRadius: DevicePixels[5],
+                }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    color: colors.appWhite,
+                    fontSize: DevicePixels[16],
+                    fontWeight: 'bold',
+                  }}>
+                  Time of workout reminder
+                </Text>
+                {(showWorkoutDate || Platform.OS === 'ios') && (
+                  <DateTimePicker
+                    disabled={!workoutReminders}
+                    style={{width: DevicePixels[90]}}
+                    testID="dateTimePicker"
+                    value={new Date(workoutDate)}
+                    // placeholderText="Select date"
+                    mode="time"
+                    // is24Hour={true}
+                    display={Platform.OS === 'ios' ? 'compact' : 'default'}
+                    onChange={(event, d: Date) => {
+                      if (d) {
+                        setWorkoutDate(d);
+                      }
+                      setShowWorkoutDate(Platform.OS === 'ios');
+                    }}
+                  />
+                )}
+                {Platform.OS === 'android' && (
+                  <TouchableOpacity
+                    disabled={!workoutReminders}
+                    onPress={() => setShowWorkoutDate(true)}>
+                    <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                      {moment(workoutDate).format('HH:mm')}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => setShowTestDate(true)}
+                disabled={Platform.OS === 'ios'}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: DevicePixels[10],
+                  backgroundColor: '#212121',
+                  height: DevicePixels[60],
+                  paddingHorizontal: DevicePixels[10],
+                  borderRadius: DevicePixels[5],
+                }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    color: colors.appWhite,
+                    fontSize: DevicePixels[16],
+                    fontWeight: 'bold',
+                  }}>
+                  Time of test reminder
+                </Text>
+                {(showTestDate || Platform.OS === 'ios') && (
+                  <DateTimePicker
+                    disabled={!testReminders}
+                    style={{width: DevicePixels[90]}}
+                    testID="dateTimePicker"
+                    value={new Date(testDate)}
+                    // placeholderText="Select date"
+                    mode="time"
+                    // is24Hour={true}
+                    display={Platform.OS === 'ios' ? 'compact' : 'default'}
+                    onChange={(event, d: Date) => {
+                      if (d) {
+                        setTestDate(d);
+                      }
+                      setShowTestDate(Platform.OS === 'ios');
+                    }}
+                  />
+                )}
+                {Platform.OS === 'android' && (
+                  <TouchableOpacity
+                    disabled={!testReminders}
+                    onPress={() => setShowTestDate(true)}>
+                    <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                      {moment(testDate).format('HH:mm')}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontStyle: 'italic',
+                  fontSize: DevicePixels[12],
+                  color: colors.appWhite,
+                  marginLeft: DevicePixels[10]
+                }}>
+                Please note these reminders are for custom plans
+              </Text>
+            </>
+          )}
           <Text
             style={{
               margin: DevicePixels[10],
@@ -288,12 +301,13 @@ const Settings: React.FC<SettingsProps> = ({
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: MyRootState) => ({
   workoutReminders: profile.workoutReminders,
   workoutReminderTime: profile.reminderTime,
   testReminderTime: profile.testReminderTime,
   testReminders: profile.testReminders,
   profile: profile.profile,
+  settings,
 });
 
 const mapDispatchToProps = {
