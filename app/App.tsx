@@ -180,19 +180,20 @@ const App: React.FC = () => {
           }}>
           <StackComponent />
         </NavigationContainer>
-        {/* {showSplash && (
-            <Video
-              onLoad={() => SplashScreen.hide()}
-              source={require('./images/splash.mp4')}
-              style={{
-                height,
-                width,
-                backgroundColor: '#fff',
-              }}
-              resizeMode="cover"
-              onEnd={() => setShowSplash(false)}
-            />
-          )} */}
+        {showSplash && (
+          <Video
+            onLoad={() => SplashScreen.hide()}
+            source={require('./images/splash.mp4')}
+            style={{
+              height,
+              width: '75%',
+              backgroundColor: '#fff',
+              alignSelf: 'center',
+            }}
+            resizeMode="contain"
+            onEnd={() => setShowSplash(false)}
+          />
+        )}
       </Provider>
     </PersistGate>
   );

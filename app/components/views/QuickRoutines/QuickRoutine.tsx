@@ -324,7 +324,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
       <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
         <View
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: colors.appGrey,
             width: '90%',
             alignSelf: 'center',
             borderRadius: DevicePixels[10],
@@ -332,7 +332,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           <Icon
             style={{alignSelf: 'center', margin: DevicePixels[10]}}
             name="info-circle"
-            color={colors.appBlue}
+            color={colors.appWhite}
             size={DevicePixels[20]}
           />
           <Text
@@ -340,10 +340,17 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               textAlign: 'center',
               padding: DevicePixels[15],
               paddingTop: 0,
+              color: colors.appWhite,
+              fontWeight: 'bold'
             }}>
             Instructions
           </Text>
-          <Text style={{margin: DevicePixels[10], textAlign: 'center'}}>
+          <Text
+            style={{
+              margin: DevicePixels[10],
+              textAlign: 'center',
+              color: colors.appWhite,
+            }}>
             {routine.instructions}
           </Text>
           <Button
