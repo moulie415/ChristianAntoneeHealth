@@ -16,51 +16,49 @@ const EducationArticle: React.FC<{
   route: RouteProp<StackParamList, 'EducationArticle'>;
 }> = ({route}) => {
   const {education} = route.params;
-  const {width} = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   return (
     <View>
-      <ScrollView contentContainerStyle={{}}>
-        <Image
-          style={{
-            height: DevicePixels[350],
-            marginBottom: DevicePixels[10],
-          }}
-          source={{uri: education.image.src}}>
-          <View
-            style={{
-              ...StyleSheet.absoluteFillObject,
-              backgroundColor: '#000',
-              opacity: 0.7,
-            }}
-          />
-        </Image>
-
-        <Header hasBack absolute />
-
+      <Image
+        style={{
+          height: DevicePixels[350],
+          marginBottom: DevicePixels[10],
+        }}
+        source={{uri: education.image.src}}>
         <View
           style={{
-            padding: DevicePixels[20],
-            borderTopLeftRadius: DevicePixels[30],
-            borderTopRightRadius: DevicePixels[30],
-            marginTop: -DevicePixels[35],
-            backgroundColor: colors.appWhite,
-          }}>
-          <Text
-            style={{
-              fontSize: DevicePixels[20],
-              fontWeight: 'bold',
-              marginBottom: DevicePixels[10],
-            }}>
-            {education.title}
-          </Text>
-          <Text style={{fontSize: DevicePixels[12]}}>{`${moment(
-            education.createdate,
-          ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
-            education.category,
-          )}`}</Text>
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: '#000',
+            opacity: 0.7,
+          }}
+        />
+      </Image>
 
-          <RenderHtml contentWidth={width} source={{html: education.body}} />
-        </View>
+      <Header hasBack absolute />
+      <ScrollView
+        style={{
+          padding: DevicePixels[20],
+          borderTopLeftRadius: DevicePixels[30],
+          borderTopRightRadius: DevicePixels[30],
+          marginTop: -DevicePixels[35],
+          backgroundColor: colors.button,
+          minHeight: height,
+        }}>
+        <Text
+          style={{
+            fontSize: DevicePixels[20],
+            fontWeight: 'bold',
+            marginBottom: DevicePixels[10],
+          }}>
+          {education.title}
+        </Text>
+        <Text style={{fontSize: DevicePixels[12]}}>{`${moment(
+          education.createdate,
+        ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
+          education.category,
+        )}`}</Text>
+
+        <RenderHtml contentWidth={width} source={{html: education.body}} />
       </ScrollView>
     </View>
   );
