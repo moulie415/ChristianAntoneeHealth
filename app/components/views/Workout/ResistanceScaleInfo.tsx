@@ -4,7 +4,6 @@ import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Color from 'color';
 import colors from '../../../constants/colors';
-import {DebugInstructions} from 'react-native/Libraries/NewAppScreen';
 
 const items: {
   value: string;

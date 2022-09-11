@@ -131,7 +131,7 @@ const Profile: React.FC<ProfileProps> = ({
   const latestBMI = weightItems?.data[weightItems.data.length - 1];
 
   return (
-    <View style={{flex: 1, backgroundColor: '#040404'}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
