@@ -43,7 +43,7 @@ const EducationArticle: React.FC<{
             borderTopLeftRadius: DevicePixels[30],
             borderTopRightRadius: DevicePixels[30],
             marginTop: -DevicePixels[35],
-            backgroundColor: colors.button,
+            backgroundColor: colors.appWhite,
           }}>
           <Text
             style={{
