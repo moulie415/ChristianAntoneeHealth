@@ -15,11 +15,11 @@ export const getTestImage = (index: number): any => {
     case 0:
       return require('../images/Fitness_testing_sit_and_reach.jpeg');
     case 1:
-      return require('../images/Fitness_testing_plank.jpeg');
-    case 2:
       return require('../images/Fitness_testing_step_test.jpeg');
-    case 3:
+    case 2:
       return require('../images/Fitness_testing_heart_rate_recovery.jpeg');
+    case 3:
+      return require('../images/Fitness_testing_plank.jpeg');
     case 4:
       return require('../images/Fitness_testing_squat.jpeg');
     default:
