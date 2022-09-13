@@ -29,11 +29,15 @@ import appCheck from '@react-native-firebase/app-check';
 
 import Education from './types/Education';
 import Video from 'react-native-video';
-import {Dimensions, Platform} from 'react-native';
+import {Dimensions, Platform, View} from 'react-native';
 import Config from 'react-native-config';
 import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
 import Instabug from 'instabug-reactnative';
+import colors from './constants/colors';
+import {Image} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import Animated, {FadeOut} from 'react-native-reanimated';
 
 const {height, width} = Dimensions.get('window');
 
@@ -131,6 +135,12 @@ const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
+    setTimeout(() => {
+      setShowSplash(false);
+    }, 5500);
+  }, []);
+
+  useEffect(() => {
     Purchases.setDebugLogsEnabled(true);
     Purchases.setup(
       Platform.OS === 'ios'
@@ -181,18 +191,18 @@ const App: React.FC = () => {
           <StackComponent />
         </NavigationContainer>
         {showSplash && (
-          <Video
-            onLoad={() => SplashScreen.hide()}
-            source={require('./images/splash.mp4')}
-            style={{
-              height,
-              width: '75%',
-              backgroundColor: '#fff',
-              alignSelf: 'center',
-            }}
-            resizeMode="contain"
-            onEnd={() => setShowSplash(false)}
-          />
+          <View style={{backgroundColor: colors.appWhite}}>
+            <FastImage
+              source={require('./images/splash.gif')}
+              style={{
+                height,
+                width: '75%',
+                backgroundColor: colors.appWhite,
+                alignSelf: 'center',
+              }}
+              resizeMode="contain"
+            />
+          </View>
         )}
       </Provider>
     </PersistGate>
