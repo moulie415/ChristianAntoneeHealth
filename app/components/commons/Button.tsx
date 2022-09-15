@@ -45,40 +45,33 @@ const Button: React.FC<Props> = ({
       disabled={disabled}
       style={[
         {
-          ...(disabled ? {} : {backgroundColor: colors.appBlue}),
-        },
-        {
           borderRadius: DevicePixels[10],
           overflow: 'hidden',
-        },
-        props.style,
-      ]}>
-      <View
-        style={{
           height: DevicePixels[60],
           justifyContent: 'center',
           padding: DevicePixels[10],
           backgroundColor: getColor(),
-        }}>
-        {loading ? (
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Spinner />
-          </View>
-        ) : (
-          <Text
-            style={[
-              {
-                color:
-                  variant === 'secondary' ? colors.appBlue : colors.appWhite,
-                textAlign: 'center',
-                fontSize: DevicePixels[20],
-              },
-              textStyle,
-            ]}>
-            {text}
-          </Text>
-        )}
-      </View>
+          opacity: disabled ? 0.5 : 1,
+        },
+        props.style,
+      ]}>
+      {loading ? (
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Spinner />
+        </View>
+      ) : (
+        <Text
+          style={[
+            {
+              color: variant === 'secondary' ? colors.appGrey : colors.appWhite,
+              textAlign: 'center',
+              fontSize: DevicePixels[20],
+            },
+            textStyle,
+          ]}>
+          {text}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

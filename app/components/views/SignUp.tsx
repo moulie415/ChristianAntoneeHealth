@@ -126,7 +126,7 @@ const SignUp: React.FC<SignUpProps> = ({
             loading={loading}
             disabled={loading}
             onPress={signUp}
-            text="Signup"
+            text="Sign Up"
             style={{
               marginHorizontal: DevicePixels[20],
               marginTop: DevicePixels[20],

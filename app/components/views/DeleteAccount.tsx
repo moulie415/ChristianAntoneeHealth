@@ -56,27 +56,30 @@ const DeleteAccount: React.FC<{
             requiresPassword ? ' and password' : ''
           } to confirm deletion and be aware that this will delete all your CA Health data and it will not be recoverable.`}
         </Text>
-        <Input
+        <View
           style={{
             margin: DevicePixels[10],
-          }}
-          placeholder="Email"
-          onChangeText={e => setEmail(e)}
-          placeholderTextColor="#fff"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-        />
-        {requiresPassword && (
+          }}>
           <Input
-            style={{margin: DevicePixels[10]}}
-            placeholder="Password"
-            onChangeText={p => setPassword(p)}
+            placeholder="Email"
+            onChangeText={e => setEmail(e)}
             placeholderTextColor="#fff"
             autoCapitalize="none"
             autoCorrect={false}
-            secure
+            keyboardType="email-address"
           />
+        </View>
+        {requiresPassword && (
+          <View style={{margin: DevicePixels[10]}}>
+            <Input
+              placeholder="Password"
+              onChangeText={p => setPassword(p)}
+              placeholderTextColor="#fff"
+              autoCapitalize="none"
+              autoCorrect={false}
+              secure
+            />
+          </View>
         )}
         <Button
           text="Confirm account deletion"
