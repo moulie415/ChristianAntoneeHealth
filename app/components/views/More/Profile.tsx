@@ -329,7 +329,7 @@ const Profile: React.FC<ProfileProps> = ({
           }}
           withShadow={false}
         />
-        {latestBMI && (
+        {!!latestBMI && (
           <>
             <Text
               style={{
