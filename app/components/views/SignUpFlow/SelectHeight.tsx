@@ -13,7 +13,8 @@ const SelectHeight: React.FC<{
   setHeight: (height: number) => void;
   unit: Unit;
   gender: Gender;
-}> = ({height, setHeight, unit, gender}) => {
+  index: number;
+}> = ({height, setHeight, unit, gender, index}) => {
   useEffect(() => {
     if (!height) {
       if (gender === 'male') {
@@ -46,20 +47,25 @@ const SelectHeight: React.FC<{
         }}>
         {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
       </Text>
-      {/* @ts-ignore */}
-      <Picker
-        style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
-        textColor={colors.appWhite}
-        itemStyle={{color: colors.appWhite}}
-        selectedValue={String(height)}
-        pickerData={heights.map(value => {
-          return {
-            label: `${value.toString()} ${unit === 'metric' ? 'cm' : 'inches'}`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setHeight(Number(val))}
-      />
+
+      {(index === 4 || height) && (
+        /* @ts-ignore */
+        <Picker
+          style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
+          textColor={colors.appWhite}
+          itemStyle={{color: colors.appWhite}}
+          selectedValue={String(height)}
+          pickerData={heights.map(value => {
+            return {
+              label: `${value.toString()} ${
+                unit === 'metric' ? 'cm' : 'inches'
+              }`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setHeight(Number(val))}
+        />
+      )}
     </View>
   );
 };

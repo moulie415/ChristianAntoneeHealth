@@ -1,8 +1,11 @@
 import {useEffect} from 'react';
 
-const useInit = (callback: () => void) => {
+const useInit = (func: () => void) => {
   useEffect(() => {
-    return callback;
+    if (func && typeof func === 'function') {
+      return func();
+    }
+    return null;
   }, []);
 };
 

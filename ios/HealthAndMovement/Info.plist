@@ -131,8 +131,8 @@
 	<string>So you can upload a photo for your profile picture</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants access to your Music library</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>So you can record audio when reporting a problem with the app</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>So you can record audio when reporting a problem with the app</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -298,6 +298,7 @@
 		<string>MontserratAlternates-Regular_bold.ttf</string>
 		<string>MontserratAlternates-Regular_italic.ttf</string>
 		<string>MontserratAlternates-Regular.ttf</string>
+		<string>MrDafoe-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

@@ -54,6 +54,7 @@ const Age: React.FC<{
           mode="date"
           style={{}}
           textColor={colors.appWhite}
+          maximumDate={new Date()}
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
           value={moment(dob).toDate()}
           onChange={(event, d: Date) => {

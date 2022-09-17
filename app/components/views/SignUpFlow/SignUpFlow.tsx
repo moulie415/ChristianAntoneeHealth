@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   Platform,
@@ -91,40 +91,45 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     useState<TrainingAvailability>(profile.trainingAvailability || null);
   const [nutrition, setNutrition] = useState(profile.nutrition || []);
 
-  useInit(async () => {
-    setLoading(true);
-
-    const available = await isAvailable();
-    if (!available && Platform.OS === 'android') {
-      Alert.alert(
-        'Google Fit not installed',
-        'While not required we recommend you install Google Fit to get the most out of CA Health',
-        [
-          {text: 'Cancel', style: 'cancel'},
-          {text: 'Install Google Fit', onPress: linkToGoogleFit},
-        ],
-      );
-      setLoading(false);
-    } else if (Platform.OS === 'ios') {
-      try {
-        await initBiometrics();
-        const h = await getHeight();
-        setHeight(h);
-        const w = await getWeight();
-        setWeight(w);
-        const sex = await getSex();
-        setGender(sex);
-        const dateOfBirth = await getDateOfBirth();
-        if (dateOfBirth) {
-          setDob(dateOfBirth);
+  useInit(() => {
+    const setup = async () => {
+      setLoading(true);
+      const available = await isAvailable();
+      if (!available && Platform.OS === 'android') {
+        Alert.alert(
+          'Google Fit not installed',
+          'While not required we recommend you install Google Fit to get the most out of CA Health',
+          [
+            {text: 'Cancel', style: 'cancel'},
+            {text: 'Install Google Fit', onPress: linkToGoogleFit},
+          ],
+        );
+        setLoading(false);
+      } else if (Platform.OS === 'ios') {
+        try {
+          await initBiometrics();
+          const h = await getHeight();
+          setHeight(h);
+          const w = await getWeight();
+          setWeight(w);
+          const sex = await getSex();
+          if (sex === 'male' || sex === 'female') {
+            setGender(sex);
+          }
+          const dateOfBirth = await getDateOfBirth();
+          console.log(dateOfBirth);
+          if (dateOfBirth) {
+            setDob(dateOfBirth);
+          }
+          setLoading(false);
+        } catch (e) {
+          setLoading(false);
+          logError(e);
         }
-        setLoading(false);
-      } catch (e) {
-        setLoading(false);
-        logError(e);
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    };
+    setup();
   });
 
   const completeSignUp = () => {
@@ -151,11 +156,17 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     });
   };
 
+  const [index, setIndex] = useState(0);
+
+  const ref = useRef<Swiper>();
+
+  const goNext = () => ref.current?.scrollTo(index + 1);
+
   const slides = [
     {
-      showNext: true,
+      showNext: false,
       key: 'letsBuild',
-      component: <LetsBuild />,
+      component: <LetsBuild goNext={goNext} />,
     },
     {
       showNext: !!dob,
@@ -190,6 +201,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           setWeight={setWeight}
           unit={unit}
           gender={gender}
+          index={index}
         />
       ),
     },
@@ -202,6 +214,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           setHeight={setHeight}
           unit={unit}
           gender={gender}
+          index={index}
         />
       ),
     },
@@ -309,8 +322,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
   ];
 
-  const [index, setIndex] = useState(0);
-
   useBackHandler(() => true);
 
   return (
@@ -338,6 +349,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
         {fromProfile && <Header hasBack />}
         <Swiper
+          ref={ref}
           onIndexChanged={setIndex}
           loop={false}
           removeClippedSubviews={false}
