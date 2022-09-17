@@ -49,7 +49,7 @@ const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
         Christian Antonee
       </Text>
       <FastImage
-        source={require('../../../images/christian.jpg')}
+        source={require('../../../images/christian-welcome.jpg')}
         style={{
           width: WIDTH,
           height: WIDTH * 1.5,
