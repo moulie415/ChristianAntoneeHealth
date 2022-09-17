@@ -13,9 +13,9 @@ const SelectWeight: React.FC<{
   setWeight: (weight: number) => void;
   unit: Unit;
   gender: Gender;
-}> = ({weight, setWeight, unit, gender}) => {
+  index: number;
+}> = ({weight, setWeight, unit, gender, index}) => {
   useEffect(() => {
-    console.log(weight, gender)
     if (!weight) {
       if (gender === 'male') {
         setWeight(unit === 'metric' ? 84 : 185);
@@ -48,20 +48,22 @@ const SelectWeight: React.FC<{
         {`${weight} ${unit === 'metric' ? 'kg' : 'lbs'}`}
       </Text>
 
-      {/* @ts-ignore */}
-      <Picker
-        style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
-        textColor={colors.appWhite}
-        itemStyle={{color: colors.appWhite}}
-        selectedValue={String(weight)}
-        pickerData={weights.map(value => {
-          return {
-            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setWeight(Number(val))}
-      />
+      {(index === 3 || weight) && (
+        /* @ts-ignore */
+        <Picker
+          style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
+          textColor={colors.appWhite}
+          itemStyle={{color: colors.appWhite}}
+          selectedValue={String(weight)}
+          pickerData={weights.map(value => {
+            return {
+              label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setWeight(Number(val))}
+        />
+      )}
     </View>
   );
 };
