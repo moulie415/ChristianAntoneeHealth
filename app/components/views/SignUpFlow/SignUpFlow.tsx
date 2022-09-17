@@ -105,27 +105,29 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           ],
         );
         setLoading(false);
-      } else if (Platform.OS === 'ios') {
-        try {
-          await initBiometrics();
-          const h = await getHeight();
-          setHeight(h);
-          const w = await getWeight();
-          setWeight(w);
-          const sex = await getSex();
-          if (sex === 'male' || sex === 'female') {
-            setGender(sex);
+      } else if (available) {
+        const fetchData = async () => {
+          try {
+            await initBiometrics();
+            const h = await getHeight();
+            setHeight(h);
+            const w = await getWeight();
+            setWeight(w);
+            const sex = await getSex();
+            if (sex === 'male' || sex === 'female') {
+              setGender(sex);
+            }
+            const dateOfBirth = await getDateOfBirth();
+            if (dateOfBirth) {
+              setDob(dateOfBirth);
+            }
+            setLoading(false);
+          } catch (e) {
+            setLoading(false);
+            logError(e);
           }
-          const dateOfBirth = await getDateOfBirth();
-          console.log(dateOfBirth);
-          if (dateOfBirth) {
-            setDob(dateOfBirth);
-          }
-          setLoading(false);
-        } catch (e) {
-          setLoading(false);
-          logError(e);
-        }
+        };
+        fetchData();
       }
       setLoading(false);
     };
