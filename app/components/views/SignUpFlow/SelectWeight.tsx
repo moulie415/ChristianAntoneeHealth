@@ -15,6 +15,7 @@ const SelectWeight: React.FC<{
   gender: Gender;
 }> = ({weight, setWeight, unit, gender}) => {
   useEffect(() => {
+    console.log(weight, gender)
     if (!weight) {
       if (gender === 'male') {
         setWeight(unit === 'metric' ? 84 : 185);

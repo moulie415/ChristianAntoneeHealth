@@ -1,4 +1,4 @@
-import {ImageBackground, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
@@ -6,7 +6,7 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import Button from '../../commons/Button';
 import FastImage from 'react-native-fast-image';
 
-const WIDTH = DevicePixels[100];
+const WIDTH = DevicePixels[150];
 
 const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
   return (
@@ -37,6 +37,16 @@ const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
         tool for the wider health and fitness community. We’re grateful to you
         for letting us be a part of your health and fitness journey, and hope
         trust that CA Health will help you reach your lifestyle goals.
+      </Text>
+      <Text
+        style={{
+          color: colors.appWhite,
+          alignSelf: 'center',
+          fontFamily: 'MrDafoe-Regular',
+          fontSize: DevicePixels[25],
+          marginTop: DevicePixels[10]
+        }}>
+        Christian Antonee
       </Text>
       <FastImage
         source={require('../../../images/christian.jpg')}

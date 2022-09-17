@@ -149,18 +149,18 @@ const Profile: React.FC<ProfileProps> = ({
             <Header
               hasBack
               title="Profile"
-              right={
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('SignUpFlow', {fromProfile: true})
-                  }>
-                  <Icon
-                    name="edit"
-                    size={DevicePixels[20]}
-                    color={colors.appWhite}
-                  />
-                </TouchableOpacity>
-              }
+              // right={
+              //   <TouchableOpacity
+              //     onPress={() =>
+              //       navigation.navigate('SignUpFlow', {fromProfile: true})
+              //     }>
+              //     <Icon
+              //       name="edit"
+              //       size={DevicePixels[20]}
+              //       color={colors.appWhite}
+              //     />
+              //   </TouchableOpacity>
+              // }
             />
             <View
               style={{

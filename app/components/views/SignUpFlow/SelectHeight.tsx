@@ -15,6 +15,7 @@ const SelectHeight: React.FC<{
   gender: Gender;
 }> = ({height, setHeight, unit, gender}) => {
   useEffect(() => {
+    console.log(height, gender)
     if (!height) {
       if (gender === 'male') {
         setHeight(unit === 'metric' ? 175 : 69);

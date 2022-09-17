@@ -40,6 +40,7 @@
 		B1C6086D7EBF12B779D04F81 /* libPods-HealthAndMovement.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E70BB5F63061D8619F41533 /* libPods-HealthAndMovement.a */; };
 		B2C2A31D0315F0BC0D0D1EDA /* libPods-HealthAndMovement-HealthAndMovementTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5010891A3438AD92C5335291 /* libPods-HealthAndMovement-HealthAndMovementTests.a */; };
 		DAF95037B7784E8C9CFCE5EC /* MontserratAlternates-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD9EB138C2534F24B6693B77 /* MontserratAlternates-Regular.ttf */; };
+		90FF22CB05814F73A1C21308 /* MrDafoe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0D8977476234F458E6EA17F /* MrDafoe-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		E670CA38C6E74B42A6E3CBE5 /* Pods-HealthAndMovement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthAndMovement.debug.xcconfig"; path = "Target Support Files/Pods-HealthAndMovement/Pods-HealthAndMovement.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F0D8977476234F458E6EA17F /* MrDafoe-Regular.ttf */ = {isa = PBXFileReference; name = "MrDafoe-Regular.ttf"; path = "../assets/fonts/MrDafoe-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +334,7 @@
 				A1AD4BA247C049729EF0346E /* MontserratAlternates-Regular_bold.ttf */,
 				3E260AC1E4BB4057A457FDD1 /* MontserratAlternates-Regular_italic.ttf */,
 				BD9EB138C2534F24B6693B77 /* MontserratAlternates-Regular.ttf */,
+				F0D8977476234F458E6EA17F /* MrDafoe-Regular.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -585,6 +588,7 @@
 				3B6A5EC74C744A0EA61D661B /* MontserratAlternates-Regular_bold.ttf in Resources */,
 				5CD423F926804C13B09F3B3A /* MontserratAlternates-Regular_italic.ttf in Resources */,
 				DAF95037B7784E8C9CFCE5EC /* MontserratAlternates-Regular.ttf in Resources */,
+				90FF22CB05814F73A1C21308 /* MrDafoe-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
