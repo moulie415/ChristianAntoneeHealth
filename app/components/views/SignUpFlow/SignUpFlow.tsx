@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   Platform,
@@ -151,11 +151,17 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     });
   };
 
+  const [index, setIndex] = useState(0);
+
+  const ref = useRef<Swiper>();
+
+  const goNext = () => ref.current?.scrollTo(index + 1);
+
   const slides = [
     {
-      showNext: true,
+      showNext: false,
       key: 'letsBuild',
-      component: <LetsBuild />,
+      component: <LetsBuild goNext={goNext} />,
     },
     {
       showNext: !!dob,
@@ -309,8 +315,6 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
   ];
 
-  const [index, setIndex] = useState(0);
-
   useBackHandler(() => true);
 
   return (
@@ -338,6 +342,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
         {fromProfile && <Header hasBack />}
         <Swiper
+          ref={ref}
           onIndexChanged={setIndex}
           loop={false}
           removeClippedSubviews={false}
