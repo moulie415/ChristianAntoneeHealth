@@ -39,7 +39,7 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
             source={require('../../images/logo.png')}
             style={{
               width: DevicePixels[95],
-              height: DevicePixels[83],
+              height: DevicePixels[84],
               margin: DevicePixels[40],
               alignSelf: 'center',
             }}

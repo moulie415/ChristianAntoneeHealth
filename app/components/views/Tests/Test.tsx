@@ -2,7 +2,7 @@ import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import {ImageBackground, View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
@@ -23,6 +23,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
+import {getTestImage} from '../../../helpers/images';
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -115,6 +116,10 @@ const Test: React.FC<TestProps> = ({
     }
   };
 
+  const image = getTestImage(
+    Object.values(tests).findIndex(i => i.id === test.id),
+  );
+
   return (
     <View style={{flex: 1}}>
       {showCountdown && (
@@ -126,12 +131,19 @@ const Test: React.FC<TestProps> = ({
         />
       )}
 
-      <Image
-        source={require('../../../images/test.jpg')}
+      <FastImage
+        source={image}
         style={{
           height: getVideoHeight(),
-        }}
-      />
+        }}>
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: '#000',
+            opacity: 0.4,
+          }}
+        />
+      </FastImage>
       <Header hasBack absolute />
       <View
         style={{
@@ -241,6 +253,7 @@ const Test: React.FC<TestProps> = ({
               <Text
                 style={{
                   margin: DevicePixels[10],
+                  marginTop: DevicePixels[20],
                   fontSize: DevicePixels[20],
                   fontWeight: 'bold',
                   color: colors.appWhite,
