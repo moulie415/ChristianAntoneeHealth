@@ -127,7 +127,7 @@ const Nutrition: React.FC<{
                     placeholder="List supplements here..."
                     multiline
                     style={{
-                      height: DevicePixels[50],
+                      height: DevicePixels[100],
                       textAlignVertical: 'top',
                     }}
                     onChangeText={text => {
