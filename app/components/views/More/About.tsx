@@ -19,7 +19,7 @@ const About: React.FC<AboutProps> = () => {
   return (
     <>
       <FastImage
-        source={require('../../../images/beginner.jpg')}
+        source={require('../../../images/login.jpeg')}
         blurRadius={3}
         style={{height: DevicePixels[200]}}>
         <View
