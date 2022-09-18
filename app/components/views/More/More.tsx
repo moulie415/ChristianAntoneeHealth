@@ -141,14 +141,14 @@ const More: React.FC<MoreProps> = ({
 
   return (
     <FastImage
-      source={require('../../../images/premium.jpg')}
+      source={require('../../../images/login.jpeg')}
       blurRadius={7}
       style={{flex: 1}}>
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor: '#000',
-          opacity: 0.8,
+          opacity: 0.7,
         }}
       />
       <SafeAreaView>

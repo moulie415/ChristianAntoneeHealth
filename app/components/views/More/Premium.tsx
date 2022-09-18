@@ -100,7 +100,8 @@ const Premium: React.FC<PremiumProps> = ({
   const hasUsedTrial = info && info.entitlements.all[0];
   return (
     <FastImage
-      source={require('../../../images/premium.jpg')}
+      source={require('../../../images/login.jpeg')}
+      blurRadius={5}
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
