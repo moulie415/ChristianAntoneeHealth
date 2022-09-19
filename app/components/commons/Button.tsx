@@ -27,17 +27,17 @@ const Button: React.FC<Props> = ({
   disabled,
   ...props
 }) => {
-  const getColor = () => {
-    if (disabled) {
-      return colors.textGrey;
-    }
+  const gradient = () => {
+    // if (disabled) {
+    //   return [colors.appGrey, colors.appGrey];
+    // }
     if (variant === 'secondary') {
-      return colors.appWhite;
+      return [colors.appWhite, colors.appWhite];
     }
     if (variant === 'danger') {
-      return colors.appRed;
+      return [colors.appRed, colors.appRed];
     }
-    return colors.textGrey;
+    return [colors.appBlueLight, colors.appBlueDark];
   };
   return (
     <TouchableOpacity
@@ -47,31 +47,38 @@ const Button: React.FC<Props> = ({
         {
           borderRadius: DevicePixels[10],
           overflow: 'hidden',
-          height: DevicePixels[60],
-          justifyContent: 'center',
-          padding: DevicePixels[10],
-          backgroundColor: getColor(),
-          opacity: disabled ? 0.5 : 1,
         },
         props.style,
       ]}>
-      {loading ? (
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Spinner />
-        </View>
-      ) : (
-        <Text
-          style={[
-            {
-              color: variant === 'secondary' ? colors.appGrey : colors.appWhite,
-              textAlign: 'center',
-              fontSize: DevicePixels[20],
-            },
-            textStyle,
-          ]}>
-          {text}
-        </Text>
-      )}
+      <LinearGradient
+        style={{
+          height: DevicePixels[60],
+          justifyContent: 'center',
+          padding: DevicePixels[10],
+          opacity: disabled ? 0.5 : 1,
+        }}
+        colors={gradient()}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {loading ? (
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Spinner />
+          </View>
+        ) : (
+          <Text
+            style={[
+              {
+                color:
+                  variant === 'secondary' ? colors.appBlue : colors.appWhite,
+                textAlign: 'center',
+                fontSize: DevicePixels[20],
+              },
+              textStyle,
+            ]}>
+            {text}
+          </Text>
+        )}
+      </LinearGradient>
     </TouchableOpacity>
   );
 };
