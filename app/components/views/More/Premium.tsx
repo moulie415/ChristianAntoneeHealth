@@ -439,21 +439,26 @@ const Premium: React.FC<PremiumProps> = ({
 
                   <TouchableOpacity
                     onPress={async () => {
-                      setLoading(true);
-                      const restore = await Purchases.restoreTransactions();
-                      if (
-                        typeof restore.entitlements.active.Premium !==
-                        'undefined'
-                      ) {
+                      try {
+                        setLoading(true);
+                        const restore = await Purchases.restoreTransactions();
+                        if (
+                          typeof restore.entitlements.active.Premium !==
+                          'undefined'
+                        ) {
+                          setLoading(false);
+                          navigation.goBack();
+                          setPremiumAction(true);
+                          Snackbar.show({text: 'Premium re-activated'});
+                        } else {
+                          setLoading(false);
+                          Snackbar.show({
+                            text: 'No previous active subscription found',
+                          });
+                        }
+                      } catch (e) {
+                        logError(e);
                         setLoading(false);
-                        navigation.goBack();
-                        setPremiumAction(true);
-                        Snackbar.show({text: 'Premium re-activated'});
-                      } else {
-                        setLoading(false);
-                        Snackbar.show({
-                          text: 'No previous active subscription found',
-                        });
                       }
                     }}>
                     <Text
