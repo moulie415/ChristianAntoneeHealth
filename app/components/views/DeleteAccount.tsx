@@ -63,6 +63,7 @@ const DeleteAccount: React.FC<{
           <Input
             placeholder="Email"
             onChangeText={e => setEmail(e)}
+            value={email}
             placeholderTextColor="#fff"
             autoCapitalize="none"
             autoCorrect={false}
@@ -74,6 +75,7 @@ const DeleteAccount: React.FC<{
             <Input
               placeholder="Password"
               onChangeText={p => setPassword(p)}
+              value={password}
               placeholderTextColor="#fff"
               autoCapitalize="none"
               autoCorrect={false}

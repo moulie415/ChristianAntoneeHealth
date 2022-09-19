@@ -31,6 +31,7 @@ export default interface Profile {
   uid: string;
   planStatus?: PlanStatus;
   name?: string;
+  surname?: string;
   avatar?: string;
   gender?: Gender;
   weight?: number;

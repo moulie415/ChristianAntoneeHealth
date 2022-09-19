@@ -48,7 +48,7 @@ const SelectWeight: React.FC<{
         {`${weight} ${unit === 'metric' ? 'kg' : 'lbs'}`}
       </Text>
 
-      {(index === 3 || weight) && (
+      {(index === 4 || weight) && (
         /* @ts-ignore */
         <Picker
           style={{height: DevicePixels[200], backgroundColor: 'transparent'}}

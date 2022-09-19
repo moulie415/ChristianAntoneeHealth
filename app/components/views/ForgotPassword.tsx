@@ -42,6 +42,7 @@ const ForgotPassword: React.FC<{
             marginTop: 0,
           }}
           placeholder="Email"
+          value={email}
           onChangeText={e => setEmail(e)}
           placeholderTextColor="#fff"
           autoCapitalize="none"

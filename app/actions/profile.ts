@@ -60,6 +60,8 @@ export interface SetLoggedInAction {
 }
 
 export interface SignUpPayload {
+  name: string;
+  surname: string;
   dob: string;
   weight: number;
   height: number;
