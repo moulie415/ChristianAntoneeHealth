@@ -263,6 +263,8 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
 
 function* signUp(action: SignUpAction) {
   const {
+    name,
+    surname,
     dob,
     weight,
     unit,
@@ -299,6 +301,8 @@ function* signUp(action: SignUpAction) {
       {
         ...profile,
         signedUp: true,
+        name,
+        surname,
         dob,
         weight,
         unit,
@@ -323,6 +327,8 @@ function* signUp(action: SignUpAction) {
     yield put(
       setProfile({
         ...profile,
+        name,
+        surname,
         dob,
         weight,
         height,
@@ -350,6 +356,8 @@ function* signUp(action: SignUpAction) {
     }
 
     setUserAttributes({
+      name,
+      surname,
       birthday: dob,
       weight: weight?.toString(),
       height: height?.toString(),

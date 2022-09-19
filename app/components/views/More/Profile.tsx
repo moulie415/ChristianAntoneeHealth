@@ -249,7 +249,7 @@ const Profile: React.FC<ProfileProps> = ({
                     fontWeight: 'bold',
                     color: colors.appWhite,
                   }}>
-                  {profile.name}
+                  {`${profile.name} ${profile.surname || ''}`}
                 </Text>
                 <Text
                   style={{
