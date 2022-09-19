@@ -41,18 +41,21 @@ const SavedItemsTabs: React.FC<{
                 renderTabBarItem={props => {
                   return (
                     <TouchableOpacity key={props.key} onPress={props.onPress}>
-                      <View
+                      <LinearGradient
+                        colors={
+                          props.key === routes[index].key
+                            ? [colors.appBlueLight, colors.appBlueDark]
+                            : ['transparent', 'transparent']
+                        }
                         style={{
                           height: DevicePixels[45],
                           paddingHorizontal: DevicePixels[20],
                           alignItems: 'center',
                           justifyContent: 'center',
                           borderRadius: DevicePixels[25],
-                          backgroundColor:
-                            props.key === routes[index].key
-                              ? colors.textGrey
-                              : colors.appGrey,
-                        }}>
+                        }}
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 0}}>
                         <Text
                           style={{
                             fontWeight: 'bold',
@@ -61,7 +64,7 @@ const SavedItemsTabs: React.FC<{
                           }}>
                           {props.route?.title}
                         </Text>
-                      </View>
+                      </LinearGradient>
                     </TouchableOpacity>
                   );
                 }}

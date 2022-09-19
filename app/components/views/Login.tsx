@@ -126,6 +126,7 @@ const Login: React.FC<LoginProps> = ({
 
             <Input
               onChangeText={setEmail}
+              value={email}
               containerStyle={{
                 marginHorizontal: DevicePixels[20],
                 marginTop: DevicePixels[60],
@@ -138,6 +139,7 @@ const Login: React.FC<LoginProps> = ({
             />
             <Input
               onChangeText={setPass}
+              value={pass}
               containerStyle={{
                 marginHorizontal: DevicePixels[20],
                 marginTop: DevicePixels[20],

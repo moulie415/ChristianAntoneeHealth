@@ -171,10 +171,15 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(0)}>
-                        <View
+                        <LinearGradient
+                          colors={
+                            tabIndex === 0
+                              ? [colors.appBlueLight, colors.appBlueDark]
+                              : ['transparent', 'transparent']
+                          }
                           style={{
                             height: DevicePixels[40],
-                            width: DevicePixels[100],
+                            paddingHorizontal: DevicePixels[10],
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: DevicePixels[25],
@@ -189,15 +194,20 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                             }}>
                             Description
                           </Text>
-                        </View>
+                        </LinearGradient>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={{}}
                         onPress={() => setTabIndex(1)}>
-                        <View
+                        <LinearGradient
+                          colors={
+                            tabIndex === 1
+                              ? [colors.appBlueLight, colors.appBlueDark]
+                              : ['transparent', 'transparent']
+                          }
                           style={{
                             height: DevicePixels[40],
-                            width: DevicePixels[100],
+                            paddingHorizontal: DevicePixels[10],
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: DevicePixels[25],
@@ -212,7 +222,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                             }}>
                             Diagram
                           </Text>
-                        </View>
+                        </LinearGradient>
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => setShowModal(true)}>
                         <Icon
@@ -341,7 +351,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               padding: DevicePixels[15],
               paddingTop: 0,
               color: colors.appWhite,
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             }}>
             Instructions
           </Text>

@@ -26,6 +26,7 @@ const SignUp: React.FC<SignUpProps> = ({
   handleAuth: handleAuthAction,
 }) => {
   const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -38,7 +39,7 @@ const SignUp: React.FC<SignUpProps> = ({
         return;
       }
       setLoading(true);
-      const user = await createUser(email, pass, {name});
+      const user = await createUser(email, pass, {name, surname});
       handleAuthAction(user);
     } catch (e) {
       setLoading(false);
@@ -81,8 +82,20 @@ const SignUp: React.FC<SignUpProps> = ({
             containerStyle={{
               marginHorizontal: DevicePixels[20],
             }}
-            placeholder="Name"
+            placeholder="First Name"
             onChangeText={setName}
+            value={name}
+            placeholderTextColor="#fff"
+            autoCorrect={false}
+          />
+          <Input
+            containerStyle={{
+              marginHorizontal: DevicePixels[20],
+              marginTop: DevicePixels[20],
+            }}
+            placeholder="Last Name"
+            onChangeText={setSurname}
+            value={surname}
             placeholderTextColor="#fff"
             autoCorrect={false}
           />
@@ -93,6 +106,7 @@ const SignUp: React.FC<SignUpProps> = ({
             }}
             placeholder="Email"
             onChangeText={setEmail}
+            value={email}
             placeholderTextColor="#fff"
             autoCapitalize="none"
             autoCorrect={false}
@@ -107,6 +121,7 @@ const SignUp: React.FC<SignUpProps> = ({
             secure
             placeholderTextColor="#fff"
             onChangeText={setPass}
+            value={pass}
             autoCorrect={false}
             autoCapitalize="none"
           />
@@ -119,12 +134,15 @@ const SignUp: React.FC<SignUpProps> = ({
             secure
             placeholderTextColor="#fff"
             onChangeText={setConfirm}
+            value={confirm}
             autoCorrect={false}
             autoCapitalize="none"
           />
           <Button
             loading={loading}
-            disabled={loading}
+            disabled={
+              loading || !pass || !name || !surname || !email || !confirm
+            }
             onPress={signUp}
             text="Sign Up"
             style={{

@@ -54,6 +54,7 @@ import BackButton from '../../commons/BackButton';
 import ForwardButton from '../../commons/ForwardButton';
 import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
+import Name from './Name';
 
 const {width} = Dimensions.get('window');
 
@@ -64,6 +65,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   signUp: signUpAction,
 }) => {
   const fromProfile = route.params?.fromProfile;
+  const [name, setName] = useState(profile.name || '');
+  const [surname, setSurname] = useState(profile.surname || '');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight);
@@ -137,6 +140,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const completeSignUp = () => {
     setLoading(true);
     signUpAction({
+      name,
+      surname,
       dob,
       weight,
       height,
@@ -169,6 +174,18 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       showNext: false,
       key: 'letsBuild',
       component: <LetsBuild goNext={goNext} />,
+    },
+    {
+      showNext: !!name && !!surname,
+      key: 'name',
+      component: (
+        <Name
+          name={name}
+          surname={surname}
+          setName={setName}
+          setSurname={setSurname}
+        />
+      ),
     },
     {
       showNext: !!dob,
