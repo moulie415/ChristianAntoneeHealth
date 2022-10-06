@@ -25,7 +25,7 @@ import Weekly from './Weekly';
 import Monthly from './Monthly';
 import colors from '../../../constants/colors';
 import Purchases, {
-  PurchaserInfo,
+  CustomerInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
 import {logError} from '../../../helpers/error';
@@ -57,7 +57,7 @@ const Plan: React.FC<{
   plan,
 }) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
-  const [info, setInfo] = useState<PurchaserInfo>();
+  const [info, setInfo] = useState<CustomerInfo>();
   useEffect(() => {
     setViewedPlanAction();
     getPlanAction();
@@ -66,7 +66,7 @@ const Plan: React.FC<{
   useEffect(() => {
     const getOfferings = async () => {
       try {
-        const purchaserInfo = await Purchases.getPurchaserInfo();
+        const purchaserInfo = await Purchases.getCustomerInfo();
         setInfo(purchaserInfo);
         const offerings = await Purchases.getOfferings();
         if (
@@ -240,7 +240,7 @@ const Plan: React.FC<{
                       disabled={loading}
                       text={`Request workout plan ${
                         profile.usedFreePlan
-                          ? '(' + p.product.price_string + ')'
+                          ? '(' + p.product.priceString + ')'
                           : ''
                       }`}
                       loading={loading}

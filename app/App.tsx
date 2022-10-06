@@ -131,6 +131,9 @@ export type StackParamList = {
   Rating: undefined;
 };
 
+// Construct a new instrumentation instance. This is needed to communicate between the integration and React
+const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
+
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
@@ -142,14 +145,22 @@ const App: React.FC = () => {
 
   useEffect(() => {
     Purchases.setDebugLogsEnabled(true);
-    Purchases.setup(
-      Platform.OS === 'ios'
-        ? Config.REVENUE_CAT_IOS_KEY
-        : Config.REVENUE_CAT_ANDROID_KEY,
-    );
+    Purchases.configure({
+      apiKey:
+        Platform.OS === 'ios'
+          ? Config.REVENUE_CAT_IOS_KEY
+          : Config.REVENUE_CAT_ANDROID_KEY,
+    });
     if (!__DEV__) {
       Sentry.init({
         dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
+        integrations: [
+          new Sentry.ReactNativeTracing({
+            // Pass instrumentation to be used as `routingInstrumentation`
+            routingInstrumentation,
+            // ...
+          }),
+        ],
       });
     }
     if (Platform.OS === 'android') {
@@ -187,6 +198,8 @@ const App: React.FC = () => {
           onReady={() => {
             sagaMiddleware.run(rootSaga);
             SplashScreen.hide();
+            // Register the navigation container with the instrumentation
+            routingInstrumentation.registerNavigationContainer(navigationRef);
           }}>
           <StackComponent />
         </NavigationContainer>
@@ -209,4 +222,4 @@ const App: React.FC = () => {
   );
 };
 
-export default gestureHandlerRootHOC(App);
+export default gestureHandlerRootHOC(Sentry.wrap(App));

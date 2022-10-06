@@ -1,8 +1,12 @@
 import Purchases from 'react-native-purchases';
+import * as Sentry from '@sentry/react-native';
 import moment from 'moment';
 
 export const setUserAttributes = (attributes: {[key: string]: string}) => {
   Purchases.setAttributes(attributes);
+  Object.keys(attributes).forEach(attribute => {
+    Sentry.setTag(attribute, attributes[attribute]);
+  });
 };
 
 export const getSimplifiedTime = (createdAt: number) => {

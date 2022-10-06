@@ -634,14 +634,14 @@ function* handleAuthWorker(action: HandleAuthAction) {
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);
       }
-      const {purchaserInfo, created} = yield call(Purchases.logIn, user.uid);
+      const {customerInfo, created} = yield call(Purchases.logIn, user.uid);
       yield call(getSettings);
       const settings: SettingsState = yield select(
         (state: MyRootState) => state.settings,
       );
       const isAdmin = settings.admins.includes(user.uid);
       yield put(setAdmin(isAdmin));
-      if (purchaserInfo.entitlements.active.Premium || isAdmin) {
+      if (customerInfo.entitlements.active.Premium || isAdmin) {
         yield put(setPremium(true));
       } else {
         yield put(setPremium(false));
@@ -651,7 +651,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         email: user.email,
         emailVerified: String(user.emailVerified),
         providerId: user.providerData[0].providerId,
-        premium: purchaserInfo.entitlements.active.Premium ? 'true' : 'false',
+        premium: customerInfo.entitlements.active.Premium ? 'true' : 'false',
       });
       if (doc.exists && doc.data().signedUp) {
         const available: boolean = yield call(isAvailable);
