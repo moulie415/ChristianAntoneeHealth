@@ -3,7 +3,7 @@ import {ImageBackground} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Purchases, {
   PACKAGE_TYPE,
-  PurchaserInfo,
+  CustomerInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
 import PremiumProps from '../../../types/views/Premium';
@@ -37,13 +37,13 @@ const Premium: React.FC<PremiumProps> = ({
   route,
 }) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
-  const [info, setInfo] = useState<PurchaserInfo>();
+  const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
   const onActivated = route.params?.onActivated;
   useEffect(() => {
     const getOfferings = async () => {
       try {
-        const purchaserInfo = await Purchases.getPurchaserInfo();
+        const purchaserInfo = await Purchases.getCustomerInfo();
         setInfo(purchaserInfo);
         const offerings = await Purchases.getOfferings();
         if (
@@ -326,7 +326,12 @@ const Premium: React.FC<PremiumProps> = ({
                   </Text>
                   <TouchableOpacity
                     onPress={() => Linking.openURL(info.managementURL)}>
-                    <Text style={{textAlign: 'center'}}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: colors.appWhite,
+                        textDecorationLine: 'underline',
+                      }}>
                       Manage subscription
                     </Text>
                   </TouchableOpacity>
@@ -345,10 +350,10 @@ const Premium: React.FC<PremiumProps> = ({
                           onPress={async () => {
                             try {
                               setLoading(true);
-                              const {purchaserInfo, productIdentifier} =
+                              const {customerInfo, productIdentifier} =
                                 await Purchases.purchasePackage(p);
                               if (
-                                typeof purchaserInfo.entitlements.active
+                                typeof customerInfo.entitlements.active
                                   .Premium !== 'undefined'
                               ) {
                                 setLoading(false);
@@ -400,7 +405,7 @@ const Premium: React.FC<PremiumProps> = ({
                                 color: colors.appWhite,
                                 fontSize: DevicePixels[14],
                               }}>
-                              {p.product.price_string}
+                              {p.product.priceString}
                             </Text>
                           </LinearGradient>
                           <View
@@ -427,7 +432,7 @@ const Premium: React.FC<PremiumProps> = ({
                                       ? colors.appBlue
                                       : colors.secondaryDark,
                                   fontSize: DevicePixels[16],
-                                }}>{`${p.product.price_string[0]}${monthlyPrice(
+                                }}>{`${p.product.priceString[0]}${monthlyPrice(
                                 p,
                               ).toFixed(2)}/mo`}</Text>
                             </View>
@@ -441,7 +446,7 @@ const Premium: React.FC<PremiumProps> = ({
                     onPress={async () => {
                       try {
                         setLoading(true);
-                        const restore = await Purchases.restoreTransactions();
+                        const restore = await Purchases.restorePurchases();
                         if (
                           typeof restore.entitlements.active.Premium !==
                           'undefined'

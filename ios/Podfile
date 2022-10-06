@@ -10,6 +10,25 @@ target 'HealthAndMovement' do
   flags = get_default_flags()
 
   config = use_native_modules!
+  config = use_frameworks! :linkage => :static
+
+  # Convert all permission pods into static libraries
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNPermissions') || pod.name.start_with?('Permission-')
+        def pod.build_type;
+          # Uncomment the line corresponding to your CocoaPods version
+          Pod::BuildType.static_library # >= 1.9
+          # Pod::Target::BuildType.static_library # < 1.9
+        end
+      end
+    end
+  end
+
+  $RNFirebaseAsStaticFramework = true
+  $RNGoogleMobileAdsAsStaticFramework = true
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
@@ -33,10 +52,17 @@ target 'HealthAndMovement' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
   if !ENV['CI']
-    use_flipper!()
+    #use_flipper!()
   end
 
   post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      if target.name == 'RCT-Folly'
+          target.build_configurations.each do |config|
+              config.build_settings['HEADER_SEARCH_PATHS'] = "$(inherited) ${PODS_ROOT}/fmt/include"
+          end
+      end
+    end
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
