@@ -321,6 +321,7 @@ function* signUp(action: SignUpAction) {
         lifestyle,
         medications,
         planStatus: PlanStatus.UNINITIALIZED,
+        signUpDate: moment().unix(),
       },
       profile.uid,
     );

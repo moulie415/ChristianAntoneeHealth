@@ -139,7 +139,10 @@ export const updateUser = (user: any, uid: string) => {
   return db()
     .collection('users')
     .doc(uid)
-    .update({...user, dobUnix: moment(user.dob).unix()});
+    .update({
+      ...user,
+      birthday: moment(user.dob).dayOfYear(),
+    });
 };
 
 export const createUser = async (
