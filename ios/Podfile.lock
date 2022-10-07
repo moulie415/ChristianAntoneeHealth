@@ -894,8 +894,8 @@ PODS:
   - PromisesObjC (2.1.1)
   - PromisesSwift (2.1.1):
     - PromisesObjC (= 2.1.1)
-  - PurchasesHybridCommon (4.2.1):
-    - RevenueCat (= 4.11.0)
+  - PurchasesHybridCommon (4.3.1):
+    - RevenueCat (= 4.13.1)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -1231,7 +1231,7 @@ PODS:
     - React-perflogger (= 0.68.3)
   - ReactNativeART (1.2.0):
     - React
-  - RevenueCat (4.11.0)
+  - RevenueCat (4.13.1)
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNAppleAuthentication (2.2.2):
@@ -1310,8 +1310,8 @@ PODS:
     - React
   - RNPermissions (3.6.1):
     - React-Core
-  - RNPurchases (5.0.2):
-    - PurchasesHybridCommon (= 4.2.1)
+  - RNPurchases (5.1.0):
+    - PurchasesHybridCommon (= 4.3.1)
     - React-Core
   - RNRate (1.2.9):
     - React-Core
@@ -1345,9 +1345,9 @@ PODS:
   - RNScreens (3.18.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.6.0):
+  - RNSentry (4.6.1):
     - React-Core
-    - Sentry (= 7.27.0)
+    - Sentry (= 7.27.1)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.2):
@@ -1367,9 +1367,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.27.0):
-    - Sentry/Core (= 7.27.0)
-  - Sentry/Core (7.27.0)
+  - Sentry (7.27.1):
+    - Sentry/Core (= 7.27.1)
+  - Sentry/Core (7.27.1)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1743,7 +1743,7 @@ SPEC CHECKSUMS:
   Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   PromisesSwift: 99fddfe4a0ec88a56486644c0da106694c92a604
-  PurchasesHybridCommon: 99e50f0429cd2a7f7495c867945b4f6ec3cd3f47
+  PurchasesHybridCommon: df3dc4516c633dd9c5ac902d56dc3659e5150661
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: b8caca023d386d43740dfb94c2cf68f695fa5e77
   RCTTypeSafety: ec44ea1d6ad1e5cd6447b22159ff40c2ebbd23b1
@@ -1781,7 +1781,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 8cdd80915ed6dabf2221a689f1f7ddb50ea5e9f3
   ReactCommon: 5b1b43a7d81a1ac4eec85f7c4db3283a14a3b13d
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
-  RevenueCat: daea606706c9d1a3182e89768bd80e664c49bce6
+  RevenueCat: f713337182aeda810fe6602f817f0909285cc1d4
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
@@ -1809,11 +1809,11 @@ SPEC CHECKSUMS:
   RNGoogleSignin: b2179ba653c759b936404a7746fc5302f9de6a5a
   RNInstabug: 7c6c25176a8fca8f6269031c9ef93629d6cc1804
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNPurchases: 6097868ae64d4716bdfcbc6e67ce255ae05671d5
+  RNPurchases: 5a022342ebe816bc42610e36e8272dfd4f412a99
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
   RNReanimated: 5bdcbcc3a72aedeee7bb099604262403aa75a1e5
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
-  RNSentry: 73f65d6ef3e5a313d6bb225e2c92c84be2e17921
+  RNSentry: f8591057d48d4f6d64196a76cbca67895667b033
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 1869ad9534459f24caaa0416a4764548c2aeedad
@@ -1821,7 +1821,7 @@ SPEC CHECKSUMS:
   RNWatch: fd30ca40a5b5ef58dcbc195638e68219bc455236
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 026b36fdc09531604db9279e55f047fe652e3f4a
+  Sentry: bc644307e2eb6a4c9c55cf117a80b895bb2a25a7
   Yoga: 2f6a78c58dcc2963bd8e34d96a4246d9dff2e3a7
 
 PODFILE CHECKSUM: 12bae824b483df1441cd61f84e75ba3e2bbdbaef
