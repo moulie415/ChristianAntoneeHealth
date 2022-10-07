@@ -141,7 +141,7 @@ export const updateUser = (user: any, uid: string) => {
     .doc(uid)
     .update({
       ...user,
-      dobUnix: moment(user.dob).unix(),
+      birthday: moment(user.dob).dayOfYear(),
     });
 };
 
