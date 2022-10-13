@@ -90,11 +90,11 @@ const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
             image={require('../../images/Homepage_Saved_Workouts.jpeg')}
             premium
             onPress={() => {
-              //if (profile.premium) {
+              if (profile.premium) {
                 navigation.navigate('SavedItems');
-              // } else {
-              //   navigation.navigate('Premium');
-              // }
+              } else {
+                navigation.navigate('Premium');
+              }
             }}
           />
 

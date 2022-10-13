@@ -10,6 +10,7 @@ import {
   MessageText,
   BubbleProps,
   MessageTextProps,
+  Bubble,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
@@ -31,7 +32,7 @@ import colors from '../../../constants/colors';
 import {viewWorkout} from '../../../actions/exercises';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
 
@@ -107,6 +108,8 @@ const Chat: React.FC<ChatProps> = ({
   const showLoadEarlier = useMemo(() => {
     return !sortMessages().some(m => m.text === 'Beginning of chat');
   }, [sortMessages]);
+
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     setTimeout(() => {
@@ -193,55 +196,73 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView style={{flex: 1}}>
-        <Header
-          title={connection.name}
-          hasBack
-          right={
-            <TouchableOpacity>
-              <Avatar src={connection.avatar} name={connection.name} />
-            </TouchableOpacity>
-          }
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <Header
+        title={connection.name}
+        hasBack
+        right={
+          <TouchableOpacity>
+            <Avatar src={connection.avatar} name={connection.name} />
+          </TouchableOpacity>
+        }
+      />
+      <Animated.View
+        entering={FadeIn.duration(1000).delay(500)}
+        style={{flex: 1}}>
+        <GiftedChat
+          wrapInSafeArea={false}
+          bottomOffset={insets.bottom}
+          renderCustomView={renderCustomView}
+          ref={ref}
+          messagesContainerStyle={{
+            paddingTop: Platform.OS === 'ios' ? 0 : DevicePixels[50],
+          }}
+          loadEarlier={showLoadEarlier}
+          isLoadingEarlier={loading}
+          onLoadEarlier={loadEarlier}
+          renderMessageText={renderMessageText}
+          messages={sortMessages()}
+          renderBubble={props => {
+            return (
+              <Bubble
+                {...props}
+                textStyle={{
+                  right: {
+                    fontFamily: 'MontserratAlternates-Regular',
+                  },
+                  left: {
+                    fontFamily: 'MontserratAlternates-Regular',
+                  },
+                }}
+                wrapperStyle={{
+                  left: {},
+                  right: {
+                    backgroundColor: colors.appBlue,
+                  },
+                }}
+              />
+            );
+          }}
+          user={{
+            _id: profile.uid,
+            name: profile.name,
+            avatar: profile.avatar,
+          }}
+          inverted={false}
+          renderAvatar={renderAvatar}
+          onSend={msgs => {
+            const message: Message = {
+              ...msgs[0],
+              type: 'text',
+              pending: true,
+              createdAt: moment().valueOf(),
+            };
+            sendMessageAction(message, chatId, uid);
+          }}
         />
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(500)}
-          style={{flex: 1}}>
-          <GiftedChat
-            renderCustomView={renderCustomView}
-            ref={ref}
-            messagesContainerStyle={{
-              paddingTop: Platform.OS === 'ios' ? 0 : DevicePixels[50],
-            }}
-            loadEarlier={showLoadEarlier}
-            isLoadingEarlier={loading}
-            onLoadEarlier={loadEarlier}
-            renderMessageText={renderMessageText}
-            messages={sortMessages()}
-            user={{
-              _id: profile.uid,
-              name: profile.name,
-              avatar: profile.avatar,
-            }}
-            inverted={false}
-            renderAvatar={renderAvatar}
-            onSend={msgs => {
-              const message: Message = {
-                ...msgs[0],
-                type: 'text',
-                pending: true,
-                createdAt: moment().valueOf(),
-              };
-              sendMessageAction(message, chatId, uid);
-            }}
-          />
-          <AbsoluteSpinner
-            loading={exercisesLoading}
-            text="Fetching exercises"
-          />
-        </Animated.View>
-      </SafeAreaView>
-    </View>
+        <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
+      </Animated.View>
+    </SafeAreaView>
   );
 };
 

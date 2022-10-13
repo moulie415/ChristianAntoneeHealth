@@ -9,6 +9,7 @@ import {
   ImageBackground,
   RefreshControl,
   SafeAreaView,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -99,35 +100,58 @@ const Connections: React.FC<{
               item.uid,
             );
             return (
-              <ListItem
+              <TouchableOpacity
                 onPress={() => navigation.navigate('Chat', {uid: item.uid})}
-                title={item.name}
-                style={{padding: DevicePixels[10]}}
-                description={truncate(lastMessage, 40)}
-                accessoryLeft={
+                style={{
+                  padding: DevicePixels[10],
+                  flexDirection: 'row',
+                  backgroundColor: colors.borderColor,
+                }}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
                   <Avatar
                     src={item.avatar}
                     name={item.name}
                     size={DevicePixels[40]}
                   />
-                }
-                accessoryRight={
-                  <View style={{alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        fontSize: DevicePixels[10],
-                        color: colors.textGrey,
-                        marginBottom: DevicePixels[5],
-                      }}>
-                      {getSimplifiedTime(createdAt)}
-                    </Text>
-                    <UnreadConnectionCount uid={item.uid} />
-                  </View>
-                }
-              />
+                </View>
+                <View style={{justifyContent: 'center', margin: 10, flex: 1}}>
+                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      fontSize: DevicePixels[12],
+                    }}>
+                    {truncate(lastMessage, 35)}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: DevicePixels[10],
+                      color: colors.appWhite,
+                      marginBottom: DevicePixels[5],
+                      fontStyle: 'italic',
+                    }}>
+                    {getSimplifiedTime(createdAt)}
+                  </Text>
+                  <UnreadConnectionCount uid={item.uid} />
+                </View>
+              </TouchableOpacity>
             );
           }}
-          ItemSeparatorComponent={Divider}
+          ItemSeparatorComponent={() => (
+            <Divider style={{}} />
+          )}
         />
       </SafeAreaView>
     </View>

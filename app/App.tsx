@@ -28,16 +28,13 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import appCheck from '@react-native-firebase/app-check';
 
 import Education from './types/Education';
-import Video from 'react-native-video';
 import {Dimensions, Platform, View} from 'react-native';
 import Config from 'react-native-config';
 import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
-import Instabug from 'instabug-reactnative';
 import colors from './constants/colors';
-import {Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import Animated, {FadeOut} from 'react-native-reanimated';
+import Instabug from 'instabug-reactnative';
 
 const {height, width} = Dimensions.get('window');
 
@@ -171,17 +168,10 @@ const App: React.FC = () => {
         });
     }
 
-    Instabug.isRunningLive(isLive => {
-      if (isLive) {
-        Instabug.start(Config.INSTABUG_PROD_TOKEN, [
-          Instabug.invocationEvent.none,
-        ]);
-      } else {
-        Instabug.start(Config.INSTABUG_DEV_TOKEN, [
-          Instabug.invocationEvent.none,
-        ]);
-      }
-    });
+    Instabug.start(
+      __DEV__ ? Config.INSTABUG_DEV_TOKEN : Config.INSTABUG_PROD_TOKEN,
+      [Instabug.invocationEvent.none],
+    );
 
     MobileAds()
       .initialize()
