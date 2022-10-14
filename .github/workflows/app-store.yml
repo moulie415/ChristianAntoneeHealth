@@ -44,12 +44,14 @@ jobs:
       - name: Import signing certificate
         env:
           SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          SIGNING_CERTIFICATE_P12_DATA_DEV: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA_DEV }}
           #SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
         run: |
           exec .github/scripts/import-certificate.sh
       - name: Import provisioning profile
         env:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+          PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.PROVISIONING_PROFILE_DATA_DEV }}
           WATCH_APP_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
           WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA }}
         run: |
