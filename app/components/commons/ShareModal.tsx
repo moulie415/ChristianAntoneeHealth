@@ -95,7 +95,7 @@ const ShareModal: React.FC<{
         }}>
         <Text style={{textAlign: 'center'}}>{title}</Text>
         <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
-          (Send message to connections)
+          (Send message to friends)
         </Text>
         <Divider />
         <FlatList

@@ -27,7 +27,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
       blurRadius={5}
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
-        <Header title="Add connection" hasBack />
+        <Header title="Add friend" hasBack />
         <View
           style={{
             ...StyleSheet.absoluteFillObject,

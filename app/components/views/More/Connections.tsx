@@ -71,7 +71,7 @@ const Connections: React.FC<{
       <SafeAreaView>
         <Header
           hasBack
-          title="Connections"
+          title="Friends"
           right={<AddConnectionButton navigation={navigation} />}
         />
         {Object.values(connections).length === 0 && (
@@ -82,7 +82,7 @@ const Connections: React.FC<{
               color: colors.appWhite,
               fontSize: DevicePixels[20],
             }}>
-            No connections yet, press the invite button in the top right to send
+            No friends yet, press the invite button in the top right to send
             a link.
           </Text>
         )}

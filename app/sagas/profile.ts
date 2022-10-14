@@ -724,7 +724,7 @@ export default function* profileSaga() {
     takeLatest(UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
-    debounce(30000, GET_CONNECTIONS, getConnections),
+    debounce(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
     debounce(3000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),

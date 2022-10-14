@@ -69,7 +69,7 @@ const More: React.FC<MoreProps> = ({
       onPress: () => navigation.navigate('Profile'),
     },
     {
-      title: 'Connections',
+      title: 'Friends',
       icon: 'user-friends',
       onPress: () => {
         if (profile.premium) {
