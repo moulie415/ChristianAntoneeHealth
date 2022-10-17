@@ -114,7 +114,7 @@ const Connections: React.FC<{
                   }}>
                   <Avatar
                     src={item.avatar}
-                    name={item.name}
+                    name={`${item.name} ${item.surname || ''}`}
                     size={DevicePixels[40]}
                   />
                 </View>

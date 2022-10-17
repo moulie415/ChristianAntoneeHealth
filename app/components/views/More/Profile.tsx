@@ -219,7 +219,7 @@ const Profile: React.FC<ProfileProps> = ({
                   marginRight: DevicePixels[10],
                 }}>
                 <Avatar
-                  name={profile.name}
+                  name={`${profile.name} ${profile.surname || ''}`}
                   src={avatar}
                   size={DevicePixels[80]}
                 />

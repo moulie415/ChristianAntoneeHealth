@@ -104,7 +104,12 @@ const ShareModal: React.FC<{
           ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
             <ListItem
-              accessoryLeft={<Avatar name={item.name} src={item.avatar} />}
+              accessoryLeft={
+                <Avatar
+                  name={`${item.name} ${item.surname || ''}`}
+                  src={item.avatar}
+                />
+              }
               onPress={() => {
                 if (selected.includes(item.uid)) {
                   setSelected(selected.filter(i => i !== item.uid));

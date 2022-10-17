@@ -185,7 +185,7 @@ const Chat: React.FC<ChatProps> = ({
         renderAvatar={(p: AvatarProps<Message>) =>
           p ? (
             <Avatar
-              name={connection.name}
+              name={`${connection.name} ${connection.surname || ''}`}
               src={connection.avatar}
               size={DevicePixels[30]}
             />
@@ -202,7 +202,10 @@ const Chat: React.FC<ChatProps> = ({
         hasBack
         right={
           <TouchableOpacity>
-            <Avatar src={connection.avatar} name={connection.name} />
+            <Avatar
+              src={connection.avatar}
+              name={`${connection.name} ${connection.surname || ''}`}
+            />
           </TouchableOpacity>
         }
       />
