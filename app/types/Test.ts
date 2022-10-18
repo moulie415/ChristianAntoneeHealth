@@ -9,6 +9,7 @@ export default interface Test {
   womens?: Table | PercentileTable;
   premium?: boolean;
   source?: string;
+  disabled?: boolean;
 };
 
 export interface Table {

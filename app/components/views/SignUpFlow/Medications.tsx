@@ -4,14 +4,15 @@ import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Medications: React.FC<{
   medications: string;
   setMedications: (medications: string) => void;
 }> = ({medications, setMedications}) => {
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
         margin: DevicePixels[50],
@@ -33,7 +34,7 @@ const Medications: React.FC<{
         value={medications}
         placeholderTextColor={colors.appWhite}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

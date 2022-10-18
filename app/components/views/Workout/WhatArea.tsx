@@ -50,13 +50,12 @@ const WhatArea: React.FC<{
               borderRadius: DevicePixels[10],
             }}
             source={require('../../../images/upper-body.jpg')}>
-            <FastImage
-              source={require('../../../images/BlackTransparentBackground.png')}
-              blurRadius={3}
+            <View
               style={{
                 height: DevicePixels[120],
                 justifyContent: 'center',
                 borderRadius: DevicePixels[10],
+                backgroundColor: 'rgba(0,0,0,0.5)',
               }}>
               <Text
                 style={{
@@ -67,7 +66,7 @@ const WhatArea: React.FC<{
                 }}>
                 UPPER BODY
               </Text>
-            </FastImage>
+            </View>
           </FastImage>
         </TouchableOpacity>
         <TouchableOpacity
@@ -86,13 +85,12 @@ const WhatArea: React.FC<{
               borderRadius: DevicePixels[10]
             }}
             source={require('../../../images/lower-body.jpg')}>
-            <FastImage
-              source={require('../../../images/BlackTransparentBackground.png')}
-              blurRadius={3}
+            <View
               style={{
                 height: DevicePixels[120],
                 justifyContent: 'center',
                 borderRadius: DevicePixels[10],
+                backgroundColor: 'rgba(0,0,0,0.5)',
               }}>
               <Text
                 style={{
@@ -103,7 +101,7 @@ const WhatArea: React.FC<{
                 }}>
                 LOWER BODY
               </Text>
-            </FastImage>
+            </View>
           </FastImage>
         </TouchableOpacity>
         <TouchableOpacity
@@ -122,13 +120,12 @@ const WhatArea: React.FC<{
               borderRadius: DevicePixels[10],
             }}
             source={require('../../../images/full-body.jpg')}>
-            <FastImage
-              source={require('../../../images/BlackTransparentBackground.png')}
-              blurRadius={3}
+            <View
               style={{
                 height: DevicePixels[120],
                 justifyContent: 'center',
                 borderRadius: DevicePixels[10],
+                backgroundColor: 'rgba(0,0,0,0.5)',
               }}>
               <Text
                 style={{
@@ -139,7 +136,7 @@ const WhatArea: React.FC<{
                 }}>
                 FULL BODY
               </Text>
-            </FastImage>
+            </View>
           </FastImage>
         </TouchableOpacity>
       </SafeAreaView>

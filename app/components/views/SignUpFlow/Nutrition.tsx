@@ -1,4 +1,3 @@
-import {ImageBackground, StyleSheet, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -10,6 +9,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
 import Input from '../../commons/Input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Nutrition: React.FC<{
   nutrition: string[];
@@ -48,8 +48,8 @@ const Nutrition: React.FC<{
   );
 
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
       }}>
@@ -175,7 +175,7 @@ const Nutrition: React.FC<{
           );
         }}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

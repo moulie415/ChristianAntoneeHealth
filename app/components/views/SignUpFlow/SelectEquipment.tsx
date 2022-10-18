@@ -4,14 +4,15 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Text from '../../commons/Text';
 import Input from '../../commons/Input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SelectEquipment: React.FC<{
   equipment: string;
   setEquipment: (equipment: string) => void;
 }> = ({equipment, setEquipment}) => {
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
         margin: DevicePixels[50],
@@ -34,7 +35,7 @@ const SelectEquipment: React.FC<{
         value={equipment}
         placeholderTextColor={colors.appWhite}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

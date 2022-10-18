@@ -45,13 +45,10 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
   return (
     <View style={{}}>
       <View style={{margin: DevicePixels[20], marginTop: DevicePixels[5]}}>
-        <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-          Muscles worked
-        </Text>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           <View style={{marginRight: DevicePixels[10]}}>
             <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-              Primary:
+              Primary muscles
             </Text>
             <View
               style={{
@@ -86,7 +83,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
           {secondary && (
             <View>
               <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                Secondary:{' '}
+                Secondary muscles{' '}
               </Text>
               <View
                 style={{

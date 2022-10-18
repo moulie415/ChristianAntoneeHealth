@@ -1,17 +1,17 @@
-import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const PhysicalInjuries: React.FC<{
   injuries: string;
   setInjuries: (injuries: string) => void;
 }> = ({injuries, setInjuries}) => {
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
         margin: DevicePixels[50],
@@ -33,7 +33,7 @@ const PhysicalInjuries: React.FC<{
         onChangeText={setInjuries}
         value={injuries}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

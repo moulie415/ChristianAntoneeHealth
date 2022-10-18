@@ -70,7 +70,7 @@ const WorkoutCard: React.FC<{
             justifyContent: 'center',
             padding: DevicePixels[10],
             borderRadius: DevicePixels[10],
-            backgroundColor: 'rgba(0,0,0,0.7)',
+            backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           {locked ? (
             <View style={{}}>

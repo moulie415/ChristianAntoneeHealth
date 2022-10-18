@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
+  Keyboard,
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -170,11 +171,13 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const goNext = () => ref.current?.scrollTo(index + 1);
 
   const slides = [
+    // 0
     {
       showNext: false,
       key: 'letsBuild',
       component: <LetsBuild goNext={goNext} />,
     },
+    // 1
     {
       showNext: !!name && !!surname,
       key: 'name',
@@ -187,6 +190,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 2
     {
       showNext: !!dob,
       key: 'age',
@@ -199,6 +203,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 3
     {
       showNext: !!gender,
       key: 'sex',
@@ -210,7 +215,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     //   tint: colors.appWhite,
     //   component: <SelectUnit unit={unit} setUnit={setUnit} />,
     // },
-
+    // 4
     {
       showNext: !!weight,
       key: 'weight',
@@ -224,6 +229,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 5
     {
       key: 'height',
       showNext: !!height,
@@ -237,11 +243,13 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 6
     {
       key: 'goal',
       showNext: !!goal,
       component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
+    // 7
     {
       key: 'experience',
       showNext: !!experience,
@@ -252,6 +260,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 8
     {
       key: 'equipment',
       showNext: true,
@@ -259,6 +268,8 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
       ),
     },
+    // 9
+
     {
       key: 'medications',
       showNext: true,
@@ -269,6 +280,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 10
     {
       key: 'lifestyle',
       showNext: true,
@@ -276,6 +288,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         <GeneralLifestyle lifestyle={lifestyle} setLifestyle={setLifestyle} />
       ),
     },
+    // 11
     {
       key: 'sleep',
       showNext: !!sleepPattern,
@@ -286,6 +299,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 12
     {
       key: 'stresslevel',
       showNext: !!stressLevel,
@@ -296,6 +310,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         />
       ),
     },
+    // 13
     {
       key: 'occupation',
       component: (
@@ -303,6 +318,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
       showNext: true,
     },
+    // 14
     {
       key: 'injuries',
       component: (
@@ -310,6 +326,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
       showNext: true,
     },
+    // 15
     {
       key: 'training',
       component: (
@@ -320,6 +337,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
       showNext: !!trainingAvailability,
     },
+    // 16
     {
       key: 'nutrition',
       component: (
@@ -327,6 +345,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
       showNext: true,
     },
+    // 17
     {
       key: 'complete',
       showNext: true,
@@ -369,7 +388,10 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
         {fromProfile && <Header hasBack />}
         <Swiper
           ref={ref}
-          onIndexChanged={setIndex}
+          onIndexChanged={i => {
+            setIndex(i);
+            Keyboard.dismiss();
+          }}
           loop={false}
           removeClippedSubviews={false}
           showsPagination={false}

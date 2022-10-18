@@ -40,14 +40,13 @@ const SavedTestCard: React.FC<{
           borderRadius: DevicePixels[10],
         }}
         source={image}>
-        <FastImage
-          source={require('../../images/BlackTransparentBackground.png')}
-          blurRadius={3}
+        <View
           style={{
             height: DevicePixels[140],
             justifyContent: 'center',
             padding: DevicePixels[10],
             borderRadius: DevicePixels[10],
+            backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           {test.premium && !profile.premium && (
             <View
@@ -102,7 +101,7 @@ const SavedTestCard: React.FC<{
               {test.name}
             </Text>
           </View>
-        </FastImage>
+        </View>
       </FastImage>
     </TouchableOpacity>
   );

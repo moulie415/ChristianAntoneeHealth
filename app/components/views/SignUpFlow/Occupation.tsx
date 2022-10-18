@@ -1,17 +1,17 @@
-import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Occupation: React.FC<{
   occupation: string;
   setOccupation: (occupation: string) => void;
 }> = ({occupation, setOccupation}) => {
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
         margin: DevicePixels[50],
@@ -32,7 +32,7 @@ const Occupation: React.FC<{
         value={occupation}
         onChangeText={setOccupation}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

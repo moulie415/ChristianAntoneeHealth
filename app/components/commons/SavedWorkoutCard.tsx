@@ -69,14 +69,13 @@ const SavedWorkoutCard: React.FC<{
         source={getImage(
           quickRoutine ? quickRoutine.level : profile.experience,
         )}>
-        <FastImage
-          source={require('../../images/BlackTransparentBackground.png')}
-          blurRadius={3}
+        <View
           style={{
             height: DevicePixels[140],
             justifyContent: 'center',
             padding: DevicePixels[10],
             borderRadius: DevicePixels[10],
+            backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           <Text
             style={{
@@ -149,7 +148,7 @@ const SavedWorkoutCard: React.FC<{
               </Text>
             )}
           </View>
-        </FastImage>
+        </View>
       </FastImage>
     </TouchableOpacity>
   );

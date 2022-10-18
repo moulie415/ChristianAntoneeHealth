@@ -30,7 +30,7 @@ const EducationArticle: React.FC<{
             style={{
               ...StyleSheet.absoluteFillObject,
               backgroundColor: '#000',
-              opacity: 0.7,
+              opacity: 0.4,
             }}
           />
         </Image>

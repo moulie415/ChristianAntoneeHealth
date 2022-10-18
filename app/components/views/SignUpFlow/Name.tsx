@@ -1,9 +1,9 @@
-import {View} from 'react-native';
 import React from 'react';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Input from '../../commons/Input';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Name: React.FC<{
   name: string;
@@ -12,12 +12,13 @@ const Name: React.FC<{
   setSurname: (name: string) => void;
 }> = ({name, setName, surname, setSurname}) => {
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
         margin: DevicePixels[40],
-      }}>
+      }}
+      style={{}}>
       <Text
         style={{
           textAlign: 'center',
@@ -48,7 +49,7 @@ const Name: React.FC<{
         placeholderTextColor="#fff"
         autoCorrect={false}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

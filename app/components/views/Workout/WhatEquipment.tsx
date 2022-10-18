@@ -47,13 +47,12 @@ const WhatEquipment: React.FC<{
                 borderRadius: DevicePixels[10],
               }}
               source={require('../../../images/bits-and-pieces.jpg')}>
-              <FastImage
-                source={require('../../../images/BlackTransparentBackground.png')}
-                blurRadius={3}
+              <View
                 style={{
                   padding: DevicePixels[20],
                   borderBottomLeftRadius: DevicePixels[10],
                   borderBottomRightRadius: DevicePixels[10],
+                  backgroundColor: 'rgba(0,0,0,0.5)',
                 }}>
                 <Text
                   style={{
@@ -73,7 +72,7 @@ const WhatEquipment: React.FC<{
                   }}>
                   (Dumbbells, exercise ball, exercise mat)
                 </Text>
-              </FastImage>
+              </View>
             </FastImage>
           </TouchableOpacity>
 
@@ -87,16 +86,15 @@ const WhatEquipment: React.FC<{
               style={{
                 height: DevicePixels[200],
                 justifyContent: 'flex-end',
-                borderRadius: DevicePixels[10]
+                borderRadius: DevicePixels[10],
               }}
               source={require('../../../images/access-to-gym.jpg')}>
-              <FastImage
-                source={require('../../../images/BlackTransparentBackground.png')}
-                blurRadius={3}
+              <View
                 style={{
                   padding: DevicePixels[20],
                   borderBottomLeftRadius: DevicePixels[10],
                   borderBottomRightRadius: DevicePixels[10],
+                  backgroundColor: 'rgba(0,0,0,0.5)',
                 }}>
                 <Text
                   style={{
@@ -117,7 +115,7 @@ const WhatEquipment: React.FC<{
                   (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
                   benches Kettlebell etc)
                 </Text>
-              </FastImage>
+              </View>
             </FastImage>
           </TouchableOpacity>
         </View>

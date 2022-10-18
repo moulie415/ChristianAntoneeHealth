@@ -1,17 +1,17 @@
-import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import DevicePixels from '../../../helpers/DevicePixels';
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const GeneralLifestyle: React.FC<{
   lifestyle: string;
   setLifestyle: (lifestyle: string) => void;
 }> = ({lifestyle, setLifestyle}) => {
   return (
-    <View
-      style={{
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
         margin: DevicePixels[50],
@@ -34,7 +34,7 @@ const GeneralLifestyle: React.FC<{
         value={lifestyle}
         placeholderTextColor={colors.appWhite}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
