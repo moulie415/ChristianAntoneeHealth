@@ -47,6 +47,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const [routineStarted, setRoutineStarted] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
       return exercisesObj[id];
@@ -100,7 +101,10 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             return (
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
-                  <ExerciseVideo paused path={exercise.video.src} />
+                  <ExerciseVideo
+                  paused={!(index !== 0 && index === i)}
+                    path={exercise.video.src}
+                  />
                 ) : (
                   <View
                     style={{
@@ -335,7 +339,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
         <View
           style={{
             backgroundColor: colors.appGrey,
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             borderRadius: DevicePixels[10],
           }}>
@@ -343,12 +347,13 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             style={{alignSelf: 'center', margin: DevicePixels[10]}}
             name="info-circle"
             color={colors.appWhite}
-            size={DevicePixels[20]}
+            size={DevicePixels[30]}
           />
           <Text
             style={{
               textAlign: 'center',
               padding: DevicePixels[15],
+              fontSize: DevicePixels[25],
               paddingTop: 0,
               color: colors.appWhite,
               fontWeight: 'bold',
@@ -358,8 +363,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           <Text
             style={{
               margin: DevicePixels[10],
+              marginTop: 0,
               textAlign: 'center',
               color: colors.appWhite,
+              fontSize: DevicePixels[18],
+              lineHeight: DevicePixels[25],
             }}>
             {routine.instructions}
           </Text>

@@ -113,10 +113,14 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           style={{flex: 1, paddingHorizontal: 0}}>
           {workout.map((exercise, i) => {
             const next = workout[index + 1];
+            
             return (
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
-                  <ExerciseVideo paused path={exercise.video.src} />
+                  <ExerciseVideo
+                    paused={!(index !== 0 && index === i)}
+                    path={exercise.video.src}
+                  />
                 ) : (
                   <View
                     style={{

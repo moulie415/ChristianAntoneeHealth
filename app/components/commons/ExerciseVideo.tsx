@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, Platform, TouchableOpacity} from 'react-native';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -18,6 +18,12 @@ const ExerciseVideo: React.FC<{
   const [hideTime, setHideTime] = useState(moment().unix());
   const ref = useRef<Video>();
   const showControls = paused || moment().unix() < hideTime + 3;
+
+  useEffect(() => {
+    if (!startedPaused) {
+      setPaused(false);
+    }
+  }, [startedPaused]);
 
   return (
     <>
@@ -60,7 +66,7 @@ const ExerciseVideo: React.FC<{
           />
         </TouchableOpacity>
       )}
-      {showControls && Platform.OS === 'ios' && (
+      {/* {showControls && Platform.OS === 'ios' && (
         <TouchableOpacity
           onPress={() => ref.current?.presentFullscreenPlayer()}
           style={{
@@ -70,7 +76,7 @@ const ExerciseVideo: React.FC<{
           }}>
           <Icon name="expand" color={colors.appWhite} size={DevicePixels[30]} />
         </TouchableOpacity>
-      )}
+      )} */}
     </>
   );
 };
