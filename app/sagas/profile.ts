@@ -695,17 +695,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(handleDeepLink, link.url);
         }
 
-        messaging()
-          .requestPermission()
-          .then(async authStatus => {
-            const enabled =
-              authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-              authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-            if (enabled) {
-              const FCMToken = await messaging().getToken();
-              api.setFCMToken(user.uid, FCMToken);
-            }
-          });
         const {premium} = yield select(
           (state: MyRootState) => state.profile.profile,
         );
@@ -718,6 +707,17 @@ function* handleAuthWorker(action: HandleAuthAction) {
       yield put(setLoggedIn(true));
       yield put(getTests());
       yield fork(createChannels);
+      messaging()
+        .requestPermission()
+        .then(async authStatus => {
+          const enabled =
+            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+          if (enabled) {
+            const FCMToken = await messaging().getToken();
+            api.setFCMToken(user.uid, FCMToken);
+          }
+        });
     } else if (user) {
       Alert.alert(
         'Account not verified',
