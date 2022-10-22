@@ -46,6 +46,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const pagerRef = useRef<PagerView>();
   const [routineStarted, setRoutineStarted] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [hasPressedPlay, setHasPressedPlay] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -101,8 +102,12 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
-                    paused={!(index !== 0 && index === i)}
+                    paused
                     path={exercise.video.src}
+                    videoIndex={i}
+                    currentIndex={index}
+                    hasPressedPlay={hasPressedPlay}
+                    setHasPressedPlay={setHasPressedPlay}
                   />
                 ) : (
                   <View

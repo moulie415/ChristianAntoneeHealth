@@ -13,17 +13,30 @@ import {Slider} from '@miblanchard/react-native-slider';
 const ExerciseVideo: React.FC<{
   path: string;
   paused?: boolean;
-}> = ({path, paused: startedPaused}) => {
+  videoIndex?: number;
+  currentIndex?: number;
+  hasPressedPlay?: boolean;
+  setHasPressedPlay?: (pressed: boolean) => void;
+}> = ({
+  path,
+  paused: startedPaused,
+  videoIndex,
+  currentIndex,
+  hasPressedPlay,
+  setHasPressedPlay,
+}) => {
   const [paused, setPaused] = useState(startedPaused);
   const [hideTime, setHideTime] = useState(moment().unix());
   const ref = useRef<Video>();
   const showControls = paused || moment().unix() < hideTime + 3;
 
   useEffect(() => {
-    if (!startedPaused) {
+    if (hasPressedPlay && currentIndex === videoIndex) {
       setPaused(false);
+    } else if (currentIndex !== videoIndex) {
+      setPaused(true);
     }
-  }, [startedPaused]);
+  }, [currentIndex, videoIndex, hasPressedPlay]);
 
   return (
     <>
@@ -46,6 +59,9 @@ const ExerciseVideo: React.FC<{
           onPress={() => {
             setHideTime(paused ? moment().unix() - 3 : moment().unix());
             setPaused(!paused);
+            if (!hasPressedPlay) {
+              setHasPressedPlay(true);
+            }
           }}
           style={{
             height: DevicePixels[50],
