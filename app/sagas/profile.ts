@@ -57,6 +57,8 @@ import {
   REQUEST_PLAN,
   setPlanStatus,
   setMonthlyHeightSamples,
+  SET_PREMIUM,
+  SetPremiumAction,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -607,6 +609,21 @@ function* requestPlanWorker() {
   }
 }
 
+function* premiumUpdatedWorker() {
+  while (true) {
+    const oldPremium: boolean = yield select(
+      (state: MyRootState) => state.profile.profile.premium,
+    );
+    yield take(SET_PREMIUM);
+    const {premium, uid} = yield select(
+      (state: MyRootState) => state.profile.profile,
+    );
+    if (oldPremium !== premium) {
+      yield call(api.updateUser, {premium}, uid);
+    }
+  }
+}
+
 function* handleAuthWorker(action: HandleAuthAction) {
   const user = action.payload;
   try {
@@ -635,6 +652,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);
       }
+      yield fork(premiumUpdatedWorker);
       const {customerInfo, created} = yield call(Purchases.logIn, user.uid);
       yield call(getSettings);
       const settings: SettingsState = yield select(
@@ -731,6 +749,7 @@ export default function* profileSaga() {
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
     takeLatest(GET_WEEKLY_ITEMS, getWeeklyItems),
     takeLatest(REQUEST_PLAN, requestPlanWorker),
+    debounce(3000, SET_PREMIUM, premiumUpdatedWorker),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

@@ -64,6 +64,7 @@ const initialState: ProfileState = {
     uid: '',
     unread: {},
     planStatus: PlanStatus.UNINITIALIZED,
+    premium: false,
   },
   loggedIn: false,
   weightSamples: {},
