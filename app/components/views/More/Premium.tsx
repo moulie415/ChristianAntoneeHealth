@@ -105,7 +105,7 @@ const Premium: React.FC<PremiumProps> = ({
       style={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack />
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
           <View
             style={{
               marginHorizontal: DevicePixels[10],
@@ -149,7 +149,7 @@ const Premium: React.FC<PremiumProps> = ({
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[10],
+                      fontSize: DevicePixels[14],
                       color: colors.appWhite,
                     }}>
                     Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
@@ -181,7 +181,7 @@ const Premium: React.FC<PremiumProps> = ({
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[10],
+                      fontSize: DevicePixels[14],
                       color: colors.appWhite,
                     }}>
                     Gain access to <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
@@ -211,7 +211,7 @@ const Premium: React.FC<PremiumProps> = ({
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[10],
+                      fontSize: DevicePixels[14],
                       color: colors.appWhite,
                     }}>
                     See how you rank against others by unlocking{' '}
@@ -238,15 +238,15 @@ const Premium: React.FC<PremiumProps> = ({
                       fontSize: DevicePixels[18],
                       color: colors.appWhite,
                     }}>
-                    Stay connected
+                    One-to-One Communication
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[10],
+                      fontSize: DevicePixels[14],
                       color: colors.appWhite,
                     }}>
-                    Enjoy in-app messaging where you can share exercises,
-                    workouts, and compare tests results!
+                    Ask questions and discuss health and fitness topics directly
+                    with Christian using our in-app messaging
                   </Text>
                 </View>
               </View>
@@ -262,7 +262,7 @@ const Premium: React.FC<PremiumProps> = ({
                     color={colors.appWhite}
                     name="calendar-alt"
                   />
-                  &
+
                   <View style={{flex: 1}}>
                     <Text
                       style={{
@@ -274,7 +274,7 @@ const Premium: React.FC<PremiumProps> = ({
                     </Text>
                     <Text
                       style={{
-                        fontSize: DevicePixels[10],
+                        fontSize: DevicePixels[14],
                         color: colors.appWhite,
                       }}>
                       Purchase customized monthly plans tailored specifically to
@@ -292,14 +292,25 @@ const Premium: React.FC<PremiumProps> = ({
                     marginBottom: DevicePixels[20],
                   }}>
                   <Icon
-                    style={{width: DevicePixels[75], textAlign: 'center'}}
+                    style={{marginRight: DevicePixels[10]}}
                     size={DevicePixels[20]}
-                    color={colors.appBlue}
+                    color={colors.appWhite}
                     name="comment-slash"
                   />
                   <View style={{flex: 1}}>
-                    <Text style={{fontWeight: 'bold'}}>Remove Ads</Text>
-                    <Text style={{}}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: colors.appWhite,
+                        fontSize: DevicePixels[18],
+                      }}>
+                      Remove Ads
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: DevicePixels[14],
+                        color: colors.appWhite,
+                      }}>
                       Enjoy the full content of the app Ad-free
                     </Text>
                   </View>
