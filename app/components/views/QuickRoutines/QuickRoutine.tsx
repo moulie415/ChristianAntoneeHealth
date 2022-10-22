@@ -47,7 +47,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const [routineStarted, setRoutineStarted] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
       return exercisesObj[id];
@@ -102,7 +101,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
-                  paused={!(index !== 0 && index === i)}
+                    paused={!(index !== 0 && index === i)}
                     path={exercise.video.src}
                   />
                 ) : (

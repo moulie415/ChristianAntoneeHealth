@@ -25,6 +25,7 @@ import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import FastImage from 'react-native-fast-image';
+import FastImageAnimated from '../../commons/FastImageAnimated';
 
 const {height, width} = Dimensions.get('window');
 
@@ -95,7 +96,7 @@ const ArticleList: React.FC<{
               overflow: 'hidden',
             }}
             onPress={() => onPress(item)}>
-            <FastImage
+            <FastImageAnimated
               style={{
                 position: 'absolute',
                 height: DevicePixels[125],

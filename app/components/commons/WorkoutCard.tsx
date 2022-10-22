@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
 import Profile from '../../types/Profile';
 import FastImage from 'react-native-fast-image';
+import FastImageAnimated from './FastImageAnimated';
 
 export const getImage = (level: Level) => {
   if (level === Level.INTERMEDIATE) {
@@ -52,7 +53,7 @@ const WorkoutCard: React.FC<{
       onPress={onPress}
       disabled={disabled}
       key={'id' in item ? item.id : item.name}>
-      <FastImage
+      <FastImageAnimated
         style={{
           height: DevicePixels[120],
           marginHorizontal: DevicePixels[10],
@@ -134,7 +135,7 @@ const WorkoutCard: React.FC<{
             )}
           </View>
         </View>
-      </FastImage>
+      </FastImageAnimated>
     </TouchableOpacity>
   );
 };
