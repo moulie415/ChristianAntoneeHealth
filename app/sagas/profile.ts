@@ -744,7 +744,7 @@ export default function* profileSaga() {
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     debounce(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
-    debounce(3000, SET_READ, setRead),
+    debounce(1000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
     takeLatest(GET_WEEKLY_ITEMS, getWeeklyItems),
