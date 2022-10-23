@@ -68,7 +68,7 @@ const Connections: React.FC<{
   }, [getConnectionsAction]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>
         <Header
           hasBack
           title="Friends"
@@ -82,18 +82,13 @@ const Connections: React.FC<{
               color: colors.appWhite,
               fontSize: DevicePixels[20],
             }}>
-            No friends yet, press the invite button in the top right to send
-            a link.
+            No friends yet, press the invite button in the top right to send a
+            link.
           </Text>
         )}
         <FlatList
+          contentContainerStyle={{flex: 1}}
           data={Object.values(connections)}
-          refreshControl={
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={getConnectionsAction}
-            />
-          }
           renderItem={({item}) => {
             const {lastMessage, createdAt, italicize} = getLastMessage(
               messages,
@@ -116,11 +111,12 @@ const Connections: React.FC<{
                     src={item.avatar}
                     name={`${item.name} ${item.surname || ''}`}
                     size={DevicePixels[40]}
+                    uid={item.uid}
                   />
                 </View>
                 <View style={{justifyContent: 'center', margin: 10, flex: 1}}>
                   <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
-                    {item.name}
+                    {`${item.name} ${item.surname || ''}`}
                   </Text>
                   <Text
                     style={{
@@ -149,9 +145,7 @@ const Connections: React.FC<{
               </TouchableOpacity>
             );
           }}
-          ItemSeparatorComponent={() => (
-            <Divider style={{}} />
-          )}
+          ItemSeparatorComponent={() => <Divider style={{}} />}
         />
       </SafeAreaView>
     </View>

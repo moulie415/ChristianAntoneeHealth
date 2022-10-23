@@ -222,6 +222,8 @@ const Profile: React.FC<ProfileProps> = ({
                   name={`${profile.name} ${profile.surname || ''}`}
                   src={avatar}
                   size={DevicePixels[80]}
+                  uid={profile.uid}
+                  hideCheck
                 />
                 <View
                   style={{

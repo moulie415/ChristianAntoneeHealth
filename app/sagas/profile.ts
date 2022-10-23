@@ -106,6 +106,7 @@ import Message from '../types/Message';
 import {WeeklyItems} from '../reducers/profile';
 import {getQuickRoutinesById} from '../actions/quickRoutines';
 import {setUsedFreePlan} from '../actions/plan';
+import _ from 'lodash';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -466,6 +467,22 @@ function* getConnections() {
       api.getConnections,
       uid,
     );
+    const currentUnread: {[key: string]: number} = yield select(
+      (state: MyRootState) => state.profile.profile.unread,
+    );
+    if (currentUnread) {
+      // in case a friend had deleted their account we want to set unread back to 0
+      const newUnread = Object.keys(currentUnread).reduce((acc, cur) => {
+        if (connections[cur]) {
+          return {...acc, [cur]: currentUnread[cur]};
+        }
+        return acc;
+      }, {});
+      if (!_.isEqual(currentUnread, newUnread)) {
+        yield call(api.setUnread, uid, newUnread);
+        yield put(setUnread(newUnread));
+      }
+    }
     const chats: {[key: string]: Chat} = yield call(api.getChats, uid);
     yield put(setChats(chats));
     yield put(setConnections(connections));
@@ -662,6 +679,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
       yield put(setAdmin(isAdmin));
       if (customerInfo.entitlements.active.Premium || isAdmin) {
         yield put(setPremium(true));
+        yield fork(getConnections);
       } else {
         yield put(setPremium(false));
       }

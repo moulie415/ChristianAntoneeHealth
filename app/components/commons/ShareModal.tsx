@@ -108,6 +108,7 @@ const ShareModal: React.FC<{
                 <Avatar
                   name={`${item.name} ${item.surname || ''}`}
                   src={item.avatar}
+                  uid={item.uid}
                 />
               }
               onPress={() => {
