@@ -103,107 +103,108 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Workout Complete!" />
-        <LinearGradient
-          colors={['#4795E3', '#1A1B1F']}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0.5}}
-          style={{
-            height: DevicePixels[154],
-            width: DevicePixels[154],
-            borderRadius: DevicePixels[78],
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={{flex: 1, marginTop: DevicePixels[40]}}>
           <LinearGradient
-            colors={['#294195', '#121617']}
+            colors={['#4795E3', '#1A1B1F']}
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0.5}}
             style={{
-              height: DevicePixels[150],
-              width: DevicePixels[150],
-              borderRadius: DevicePixels[75],
+              height: DevicePixels[154],
+              width: DevicePixels[154],
+              borderRadius: DevicePixels[78],
+              alignSelf: 'center',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Icon
-              name="check"
-              color={colors.appWhite}
-              size={DevicePixels[70]}
-            />
+            <LinearGradient
+              colors={['#294195', '#121617']}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0.5}}
+              style={{
+                height: DevicePixels[150],
+                width: DevicePixels[150],
+                borderRadius: DevicePixels[75],
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon
+                name="check"
+                color={colors.appWhite}
+                size={DevicePixels[70]}
+              />
+            </LinearGradient>
           </LinearGradient>
-        </LinearGradient>
-        <Text
-          style={{
-            margin: DevicePixels[10],
-            marginTop: DevicePixels[20],
-            color: colors.appWhite,
-          }}>
-          Rate your performance to help us understand your fitness level
-        </Text>
-
-        <Slider
-          minimumValue={0}
-          maximumValue={3}
-          step={1}
-          value={difficulty}
-          renderThumbComponent={() => {
-            return (
-              <View
-                style={{
-                  backgroundColor: colors.appWhite,
-                  height: DevicePixels[30],
-                  width: DevicePixels[30],
-                  borderRadius: DevicePixels[15],
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <LinearGradient
-                  colors={['#294195', '#121617']}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0.5}}
-                  style={{
-                    height: DevicePixels[26],
-                    width: DevicePixels[26],
-                    borderRadius: DevicePixels[13],
-                  }}
-                />
-              </View>
-            );
-          }}
-          minimumTrackTintColor={colors.appBlue}
-          maximumTrackTintColor={colors.appWhite}
-          containerStyle={{marginHorizontal: DevicePixels[20]}}
-          onValueChange={val =>
-            typeof val === 'object' && setDifficulty(val[0])
-          }
-        />
-
-        <View
-          style={{
-            margin: DevicePixels[10],
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}>
           <Text
             style={{
-              fontSize: DevicePixels[30],
-              textAlign: 'center',
               margin: DevicePixels[10],
+              marginTop: DevicePixels[20],
+              color: colors.appWhite,
             }}>
-            {emoji}
+            Rate your performance to help us understand your fitness level
           </Text>
-          <Text style={{color: colors.appWhite, fontWeight: 'bold', flex: 1}}>
-            {text}
+
+          <Slider
+            minimumValue={0}
+            maximumValue={3}
+            step={1}
+            value={difficulty}
+            renderThumbComponent={() => {
+              return (
+                <View
+                  style={{
+                    backgroundColor: colors.appWhite,
+                    height: DevicePixels[30],
+                    width: DevicePixels[30],
+                    borderRadius: DevicePixels[15],
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <LinearGradient
+                    colors={['#294195', '#121617']}
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0.5}}
+                    style={{
+                      height: DevicePixels[26],
+                      width: DevicePixels[26],
+                      borderRadius: DevicePixels[13],
+                    }}
+                  />
+                </View>
+              );
+            }}
+            minimumTrackTintColor={colors.appBlue}
+            maximumTrackTintColor={colors.appWhite}
+            containerStyle={{marginHorizontal: DevicePixels[20]}}
+            onValueChange={val =>
+              typeof val === 'object' && setDifficulty(val[0])
+            }
+          />
+
+          <View
+            style={{
+              margin: DevicePixels[10],
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}>
             <Text
               style={{
-                color: colors.appWhite,
-                fontWeight: 'normal',
-              }}>{` - ${subtext}`}</Text>
-          </Text>
-        </View>
-        <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
+                fontSize: DevicePixels[30],
+                textAlign: 'center',
+                margin: DevicePixels[10],
+              }}>
+              {emoji}
+            </Text>
+            <Text style={{color: colors.appWhite, fontWeight: 'bold', flex: 1}}>
+              {text}
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontWeight: 'normal',
+                }}>{` - ${subtext}`}</Text>
+            </Text>
+          </View>
+          {/* <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
           Workout note
         </Text>
         <Input
@@ -212,64 +213,65 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           placeholder="Add details about this workout"
           value={note}
           onChangeText={setNote}
-        />
-        <Button
-          text="Save & Continue"
-          disabled={loading}
-          style={{margin: DevicePixels[10]}}
-          onPress={() => {
-            setLoading(true);
-            const navigate = () => {
-              navigation.navigate('QuickRoutineSummary', {
-                calories,
-                seconds,
-                difficulty,
-                routine,
-              });
-            };
+        /> */}
+          <Button
+            text="Save & Continue"
+            disabled={loading}
+            style={{margin: DevicePixels[10]}}
+            onPress={() => {
+              setLoading(true);
+              const navigate = () => {
+                navigation.navigate('QuickRoutineSummary', {
+                  calories,
+                  seconds,
+                  difficulty,
+                  routine,
+                });
+              };
 
-            const save = (saved: boolean) => {
-              saveQuickRoutineAction({
-                calories,
-                seconds,
-                difficulty,
-                createdate: new Date(),
-                quickRoutineId: routine.id,
-                saved,
-              });
-            };
-            if (profile.premium) {
-              Alert.alert(
-                'Save workout',
-                'Do you wish to save this workout to view later?',
-                [
-                  {
-                    style: 'cancel',
-                    text: 'Cancel',
-                    onPress: () => setLoading(false),
-                  },
-                  {
-                    text: 'No',
-                    onPress: () => {
-                      save(false);
-                      navigate();
+              const save = (saved: boolean) => {
+                saveQuickRoutineAction({
+                  calories,
+                  seconds,
+                  difficulty,
+                  createdate: new Date(),
+                  quickRoutineId: routine.id,
+                  saved,
+                });
+              };
+              if (profile.premium) {
+                Alert.alert(
+                  'Save workout',
+                  'Do you wish to save this workout to view later?',
+                  [
+                    {
+                      style: 'cancel',
+                      text: 'Cancel',
+                      onPress: () => setLoading(false),
                     },
-                  },
-                  {
-                    text: 'Yes',
-                    onPress: () => {
-                      save(true);
-                      navigate();
+                    {
+                      text: 'No',
+                      onPress: () => {
+                        save(false);
+                        navigate();
+                      },
                     },
-                  },
-                ],
-              );
-            } else {
-              save(false);
-              navigate();
-            }
-          }}
-        />
+                    {
+                      text: 'Yes',
+                      onPress: () => {
+                        save(true);
+                        navigate();
+                      },
+                    },
+                  ],
+                );
+              } else {
+                save(false);
+                navigate();
+              }
+            }}
+          />
+        </View>
       </SafeAreaView>
     </View>
   );

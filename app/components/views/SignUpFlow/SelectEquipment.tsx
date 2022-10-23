@@ -21,6 +21,7 @@ const SelectEquipment: React.FC<{
         style={{
           textAlign: 'center',
           marginVertical: DevicePixels[20],
+
           fontSize: DevicePixels[20],
           color: colors.appWhite,
         }}>
@@ -29,7 +30,11 @@ const SelectEquipment: React.FC<{
 
       <Input
         placeholder="e.g. dumbbells, barbells, squat rack..."
-        style={{height: DevicePixels[100], textAlignVertical: 'top'}}
+        style={{
+          height: DevicePixels[100],
+          textAlignVertical: 'top',
+          marginHorizontal: DevicePixels[10],
+        }}
         multiline
         onChangeText={setEquipment}
         value={equipment}

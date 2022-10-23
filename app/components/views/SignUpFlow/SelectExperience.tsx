@@ -33,21 +33,30 @@ const SelectExperience: React.FC<{
       </Text>
       <Button
         text="No clue what I'm doing"
-        style={{marginBottom: DevicePixels[20]}}
+        style={{
+          marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
+        }}
         onPress={() => setExperience(Level.BEGINNER)}
         textStyle={{fontSize: DevicePixels[15]}}
         variant={experience === Level.BEGINNER ? 'primary' : 'secondary'}
       />
       <Button
         text="I workout every now and again"
-        style={{marginBottom: DevicePixels[20]}}
+        style={{
+          marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
+        }}
         onPress={() => setExperience(Level.INTERMEDIATE)}
         textStyle={{fontSize: DevicePixels[15]}}
         variant={experience === Level.INTERMEDIATE ? 'primary' : 'secondary'}
       />
       <Button
         text="I’m a seasoned veteran"
-        style={{marginBottom: DevicePixels[20]}}
+        style={{
+          marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
+        }}
         onPress={() => setExperience(Level.ADVANCED)}
         textStyle={{fontSize: DevicePixels[15]}}
         variant={experience === Level.ADVANCED ? 'primary' : 'secondary'}

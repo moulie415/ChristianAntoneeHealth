@@ -56,7 +56,9 @@ const SavedTests: FunctionComponent<{
       <View>
         {!missingTests.length && (
           <FlatList
-            data={Object.values(savedTests)}
+            data={Object.values(savedTests).sort(
+              (a, b) => moment(b).valueOf() - moment(a).valueOf(),
+            )}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
               return <SavedTestCard item={item} navigation={navigation} />;

@@ -97,7 +97,7 @@ const SavedWorkouts: FunctionComponent<{
             data={[
               ...Object.values(savedWorkouts),
               ...Object.values(savedQuickRoutines),
-            ]}
+            ].sort((a,b) => moment(b).valueOf() - moment(a).valueOf())}
             keyExtractor={item => item.id}
             renderItem={({item}) => {
               return <SavedWorkoutCard item={item} navigation={navigation} />;

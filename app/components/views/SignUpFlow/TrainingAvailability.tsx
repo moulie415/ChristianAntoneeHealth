@@ -37,6 +37,7 @@ const SelectTrainingAvailability: React.FC<{
         onPress={() => setTrainingAvailability(TrainingAvailability.ONE_TWO)}
         style={{
           marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
         }}
         variant={
           trainingAvailability === TrainingAvailability.ONE_TWO
@@ -49,6 +50,7 @@ const SelectTrainingAvailability: React.FC<{
         onPress={() => setTrainingAvailability(TrainingAvailability.TWO_THREE)}
         style={{
           marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
         }}
         variant={
           trainingAvailability === TrainingAvailability.TWO_THREE
@@ -61,6 +63,7 @@ const SelectTrainingAvailability: React.FC<{
         onPress={() => setTrainingAvailability(TrainingAvailability.THREE_FOUR)}
         style={{
           marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
         }}
         variant={
           trainingAvailability === TrainingAvailability.THREE_FOUR
@@ -73,6 +76,7 @@ const SelectTrainingAvailability: React.FC<{
         onPress={() => setTrainingAvailability(TrainingAvailability.FOUR_PLUS)}
         style={{
           marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
         }}
         variant={
           trainingAvailability === TrainingAvailability.FOUR_PLUS

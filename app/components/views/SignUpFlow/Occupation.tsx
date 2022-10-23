@@ -31,6 +31,7 @@ const Occupation: React.FC<{
         placeholder="e.g. Doctor, lawyer..."
         value={occupation}
         onChangeText={setOccupation}
+        style={{marginHorizontal: DevicePixels[10]}}
       />
     </KeyboardAwareScrollView>
   );

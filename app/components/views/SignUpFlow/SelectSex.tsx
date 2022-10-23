@@ -35,13 +35,17 @@ const SelectSex: React.FC<{
 
       <Button
         text="Female"
-        style={{marginBottom: DevicePixels[20]}}
+        style={{
+          marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
+        }}
         onPress={() => setGender('female')}
         variant={gender === 'female' ? 'primary' : 'secondary'}
       />
 
       <Button
         text="Male"
+        style={{marginHorizontal: DevicePixels[20]}}
         onPress={() => setGender('male')}
         variant={gender === 'male' ? 'primary' : 'secondary'}
       />

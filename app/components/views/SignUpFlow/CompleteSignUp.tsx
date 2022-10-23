@@ -37,52 +37,52 @@ const CompleteSignUp: React.FC<{
         }}>
         Almost there...
       </Text>
-
-      <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          marginBottom: DevicePixels[10],
-          alignItems: 'center',
-        }}
-        onPress={() => setPrivacy(!privacy)}>
-        <Checkbox
-          checked={privacy}
-          onPress={() => setPrivacy(!privacy)}
-          iconStyle={{color: colors.appWhite}}
-        />
-        <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
-          I've read the{' '}
-          <Text
-            onPress={() => {
-              Linking.openURL('https://christianantonee.com/privacy-policy');
-            }}
-            style={{
-              textDecorationLine: 'underline',
-              fontWeight: 'bold',
-              color: colors.appWhite,
-            }}>
-            Privacy Policy
+      <View style={{marginLeft: DevicePixels[10]}}>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            marginBottom: DevicePixels[10],
+            alignItems: 'center',
+          }}
+          onPress={() => setPrivacy(!privacy)}>
+          <Checkbox
+            checked={privacy}
+            onPress={() => setPrivacy(!privacy)}
+            iconStyle={{color: colors.appWhite}}
+          />
+          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
+            I've read the{' '}
+            <Text
+              onPress={() => {
+                Linking.openURL('https://christianantonee.com/privacy-policy');
+              }}
+              style={{
+                textDecorationLine: 'underline',
+                fontWeight: 'bold',
+                color: colors.appWhite,
+              }}>
+              Privacy Policy
+            </Text>
           </Text>
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => setMarketing(!marketing)}
-        style={{
-          flexDirection: 'row',
-          marginBottom: DevicePixels[20],
-          alignItems: 'center',
-        }}>
-        <Checkbox
-          checked={marketing}
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => setMarketing(!marketing)}
-          iconStyle={{color: colors.appWhite}}
-        />
-        <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
-          I want to join the CA Health mailing list and receive relevant
-          articles offers and promotions
-        </Text>
-      </TouchableOpacity>
-
+          style={{
+            flexDirection: 'row',
+            marginBottom: DevicePixels[20],
+            alignItems: 'center',
+          }}>
+          <Checkbox
+            checked={marketing}
+            onPress={() => setMarketing(!marketing)}
+            iconStyle={{color: colors.appWhite}}
+          />
+          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
+            I want to join the CA Health mailing list and receive relevant
+            articles offers and promotions
+          </Text>
+        </TouchableOpacity>
+      </View>
       <Button
         text="Complete my profile"
         onPress={completeSignUp}

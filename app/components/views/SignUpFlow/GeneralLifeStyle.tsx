@@ -28,7 +28,11 @@ const GeneralLifestyle: React.FC<{
 
       <Input
         placeholder="e.g. active, sedentary, mixed"
-        style={{height: DevicePixels[100], textAlignVertical: 'top'}}
+        style={{
+          height: DevicePixels[100],
+          textAlignVertical: 'top',
+          marginHorizontal: DevicePixels[10],
+        }}
         multiline
         onChangeText={setLifestyle}
         value={lifestyle}

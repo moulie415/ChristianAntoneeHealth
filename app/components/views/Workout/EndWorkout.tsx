@@ -192,7 +192,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
               }}>{` - ${subtext}`}</Text>
           </Text>
         </View>
-        <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
+        {/* <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
           Workout note
         </Text>
         <Input
@@ -201,7 +201,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
           placeholder="Add details about this workout"
           value={note}
           onChangeText={setNote}
-        />
+        /> */}
         <Button
           text="Save & Continue"
           disabled={loading}

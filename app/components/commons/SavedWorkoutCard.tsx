@@ -66,9 +66,11 @@ const SavedWorkoutCard: React.FC<{
           marginBottom: DevicePixels[10],
           borderRadius: DevicePixels[10],
         }}
-        source={getImage(
-          quickRoutine ? quickRoutine.level : profile.experience,
-        )}>
+        source={
+          quickRoutine
+            ? {uri: quickRoutine.thumbnail.src}
+            : getImage(profile.experience)
+        }>
         <View
           style={{
             height: DevicePixels[140],

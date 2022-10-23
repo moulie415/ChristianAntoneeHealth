@@ -38,6 +38,8 @@ const StressLevels: React.FC<{
         variant={stressLevel === 'low' ? 'primary' : 'secondary'}
         style={{
           marginBottom: DevicePixels[20],
+
+          marginHorizontal: DevicePixels[20],
         }}
       />
       <Button
@@ -46,6 +48,7 @@ const StressLevels: React.FC<{
         variant={stressLevel === 'medium' ? 'primary' : 'secondary'}
         style={{
           marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
         }}
       />
       <Button
@@ -54,6 +57,7 @@ const StressLevels: React.FC<{
         variant={stressLevel === 'high' ? 'primary' : 'secondary'}
         style={{
           marginBottom: DevicePixels[20],
+          marginHorizontal: DevicePixels[20],
         }}
       />
     </View>
