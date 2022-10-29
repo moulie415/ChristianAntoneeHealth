@@ -97,6 +97,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
           onPageSelected={e => {
             setIndex(e.nativeEvent.position);
           }}
+          scrollEnabled={!fullscreen}
           style={{flex: 1, paddingHorizontal: 0}}>
           {exercises.map((exercise, i) => {
             const next = exercises[index + 1];

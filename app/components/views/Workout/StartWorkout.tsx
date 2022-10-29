@@ -113,6 +113,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           onPageSelected={e => {
             setIndex(e.nativeEvent.position);
           }}
+          scrollEnabled={!fullscreen}
           style={{flex: 1, paddingHorizontal: 0}}>
           {workout.map((exercise, i) => {
             const next = workout[index + 1];
