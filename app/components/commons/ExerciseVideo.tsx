@@ -119,7 +119,7 @@ const ExerciseVideo: React.FC<{
             }}
             style={{
               position: 'absolute',
-              top: fullscreen ? undefined : '35%',
+              top: fullscreen ? undefined : '37%',
               bottom: fullscreen ? '5%' : undefined,
               right: DevicePixels[20],
             }}>
