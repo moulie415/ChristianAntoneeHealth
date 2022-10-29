@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, Platform, TouchableOpacity} from 'react-native';
+import {Dimensions, Platform, StatusBar, TouchableOpacity} from 'react-native';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getVideoHeight} from '../../helpers';
@@ -9,6 +9,7 @@ import colors from '../../constants/colors';
 import moment from 'moment';
 import convertToProxyURL from 'react-native-video-cache';
 import {Slider} from '@miblanchard/react-native-slider';
+import Orientation from 'react-native-orientation-locker';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -17,6 +18,8 @@ const ExerciseVideo: React.FC<{
   currentIndex?: number;
   hasPressedPlay?: boolean;
   setHasPressedPlay?: (pressed: boolean) => void;
+  fullscreen?: boolean;
+  setFullScreen: (fullscreen: boolean) => void;
 }> = ({
   path,
   paused: startedPaused,
@@ -24,6 +27,8 @@ const ExerciseVideo: React.FC<{
   currentIndex,
   hasPressedPlay,
   setHasPressedPlay,
+  fullscreen,
+  setFullScreen,
 }) => {
   const [paused, setPaused] = useState(startedPaused);
   const [hideTime, setHideTime] = useState(moment().unix());
@@ -40,15 +45,14 @@ const ExerciseVideo: React.FC<{
 
   return (
     <>
+      <StatusBar hidden={fullscreen} />
       <Video
         source={{uri: convertToProxyURL(path)}}
-        style={{height: getVideoHeight()}}
+        style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
+        resizeMode={fullscreen ? 'cover' : 'none'}
         ref={ref}
         onError={e => console.error(e)}
         repeat
-        onFullscreenPlayerDidDismiss={() => {
-          console.log('onFullscreenPlayerDidDismiss');
-        }}
         // onEnd={() => {
         //   ref.current?.seek(0);
         // }}
@@ -72,7 +76,9 @@ const ExerciseVideo: React.FC<{
             borderRadius: DevicePixels[25],
             backgroundColor: colors.appWhite,
             position: 'absolute',
-            top: '18%',
+            top: fullscreen
+              ? Dimensions.get('window').height / 2 - DevicePixels[25]
+              : '18%',
             left: Dimensions.get('window').width / 2 - DevicePixels[25],
             alignItems: 'center',
             justifyContent: 'center',
@@ -85,15 +91,28 @@ const ExerciseVideo: React.FC<{
           />
         </TouchableOpacity>
       )}
-      {showControls && Platform.OS === 'ios' && (
+      {showControls && (
         <TouchableOpacity
-          onPress={() => ref.current?.presentFullscreenPlayer()}
+          onPress={() => {
+            if (fullscreen) {
+              Orientation.lockToPortrait();
+              setFullScreen(false);
+            } else {
+              Orientation.lockToLandscape();
+              setFullScreen(true);
+            }
+          }}
           style={{
             position: 'absolute',
-            top: '35%',
+            top: fullscreen ? undefined : '35%',
+            bottom: fullscreen ? '5%' : undefined,
             right: DevicePixels[20],
           }}>
-          <Icon name="expand" color={colors.appWhite} size={DevicePixels[30]} />
+          <Icon
+            name={fullscreen ? 'compress' : 'expand'}
+            color={colors.appWhite}
+            size={DevicePixels[30]}
+          />
         </TouchableOpacity>
       )}
     </>

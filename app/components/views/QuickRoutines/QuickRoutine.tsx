@@ -5,6 +5,7 @@ import {
   Alert,
   View,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -28,6 +29,7 @@ import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../commons/Input';
 import FastImage from 'react-native-fast-image';
+import Orientation from 'react-native-orientation-locker';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -47,6 +49,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const [routineStarted, setRoutineStarted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
+  const [fullscreen, setFullScreen] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -86,7 +89,14 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
 
   return (
     <View style={{flex: 1}}>
-      <Header hasBack absolute />
+      <Header
+        hasBack
+        absolute
+        customBackPress={() => {
+          navigation.goBack();
+          Orientation.lockToPortrait();
+        }}
+      />
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (
@@ -108,6 +118,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     currentIndex={index}
                     hasPressedPlay={hasPressedPlay}
                     setHasPressedPlay={setHasPressedPlay}
+                    fullscreen={fullscreen}
+                    setFullScreen={setFullScreen}
                   />
                 ) : (
                   <View
@@ -128,7 +140,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     style={{
                       position: 'absolute',
                       right: DevicePixels[5],
-                      top: '18%',
+                      top: fullscreen
+                        ? Dimensions.get('window').height / 2 - DevicePixels[15]
+                        : '18%',
                       zIndex: 9,
                       padding: DevicePixels[10],
                     }}>
@@ -145,7 +159,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     style={{
                       position: 'absolute',
                       left: DevicePixels[5],
-                      top: '18%',
+                      top: fullscreen
+                        ? Dimensions.get('window').height / 2 - DevicePixels[15]
+                        : '18%',
                       zIndex: 9,
                       padding: DevicePixels[10],
                     }}>
@@ -156,184 +172,192 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-                <View
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    top: getVideoHeight() - DevicePixels[30],
-                    borderTopLeftRadius: DevicePixels[30],
-                    borderTopRightRadius: DevicePixels[30],
-                    overflow: 'hidden',
-                    backgroundColor: colors.appGrey,
-                  }}>
-                  <ScrollView keyboardShouldPersistTaps="always">
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
-                        alignItems: 'center',
-                        marginTop: DevicePixels[30],
-                      }}>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => setTabIndex(0)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 0
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
-                          style={{
-                            height: DevicePixels[40],
-                            paddingHorizontal: DevicePixels[10],
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
-                            backgroundColor:
-                              tabIndex === 0 ? colors.textGrey : colors.appGrey,
-                          }}>
-                          <Text
+                {!fullscreen && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: getVideoHeight() - DevicePixels[30],
+                      borderTopLeftRadius: DevicePixels[30],
+                      borderTopRightRadius: DevicePixels[30],
+                      overflow: 'hidden',
+                      backgroundColor: colors.appGrey,
+                    }}>
+                    <ScrollView keyboardShouldPersistTaps="always">
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                          marginTop: DevicePixels[30],
+                        }}>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => setTabIndex(0)}>
+                          <LinearGradient
+                            colors={
+                              tabIndex === 0
+                                ? [colors.appBlueLight, colors.appBlueDark]
+                                : ['transparent', 'transparent']
+                            }
                             style={{
-                              fontWeight: 'bold',
-                              color: '#fff',
-                              textAlign: 'center',
-                            }}>
-                            Description
-                          </Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => setTabIndex(1)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 1
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
-                          style={{
-                            height: DevicePixels[40],
-                            paddingHorizontal: DevicePixels[10],
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
-                            backgroundColor:
-                              tabIndex === 1 ? colors.textGrey : colors.appGrey,
-                          }}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: '#fff',
-                              textAlign: 'center',
-                            }}>
-                            Diagram
-                          </Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => setShowModal(true)}>
-                        <Icon
-                          name="info-circle"
-                          color={colors.appWhite}
-                          size={DevicePixels[30]}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                    <View>
-                      {tabIndex === 0 && (
-                        <>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
+                              height: DevicePixels[40],
+                              paddingHorizontal: DevicePixels[10],
                               alignItems: 'center',
-                              margin: DevicePixels[10],
-                              marginBottom: 0,
+                              justifyContent: 'center',
+                              borderRadius: DevicePixels[25],
+                              backgroundColor:
+                                tabIndex === 0
+                                  ? colors.textGrey
+                                  : colors.appGrey,
                             }}>
                             <Text
                               style={{
-                                color: colors.appWhite,
-                                fontSize: DevicePixels[20],
                                 fontWeight: 'bold',
+                                color: '#fff',
+                                textAlign: 'center',
                               }}>
-                              {exercise.name}
+                              Description
                             </Text>
-                          </View>
-                          <ViewMore text={exercise.description} lines={5} />
-                        </>
-                      )}
+                          </LinearGradient>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => setTabIndex(1)}>
+                          <LinearGradient
+                            colors={
+                              tabIndex === 1
+                                ? [colors.appBlueLight, colors.appBlueDark]
+                                : ['transparent', 'transparent']
+                            }
+                            style={{
+                              height: DevicePixels[40],
+                              paddingHorizontal: DevicePixels[10],
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: DevicePixels[25],
+                              backgroundColor:
+                                tabIndex === 1
+                                  ? colors.textGrey
+                                  : colors.appGrey,
+                            }}>
+                            <Text
+                              style={{
+                                fontWeight: 'bold',
+                                color: '#fff',
+                                textAlign: 'center',
+                              }}>
+                              Diagram
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setShowModal(true)}>
+                          <Icon
+                            name="info-circle"
+                            color={colors.appWhite}
+                            size={DevicePixels[30]}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      <View>
+                        {tabIndex === 0 && (
+                          <>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                margin: DevicePixels[10],
+                                marginBottom: 0,
+                              }}>
+                              <Text
+                                style={{
+                                  color: colors.appWhite,
+                                  fontSize: DevicePixels[20],
+                                  fontWeight: 'bold',
+                                }}>
+                                {exercise.name}
+                              </Text>
+                            </View>
+                            <ViewMore text={exercise.description} lines={5} />
+                          </>
+                        )}
 
-                      {tabIndex === 1 && i === index && (
-                        <MusclesDiagram
-                          primary={exercise.muscles}
-                          secondary={exercise.musclesSecondary}
-                        />
-                      )}
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        margin: DevicePixels[10],
-                        height: DevicePixels[60],
-                        borderRadius: DevicePixels[30],
-                        marginBottom: DevicePixels[10],
-                        backgroundColor: colors.appGrey,
-                      }}>
-                      <Text
-                        style={{
-                          fontWeight: 'bold',
-                          color: colors.appWhite,
-                          fontSize: DevicePixels[20],
-                          padding: DevicePixels[15],
-                        }}>{`Exercise ${index + 1}/${exercises.length}`}</Text>
+                        {tabIndex === 1 && i === index && (
+                          <MusclesDiagram
+                            primary={exercise.muscles}
+                            secondary={exercise.musclesSecondary}
+                          />
+                        )}
+                      </View>
 
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon
-                          name="stopwatch"
-                          size={DevicePixels[20]}
-                          color={colors.appWhite}
-                        />
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          margin: DevicePixels[10],
+                          height: DevicePixels[60],
+                          borderRadius: DevicePixels[30],
+                          marginBottom: DevicePixels[10],
+                          backgroundColor: colors.appGrey,
+                        }}>
                         <Text
                           style={{
                             fontWeight: 'bold',
                             color: colors.appWhite,
                             fontSize: DevicePixels[20],
-                            paddingLeft: DevicePixels[5],
                             padding: DevicePixels[15],
-                          }}>
-                          {moment()
-                            .utc()
-                            .startOf('day')
-                            .add({seconds})
-                            .format('mm:ss')}
-                        </Text>
+                          }}>{`Exercise ${index + 1}/${
+                          exercises.length
+                        }`}</Text>
+
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Icon
+                            name="stopwatch"
+                            size={DevicePixels[20]}
+                            color={colors.appWhite}
+                          />
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color: colors.appWhite,
+                              fontSize: DevicePixels[20],
+                              paddingLeft: DevicePixels[5],
+                              padding: DevicePixels[15],
+                            }}>
+                            {moment()
+                              .utc()
+                              .startOf('day')
+                              .add({seconds})
+                              .format('mm:ss')}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                    <Button
-                      text="End Workout"
-                      onPress={() => {
-                        Alert.alert('End workout', 'Are you sure?', [
-                          {text: 'No', style: 'cancel'},
-                          {
-                            text: 'Yes',
-                            onPress: () => {
-                              navigation.navigate('EndQuickRoutine', {
-                                seconds,
-                                routine,
-                              });
+                      <Button
+                        text="End Workout"
+                        onPress={() => {
+                          Alert.alert('End workout', 'Are you sure?', [
+                            {text: 'No', style: 'cancel'},
+                            {
+                              text: 'Yes',
+                              onPress: () => {
+                                navigation.navigate('EndQuickRoutine', {
+                                  seconds,
+                                  routine,
+                                });
+                              },
                             },
-                          },
-                        ]);
-                      }}
-                      style={{margin: DevicePixels[10]}}
-                    />
-                  </ScrollView>
-                </View>
+                          ]);
+                        }}
+                        style={{margin: DevicePixels[10]}}
+                      />
+                    </ScrollView>
+                  </View>
+                )}
               </View>
             );
           })}

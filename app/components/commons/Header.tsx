@@ -12,7 +12,8 @@ const Header: React.FC<{
   title?: string;
   right?: ReactNode;
   absolute?: boolean;
-}> = ({hasBack, title, right, absolute}) => {
+  customBackPress?: () => void;
+}> = ({hasBack, title, right, absolute, customBackPress}) => {
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -27,7 +28,7 @@ const Header: React.FC<{
       {hasBack && (
         <BackButton
           style={{margin: DevicePixels[20]}}
-          onPress={navigationRef?.goBack}
+          onPress={customBackPress || navigationRef?.goBack}
         />
       )}
       {!!title && (
