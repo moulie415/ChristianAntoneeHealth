@@ -12,7 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -46,13 +46,13 @@ const PreQuickRoutine: React.FC<{
           <Header hasBack />
         </SafeAreaView>
       </FastImage>
-      <View
+      <ScrollView
         style={{
           flex: 1,
           borderTopLeftRadius: DevicePixels[30],
           borderTopRightRadius: DevicePixels[30],
           marginTop: -DevicePixels[30],
-          backgroundColor: colors.appGrey
+          backgroundColor: colors.appGrey,
         }}>
         <Text
           style={{
@@ -171,7 +171,7 @@ const PreQuickRoutine: React.FC<{
             navigation.navigate('QuickRoutine', {routine: route.params.routine})
           }
         />
-      </View>
+      </ScrollView>
     </>
   );
 };

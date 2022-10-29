@@ -46,6 +46,9 @@ const ExerciseVideo: React.FC<{
         ref={ref}
         onError={e => console.error(e)}
         repeat
+        onFullscreenPlayerDidDismiss={() => {
+          console.log('onFullscreenPlayerDidDismiss');
+        }}
         // onEnd={() => {
         //   ref.current?.seek(0);
         // }}
@@ -82,7 +85,7 @@ const ExerciseVideo: React.FC<{
           />
         </TouchableOpacity>
       )}
-      {/* {showControls && Platform.OS === 'ios' && (
+      {showControls && Platform.OS === 'ios' && (
         <TouchableOpacity
           onPress={() => ref.current?.presentFullscreenPlayer()}
           style={{
@@ -92,7 +95,7 @@ const ExerciseVideo: React.FC<{
           }}>
           <Icon name="expand" color={colors.appWhite} size={DevicePixels[30]} />
         </TouchableOpacity>
-      )} */}
+      )}
     </>
   );
 };

@@ -937,8 +937,8 @@ PODS:
   - PromisesObjC (2.1.1)
   - PromisesSwift (2.1.1):
     - PromisesObjC (= 2.1.1)
-  - PurchasesHybridCommon (4.3.1):
-    - RevenueCat (= 4.13.1)
+  - PurchasesHybridCommon (4.3.2):
+    - RevenueCat (= 4.13.2)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -1186,6 +1186,8 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.0):
     - React-Core
+  - react-native-orientation-locker (1.5.0):
+    - React-Core
   - react-native-pager-view (6.0.1):
     - React-Core
   - react-native-safe-area-context (4.4.1):
@@ -1198,13 +1200,13 @@ PODS:
     - React
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-video (6.0.0-alpha.1):
+  - react-native-video (6.0.0-alpha.3):
     - React-Core
-    - react-native-video/Video (= 6.0.0-alpha.1)
+    - react-native-video/Video (= 6.0.0-alpha.3)
   - react-native-video-cache (2.7.3):
     - KTVHTTPCache (~> 2.0.0)
     - React
-  - react-native-video/Video (6.0.0-alpha.1):
+  - react-native-video/Video (6.0.0-alpha.3):
     - PromisesSwift
     - React-Core
   - react-native-webview (11.23.1):
@@ -1276,7 +1278,7 @@ PODS:
     - React-perflogger (= 0.68.3)
   - ReactNativeART (1.2.0):
     - React
-  - RevenueCat (4.13.1)
+  - RevenueCat (4.13.2)
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNAppleAuthentication (2.2.2):
@@ -1295,7 +1297,7 @@ PODS:
     - React-Core
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
-  - RNDateTimePicker (6.5.2):
+  - RNDateTimePicker (6.5.3):
     - React-Core
   - RNDeviceInfo (10.3.0):
     - React-Core
@@ -1355,12 +1357,12 @@ PODS:
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNPurchases (5.1.0):
-    - PurchasesHybridCommon (= 4.3.1)
+  - RNPurchases (5.1.1):
+    - PurchasesHybridCommon (= 4.3.2)
     - React-Core
   - RNRate (1.2.9):
     - React-Core
-  - RNReanimated (2.11.0):
+  - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1390,9 +1392,9 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.6.1):
+  - RNSentry (4.7.1):
     - React-Core
-    - Sentry (= 7.27.1)
+    - Sentry (= 7.28.0)
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSound (0.11.2):
@@ -1412,9 +1414,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.27.1):
-    - Sentry/Core (= 7.27.1)
-  - Sentry/Core (7.27.1)
+  - Sentry (7.28.0):
+    - Sentry/Core (= 7.28.0)
+  - Sentry/Core (7.28.0)
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -1473,6 +1475,7 @@ DEPENDENCIES:
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-spinkit (from `../node_modules/react-native-spinkit`)
@@ -1647,6 +1650,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-flipper"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-orientation-locker:
+    :path: "../node_modules/react-native-orientation-locker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -1826,7 +1831,7 @@ SPEC CHECKSUMS:
   Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   PromisesSwift: 99fddfe4a0ec88a56486644c0da106694c92a604
-  PurchasesHybridCommon: df3dc4516c633dd9c5ac902d56dc3659e5150661
+  PurchasesHybridCommon: 266f88e157448184a7e3d4f6c8cbba840d7e97b4
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: b8caca023d386d43740dfb94c2cf68f695fa5e77
   RCTTypeSafety: ec44ea1d6ad1e5cd6447b22159ff40c2ebbd23b1
@@ -1845,11 +1850,12 @@ SPEC CHECKSUMS:
   react-native-fbsdk-next: 79815a5b8f66ab0990fbb370b4a4b5bdf0a15e6c
   react-native-flipper: 7eeb9b59b667dd0619372c7349cf7c78032d1de2
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
+  react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-pager-view: 3051346698a0ba0c4e13e40097cc11b00ee03cca
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-video: bb6f12a7198db53b261fefb5d609dc77417acc8b
+  react-native-video: 3b4fa3b67e6d8efcfba6c27231a7a493c28d4f1f
   react-native-video-cache: 1f3d0b6841c9cc962ded4ba70b412f121c8e9620
   react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: fa15d1d29ff7557ee25ea48f7f59e65896fb3215
@@ -1865,7 +1871,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 8cdd80915ed6dabf2221a689f1f7ddb50ea5e9f3
   ReactCommon: 5b1b43a7d81a1ac4eec85f7c4db3283a14a3b13d
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
-  RevenueCat: f713337182aeda810fe6602f817f0909285cc1d4
+  RevenueCat: cb2bd5f610c1790c29e0c43e0523e4891fefa57a
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
@@ -1875,7 +1881,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: bc0170f389056201c82a55e242e5d90070e18e5a
   RNCPicker: 0bf8ef8f7800524f32d2bb2a8bcadd53eda0ecd1
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
-  RNDateTimePicker: 3f32aa2247836c12618d346113e5e82ea60ddd9c
+  RNDateTimePicker: 400fc87d26052d1ac76d05935e0f8d0fd4c78f13
   RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
   RNEventEmitter: 557106956ec2f9ccda6940afeea563936385efd3
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
@@ -1893,11 +1899,11 @@ SPEC CHECKSUMS:
   RNGoogleSignin: ec96ded826fcdca71ab5f58b1d086e969cabe67b
   RNInstabug: 795e50ff7e43c063dea7f1529c829f61a34bfc20
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNPurchases: 5a022342ebe816bc42610e36e8272dfd4f412a99
+  RNPurchases: 00588194bbef5f6600586ff6f2c3f93e5070bbfd
   RNRate: 94f57c773e155ca0d0aeeba9c10a32bce9030daf
-  RNReanimated: ef5634269d654838dce94da507206a40ea34e93d
+  RNReanimated: 0ff5e7f619a7524d237848ecb4c47650c4946f71
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSentry: f8591057d48d4f6d64196a76cbca67895667b033
+  RNSentry: 694aecc3d8240e4935374974a6636e360ae06394
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
@@ -1905,7 +1911,7 @@ SPEC CHECKSUMS:
   RNWatch: fd30ca40a5b5ef58dcbc195638e68219bc455236
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: bc644307e2eb6a4c9c55cf117a80b895bb2a25a7
+  Sentry: 2c6053e4cfe6dea6608135dea1928ffbb4ecfba5
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 2f6a78c58dcc2963bd8e34d96a4246d9dff2e3a7
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
