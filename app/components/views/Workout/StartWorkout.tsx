@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
+  Dimensions,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -48,9 +49,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>();
   const [showModal, setShowModal] = useState(false);
+  const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const textInputRef = useRef<TextInput>();
   const name = route.params?.name;
   const isLast = route.params?.isLast;
+  const [fullscreen, setFullScreen] = useState(false);
 
   useEffect(() => {
     const start = moment().unix();
@@ -113,13 +116,19 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           style={{flex: 1, paddingHorizontal: 0}}>
           {workout.map((exercise, i) => {
             const next = workout[index + 1];
-            
+
             return (
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
-                    paused={!(index !== 0 && index === i)}
+                    paused
                     path={exercise.video.src}
+                    videoIndex={i}
+                    currentIndex={index}
+                    hasPressedPlay={hasPressedPlay}
+                    setHasPressedPlay={setHasPressedPlay}
+                    fullscreen={fullscreen}
+                    setFullScreen={setFullScreen}
                   />
                 ) : (
                   <View
@@ -140,7 +149,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       position: 'absolute',
                       right: DevicePixels[5],
-                      top: '18%',
+                      top: fullscreen
+                        ? Dimensions.get('window').height / 2 - DevicePixels[15]
+                        : '18%',
                       zIndex: 9,
                       padding: DevicePixels[10],
                     }}>
@@ -157,7 +168,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     style={{
                       position: 'absolute',
                       left: DevicePixels[5],
-                      top: '18%',
+                      top: fullscreen
+                        ? Dimensions.get('window').height / 2 - DevicePixels[15]
+                        : '18%',
                       zIndex: 9,
                       padding: DevicePixels[10],
                     }}>
@@ -168,245 +181,253 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     />
                   </TouchableOpacity>
                 )}
-                <View
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    top: getVideoHeight() - DevicePixels[30],
-                    borderTopLeftRadius: DevicePixels[30],
-                    borderTopRightRadius: DevicePixels[30],
-                    overflow: 'hidden',
-                    backgroundColor: colors.appGrey,
-                  }}>
-                  <ScrollView keyboardShouldPersistTaps="always">
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: DevicePixels[30],
-                      }}>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => setTabIndex(0)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 0
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
-                          style={{
-                            height: DevicePixels[40],
-                            width: DevicePixels[100],
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
-                            backgroundColor:
-                              tabIndex === 0 ? colors.textGrey : colors.appGrey,
-                          }}>
-                          <Text
+                {!fullscreen && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: getVideoHeight() - DevicePixels[30],
+                      borderTopLeftRadius: DevicePixels[30],
+                      borderTopRightRadius: DevicePixels[30],
+                      overflow: 'hidden',
+                      backgroundColor: colors.appGrey,
+                    }}>
+                    <ScrollView keyboardShouldPersistTaps="always">
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginTop: DevicePixels[30],
+                        }}>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => setTabIndex(0)}>
+                          <LinearGradient
+                            colors={
+                              tabIndex === 0
+                                ? [colors.appBlueLight, colors.appBlueDark]
+                                : ['transparent', 'transparent']
+                            }
                             style={{
-                              fontWeight: 'bold',
-                              color: colors.appWhite,
-                              textAlign: 'center',
-                            }}>
-                            Description
-                          </Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => setTabIndex(1)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 1
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
-                          style={{
-                            height: DevicePixels[40],
-                            width: DevicePixels[100],
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
-                            backgroundColor:
-                              tabIndex === 1 ? colors.textGrey : colors.appGrey,
-                          }}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: '#fff',
-                              textAlign: 'center',
-                            }}>
-                            Diagram
-                          </Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{}}
-                        onPress={() => setTabIndex(2)}>
-                        <LinearGradient
-                          colors={
-                            tabIndex === 2
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
-                          style={{
-                            height: DevicePixels[40],
-                            width: DevicePixels[100],
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
-                            backgroundColor:
-                              tabIndex === 2 ? colors.textGrey : colors.appGrey,
-                          }}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: '#fff',
-                              textAlign: 'center',
-                            }}>
-                            Notes
-                          </Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
-                    </View>
-                    <View>
-                      {tabIndex === 0 && (
-                        <>
-                          <Text
-                            style={{
-                              margin: DevicePixels[10],
-                              color: colors.appWhite,
-                              fontSize: DevicePixels[20],
-                              fontWeight: 'bold',
-                            }}>
-                            {exercise.name}
-                          </Text>
-                          <View
-                            style={{
-                              flexDirection: 'row',
+                              height: DevicePixels[40],
+                              width: DevicePixels[100],
                               alignItems: 'center',
-                              margin: DevicePixels[10],
-                              marginVertical: 0,
+                              justifyContent: 'center',
+                              borderRadius: DevicePixels[25],
+                              backgroundColor:
+                                tabIndex === 0
+                                  ? colors.textGrey
+                                  : colors.appGrey,
                             }}>
+                            <Text
+                              style={{
+                                fontWeight: 'bold',
+                                color: colors.appWhite,
+                                textAlign: 'center',
+                              }}>
+                              Description
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => setTabIndex(1)}>
+                          <LinearGradient
+                            colors={
+                              tabIndex === 1
+                                ? [colors.appBlueLight, colors.appBlueDark]
+                                : ['transparent', 'transparent']
+                            }
+                            style={{
+                              height: DevicePixels[40],
+                              width: DevicePixels[100],
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: DevicePixels[25],
+                              backgroundColor:
+                                tabIndex === 1
+                                  ? colors.textGrey
+                                  : colors.appGrey,
+                            }}>
+                            <Text
+                              style={{
+                                fontWeight: 'bold',
+                                color: '#fff',
+                                textAlign: 'center',
+                              }}>
+                              Diagram
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{}}
+                          onPress={() => setTabIndex(2)}>
+                          <LinearGradient
+                            colors={
+                              tabIndex === 2
+                                ? [colors.appBlueLight, colors.appBlueDark]
+                                : ['transparent', 'transparent']
+                            }
+                            style={{
+                              height: DevicePixels[40],
+                              width: DevicePixels[100],
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              borderRadius: DevicePixels[25],
+                              backgroundColor:
+                                tabIndex === 2
+                                  ? colors.textGrey
+                                  : colors.appGrey,
+                            }}>
+                            <Text
+                              style={{
+                                fontWeight: 'bold',
+                                color: '#fff',
+                                textAlign: 'center',
+                              }}>
+                              Notes
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                      </View>
+                      <View>
+                        {tabIndex === 0 && (
+                          <>
+                            <Text
+                              style={{
+                                margin: DevicePixels[10],
+                                color: colors.appWhite,
+                                fontSize: DevicePixels[20],
+                                fontWeight: 'bold',
+                              }}>
+                              {exercise.name}
+                            </Text>
                             <View
                               style={{
                                 flexDirection: 'row',
-                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                margin: DevicePixels[10],
+                                marginVertical: 0,
                               }}>
-                              <Text
+                              <View
                                 style={{
-                                  color: colors.appWhite,
-                                  textAlign: 'center',
-                                  fontSize: DevicePixels[16],
-                                }}>{`${exercise.reps} reps / ${exercise.sets} sets `}</Text>
-                              <ResistanceScale
-                                resistanceScale={exercise.resistanceScale}
-                              />
+                                  flexDirection: 'row',
+                                  justifyContent: 'flex-start',
+                                }}>
+                                <Text
+                                  style={{
+                                    color: colors.appWhite,
+                                    textAlign: 'center',
+                                    fontSize: DevicePixels[16],
+                                  }}>{`${exercise.reps} reps / ${exercise.sets} sets `}</Text>
+                                <ResistanceScale
+                                  resistanceScale={exercise.resistanceScale}
+                                />
+                              </View>
+                              <TouchableOpacity
+                                onPress={() => setShowModal(true)}>
+                                <Icon
+                                  name="info-circle"
+                                  color={colors.appWhite}
+                                  size={DevicePixels[30]}
+                                />
+                              </TouchableOpacity>
                             </View>
-                            <TouchableOpacity
-                              onPress={() => setShowModal(true)}>
-                              <Icon
-                                name="info-circle"
-                                color={colors.appWhite}
-                                size={DevicePixels[30]}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                          <ViewMore text={exercise.description} lines={5} />
-                        </>
-                      )}
+                            <ViewMore text={exercise.description} lines={5} />
+                          </>
+                        )}
 
-                      {tabIndex === 1 && i === index && (
-                        <MusclesDiagram
-                          primary={exercise.muscles}
-                          secondary={exercise.musclesSecondary}
-                        />
-                      )}
+                        {tabIndex === 1 && i === index && (
+                          <MusclesDiagram
+                            primary={exercise.muscles}
+                            secondary={exercise.musclesSecondary}
+                          />
+                        )}
 
-                      {tabIndex === 2 && (
-                        <Input
-                          style={{
-                            height: DevicePixels[100],
-                            textAlignVertical: 'top',
-                            margin: DevicePixels[10],
-                          }}
-                          placeholder="Enter notes here..."
-                          multiline
-                          value={exerciseNotes[exercise.id]}
-                          onChangeText={text =>
-                            setExerciseNoteAction(exercise.id, text)
-                          }
-                        />
-                      )}
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        margin: DevicePixels[10],
-                        height: DevicePixels[60],
-                        borderRadius: DevicePixels[30],
-                        marginBottom: DevicePixels[10],
-                        backgroundColor: colors.textGrey,
-                      }}>
-                      <Text
-                        style={{
-                          fontWeight: 'bold',
-                          color: colors.appWhite,
-                          fontSize: DevicePixels[20],
-                          padding: DevicePixels[15],
-                        }}>{`Exercise ${index + 1}/${workout.length}`}</Text>
+                        {tabIndex === 2 && (
+                          <Input
+                            style={{
+                              height: DevicePixels[100],
+                              textAlignVertical: 'top',
+                              margin: DevicePixels[10],
+                            }}
+                            placeholder="Enter notes here..."
+                            multiline
+                            value={exerciseNotes[exercise.id]}
+                            onChangeText={text =>
+                              setExerciseNoteAction(exercise.id, text)
+                            }
+                          />
+                        )}
+                      </View>
 
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon
-                          name="stopwatch"
-                          size={DevicePixels[20]}
-                          color={colors.appWhite}
-                        />
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          margin: DevicePixels[10],
+                          height: DevicePixels[60],
+                          borderRadius: DevicePixels[30],
+                          marginBottom: DevicePixels[10],
+                          backgroundColor: colors.textGrey,
+                        }}>
                         <Text
                           style={{
                             fontWeight: 'bold',
                             color: colors.appWhite,
                             fontSize: DevicePixels[20],
-                            paddingLeft: DevicePixels[5],
                             padding: DevicePixels[15],
-                          }}>
-                          {moment()
-                            .utc()
-                            .startOf('day')
-                            .add({seconds})
-                            .format('mm:ss')}
-                        </Text>
+                          }}>{`Exercise ${index + 1}/${workout.length}`}</Text>
+
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Icon
+                            name="stopwatch"
+                            size={DevicePixels[20]}
+                            color={colors.appWhite}
+                          />
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color: colors.appWhite,
+                              fontSize: DevicePixels[20],
+                              paddingLeft: DevicePixels[5],
+                              padding: DevicePixels[15],
+                            }}>
+                            {moment()
+                              .utc()
+                              .startOf('day')
+                              .add({seconds})
+                              .format('mm:ss')}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                    <Button
-                      text="End Workout"
-                      onPress={() => {
-                        Alert.alert('End workout', 'Are you sure?', [
-                          {text: 'No', style: 'cancel'},
-                          {
-                            text: 'Yes',
-                            onPress: () => {
-                              navigation.navigate('EndWorkout', {
-                                seconds,
-                                name,
-                                isLast,
-                              });
+                      <Button
+                        text="End Workout"
+                        onPress={() => {
+                          Alert.alert('End workout', 'Are you sure?', [
+                            {text: 'No', style: 'cancel'},
+                            {
+                              text: 'Yes',
+                              onPress: () => {
+                                navigation.navigate('EndWorkout', {
+                                  seconds,
+                                  name,
+                                  isLast,
+                                });
+                              },
                             },
-                          },
-                        ]);
-                      }}
-                      style={{margin: DevicePixels[10]}}
-                    />
-                  </ScrollView>
-                </View>
+                          ]);
+                        }}
+                        style={{margin: DevicePixels[10]}}
+                      />
+                    </ScrollView>
+                  </View>
+                )}
               </View>
             );
           })}

@@ -14,7 +14,6 @@
 #import "AVFoundation/AVFoundation.h"
 
 #import <React/RCTAppSetupUtils.h>
-#import "Orientation.h"
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -172,9 +171,5 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 }
 
 #endif
-
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-  return [Orientation getOrientation];
-}
 
 @end

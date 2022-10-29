@@ -29,7 +29,6 @@ import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../commons/Input';
 import FastImage from 'react-native-fast-image';
-import Orientation from 'react-native-orientation-locker';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -89,14 +88,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
 
   return (
     <View style={{flex: 1}}>
-      <Header
-        hasBack
-        absolute
-        customBackPress={() => {
-          navigation.goBack();
-          Orientation.lockToPortrait();
-        }}
-      />
+      <Header hasBack absolute />
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
       ) : (

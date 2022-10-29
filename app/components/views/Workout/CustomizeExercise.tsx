@@ -41,6 +41,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
   const [sets, setSets] = useState(current?.sets || 3);
   const [resistance, setResistance] = useState(current?.resistance || 0);
   const video: {src: string; path: string} | undefined = videos[exercise.id];
+  const [fullscreen, setFullScreen] = useState(false);
 
   useEffect(() => {
     downloadVideoAction(exercise.id);
@@ -71,7 +72,12 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       video &&
       exercise.video &&
       video.src === exercise.video.src ? (
-        <ExerciseVideo path={video.path} />
+        <ExerciseVideo
+          paused
+          path={exercise.video.src}
+          fullscreen={fullscreen}
+          setFullScreen={setFullScreen}
+        />
       ) : (
         <View
           style={{

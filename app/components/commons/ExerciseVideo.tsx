@@ -1,6 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, Platform, StatusBar, TouchableOpacity} from 'react-native';
-import Video from 'react-native-video';
+import {
+  Dimensions,
+  Platform,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Video, {OnProgressData} from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getVideoHeight} from '../../helpers';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -9,7 +15,7 @@ import colors from '../../constants/colors';
 import moment from 'moment';
 import convertToProxyURL from 'react-native-video-cache';
 import {Slider} from '@miblanchard/react-native-slider';
-import Orientation from 'react-native-orientation-locker';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -34,6 +40,7 @@ const ExerciseVideo: React.FC<{
   const [hideTime, setHideTime] = useState(moment().unix());
   const ref = useRef<Video>();
   const showControls = paused || moment().unix() < hideTime + 3;
+  const [progressData, setProgressData] = useState<OnProgressData>();
 
   useEffect(() => {
     if (hasPressedPlay && currentIndex === videoIndex) {
@@ -44,14 +51,23 @@ const ExerciseVideo: React.FC<{
   }, [currentIndex, videoIndex, hasPressedPlay]);
 
   return (
-    <>
+    <View
+      style={{
+        backgroundColor: colors.appGrey,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}>
       <StatusBar hidden={fullscreen} />
       <Video
         source={{uri: convertToProxyURL(path)}}
         style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
-        resizeMode={fullscreen ? 'cover' : 'none'}
+        resizeMode={'none'}
         ref={ref}
         onError={e => console.error(e)}
+        onProgress={setProgressData}
         repeat
         // onEnd={() => {
         //   ref.current?.seek(0);
@@ -91,31 +107,81 @@ const ExerciseVideo: React.FC<{
           />
         </TouchableOpacity>
       )}
-      {showControls && (
-        <TouchableOpacity
-          onPress={() => {
-            if (fullscreen) {
-              Orientation.lockToPortrait();
-              setFullScreen(false);
-            } else {
-              Orientation.lockToLandscape();
-              setFullScreen(true);
-            }
-          }}
-          style={{
-            position: 'absolute',
-            top: fullscreen ? undefined : '35%',
-            bottom: fullscreen ? '5%' : undefined,
-            right: DevicePixels[20],
-          }}>
-          <Icon
-            name={fullscreen ? 'compress' : 'expand'}
-            color={colors.appWhite}
-            size={DevicePixels[30]}
-          />
-        </TouchableOpacity>
+      {(showControls || fullscreen) && (
+        <>
+          <TouchableOpacity
+            onPress={() => {
+              if (fullscreen) {
+                setFullScreen(false);
+              } else {
+                setFullScreen(true);
+              }
+            }}
+            style={{
+              position: 'absolute',
+              top: fullscreen ? undefined : '35%',
+              bottom: fullscreen ? '5%' : undefined,
+              right: DevicePixels[20],
+            }}>
+            <Icon
+              name={fullscreen ? 'compress' : 'expand'}
+              color={colors.appWhite}
+              size={DevicePixels[30]}
+            />
+          </TouchableOpacity>
+          {fullscreen && (
+            <View
+              style={{
+                alignSelf: 'center',
+                justifyContent: 'center',
+                flex: 1,
+                width: '77%',
+                position: 'absolute',
+                bottom: '4.5%',
+                left: '5%',
+                right: 0,
+              }}>
+              <Slider
+                value={
+                  progressData
+                    ? progressData.currentTime / progressData.playableDuration
+                    : 0
+                }
+                maximumTrackTintColor={colors.appWhite}
+                minimumTrackTintColor={colors.appBlue}
+                thumbTintColor={colors.appBlue}
+                renderThumbComponent={() => (
+                  <LinearGradient
+                    style={{
+                      width: DevicePixels[30],
+                      height: DevicePixels[30],
+                      borderRadius: DevicePixels[15],
+                      backgroundColor: colors.appBlue,
+                    }}
+                    colors={[colors.appBlueLight, colors.appBlueDark]}
+                    hitSlop={{
+                      top: DevicePixels[10],
+                      bottom: DevicePixels[10],
+                      left: DevicePixels[10],
+                      right: DevicePixels[10],
+                    }}
+                  />
+                )}
+                onValueChange={value => {
+                  const val = value as number;
+                  const seekable =
+                    progressData.seekableDuration /
+                    progressData.playableDuration;
+                  if (val <= seekable) {
+                    ref.current?.seek(progressData.playableDuration * val);
+                  }
+                }}
+              />
+            </View>
+          )}
+        </>
       )}
-    </>
+    </View>
   );
 };
 
