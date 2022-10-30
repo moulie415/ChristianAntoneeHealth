@@ -12,6 +12,7 @@
 #import "RCTAppleHealthKit.h"
 #import <React/RCTLinkingManager.h>
 #import "AVFoundation/AVFoundation.h"
+#import "Orientation.h"
 
 #import <React/RCTAppSetupUtils.h>
 
@@ -171,5 +172,9 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 }
 
 #endif
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
+}
 
 @end

@@ -16,6 +16,12 @@ import moment from 'moment';
 import convertToProxyURL from 'react-native-video-cache';
 import {Slider} from '@miblanchard/react-native-slider';
 import LinearGradient from 'react-native-linear-gradient';
+import Orientation, {
+  LANDSCAPE_LEFT,
+  LANDSCAPE_RIGHT,
+  OrientationType,
+  useOrientationChange,
+} from 'react-native-orientation-locker';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -41,6 +47,7 @@ const ExerciseVideo: React.FC<{
   const ref = useRef<Video>();
   const showControls = paused || moment().unix() < hideTime + 3;
   const [progressData, setProgressData] = useState<OnProgressData>();
+  const [orientation, setOrientation] = useState<OrientationType>();
 
   useEffect(() => {
     if (hasPressedPlay && currentIndex === videoIndex) {
@@ -49,6 +56,16 @@ const ExerciseVideo: React.FC<{
       setPaused(true);
     }
   }, [currentIndex, videoIndex, hasPressedPlay]);
+
+  useEffect(() => {
+    fullscreen
+      ? Orientation.unlockAllOrientations()
+      : Orientation.lockToPortrait();
+  }, [fullscreen]);
+
+  useOrientationChange(o => {
+    setOrientation(o);
+  });
 
   return (
     <View
@@ -64,7 +81,12 @@ const ExerciseVideo: React.FC<{
       <Video
         source={{uri: convertToProxyURL(path)}}
         style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
-        resizeMode={'none'}
+        resizeMode={
+          orientation === OrientationType['LANDSCAPE-LEFT'] ||
+          orientation === OrientationType['LANDSCAPE-RIGHT']
+            ? 'cover'
+            : 'none'
+        }
         ref={ref}
         onError={e => console.error(e)}
         onProgress={setProgressData}
@@ -119,7 +141,7 @@ const ExerciseVideo: React.FC<{
             }}
             style={{
               position: 'absolute',
-              top: fullscreen ? undefined : '37%',
+              top: fullscreen ? undefined : getVideoHeight() - DevicePixels[85],
               bottom: fullscreen ? '5%' : undefined,
               right: DevicePixels[20],
             }}>

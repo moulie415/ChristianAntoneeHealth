@@ -32,6 +32,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../commons/Input';
 import FastImage from 'react-native-fast-image';
+import Orientation from 'react-native-orientation-locker';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -103,7 +104,14 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
 
   return (
     <View style={{flex: 1}}>
-      <Header hasBack absolute />
+      <Header
+        hasBack
+        absolute
+        customBackPress={() => {
+          navigation.goBack();
+          Orientation.lockToPortrait();
+        }}
+      />
 
       {loadingExercises ? (
         <AbsoluteSpinner loading text="Loading exercises..." />
