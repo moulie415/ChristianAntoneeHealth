@@ -33,6 +33,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../commons/Input';
 import FastImage from 'react-native-fast-image';
 import Orientation from 'react-native-orientation-locker';
+import ExerciseArrows from '../../commons/ExerciseArrows';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -108,8 +109,18 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
         hasBack
         absolute
         customBackPress={() => {
-          navigation.goBack();
-          Orientation.lockToPortrait();
+          Alert.alert('Exit workout', 'Are you sure?', [
+            {
+              text: 'No',
+            },
+            {
+              text: 'Yes',
+              onPress: () => {
+                navigation.goBack();
+                Orientation.lockToPortrait();
+              },
+            },
+          ]);
         }}
       />
 
@@ -151,45 +162,12 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                     <Spinner color={colors.appBlue} />
                   </View>
                 )}
-
-                {workout[i + 1] && (
-                  <TouchableOpacity
-                    onPress={() => pagerRef.current.setPage(i + 1)}
-                    style={{
-                      position: 'absolute',
-                      right: DevicePixels[5],
-                      top: fullscreen
-                        ? Dimensions.get('window').height / 2 - DevicePixels[15]
-                        : '18%',
-                      zIndex: 9,
-                      padding: DevicePixels[10],
-                    }}>
-                    <Icon
-                      name="chevron-right"
-                      size={DevicePixels[30]}
-                      color="#fff"
-                    />
-                  </TouchableOpacity>
-                )}
-                {workout[i - 1] && (
-                  <TouchableOpacity
-                    onPress={() => pagerRef.current.setPage(i - 1)}
-                    style={{
-                      position: 'absolute',
-                      left: DevicePixels[5],
-                      top: fullscreen
-                        ? Dimensions.get('window').height / 2 - DevicePixels[15]
-                        : '18%',
-                      zIndex: 9,
-                      padding: DevicePixels[10],
-                    }}>
-                    <Icon
-                      name="chevron-left"
-                      size={DevicePixels[30]}
-                      color="#fff"
-                    />
-                  </TouchableOpacity>
-                )}
+                <ExerciseArrows
+                  exercises={workout}
+                  index={i}
+                  pagerRef={pagerRef}
+                  fullscreen={fullscreen}
+                />
                 {!fullscreen && (
                   <View
                     style={{

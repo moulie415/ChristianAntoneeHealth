@@ -1524,10 +1524,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-14.12.0.tgz#3bd4a5e9aa2c57d6cba72771969a7e224a9809e1"
   integrity sha512-oveveslj+BfrQNf1uMyjjj6ogEFK0UaDtkvMvbvEzp53hn9k9iHSQijjr6EDti4ieh51wF7XOwgh3X28nlwIQA==
 
-"@react-native-google-signin/google-signin@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-8.0.1.tgz#b03e7fa07013800ec4cff47881e7704a9d8d917f"
-  integrity sha512-ZsHzul3FWM/En3Upx7++KNPVMJxPuzX1H6LWMDiwxlgMmJxpvKpq7UsW4vE3O8x6E6gLfbCFKpjRZXojwXaI+g==
+"@react-native-google-signin/google-signin@^8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-8.1.0.tgz#a9e1cf32b6ae6447dd5eceb8583261c2e4e4874b"
+  integrity sha512-63o8iJrihAuGDxvm8k8Ghy2rHha+OsQ8XrcbsOEhV/R9HTZL2qRyNwvm/NaHCCpuf/bywA8WFGerw+d8REDBKQ==
 
 "@react-native-masked-view/masked-view@^0.2.8":
   version "0.2.8"
@@ -7409,10 +7409,10 @@ react-native-calendar-events@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz#6cb78bf712457ca9928dae95b428c91e7b895ae0"
   integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
 
-react-native-calendars@^1.1290.0:
-  version "1.1290.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1290.0.tgz#885fbafe9d4d4d2023127f175a0202c153543f16"
-  integrity sha512-J9WWroLZ/aTI029iAUu0NrDmLuWmGfG/lB9t9AZUz2FnZBw1dJpyPp94HQI3MInUQXbP0k0W31QOb26Zm2tg/w==
+react-native-calendars@^1.1291.0:
+  version "1.1291.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1291.0.tgz#15b2335d4660deb71b9983be1fb2918710776c5b"
+  integrity sha512-WBkcpD0B+Fq/VMD5E3laRFf3/1VEaZGqzXW8D1csJUGnXwKbCvh5GOzEUBJJJ2dBTIjww0o4AOUyt4St9qbC8w==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     immutable "^4.0.0-rc.12"
@@ -7555,10 +7555,10 @@ react-native-google-fit@^0.19.0:
   dependencies:
     moment "^2.29.2"
 
-react-native-google-mobile-ads@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-google-mobile-ads/-/react-native-google-mobile-ads-8.2.0.tgz#b71e4f11ddc324c14857509b87aae8e66cdf6b52"
-  integrity sha512-tlS7s+MPnM4NWbq0ZZTH0iZ2UTpH0D2ozFblGOaXgTxtTBihZXgWAasmnGn7AsW2w83L86LIBJVqh4XPe59Iqg==
+react-native-google-mobile-ads@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-google-mobile-ads/-/react-native-google-mobile-ads-8.2.1.tgz#db8d498429cdc65115b8399de2c87598b4479ad0"
+  integrity sha512-iKGvd/3RLyO7n7WE4a8WvLhma52lc6gjZhdV8xIBVhWqpBroPX7WRTcTS330XQQJ1DVcv0jhPKXJmuERhb2f0w==
   dependencies:
     "@iabtcf/core" "^1.5.3"
     use-deep-compare-effect "^1.8.1"
@@ -7616,10 +7616,10 @@ react-native-orientation-locker@^1.5.0:
   resolved "https://registry.yarnpkg.com/react-native-orientation-locker/-/react-native-orientation-locker-1.5.0.tgz#324853937eed4835ecd1c8613ab2206135d908ac"
   integrity sha512-4XOCGmNN4BXg5JUFjUuXpsfhPJmbA3LkQilJO1ed+6vL97teTdG2w5IEevKiqL9/hPjeWE8YYtX/YW+yp53hkg==
 
-react-native-pager-view@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.0.1.tgz#353abf38d3c2b91ed7c586f10af0f94700f5b1dc"
-  integrity sha512-kOVNu+4JnR3Gpykviy4WbOAnQz8TgP6O2pRvne221oPUDQLYrvEE/FINR0P85TxbMgvKTPlLejGw0ZHQbezK/g==
+react-native-pager-view@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.0.2.tgz#447b85fcb9f35225c4d6885c18689a7d30c181d9"
+  integrity sha512-XL3Qc9k7o0BykclGHtuRUz97FpF6rcKbP8LqszLeS2hKnINYcbUPYqg46EhbwVhFOUJE+XhT3idrSO1e/D6jtQ==
 
 react-native-parsed-text@0.0.22:
   version "0.0.22"
