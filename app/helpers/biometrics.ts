@@ -439,3 +439,29 @@ export const saveWorkout = (
     });
   }
 };
+
+const getFatPercentage = () => {
+
+}
+
+const saveFatPercentage = () => {
+
+}
+
+
+const getMuscleMass = () => {
+
+}
+
+const saveMuscleMass = () => {
+
+}
+
+const getBoneDensity = () => {
+
+}
+
+const saveBoneDensity = () => {
+  
+}
+

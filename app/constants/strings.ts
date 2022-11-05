@@ -20,8 +20,9 @@ export const healthKitOptions: HealthKitPermissions = {
       PERMS.StepCount,
       PERMS.BiologicalSex,
       PERMS.Workout,
+      PERMS.BodyFatPercentage,
     ],
-    write: [PERMS.Weight, PERMS.Workout, PERMS.Height],
+    write: [PERMS.Weight, PERMS.Workout, PERMS.Height, PERMS.BodyFatPercentage],
   },
 };
 
