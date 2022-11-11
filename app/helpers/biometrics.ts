@@ -440,28 +440,50 @@ export const saveWorkout = (
   }
 };
 
-const getFatPercentage = () => {
+const getFatPercentage = (months = 1) => {
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.getBodyFatPercentageSamples(
+        {
+          startDate: moment()
+            .subtract(months, 'month')
+            .startOf('day')
+            .toISOString(),
+          endDate: moment().endOf('day').toISOString(),
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        },
+      );
+    });
+  } else {
+    
+  }
+};
 
-}
+const saveFatPercentage = (value: number) => {
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
+        if (e) {
+          reject(e);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  } else {
+  }
+};
 
-const saveFatPercentage = () => {
+const getMuscleMass = () => {};
 
-}
+const saveMuscleMass = () => {};
 
+const getBoneDensity = () => {};
 
-const getMuscleMass = () => {
-
-}
-
-const saveMuscleMass = () => {
-
-}
-
-const getBoneDensity = () => {
-
-}
-
-const saveBoneDensity = () => {
-  
-}
-
+const saveBoneDensity = () => {};
