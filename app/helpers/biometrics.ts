@@ -6,7 +6,7 @@ import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Unit} from '../types/Profile';
 import {StepSample} from '../types/Shared';
 import {logError} from './error';
-import ListItem from '../components/commons/ListItem';
+import db from '@react-native-firebase/firestore';
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -94,7 +94,7 @@ export const getHeight = async (): Promise<number | undefined> => {
     });
   }
   const response = await GoogleFit.getHeightSamples({
-    startDate: moment().subtract(1, 'month').startOf('day').toISOString(),
+    startDate: moment().subtract(30, 'days').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
   const latest = response[response.length - 1];
@@ -122,7 +122,7 @@ export const getWeight = async (): Promise<number | undefined> => {
     });
   }
   const response = await GoogleFit.getWeightSamples({
-    startDate: moment().subtract(1, 'month').startOf('day').toISOString(),
+    startDate: moment().subtract(30, 'days').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
   const latest = response[response.length - 1];
@@ -132,13 +132,13 @@ export const getWeight = async (): Promise<number | undefined> => {
   }
 };
 
-export const getWeightSamples = async (unit: Unit, months = 1) => {
+export const getWeightSamples = async (unit: Unit, days = 30) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getWeightSamples(
         {
           startDate: moment()
-            .subtract(months, 'month')
+            .subtract(days, 'days')
             .startOf('day')
             .toISOString(),
           endDate: moment().endOf('day').toISOString(),
@@ -162,20 +162,20 @@ export const getWeightSamples = async (unit: Unit, months = 1) => {
     });
   }
   const response = await GoogleFit.getWeightSamples({
-    startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
+    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
     unit: unit === 'imperial' ? 'pound' : 'kg',
   });
   return response;
 };
 
-export const getHeightSamples = async (unit: Unit, months = 1) => {
+export const getHeightSamples = async (unit: Unit, days = 30) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getHeightSamples(
         {
           startDate: moment()
-            .subtract(months, 'month')
+            .subtract(days, 'days')
             .startOf('day')
             .toISOString(),
           endDate: moment().endOf('day').toISOString(),
@@ -199,7 +199,7 @@ export const getHeightSamples = async (unit: Unit, months = 1) => {
     });
   }
   const response = await GoogleFit.getHeightSamples({
-    startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
+    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
   return response.map(item => {
@@ -207,13 +207,13 @@ export const getHeightSamples = async (unit: Unit, months = 1) => {
   });
 };
 
-export const getStepSamples = async (months = 1) => {
+export const getStepSamples = async (days = 30) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getDailyStepCountSamples(
         {
           startDate: moment()
-            .subtract(months, 'month')
+            .subtract(days, 'days')
             .startOf('day')
             .toISOString(),
           endDate: moment().endOf('day').toISOString(),
@@ -229,7 +229,7 @@ export const getStepSamples = async (months = 1) => {
     });
   }
   const response = await GoogleFit.getDailyStepCountSamples({
-    startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
+    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
     bucketUnit: BucketUnit.DAY,
     bucketInterval: 1,
@@ -271,13 +271,13 @@ export const getWeeklySteps = async (): Promise<StepSample[]> => {
   );
 };
 
-export const getActivitySamples = async (months = 1) => {
+export const getActivitySamples = async (days = 30) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getSamples(
         {
           startDate: moment()
-            .subtract(months, 'month')
+            .subtract(days, 'day')
             .startOf('day')
             .toISOString(),
           endDate: moment().endOf('day').toISOString(),
@@ -293,7 +293,7 @@ export const getActivitySamples = async (months = 1) => {
     });
   }
   const response = await GoogleFit.getActivitySamples({
-    startDate: moment().subtract(months, 'month').startOf('day').toISOString(),
+    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
 
@@ -440,13 +440,13 @@ export const saveWorkout = (
   }
 };
 
-const getFatPercentage = (months = 1) => {
+export const getFatPercentageSamples = (uid: string, days = 30) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getBodyFatPercentageSamples(
         {
           startDate: moment()
-            .subtract(months, 'month')
+            .subtract(days, 'days')
             .startOf('day')
             .toISOString(),
           endDate: moment().endOf('day').toISOString(),
@@ -461,11 +461,21 @@ const getFatPercentage = (months = 1) => {
       );
     });
   } else {
-    
+    return db()
+      .collection('users')
+      .doc(uid)
+      .collection('bodyFatPercentage')
+      .where('createdate', '>=', moment().subtract(days, 'days').toDate())
+      .get();
   }
 };
 
-const saveFatPercentage = (value: number) => {
+export const saveBodyFatPercentage = async (value: number, uid: string) => {
+  await db()
+    .collection('users')
+    .doc(uid)
+    .collection('bodyFatPercentage')
+    .add({value, createdate: new Date()});
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
@@ -476,14 +486,39 @@ const saveFatPercentage = (value: number) => {
         }
       });
     });
-  } else {
   }
 };
 
-const getMuscleMass = () => {};
+export const getMuscleMassSamples = (uid: string, days = 30) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection('muscleMass')
+    .where('createdate', '>=', moment().subtract(days, 'days').toDate())
+    .get();
+};
 
-const saveMuscleMass = () => {};
+export const saveMuscleMass = (value: number, uid: string) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection('muscleMass')
+    .add({value, createdate: new Date()});
+};
 
-const getBoneDensity = () => {};
+export const getBoneDensitySamples = (uid: string, days = 30) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection('muscleMass')
+    .where('createdate', '>=', moment().subtract(days, 'days').toDate())
+    .get();
+};
 
-const saveBoneDensity = () => {};
+export const saveBoneDensity = (value: number, uid: string) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection('boneDensity')
+    .add({value, createdate: new Date()});
+};

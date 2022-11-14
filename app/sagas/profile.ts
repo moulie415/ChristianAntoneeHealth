@@ -66,7 +66,7 @@ import Profile, {PlanStatus} from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
-import {Alert, Platform} from 'react-native';
+import {Alert, Linking, Platform} from 'react-native';
 import {
   getActivitySamples,
   getHeightSamples,
@@ -76,12 +76,15 @@ import {
   initBiometrics,
   isAvailable,
   isEnabled,
+  saveBodyFatPercentage,
+  saveBoneDensity,
   saveHeight,
+  saveMuscleMass,
   saveWeight,
 } from '../helpers/biometrics';
 import Snackbar from 'react-native-snackbar';
 import {HealthValue} from 'react-native-health';
-import {ActivitySampleResponse} from 'react-native-google-fit';
+import googleFit, {ActivitySampleResponse} from 'react-native-google-fit';
 import {
   DownloadVideoAction,
   DOWNLOAD_VIDEO,
@@ -180,29 +183,54 @@ function* updateProfile(action: UpdateProfileAction) {
     marketing,
     goal,
     avatar,
+    bodyFatPercentage,
+    muscleMass,
+    boneDensity,
   } = action.payload;
   try {
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const enabled: boolean = yield call(isEnabled);
-    if (enabled && weight && height && unit) {
-      yield call(saveWeight, weight, unit);
-      yield call(saveHeight, height, unit);
+    if (enabled) {
+      if (height && unit) {
+        yield call(saveWeight, weight, unit);
+      }
+      if (weight && unit) {
+        yield call(saveHeight, height, unit);
+      }
+      if (bodyFatPercentage) {
+        yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
+      }
+      if (muscleMass) {
+        yield call(saveMuscleMass, muscleMass, uid);
+      }
+      if (boneDensity) {
+        yield call(saveBoneDensity, boneDensity, uid);
+      }
     }
   } catch (e) {
-    console.log(e);
+    Alert.alert(
+      'Error saving body measurement',
+      "Please make sure you've given CA Health sufficient permissions",
+      [
+        {text: 'Cancel'},
+        {
+          text: `Open ${Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'}`,
+          onPress: () => {
+            if (Platform.OS === 'ios') {
+              Linking.openURL('health://');
+            } else {
+              googleFit.openFit();
+            }
+          },
+        },
+      ],
+    );
+    logError(e);
   }
   const {profile} = yield select((state: MyRootState) => state.profile);
   const updateObj = {
     ...profile,
-    ...(dob ? {dob} : {}),
-    ...(weight ? {weight} : {}),
-    ...(height ? {height} : {}),
-    ...(unit ? {unit} : {}),
-    ...(gender ? {gender} : {}),
-    ...(experience ? {experience} : {}),
-    ...(marketing ? {marketing} : {}),
-    ...(equipment ? {equipment} : {}),
-    ...(goal ? {goal} : {}),
-    ...(avatar ? {avatar} : {}),
+    ...action.payload,
   };
   yield call(api.updateUser, updateObj, profile.uid);
   yield put(setProfile(updateObj));
@@ -304,25 +332,7 @@ function* signUp(action: SignUpAction) {
       {
         ...profile,
         signedUp: true,
-        name,
-        surname,
-        dob,
-        weight,
-        unit,
-        height,
-        gender,
-        experience,
-        equipment,
-        marketing,
-        goal,
-        nutrition,
-        trainingAvailability,
-        injuries,
-        occupation,
-        stressLevel,
-        sleepPattern,
-        lifestyle,
-        medications,
+        ...action.payload,
         planStatus: PlanStatus.UNINITIALIZED,
         signUpDate: moment().unix(),
       },
@@ -331,25 +341,7 @@ function* signUp(action: SignUpAction) {
     yield put(
       setProfile({
         ...profile,
-        name,
-        surname,
-        dob,
-        weight,
-        height,
-        unit,
-        gender,
-        experience,
-        equipment,
-        marketing,
-        goal,
-        nutrition,
-        trainingAvailability,
-        injuries,
-        occupation,
-        stressLevel,
-        sleepPattern,
-        lifestyle,
-        medications,
+        ...action.payload,
         planStatus: PlanStatus.UNINITIALIZED,
       }),
     );

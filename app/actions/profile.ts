@@ -93,6 +93,9 @@ export interface UpdateProfilePayload {
   equipment?: string;
   goal?: Goal;
   avatar?: string;
+  bodyFatPercentage?: number;
+  muscleMass?: number;
+  boneDensity?: number;
 }
 
 export interface SignUpAction {

@@ -55,4 +55,7 @@ export default interface Profile {
   injuries?: string;
   occupation?: string;
   lifestyle?: string;
+  bodyFatPercentage?: number;
+  muscleMass?: number;
+  boneDensity?: number;
 }

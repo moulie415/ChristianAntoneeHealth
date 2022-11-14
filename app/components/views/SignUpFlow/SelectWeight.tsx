@@ -5,8 +5,7 @@ import {Picker} from 'react-native-wheel-pick';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-
-const weights = [...Array(501).keys()];
+import {WEIGHTS} from '../../../constants';
 
 const SelectWeight: React.FC<{
   weight: number;
@@ -55,7 +54,7 @@ const SelectWeight: React.FC<{
           textColor={colors.appWhite}
           itemStyle={{color: colors.appWhite}}
           selectedValue={String(weight)}
-          pickerData={weights.map(value => {
+          pickerData={WEIGHTS.map(value => {
             return {
               label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
               value: String(value),

@@ -17,11 +17,9 @@ import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import colors from '../../../constants/colors';
+import {REPS, RESISTANCE, SETS} from '../../../constants';
 
-const REPS = [...Array(101).keys()];
 REPS.shift();
-const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const RESISTANCE = [...Array(301).keys()];
 
 const {width, height} = Dimensions.get('screen');
 

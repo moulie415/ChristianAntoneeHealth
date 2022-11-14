@@ -1,15 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {
-  TouchableOpacity,
-  Dimensions,
-  ScrollView,
-  View,
-  Alert,
-  ImageBackground,
-  Linking,
-} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {TouchableOpacity, ScrollView, View, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {LineChart} from 'react-native-chart-kit';
 import moment from 'moment';
 import styles from '../../../styles/views/Profile';
 import ProfileProps from '../../../types/views/Profile';
@@ -19,11 +10,7 @@ import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
 import * as _ from 'lodash';
 import {getSamples, updateProfile} from '../../../actions/profile';
-import DatePicker, {Event} from '@react-native-community/datetimepicker';
-import {Platform} from 'react-native';
-import {getBMIItems, getWeightItems} from '../../../helpers';
-import {weightChartConfig} from '../../../constants';
-import {isAvailable, isEnabled} from '../../../helpers/biometrics';
+import {BONE_DENSITIES, HEIGHTS, MUSCLE_MASSES, PERCENTAGES, WEIGHTS} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Avatar from '../../commons/Avatar';
 import {
@@ -38,24 +25,17 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
 import storage from '@react-native-firebase/storage';
 import Text from '../../commons/Text';
-import Input from '../../commons/Input';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Modal from '../../commons/Modal';
-import {Picker} from 'react-native-wheel-pick';
-
-const heights = [...Array(501).keys()];
-const weights = [...Array(501).keys()];
+import PickerModal from '../../commons/PickerModal';
+import ProfileCharts from '../../commons/ProfileCharts';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
-  weightSamples,
-  heightSamples,
   navigation,
   updateProfileAction,
-  getSamplesAction,
 }) => {
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState<Gender>(profile.gender);
@@ -67,6 +47,17 @@ const Profile: React.FC<ProfileProps> = ({
   const [loading, setLoading] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
+  const [showBodyFatPercentageModal, setShowBodyFatPercentageModal] =
+    useState(false);
+  const [bodyFatPercentage, setBodyFatPercentage] = useState(
+    profile.bodyFatPercentage,
+  );
+
+  const [showMuscleMassModal, setShowMuscleMassModal] = useState(false);
+  const [muscleMass, setMuscleMass] = useState(profile.muscleMass);
+
+  const [showBoneDensityModal, setShowBoneDensityModal] = useState(false);
+  const [boneDensity, setBoneDensity] = useState(profile.boneDensity);
 
   const newProfile = {
     ...profile,
@@ -76,43 +67,12 @@ const Profile: React.FC<ProfileProps> = ({
     height,
     unit,
     avatar,
+    bodyFatPercentage,
+    muscleMass,
+    boneDensity,
   };
 
   const equal = _.isEqual(newProfile, profile);
-
-  const monthlyWeightSamples = weightSamples[moment().month()];
-  const monthlyHeightSamples = heightSamples[moment().month()];
-  const weightItems: {
-    labels: string[];
-    data: number[];
-    minMax: number[];
-  } = useMemo(() => {
-    return getBMIItems(profile, monthlyWeightSamples, monthlyHeightSamples);
-  }, [monthlyWeightSamples, profile]);
-
-  const weightData = {
-    labels: weightItems.labels,
-    datasets: [
-      {
-        data: weightItems.data,
-        color: (opacity = 1) => colors.appBlue, // optional
-        strokeWidth: 4, // optional
-      },
-      {
-        data: weightItems.minMax,
-        color: () => 'rgba(0, 0, 0, 0)',
-      },
-    ],
-  };
-
-  useEffect(() => {
-    const init = async () => {
-      if (await isEnabled()) {
-        getSamplesAction();
-      }
-    };
-    init();
-  }, [getSamplesAction]);
 
   const handlePickerCallback = useCallback(
     async (response: ImagePickerResponse) => {
@@ -127,8 +87,6 @@ const Profile: React.FC<ProfileProps> = ({
     },
     [],
   );
-
-  const latestBMI = weightItems?.data[weightItems.data.length - 1];
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -311,56 +269,7 @@ const Profile: React.FC<ProfileProps> = ({
           </SafeAreaView>
         </LinearGradient>
 
-        <Text
-          style={{
-            margin: DevicePixels[20],
-            color: colors.appWhite,
-            fontWeight: 'bold',
-            fontSize: DevicePixels[24],
-          }}>
-          BMI tracking
-        </Text>
-        <LineChart
-          data={weightData}
-          width={Dimensions.get('screen').width * 0.9}
-          height={DevicePixels[200]}
-          chartConfig={weightChartConfig}
-          // withVerticalLines={false}
-          formatYLabel={label => {
-            return label.slice(0, -1);
-          }}
-          withShadow={false}
-        />
-        {!!latestBMI && (
-          <>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: DevicePixels[16],
-                marginHorizontal: DevicePixels[20],
-                marginVertical: DevicePixels[10],
-              }}>
-              Your current BMI is{' '}
-              <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
-            </Text>
-
-            <Text
-              onPress={() =>
-                Linking.openURL(
-                  'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
-                )
-              }
-              style={{
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                textDecorationLine: 'underline',
-                marginHorizontal: DevicePixels[20],
-                marginBottom: DevicePixels[20],
-              }}>
-              What does this mean?
-            </Text>
-          </>
-        )}
+        <ProfileCharts />
         <Button
           variant="danger"
           text=" Delete my account"
@@ -407,68 +316,66 @@ const Profile: React.FC<ProfileProps> = ({
           bottom: 0,
         }}
       />
-      <Modal
+      <PickerModal
         visible={showHeightModal}
-        onRequestClose={() => setShowHeightModal(false)}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            width: '90%',
-            alignSelf: 'center',
-            borderRadius: DevicePixels[10],
-          }}>
-          <Picker
-            style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
-            /* @ts-ignore */
-            selectedValue={String(height)}
-            pickerData={heights.map(value => {
-              return {
-                label: `${value.toString()} ${
-                  unit === 'metric' ? 'cm' : 'inches'
-                }`,
-                value: String(value),
-              };
-            })}
-            onValueChange={val => setHeight(Number(val))}
-          />
-          <Button
-            text="Close"
-            style={{margin: DevicePixels[10]}}
-            onPress={() => setShowHeightModal(false)}
-          />
-        </View>
-      </Modal>
-      <Modal
+        selectedValue={String(height)}
+        pickerData={HEIGHTS.map(value => {
+          return {
+            label: `${value.toString()} ${unit === 'metric' ? 'cm' : 'inches'}`,
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setHeight(Number(val))}
+        onRequestClose={() => setShowHeightModal(false)}
+      />
+      <PickerModal
         visible={showWeightModal}
-        onRequestClose={() => setShowWeightModal(false)}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            width: '90%',
-            alignSelf: 'center',
-            borderRadius: DevicePixels[10],
-          }}>
-          <Picker
-            style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
-            /* @ts-ignore */
-            selectedValue={String(weight)}
-            pickerData={weights.map(value => {
-              return {
-                label: `${value.toString()} ${
-                  unit === 'metric' ? 'kg' : 'lbs'
-                }`,
-                value: String(value),
-              };
-            })}
-            onValueChange={val => setWeight(Number(val))}
-          />
-          <Button
-            text="Close"
-            style={{margin: DevicePixels[10]}}
-            onPress={() => setShowWeightModal(false)}
-          />
-        </View>
-      </Modal>
+        selectedValue={String(weight)}
+        pickerData={WEIGHTS.map(value => {
+          return {
+            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setWeight(Number(val))}
+        onRequestClose={() => setShowWeightModal(false)}
+      />
+      <PickerModal
+        visible={showBodyFatPercentageModal}
+        selectedValue={String(bodyFatPercentage)}
+        pickerData={PERCENTAGES.map(value => {
+          return {
+            label: `${value.toString()} %`,
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setBodyFatPercentage(Number(val))}
+        onRequestClose={() => setShowBodyFatPercentageModal(false)}
+      />
+      <PickerModal
+        visible={showMuscleMassModal}
+        selectedValue={String(muscleMass)}
+        pickerData={MUSCLE_MASSES.map(value => {
+          return {
+            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setMuscleMass(Number(val))}
+        onRequestClose={() => setShowMuscleMassModal(false)}
+      />
+      <PickerModal
+        visible={showBoneDensityModal}
+        selectedValue={String(boneDensity)}
+        pickerData={BONE_DENSITIES.map(value => {
+          return {
+            label: value.toString(),
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setBoneDensity(Number(val))}
+        onRequestClose={() => setShowBoneDensityModal(false)}
+      />
       <AbsoluteSpinner loading={loading} />
     </View>
   );
@@ -476,13 +383,10 @@ const Profile: React.FC<ProfileProps> = ({
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
-  weightSamples: profile.weightSamples,
-  heightSamples: profile.heightSamples,
 });
 
 const mapDispatchToProps = {
   updateProfileAction: updateProfile,
-  getSamplesAction: getSamples,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

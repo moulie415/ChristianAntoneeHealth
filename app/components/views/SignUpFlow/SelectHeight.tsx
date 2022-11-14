@@ -5,8 +5,7 @@ import {Picker} from 'react-native-wheel-pick';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-
-const heights = [...Array(501).keys()];
+import { HEIGHTS } from '../../../constants';
 
 const SelectHeight: React.FC<{
   height: number;
@@ -55,7 +54,7 @@ const SelectHeight: React.FC<{
           textColor={colors.appWhite}
           itemStyle={{color: colors.appWhite}}
           selectedValue={String(height)}
-          pickerData={heights.map(value => {
+          pickerData={HEIGHTS.map(value => {
             return {
               label: `${value.toString()} ${
                 unit === 'metric' ? 'cm' : 'inches'
