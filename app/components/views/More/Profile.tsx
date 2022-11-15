@@ -43,7 +43,6 @@ const Profile: React.FC<ProfileProps> = ({
   navigation,
   updateProfileAction,
 }) => {
-  const [show, setShow] = useState(false);
   const [gender, setGender] = useState<Gender>(profile.gender);
   const [weight, setWeight] = useState<number>(profile.weight);
   const [dob, setDob] = useState(profile.dob);
@@ -78,7 +77,7 @@ const Profile: React.FC<ProfileProps> = ({
     boneDensity,
   };
 
-  const equal = _.isEqual(newProfile, profile);
+  const equal = _.isMatch(newProfile, profile);
 
   const handlePickerCallback = useCallback(
     async (response: ImagePickerResponse) => {
@@ -93,6 +92,34 @@ const Profile: React.FC<ProfileProps> = ({
     },
     [],
   );
+
+  const onSave = async () => {
+    try {
+      setLoading(true);
+      let newAvatar = profile.avatar;
+      if (avatar !== profile.avatar) {
+        const imageRef = storage().ref(`images/${profile.uid}`).child('avatar');
+        await imageRef.putFile(avatar);
+        newAvatar = await imageRef.getDownloadURL();
+      }
+      navigation.goBack();
+      updateProfileAction({
+        gender,
+        dob,
+        height,
+        weight,
+        unit,
+        avatar: newAvatar,
+      });
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      logError(e);
+      Snackbar.show({text: 'Error updating profile'});
+    }
+  };
+
+  const saveDisabled = !dob || !height || !weight || !gender || equal;
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -113,18 +140,45 @@ const Profile: React.FC<ProfileProps> = ({
             <Header
               hasBack
               title="Profile"
-              // right={
-              //   <TouchableOpacity
-              //     onPress={() =>
-              //       navigation.navigate('SignUpFlow', {fromProfile: true})
-              //     }>
-              //     <Icon
-              //       name="edit"
-              //       size={DevicePixels[20]}
-              //       color={colors.appWhite}
-              //     />
-              //   </TouchableOpacity>
-              // }
+              customBackPress={() => {
+                if (equal) {
+                  navigation.goBack();
+                } else {
+                  Alert.alert('Unsaved changes', 'Do you want to save?', [
+                    {text: 'Cancel'},
+                    {text: 'No', onPress: () => navigation.goBack()},
+                    {
+                      text: 'Yes',
+                      onPress: async () => {
+                        await onSave();
+                        navigation.goBack();
+                      },
+                    },
+                  ]);
+                }
+              }}
+              right={
+                <TouchableOpacity
+                  disabled={saveDisabled}
+                  onPress={() => {
+                    // navigation.navigate('SignUpFlow', {fromProfile: true});
+                    onSave();
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      fontWeight: 'bold',
+                      opacity: saveDisabled ? 0.5 : 1,
+                    }}>
+                    SAVE
+                  </Text>
+                  {/* <Icon
+                    name="edit"
+                    size={DevicePixels[20]}
+                    color={colors.appWhite}
+                  /> */}
+                </TouchableOpacity>
+              }
             />
             <View
               style={{
@@ -283,36 +337,10 @@ const Profile: React.FC<ProfileProps> = ({
           onPress={() => navigation.navigate('DeleteAccount')}
         />
       </ScrollView>
-      <Button
+      {/* <Button
         text="Save"
-        onPress={async () => {
-          try {
-            setLoading(true);
-            let newAvatar = profile.avatar;
-            if (avatar !== profile.avatar) {
-              const imageRef = storage()
-                .ref(`images/${profile.uid}`)
-                .child('avatar');
-              await imageRef.putFile(avatar);
-              newAvatar = await imageRef.getDownloadURL();
-            }
-            navigation.goBack();
-            updateProfileAction({
-              gender,
-              dob,
-              height,
-              weight,
-              unit,
-              avatar: newAvatar,
-            });
-            setLoading(false);
-          } catch (e) {
-            setLoading(false);
-            logError(e);
-            Snackbar.show({text: 'Error updating profile'});
-          }
-        }}
-        disabled={!dob || !height || !weight || !gender || equal}
+        onPress={onSave}
+        disabled={saveDisabled}
         style={{
           margin: DevicePixels[10],
           marginBottom: DevicePixels[20],
@@ -321,7 +349,7 @@ const Profile: React.FC<ProfileProps> = ({
           right: 0,
           bottom: 0,
         }}
-      />
+      /> */}
       <PickerModal
         visible={showHeightModal}
         selectedValue={String(height)}

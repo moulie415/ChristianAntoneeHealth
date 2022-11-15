@@ -1,5 +1,5 @@
 import PushNotification from 'react-native-push-notification';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import {Dimensions} from 'react-native';
 import Rate, {AndroidMarket} from 'react-native-rate';
 import analytics from '@react-native-firebase/analytics';
@@ -35,75 +35,81 @@ export const scheduleLocalNotification = (
   }
 };
 
-export const getWeightItems = (profile: Profile, weightSamples: Sample[]) => {
-  const labels = [];
-  const data = [];
-  let prevWeight;
-  let lowest = profile.weight || 0;
-  let highest = profile.weight || 0;
-  for (let i = 6; i >= 0; i--) {
-    const day = moment().subtract(i, 'days');
-    const dayOfYear = day.dayOfYear();
-    const sample =
-      weightSamples &&
-      weightSamples.find(s => moment(s.startDate).dayOfYear() === dayOfYear)
-        ?.value;
-    if (i === 6) {
-      const weight = sample || profile.weight || 0;
-      if (weight > highest) {
-        highest = weight;
-      }
-      if (weight < lowest) {
-        lowest = weight;
-      }
-      data.push(weight);
-      prevWeight = weight;
-    } else {
-      const weight = sample ?? prevWeight;
-      data.push(weight);
-      if (weight > highest) {
-        highest = weight;
-      }
-      if (weight < lowest) {
-        lowest = weight;
-      }
+const findClosestSampleToDate = (
+  samples: Sample[],
+  day: Moment,
+  profileVal: number,
+) => {
+  let closest = Infinity;
+  for (let i = 0; i < samples.length; i++) {
+    const sample = samples[i];
+    if (
+      moment(sample.startDate).isSameOrAfter(day) &&
+      moment(sample.startDate).diff(day) < closest
+    ) {
+      closest = sample.value;
     }
-    labels.push(day.format('dd'));
   }
-  return {data, labels, minMax: [lowest - 5, highest + 5]};
+  if (closest === Infinity) {
+    return profileVal;
+  }
+  return closest;
 };
 
 export const getBMIItems = (
   profile: Profile,
   weightSamples: Sample[],
   heightSamples: Sample[],
+  filter: 6 | 30 | 365,
 ) => {
   const labels = [];
   const data = [];
   const profileHeight = profile.height;
   const profileWeight = profile.weight;
-  let prevWeight = profileWeight;
-  let prevHeight = profileHeight;
 
   let lowest =
     profileWeight && profileHeight ? getBMI(profileHeight, profileWeight) : 0;
   let highest =
     profileWeight && profileHeight ? getBMI(profileHeight, profileWeight) : 0;
 
-  for (let i = 6; i >= 0; i--) {
-    const day = moment().subtract(i, 'days');
-    const dayOfYear = day.dayOfYear();
-    const weightSample =
-      (weightSamples &&
-        weightSamples.find(s => moment(s.startDate).dayOfYear() === dayOfYear)
-          ?.value) ||
-      prevWeight;
-    const heightSample =
-      (heightSamples &&
-        heightSamples.find(s => moment(s.startDate).dayOfYear() === dayOfYear)
-          ?.value) ||
-      prevHeight;
-    if (i === 6) {
+  for (let i = filter as number; i >= 0; i--) {
+    const day = moment().subtract(i, 'days').endOf('day');
+
+    if (i === 0) {
+      const bmi = getBMI(profile.height, profile.weight);
+      if (bmi > highest) {
+        highest = bmi;
+      }
+      if (bmi < lowest) {
+        lowest = bmi;
+      }
+      data.push(bmi);
+      if (filter === 6) {
+        labels.push(day.format('dd'));
+      }
+      if (filter === 30) {
+        labels.push(day.format('Do'));
+      }
+      if (filter === 365) {
+        labels.push(day.format('MMM'));
+      }
+    } else if (
+      i === filter ||
+      filter === 6 ||
+      (filter === 30 && i % 4 === 0) ||
+      (filter === 365 && i % 50 === 0)
+    ) {
+      const weightSample =
+        (weightSamples &&
+          weightSamples.length &&
+          findClosestSampleToDate(weightSamples, day, profile.weight)) ||
+        profile.weight;
+
+      const heightSample =
+        (heightSamples &&
+          heightSamples.length &&
+          findClosestSampleToDate(heightSamples, day, profile.height)) ||
+        profile.height;
       const bmi = getBMI(heightSample, weightSample);
       if (bmi > highest) {
         highest = bmi;
@@ -112,20 +118,19 @@ export const getBMIItems = (
         lowest = bmi;
       }
       data.push(bmi);
-      prevWeight = weightSample;
-      prevHeight = heightSample;
-    } else {
-      const bmi = getBMI(heightSample, weightSample);
-      data.push(bmi);
-      if (bmi > highest) {
-        highest = bmi;
+
+      if (filter === 6) {
+        labels.push(day.format('dd'));
       }
-      if (bmi < lowest) {
-        lowest = bmi;
+      if (filter === 30) {
+        labels.push(day.format('Do'));
+      }
+      if (filter === 365) {
+        labels.push(day.format('MMM'));
       }
     }
-    labels.push(day.format('dd'));
   }
+
   return {data, labels, minMax: [lowest - 5, highest + 5]};
 };
 

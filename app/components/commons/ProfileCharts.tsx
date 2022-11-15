@@ -1,4 +1,10 @@
-import {View, Text, ScrollView, Dimensions, Linking} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
 import {PERCENTAGES, weightChartConfig} from '../../constants';
@@ -13,6 +19,8 @@ import moment from 'moment';
 import {getBMIItems} from '../../helpers';
 import {isEnabled} from '../../helpers/biometrics';
 import PickerModal from './PickerModal';
+import LinearGradient from 'react-native-linear-gradient';
+import Text from './Text';
 
 const Chart: React.FC<{
   data: LineChartData;
@@ -50,15 +58,28 @@ const ProfileCharts: React.FC<{
   profile: Profile;
   weightSamples: Sample[];
   heightSamples: Sample[];
+  bodyFatPercentageSamples: Sample[];
+  muscleMassSamples: Sample[];
+  boneDensitySamples: Sample[];
   getSamplesAction: () => void;
-}> = ({profile, weightSamples, heightSamples, getSamplesAction}) => {
+}> = ({
+  profile,
+  weightSamples,
+  heightSamples,
+  bodyFatPercentageSamples,
+  muscleMassSamples,
+  boneDensitySamples,
+  getSamplesAction,
+}) => {
+  const [filter, setFilter] = useState<6 | 30 | 365>(6);
+
   const weightItems: {
     labels: string[];
     data: number[];
     minMax: number[];
   } = useMemo(() => {
-    return getBMIItems(profile, weightSamples, heightSamples);
-  }, [weightSamples, profile, heightSamples]);
+    return getBMIItems(profile, weightSamples, heightSamples, filter);
+  }, [weightSamples, profile, heightSamples, filter]);
 
   const weightData = {
     labels: weightItems.labels,
@@ -88,6 +109,86 @@ const ProfileCharts: React.FC<{
 
   return (
     <>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+          marginTop: DevicePixels[30],
+        }}>
+        <TouchableOpacity style={{}} onPress={() => setFilter(6)}>
+          <LinearGradient
+            colors={
+              filter === 6
+                ? [colors.appBlueLight, colors.appBlueDark]
+                : ['transparent', 'transparent']
+            }
+            style={{
+              height: DevicePixels[40],
+              paddingHorizontal: DevicePixels[10],
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: DevicePixels[25],
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textAlign: 'center',
+              }}>
+              Weekly
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity style={{}} onPress={() => setFilter(30)}>
+          <LinearGradient
+            colors={
+              filter === 30
+                ? [colors.appBlueLight, colors.appBlueDark]
+                : ['transparent', 'transparent']
+            }
+            style={{
+              height: DevicePixels[40],
+              paddingHorizontal: DevicePixels[10],
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: DevicePixels[25],
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textAlign: 'center',
+              }}>
+              Monthly
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity style={{}} onPress={() => setFilter(365)}>
+          <LinearGradient
+            colors={
+              filter === 365
+                ? [colors.appBlueLight, colors.appBlueDark]
+                : ['transparent', 'transparent']
+            }
+            style={{
+              height: DevicePixels[40],
+              paddingHorizontal: DevicePixels[10],
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: DevicePixels[25],
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textAlign: 'center',
+              }}>
+              Yearly
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
       <ScrollView horizontal>
         <Chart
           title="BMI"
@@ -197,6 +298,9 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   weightSamples: profile.weightSamples,
   heightSamples: profile.heightSamples,
+  bodyFatPercentageSamples: profile.bodyFatPercentageSamples,
+  muscleMassSamples: profile.muscleMassSamples,
+  boneDensitySamples: profile.boneDensitySamples,
 });
 
 const mapDispatchToProps = {
