@@ -20,9 +20,13 @@ export const SET_PROFILE = 'SET_PROFILE';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const SIGN_UP = 'SIGN_UP';
 export const GET_SAMPLES = 'GET_SAMPLES';
-export const SET_MONTHLY_WEIGHT_SAMPLES = 'SET_MONTHLY_WEIGHT_SAMPLES';
-export const SET_MONTHLY_HEIGHT_SAMPLES = 'SET_MONTHLY_HEIGHT_SAMPLES';
-export const SET_MONTHLY_STEP_SAMPLES = 'SET_MONTHLY_STEP_SAMPLES';
+export const SET_WEIGHT_SAMPLES = 'SET_WEIGHT_SAMPLES';
+export const SET_HEIGHT_SAMPLES = 'SET_HEIGHT_SAMPLES';
+export const SET_BODY_FAT_PERCENTAGE_SAMPLES =
+  'SET_BODY_FAT_PERCENTAGE_SAMPLES';
+export const SET_MUSCLE_MASS_SAMPLES = 'SET_MUSCLE_MASS_SAMPLES';
+export const SET_BONE_DENSITY_SAMPLES = 'SET_BONE_DENSITY_SAMPLES';
+export const SET_STEP_SAMPLES = 'SET_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
@@ -112,19 +116,34 @@ export interface GetSamplesAction {
   type: typeof GET_SAMPLES;
 }
 
-export interface SetMonthlyWeightSamplesAction {
-  type: typeof SET_MONTHLY_WEIGHT_SAMPLES;
-  payload: {samples: Sample[]; month: number};
+export interface SetWeightSamplesAction {
+  type: typeof SET_WEIGHT_SAMPLES;
+  payload: {samples: Sample[]};
 }
 
-export interface SetMonthlyHeightSamplesAction {
-  type: typeof SET_MONTHLY_HEIGHT_SAMPLES;
-  payload: {samples: Sample[]; month: number};
+export interface SetHeightSamplesAction {
+  type: typeof SET_HEIGHT_SAMPLES;
+  payload: {samples: Sample[]};
 }
 
-export interface SetMonthlyStepSamplesAction {
-  type: typeof SET_MONTHLY_STEP_SAMPLES;
-  payload: {samples: StepSample[]; month: number};
+export interface SetBodyFatPercentageSamplesAction {
+  type: typeof SET_BODY_FAT_PERCENTAGE_SAMPLES;
+  payload: {samples: Sample[]};
+}
+
+export interface SetMuscleMassSamplesAction {
+  type: typeof SET_MUSCLE_MASS_SAMPLES;
+  payload: {samples: Sample[]};
+}
+
+export interface SetBoneDensitySamplesAction {
+  type: typeof SET_BONE_DENSITY_SAMPLES;
+  payload: {samples: Sample[]};
+}
+
+export interface SetStepSamplesAction {
+  type: typeof SET_STEP_SAMPLES;
+  payload: {samples: StepSample[]};
 }
 
 export interface SetWeeklyStepsAction {
@@ -247,9 +266,9 @@ export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
   | SignUpAction
-  | SetMonthlyWeightSamplesAction
+  | SetWeightSamplesAction
   | GetSamplesAction
-  | SetMonthlyStepSamplesAction
+  | SetStepSamplesAction
   | SetWeeklyStepsAction
   | UpdateProfileAction
   | SetWorkoutRemindersAction
@@ -275,7 +294,10 @@ export type ProfileActionTypes =
   | SetWeeklyItemsAction
   | RequestPlanAction
   | SetPlanStatus
-  | SetMonthlyHeightSamplesAction;
+  | SetHeightSamplesAction
+  | SetBoneDensitySamplesAction
+  | SetBodyFatPercentageSamplesAction
+  | SetMuscleMassSamplesAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -303,28 +325,46 @@ export const getSamples = (): GetSamplesAction => ({
   type: GET_SAMPLES,
 });
 
-export const setMonthlyWeightSamples = (
+export const setWeightSamples = (
   samples: Sample[],
-  month: number,
-): SetMonthlyWeightSamplesAction => ({
-  type: SET_MONTHLY_WEIGHT_SAMPLES,
-  payload: {samples, month},
+): SetWeightSamplesAction => ({
+  type: SET_WEIGHT_SAMPLES,
+  payload: {samples},
 });
 
-export const setMonthlyHeightSamples = (
+export const setHeightSamples = (
   samples: Sample[],
-  month: number,
-): SetMonthlyHeightSamplesAction => ({
-  type: SET_MONTHLY_HEIGHT_SAMPLES,
-  payload: {samples, month},
+): SetHeightSamplesAction => ({
+  type: SET_HEIGHT_SAMPLES,
+  payload: {samples},
 });
 
-export const setMonthlyStepSamples = (
+export const setBodyFatPercentageSamples = (
+  samples: Sample[],
+): SetBodyFatPercentageSamplesAction => ({
+  type: SET_BODY_FAT_PERCENTAGE_SAMPLES,
+  payload: {samples},
+});
+
+export const setMuscleMassSamples = (
+  samples: Sample[],
+): SetMuscleMassSamplesAction => ({
+  type: SET_MUSCLE_MASS_SAMPLES,
+  payload: {samples},
+});
+
+export const setBoneDensitySamples = (
+  samples: Sample[],
+): SetBoneDensitySamplesAction => ({
+  type: SET_BONE_DENSITY_SAMPLES,
+  payload: {samples},
+});
+
+export const setStepSamples = (
   samples: StepSample[],
-  month: number,
-): SetMonthlyStepSamplesAction => ({
-  type: SET_MONTHLY_STEP_SAMPLES,
-  payload: {samples, month},
+): SetStepSamplesAction => ({
+  type: SET_STEP_SAMPLES,
+  payload: {samples},
 });
 
 export const setWeeklySteps = (steps: StepSample[]): SetWeeklyStepsAction => ({

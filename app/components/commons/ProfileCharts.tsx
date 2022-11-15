@@ -48,19 +48,17 @@ const Chart: React.FC<{
 
 const ProfileCharts: React.FC<{
   profile: Profile;
-  weightSamples: {[key: number]: Sample[]};
-  heightSamples: {[key: number]: Sample[]};
+  weightSamples: Sample[];
+  heightSamples: Sample[];
   getSamplesAction: () => void;
 }> = ({profile, weightSamples, heightSamples, getSamplesAction}) => {
-  const monthlyWeightSamples = weightSamples[moment().month()];
-  const monthlyHeightSamples = heightSamples[moment().month()];
   const weightItems: {
     labels: string[];
     data: number[];
     minMax: number[];
   } = useMemo(() => {
-    return getBMIItems(profile, monthlyWeightSamples, monthlyHeightSamples);
-  }, [monthlyWeightSamples, profile, monthlyHeightSamples]);
+    return getBMIItems(profile, weightSamples, heightSamples);
+  }, [weightSamples, profile, heightSamples]);
 
   const weightData = {
     labels: weightItems.labels,
@@ -79,9 +77,9 @@ const ProfileCharts: React.FC<{
 
   useEffect(() => {
     const init = async () => {
-      if (await isEnabled()) {
-        getSamplesAction();
-      }
+      // if (await isEnabled()) {
+      getSamplesAction();
+      // }
     };
     init();
   }, [getSamplesAction]);

@@ -4,8 +4,8 @@ import {
   SET_PROFILE,
   SET_LOGGED_IN,
   ProfileActionTypes,
-  SET_MONTHLY_WEIGHT_SAMPLES,
-  SET_MONTHLY_STEP_SAMPLES,
+  SET_WEIGHT_SAMPLES,
+  SET_STEP_SAMPLES,
   SET_WEEKLY_STEPS,
   SET_WORKOUT_REMINDERS,
   SET_WORKOUT_REMINDER_TIME,
@@ -22,7 +22,10 @@ import {
   SET_VIEWED_PLAN,
   SET_WEEKLY_ITEMS,
   SET_PLAN_STATUS,
-  SET_MONTHLY_HEIGHT_SAMPLES,
+  SET_HEIGHT_SAMPLES,
+  SET_BODY_FAT_PERCENTAGE_SAMPLES,
+  SET_MUSCLE_MASS_SAMPLES,
+  SET_BONE_DENSITY_SAMPLES,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -39,9 +42,12 @@ export interface ProfileState {
   step: number;
   profile: Profile;
   loggedIn: boolean;
-  weightSamples: {[key: number]: Sample[]};
-  heightSamples: {[key: number]: Sample[]};
-  stepSamples: {[key: number]: StepSample[]};
+  weightSamples: Sample[];
+  heightSamples: Sample[];
+  bodyFatPercentageSamples: Sample[];
+  muscleMassSamples: Sample[];
+  boneDensitySamples: Sample[];
+  stepSamples: StepSample[];
   weeklySteps: StepSample[];
   workoutReminders: boolean;
   reminderTime: string;
@@ -65,11 +71,17 @@ const initialState: ProfileState = {
     unread: {},
     planStatus: PlanStatus.UNINITIALIZED,
     premium: false,
+    bodyFatPercentage: undefined,
+    muscleMass: undefined,
+    boneDensity: undefined,
   },
   loggedIn: false,
-  weightSamples: {},
-  heightSamples: {},
-  stepSamples: {},
+  weightSamples: [],
+  heightSamples: [],
+  fatPercentageSamples: [],
+  muscleMassSamples: [],
+  boneDensitySamples: [],
+  stepSamples: [],
   weeklySteps: [],
   workoutReminders: true,
   reminderTime: new Date(
@@ -118,29 +130,35 @@ const reducer = (
             loggedIn: action.payload,
           }
         : {...initialState, loggedIn: action.payload};
-    case SET_MONTHLY_WEIGHT_SAMPLES:
+    case SET_WEIGHT_SAMPLES:
       return {
         ...state,
-        weightSamples: {
-          ...state.weightSamples,
-          [action.payload.month]: action.payload.samples,
-        },
+        weightSamples: action.payload.samples,
       };
-    case SET_MONTHLY_HEIGHT_SAMPLES:
+    case SET_HEIGHT_SAMPLES:
       return {
         ...state,
-        heightSamples: {
-          ...state.heightSamples,
-          [action.payload.month]: action.payload.samples,
-        },
+        heightSamples: action.payload.samples,
       };
-    case SET_MONTHLY_STEP_SAMPLES:
+    case SET_BODY_FAT_PERCENTAGE_SAMPLES:
       return {
         ...state,
-        stepSamples: {
-          ...state.stepSamples,
-          [action.payload.month]: action.payload.samples,
-        },
+        bodyFatPercentageSamples: action.payload.samples,
+      };
+    case SET_MUSCLE_MASS_SAMPLES:
+      return {
+        ...state,
+        muscleMassSamples: action.payload.samples,
+      };
+    case SET_BONE_DENSITY_SAMPLES:
+      return {
+        ...state,
+        boneDensitySamples: action.payload.samples,
+      };
+    case SET_STEP_SAMPLES:
+      return {
+        ...state,
+        stepSamples: action.payload.samples,
       };
     case SET_WEEKLY_STEPS:
       return {

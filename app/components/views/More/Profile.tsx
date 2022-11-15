@@ -9,8 +9,14 @@ import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
 import * as _ from 'lodash';
-import {getSamples, updateProfile} from '../../../actions/profile';
-import {BONE_DENSITIES, HEIGHTS, MUSCLE_MASSES, PERCENTAGES, WEIGHTS} from '../../../constants';
+import {updateProfile} from '../../../actions/profile';
+import {
+  BONE_DENSITIES,
+  HEIGHTS,
+  MUSCLE_MASSES,
+  PERCENTAGES,
+  WEIGHTS,
+} from '../../../constants';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Avatar from '../../commons/Avatar';
 import {

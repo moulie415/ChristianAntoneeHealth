@@ -122,7 +122,7 @@ export const getWeight = async (): Promise<number | undefined> => {
     });
   }
   const response = await GoogleFit.getWeightSamples({
-    startDate: moment().subtract(30, 'days').startOf('day').toISOString(),
+    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
   const latest = response[response.length - 1];
@@ -132,15 +132,12 @@ export const getWeight = async (): Promise<number | undefined> => {
   }
 };
 
-export const getWeightSamples = async (unit: Unit, days = 30) => {
+export const getWeightSamples = async (unit: Unit) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getWeightSamples(
         {
-          startDate: moment()
-            .subtract(days, 'days')
-            .startOf('day')
-            .toISOString(),
+          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
           // @ts-ignore
           unit: unit === 'lbs' ? 'pound' : 'gram',
@@ -162,22 +159,19 @@ export const getWeightSamples = async (unit: Unit, days = 30) => {
     });
   }
   const response = await GoogleFit.getWeightSamples({
-    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
+    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
     unit: unit === 'imperial' ? 'pound' : 'kg',
   });
   return response;
 };
 
-export const getHeightSamples = async (unit: Unit, days = 30) => {
+export const getHeightSamples = async (unit: Unit) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getHeightSamples(
         {
-          startDate: moment()
-            .subtract(days, 'days')
-            .startOf('day')
-            .toISOString(),
+          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
           // @ts-ignore
           unit: unit === 'imperial' ? 'inch' : 'meter',
@@ -199,7 +193,7 @@ export const getHeightSamples = async (unit: Unit, days = 30) => {
     });
   }
   const response = await GoogleFit.getHeightSamples({
-    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
+    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
   return response.map(item => {
@@ -207,15 +201,12 @@ export const getHeightSamples = async (unit: Unit, days = 30) => {
   });
 };
 
-export const getStepSamples = async (days = 30) => {
+export const getStepSamples = async () => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getDailyStepCountSamples(
         {
-          startDate: moment()
-            .subtract(days, 'days')
-            .startOf('day')
-            .toISOString(),
+          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
         },
         (err, results) => {
@@ -229,7 +220,7 @@ export const getStepSamples = async (days = 30) => {
     });
   }
   const response = await GoogleFit.getDailyStepCountSamples({
-    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
+    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
     bucketUnit: BucketUnit.DAY,
     bucketInterval: 1,
@@ -271,15 +262,12 @@ export const getWeeklySteps = async (): Promise<StepSample[]> => {
   );
 };
 
-export const getActivitySamples = async (days = 30) => {
+export const getActivitySamples = async () => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getSamples(
         {
-          startDate: moment()
-            .subtract(days, 'day')
-            .startOf('day')
-            .toISOString(),
+          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
         },
         (err, results) => {
@@ -293,7 +281,7 @@ export const getActivitySamples = async (days = 30) => {
     });
   }
   const response = await GoogleFit.getActivitySamples({
-    startDate: moment().subtract(days, 'days').startOf('day').toISOString(),
+    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
     endDate: moment().endOf('day').toISOString(),
   });
 
@@ -440,15 +428,12 @@ export const saveWorkout = (
   }
 };
 
-export const getFatPercentageSamples = (uid: string, days = 30) => {
+export const getBodyFatPercentageSamples = async (uid: string) => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getBodyFatPercentageSamples(
         {
-          startDate: moment()
-            .subtract(days, 'days')
-            .startOf('day')
-            .toISOString(),
+          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
         },
         (err, results) => {
@@ -461,12 +446,20 @@ export const getFatPercentageSamples = (uid: string, days = 30) => {
       );
     });
   } else {
-    return db()
+    const samples = await db()
       .collection('users')
       .doc(uid)
       .collection('bodyFatPercentage')
-      .where('createdate', '>=', moment().subtract(days, 'days').toDate())
+      .where('createdate', '>=', moment().subtract(1, 'year').toDate())
       .get();
+    return samples.docs.map(doc => {
+      const data = doc.data();
+      return {
+        startDate: data.createdate,
+        endDate: data.createdate,
+        value: data.value,
+      };
+    });
   }
 };
 
@@ -489,13 +482,21 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
   }
 };
 
-export const getMuscleMassSamples = (uid: string, days = 30) => {
-  return db()
+export const getMuscleMassSamples = async (uid: string) => {
+  const samples = await db()
     .collection('users')
     .doc(uid)
     .collection('muscleMass')
-    .where('createdate', '>=', moment().subtract(days, 'days').toDate())
+    .where('createdate', '>=', moment().subtract(1, 'year').toDate())
     .get();
+  return samples.docs.map(doc => {
+    const data = doc.data();
+    return {
+      startDate: data.createdate,
+      endDate: data.createdate,
+      value: data.value,
+    };
+  });
 };
 
 export const saveMuscleMass = (value: number, uid: string) => {
@@ -506,13 +507,21 @@ export const saveMuscleMass = (value: number, uid: string) => {
     .add({value, createdate: new Date()});
 };
 
-export const getBoneDensitySamples = (uid: string, days = 30) => {
-  return db()
+export const getBoneDensitySamples = async (uid: string) => {
+  const samples = await db()
     .collection('users')
     .doc(uid)
     .collection('muscleMass')
-    .where('createdate', '>=', moment().subtract(days, 'days').toDate())
+    .where('createdate', '>=', moment().subtract(1, 'year').toDate())
     .get();
+  return samples.docs.map(doc => {
+    const data = doc.data();
+    return {
+      startDate: data.createdate,
+      endDate: data.createdate,
+      value: data.value,
+    };
+  });
 };
 
 export const saveBoneDensity = (value: number, uid: string) => {

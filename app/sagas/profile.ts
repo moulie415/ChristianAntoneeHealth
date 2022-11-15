@@ -23,9 +23,9 @@ import {
   setProfile,
   SIGN_UP,
   SignUpAction,
-  setMonthlyWeightSamples,
+  setWeightSamples,
   GET_SAMPLES,
-  setMonthlyStepSamples,
+  setStepSamples,
   setWeeklySteps,
   UPDATE_PROFILE,
   UpdateProfileAction,
@@ -56,9 +56,12 @@ import {
   setWeeklyItems,
   REQUEST_PLAN,
   setPlanStatus,
-  setMonthlyHeightSamples,
+  setHeightSamples,
   SET_PREMIUM,
   SetPremiumAction,
+  setBodyFatPercentageSamples,
+  setMuscleMassSamples,
+  setBoneDensitySamples,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -69,7 +72,10 @@ import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {Alert, Linking, Platform} from 'react-native';
 import {
   getActivitySamples,
+  getBodyFatPercentageSamples,
+  getBoneDensitySamples,
   getHeightSamples,
+  getMuscleMassSamples,
   getStepSamples,
   getWeeklySteps,
   getWeightSamples,
@@ -121,45 +127,57 @@ type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
-  const month = moment().month();
-
-  const weeklySteps: StepSample[] = yield call(getWeeklySteps);
-  if (Platform.OS === 'ios') {
-    const aggregatedWeeklySteps = Object.values(
-      weeklySteps.reduce(
-        (acc: {[key: string]: {date: string; value: number}}, cur) => {
-          const date = moment(cur.date).format('YYYY-MM-DD');
-          if (acc[date]) {
-            acc[date] = {date, value: acc[date].value + cur.value};
-          } else {
-            acc[date] = {date, value: cur.value};
-          }
-          return acc;
-        },
-        {},
-      ),
-    );
-    yield put(setWeeklySteps(aggregatedWeeklySteps));
-  } else {
-    yield put(setWeeklySteps(weeklySteps));
-  }
-
-  const stepSamples: StepSample[] = yield call(getStepSamples);
-  yield put(setMonthlyStepSamples(stepSamples, month));
-
-  const {unit} = yield select((state: MyRootState) => state.profile.profile);
+  const {unit, uid} = yield select(
+    (state: MyRootState) => state.profile.profile,
+  );
   const weightSamples: Sample[] = yield call(getWeightSamples, unit);
-  yield put(setMonthlyWeightSamples(weightSamples, month));
+  yield put(setWeightSamples(weightSamples));
 
   const heightSamples: Sample[] = yield call(getHeightSamples, unit);
-  yield put(setMonthlyHeightSamples(heightSamples, month));
+  yield put(setHeightSamples(heightSamples));
 
-  const activitySamples: HealthValue[] | ActivitySampleResponse[] = yield call(
-    getActivitySamples,
+  const bodyFatPercentageSamples: Sample[] = yield call(
+    getBodyFatPercentageSamples,
+    uid,
   );
+  yield put(setBodyFatPercentageSamples(bodyFatPercentageSamples));
 
-  if (activitySamples) {
-  }
+  const muscleMassSamples: Sample[] = yield call(getMuscleMassSamples, uid);
+  yield put(setMuscleMassSamples(muscleMassSamples));
+
+  const boneDensitySamples: Sample[] = yield call(getBoneDensitySamples, uid);
+  yield put(setBoneDensitySamples(boneDensitySamples));
+
+  // const stepSamples: StepSample[] = yield call(getStepSamples);
+  // yield put(setStepSamples(stepSamples));
+
+  // const activitySamples: HealthValue[] | ActivitySampleResponse[] = yield call(
+  //   getActivitySamples,
+  // );
+
+  // if (activitySamples) {
+  // }
+
+  // const weeklySteps: StepSample[] = yield call(getWeeklySteps);
+  // if (Platform.OS === 'ios') {
+  //   const aggregatedWeeklySteps = Object.values(
+  //     weeklySteps.reduce(
+  //       (acc: {[key: string]: {date: string; value: number}}, cur) => {
+  //         const date = moment(cur.date).format('YYYY-MM-DD');
+  //         if (acc[date]) {
+  //           acc[date] = {date, value: acc[date].value + cur.value};
+  //         } else {
+  //           acc[date] = {date, value: cur.value};
+  //         }
+  //         return acc;
+  //       },
+  //       {},
+  //     ),
+  //   );
+  //   yield put(setWeeklySteps(aggregatedWeeklySteps));
+  // } else {
+  //   yield put(setWeeklySteps(weeklySteps));
+  // }
 }
 
 function onAuthStateChanged() {

@@ -35,10 +35,7 @@ export const scheduleLocalNotification = (
   }
 };
 
-export const getWeightItems = (
-  profile: Profile,
-  monthlyWeightSamples: Sample[],
-) => {
+export const getWeightItems = (profile: Profile, weightSamples: Sample[]) => {
   const labels = [];
   const data = [];
   let prevWeight;
@@ -48,10 +45,9 @@ export const getWeightItems = (
     const day = moment().subtract(i, 'days');
     const dayOfYear = day.dayOfYear();
     const sample =
-      monthlyWeightSamples &&
-      monthlyWeightSamples.find(
-        s => moment(s.startDate).dayOfYear() === dayOfYear,
-      )?.value;
+      weightSamples &&
+      weightSamples.find(s => moment(s.startDate).dayOfYear() === dayOfYear)
+        ?.value;
     if (i === 6) {
       const weight = sample || profile.weight || 0;
       if (weight > highest) {
@@ -79,8 +75,8 @@ export const getWeightItems = (
 
 export const getBMIItems = (
   profile: Profile,
-  monthlyWeightSamples: Sample[],
-  monthlyHeightSamples: Sample[],
+  weightSamples: Sample[],
+  heightSamples: Sample[],
 ) => {
   const labels = [];
   const data = [];
@@ -98,16 +94,14 @@ export const getBMIItems = (
     const day = moment().subtract(i, 'days');
     const dayOfYear = day.dayOfYear();
     const weightSample =
-      (monthlyWeightSamples &&
-        monthlyWeightSamples.find(
-          s => moment(s.startDate).dayOfYear() === dayOfYear,
-        )?.value) ||
+      (weightSamples &&
+        weightSamples.find(s => moment(s.startDate).dayOfYear() === dayOfYear)
+          ?.value) ||
       prevWeight;
     const heightSample =
-      (monthlyHeightSamples &&
-        monthlyHeightSamples.find(
-          s => moment(s.startDate).dayOfYear() === dayOfYear,
-        )?.value) ||
+      (heightSamples &&
+        heightSamples.find(s => moment(s.startDate).dayOfYear() === dayOfYear)
+          ?.value) ||
       prevHeight;
     if (i === 6) {
       const bmi = getBMI(heightSample, weightSample);
