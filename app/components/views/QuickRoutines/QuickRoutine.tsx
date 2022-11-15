@@ -59,10 +59,10 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   }, [exercisesObj, routine.exerciseIds]);
 
   useEffect(() => {
-    if (routine.instructions) {
+    if (routine.instructions || routine.steps) {
       setShowModal(true);
     }
-  }, [navigation, routine.instructions]);
+  }, [navigation, routine.instructions, routine.steps]);
 
   useEffect(() => {
     if (routineStarted) {
@@ -376,7 +376,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               fontSize: DevicePixels[18],
               lineHeight: DevicePixels[25],
             }}>
-            {routine.instructions}
+            {routine.steps
+              ? routine.steps.map(step => {
+                  return `• ${step}\n\n`;
+                })
+              : routine.instructions}
           </Text>
           <Button
             text="OK"
