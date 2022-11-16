@@ -34,6 +34,7 @@ import Input from '../../commons/Input';
 import FastImage from 'react-native-fast-image';
 import Orientation from 'react-native-orientation-locker';
 import ExerciseArrows from '../../commons/ExerciseArrows';
+import useInterval from '../../../hooks/UseInterval';
 
 const StartWorkout: React.FC<StartWorkoutProps> = ({
   workout,
@@ -56,14 +57,13 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const name = route.params?.name;
   const isLast = route.params?.isLast;
   const [fullscreen, setFullScreen] = useState(false);
+  const [timerPaused, setTimerPaused] = useState(false);
 
-  useEffect(() => {
-    const start = moment().unix();
-    const intervalID = setInterval(() => {
-      setSeconds(Math.floor(moment().unix() - start));
-    }, 1000);
-    return () => clearInterval(intervalID);
-  }, []);
+  useInterval(() => {
+    if (!timerPaused) {
+      setSeconds(seconds + 1);
+    }
+  }, 1000);
 
   useEffect(() => {
     if (tabIndex === 2) {
@@ -391,6 +391,15 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                               .add({seconds})
                               .format('mm:ss')}
                           </Text>
+                          <TouchableOpacity
+                            onPress={() => setTimerPaused(!timerPaused)}>
+                            <Icon
+                              name={timerPaused ? 'play' : 'pause'}
+                              size={DevicePixels[30]}
+                              style={{marginRight: DevicePixels[10]}}
+                              color={colors.appWhite}
+                            />
+                          </TouchableOpacity>
                         </View>
                       </View>
                       <Button

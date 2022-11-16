@@ -1,12 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  View,
-  ImageBackground,
-  Dimensions,
-} from 'react-native';
+import {ScrollView, TouchableOpacity, Alert, View} from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {getVideoHeight} from '../../../helpers';
@@ -27,10 +20,9 @@ import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import Input from '../../commons/Input';
-import FastImage from 'react-native-fast-image';
 import Orientation from 'react-native-orientation-locker';
 import ExerciseArrows from '../../commons/ExerciseArrows';
+import useInterval from '../../../hooks/UseInterval';
 
 const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   downloadVideoAction,
@@ -51,6 +43,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const [fullscreen, setFullScreen] = useState(false);
+  const [timerPaused, setTimerPaused] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -64,15 +57,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
     }
   }, [navigation, routine.instructions, routine.steps]);
 
-  useEffect(() => {
-    if (routineStarted) {
-      const start = moment().unix();
-      const intervalID = setInterval(() => {
-        setSeconds(Math.floor(moment().unix() - start));
-      }, 1000);
-      return () => clearInterval(intervalID);
+  useInterval(() => {
+    if (routineStarted && !timerPaused) {
+      setSeconds(seconds + 1);
     }
-  }, [routineStarted]);
+  }, 1000);
 
   const loadingExercises = !exercises || exercises.some(e => e === undefined);
 
@@ -314,6 +303,15 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                               .add({seconds})
                               .format('mm:ss')}
                           </Text>
+                          <TouchableOpacity
+                            onPress={() => setTimerPaused(!timerPaused)}>
+                            <Icon
+                              name={timerPaused ? 'play' : 'pause'}
+                              size={DevicePixels[30]}
+                              style={{marginRight: DevicePixels[10]}}
+                              color={colors.appWhite}
+                            />
+                          </TouchableOpacity>
                         </View>
                       </View>
                       <Button
@@ -367,21 +365,39 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             }}>
             Instructions
           </Text>
-          <Text
-            style={{
-              margin: DevicePixels[10],
-              marginTop: 0,
-              textAlign: 'center',
-              color: colors.appWhite,
-              fontSize: DevicePixels[18],
-              lineHeight: DevicePixels[25],
-            }}>
-            {routine.steps
-              ? routine.steps.map(step => {
-                  return `• ${step}\n\n`;
-                })
-              : routine.instructions}
-          </Text>
+          <View style={{marginBottom: DevicePixels[10]}}>
+            {routine.steps ? (
+              routine.steps.map(step => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      margin: DevicePixels[10],
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        marginRight: DevicePixels[10],
+                      }}>
+                      ●
+                    </Text>
+                    <Text style={{color: colors.appWhite, flex: 1}}>
+                      {step}
+                    </Text>
+                  </View>
+                );
+              })
+            ) : (
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  marginHorizontal: DevicePixels[20],
+                }}>
+                {routine.instructions}
+              </Text>
+            )}
+          </View>
           <Button
             text="OK"
             onPress={() => setShowModal(false)}
