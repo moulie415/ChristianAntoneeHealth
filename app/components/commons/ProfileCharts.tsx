@@ -23,7 +23,8 @@ const Chart: React.FC<{
   data: LineChartData;
   title: string;
   footer: ReactNode;
-}> = ({data, title, footer}) => {
+  formatLabel?: (label: string) => string;
+}> = ({data, title, footer, formatLabel}) => {
   return (
     <View>
       <Text
@@ -41,9 +42,13 @@ const Chart: React.FC<{
         height={DevicePixels[200]}
         chartConfig={weightChartConfig}
         // withVerticalLines={false}
-        formatYLabel={label => {
-          return label.slice(0, -1);
-        }}
+        formatYLabel={
+          formatLabel
+            ? formatLabel
+            : label => {
+                return label.slice(0, -1);
+              }
+        }
         withShadow={false}
       />
       {footer}
@@ -245,6 +250,9 @@ const ProfileCharts: React.FC<{
         <Chart
           title="Body fat percentage"
           data={bodyFatItems.chartData}
+          formatLabel={label => {
+            return `${label.slice(0, -3)} %`;
+          }}
           footer={
             <Button
               onPress={() => setShowBodyFatPercentageModal(true)}
@@ -260,6 +268,9 @@ const ProfileCharts: React.FC<{
         <Chart
           title="Muscle mass"
           data={muscleMassItems.chartData}
+          formatLabel={label => {
+            return `${label.slice(0, -3)} kg`;
+          }}
           footer={
             <Button
               onPress={() => setShowMuscleMassModal(true)}
