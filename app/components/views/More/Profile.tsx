@@ -52,6 +52,7 @@ const Profile: React.FC<ProfileProps> = ({
   const [loading, setLoading] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
+
   const [showBodyFatPercentageModal, setShowBodyFatPercentageModal] =
     useState(false);
   const [bodyFatPercentage, setBodyFatPercentage] = useState(
@@ -72,12 +73,12 @@ const Profile: React.FC<ProfileProps> = ({
     height,
     unit,
     avatar,
-    bodyFatPercentage,
-    muscleMass,
-    boneDensity,
+    ...(bodyFatPercentage ? {bodyFatPercentage} : {}),
+    ...(muscleMass ? {muscleMass} : {}),
+    ...(boneDensity ? {boneDensity} : {}),
   };
 
-  const equal = _.isMatch(newProfile, profile);
+  const equal = _.isEqual(newProfile, profile);
 
   const handlePickerCallback = useCallback(
     async (response: ImagePickerResponse) => {
@@ -329,7 +330,16 @@ const Profile: React.FC<ProfileProps> = ({
           </SafeAreaView>
         </LinearGradient>
 
-        <ProfileCharts />
+        <ProfileCharts
+          weight={weight}
+          height={height}
+          bodyFatPercentage={bodyFatPercentage}
+          muscleMass={muscleMass}
+          boneDensity={boneDensity}
+          setShowBodyFatPercentageModal={setShowBodyFatPercentageModal}
+          setShowBoneDensityModal={setShowBoneDensityModal}
+          setShowMuscleMassModal={setShowMuscleMassModal}
+        />
         <Button
           variant="danger"
           text=" Delete my account"

@@ -56,27 +56,121 @@ const findClosestSampleToDate = (
   return closest;
 };
 
+export const getSampleItems = (
+  profileVal: number,
+  filter: 6 | 30 | 365,
+  samples: Sample[],
+) => {
+  if (profileVal === undefined || profileVal === null) {
+    const chartData = {
+      labels: [] as string[],
+      datasets: [
+        {
+          data: [] as number[],
+          color: (opacity = 1) => colors.appBlue, // optional
+          strokeWidth: 4, // optional
+        },
+        {
+          data: [] as number[],
+          color: () => 'rgba(0, 0, 0, 0)',
+        },
+      ],
+    };
+    return {data: [], chartData};
+  }
+  const labels = [];
+  const data = [];
+
+  let lowest = profileVal || 0;
+  let highest = profileVal || 0;
+
+  for (let i = filter as number; i >= 0; i--) {
+    const day = moment().subtract(i, 'days').endOf('day');
+
+    if (i === 0) {
+      if (profileVal > highest) {
+        highest = profileVal;
+      }
+      if (profileVal < lowest) {
+        lowest = profileVal;
+      }
+      data.push(profileVal);
+      if (filter === 6) {
+        labels.push(day.format('dd'));
+      }
+      if (filter === 30) {
+        labels.push(day.format('Do'));
+      }
+      if (filter === 365) {
+        labels.push(day.format('MMM'));
+      }
+    } else if (
+      i === filter ||
+      filter === 6 ||
+      (filter === 30 && i % 4 === 0) ||
+      (filter === 365 && i % 50 === 0)
+    ) {
+      const sample =
+        (samples &&
+          samples.length &&
+          findClosestSampleToDate(samples, day, profileVal)) ||
+        profileVal;
+      if (sample > highest) {
+        highest = sample;
+      }
+      if (sample < lowest) {
+        lowest = sample;
+      }
+      data.push(sample);
+
+      if (filter === 6) {
+        labels.push(day.format('dd'));
+      }
+      if (filter === 30) {
+        labels.push(day.format('Do'));
+      }
+      if (filter === 365) {
+        labels.push(day.format('MMM'));
+      }
+    }
+  }
+
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        data,
+        color: (opacity = 1) => colors.appBlue, // optional
+        strokeWidth: 4, // optional
+      },
+      {
+        data: [lowest - 5, highest + 5],
+        color: () => 'rgba(0, 0, 0, 0)',
+      },
+    ],
+  };
+
+  return {data, chartData};
+};
+
 export const getBMIItems = (
-  profile: Profile,
+  weight: number,
+  height: number,
   weightSamples: Sample[],
   heightSamples: Sample[],
   filter: 6 | 30 | 365,
 ) => {
   const labels = [];
   const data = [];
-  const profileHeight = profile.height;
-  const profileWeight = profile.weight;
 
-  let lowest =
-    profileWeight && profileHeight ? getBMI(profileHeight, profileWeight) : 0;
-  let highest =
-    profileWeight && profileHeight ? getBMI(profileHeight, profileWeight) : 0;
+  let lowest = weight && height ? getBMI(height, weight) : 0;
+  let highest = weight && height ? getBMI(height, weight) : 0;
 
   for (let i = filter as number; i >= 0; i--) {
     const day = moment().subtract(i, 'days').endOf('day');
 
     if (i === 0) {
-      const bmi = getBMI(profile.height, profile.weight);
+      const bmi = getBMI(height, weight);
       if (bmi > highest) {
         highest = bmi;
       }
@@ -102,14 +196,14 @@ export const getBMIItems = (
       const weightSample =
         (weightSamples &&
           weightSamples.length &&
-          findClosestSampleToDate(weightSamples, day, profile.weight)) ||
-        profile.weight;
+          findClosestSampleToDate(weightSamples, day, weight)) ||
+        weight;
 
       const heightSample =
         (heightSamples &&
           heightSamples.length &&
-          findClosestSampleToDate(heightSamples, day, profile.height)) ||
-        profile.height;
+          findClosestSampleToDate(heightSamples, day, height)) ||
+        height;
       const bmi = getBMI(heightSample, weightSample);
       if (bmi > highest) {
         highest = bmi;
@@ -131,7 +225,22 @@ export const getBMIItems = (
     }
   }
 
-  return {data, labels, minMax: [lowest - 5, highest + 5]};
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        data,
+        color: (opacity = 1) => colors.appBlue, // optional
+        strokeWidth: 4, // optional
+      },
+      {
+        data: [lowest - 5, highest + 5],
+        color: () => 'rgba(0, 0, 0, 0)',
+      },
+    ],
+  };
+
+  return {data, chartData};
 };
 
 const getBMI = (h: number, w: number) => {

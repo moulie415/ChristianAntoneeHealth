@@ -14,13 +14,10 @@ import {LineChartData} from 'react-native-chart-kit/dist/line-chart/LineChart';
 import {connect} from 'react-redux';
 import {MyRootState, Sample} from '../../types/Shared';
 import {getSamples} from '../../actions/profile';
-import Profile from '../../types/Profile';
-import moment from 'moment';
-import {getBMIItems} from '../../helpers';
-import {isEnabled} from '../../helpers/biometrics';
-import PickerModal from './PickerModal';
+import {getBMIItems, getSampleItems} from '../../helpers';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
+import Button from './Button';
 
 const Chart: React.FC<{
   data: LineChartData;
@@ -55,46 +52,65 @@ const Chart: React.FC<{
 };
 
 const ProfileCharts: React.FC<{
-  profile: Profile;
   weightSamples: Sample[];
   heightSamples: Sample[];
   bodyFatPercentageSamples: Sample[];
   muscleMassSamples: Sample[];
   boneDensitySamples: Sample[];
   getSamplesAction: () => void;
+  setShowBodyFatPercentageModal: (show: boolean) => void;
+  setShowMuscleMassModal: (show: boolean) => void;
+  setShowBoneDensityModal: (show: boolean) => void;
+  weight: number;
+  height: number;
+  bodyFatPercentage: number;
+  muscleMass: number;
+  boneDensity: number;
 }> = ({
-  profile,
   weightSamples,
   heightSamples,
   bodyFatPercentageSamples,
   muscleMassSamples,
   boneDensitySamples,
   getSamplesAction,
+  setShowBodyFatPercentageModal,
+  setShowBoneDensityModal,
+  setShowMuscleMassModal,
+  weight,
+  height,
+  bodyFatPercentage,
+  muscleMass,
+  boneDensity,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
 
   const weightItems: {
-    labels: string[];
     data: number[];
-    minMax: number[];
+    chartData: LineChartData;
   } = useMemo(() => {
-    return getBMIItems(profile, weightSamples, heightSamples, filter);
-  }, [weightSamples, profile, heightSamples, filter]);
+    return getBMIItems(weight, height, weightSamples, heightSamples, filter);
+  }, [weightSamples, weight, height, heightSamples, filter]);
 
-  const weightData = {
-    labels: weightItems.labels,
-    datasets: [
-      {
-        data: weightItems.data,
-        color: (opacity = 1) => colors.appBlue, // optional
-        strokeWidth: 4, // optional
-      },
-      {
-        data: weightItems.minMax,
-        color: () => 'rgba(0, 0, 0, 0)',
-      },
-    ],
-  };
+  const bodyFatItems: {
+    data: number[];
+    chartData: LineChartData;
+  } = useMemo(() => {
+    return getSampleItems(bodyFatPercentage, filter, bodyFatPercentageSamples);
+  }, [bodyFatPercentageSamples, filter, bodyFatPercentage]);
+
+  const muscleMassItems: {
+    data: number[];
+    chartData: LineChartData;
+  } = useMemo(() => {
+    return getSampleItems(muscleMass, filter, muscleMassSamples);
+  }, [muscleMassSamples, filter, muscleMass]);
+
+  const boneDensityItems: {
+    data: number[];
+    chartData: LineChartData;
+  } = useMemo(() => {
+    return getSampleItems(boneDensity, filter, boneDensitySamples);
+  }, [boneDensitySamples, filter, boneDensity]);
 
   useEffect(() => {
     const init = async () => {
@@ -192,7 +208,7 @@ const ProfileCharts: React.FC<{
       <ScrollView horizontal>
         <Chart
           title="BMI"
-          data={weightData}
+          data={weightItems.chartData}
           footer={
             latestBMI && (
               <>
@@ -228,65 +244,48 @@ const ProfileCharts: React.FC<{
         />
         <Chart
           title="Body fat percentage"
-          data={weightData}
+          data={bodyFatItems.chartData}
           footer={
-            !!profile.bodyFatPercentage && (
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: DevicePixels[16],
-                  marginHorizontal: DevicePixels[20],
-                  marginVertical: DevicePixels[10],
-                }}>
-                Your current body fat percentage is
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                  }}>{`${profile.bodyFatPercentage}%`}</Text>
-              </Text>
-            )
+            <Button
+              onPress={() => setShowBodyFatPercentageModal(true)}
+              text="Set body fat percentage"
+              style={{
+                width: DevicePixels[300],
+                marginLeft: DevicePixels[40],
+                marginTop: DevicePixels[10],
+              }}
+            />
           }
         />
         <Chart
           title="Muscle mass"
-          data={weightData}
+          data={muscleMassItems.chartData}
           footer={
-            !!profile.bodyFatPercentage && (
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: DevicePixels[16],
-                  marginHorizontal: DevicePixels[20],
-                  marginVertical: DevicePixels[10],
-                }}>
-                Your current body fat percentage is
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                  }}>{`${profile.bodyFatPercentage}%`}</Text>
-              </Text>
-            )
+            <Button
+              onPress={() => setShowMuscleMassModal(true)}
+              text="Set muscle mass"
+              style={{
+                width: DevicePixels[300],
+                marginLeft: DevicePixels[40],
+                marginTop: DevicePixels[10],
+              }}
+            />
           }
         />
         <Chart
           title="Bone density"
-          data={weightData}
+          data={boneDensityItems.chartData}
           footer={
-            !!profile.bodyFatPercentage && (
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: DevicePixels[16],
-                  marginHorizontal: DevicePixels[20],
-                  marginVertical: DevicePixels[10],
-                }}>
-                Your current body fat percentage is
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                  }}>{`${profile.bodyFatPercentage}%`}</Text>
-              </Text>
-            )
+            <Button
+              onPress={() => setShowBoneDensityModal(true)}
+              text="Set bone density"
+              style={{
+                width: DevicePixels[300],
+                marginTop: DevicePixels[10],
+                marginLeft: DevicePixels[40],
+                marginRight: DevicePixels[20],
+              }}
+            />
           }
         />
       </ScrollView>
@@ -295,7 +294,6 @@ const ProfileCharts: React.FC<{
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
-  profile: profile.profile,
   weightSamples: profile.weightSamples,
   heightSamples: profile.heightSamples,
   bodyFatPercentageSamples: profile.bodyFatPercentageSamples,
