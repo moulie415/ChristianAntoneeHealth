@@ -42,13 +42,15 @@ const Chart: React.FC<{
         height={DevicePixels[200]}
         chartConfig={weightChartConfig}
         // withVerticalLines={false}
-        formatYLabel={
-          formatLabel
-            ? formatLabel
-            : label => {
-                return label.slice(0, -1);
-              }
-        }
+        formatYLabel={label => {
+          if (label === 'NaN') {
+            return 'N/A';
+          }
+          if (formatLabel) {
+            return formatLabel(label);
+          }
+          return label.slice(0, -1);
+        }}
         withShadow={false}
       />
       {footer}

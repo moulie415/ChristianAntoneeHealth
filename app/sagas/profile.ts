@@ -12,11 +12,9 @@ import {
   select,
   put,
   all,
-  takeEvery,
   takeLatest,
   fork,
   debounce,
-  throttle,
 } from 'redux-saga/effects';
 import {
   setLoggedIn,
@@ -25,12 +23,8 @@ import {
   SignUpAction,
   setWeightSamples,
   GET_SAMPLES,
-  setStepSamples,
-  setWeeklySteps,
   UPDATE_PROFILE,
   UpdateProfileAction,
-  setWorkoutReminderTime,
-  setTestReminders,
   HandleAuthAction,
   HANDLE_AUTH,
   handleAuth,
@@ -58,7 +52,6 @@ import {
   setPlanStatus,
   setHeightSamples,
   SET_PREMIUM,
-  SetPremiumAction,
   setBodyFatPercentageSamples,
   setMuscleMassSamples,
   setBoneDensitySamples,
@@ -71,13 +64,10 @@ import * as api from '../helpers/api';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {Alert, Linking, Platform} from 'react-native';
 import {
-  getActivitySamples,
   getBodyFatPercentageSamples,
   getBoneDensitySamples,
   getHeightSamples,
   getMuscleMassSamples,
-  getStepSamples,
-  getWeeklySteps,
   getWeightSamples,
   initBiometrics,
   isAvailable,
@@ -89,7 +79,6 @@ import {
   saveWeight,
 } from '../helpers/biometrics';
 import Snackbar from 'react-native-snackbar';
-import {HealthValue} from 'react-native-health';
 import googleFit, {ActivitySampleResponse} from 'react-native-google-fit';
 import {
   DownloadVideoAction,

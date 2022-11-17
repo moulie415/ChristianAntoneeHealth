@@ -468,21 +468,25 @@ export const getBodyFatPercentageSamples = async (uid: string) => {
 };
 
 export const saveBodyFatPercentage = async (value: number, uid: string) => {
-  await db()
-    .collection('users')
-    .doc(uid)
-    .collection('bodyFatPercentage')
-    .add({value, createdate: new Date()});
-  if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
-        if (e) {
-          reject(e);
-        } else {
-          resolve(result);
-        }
+  try {
+    await db()
+      .collection('users')
+      .doc(uid)
+      .collection('bodyFatPercentage')
+      .add({value, createdate: new Date()});
+    if (Platform.OS === 'ios') {
+      return new Promise((resolve, reject) => {
+        AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
+          if (e) {
+            reject(e);
+          } else {
+            resolve(result);
+          }
+        });
       });
-    });
+    }
+  } catch (e) {
+    console.log(e, 'bodyFatPercentage');
   }
 };
 
@@ -504,11 +508,15 @@ export const getMuscleMassSamples = async (uid: string) => {
 };
 
 export const saveMuscleMass = (value: number, uid: string) => {
-  return db()
-    .collection('users')
-    .doc(uid)
-    .collection('muscleMass')
-    .add({value, createdate: new Date()});
+  try {
+    return db()
+      .collection('users')
+      .doc(uid)
+      .collection('muscleMass')
+      .add({value, createdate: new Date()});
+  } catch (e) {
+    console.log(e, 'muscleMass');
+  }
 };
 
 export const getBoneDensitySamples = async (uid: string) => {
@@ -529,9 +537,13 @@ export const getBoneDensitySamples = async (uid: string) => {
 };
 
 export const saveBoneDensity = (value: number, uid: string) => {
-  return db()
-    .collection('users')
-    .doc(uid)
-    .collection('boneDensity')
-    .add({value, createdate: new Date()});
+  try {
+    return db()
+      .collection('users')
+      .doc(uid)
+      .collection('boneDensity')
+      .add({value, createdate: new Date()});
+  } catch (e) {
+    console.log(e, 'boneDensity');
+  }
 };
