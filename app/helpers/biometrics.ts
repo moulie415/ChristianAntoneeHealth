@@ -440,7 +440,11 @@ export const getBodyFatPercentageSamples = async (uid: string) => {
           if (err) {
             reject(err);
           } else {
-            resolve(results);
+            resolve(
+              results.map(res => {
+                return {...res, value: res.value * 100};
+              }),
+            );
           }
         },
       );
@@ -511,7 +515,7 @@ export const getBoneDensitySamples = async (uid: string) => {
   const samples = await db()
     .collection('users')
     .doc(uid)
-    .collection('muscleMass')
+    .collection('boneDensity')
     .where('createdate', '>=', moment().subtract(1, 'year').toDate())
     .get();
   return samples.docs.map(doc => {

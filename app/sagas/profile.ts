@@ -140,6 +140,7 @@ function* getSamplesWorker() {
     getBodyFatPercentageSamples,
     uid,
   );
+
   yield put(setBodyFatPercentageSamples(bodyFatPercentageSamples));
 
   const muscleMassSamples: Sample[] = yield call(getMuscleMassSamples, uid);
