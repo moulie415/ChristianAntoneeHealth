@@ -73,9 +73,9 @@ const Profile: React.FC<ProfileProps> = ({
     height,
     unit,
     avatar,
-    ...(bodyFatPercentage ? {bodyFatPercentage} : {}),
-    ...(muscleMass ? {muscleMass} : {}),
-    ...(boneDensity ? {boneDensity} : {}),
+    ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
+    ...(muscleMass !== undefined ? {muscleMass} : {}),
+    ...(boneDensity !== undefined ? {boneDensity} : {}),
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -111,6 +111,9 @@ const Profile: React.FC<ProfileProps> = ({
         weight,
         unit,
         avatar: newAvatar,
+        ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
+        ...(muscleMass !== undefined ? {muscleMass} : {}),
+        ...(boneDensity !== undefined ? {boneDensity} : {}),
       });
       setLoading(false);
     } catch (e) {

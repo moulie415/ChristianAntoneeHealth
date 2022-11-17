@@ -215,13 +215,13 @@ function* updateProfile(action: UpdateProfileAction) {
       if (weight && unit) {
         yield call(saveHeight, height, unit);
       }
-      if (bodyFatPercentage) {
+      if (bodyFatPercentage !== undefined) {
         yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
       }
-      if (muscleMass) {
+      if (muscleMass !== undefined) {
         yield call(saveMuscleMass, muscleMass, uid);
       }
-      if (boneDensity) {
+      if (boneDensity !== undefined) {
         yield call(saveBoneDensity, boneDensity, uid);
       }
     }
