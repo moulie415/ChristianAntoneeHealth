@@ -4,6 +4,7 @@ import {
   Dimensions,
   Linking,
   TouchableOpacity,
+  InteractionManager,
 } from 'react-native';
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -18,6 +19,7 @@ import {getBMIItems, getSampleItems} from '../../helpers';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
 import Button from './Button';
+import Spinner from './Spinner';
 
 const Chart: React.FC<{
   data: LineChartData;
@@ -90,6 +92,7 @@ const ProfileCharts: React.FC<{
   boneDensity,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
+  const [showCharts, setShowCharts] = useState(false);
 
   const weightItems: {
     data: number[];
@@ -123,6 +126,9 @@ const ProfileCharts: React.FC<{
     const init = async () => {
       // if (await isEnabled()) {
       getSamplesAction();
+      InteractionManager.runAfterInteractions(() => {
+        setShowCharts(true);
+      });
       // }
     };
     init();
@@ -212,96 +218,107 @@ const ProfileCharts: React.FC<{
           </LinearGradient>
         </TouchableOpacity>
       </View>
-      <ScrollView horizontal>
-        <Chart
-          title="BMI"
-          data={weightItems.chartData}
-          footer={
-            latestBMI && (
-              <>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontSize: DevicePixels[16],
-                    marginHorizontal: DevicePixels[20],
-                    marginVertical: DevicePixels[10],
-                  }}>
-                  Your current BMI is{' '}
-                  <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
-                </Text>
+      {showCharts ? (
+        <ScrollView horizontal>
+          <Chart
+            title="BMI"
+            data={weightItems.chartData}
+            footer={
+              latestBMI && (
+                <>
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      fontSize: DevicePixels[16],
+                      marginHorizontal: DevicePixels[20],
+                      marginVertical: DevicePixels[10],
+                    }}>
+                    Your current BMI is{' '}
+                    <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
+                  </Text>
 
-                <Text
-                  onPress={() =>
-                    Linking.openURL(
-                      'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
-                    )
-                  }
-                  style={{
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    textDecorationLine: 'underline',
-                    marginHorizontal: DevicePixels[20],
-                    marginBottom: DevicePixels[20],
-                  }}>
-                  What does this mean?
-                </Text>
-              </>
-            )
-          }
-        />
-        <Chart
-          title="Body fat percentage"
-          data={bodyFatItems.chartData}
-          formatLabel={label => {
-            return `${label.slice(0, -3)} %`;
-          }}
-          footer={
-            <Button
-              onPress={() => setShowBodyFatPercentageModal(true)}
-              text="Set body fat percentage"
-              style={{
-                width: DevicePixels[300],
-                marginLeft: DevicePixels[40],
-                marginTop: DevicePixels[10],
-              }}
-            />
-          }
-        />
-        <Chart
-          title="Muscle mass"
-          data={muscleMassItems.chartData}
-          formatLabel={label => {
-            return `${label.slice(0, -3)} kg`;
-          }}
-          footer={
-            <Button
-              onPress={() => setShowMuscleMassModal(true)}
-              text="Set muscle mass"
-              style={{
-                width: DevicePixels[300],
-                marginLeft: DevicePixels[40],
-                marginTop: DevicePixels[10],
-              }}
-            />
-          }
-        />
-        <Chart
-          title="Bone density"
-          data={boneDensityItems.chartData}
-          footer={
-            <Button
-              onPress={() => setShowBoneDensityModal(true)}
-              text="Set bone density"
-              style={{
-                width: DevicePixels[300],
-                marginTop: DevicePixels[10],
-                marginLeft: DevicePixels[40],
-                marginRight: DevicePixels[20],
-              }}
-            />
-          }
-        />
-      </ScrollView>
+                  <Text
+                    onPress={() =>
+                      Linking.openURL(
+                        'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
+                      )
+                    }
+                    style={{
+                      color: colors.appWhite,
+                      fontWeight: 'bold',
+                      textDecorationLine: 'underline',
+                      marginHorizontal: DevicePixels[20],
+                      marginBottom: DevicePixels[20],
+                    }}>
+                    What does this mean?
+                  </Text>
+                </>
+              )
+            }
+          />
+          <Chart
+            title="Body fat percentage"
+            data={bodyFatItems.chartData}
+            formatLabel={label => {
+              return `${label.slice(0, -3)} %`;
+            }}
+            footer={
+              <Button
+                onPress={() => setShowBodyFatPercentageModal(true)}
+                text="Enter body fat percentage"
+                style={{
+                  width: DevicePixels[300],
+                  marginLeft: DevicePixels[40],
+                  marginTop: DevicePixels[10],
+                }}
+              />
+            }
+          />
+          <Chart
+            title="Muscle mass"
+            data={muscleMassItems.chartData}
+            formatLabel={label => {
+              return `${label.slice(0, -3)} kg`;
+            }}
+            footer={
+              <Button
+                onPress={() => setShowMuscleMassModal(true)}
+                text="Enter muscle mass"
+                style={{
+                  width: DevicePixels[300],
+                  marginLeft: DevicePixels[40],
+                  marginTop: DevicePixels[10],
+                }}
+              />
+            }
+          />
+          <Chart
+            title="Bone density"
+            data={boneDensityItems.chartData}
+            footer={
+              <Button
+                onPress={() => setShowBoneDensityModal(true)}
+                text="Enter bone density"
+                style={{
+                  width: DevicePixels[300],
+                  marginTop: DevicePixels[10],
+                  marginLeft: DevicePixels[40],
+                  marginRight: DevicePixels[20],
+                }}
+              />
+            }
+          />
+        </ScrollView>
+      ) : (
+        <View
+          style={{
+            height: DevicePixels[280],
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Spinner />
+        </View>
+      )}
     </>
   );
 };
