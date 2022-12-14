@@ -8,10 +8,8 @@ import {
 } from 'react-native';
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
-import {PERCENTAGES, weightChartConfig} from '../../constants';
-import {LineChart} from 'react-native-chart-kit';
+import {PERCENTAGES} from '../../constants';
 import colors from '../../constants/colors';
-import {LineChartData} from 'react-native-chart-kit/dist/line-chart/LineChart';
 import {connect} from 'react-redux';
 import {MyRootState, Sample} from '../../types/Shared';
 import {getSamples} from '../../actions/profile';
@@ -20,13 +18,23 @@ import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
 import Button from './Button';
 import Spinner from './Spinner';
+import {
+  VictoryArea,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+} from 'victory-native';
+import moment from 'moment';
 
 const Chart: React.FC<{
-  data: LineChartData;
+  data: {x: number; y: number}[];
   title: string;
+  lowest: number;
+  highest: number;
+  filter: 6 | 30 | 365;
   footer: ReactNode;
   formatLabel?: (label: string) => string;
-}> = ({data, title, footer, formatLabel}) => {
+}> = ({data, title, footer, formatLabel, lowest, highest, filter}) => {
   return (
     <View>
       <Text
@@ -38,23 +46,29 @@ const Chart: React.FC<{
         }}>
         {title}
       </Text>
-      <LineChart
-        data={data}
-        width={Dimensions.get('screen').width * 0.9}
-        height={DevicePixels[200]}
-        chartConfig={weightChartConfig}
-        // withVerticalLines={false}
-        formatYLabel={label => {
-          if (label === 'NaN') {
-            return 'N/A';
-          }
-          if (formatLabel) {
-            return formatLabel(label);
-          }
-          return label.slice(0, -1);
-        }}
-        withShadow={false}
-      />
+      <VictoryChart
+        maxDomain={{y: highest + 5}}
+        minDomain={{y: lowest - 5}}
+        width={Dimensions.get('window').width * 0.9}
+        height={DevicePixels[250]}
+        theme={VictoryTheme.material}>
+        <VictoryArea style={{data: {fill: colors.appBlue}}} data={data} />
+
+        <VictoryAxis
+          tickFormat={x => {
+            if (filter === 6) {
+              return moment(x).format('dd');
+            }
+            if (filter === 30) {
+              return moment(x).format('Do');
+            }
+            if (filter === 365) {
+              return moment(x).format('MMM');
+            }
+          }}
+        />
+        <VictoryAxis dependentAxis />
+      </VictoryChart>
       {footer}
     </View>
   );
@@ -95,29 +109,33 @@ const ProfileCharts: React.FC<{
   const [showCharts, setShowCharts] = useState(false);
 
   const weightItems: {
-    data: number[];
-    chartData: LineChartData;
+    data: {x: number; y: number}[];
+    lowest: number;
+    highest: number;
   } = useMemo(() => {
     return getBMIItems(weight, height, weightSamples, heightSamples, filter);
   }, [weightSamples, weight, height, heightSamples, filter]);
 
   const bodyFatItems: {
-    data: number[];
-    chartData: LineChartData;
+    data: {x: number; y: number}[];
+    lowest: number;
+    highest: number;
   } = useMemo(() => {
     return getSampleItems(bodyFatPercentage, filter, bodyFatPercentageSamples);
   }, [bodyFatPercentageSamples, filter, bodyFatPercentage]);
 
   const muscleMassItems: {
-    data: number[];
-    chartData: LineChartData;
+    data: {x: number; y: number}[];
+    lowest: number;
+    highest: number;
   } = useMemo(() => {
     return getSampleItems(muscleMass, filter, muscleMassSamples);
   }, [muscleMassSamples, filter, muscleMass]);
 
   const boneDensityItems: {
-    data: number[];
-    chartData: LineChartData;
+    data: {x: number; y: number}[];
+    lowest: number;
+    highest: number;
   } = useMemo(() => {
     return getSampleItems(boneDensity, filter, boneDensitySamples);
   }, [boneDensitySamples, filter, boneDensity]);
@@ -134,8 +152,8 @@ const ProfileCharts: React.FC<{
     init();
   }, [getSamplesAction]);
 
-  const latestBMI = weightItems?.data[weightItems.data.length - 1];
-
+  const latestBMI = weightItems?.data[weightItems.data.length - 1]?.y;
+  console.log(boneDensityItems.data);
   return (
     <>
       <View
@@ -221,10 +239,13 @@ const ProfileCharts: React.FC<{
       {showCharts ? (
         <ScrollView horizontal>
           <Chart
+            filter={filter}
             title="BMI"
-            data={weightItems.chartData}
+            data={weightItems.data}
+            lowest={weightItems.lowest}
+            highest={weightItems.highest}
             footer={
-              latestBMI && (
+              !!latestBMI && (
                 <>
                   <Text
                     style={{
@@ -257,8 +278,11 @@ const ProfileCharts: React.FC<{
             }
           />
           <Chart
+            filter={filter}
             title="Body fat percentage"
-            data={bodyFatItems.chartData}
+            highest={bodyFatItems.highest}
+            lowest={bodyFatItems.lowest}
+            data={bodyFatItems.data}
             formatLabel={label => {
               return `${label.slice(0, -3)} %`;
             }}
@@ -275,8 +299,11 @@ const ProfileCharts: React.FC<{
             }
           />
           <Chart
+            filter={filter}
+            highest={muscleMassItems.highest}
+            lowest={muscleMassItems.lowest}
             title="Muscle mass"
-            data={muscleMassItems.chartData}
+            data={muscleMassItems.data}
             formatLabel={label => {
               return `${label.slice(0, -3)} kg`;
             }}
@@ -294,7 +321,10 @@ const ProfileCharts: React.FC<{
           />
           <Chart
             title="Bone density"
-            data={boneDensityItems.chartData}
+            data={boneDensityItems.data}
+            filter={filter}
+            highest={boneDensityItems.highest}
+            lowest={boneDensityItems.lowest}
             footer={
               <Button
                 onPress={() => setShowBoneDensityModal(true)}

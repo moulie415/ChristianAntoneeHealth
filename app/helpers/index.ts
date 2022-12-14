@@ -62,23 +62,8 @@ export const getSampleItems = (
   samples: Sample[],
 ) => {
   if (profileVal === undefined || profileVal === null) {
-    const chartData = {
-      labels: [] as string[],
-      datasets: [
-        {
-          data: [] as number[],
-          color: (opacity = 1) => colors.appBlue, // optional
-          strokeWidth: 4, // optional
-        },
-        {
-          data: [] as number[],
-          color: () => 'rgba(0, 0, 0, 0)',
-        },
-      ],
-    };
-    return {data: [], chartData};
+    return {data: [] as {x: number; y: number}[], highest: 0, lowest: 0};
   }
-  const labels = [];
   const data = [];
 
   let lowest = profileVal || 0;
@@ -94,16 +79,7 @@ export const getSampleItems = (
       if (profileVal < lowest) {
         lowest = profileVal;
       }
-      data.push(profileVal);
-      if (filter === 6) {
-        labels.push(day.format('dd'));
-      }
-      if (filter === 30) {
-        labels.push(day.format('Do'));
-      }
-      if (filter === 365) {
-        labels.push(day.format('MMM'));
-      }
+      data.push({y: profileVal, x: day.valueOf()});
     } else if (
       i === filter ||
       filter === 6 ||
@@ -121,36 +97,11 @@ export const getSampleItems = (
       if (sample < lowest) {
         lowest = sample;
       }
-      data.push(sample);
-
-      if (filter === 6) {
-        labels.push(day.format('dd'));
-      }
-      if (filter === 30) {
-        labels.push(day.format('Do'));
-      }
-      if (filter === 365) {
-        labels.push(day.format('MMM'));
-      }
+      data.push({y: sample, x: day.valueOf()});
     }
   }
 
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        data,
-        color: (opacity = 1) => colors.appBlue, // optional
-        strokeWidth: 4, // optional
-      },
-      {
-        data: [lowest - 5, highest + 5],
-        color: () => 'rgba(0, 0, 0, 0)',
-      },
-    ],
-  };
-
-  return {data, chartData};
+  return {data, highest, lowest};
 };
 
 export const getBMIItems = (
@@ -160,7 +111,6 @@ export const getBMIItems = (
   heightSamples: Sample[],
   filter: 6 | 30 | 365,
 ) => {
-  const labels = [];
   const data = [];
 
   let lowest = weight && height ? getBMI(height, weight) : 0;
@@ -177,16 +127,7 @@ export const getBMIItems = (
       if (bmi < lowest) {
         lowest = bmi;
       }
-      data.push(bmi);
-      if (filter === 6) {
-        labels.push(day.format('dd'));
-      }
-      if (filter === 30) {
-        labels.push(day.format('Do'));
-      }
-      if (filter === 365) {
-        labels.push(day.format('MMM'));
-      }
+      data.push({y: bmi, x: day.valueOf()});
     } else if (
       i === filter ||
       filter === 6 ||
@@ -211,36 +152,11 @@ export const getBMIItems = (
       if (bmi < lowest) {
         lowest = bmi;
       }
-      data.push(bmi);
-
-      if (filter === 6) {
-        labels.push(day.format('dd'));
-      }
-      if (filter === 30) {
-        labels.push(day.format('Do'));
-      }
-      if (filter === 365) {
-        labels.push(day.format('MMM'));
-      }
+      data.push({y: bmi, x: day.valueOf()});
     }
   }
 
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        data,
-        color: (opacity = 1) => colors.appBlue, // optional
-        strokeWidth: 4, // optional
-      },
-      {
-        data: [lowest - 5, highest + 5],
-        color: () => 'rgba(0, 0, 0, 0)',
-      },
-    ],
-  };
-
-  return {data, chartData};
+  return {data, lowest, highest};
 };
 
 const getBMI = (h: number, w: number) => {
