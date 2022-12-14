@@ -54,7 +54,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
   }, [isClosed, navigation]);
 
   const renderItem = useCallback(
-    ({item, index, drag, isActive}: RenderItemParams<Exercise>) => {
+    ({item, drag, isActive}: RenderItemParams<Exercise>) => {
       return (
         <ListItem
           style={{backgroundColor: isActive ? colors.appBlue : undefined}}
