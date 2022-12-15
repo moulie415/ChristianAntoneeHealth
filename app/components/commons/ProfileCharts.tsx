@@ -23,6 +23,7 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
+  VictoryLine,
 } from 'victory-native';
 import moment from 'moment';
 
@@ -53,8 +54,10 @@ const Chart: React.FC<{
         height={DevicePixels[250]}
         theme={VictoryTheme.material}>
         <VictoryArea style={{data: {fill: colors.appBlue}}} data={data} />
+        {/* <VictoryLine style={{data: {fill: colors.appBlue}}} data={data} /> */}
 
         <VictoryAxis
+          offsetY={DevicePixels[50]}
           tickFormat={x => {
             if (filter === 6) {
               return moment(x).format('dd');
@@ -153,7 +156,6 @@ const ProfileCharts: React.FC<{
   }, [getSamplesAction]);
 
   const latestBMI = weightItems?.data[weightItems.data.length - 1]?.y;
-  console.log(boneDensityItems.data);
   return (
     <>
       <View
