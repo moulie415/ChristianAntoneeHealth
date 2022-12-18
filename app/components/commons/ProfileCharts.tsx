@@ -44,6 +44,7 @@ const Chart: React.FC<{
           color: colors.appWhite,
           fontWeight: 'bold',
           fontSize: DevicePixels[24],
+          marginBottom: 0
         }}>
         {title}
       </Text>
