@@ -25,7 +25,7 @@ import {
   SET_HEIGHT_SAMPLES,
   SET_BODY_FAT_PERCENTAGE_SAMPLES,
   SET_MUSCLE_MASS_SAMPLES,
-  SET_BONE_DENSITY_SAMPLES,
+  SET_BONE_MASS_SAMPLES,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -46,7 +46,7 @@ export interface ProfileState {
   heightSamples: Sample[];
   bodyFatPercentageSamples: Sample[];
   muscleMassSamples: Sample[];
-  boneDensitySamples: Sample[];
+  boneMassSamples: Sample[];
   stepSamples: StepSample[];
   weeklySteps: StepSample[];
   workoutReminders: boolean;
@@ -77,7 +77,7 @@ const initialState: ProfileState = {
   heightSamples: [],
   bodyFatPercentageSamples: [],
   muscleMassSamples: [],
-  boneDensitySamples: [],
+  boneMassSamples: [],
   stepSamples: [],
   weeklySteps: [],
   workoutReminders: true,
@@ -147,10 +147,10 @@ const reducer = (
         ...state,
         muscleMassSamples: action.payload.samples,
       };
-    case SET_BONE_DENSITY_SAMPLES:
+    case SET_BONE_MASS_SAMPLES:
       return {
         ...state,
-        boneDensitySamples: action.payload.samples,
+        boneMassSamples: action.payload.samples,
       };
     case SET_STEP_SAMPLES:
       return {

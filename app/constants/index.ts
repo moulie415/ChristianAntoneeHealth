@@ -39,7 +39,4 @@ export const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const RESISTANCE = [...Array(301).keys()];
 export const PERCENTAGES = [...Array(100).keys()];
 export const MUSCLE_MASSES = [...Array(100).keys()];
-export const BONE_DENSITIES = [...Array(71).keys()].map(val => {
-  const value = val / 10 - 5;
-  return Math.round(value * 10) / 10;
-});
+export const BONE_DENSITIES = [...Array(11).keys()];

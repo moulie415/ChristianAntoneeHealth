@@ -25,7 +25,7 @@ export const SET_HEIGHT_SAMPLES = 'SET_HEIGHT_SAMPLES';
 export const SET_BODY_FAT_PERCENTAGE_SAMPLES =
   'SET_BODY_FAT_PERCENTAGE_SAMPLES';
 export const SET_MUSCLE_MASS_SAMPLES = 'SET_MUSCLE_MASS_SAMPLES';
-export const SET_BONE_DENSITY_SAMPLES = 'SET_BONE_DENSITY_SAMPLES';
+export const SET_BONE_MASS_SAMPLES = 'SET_BONE_MASS_SAMPLES';
 export const SET_STEP_SAMPLES = 'SET_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
@@ -99,7 +99,7 @@ export interface UpdateProfilePayload {
   avatar?: string;
   bodyFatPercentage?: number;
   muscleMass?: number;
-  boneDensity?: number;
+  boneMass?: number;
 }
 
 export interface SignUpAction {
@@ -136,8 +136,8 @@ export interface SetMuscleMassSamplesAction {
   payload: {samples: Sample[]};
 }
 
-export interface SetBoneDensitySamplesAction {
-  type: typeof SET_BONE_DENSITY_SAMPLES;
+export interface SetBoneMassSamplesAction {
+  type: typeof SET_BONE_MASS_SAMPLES;
   payload: {samples: Sample[]};
 }
 
@@ -295,7 +295,7 @@ export type ProfileActionTypes =
   | RequestPlanAction
   | SetPlanStatus
   | SetHeightSamplesAction
-  | SetBoneDensitySamplesAction
+  | SetBoneMassSamplesAction
   | SetBodyFatPercentageSamplesAction
   | SetMuscleMassSamplesAction;
 
@@ -353,10 +353,10 @@ export const setMuscleMassSamples = (
   payload: {samples},
 });
 
-export const setBoneDensitySamples = (
+export const setBoneMassSamples = (
   samples: Sample[],
-): SetBoneDensitySamplesAction => ({
-  type: SET_BONE_DENSITY_SAMPLES,
+): SetBoneMassSamplesAction => ({
+  type: SET_BONE_MASS_SAMPLES,
   payload: {samples},
 });
 

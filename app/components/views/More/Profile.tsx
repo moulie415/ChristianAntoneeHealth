@@ -62,8 +62,8 @@ const Profile: React.FC<ProfileProps> = ({
   const [showMuscleMassModal, setShowMuscleMassModal] = useState(false);
   const [muscleMass, setMuscleMass] = useState(profile.muscleMass);
 
-  const [showBoneDensityModal, setShowBoneDensityModal] = useState(false);
-  const [boneDensity, setBoneDensity] = useState(profile.boneDensity);
+  const [showBoneMassModal, setShowBoneMassModal] = useState(false);
+  const [boneMass, setBoneMass] = useState(profile.boneMass);
 
   const newProfile = {
     ...profile,
@@ -75,7 +75,7 @@ const Profile: React.FC<ProfileProps> = ({
     ...(avatar !== undefined ? {avatar} : {}),
     ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
     ...(muscleMass !== undefined ? {muscleMass} : {}),
-    ...(boneDensity !== undefined ? {boneDensity} : {}),
+    ...(boneMass !== undefined ? {boneMass} : {}),
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -113,7 +113,7 @@ const Profile: React.FC<ProfileProps> = ({
         ...(newAvatar !== undefined ? {avatar: newAvatar} : {}),
         ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
         ...(muscleMass !== undefined ? {muscleMass} : {}),
-        ...(boneDensity !== undefined ? {boneDensity} : {}),
+        ...(boneMass !== undefined ? {boneMass} : {}),
       });
       setLoading(false);
     } catch (e) {
@@ -338,9 +338,9 @@ const Profile: React.FC<ProfileProps> = ({
           height={height}
           bodyFatPercentage={bodyFatPercentage}
           muscleMass={muscleMass}
-          boneDensity={boneDensity}
+          boneMass={boneMass}
           setShowBodyFatPercentageModal={setShowBodyFatPercentageModal}
-          setShowBoneDensityModal={setShowBoneDensityModal}
+          setShowBoneMassModal={setShowBoneMassModal}
           setShowMuscleMassModal={setShowMuscleMassModal}
           setShowHeightModal={setShowHeightModal}
           setShowWeightModal={setShowWeightModal}
@@ -414,16 +414,16 @@ const Profile: React.FC<ProfileProps> = ({
         onRequestClose={() => setShowMuscleMassModal(false)}
       />
       <PickerModal
-        visible={showBoneDensityModal}
-        selectedValue={String(boneDensity)}
+        visible={showBoneMassModal}
+        selectedValue={String(boneMass)}
         pickerData={BONE_DENSITIES.map(value => {
           return {
-            label: value.toString(),
+            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
             value: String(value),
           };
         })}
-        onValueChange={val => setBoneDensity(Number(val))}
-        onRequestClose={() => setShowBoneDensityModal(false)}
+        onValueChange={val => setBoneMass(Number(val))}
+        onRequestClose={() => setShowBoneMassModal(false)}
       />
       <AbsoluteSpinner loading={loading} />
     </View>

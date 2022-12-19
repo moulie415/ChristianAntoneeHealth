@@ -27,6 +27,7 @@ import {
 } from 'victory-native';
 import moment from 'moment';
 import MetricExplainedModal from './MetricExplainedModal';
+import Color from 'color';
 
 const Chart: React.FC<{
   data: {x: number; y: number}[];
@@ -97,7 +98,7 @@ const Chart: React.FC<{
             }
           }}
         />
-        <VictoryAxis dependentAxis tickFormat={x => `${x} ${suffix || ''}`} />
+        <VictoryAxis dependentAxis tickFormat={x => `${x}${suffix || ''}`} />
       </VictoryChart>
       <View style={{marginLeft: DevicePixels[20]}}>
         {current !== undefined && (
@@ -110,7 +111,7 @@ const Chart: React.FC<{
             }}>
             Your current{' '}
             {capitalize ? title.toUpperCase() : title.toLowerCase()} is{' '}
-            <Text style={{fontWeight: 'bold'}}>{current}</Text>
+            <Text style={{fontWeight: 'bold'}}>{current + (suffix || '')}</Text>
           </Text>
         )}
 
@@ -149,33 +150,33 @@ const ProfileCharts: React.FC<{
   heightSamples: Sample[];
   bodyFatPercentageSamples: Sample[];
   muscleMassSamples: Sample[];
-  boneDensitySamples: Sample[];
+  boneMassSamples: Sample[];
   getSamplesAction: () => void;
   setShowBodyFatPercentageModal: (show: boolean) => void;
   setShowMuscleMassModal: (show: boolean) => void;
-  setShowBoneDensityModal: (show: boolean) => void;
+  setShowBoneMassModal: (show: boolean) => void;
   setShowWeightModal: (show: boolean) => void;
   setShowHeightModal: (show: boolean) => void;
   weight: number;
   height: number;
   bodyFatPercentage: number;
   muscleMass: number;
-  boneDensity: number;
+  boneMass: number;
 }> = ({
   weightSamples,
   heightSamples,
   bodyFatPercentageSamples,
   muscleMassSamples,
-  boneDensitySamples,
+  boneMassSamples,
   getSamplesAction,
   setShowBodyFatPercentageModal,
-  setShowBoneDensityModal,
+  setShowBoneMassModal,
   setShowMuscleMassModal,
   weight,
   height,
   bodyFatPercentage,
   muscleMass,
-  boneDensity,
+  boneMass,
   setShowHeightModal,
   setShowWeightModal,
 }) => {
@@ -206,13 +207,13 @@ const ProfileCharts: React.FC<{
     return getSampleItems(muscleMass, filter, muscleMassSamples);
   }, [muscleMassSamples, filter, muscleMass]);
 
-  const boneDensityItems: {
+  const boneMassItems: {
     data: {x: number; y: number}[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
-    return getSampleItems(boneDensity, filter, boneDensitySamples);
-  }, [boneDensitySamples, filter, boneDensity]);
+    return getSampleItems(boneMass, filter, boneMassSamples);
+  }, [boneMassSamples, filter, boneMass]);
 
   useEffect(() => {
     const init = async () => {
@@ -403,8 +404,12 @@ const ProfileCharts: React.FC<{
             data={muscleMassItems.data}
             suffix="kg"
             ranges={[44.0, 52.4]}
-            colors={[]}
-            labels={[]}
+            colors={[
+              colors.appBlueDark,
+              colors.appGreen,
+              new Color(colors.appGreen).darken(0.4).toString(),
+            ]}
+            labels={['Low', 'Normal', 'High']}
             footer={
               <Button
                 onPress={() => setShowMuscleMassModal(true)}
@@ -418,19 +423,26 @@ const ProfileCharts: React.FC<{
             }
           />
           <Chart
-            current={boneDensity}
-            title="Bone density"
-            data={boneDensityItems.data}
+            current={boneMass}
+            title="Bone mass"
+            data={boneMassItems.data}
             filter={filter}
-            highest={boneDensityItems.highest}
-            lowest={boneDensityItems.lowest}
-            ranges={[]}
-            colors={[]}
-            labels={[]}
+            suffix="kg"
+            highest={boneMassItems.highest}
+            lowest={boneMassItems.lowest}
+            minY={0}
+            maxY={10}
+            ranges={[2.09, 3.48]}
+            colors={[
+              colors.secondaryLight,
+              colors.appGreen,
+              new Color(colors.appGreen).darken(0.4).toString(),
+            ]}
+            labels={['Below average', 'Average', 'Above average']}
             footer={
               <Button
-                onPress={() => setShowBoneDensityModal(true)}
-                text="Enter bone density"
+                onPress={() => setShowBoneMassModal(true)}
+                text="Enter bone mass"
                 style={{
                   width: DevicePixels[300],
                   marginTop: DevicePixels[10],
@@ -460,7 +472,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   heightSamples: profile.heightSamples,
   bodyFatPercentageSamples: profile.bodyFatPercentageSamples,
   muscleMassSamples: profile.muscleMassSamples,
-  boneDensitySamples: profile.boneDensitySamples,
+  boneMassSamples: profile.boneMassSamples,
 });
 
 const mapDispatchToProps = {

@@ -511,11 +511,11 @@ export const saveMuscleMass = (value: number, uid: string) => {
     .add({value, createdate: new Date()});
 };
 
-export const getBoneDensitySamples = async (uid: string) => {
+export const getBoneMassSamples = async (uid: string) => {
   const samples = await db()
     .collection('users')
     .doc(uid)
-    .collection('boneDensity')
+    .collection('boneMass')
     .where('createdate', '>=', moment().subtract(1, 'year').toDate())
     .get();
   return samples.docs.map(doc => {
@@ -528,10 +528,10 @@ export const getBoneDensitySamples = async (uid: string) => {
   });
 };
 
-export const saveBoneDensity = (value: number, uid: string) => {
+export const saveBoneMass = (value: number, uid: string) => {
   return db()
     .collection('users')
     .doc(uid)
-    .collection('boneDensity')
+    .collection('boneMass')
     .add({value, createdate: new Date()});
 };

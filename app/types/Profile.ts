@@ -57,5 +57,5 @@ export default interface Profile {
   lifestyle?: string;
   bodyFatPercentage?: number;
   muscleMass?: number;
-  boneDensity?: number;
+  boneMass?: number;
 }

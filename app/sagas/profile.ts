@@ -54,7 +54,7 @@ import {
   SET_PREMIUM,
   setBodyFatPercentageSamples,
   setMuscleMassSamples,
-  setBoneDensitySamples,
+  setBoneMassSamples,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -65,7 +65,7 @@ import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {Alert, Linking, Platform} from 'react-native';
 import {
   getBodyFatPercentageSamples,
-  getBoneDensitySamples,
+  getBoneMassSamples,
   getHeightSamples,
   getMuscleMassSamples,
   getWeightSamples,
@@ -73,7 +73,7 @@ import {
   isAvailable,
   isEnabled,
   saveBodyFatPercentage,
-  saveBoneDensity,
+  saveBoneMass,
   saveHeight,
   saveMuscleMass,
   saveWeight,
@@ -135,8 +135,8 @@ function* getSamplesWorker() {
   const muscleMassSamples: Sample[] = yield call(getMuscleMassSamples, uid);
   yield put(setMuscleMassSamples(muscleMassSamples));
 
-  const boneDensitySamples: Sample[] = yield call(getBoneDensitySamples, uid);
-  yield put(setBoneDensitySamples(boneDensitySamples));
+  const boneMassSamples: Sample[] = yield call(getBoneMassSamples, uid);
+  yield put(setBoneMassSamples(boneMassSamples));
 
   // const stepSamples: StepSample[] = yield call(getStepSamples);
   // yield put(setStepSamples(stepSamples));
@@ -193,7 +193,7 @@ function* updateProfile(action: UpdateProfileAction) {
     avatar,
     bodyFatPercentage,
     muscleMass,
-    boneDensity,
+    boneMass,
   } = action.payload;
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
@@ -211,8 +211,8 @@ function* updateProfile(action: UpdateProfileAction) {
       if (muscleMass !== undefined) {
         yield call(saveMuscleMass, muscleMass, uid);
       }
-      if (boneDensity !== undefined) {
-        yield call(saveBoneDensity, boneDensity, uid);
+      if (boneMass !== undefined) {
+        yield call(saveBoneMass, boneMass, uid);
       }
     }
   } catch (e) {

@@ -24,6 +24,7 @@ const MetricExplainedModal: React.FC<{
   title,
   labels,
   current,
+  suffix,
 }) => {
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
@@ -48,7 +49,7 @@ const MetricExplainedModal: React.FC<{
           <View
             style={{
               flexDirection: 'row',
-              marginHorizontal: DevicePixels[20],
+              marginHorizontal: DevicePixels[10],
               marginBottom: DevicePixels[20],
             }}>
             {!!colorsArr.length &&
@@ -74,7 +75,7 @@ const MetricExplainedModal: React.FC<{
                         marginLeft: -DevicePixels[10],
                         height: DevicePixels[23],
                       }}>
-                      {isFirst ? '' : ranges[index]}
+                      {isFirst ? '' : `${ranges[index] + suffix || ''}`}
                     </Text>
                     <View
                       style={{
@@ -99,7 +100,7 @@ const MetricExplainedModal: React.FC<{
                     </View>
                     <Text
                       style={{
-                        fontSize: DevicePixels[10],
+                        fontSize: DevicePixels[9],
                         marginTop: DevicePixels[10],
                         color: colors.appWhite,
                         textAlign: 'center',
