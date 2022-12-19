@@ -26,6 +26,7 @@ import {
   VictoryLine,
 } from 'victory-native';
 import moment from 'moment';
+import MetricExplainedModal from './MetricExplainedModal';
 
 const Chart: React.FC<{
   data: {x: number; y: number}[];
@@ -33,9 +34,32 @@ const Chart: React.FC<{
   lowest: number;
   highest: number;
   filter: 6 | 30 | 365;
-  footer: ReactNode;
-  formatLabel?: (label: string) => string;
-}> = ({data, title, footer, formatLabel, lowest, highest, filter}) => {
+  capitalize?: boolean;
+  current: number;
+  suffix?: string;
+  footer?: ReactNode;
+  minY?: number;
+  maxY?: number;
+  ranges: number[];
+  colors: string[];
+  labels: string[];
+}> = ({
+  data,
+  title,
+  footer,
+  lowest,
+  highest,
+  filter,
+  current,
+  capitalize,
+  minY,
+  maxY,
+  suffix,
+  ranges,
+  colors: colorsArr,
+  labels,
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
       <Text
@@ -44,13 +68,15 @@ const Chart: React.FC<{
           color: colors.appWhite,
           fontWeight: 'bold',
           fontSize: DevicePixels[24],
-          marginBottom: 0
+          marginBottom: 0,
         }}>
         {title}
       </Text>
       <VictoryChart
-        maxDomain={{y: highest + 5}}
-        minDomain={{y: lowest - 5}}
+        maxDomain={{
+          y: maxY !== undefined && maxY > highest + 5 ? maxY : highest + 5,
+        }}
+        minDomain={{y: minY !== undefined ? minY : lowest - 5}}
         width={Dimensions.get('window').width * 0.9}
         height={DevicePixels[250]}
         theme={VictoryTheme.material}>
@@ -71,9 +97,49 @@ const Chart: React.FC<{
             }
           }}
         />
-        <VictoryAxis dependentAxis />
+        <VictoryAxis dependentAxis tickFormat={x => `${x} ${suffix || ''}`} />
       </VictoryChart>
+      <View style={{marginLeft: DevicePixels[20]}}>
+        {current !== undefined && (
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontSize: DevicePixels[16],
+              marginHorizontal: DevicePixels[20],
+              marginVertical: DevicePixels[10],
+            }}>
+            Your current{' '}
+            {capitalize ? title.toUpperCase() : title.toLowerCase()} is{' '}
+            <Text style={{fontWeight: 'bold'}}>{current}</Text>
+          </Text>
+        )}
+
+        {current !== undefined && (
+          <Text
+            onPress={() => setModalVisible(true)}
+            style={{
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              textDecorationLine: 'underline',
+              marginHorizontal: DevicePixels[20],
+              marginBottom: DevicePixels[20],
+            }}>
+            What does this mean?
+          </Text>
+        )}
+      </View>
       {footer}
+
+      <MetricExplainedModal
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+        suffix={suffix}
+        current={current}
+        ranges={[minY, ...ranges, maxY]}
+        title={title}
+        colors={colorsArr}
+        labels={labels}
+      />
     </View>
   );
 };
@@ -88,6 +154,8 @@ const ProfileCharts: React.FC<{
   setShowBodyFatPercentageModal: (show: boolean) => void;
   setShowMuscleMassModal: (show: boolean) => void;
   setShowBoneDensityModal: (show: boolean) => void;
+  setShowWeightModal: (show: boolean) => void;
+  setShowHeightModal: (show: boolean) => void;
   weight: number;
   height: number;
   bodyFatPercentage: number;
@@ -108,9 +176,11 @@ const ProfileCharts: React.FC<{
   bodyFatPercentage,
   muscleMass,
   boneDensity,
+  setShowHeightModal,
+  setShowWeightModal,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
-  const [showCharts, setShowCharts] = useState(false);
+  const [showCharts, setShowCharts] = useState(true);
 
   const weightItems: {
     data: {x: number; y: number}[];
@@ -148,9 +218,9 @@ const ProfileCharts: React.FC<{
     const init = async () => {
       // if (await isEnabled()) {
       getSamplesAction();
-      InteractionManager.runAfterInteractions(() => {
-        setShowCharts(true);
-      });
+      // InteractionManager.runAfterInteractions(() => {
+      //   setShowCharts(true);
+      // });
       // }
     };
     init();
@@ -242,53 +312,74 @@ const ProfileCharts: React.FC<{
       {showCharts ? (
         <ScrollView horizontal>
           <Chart
+            current={latestBMI}
             filter={filter}
             title="BMI"
             data={weightItems.data}
             lowest={weightItems.lowest}
             highest={weightItems.highest}
+            minY={0}
+            maxY={40}
+            capitalize
+            ranges={[18.5, 25.0, 30.0]}
+            colors={[
+              colors.appBlueDark,
+              colors.appGreen,
+              colors.secondaryLight,
+              colors.appRed,
+            ]}
+            labels={['Underweight', 'Normal', 'Overweight', 'Obesity']}
             footer={
-              !!latestBMI && (
-                <>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      fontSize: DevicePixels[16],
-                      marginHorizontal: DevicePixels[20],
-                      marginVertical: DevicePixels[10],
-                    }}>
-                    Your current BMI is{' '}
-                    <Text style={{fontWeight: 'bold'}}>{latestBMI}</Text>
-                  </Text>
-
-                  <Text
-                    onPress={() =>
-                      Linking.openURL(
-                        'https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/',
-                      )
-                    }
-                    style={{
-                      color: colors.appWhite,
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                      marginHorizontal: DevicePixels[20],
-                      marginBottom: DevicePixels[20],
-                    }}>
-                    What does this mean?
-                  </Text>
-                </>
-              )
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: Dimensions.get('window').width,
+                  justifyContent: 'space-evenly',
+                }}>
+                <Button
+                  onPress={() => setShowWeightModal(true)}
+                  text="Enter weight"
+                  style={{
+                    width: '42%',
+                    marginTop: DevicePixels[10],
+                  }}
+                />
+                <Button
+                  onPress={() => setShowHeightModal(true)}
+                  text="Enter height"
+                  style={{
+                    width: '42%',
+                    marginTop: DevicePixels[10],
+                  }}
+                />
+              </View>
             }
           />
           <Chart
+            current={bodyFatPercentage}
             filter={filter}
             title="Body fat percentage"
             highest={bodyFatItems.highest}
             lowest={bodyFatItems.lowest}
+            minY={0}
+            maxY={30}
             data={bodyFatItems.data}
-            formatLabel={label => {
-              return `${label.slice(0, -3)} %`;
-            }}
+            ranges={[6.0, 13.0, 17.0, 25.0]}
+            colors={[
+              colors.appBlueDark,
+              colors.appGreen,
+              colors.appBlueLight,
+              colors.muscleSecondary,
+              colors.appRed,
+            ]}
+            labels={[
+              'Essential Fat',
+              'Athletes',
+              'Fitness',
+              'Acceptable',
+              'Obesity',
+            ]}
+            suffix="%"
             footer={
               <Button
                 onPress={() => setShowBodyFatPercentageModal(true)}
@@ -302,14 +393,18 @@ const ProfileCharts: React.FC<{
             }
           />
           <Chart
+            current={muscleMass}
             filter={filter}
+            minY={0}
+            maxY={70}
             highest={muscleMassItems.highest}
             lowest={muscleMassItems.lowest}
             title="Muscle mass"
             data={muscleMassItems.data}
-            formatLabel={label => {
-              return `${label.slice(0, -3)} kg`;
-            }}
+            suffix="kg"
+            ranges={[44.0, 52.4]}
+            colors={[]}
+            labels={[]}
             footer={
               <Button
                 onPress={() => setShowMuscleMassModal(true)}
@@ -323,11 +418,15 @@ const ProfileCharts: React.FC<{
             }
           />
           <Chart
+            current={boneDensity}
             title="Bone density"
             data={boneDensityItems.data}
             filter={filter}
             highest={boneDensityItems.highest}
             lowest={boneDensityItems.lowest}
+            ranges={[]}
+            colors={[]}
+            labels={[]}
             footer={
               <Button
                 onPress={() => setShowBoneDensityModal(true)}

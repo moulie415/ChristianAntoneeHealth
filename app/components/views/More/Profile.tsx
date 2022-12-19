@@ -342,6 +342,8 @@ const Profile: React.FC<ProfileProps> = ({
           setShowBodyFatPercentageModal={setShowBodyFatPercentageModal}
           setShowBoneDensityModal={setShowBoneDensityModal}
           setShowMuscleMassModal={setShowMuscleMassModal}
+          setShowHeightModal={setShowHeightModal}
+          setShowWeightModal={setShowWeightModal}
         />
         <Button
           variant="danger"
