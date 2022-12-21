@@ -6,7 +6,14 @@ import {
   TouchableOpacity,
   InteractionManager,
 } from 'react-native';
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
+import React, {
+  MutableRefObject,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
 import {PERCENTAGES} from '../../constants';
 import colors from '../../constants/colors';
@@ -18,6 +25,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
 import Button from './Button';
 import Spinner from './Spinner';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   VictoryArea,
   VictoryChart,
@@ -28,6 +36,7 @@ import {
 import moment from 'moment';
 import MetricExplainedModal from './MetricExplainedModal';
 import Color from 'color';
+import PagerView from 'react-native-pager-view';
 
 const Chart: React.FC<{
   data: {x: number; y: number}[];
@@ -44,6 +53,10 @@ const Chart: React.FC<{
   ranges: number[];
   colors: string[];
   labels: string[];
+  pagerRef: MutableRefObject<PagerView>;
+  index: number;
+  isLast?: boolean;
+  isFirst?: boolean;
 }> = ({
   data,
   title,
@@ -59,10 +72,14 @@ const Chart: React.FC<{
   ranges,
   colors: colorsArr,
   labels,
+  pagerRef,
+  index,
+  isFirst,
+  isLast,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View>
+    <View style={{alignItems: 'center'}}>
       <Text
         style={{
           margin: DevicePixels[20],
@@ -108,6 +125,7 @@ const Chart: React.FC<{
               fontSize: DevicePixels[16],
               marginHorizontal: DevicePixels[20],
               marginVertical: DevicePixels[10],
+              textAlign: 'center',
             }}>
             Your current{' '}
             {capitalize ? title.toUpperCase() : title.toLowerCase()} is{' '}
@@ -124,6 +142,7 @@ const Chart: React.FC<{
               textDecorationLine: 'underline',
               marginHorizontal: DevicePixels[20],
               marginBottom: DevicePixels[20],
+              textAlign: 'center',
             }}>
             What does this mean?
           </Text>
@@ -141,6 +160,41 @@ const Chart: React.FC<{
         colors={colorsArr}
         labels={labels}
       />
+
+      {!isFirst && (
+        <TouchableOpacity
+          onPress={() => pagerRef.current.setPage(index - 1)}
+          style={{
+            position: 'absolute',
+            left: DevicePixels[0],
+            top: DevicePixels[150],
+            padding: DevicePixels[10],
+          }}>
+          <Icon
+            style={{opacity: 0.8}}
+            name="chevron-left"
+            size={DevicePixels[30]}
+            color="#fff"
+          />
+        </TouchableOpacity>
+      )}
+      {!isLast && (
+        <TouchableOpacity
+          onPress={() => pagerRef.current.setPage(index + 1)}
+          style={{
+            position: 'absolute',
+            right: DevicePixels[0],
+            top: DevicePixels[150],
+            padding: DevicePixels[10],
+          }}>
+          <Icon
+            style={{opacity: 0.8}}
+            name="chevron-right"
+            size={DevicePixels[30]}
+            color="#fff"
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -182,6 +236,7 @@ const ProfileCharts: React.FC<{
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
   const [showCharts, setShowCharts] = useState(true);
+  const pagerRef = useRef<PagerView>();
 
   const weightItems: {
     data: {x: number; y: number}[];
@@ -311,8 +366,11 @@ const ProfileCharts: React.FC<{
         </TouchableOpacity>
       </View>
       {showCharts ? (
-        <ScrollView horizontal>
+        <PagerView ref={pagerRef} style={{flex: 1, height: DevicePixels[450]}}>
           <Chart
+            isFirst
+            index={0}
+            pagerRef={pagerRef}
             current={latestBMI}
             filter={filter}
             title="BMI"
@@ -357,6 +415,8 @@ const ProfileCharts: React.FC<{
             }
           />
           <Chart
+            index={1}
+            pagerRef={pagerRef}
             current={bodyFatPercentage}
             filter={filter}
             title="Body fat percentage"
@@ -387,13 +447,14 @@ const ProfileCharts: React.FC<{
                 text="Enter body fat percentage"
                 style={{
                   width: DevicePixels[300],
-                  marginLeft: DevicePixels[40],
                   marginTop: DevicePixels[10],
                 }}
               />
             }
           />
           <Chart
+            index={2}
+            pagerRef={pagerRef}
             current={muscleMass}
             filter={filter}
             minY={0}
@@ -416,13 +477,16 @@ const ProfileCharts: React.FC<{
                 text="Enter muscle mass"
                 style={{
                   width: DevicePixels[300],
-                  marginLeft: DevicePixels[40],
+
                   marginTop: DevicePixels[10],
                 }}
               />
             }
           />
           <Chart
+            isLast
+            index={3}
+            pagerRef={pagerRef}
             current={boneMass}
             title="Bone mass"
             data={boneMassItems.data}
@@ -446,13 +510,11 @@ const ProfileCharts: React.FC<{
                 style={{
                   width: DevicePixels[300],
                   marginTop: DevicePixels[10],
-                  marginLeft: DevicePixels[40],
-                  marginRight: DevicePixels[20],
                 }}
               />
             }
           />
-        </ScrollView>
+        </PagerView>
       ) : (
         <View
           style={{

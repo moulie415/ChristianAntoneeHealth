@@ -270,16 +270,16 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     },
     // 9
 
-    {
-      key: 'medications',
-      showNext: true,
-      component: (
-        <Medications
-          medications={medications}
-          setMedications={setMedications}
-        />
-      ),
-    },
+    // {
+    //   key: 'medications',
+    //   showNext: true,
+    //   component: (
+    //     <Medications
+    //       medications={medications}
+    //       setMedications={setMedications}
+    //     />
+    //   ),
+    // },
     // 10
     {
       key: 'lifestyle',
@@ -319,13 +319,13 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       showNext: true,
     },
     // 14
-    {
-      key: 'injuries',
-      component: (
-        <PhysicalInjuries injuries={injuries} setInjuries={setInjuries} />
-      ),
-      showNext: true,
-    },
+    // {
+    //   key: 'injuries',
+    //   component: (
+    //     <PhysicalInjuries injuries={injuries} setInjuries={setInjuries} />
+    //   ),
+    //   showNext: true,
+    // },
     // 15
     {
       key: 'training',
@@ -338,13 +338,13 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       showNext: !!trainingAvailability,
     },
     // 16
-    {
-      key: 'nutrition',
-      component: (
-        <Nutrition nutrition={nutrition} setNutrition={setNutrition} />
-      ),
-      showNext: true,
-    },
+    // {
+    //   key: 'nutrition',
+    //   component: (
+    //     <Nutrition nutrition={nutrition} setNutrition={setNutrition} />
+    //   ),
+    //   showNext: true,
+    // },
     // 17
     {
       key: 'complete',
