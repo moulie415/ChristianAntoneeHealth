@@ -26,15 +26,22 @@ import TestType from './types/Test';
 import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import appCheck from '@react-native-firebase/app-check';
-
+import {
+  Align,
+  AttachStep,
+  Position,
+  SpotlightTourProvider,
+  TourStep,
+} from '@stackbuilders/react-native-spotlight-tour';
 import Education from './types/Education';
-import {Dimensions, Platform, View} from 'react-native';
+import {Dimensions, Platform, View, TouchableOpacity} from 'react-native';
 import Config from 'react-native-config';
 import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
 import Instabug from 'instabug-reactnative';
+import Text from './components/commons/Text';
 
 const {height, width} = Dimensions.get('window');
 
@@ -131,6 +138,20 @@ export type StackParamList = {
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
 
+const mySteps: TourStep[] = [
+  {
+    position: Position.TOP,
+    render: ({next}) => (
+      <View>
+        <Text>This is the first step of tour!</Text>
+        <TouchableOpacity onPress={next}>
+          <Text>Next</Text>
+        </TouchableOpacity>
+      </View>
+    ),
+  },
+];
+
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
@@ -183,16 +204,25 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <NavigationContainer
-          ref={navigationRef}
-          onReady={() => {
-            sagaMiddleware.run(rootSaga);
-            SplashScreen.hide();
-            // Register the navigation container with the instrumentation
-            routingInstrumentation.registerNavigationContainer(navigationRef);
-          }}>
-          <StackComponent />
-        </NavigationContainer>
+        <SpotlightTourProvider
+          steps={mySteps}
+          overlayColor={'gray'}
+          overlayOpacity={0.36}>
+          {({start}) => (
+            <NavigationContainer
+              ref={navigationRef}
+              onReady={() => {
+                sagaMiddleware.run(rootSaga);
+                SplashScreen.hide();
+                // Register the navigation container with the instrumentation
+                routingInstrumentation.registerNavigationContainer(
+                  navigationRef,
+                );
+              }}>
+              <StackComponent startTour={start} />
+            </NavigationContainer>
+          )}
+        </SpotlightTourProvider>
         {showSplash && (
           <View style={{backgroundColor: colors.appWhite}}>
             <FastImage

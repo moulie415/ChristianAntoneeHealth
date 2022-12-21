@@ -18,6 +18,9 @@ import colors from '../../constants/colors';
 import Avatar from '../commons/Avatar';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../App';
+import Profile from '../../types/Profile';
 
 const {height, width} = Dimensions.get('window');
 
@@ -25,12 +28,21 @@ const RATIO = height / width;
 
 const ROW_MARGIN = DevicePixels[10] * RATIO;
 
-const Home: React.FC<HomeProps> = ({navigation, profile, viewedPlan}) => {
+type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
+
+const Home: React.FC<{
+  navigation: HomeNavigationProp;
+  profile: Profile;
+  viewedPlan: boolean;
+  startTour: () => void;
+}> = ({navigation, profile, viewedPlan, startTour}) => {
+  console.log(navigation);
   useEffect(() => {
+    startTour();
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
-  }, [navigation, viewedPlan]);
+  }, [navigation, viewedPlan, startTour]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView>

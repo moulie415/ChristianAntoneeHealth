@@ -47,7 +47,9 @@ import PreWorkout from './components/views/Workout/PreWorkout';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const StackComponent: FunctionComponent = () => {
+const StackComponent: FunctionComponent<{startTour: () => void}> = ({
+  startTour,
+}) => {
   return (
     <>
       <Stack.Navigator
@@ -63,7 +65,10 @@ const StackComponent: FunctionComponent = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
           <Stack.Screen name="SignUpFlow" component={SignUpFlow} />
-          <Stack.Screen name="Tabs" component={Tabs} />
+          <Stack.Screen
+            name="Tabs"
+            children={props => <Tabs {...props} startTour={startTour} />}
+          />
           <Stack.Screen name="FitnessGoal" component={FitnessGoal} />
           <Stack.Screen name="Experience" component={Experience} />
           <Stack.Screen name="WarmUp" component={WarmUp} />
