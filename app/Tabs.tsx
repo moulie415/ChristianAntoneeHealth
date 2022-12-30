@@ -14,9 +14,6 @@ import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
 import LinearGradient from 'react-native-linear-gradient';
 import Color from 'color';
-import {AttachStep} from '@stackbuilders/react-native-spotlight-tour';
-import {View, TouchableOpacity} from 'react-native';
-import DevicePixels from './helpers/DevicePixels';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -25,8 +22,7 @@ const color = new Color(colors.appWhite);
 const Tabs: React.FC<{
   profile: Profile;
   plansEnabled: boolean;
-  startTour: () => void;
-}> = ({profile, plansEnabled, startTour}) => {
+}> = ({profile, plansEnabled}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -46,7 +42,7 @@ const Tabs: React.FC<{
         }}
         name="Home"
         key="Home"
-        children={props => <Home {...props} startTour={startTour} />}
+        component={Home}
       />
       {(profile.admin || plansEnabled) && (
         <Tab.Screen
@@ -65,11 +61,7 @@ const Tabs: React.FC<{
       <Tab.Screen
         options={{
           tabBarLabel: 'Workout',
-          tabBarButton: props => (
-            <AttachStep index={0}>
-              <TouchableOpacity {...props} activeOpacity={1} />
-            </AttachStep>
-          ),
+
           tabBarIcon: ({color, size}) => (
             <Icon color={color} size={size} name="dumbbell" />
           ),

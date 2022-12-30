@@ -1,12 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-  Dimensions,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Dimensions, ScrollView, View} from 'react-native';
 import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
@@ -34,15 +27,12 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
   viewedPlan: boolean;
-  startTour: () => void;
-}> = ({navigation, profile, viewedPlan, startTour}) => {
-  console.log(navigation);
+}> = ({navigation, profile, viewedPlan}) => {
   useEffect(() => {
-    startTour();
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
-  }, [navigation, viewedPlan, startTour]);
+  }, [navigation, viewedPlan]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView>

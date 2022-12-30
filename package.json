@@ -39,7 +39,6 @@
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/native-stack": "^6.9.7",
     "@sentry/react-native": "^4.12.0",
-    "@stackbuilders/react-native-spotlight-tour": "^2.0.0",
     "@types/react-native-wheel-pick": "^1.1.2",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "axios": "^0.27.2",
