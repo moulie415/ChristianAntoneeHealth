@@ -7,11 +7,14 @@ const Modal: React.FC<{
   visible?: boolean;
   onRequestClose?: () => void;
   children: ReactNode;
-}> = ({children, visible, onRequestClose}) => {
+  disableBackDrop?: boolean;
+}> = ({children, visible, onRequestClose, disableBackDrop}) => {
   return (
     <RNModal
       onBackButtonPress={() => onRequestClose && onRequestClose()}
-      onBackdropPress={() => onRequestClose && onRequestClose()}
+      onBackdropPress={() =>
+        !disableBackDrop && onRequestClose && onRequestClose()
+      }
       isVisible={visible}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {children}

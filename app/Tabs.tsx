@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {StackParamList} from './App';
@@ -14,6 +14,11 @@ import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
 import LinearGradient from 'react-native-linear-gradient';
 import Color from 'color';
+import Tooltip from 'react-native-walkthrough-tooltip';
+import Text from './components/commons/Text';
+import {navigationRef} from './RootNavigation';
+import {incrementStep} from './actions/tour';
+import useThrottle from './hooks/UseThrottle';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -22,7 +27,14 @@ const color = new Color(colors.appWhite);
 const Tabs: React.FC<{
   profile: Profile;
   plansEnabled: boolean;
-}> = ({profile, plansEnabled}) => {
+  step: number;
+  incrementStep: () => void;
+}> = ({profile, plansEnabled, step, incrementStep: increment}) => {
+  const onToolTipPress = useThrottle(() => {
+    console.log('test');
+    increment();
+    navigationRef.navigate('Workout');
+  }, 1000);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -61,9 +73,14 @@ const Tabs: React.FC<{
       <Tab.Screen
         options={{
           tabBarLabel: 'Workout',
-
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="dumbbell" />
+            <Tooltip
+              isVisible={step && step === 1}
+              content={<Text>Access workouts here</Text>}
+              placement="top"
+              onClose={onToolTipPress}>
+              <Icon color={color} size={size} name="dumbbell" />
+            </Tooltip>
           ),
           headerShown: false,
         }}
@@ -97,9 +114,14 @@ const Tabs: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, settings}: MyRootState) => ({
+const mapStateToProps = ({profile, settings, tour}: MyRootState) => ({
   profile: profile.profile,
   plansEnabled: settings.plansEnabled,
+  step: tour.step,
 });
 
-export default connect(mapStateToProps)(Tabs);
+const mapDispatchToProps = {
+  incrementStep,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tabs);

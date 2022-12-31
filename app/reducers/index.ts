@@ -6,6 +6,7 @@ import tests from './tests';
 import quickRoutines from './quickRoutines';
 import education from './education';
 import settings from './settings';
+import tour from './tour';
 import {combineReducers} from 'redux';
 
 const config = {
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   quickRoutines,
   education: persistReducer(educationPersistConfig, education),
   settings,
+  tour,
 });
 
 export default persistReducer(config, rootReducer);

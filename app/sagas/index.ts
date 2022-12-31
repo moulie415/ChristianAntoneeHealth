@@ -7,6 +7,7 @@ import educationSaga from './education';
 import appStateSaga from './appState';
 import planSaga from './plan';
 import watchSaga from './watch';
+import tourSaga from './tour';
 
 export default function* rootSaga() {
   yield all([
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(appStateSaga),
     fork(planSaga),
     fork(watchSaga),
+    fork(tourSaga),
   ]);
 }

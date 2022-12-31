@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
-import HomeProps from '../../types/views/Home';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeCard from '../commons/HomeCard';
@@ -14,6 +13,9 @@ import FastImage from 'react-native-fast-image';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../../types/Profile';
+import Modal from '../commons/Modal';
+import Button from '../commons/Button';
+import {setHasViewedTour, startTour} from '../../actions/tour';
 
 const {height, width} = Dimensions.get('window');
 
@@ -27,12 +29,26 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
   viewedPlan: boolean;
-}> = ({navigation, profile, viewedPlan}) => {
+  hasViewedTour: boolean;
+  startTour: () => void;
+  setHasViewedTour: () => void;
+}> = ({
+  navigation,
+  profile,
+  viewedPlan,
+  hasViewedTour,
+  startTour: start,
+  setHasViewedTour: setViewed,
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
-  }, [navigation, viewedPlan]);
+    if (!hasViewedTour) {
+      setModalVisible(true);
+    }
+  }, [navigation, viewedPlan, hasViewedTour]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView>
@@ -114,13 +130,50 @@ const Home: React.FC<{
           />
         </SafeAreaView>
       </ScrollView>
+      <Modal
+        disableBackDrop
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            alignSelf: 'center',
+            borderRadius: DevicePixels[10],
+            padding: DevicePixels[20],
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              padding: DevicePixels[15],
+              paddingTop: 0,
+              fontSize: DevicePixels[25],
+            }}>
+            Welcome to CA Health
+          </Text>
+
+          <Button
+            text="Start tour"
+            onPress={() => {
+              setModalVisible(false);
+              // setViewed()
+              start();
+            }}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, tour}: MyRootState) => ({
   profile: profile.profile,
   viewedPlan: profile.viewedPlan,
+  hasViewedTour: tour.hasViewedTour,
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+  startTour,
+  setHasViewedTour,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
