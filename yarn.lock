@@ -4980,10 +4980,10 @@ inquirer@^6.2.0:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
-instabug-reactnative@^11.5.1:
-  version "11.5.1"
-  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-11.5.1.tgz#2c198a6fda6f22acb87198c6e45f16350bfca521"
-  integrity sha512-l15linIdZQuiBM04tOJLqAfYQWHSnVMWSgo4S3FpdM5pySWQrV/hO6uxPzkBz1WclbjXLzeO1ScKkCc7PujZyg==
+instabug-reactnative@^11.6.0:
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-11.6.0.tgz#59de5d3fb034ec70ba31de8afd8abb4ccfbab5ba"
+  integrity sha512-U8oNkGY2fvGnqt7zLF4CMUDtWXA/Zqx+en5Z+8of71sUv5mWpASsbktU/yr+nLmmbr+quWSDoP9N3xbyFCqEkA==
 
 internal-slot@^1.0.3:
   version "1.0.3"
@@ -6632,7 +6632,7 @@ mkdirp@^0.5.1, mkdirp@^0.5.5:
   dependencies:
     minimist "^1.2.6"
 
-moment@^2.19.1, moment@^2.24.0, moment@^2.29.2, moment@^2.29.4:
+moment@^2.19.1, moment@^2.29.2, moment@^2.29.4:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -7522,10 +7522,10 @@ react-native-calendar-events@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz#6cb78bf712457ca9928dae95b428c91e7b895ae0"
   integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
 
-react-native-calendars@^1.1292.0:
-  version "1.1292.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1292.0.tgz#a50c3428848ed8a4b7997cb44265bd21afa4974b"
-  integrity sha512-4TjLEg/aIC6ohD7K1MkUedkcw8eNzsWS56abPonkXHxzO+zBpY5beKpwrmFZwlq4ZRadMv8Dp2TsW2Nld6JONg==
+react-native-calendars@^1.1293.0:
+  version "1.1293.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1293.0.tgz#3b06a7cbc050a074ec876a5accc90e49e9db84a1"
+  integrity sha512-/wWBlNOooHAVTCDhZptdeZEa1+DTUW1E3cI9auEPblJ56t1TXqe0gVK1UTchPDsA5d2eIXxdhTThpFD846yq7g==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     immutable "^4.0.0-rc.12"
@@ -7536,7 +7536,7 @@ react-native-calendars@^1.1292.0:
     recyclerlistview "^3.0.5"
     xdate "^0.8.0"
   optionalDependencies:
-    moment "^2.24.0"
+    moment "^2.29.4"
 
 react-native-circular-progress@^1.3.7:
   version "1.3.7"
@@ -7751,10 +7751,10 @@ react-native-progress@^5.0.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-purchases@^5.3.3:
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-5.3.3.tgz#109cec0c2534a303793f32ef724943ea51af9d52"
-  integrity sha512-TsFsifpeTsr6Pp4abnVGCUXKa/mgoEmjiuJS72SjqnkSsIwl3Ide3nXekfIetVlC7S14esFOPx0M1v3v6cLZnQ==
+react-native-purchases@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-5.4.0.tgz#17c3a83a39be8c1709b3a38ef8e257facb0c525e"
+  integrity sha512-7Qbvq4dT+VrpJcvQf7mKtLyNeQeL0eEBNezT9KLdxbHC6CV2HGsP73T8l6Q/s7TT9PwhMDhsMyWy1L4h33YNkg==
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"
@@ -7940,10 +7940,10 @@ react-native-view-more-text@^2.2.0:
   dependencies:
     prop-types "^15.5.7"
 
-react-native-walkthrough-tooltip@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.4.0.tgz#5b6f5c3255cb4415dd40e37073c5c231dfb772b6"
-  integrity sha512-nyBuynmCuzPKJN9NRGhSzCutGOk7/WqszGtX01gjDtlRfoJ25cSM0h+TEi/lsLbSCTEdB+e65qOTvoVhIq2gzA==
+react-native-walkthrough-tooltip@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.5.0.tgz#10a15c700fef73db2b509a13b89b488a454ffd75"
+  integrity sha512-xzpTs3JQkUMkmurc7WJDSAWaH2KRiRL2YoTXVCRqEEWxIvLQTn9eQv0jBzs1geR0wL+ezRpjkBEGAlfQ6eMimw==
   dependencies:
     prop-types "^15.6.1"
     react-fast-compare "^2.0.4"

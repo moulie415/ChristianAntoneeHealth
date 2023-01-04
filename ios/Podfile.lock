@@ -904,7 +904,7 @@ PODS:
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (1.7.2)
   - hermes-engine (0.11.0)
-  - Instabug (11.5.0)
+  - Instabug (11.6.0)
   - KTVCocoaHTTPServer (1.0.0):
     - CocoaAsyncSocket
   - KTVHTTPCache (2.0.1):
@@ -937,8 +937,8 @@ PODS:
   - PromisesObjC (2.1.1)
   - PromisesSwift (2.1.1):
     - PromisesObjC (= 2.1.1)
-  - PurchasesHybridCommon (4.5.3):
-    - RevenueCat (= 4.15.4)
+  - PurchasesHybridCommon (4.5.4):
+    - RevenueCat (= 4.15.5)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -1278,7 +1278,7 @@ PODS:
     - React-perflogger (= 0.68.5)
   - ReactNativeART (1.2.0):
     - React
-  - RevenueCat (4.15.4)
+  - RevenueCat (4.15.5)
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNAppleAuthentication (2.2.2):
@@ -1352,13 +1352,13 @@ PODS:
   - RNGoogleSignin (9.0.2):
     - GoogleSignIn (~> 6.2)
     - React-Core
-  - RNInstabug (11.5.1):
-    - Instabug (= 11.5.0)
+  - RNInstabug (11.6.0):
+    - Instabug (= 11.6.0)
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNPurchases (5.3.3):
-    - PurchasesHybridCommon (= 4.5.3)
+  - RNPurchases (5.4.0):
+    - PurchasesHybridCommon (= 4.5.4)
     - React-Core
   - RNRate (1.2.10):
     - React-Core
@@ -1817,7 +1817,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   hermes-engine: 84e3af1ea01dd7351ac5d8689cbbea1f9903ffc3
-  Instabug: 49aac964ffb253f3e0657afdaa7569eecf09867c
+  Instabug: bddae5b34c359e97e4aee5ce4d9a71fdba4df652
   KTVCocoaHTTPServer: df8d7b861e603ff8037e9b2138aca2563a6b768d
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
@@ -1829,7 +1829,7 @@ SPEC CHECKSUMS:
   Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   PromisesSwift: 99fddfe4a0ec88a56486644c0da106694c92a604
-  PurchasesHybridCommon: 1a920216541b32d31dc13b12fecc647d982c9800
+  PurchasesHybridCommon: cc41fe577206f862f959682c4e6f8cbe65b8b64c
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 0f06b6068f530932d10e1a01a5352fad4eaacb74
   RCTTypeSafety: b0ee81f10ef1b7d977605a2b266823dabd565e65
@@ -1869,7 +1869,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: b1f1995089b90696dbc2a7ffe0059a80db5c8eb1
   ReactCommon: 149e2c0acab9bac61378da0db5b2880a1b5ff59b
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
-  RevenueCat: fdd587e54455640efd113e23478e35a105d70823
+  RevenueCat: 566628a505ad1ff1f9f3a62b7d14e4fe397439a5
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
@@ -1895,9 +1895,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNGoogleMobileAds: 6e399a1b02f3d493f6b0ec7cf7f37623cc997034
   RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
-  RNInstabug: 8baebdfca3bb401e785a87d7552bedc55d959344
+  RNInstabug: 00cc8cca05951227f6990dc7de9840874adcfc29
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNPurchases: 6228dbcdf2155e8b16f77079cd80b43f0a489639
+  RNPurchases: 614493e08b42a63a4a2cfd5829a85d74135fbfd1
   RNRate: 6a47d52786d6e502ab37a4fb84be2e40aa513544
   RNReanimated: b21b362b4b8ca921932e8b1718e88cf3a36f157e
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
