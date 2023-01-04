@@ -12,7 +12,7 @@ import {combineReducers} from 'redux';
 const config = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['exercises', 'profile', 'education', 'music'],
+  blacklist: ['exercises', 'profile', 'education', 'music', 'tour'],
 };
 
 const exercisesPersistConfig = {
@@ -33,6 +33,12 @@ const educationPersistConfig = {
   blacklist: ['loading'],
 };
 
+const tourPersistConfig = {
+  key: 'tour',
+  storage: AsyncStorage,
+  blacklist: ['step'],
+};
+
 const rootReducer = combineReducers({
   profile: persistReducer(profilePersistConfig, profile),
   exercises: persistReducer(exercisesPersistConfig, exercises),
@@ -40,7 +46,7 @@ const rootReducer = combineReducers({
   quickRoutines,
   education: persistReducer(educationPersistConfig, education),
   settings,
-  tour,
+  tour: persistReducer(tourPersistConfig, tour),
 });
 
 export default persistReducer(config, rootReducer);

@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Tooltip from 'react-native-walkthrough-tooltip';
 import {connect} from 'react-redux';
 import {incrementStep} from '../../../actions/tour';
 import {StackParamList} from '../../../App';
@@ -41,122 +40,115 @@ const WhatArea: React.FC<{
           }}>
           What area do you want to focus on?
         </Text>
-        <Tooltip
-          isVisible={step && step === 3}
-          content={<Text>Select the body area you want to focus on</Text>}
-          placement="bottom"
-          onClose={() => {
-            increment();
+
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WorkoutList', {equipment, area: 'upper'})
+          }
+          style={{
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[5],
+            borderRadius: DevicePixels[5],
+            width: Dimensions.get('window').width - DevicePixels[40],
           }}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WorkoutList', {equipment, area: 'upper'})
-            }
+          <FastImage
             style={{
-              margin: DevicePixels[20],
-              marginTop: DevicePixels[5],
-              borderRadius: DevicePixels[5],
-              width: Dimensions.get('window').width - DevicePixels[40],
-            }}>
-            <FastImage
+              height: DevicePixels[120],
+              justifyContent: 'flex-end',
+              borderRadius: DevicePixels[10],
+            }}
+            source={require('../../../images/upper-body.jpg')}>
+            <View
               style={{
                 height: DevicePixels[120],
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
                 borderRadius: DevicePixels[10],
-              }}
-              source={require('../../../images/upper-body.jpg')}>
-              <View
+                backgroundColor: 'rgba(0,0,0,0.5)',
+              }}>
+              <Text
                 style={{
-                  height: DevicePixels[120],
-                  justifyContent: 'center',
-                  borderRadius: DevicePixels[10],
-                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[25],
+                  fontSize: DevicePixels[22],
                 }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    marginLeft: DevicePixels[25],
-                    fontSize: DevicePixels[22],
-                  }}>
-                  UPPER BODY
-                </Text>
-              </View>
-            </FastImage>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WorkoutList', {equipment, area: 'lower'})
-            }
+                UPPER BODY
+              </Text>
+            </View>
+          </FastImage>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WorkoutList', {equipment, area: 'lower'})
+          }
+          style={{
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[5],
+            borderRadius: DevicePixels[5],
+            width: Dimensions.get('window').width - DevicePixels[40],
+          }}>
+          <FastImage
             style={{
-              margin: DevicePixels[20],
-              marginTop: DevicePixels[5],
-              borderRadius: DevicePixels[5],
-              width: Dimensions.get('window').width - DevicePixels[40],
-            }}>
-            <FastImage
+              height: DevicePixels[120],
+              justifyContent: 'flex-end',
+              borderRadius: DevicePixels[10],
+            }}
+            source={require('../../../images/lower-body.jpg')}>
+            <View
               style={{
                 height: DevicePixels[120],
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
                 borderRadius: DevicePixels[10],
-              }}
-              source={require('../../../images/lower-body.jpg')}>
-              <View
+                backgroundColor: 'rgba(0,0,0,0.5)',
+              }}>
+              <Text
                 style={{
-                  height: DevicePixels[120],
-                  justifyContent: 'center',
-                  borderRadius: DevicePixels[10],
-                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[25],
+                  fontSize: DevicePixels[22],
                 }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    marginLeft: DevicePixels[25],
-                    fontSize: DevicePixels[22],
-                  }}>
-                  LOWER BODY
-                </Text>
-              </View>
-            </FastImage>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('WorkoutList', {equipment, area: 'full'})
-            }
+                LOWER BODY
+              </Text>
+            </View>
+          </FastImage>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WorkoutList', {equipment, area: 'full'})
+          }
+          style={{
+            margin: DevicePixels[20],
+            marginTop: DevicePixels[5],
+            borderRadius: DevicePixels[5],
+            width: Dimensions.get('window').width - DevicePixels[40],
+          }}>
+          <FastImage
             style={{
-              margin: DevicePixels[20],
-              marginTop: DevicePixels[5],
-              borderRadius: DevicePixels[5],
-              width: Dimensions.get('window').width - DevicePixels[40],
-            }}>
-            <FastImage
+              height: DevicePixels[120],
+              justifyContent: 'flex-end',
+              borderRadius: DevicePixels[10],
+            }}
+            source={require('../../../images/full-body.jpg')}>
+            <View
               style={{
                 height: DevicePixels[120],
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
                 borderRadius: DevicePixels[10],
-              }}
-              source={require('../../../images/full-body.jpg')}>
-              <View
+                backgroundColor: 'rgba(0,0,0,0.5)',
+              }}>
+              <Text
                 style={{
-                  height: DevicePixels[120],
-                  justifyContent: 'center',
-                  borderRadius: DevicePixels[10],
-                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: DevicePixels[25],
+                  fontSize: DevicePixels[22],
                 }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    marginLeft: DevicePixels[25],
-                    fontSize: DevicePixels[22],
-                  }}>
-                  FULL BODY
-                </Text>
-              </View>
-            </FastImage>
-          </TouchableOpacity>
-        </Tooltip>
+                FULL BODY
+              </Text>
+            </View>
+          </FastImage>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );

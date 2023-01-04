@@ -12,13 +12,8 @@ import WhatEquipment from './components/views/Workout/WhatEquipment';
 import {connect} from 'react-redux';
 import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
-import LinearGradient from 'react-native-linear-gradient';
 import Color from 'color';
-import Tooltip from 'react-native-walkthrough-tooltip';
-import Text from './components/commons/Text';
-import {navigationRef} from './RootNavigation';
 import {incrementStep} from './actions/tour';
-import useThrottle from './hooks/UseThrottle';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -30,11 +25,7 @@ const Tabs: React.FC<{
   step: number;
   incrementStep: () => void;
 }> = ({profile, plansEnabled, step, incrementStep: increment}) => {
-  const onToolTipPress = useThrottle(() => {
-    console.log('test');
-    increment();
-    navigationRef.navigate('Workout');
-  }, 1000);
+  console.log(step);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -74,13 +65,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <Tooltip
-              isVisible={step && step === 1}
-              content={<Text>Access workouts here</Text>}
-              placement="top"
-              onClose={onToolTipPress}>
-              <Icon color={color} size={size} name="dumbbell" />
-            </Tooltip>
+            <Icon color={color} size={size} name="dumbbell" />
           ),
           headerShown: false,
         }}

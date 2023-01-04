@@ -34,8 +34,6 @@ import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
 import Instabug from 'instabug-reactnative';
-import Text from './components/commons/Text';
-import DevicePixels from './helpers/DevicePixels';
 
 const {height, width} = Dimensions.get('window');
 
@@ -184,16 +182,17 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              sagaMiddleware.run(rootSaga);
-              SplashScreen.hide();
-              // Register the navigation container with the instrumentation
-              routingInstrumentation.registerNavigationContainer(navigationRef);
-            }}>
-            <StackComponent />
-          </NavigationContainer>
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            sagaMiddleware.run(rootSaga);
+            SplashScreen.hide();
+            // Register the navigation container with the instrumentation
+            routingInstrumentation.registerNavigationContainer(navigationRef);
+          }}>
+          <StackComponent />
+        </NavigationContainer>
+
         {showSplash && (
           <View style={{backgroundColor: colors.appWhite}}>
             <FastImage
