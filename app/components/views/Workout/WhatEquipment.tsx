@@ -16,7 +16,6 @@ const WhatEquipment: React.FC<{
   step: number;
   incrementStep: () => void;
 }> = ({navigation, step, incrementStep: increment}) => {
-  console.log(step);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>

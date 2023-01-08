@@ -25,7 +25,6 @@ const Tabs: React.FC<{
   step: number;
   incrementStep: () => void;
 }> = ({profile, plansEnabled, step, incrementStep: increment}) => {
-  console.log(step);
   return (
     <Tab.Navigator
       screenOptions={{

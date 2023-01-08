@@ -37,6 +37,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import PickerModal from '../../commons/PickerModal';
 import ProfileCharts from '../../commons/ProfileCharts';
+import GoalSummaries from '../../commons/GoalSummaries';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -332,6 +333,9 @@ const Profile: React.FC<ProfileProps> = ({
             </View>
           </SafeAreaView>
         </LinearGradient>
+
+
+        <GoalSummaries />
 
         <ProfileCharts
           weight={weight}
