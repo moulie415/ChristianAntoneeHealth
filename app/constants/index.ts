@@ -9,9 +9,7 @@ export interface GoalItem {
 
 export const goalItems: GoalItem[] = [
   {title: 'Improve my strength', goal: Goal.STRENGTH},
-  {title: 'Improve my fitness', goal: Goal.FITNESS},
 ];
-
 
 export const STORE_LINK =
   Platform.OS === 'ios'

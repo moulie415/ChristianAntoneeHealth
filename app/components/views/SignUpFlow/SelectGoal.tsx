@@ -1,9 +1,4 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {Goal} from '../../../types/Shared';
 import Text from '../../commons/Text';
@@ -32,7 +27,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         What's your goal?
       </Text>
       <Button
-        text="Improve my strength"
+        text="Improve my strength and fitness"
         style={{
           marginBottom: DevicePixels[20],
           marginHorizontal: DevicePixels[20],
@@ -40,16 +35,6 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         textStyle={{fontSize: DevicePixels[15]}}
         onPress={() => setGoal(Goal.STRENGTH)}
         variant={goal === Goal.STRENGTH ? 'primary' : 'secondary'}
-      />
-      <Button
-        text="Improve my fitness"
-        style={{
-          marginBottom: DevicePixels[20],
-          marginHorizontal: DevicePixels[20],
-        }}
-        textStyle={{fontSize: DevicePixels[15]}}
-        onPress={() => setGoal(Goal.FITNESS)}
-        variant={goal === Goal.FITNESS ? 'primary' : 'secondary'}
       />
       <Button
         text=" Weight loss"
@@ -62,14 +47,14 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         variant={goal === Goal.WEIGHT_LOSS ? 'primary' : 'secondary'}
       />
       <Button
-        text="Injury prevention/rehabilitation"
+        text="Become more active"
         textStyle={{fontSize: DevicePixels[15]}}
         style={{
           marginBottom: DevicePixels[20],
           marginHorizontal: DevicePixels[20],
         }}
-        onPress={() => setGoal(Goal.INJURY_PREVENTION)}
-        variant={goal === Goal.INJURY_PREVENTION ? 'primary' : 'secondary'}
+        onPress={() => setGoal(Goal.ACTIVE)}
+        variant={goal === Goal.ACTIVE ? 'primary' : 'secondary'}
       />
     </View>
   );

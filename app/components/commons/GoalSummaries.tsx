@@ -1,13 +1,17 @@
 import {View, TouchableOpacity} from 'react-native';
-import React, {MutableRefObject, useRef, useState} from 'react';
+import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
 import PagerView from 'react-native-pager-view';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {Goal, MyRootState} from '../../types/Shared';
+import {connect} from 'react-redux';
+import Profile from '../../types/Profile';
+import {getWeeklyItems} from '../../actions/profile';
 
-const Goal: React.FC<{
+const GoalCircle: React.FC<{
   isLast?: boolean;
   isFirst?: boolean;
   pagerRef: MutableRefObject<PagerView>;
@@ -101,8 +105,26 @@ const Goal: React.FC<{
   );
 };
 
-const GoalSummaries = () => {
+const GoalSummaries: React.FC<{
+  profile: Profile;
+  getWeeklyItemsAction: () => void;
+}> = ({profile, getWeeklyItemsAction}) => {
   const pagerRef = useRef<PagerView>();
+
+  const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
+  const minsGoal = profile.goal === Goal.WEIGHT_LOSS ? 180 : 150;
+
+  const workoutTitlePrefixString =
+    profile.goal === Goal.WEIGHT_LOSS
+      ? 'Intermediate'
+      : profile.goal === Goal.STRENGTH
+      ? 'Intermediate/advanced'
+      : 'Beginner/intermediate';
+
+  useEffect(() => {
+    getWeeklyItemsAction();
+  }, [getWeeklyItemsAction]);
+
   return (
     <>
       <Text
@@ -116,43 +138,54 @@ const GoalSummaries = () => {
         Weekly Goals
       </Text>
       <PagerView ref={pagerRef} style={{height: DevicePixels[150]}}>
-        <Goal
-          title="Number of Workouts"
+        <GoalCircle
+          title="Workouts completed"
           pagerRef={pagerRef}
           index={0}
           score={2}
-          goal={3}
+          goal={workoutGoal}
           isFirst
         />
-        <Goal
+        <GoalCircle
           title="Minutes spent training"
           pagerRef={pagerRef}
           index={1}
-          goal={150}
+          goal={minsGoal}
           score={35}
           fontSize={DevicePixels[20]}
           suffix={'\nmins'}
         />
-        {/* <Goal
-          title="Workout intensity"
+
+        {profile.goal === Goal.WEIGHT_LOSS && (
+          <GoalCircle
+            title="Calories burned"
+            pagerRef={pagerRef}
+            index={2}
+            goal={3500}
+            score={2000}
+            fontSize={DevicePixels[20]}
+            suffix={'\nkcal'}
+            isLast
+          />
+        )}
+        <GoalCircle
+          title={`${workoutTitlePrefixString} workouts completed`}
           pagerRef={pagerRef}
           index={2}
           score={5}
-          goal={8}
-        /> */}
-        <Goal
-          title="Calories burned"
-          pagerRef={pagerRef}
-          index={2}
-          goal={3500}
-          score={2000}
-          fontSize={DevicePixels[20]}
-          suffix={'\nkcal'}
-          isLast
+          goal={workoutGoal}
         />
       </PagerView>
     </>
   );
 };
 
-export default GoalSummaries;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+const mapDispatchToProps = {
+  getWeeklyItemsAction: getWeeklyItems,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoalSummaries);

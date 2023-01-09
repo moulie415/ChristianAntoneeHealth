@@ -15,7 +15,6 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
-import {goalItems} from '../../../constants';
 import * as _ from 'lodash';
 import DevicePixels from '../../../helpers/DevicePixels';
 import Text from '../../commons/Text';
@@ -26,7 +25,7 @@ import Header from '../../commons/Header';
 import Toggle from '../../commons/Toggle';
 
 const isValidGoal = (goal: Goal) =>
-  goal === Goal.STRENGTH || goal === Goal.FITNESS;
+  goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
 
 const Settings: React.FC<SettingsProps> = ({
   workoutReminders,
@@ -238,7 +237,7 @@ const Settings: React.FC<SettingsProps> = ({
                   fontStyle: 'italic',
                   fontSize: DevicePixels[12],
                   color: colors.appWhite,
-                  marginLeft: DevicePixels[10]
+                  marginLeft: DevicePixels[10],
                 }}>
                 Please note these reminders are for custom plans
               </Text>

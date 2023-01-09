@@ -59,9 +59,6 @@ const Workout: React.FC<WorkoutProps> = ({
   };
 
   const getGoalString = (goal: Goal) => {
-    if (goal === Goal.FITNESS) {
-      return 'Improve my fitness';
-    }
     return 'Improve my strength';
   };
 
