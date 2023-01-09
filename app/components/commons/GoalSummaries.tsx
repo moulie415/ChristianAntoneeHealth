@@ -10,6 +10,8 @@ import {Goal, MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import {getWeeklyItems} from '../../actions/profile';
+import {WeeklyItems} from '../../reducers/profile';
+import QuickRoutine from '../../types/QuickRoutines';
 
 const GoalCircle: React.FC<{
   isLast?: boolean;
@@ -108,7 +110,9 @@ const GoalCircle: React.FC<{
 const GoalSummaries: React.FC<{
   profile: Profile;
   getWeeklyItemsAction: () => void;
-}> = ({profile, getWeeklyItemsAction}) => {
+  weeklyItems: WeeklyItems;
+  quickRoutinesObj: {[key: string]: QuickRoutine};
+}> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
   const pagerRef = useRef<PagerView>();
 
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
@@ -124,6 +128,15 @@ const GoalSummaries: React.FC<{
   useEffect(() => {
     getWeeklyItemsAction();
   }, [getWeeklyItemsAction]);
+
+  const savedQuickRoutines =
+    weeklyItems?.quickRoutines && Object.values(weeklyItems.quickRoutines);
+
+  const quickRoutines =
+    savedQuickRoutines &&
+    savedQuickRoutines.map(({quickRoutineId}) => {
+      return quickRoutinesObj[quickRoutineId];
+    });
 
   return (
     <>
@@ -180,8 +193,10 @@ const GoalSummaries: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, quickRoutines}: MyRootState) => ({
   profile: profile.profile,
+  weeklyItems: profile.weeklyItems,
+  quickRoutinesObj: quickRoutines.quickRoutines,
 });
 
 const mapDispatchToProps = {
