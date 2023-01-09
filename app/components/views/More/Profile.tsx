@@ -334,7 +334,6 @@ const Profile: React.FC<ProfileProps> = ({
           </SafeAreaView>
         </LinearGradient>
 
-
         <GoalSummaries />
 
         <ProfileCharts

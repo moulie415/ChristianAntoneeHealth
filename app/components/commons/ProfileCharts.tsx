@@ -272,12 +272,12 @@ const ProfileCharts: React.FC<{
 
   useEffect(() => {
     const init = async () => {
-      // if (await isEnabled()) {
+      //if (await isEnabled()) {
       getSamplesAction();
-      // InteractionManager.runAfterInteractions(() => {
-      //   setShowCharts(true);
-      // });
-      // }
+      InteractionManager.runAfterInteractions(() => {
+        setShowCharts(true);
+      });
+      //  }
     };
     init();
   }, [getSamplesAction]);
