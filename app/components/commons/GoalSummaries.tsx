@@ -6,7 +6,7 @@ import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {Goal, MyRootState} from '../../types/Shared';
+import {Goal, Level, MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import {getWeeklyItems} from '../../actions/profile';
@@ -118,7 +118,7 @@ const GoalSummaries: React.FC<{
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
   const minsGoal = profile.goal === Goal.WEIGHT_LOSS ? 180 : 150;
 
-  const workoutTitlePrefixString =
+  const workoutLevelTitleString =
     profile.goal === Goal.WEIGHT_LOSS
       ? 'Intermediate'
       : profile.goal === Goal.STRENGTH
@@ -134,9 +134,43 @@ const GoalSummaries: React.FC<{
 
   const quickRoutines =
     savedQuickRoutines &&
-    savedQuickRoutines.map(({quickRoutineId}) => {
-      return quickRoutinesObj[quickRoutineId];
-    });
+    savedQuickRoutines
+      .map(({quickRoutineId}) => {
+        return quickRoutinesObj[quickRoutineId];
+      })
+      .filter(x => x);
+
+  const workoutLevelScore = quickRoutines
+    ? quickRoutines.filter(routine => {
+        if (profile.goal === Goal.WEIGHT_LOSS) {
+          return routine.level === Level.INTERMEDIATE;
+        }
+        if (profile.goal === Goal.STRENGTH) {
+          return (
+            routine.level === Level.INTERMEDIATE ||
+            routine.level === Level.ADVANCED
+          );
+        }
+        return (
+          routine.level === Level.BEGINNER ||
+          routine.level === Level.INTERMEDIATE
+        );
+      }).length
+    : 0;
+
+  const mins = savedQuickRoutines
+    ? Math.round(
+        savedQuickRoutines.reduce((acc, cur) => {
+          return acc + cur.seconds / 60;
+        }, 0),
+      )
+    : 0;
+
+  const calories = savedQuickRoutines
+    ? savedQuickRoutines.reduce((acc, cur) => {
+        return acc + cur.calories;
+      }, 0)
+    : 0;
 
   return (
     <>
@@ -155,16 +189,16 @@ const GoalSummaries: React.FC<{
           title="Workouts completed"
           pagerRef={pagerRef}
           index={0}
-          score={2}
+          score={savedQuickRoutines ? savedQuickRoutines.length : 0}
           goal={workoutGoal}
           isFirst
         />
         <GoalCircle
           title="Minutes spent training"
           pagerRef={pagerRef}
-          index={1}
+          index={0}
           goal={minsGoal}
-          score={35}
+          score={mins}
           fontSize={DevicePixels[20]}
           suffix={'\nmins'}
         />
@@ -175,17 +209,17 @@ const GoalSummaries: React.FC<{
             pagerRef={pagerRef}
             index={2}
             goal={3500}
-            score={2000}
+            score={calories}
             fontSize={DevicePixels[20]}
             suffix={'\nkcal'}
             isLast
           />
         )}
         <GoalCircle
-          title={`${workoutTitlePrefixString} workouts completed`}
+          title={`${workoutLevelTitleString} workouts completed`}
           pagerRef={pagerRef}
           index={2}
-          score={5}
+          score={workoutLevelScore}
           goal={workoutGoal}
         />
       </PagerView>
