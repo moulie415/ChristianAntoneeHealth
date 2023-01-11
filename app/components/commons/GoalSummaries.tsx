@@ -12,6 +12,8 @@ import Profile from '../../types/Profile';
 import {getWeeklyItems} from '../../actions/profile';
 import {WeeklyItems} from '../../reducers/profile';
 import QuickRoutine from '../../types/QuickRoutines';
+import profileSaga from '../../sagas/profile';
+import Goals from '../../styles/views/Goals';
 
 const GoalCircle: React.FC<{
   isLast?: boolean;
@@ -66,6 +68,8 @@ const GoalCircle: React.FC<{
           color: colors.appWhite,
           fontWeight: 'bold',
           fontSize: DevicePixels[16],
+          paddingHorizontal: DevicePixels[20],
+          textAlign: 'center',
         }}>
         {title}
       </Text>
@@ -172,6 +176,54 @@ const GoalSummaries: React.FC<{
       }, 0)
     : 0;
 
+  const goals = [
+    <GoalCircle
+      title="Workouts completed"
+      pagerRef={pagerRef}
+      index={0}
+      key="workout"
+      score={savedQuickRoutines ? savedQuickRoutines.length : 0}
+      goal={workoutGoal}
+      isFirst
+    />,
+    <GoalCircle
+      title="Minutes spent training"
+      pagerRef={pagerRef}
+      index={1}
+      key="mins"
+      goal={minsGoal}
+      score={mins}
+      fontSize={DevicePixels[20]}
+      suffix={'\nmins'}
+    />,
+
+    <GoalCircle
+      title={`${workoutLevelTitleString} workouts completed`}
+      pagerRef={pagerRef}
+      index={2}
+      key="workoutLevel"
+      score={workoutLevelScore}
+      goal={workoutGoal}
+      isLast={!(profile.goal === Goal.WEIGHT_LOSS)}
+    />,
+  ];
+
+  if (profile.goal === Goal.WEIGHT_LOSS) {
+    goals.push(
+      <GoalCircle
+        title="Calories burned"
+        pagerRef={pagerRef}
+        key="calories"
+        index={3}
+        goal={3500}
+        score={calories}
+        fontSize={DevicePixels[20]}
+        suffix={'\nkcal'}
+        isLast
+      />,
+    );
+  }
+
   return (
     <>
       <Text
@@ -184,44 +236,8 @@ const GoalSummaries: React.FC<{
         }}>
         Weekly Goals
       </Text>
-      <PagerView ref={pagerRef} style={{height: DevicePixels[150]}}>
-        <GoalCircle
-          title="Workouts completed"
-          pagerRef={pagerRef}
-          index={0}
-          score={savedQuickRoutines ? savedQuickRoutines.length : 0}
-          goal={workoutGoal}
-          isFirst
-        />
-        <GoalCircle
-          title="Minutes spent training"
-          pagerRef={pagerRef}
-          index={0}
-          goal={minsGoal}
-          score={mins}
-          fontSize={DevicePixels[20]}
-          suffix={'\nmins'}
-        />
-
-        {profile.goal === Goal.WEIGHT_LOSS && (
-          <GoalCircle
-            title="Calories burned"
-            pagerRef={pagerRef}
-            index={2}
-            goal={3500}
-            score={calories}
-            fontSize={DevicePixels[20]}
-            suffix={'\nkcal'}
-            isLast
-          />
-        )}
-        <GoalCircle
-          title={`${workoutLevelTitleString} workouts completed`}
-          pagerRef={pagerRef}
-          index={2}
-          score={workoutLevelScore}
-          goal={workoutGoal}
-        />
+      <PagerView ref={pagerRef} style={{height: DevicePixels[180]}}>
+        {goals}
       </PagerView>
     </>
   );

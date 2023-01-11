@@ -3,9 +3,10 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
+$RNFirebaseAsStaticFramework = true
 
 target 'HealthAndMovement' do
-
+  use_frameworks! :linkage => :static
   # Flags change depending on the env values.
   flags = get_default_flags()
 
@@ -35,6 +36,21 @@ target 'HealthAndMovement' do
     inherit! :complete
     # Pods for testing
   end
+
+  # Convert all permission pods into static libraries
+pre_install do |installer|
+  Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+  installer.pod_targets.each do |pod|
+    if pod.name.eql?('RNPermissions') || pod.name.start_with?('Permission-')
+      def pod.build_type;
+        # Uncomment the line corresponding to your CocoaPods version
+        Pod::BuildType.static_library # >= 1.9
+        # Pod::Target::BuildType.static_library # < 1.9
+      end
+    end
+  end
+end
 
   post_install do |installer|
     installer.generated_projects.each do |project|
