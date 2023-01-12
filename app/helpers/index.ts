@@ -1,7 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 import moment, {Moment} from 'moment';
 import {Dimensions} from 'react-native';
-import Rate, {AndroidMarket} from 'react-native-rate';
 import analytics from '@react-native-firebase/analytics';
 import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
@@ -9,6 +8,7 @@ import colors from '../constants/colors';
 import {PercentileTable, Table} from '../types/Test';
 import {Category} from '../types/Education';
 import {logError} from './error';
+import InAppReview from 'react-native-in-app-review';
 
 const {height, width} = Dimensions.get('window');
 
@@ -165,19 +165,13 @@ const getBMI = (h: number, w: number) => {
   return Math.round(val * 10) / 10;
 };
 
-export const rateApp = () => {
-  Rate.rate(
-    {
-      AppleAppID: '1506679389',
-      GooglePackageName: 'com.healthandmovement',
-      preferredAndroidMarket: AndroidMarket.Google,
-      preferInApp: true,
-      openAppStoreIfInAppFails: true,
-    },
-    success => {
-      analytics().logEvent('user_rating', {success});
-    },
-  );
+export const rateApp = async () => {
+  try {
+    const success = await InAppReview.RequestInAppReview();
+    analytics().logEvent('user_rating', {success});
+  } catch (e) {
+    logError(e);
+  }
 };
 
 export const getVideoHeight = () => {
