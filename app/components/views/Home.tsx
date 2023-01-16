@@ -16,6 +16,7 @@ import Profile from '../../types/Profile';
 import Modal from '../commons/Modal';
 import Button from '../commons/Button';
 import {setHasViewedTour, startTour} from '../../actions/tour';
+import GoalSummaries from '../commons/GoalSummaries';
 
 const {height, width} = Dimensions.get('window');
 
@@ -150,7 +151,7 @@ const Home: React.FC<{
             }}>
             Welcome to CA Health
           </Text>
-
+          <GoalSummaries />
           <Button
             text="Start tour"
             onPress={() => {

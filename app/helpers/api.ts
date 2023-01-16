@@ -400,7 +400,7 @@ export const getSavedQuickRoutines = async (uid: string) => {
 };
 
 export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
-  const startOfWeek = moment().startOf('isoWeek').unix();
+  const startOfWeek = moment().startOf('isoWeek').toDate();
   const quickRoutinesQuery = await db()
     .collection('users')
     .doc(uid)

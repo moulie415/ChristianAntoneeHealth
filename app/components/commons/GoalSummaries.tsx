@@ -58,8 +58,9 @@ const GoalCircle: React.FC<{
               color: colors.appWhite,
               fontWeight: 'bold',
               textAlign: 'center',
+              alignSelf: 'center',
             }}>
-            {`${score} ${suffix || ''}`}
+            {score + (suffix ? ` ${suffix}` : '')}
           </Text>
         )}
       </AnimatedCircularProgress>
@@ -70,6 +71,7 @@ const GoalCircle: React.FC<{
           fontSize: DevicePixels[16],
           paddingHorizontal: DevicePixels[20],
           textAlign: 'center',
+          alignSelf: 'center',
         }}>
         {title}
       </Text>
