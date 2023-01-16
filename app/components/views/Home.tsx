@@ -41,13 +41,9 @@ const Home: React.FC<{
   startTour: start,
   setHasViewedTour: setViewed,
 }) => {
-  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     if (!viewedPlan) {
       // navigation.navigate('Plan');
-    }
-    if (!hasViewedTour) {
-      setModalVisible(true);
     }
   }, [navigation, viewedPlan, hasViewedTour]);
   return (
@@ -131,37 +127,6 @@ const Home: React.FC<{
           />
         </SafeAreaView>
       </ScrollView>
-      <Modal
-        disableBackDrop
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-            borderRadius: DevicePixels[10],
-            padding: DevicePixels[20],
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              padding: DevicePixels[15],
-              paddingTop: 0,
-              fontSize: DevicePixels[25],
-            }}>
-            Welcome to CA Health
-          </Text>
-          <GoalSummaries />
-          <Button
-            text="Start tour"
-            onPress={() => {
-              setModalVisible(false);
-              // setViewed()
-              start();
-            }}
-          />
-        </View>
-      </Modal>
     </View>
   );
 };

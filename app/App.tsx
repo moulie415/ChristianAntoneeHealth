@@ -34,6 +34,12 @@ import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
 import Instabug from 'instabug-reactnative';
+import Modal from './components/commons/Modal';
+import Text from './components/commons/Text';
+import DevicePixels from './helpers/DevicePixels';
+import GoalSummaries from './components/commons/GoalSummaries';
+import Button from './components/commons/Button';
+import {startTour} from './actions/tour';
 
 const {height, width} = Dimensions.get('window');
 
@@ -131,6 +137,7 @@ export type StackParamList = {
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
 
 const App: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -179,6 +186,12 @@ const App: React.FC = () => {
         console.log(adapterStatuses);
       });
   }, []);
+
+  useEffect(() => {
+    if (!store.getState().tour.hasViewedTour && !showSplash) {
+      setModalVisible(true);
+    }
+  }, [showSplash]);
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
@@ -207,6 +220,39 @@ const App: React.FC = () => {
             />
           </View>
         )}
+        <Modal
+          disableBackDrop
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}>
+          <View
+            style={{
+              backgroundColor: colors.appGrey,
+              alignSelf: 'center',
+              borderRadius: DevicePixels[10],
+              padding: DevicePixels[20],
+              width: '95%',
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                padding: DevicePixels[15],
+                paddingTop: 0,
+                fontSize: DevicePixels[25],
+                color: colors.appWhite,
+              }}>
+              Welcome to CA Health
+            </Text>
+            <GoalSummaries />
+            <Button
+              text="Start tour"
+              onPress={() => {
+                setModalVisible(false);
+                // setViewed()
+                store.dispatch(startTour());
+              }}
+            />
+          </View>
+        </Modal>
       </Provider>
     </PersistGate>
   );

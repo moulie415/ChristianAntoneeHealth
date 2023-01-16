@@ -277,6 +277,7 @@ const ProfileCharts: React.FC<{
       InteractionManager.runAfterInteractions(() => {
         setShowCharts(true);
       });
+
       //  }
     };
     init();
