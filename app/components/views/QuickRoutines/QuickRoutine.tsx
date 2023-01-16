@@ -370,6 +370,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               routine.steps.map(step => {
                 return (
                   <View
+                    key={step}
                     style={{
                       flexDirection: 'row',
                       margin: DevicePixels[10],

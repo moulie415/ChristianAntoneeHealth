@@ -747,7 +747,7 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Google-Mobile-Ads-SDK (9.12.0):
+  - Google-Mobile-Ads-SDK (9.14.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAppMeasurement (10.3.0):
@@ -886,7 +886,7 @@ PODS:
   - PromisesObjC (2.1.1)
   - PromisesSwift (2.1.1):
     - PromisesObjC (= 2.1.1)
-  - PurchasesHybridCommon (4.7.0):
+  - PurchasesHybridCommon (4.8.0):
     - RevenueCat (= 4.16.0)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -1114,9 +1114,9 @@ PODS:
   - React-jsinspector (0.70.6)
   - React-logger (0.70.6):
     - glog
-  - react-native-config (1.4.11):
-    - react-native-config/App (= 1.4.11)
-  - react-native-config/App (1.4.11):
+  - react-native-config (1.4.12):
+    - react-native-config/App (= 1.4.12)
+  - react-native-config/App (1.4.12):
     - React-Core
   - react-native-fbsdk-next (8.0.5):
     - React-Core
@@ -1297,10 +1297,10 @@ PODS:
     - Firebase/Storage (= 10.3.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.8.0):
+  - RNGestureHandler (2.9.0):
     - React-Core
-  - RNGoogleMobileAds (8.2.2):
-    - Google-Mobile-Ads-SDK (= 9.12.0)
+  - RNGoogleMobileAds (9.1.0):
+    - Google-Mobile-Ads-SDK (= 9.14.0)
     - GoogleUserMessagingPlatform (= 2.0.0)
     - React-Core
   - RNGoogleSignin (9.0.2):
@@ -1311,10 +1311,10 @@ PODS:
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNPurchases (5.5.0):
-    - PurchasesHybridCommon (= 4.7.0)
+  - RNPurchases (5.6.0):
+    - PurchasesHybridCommon (= 4.8.0)
     - React-Core
-  - RNReanimated (2.13.0):
+  - RNReanimated (2.14.1):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1722,7 +1722,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 0efbff0ac978981866d89804191688ae50d64033
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  Google-Mobile-Ads-SDK: b4e9efb765ef1693ae9dd94c527b6c1d91ee5052
+  Google-Mobile-Ads-SDK: 4fe6304b771f8467d29978cb790ec1e56e646946
   GoogleAppMeasurement: c7d6fff39bf2d829587d74088d582e32d75133c3
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
@@ -1744,7 +1744,7 @@ SPEC CHECKSUMS:
   Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   PromisesSwift: 99fddfe4a0ec88a56486644c0da106694c92a604
-  PurchasesHybridCommon: 73a2b5ce248de2f6dd3c13d3d0b619f7f1d5c72f
+  PurchasesHybridCommon: bd1e1d3476afd3f95332b0ae160e4ce1bd1efd99
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: e1866f61af7049eb3d8e08e8b133abd38bc1ca7a
   RCTTypeSafety: 27c2ac1b00609a432ced1ae701247593f07f901e
@@ -1760,7 +1760,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b4a65947391c658450151275aa406f2b8263178f
   React-jsinspector: 60769e5a0a6d4b32294a2456077f59d0266f9a8b
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
-  react-native-config: bcafda5b4c51491ee1b0e1d0c4e3905bc7b56c1b
+  react-native-config: 5e3e0c7798522b1a0d7641f7ffa5363044e16397
   react-native-fbsdk-next: 79815a5b8f66ab0990fbb370b4a4b5bdf0a15e6c
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-in-app-review: a073f67c5f3392af6ea7fb383217cdb1aa2aa726
@@ -1808,13 +1808,13 @@ SPEC CHECKSUMS:
   RNFBFunctions: 3ca2f572b6793815b5f5c425a1bc0cc054216306
   RNFBMessaging: c88867b6c9d16d3ba349c7ab4a1a8948fb71e2f6
   RNFBStorage: cce752c3adefd5a9a7e9df3b87ec5b8d32fc5c01
-  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
-  RNGoogleMobileAds: 6e399a1b02f3d493f6b0ec7cf7f37623cc997034
+  RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
+  RNGoogleMobileAds: 05f562eab590751c249869c72fc9aab1d9a6bd0f
   RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
   RNInstabug: 00cc8cca05951227f6990dc7de9840874adcfc29
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNPurchases: ea5cba52790c11fc8dfc2195eb3db043440660f1
-  RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
+  RNPurchases: bf74bd8e79ed681a84f05d2c7324964d0859b913
+  RNReanimated: 8125b2324ba03108136ab5dd506fc49b2454da24
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSentry: acebe4104a6f5915ae871eb59dc73f13dcc92ef7
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd

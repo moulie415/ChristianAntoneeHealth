@@ -106,16 +106,22 @@ export const getCaloriesBurned = (
 };
 
 export const getDifficultyEmoji = (difficulty: number) => {
-  if (difficulty === 0) {
+  if (difficulty < 2) {
     return '😊';
   }
-  if (difficulty === 1) {
+  if (difficulty < 4) {
     return '😐';
   }
-  if (difficulty === 2) {
+  if (difficulty < 7) {
+    return '😮‍💨';
+  }
+  if (difficulty < 9) {
     return '😰';
   }
-  return '🤢';
+  if (difficulty < 10) {
+    return '🤢';
+  }
+  return '🤮';
 };
 
 export const getDifficultyText = (difficulty: number) => {
