@@ -1,61 +1,147 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import {View} from 'react-native';
+import React, {useState} from 'react';
 import DevicePixels from '../../helpers/DevicePixels';
 import {Slider} from '@miblanchard/react-native-slider';
 import colors from '../../constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
+import {getDifficultyEmoji} from '../../helpers/exercises';
+import Text from './Text';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
-const sliderScale: {
+export const rpeSliderScale: {
   rpe: number;
   title: string;
   description: string;
+  color: string;
 }[] = [
   {
     rpe: 1,
     title: 'Very light activity',
     description:
       'Hardly any exertion, but more than sleeping, watching TV, etc',
+    color: colors.appGreen,
   },
   {
     rpe: 2,
     title: 'Light activity',
     description:
       'Feels like you can maintain for hours. Easy to breathe and carry a conversation',
+    color: colors.appBlueLight,
   },
   {
     rpe: 3,
     title: 'Light activity',
     description:
       'Feels like you can maintain for hours. Easy to breathe and carry a conversation',
+    color: colors.appBlueLight,
   },
 
   {
     rpe: 4,
     title: 'Moderate activity',
     description:
-      '',
+      'Breathing heavily, can hold a short conversation. Still somewhat comfortable, but becoming noticeably more challenging',
+    color: colors.appBlue,
   },
 
-  
+  {
+    rpe: 5,
+    title: 'Moderate activity',
+    description:
+      'Breathing heavily, can hold a short conversation. Still somewhat comfortable, but becoming noticeably more challenging',
+    color: colors.appBlue,
+  },
+  {
+    rpe: 6,
+    title: 'Moderate activity',
+    description:
+      'Breathing heavily, can hold a short conversation. Still somewhat comfortable, but becoming noticeably more challenging',
+    color: colors.appBlue,
+  },
+  {
+    rpe: 7,
+    title: 'Vigorous activity',
+    description:
+      'Borderline uncomfortable. Short of breath, can speak a sentence',
+    color: colors.secondaryLight,
+  },
+  {
+    rpe: 8,
+    title: 'Vigorous activity',
+    description:
+      'Borderline uncomfortable. Short of breath, can speak a sentence',
+    color: colors.secondaryLight,
+  },
+  {
+    rpe: 9,
+    title: 'Very hard activity',
+    description:
+      'Very difficult to maintain exercise intensity. Can barely breathe and speak only a few words',
+    color: colors.secondaryDark,
+  },
+  {
+    rpe: 10,
+    title: 'Max effort activity',
+    description:
+      'Feels almost impossible to keep going. Completely out of breath, unable to talk. Cannot maintain for more tan a very short time',
+    color: colors.appRed,
+  },
 ];
 
-const RPESlider = () => {
+const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
+  rpe,
+  setRpe,
+}) => {
   return (
     <View>
       <Text
+        style={{
+          color: colors.appWhite,
+          textAlign: 'center',
+          fontSize: DevicePixels[25],
+          marginBottom: DevicePixels[20],
+        }}>
+        Rate of perceived exertion{' '}
+        <Text style={{fontWeight: 'bold'}}>(RPE)</Text>
+      </Text>
+      <AnimatedCircularProgress
+        style={{alignSelf: 'center'}}
+        size={DevicePixels[120]}
+        width={DevicePixels[15]}
+        backgroundWidth={DevicePixels[5]}
+        fill={10 * rpe}
+        tintColor={rpeSliderScale[rpe - 1].color}
+        // tintColorSecondary={colors.appBlueFaded}
+        backgroundColor={colors.appWhite}
+        arcSweepAngle={240}
+        rotation={240}
+        lineCap="round">
+        {fill => (
+          <Text
+            style={{
+              fontSize: DevicePixels[30],
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}>
+            {rpe}
+          </Text>
+        )}
+      </AnimatedCircularProgress>
+      {/* <Text
         style={{
           margin: DevicePixels[10],
           marginTop: DevicePixels[20],
           color: colors.appWhite,
         }}>
         Rate your performance to help us understand your fitness level
-      </Text>
+      </Text> */}
 
       <Slider
-        minimumValue={0}
-        maximumValue={3}
+        minimumValue={1}
+        maximumValue={10}
         step={1}
-        value={difficulty}
+        value={rpe}
         renderThumbComponent={() => {
           return (
             <View
@@ -83,31 +169,32 @@ const RPESlider = () => {
         minimumTrackTintColor={colors.appBlue}
         maximumTrackTintColor={colors.appWhite}
         containerStyle={{marginHorizontal: DevicePixels[20]}}
-        onValueChange={val => typeof val === 'object' && setDifficulty(val[0])}
+        onValueChange={val => typeof val === 'object' && setRpe(val[0])}
       />
 
       <View
         style={{
+          marginTop: DevicePixels[30],
           margin: DevicePixels[10],
           justifyContent: 'center',
-          alignItems: 'center',
           flexDirection: 'row',
+          height: DevicePixels[100],
         }}>
         <Text
           style={{
             fontSize: DevicePixels[30],
             textAlign: 'center',
-            margin: DevicePixels[10],
+            width: DevicePixels[60],
           }}>
-          {emoji}
+          {getDifficultyEmoji(rpe)}
         </Text>
         <Text style={{color: colors.appWhite, fontWeight: 'bold', flex: 1}}>
-          {text}
+          {rpeSliderScale[rpe - 1].title}
           <Text
             style={{
               color: colors.appWhite,
               fontWeight: 'normal',
-            }}>{` - ${subtext}`}</Text>
+            }}>{` - ${rpeSliderScale[rpe - 1].description}`}</Text>
         </Text>
       </View>
     </View>

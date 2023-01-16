@@ -19,6 +19,8 @@ import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 import FastImage from 'react-native-fast-image';
+import WorkoutSummaryInfo from '../../commons/WorkoutSummaryInfo';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
 
 const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
   route,
@@ -31,6 +33,8 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
 }) => {
   const {calories, seconds, difficulty, isLast} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  useBackHandler(() => true);
+
   useEffect(() => {
     if (isLast) {
       Alert.alert(
@@ -56,75 +60,11 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
         }}
       />
       <SafeAreaView style={{flex: 1}}>
-        <Text
-          style={{
-            color: colors.appWhite,
-            fontSize: DevicePixels[22],
-            fontWeight: 'bold',
-            textAlign: 'center',
-            margin: DevicePixels[20],
-          }}>
-          Summary
-        </Text>
-        <View
-          style={{
-            justifyContent: 'space-evenly',
-            flex: 1,
-            alignItems: 'center',
-          }}>
-          <View style={{alignItems: 'center'}}>
-            <Text
-              style={{
-                marginBottom: DevicePixels[20],
-                color: colors.appWhite,
-                fontSize: DevicePixels[20],
-              }}>
-              Calories burned
-            </Text>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: DevicePixels[30],
-                fontWeight: 'bold',
-              }}>
-              {Math.floor(calories)}
-            </Text>
-          </View>
-          <View style={{alignItems: 'center'}}>
-            <Text
-              style={{
-                marginBottom: DevicePixels[20],
-                color: colors.appWhite,
-                fontSize: DevicePixels[20],
-              }}>
-              Time spent active
-            </Text>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: DevicePixels[30],
-                fontWeight: 'bold',
-              }}>
-              {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
-            </Text>
-          </View>
-          <View style={{alignItems: 'center'}}>
-            <Text style={{color: colors.appWhite, fontSize: DevicePixels[20]}}>
-              Intensity
-            </Text>
-            <Text style={{fontSize: DevicePixels[100], color: colors.appWhite}}>
-              {getDifficultyEmoji(difficulty)}
-            </Text>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: DevicePixels[25],
-                fontWeight: 'bold',
-              }}>
-              {getDifficultyText(difficulty)}
-            </Text>
-          </View>
-        </View>
+        <WorkoutSummaryInfo
+          calories={calories}
+          difficulty={difficulty}
+          seconds={seconds}
+        />
 
         <Button
           text="Return Home"

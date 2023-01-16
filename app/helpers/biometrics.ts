@@ -3,10 +3,11 @@ import AppleHealthKit from 'react-native-health';
 import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
-import {Gender, Unit} from '../types/Profile';
+import Profile, {Gender, Unit} from '../types/Profile';
 import {StepSample} from '../types/Shared';
 import {logError} from './error';
 import db from '@react-native-firebase/firestore';
+import {getCaloriesBurned} from './exercises';
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -384,47 +385,65 @@ export const saveHeight = async (value: number, unit: Unit) => {
 };
 
 export const saveWorkout = (
-  startDate: string,
-  endDate: string,
-  calories: number,
+  seconds: number,
+  difficulty: number,
+  profile: Profile,
   name: string,
   description: string,
 ) => {
-  if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.saveWorkout(
-        {
-          type: AppleHealthKit.Constants.Activities.FunctionalStrengthTraining,
-          startDate,
+  try {
+    const startDate = moment().subtract(seconds, 'seconds').toISOString();
+    const endDate = moment().toISOString();
+    const calories = getCaloriesBurned(
+      seconds,
+      difficulty,
+      profile.weight,
+      profile.unit,
+    );
+    if (Platform.OS === 'ios') {
+      return new Promise((resolve, reject) => {
+        AppleHealthKit.saveWorkout(
+          {
+            type: AppleHealthKit.Constants.Activities
+              .FunctionalStrengthTraining,
+            startDate,
+            endDate,
+            // @ts-ignore
+            energyBurned: calories,
+            energyBurnedUnit: 'calorie',
+          },
+          (e: Error, res) => {
+            if (e) {
+              logError(e);
+              reject(e);
+              return;
+            }
+            resolve(res);
+            console.log(res);
+            // workout successfully saved
+          },
+        );
+      });
+    } else {
+      return GoogleFit.saveWorkout({
+        startDate: moment(startDate).toISOString(),
+        endDate: moment(endDate).toISOString(),
+        activityType: ActivityType.Strength_training,
+        sessionName: name,
+        identifier: `workout:${moment(startDate).toISOString()} - ${moment(
           endDate,
-          // @ts-ignore
-          energyBurned: calories,
-          energyBurnedUnit: 'calorie',
-        },
-        (e: Error, res) => {
-          if (e) {
-            logError(e);
-            reject(e);
-            return;
-          }
-          resolve(res);
-          console.log(res);
-          // workout successfully saved
-        },
-      );
-    });
-  } else {
-    return GoogleFit.saveWorkout({
-      startDate: moment(startDate).toISOString(),
-      endDate: moment(endDate).toISOString(),
-      activityType: ActivityType.Strength_training,
-      sessionName: name,
-      identifier: `workout:${moment(startDate).toISOString()} - ${moment(
-        endDate,
-      ).toISOString()}`,
-      calories,
-      description,
-    });
+        ).toISOString()}`,
+        calories,
+        description,
+      });
+    }
+  } catch (e) {
+    Alert.alert(
+      `Error saving workout to ${
+        Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+      }`,
+      e.message,
+    );
   }
 };
 
