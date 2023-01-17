@@ -7729,10 +7729,10 @@ react-native-gradle-plugin@^0.70.3:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz#cbcf0619cbfbddaa9128701aa2d7b4145f9c4fc8"
   integrity sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A==
 
-react-native-health@^1.13.4:
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/react-native-health/-/react-native-health-1.13.4.tgz#a6ff3ffec0a1b9d29ecb148777c838fd959cc463"
-  integrity sha512-CiNwjUy2urpN7Mc4cjo7J+MpbsyEvnqEcTJi8okC8V+8dQBzZMKr4FsbwiIYT9BJRlFes4r//bm+fywijkyxWQ==
+react-native-health@^1.13.5:
+  version "1.13.5"
+  resolved "https://registry.yarnpkg.com/react-native-health/-/react-native-health-1.13.5.tgz#c1ae67d591116f14e0fb530fa780e8728569da95"
+  integrity sha512-VRKbeOtwhaMHSrszqL6mOqbHpInXZGiczEDAeuGlI7ERSo+K7/NFm5fwLF8GZq6HTydgHWxZYLlV69CQCECGGQ==
   dependencies:
     "@expo/config-plugins" "^4.1.5"
 
@@ -7816,10 +7816,10 @@ react-native-push-notification@^8.1.1:
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#a41d20c70ea5a7709417e96261b225461f8dc73a"
   integrity sha512-XpBtG/w+a6WXTxu6l1dNYyTiHnbgnvjoc3KxPTxYkaIABRmvuJZkFxqruyGvfCw7ELAlZEAJO+dthdTabCe1XA==
 
-react-native-reanimated@^2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.14.1.tgz#2783474c009612e1c794ef8f4aa2ed7fd4a90b15"
-  integrity sha512-o5fAcfYqgRENguVd1Xxd7PPwBgmqTA9yzrIlUk/I0iHeV+5lRLjYwya+Oz3muefUQoQk9hlVyEvZeEdwClC5AQ==
+react-native-reanimated@^2.14.2:
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.14.2.tgz#7f20f01052ea4902e320be8725d55b40b1d21d62"
+  integrity sha512-zj05BBafk38rE78PhHc6q0vg9M4WeJY/RExHUGFiP1miJyyAaJzs2jLQR+HY0zbutCE+/yNJyOE3dca2BslsGg==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.16.7"
     "@babel/preset-typescript" "^7.16.7"

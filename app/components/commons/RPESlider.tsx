@@ -128,14 +128,15 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
           </Text>
         )}
       </AnimatedCircularProgress>
-      {/* <Text
+      <Text
         style={{
           margin: DevicePixels[10],
           marginTop: DevicePixels[20],
           color: colors.appWhite,
+          textAlign: 'center'
         }}>
-        Rate your performance to help us understand your fitness level
-      </Text> */}
+        How hard did you find that workout?
+      </Text>
 
       <Slider
         minimumValue={1}
@@ -174,10 +175,10 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
 
       <View
         style={{
-          marginTop: DevicePixels[30],
           margin: DevicePixels[10],
           justifyContent: 'center',
           flexDirection: 'row',
+          alignItems: 'center',
           height: DevicePixels[100],
         }}>
         <Text

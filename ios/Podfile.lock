@@ -1314,7 +1314,7 @@ PODS:
   - RNPurchases (5.6.0):
     - PurchasesHybridCommon (= 4.8.0)
     - React-Core
-  - RNReanimated (2.14.1):
+  - RNReanimated (2.14.2):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1814,7 +1814,7 @@ SPEC CHECKSUMS:
   RNInstabug: 00cc8cca05951227f6990dc7de9840874adcfc29
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNPurchases: bf74bd8e79ed681a84f05d2c7324964d0859b913
-  RNReanimated: 8125b2324ba03108136ab5dd506fc49b2454da24
+  RNReanimated: 3ed15d2c7d7fd9d9a284de291a1e347d132d282b
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSentry: acebe4104a6f5915ae871eb59dc73f13dcc92ef7
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
