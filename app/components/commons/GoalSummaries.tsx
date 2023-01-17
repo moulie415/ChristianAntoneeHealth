@@ -45,7 +45,7 @@ const GoalCircle: React.FC<{
         width={DevicePixels[15]}
         backgroundWidth={DevicePixels[5]}
         fill={fill}
-        tintColor={colors.appBlue}
+        tintColor={score >= goal ? colors.appGreen : colors.appBlue}
         // tintColorSecondary={colors.appBlueFaded}
         backgroundColor={colors.appWhite}
         arcSweepAngle={240}
@@ -73,7 +73,7 @@ const GoalCircle: React.FC<{
           textAlign: 'center',
           alignSelf: 'center',
         }}>
-        {title}
+        {`${title} ${score}/${goal}`}
       </Text>
       {!isFirst && (
         <TouchableOpacity
