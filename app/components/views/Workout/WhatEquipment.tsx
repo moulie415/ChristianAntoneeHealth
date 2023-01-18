@@ -7,7 +7,6 @@ import Text from '../../commons/Text';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import FastImage from 'react-native-fast-image';
-import {TourGuideZone} from 'rn-tourguide';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
@@ -25,103 +24,96 @@ const WhatEquipment: React.FC<{
             }}>
             What equipment do you have?
           </Text>
-          <TourGuideZone
-            zone={2}
-            text="Select your amount of equipment from here"
-            borderRadius={16}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('WhatArea', {
-                  equipment: 'minimal',
-                })
-              }
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('WhatArea', {
+                equipment: 'minimal',
+              })
+            }
+            style={{
+              margin: DevicePixels[20],
+              marginBottom: DevicePixels[10],
+              width: Dimensions.get('window').width - DevicePixels[40],
+            }}>
+            <FastImage
               style={{
-                margin: DevicePixels[20],
-                marginBottom: DevicePixels[10],
-                width: Dimensions.get('window').width - DevicePixels[40],
-              }}>
-              <FastImage
+                height: DevicePixels[200],
+                justifyContent: 'flex-end',
+                borderRadius: DevicePixels[10],
+              }}
+              source={require('../../../images/bits-and-pieces.jpg')}>
+              <View
                 style={{
-                  height: DevicePixels[200],
-                  justifyContent: 'flex-end',
-                  borderRadius: DevicePixels[10],
-                }}
-                source={require('../../../images/bits-and-pieces.jpg')}>
-                <View
+                  padding: DevicePixels[20],
+                  borderBottomLeftRadius: DevicePixels[10],
+                  borderBottomRightRadius: DevicePixels[10],
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                }}>
+                <Text
                   style={{
-                    padding: DevicePixels[20],
-                    borderBottomLeftRadius: DevicePixels[10],
-                    borderBottomRightRadius: DevicePixels[10],
-                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    textAlign: 'center',
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    fontSize: DevicePixels[20],
+                    marginBottom: DevicePixels[10],
                   }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: colors.appWhite,
-                      fontWeight: 'bold',
-                      fontSize: DevicePixels[20],
-                      marginBottom: DevicePixels[10],
-                    }}>
-                    I’ve got a few bits and pieces
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      textAlign: 'center',
-                      fontSize: DevicePixels[10],
-                    }}>
-                    (Dumbbells, exercise ball, exercise mat)
-                  </Text>
-                </View>
-              </FastImage>
-            </TouchableOpacity>
+                  I’ve got a few bits and pieces
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                    fontSize: DevicePixels[10],
+                  }}>
+                  (Dumbbells, exercise ball, exercise mat)
+                </Text>
+              </View>
+            </FastImage>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('WhatArea', {equipment: 'full'})
-              }
+          <TouchableOpacity
+            onPress={() => navigation.navigate('WhatArea', {equipment: 'full'})}
+            style={{
+              margin: DevicePixels[20],
+              marginTop: DevicePixels[10],
+              width: Dimensions.get('window').width - DevicePixels[40],
+            }}>
+            <FastImage
               style={{
-                margin: DevicePixels[20],
-                marginTop: DevicePixels[10],
-                width: Dimensions.get('window').width - DevicePixels[40],
-              }}>
-              <FastImage
+                height: DevicePixels[200],
+                justifyContent: 'flex-end',
+                borderRadius: DevicePixels[10],
+              }}
+              source={require('../../../images/access-to-gym.jpg')}>
+              <View
                 style={{
-                  height: DevicePixels[200],
-                  justifyContent: 'flex-end',
-                  borderRadius: DevicePixels[10],
-                }}
-                source={require('../../../images/access-to-gym.jpg')}>
-                <View
+                  padding: DevicePixels[20],
+                  borderBottomLeftRadius: DevicePixels[10],
+                  borderBottomRightRadius: DevicePixels[10],
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                }}>
+                <Text
                   style={{
-                    padding: DevicePixels[20],
-                    borderBottomLeftRadius: DevicePixels[10],
-                    borderBottomRightRadius: DevicePixels[10],
-                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    textAlign: 'center',
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    fontSize: DevicePixels[20],
+                    marginBottom: DevicePixels[10],
                   }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: colors.appWhite,
-                      fontWeight: 'bold',
-                      fontSize: DevicePixels[20],
-                      marginBottom: DevicePixels[10],
-                    }}>
-                    I’ve got access to a gym
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      textAlign: 'center',
-                      fontSize: DevicePixels[10],
-                    }}>
-                    (Dumbbells, weighted bars, bosu ball, exercise ball,
-                    exercise benches Kettlebell etc)
-                  </Text>
-                </View>
-              </FastImage>
-            </TouchableOpacity>
-          </TourGuideZone>
+                  I’ve got access to a gym
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                    fontSize: DevicePixels[10],
+                  }}>
+                  (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
+                  benches Kettlebell etc)
+                </Text>
+              </View>
+            </FastImage>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </View>

@@ -35,10 +35,9 @@ const Home: React.FC<{
 
   const handleOnStepChange = useCallback(
     (step: {order?: number}) => {
-      if (step?.order === 2) {
-        navigation.navigate('Workout');
+      if (step?.order === 3) {
+        navigation.navigate('More');
       }
-      console.log(step?.order); // <--- will contain the current step
     },
     [navigation],
   );
@@ -83,17 +82,13 @@ const Home: React.FC<{
             }}>
             {profile.name?.split(' ')[0] || 'user'}
           </Text> */}
-          <TourGuideZone
-            zone={0}
-            text="Start a workout from here"
-            borderRadius={16}>
+
             <HomeCard
               title="New Workout"
               subtitle="Start a new workout now"
               image={require('../../images/Homepage_new_workout.jpeg')}
               onPress={() => navigation.navigate('Workout')}
             />
-          </TourGuideZone>
           <HomeCard
             title="Fitness tests"
             subtitle="Track your fitness overtime"

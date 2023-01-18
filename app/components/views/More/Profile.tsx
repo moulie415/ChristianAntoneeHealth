@@ -38,6 +38,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import PickerModal from '../../commons/PickerModal';
 import ProfileCharts from '../../commons/ProfileCharts';
 import GoalSummaries from '../../commons/GoalSummaries';
+import Divider from '../../commons/Divider';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
@@ -335,7 +336,7 @@ const Profile: React.FC<ProfileProps> = ({
         </LinearGradient>
 
         <GoalSummaries />
-
+        <Divider />
         <ProfileCharts
           weight={weight}
           height={height}
@@ -347,6 +348,9 @@ const Profile: React.FC<ProfileProps> = ({
           setShowMuscleMassModal={setShowMuscleMassModal}
           setShowHeightModal={setShowHeightModal}
           setShowWeightModal={setShowWeightModal}
+        />
+        <Divider
+          style={{marginTop: DevicePixels[20], marginBottom: DevicePixels[10]}}
         />
         <Button
           variant="danger"

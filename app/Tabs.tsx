@@ -62,7 +62,10 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <TourGuideZone zone={1} text="Or from here" borderRadius={16}>
+            <TourGuideZone
+              zone={0}
+              text="Start a workout from here"
+              borderRadius={16}>
               <Icon color={color} size={size} name="dumbbell" />
             </TourGuideZone>
           ),
@@ -76,7 +79,12 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Test',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="heartbeat" />
+            <TourGuideZone
+              zone={1}
+              text="Test your fitness from our list of tests here"
+              borderRadius={16}>
+              <Icon color={color} size={size} name="heartbeat" />
+            </TourGuideZone>
           ),
           headerShown: false,
         }}
@@ -87,7 +95,14 @@ const Tabs: React.FC<{
       <Tab.Screen
         options={{
           tabBarLabel: 'More',
-          tabBarIcon: ({color, size}) => <MoreIcon color={color} size={size} />,
+          tabBarIcon: ({color, size}) => (
+            <TourGuideZone
+              zone={2}
+              text="For everything else there the More tab"
+              borderRadius={16}>
+              <MoreIcon color={color} size={size} />
+            </TourGuideZone>
+          ),
           headerShown: false,
         }}
         key="More"

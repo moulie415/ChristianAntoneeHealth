@@ -40,6 +40,7 @@ import WelcomeModal from './WelcomeModal';
 import {
   TourGuideProvider, // Main provider
 } from 'rn-tourguide';
+import CustomTooltip from './components/commons/CustomTooltip';
 
 const {height, width} = Dimensions.get('window');
 
@@ -189,7 +190,9 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <TourGuideProvider backdropColor="rgba(0,0,0,0.6)">
+        <TourGuideProvider
+          backdropColor="rgba(0,0,0,0.6)"
+          tooltipComponent={CustomTooltip}>
           <NavigationContainer
             ref={navigationRef}
             onReady={() => {

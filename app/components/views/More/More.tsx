@@ -27,6 +27,57 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import * as Sentry from '@sentry/react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
+import {TourGuideZone, TourGuideZoneByPosition} from 'rn-tourguide';
+
+export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
+  return (
+    <TouchableOpacity
+      onPress={item.onPress}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: DevicePixels[10],
+      }}>
+      <View
+        style={{
+          height: DevicePixels[35],
+          width: DevicePixels[35],
+          backgroundColor: '#212121',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: DevicePixels[5],
+        }}>
+        <Icon
+          size={DevicePixels[20]}
+          color={colors.appWhite}
+          solid
+          name={item.icon}
+        />
+      </View>
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontSize: DevicePixels[18],
+          fontWeight: 'bold',
+          marginLeft: DevicePixels[15],
+        }}>
+        {item.title}
+      </Text>
+      <View style={{alignItems: 'flex-end', flex: 1}}>
+        {item.accessoryRight}
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+export interface ListItem {
+  title: string;
+  icon: string;
+  onPress?: () => void;
+  accessoryRight?: ReactNode;
+  tourIndex?: number;
+  tourText?: string;
+}
 
 const More: React.FC<MoreProps> = ({
   navigation,
@@ -52,12 +103,7 @@ const More: React.FC<MoreProps> = ({
       },
     ]);
   };
-  const listItems: {
-    title: string;
-    icon: string;
-    onPress?: () => void;
-    accessoryRight?: ReactNode;
-  }[] = [
+  const listItems: ListItem[] = [
     {
       title: 'Education',
       icon: 'book-open',
@@ -155,46 +201,33 @@ const More: React.FC<MoreProps> = ({
         <FlatList
           data={listItems}
           contentContainerStyle={{marginTop: DevicePixels[20]}}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={item.onPress}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: DevicePixels[10],
-              }}>
-              <View
-                style={{
-                  height: DevicePixels[35],
-                  width: DevicePixels[35],
-                  backgroundColor: '#212121',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: DevicePixels[5],
-                }}>
-                <Icon
-                  size={DevicePixels[20]}
-                  color={colors.appWhite}
-                  solid
-                  name={item.icon}
-                />
-              </View>
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: DevicePixels[18],
-                  fontWeight: 'bold',
-                  marginLeft: DevicePixels[15],
-                }}>
-                {item.title}
-              </Text>
-              <View style={{alignItems: 'flex-end', flex: 1}}>
-                {item.accessoryRight}
-              </View>
-            </TouchableOpacity>
-          )}
+          renderItem={({item}) => {
+            if (item.tourIndex) {
+              return (
+                <TourGuideZone
+                  maskOffset={-200}
+                  tooltipBottomOffset={-150}
+                  zone={item.tourIndex}
+                  text={item.tourText}
+                  borderRadius={16}>
+                  <MoreItem item={item} />
+                </TourGuideZone>
+              );
+            }
+            return <MoreItem item={item} />;
+          }}
         />
       </SafeAreaView>
+      <TourGuideZoneByPosition
+        zone={3}
+        shape="rectangle"
+        isTourGuide
+        text="Keep up with your goals and access and log your biometric data from your profile"
+        top={DevicePixels[130]}
+        width="100%"
+        height={DevicePixels[45]}
+        tooltipBottomOffset={50}
+      />
     </FastImage>
   );
 };

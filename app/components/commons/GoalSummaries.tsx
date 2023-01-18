@@ -231,6 +231,7 @@ const GoalSummaries: React.FC<{
       <Text
         style={{
           margin: DevicePixels[20],
+          marginTop: DevicePixels[30],
           color: colors.appWhite,
           fontWeight: 'bold',
           alignSelf: 'center',

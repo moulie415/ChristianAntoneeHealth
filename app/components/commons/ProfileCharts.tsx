@@ -85,71 +85,79 @@ const Chart: React.FC<{
           margin: DevicePixels[20],
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: DevicePixels[24],
+          fontSize: DevicePixels[20],
           marginBottom: 0,
         }}>
         {title}
       </Text>
-      <VictoryChart
-        maxDomain={{
-          y: maxY !== undefined && maxY > highest + 5 ? maxY : highest + 5,
-        }}
-        minDomain={{y: minY !== undefined ? minY : lowest - 5}}
-        width={Dimensions.get('window').width * 0.9}
-        height={DevicePixels[250]}
-        theme={VictoryTheme.material}>
-        <VictoryArea style={{data: {fill: colors.appBlue}}} data={data} />
-        {/* <VictoryLine style={{data: {fill: colors.appBlue}}} data={data} /> */}
-
-        <VictoryAxis
-          offsetY={DevicePixels[50]}
-          tickFormat={x => {
-            if (filter === 6) {
-              return moment(x).format('dd');
-            }
-            if (filter === 30) {
-              return moment(x).format('Do');
-            }
-            if (filter === 365) {
-              return moment(x).format('MMM');
-            }
+      <View
+        style={{
+          marginTop: -DevicePixels[20],
+          width: Dimensions.get('window').width * 0.9,
+          alignItems: 'center'
+        }}>
+        <VictoryChart
+          maxDomain={{
+            y: maxY !== undefined && maxY > highest + 5 ? maxY : highest + 5,
           }}
-        />
-        <VictoryAxis dependentAxis tickFormat={x => `${x}${suffix || ''}`} />
-      </VictoryChart>
-      <View style={{marginLeft: DevicePixels[20]}}>
-        {current !== undefined && (
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: DevicePixels[16],
-              marginHorizontal: DevicePixels[20],
-              marginVertical: DevicePixels[10],
-              textAlign: 'center',
-            }}>
-            Your current{' '}
-            {capitalize ? title.toUpperCase() : title.toLowerCase()} is{' '}
-            <Text style={{fontWeight: 'bold'}}>{current + (suffix || '')}</Text>
-          </Text>
-        )}
+          minDomain={{y: minY !== undefined ? minY : lowest - 5}}
+          width={Dimensions.get('window').width * 0.9}
+          height={DevicePixels[250]}
+          theme={VictoryTheme.material}>
+          <VictoryArea style={{data: {fill: colors.appBlue}}} data={data} />
+          {/* <VictoryLine style={{data: {fill: colors.appBlue}}} data={data} /> */}
 
-        {current !== undefined && (
-          <Text
-            onPress={() => setModalVisible(true)}
-            style={{
-              color: colors.appWhite,
-              fontWeight: 'bold',
-              textDecorationLine: 'underline',
-              marginHorizontal: DevicePixels[20],
-              marginBottom: DevicePixels[20],
-              textAlign: 'center',
-            }}>
-            What does this mean?
-          </Text>
-        )}
+          <VictoryAxis
+            offsetY={DevicePixels[50]}
+            tickFormat={x => {
+              if (filter === 6) {
+                return moment(x).format('dd');
+              }
+              if (filter === 30) {
+                return moment(x).format('Do');
+              }
+              if (filter === 365) {
+                return moment(x).format('MMM');
+              }
+            }}
+          />
+          <VictoryAxis dependentAxis tickFormat={x => `${x}${suffix || ''}`} />
+        </VictoryChart>
+        <View style={{marginLeft: DevicePixels[20]}}>
+          {current !== undefined && (
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: DevicePixels[16],
+                marginHorizontal: DevicePixels[20],
+                marginVertical: DevicePixels[10],
+                textAlign: 'center',
+              }}>
+              Your current{' '}
+              {capitalize ? title.toUpperCase() : title.toLowerCase()} is{' '}
+              <Text style={{fontWeight: 'bold'}}>
+                {current + (suffix || '')}
+              </Text>
+            </Text>
+          )}
+
+          {current !== undefined && (
+            <Text
+              onPress={() => setModalVisible(true)}
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                textDecorationLine: 'underline',
+                marginHorizontal: DevicePixels[20],
+                marginBottom: DevicePixels[20],
+                textAlign: 'center',
+              }}>
+              What does this mean?
+            </Text>
+          )}
+        </View>
+        {footer}
       </View>
-      {footer}
-
       <MetricExplainedModal
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
@@ -286,6 +294,17 @@ const ProfileCharts: React.FC<{
   const latestBMI = weightItems?.data[weightItems.data.length - 1]?.y;
   return (
     <>
+      <Text
+        style={{
+          marginTop: DevicePixels[20],
+
+          color: colors.appWhite,
+          fontWeight: 'bold',
+          alignSelf: 'center',
+          fontSize: DevicePixels[24],
+        }}>
+        Biometric tracking
+      </Text>
       <View
         style={{
           flexDirection: 'row',

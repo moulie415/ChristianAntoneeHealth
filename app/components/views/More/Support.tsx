@@ -5,6 +5,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
+  FlatList,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,8 +17,50 @@ import Instabug from 'instabug-reactnative';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useTourGuideController} from 'rn-tourguide';
+import {ListItem, MoreItem} from './More';
+import {navigate} from '../../../RootNavigation';
 
 const Support: React.FC<SupportProps> = () => {
+  const {
+    canStart, // a boolean indicate if you can start tour guide
+    start, // a function to start the tourguide
+    getCurrentStep,
+  } = useTourGuideController();
+
+  const items: ListItem[] = [
+    {
+      title: 'Privacy Policy',
+      icon: 'check-circle',
+      onPress: () =>
+        Linking.openURL('https://christianantonee.com/privacy-policy'),
+    },
+    {
+      title: 'Report a problem',
+      icon: 'bug',
+      onPress: () => Instabug.show(),
+    },
+    {
+      title: 'Contact us',
+      icon: 'envelope',
+      onPress: () => {
+        try {
+          Linking.openURL('mailto:info@christianantonee.com?subject=CA Health');
+        } catch (e) {
+          Linking.openURL('https://christianantonee.com/contact');
+        }
+      },
+    },
+    {
+      title: 'Restart tour',
+      icon: 'sign',
+      onPress: () => {
+        navigate('Home');
+        start();
+      },
+    },
+  ];
+
   return (
     <FastImage
       source={require('../../../images/login.jpeg')}
@@ -32,117 +75,13 @@ const Support: React.FC<SupportProps> = () => {
       />
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Support" />
-
-        <TouchableOpacity
-          onPress={() =>
-            Linking.openURL('https://christianantonee.com/privacy-policy')
-          }
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: DevicePixels[10],
-          }}>
-          <View
-            style={{
-              height: DevicePixels[35],
-              width: DevicePixels[35],
-              backgroundColor: '#212121',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: DevicePixels[5],
-            }}>
-            <Icon
-              size={DevicePixels[20]}
-              color={colors.appWhite}
-              solid
-              name="check-circle"
-            />
-          </View>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: DevicePixels[18],
-              fontWeight: 'bold',
-              marginLeft: DevicePixels[15],
-            }}>
-            Privacy policy
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => Instabug.show()}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: DevicePixels[10],
-          }}>
-          <View
-            style={{
-              height: DevicePixels[35],
-              width: DevicePixels[35],
-              backgroundColor: '#212121',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: DevicePixels[5],
-            }}>
-            <Icon
-              size={DevicePixels[20]}
-              color={colors.appWhite}
-              solid
-              name="bug"
-            />
-          </View>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: DevicePixels[18],
-              fontWeight: 'bold',
-              marginLeft: DevicePixels[15],
-            }}>
-            Report a problem
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            try {
-              Linking.openURL(
-                'mailto:info@christianantonee.com?subject=CA Health',
-              );
-            } catch (e) {
-              Linking.openURL('https://christianantonee.com/contact');
-            }
+        <FlatList
+          data={items}
+          contentContainerStyle={{marginTop: DevicePixels[20]}}
+          renderItem={({item}) => {
+            return <MoreItem item={item} />;
           }}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: DevicePixels[10],
-          }}>
-          <View
-            style={{
-              height: DevicePixels[35],
-              width: DevicePixels[35],
-              backgroundColor: '#212121',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: DevicePixels[5],
-            }}>
-            <Icon
-              size={DevicePixels[20]}
-              color={colors.appWhite}
-              solid
-              name="envelope"
-            />
-          </View>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: DevicePixels[18],
-              fontWeight: 'bold',
-              marginLeft: DevicePixels[15],
-            }}>
-            Contact us
-          </Text>
-        </TouchableOpacity>
+        />
       </SafeAreaView>
     </FastImage>
   );

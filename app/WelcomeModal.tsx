@@ -5,9 +5,7 @@ import colors from './constants/colors';
 import DevicePixels from './helpers/DevicePixels';
 import GoalSummaries from './components/commons/GoalSummaries';
 import Button from './components/commons/Button';
-import {
-  useTourGuideController, // hook to start, etc.
-} from 'rn-tourguide';
+import {useTourGuideController} from 'rn-tourguide';
 import {MyRootState} from './types/Shared';
 import {connect} from 'react-redux';
 
@@ -49,9 +47,14 @@ const WelcomeModal: React.FC<{
             color: colors.appWhite,
             fontWeight: 'bold',
           }}>
-          Welcome to CA Health
+          Welcome
         </Text>
-        <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+        <Text
+          style={{
+            color: colors.appWhite,
+            textAlign: 'center',
+            fontSize: DevicePixels[20],
+          }}>
           Here are your...
         </Text>
         <GoalSummaries />
