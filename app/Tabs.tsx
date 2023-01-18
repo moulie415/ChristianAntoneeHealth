@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
 import Color from 'color';
-import {incrementStep} from './actions/tour';
+import {TourGuideZone} from 'rn-tourguide';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -22,9 +22,7 @@ const color = new Color(colors.appWhite);
 const Tabs: React.FC<{
   profile: Profile;
   plansEnabled: boolean;
-  step: number;
-  incrementStep: () => void;
-}> = ({profile, plansEnabled, step, incrementStep: increment}) => {
+}> = ({profile, plansEnabled}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -64,7 +62,9 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="dumbbell" />
+            <TourGuideZone zone={1} text="Or from here" borderRadius={16}>
+              <Icon color={color} size={size} name="dumbbell" />
+            </TourGuideZone>
           ),
           headerShown: false,
         }}
@@ -98,14 +98,9 @@ const Tabs: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, settings, tour}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: MyRootState) => ({
   profile: profile.profile,
   plansEnabled: settings.plansEnabled,
-  step: tour.step,
 });
 
-const mapDispatchToProps = {
-  incrementStep,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
+export default connect(mapStateToProps)(Tabs);

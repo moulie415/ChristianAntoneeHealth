@@ -37,6 +37,9 @@ import Instabug from 'instabug-reactnative';
 import Text from './components/commons/Text';
 import Button from './components/commons/Button';
 import WelcomeModal from './WelcomeModal';
+import {
+  TourGuideProvider, // Main provider
+} from 'rn-tourguide';
 
 const {height, width} = Dimensions.get('window');
 
@@ -134,7 +137,6 @@ export type StackParamList = {
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
 
 const App: React.FC = () => {
-  const [modalVisible, setModalVisible] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -184,43 +186,37 @@ const App: React.FC = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (!store.getState().tour.hasViewedTour && !showSplash) {
-      setModalVisible(true);
-    }
-  }, [showSplash]);
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <NavigationContainer
-          ref={navigationRef}
-          onReady={() => {
-            sagaMiddleware.run(rootSaga);
-            SplashScreen.hide();
-            // Register the navigation container with the instrumentation
-            routingInstrumentation.registerNavigationContainer(navigationRef);
-          }}>
-          <StackComponent />
-        </NavigationContainer>
+        <TourGuideProvider backdropColor="rgba(0,0,0,0.6)">
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              sagaMiddleware.run(rootSaga);
+              SplashScreen.hide();
+              // Register the navigation container with the instrumentation
+              routingInstrumentation.registerNavigationContainer(navigationRef);
+            }}>
+            <StackComponent />
+          </NavigationContainer>
 
-        {showSplash && (
-          <View style={{backgroundColor: colors.appWhite}}>
-            <FastImage
-              source={require('./images/splash.gif')}
-              style={{
-                height,
-                width: '75%',
-                backgroundColor: colors.appWhite,
-                alignSelf: 'center',
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        )}
-        <WelcomeModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        />
+          {showSplash && (
+            <View style={{backgroundColor: colors.appWhite}}>
+              <FastImage
+                source={require('./images/splash.gif')}
+                style={{
+                  height,
+                  width: '75%',
+                  backgroundColor: colors.appWhite,
+                  alignSelf: 'center',
+                }}
+                resizeMode="contain"
+              />
+            </View>
+          )}
+          <WelcomeModal showSplash={showSplash} />
+        </TourGuideProvider>
       </Provider>
     </PersistGate>
   );

@@ -52,6 +52,7 @@ export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const REQUEST_PLAN = 'REQUEST_PLAN';
 export const SET_PLAN_STATUS = 'SET_PLAN_STATUS';
+export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 
 interface setProfileAction {
   type: typeof SET_PROFILE;
@@ -262,6 +263,10 @@ export interface SetPlanStatus {
   payload: PlanStatus;
 }
 
+export interface SetHasViewedTourAction {
+  type: typeof SET_HAS_VIEWED_TOUR;
+}
+
 export type ProfileActionTypes =
   | setProfileAction
   | SetLoggedInAction
@@ -297,7 +302,8 @@ export type ProfileActionTypes =
   | SetHeightSamplesAction
   | SetBoneMassSamplesAction
   | SetBodyFatPercentageSamplesAction
-  | SetMuscleMassSamplesAction;
+  | SetMuscleMassSamplesAction
+  | SetHasViewedTourAction 
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -522,4 +528,8 @@ export const requestPlan = (): RequestPlanAction => ({
 export const setPlanStatus = (payload: PlanStatus): SetPlanStatus => ({
   type: SET_PLAN_STATUS,
   payload,
+});
+
+export const setHasViewedTour = (): SetHasViewedTourAction => ({
+  type: SET_HAS_VIEWED_TOUR,
 });

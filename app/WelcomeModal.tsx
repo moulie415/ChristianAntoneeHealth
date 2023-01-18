@@ -1,17 +1,32 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Modal from './components/commons/Modal';
 import colors from './constants/colors';
 import DevicePixels from './helpers/DevicePixels';
-import {useSpotlightTour} from '@stackbuilders/react-native-spotlight-tour';
 import GoalSummaries from './components/commons/GoalSummaries';
 import Button from './components/commons/Button';
+import {
+  useTourGuideController, // hook to start, etc.
+} from 'rn-tourguide';
+import {MyRootState} from './types/Shared';
+import {connect} from 'react-redux';
 
 const WelcomeModal: React.FC<{
-  modalVisible: boolean;
-  setModalVisible: (visible: boolean) => void;
-}> = ({modalVisible, setModalVisible}) => {
+  showSplash: boolean;
+  hasViewedTour: boolean;
+}> = ({hasViewedTour, showSplash}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const {
+    canStart, // a boolean indicate if you can start tour guide
+    start, // a function to start the tourguide
+    getCurrentStep,
+  } = useTourGuideController();
 
+  useEffect(() => {
+    if (!hasViewedTour && !showSplash) {
+      setModalVisible(true);
+    }
+  }, [showSplash, hasViewedTour]);
   return (
     <Modal
       disableBackDrop
@@ -44,7 +59,7 @@ const WelcomeModal: React.FC<{
           text="Start tour"
           onPress={() => {
             setModalVisible(false);
-      
+            start();
             // setViewed
           }}
         />
@@ -61,4 +76,8 @@ const WelcomeModal: React.FC<{
   );
 };
 
-export default WelcomeModal;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  hasViewedTour: profile.hasViewedTour,
+});
+
+export default connect(mapStateToProps)(WelcomeModal);

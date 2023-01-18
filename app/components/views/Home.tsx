@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeCard from '../commons/HomeCard';
 import DevicePixels from '../../helpers/DevicePixels';
-import Text from '../commons/Text';
-import {greetingMessage} from '../../helpers';
 import colors from '../../constants/colors';
 import Avatar from '../commons/Avatar';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -13,10 +11,7 @@ import FastImage from 'react-native-fast-image';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../../types/Profile';
-import Modal from '../commons/Modal';
-import Button from '../commons/Button';
-import {setHasViewedTour, startTour} from '../../actions/tour';
-import GoalSummaries from '../commons/GoalSummaries';
+import {TourGuideZone, useTourGuideController} from 'rn-tourguide';
 
 const {height, width} = Dimensions.get('window');
 
@@ -30,22 +25,31 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
   viewedPlan: boolean;
-  hasViewedTour: boolean;
-  startTour: () => void;
-  setHasViewedTour: () => void;
-}> = ({
-  navigation,
-  profile,
-  viewedPlan,
-  hasViewedTour,
-  startTour: start,
-  setHasViewedTour: setViewed,
-}) => {
+}> = ({navigation, profile, viewedPlan}) => {
+  const {eventEmitter} = useTourGuideController();
   useEffect(() => {
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
-  }, [navigation, viewedPlan, hasViewedTour]);
+  }, [navigation, viewedPlan]);
+
+  const handleOnStepChange = useCallback(
+    (step: {order?: number}) => {
+      if (step?.order === 2) {
+        navigation.navigate('Workout');
+      }
+      console.log(step?.order); // <--- will contain the current step
+    },
+    [navigation],
+  );
+
+  useEffect(() => {
+    eventEmitter.on('stepChange', handleOnStepChange);
+
+    return () => {
+      eventEmitter.off('stepChange', handleOnStepChange);
+    };
+  }, [eventEmitter, handleOnStepChange]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView>
@@ -79,13 +83,17 @@ const Home: React.FC<{
             }}>
             {profile.name?.split(' ')[0] || 'user'}
           </Text> */}
-
-          <HomeCard
-            title="New Workout"
-            subtitle="Start a new workout now"
-            image={require('../../images/Homepage_new_workout.jpeg')}
-            onPress={() => navigation.navigate('Workout')}
-          />
+          <TourGuideZone
+            zone={0}
+            text="Start a workout from here"
+            borderRadius={16}>
+            <HomeCard
+              title="New Workout"
+              subtitle="Start a new workout now"
+              image={require('../../images/Homepage_new_workout.jpeg')}
+              onPress={() => navigation.navigate('Workout')}
+            />
+          </TourGuideZone>
           <HomeCard
             title="Fitness tests"
             subtitle="Track your fitness overtime"
@@ -131,15 +139,9 @@ const Home: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, tour}: MyRootState) => ({
+const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
   viewedPlan: profile.viewedPlan,
-  hasViewedTour: tour.hasViewedTour,
 });
 
-const mapDispatchToProps = {
-  startTour,
-  setHasViewedTour,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

@@ -6,7 +6,6 @@ import tests from './tests';
 import quickRoutines from './quickRoutines';
 import education from './education';
 import settings from './settings';
-import tour from './tour';
 import {combineReducers} from 'redux';
 
 const config = {
@@ -33,12 +32,6 @@ const educationPersistConfig = {
   blacklist: ['loading'],
 };
 
-const tourPersistConfig = {
-  key: 'tour',
-  storage: AsyncStorage,
-  blacklist: ['step'],
-};
-
 const rootReducer = combineReducers({
   profile: persistReducer(profilePersistConfig, profile),
   exercises: persistReducer(exercisesPersistConfig, exercises),
@@ -46,7 +39,6 @@ const rootReducer = combineReducers({
   quickRoutines,
   education: persistReducer(educationPersistConfig, education),
   settings,
-  tour: persistReducer(tourPersistConfig, tour),
 });
 
 export default persistReducer(config, rootReducer);

@@ -26,6 +26,7 @@ import {
   SET_BODY_FAT_PERCENTAGE_SAMPLES,
   SET_MUSCLE_MASS_SAMPLES,
   SET_BONE_MASS_SAMPLES,
+  SET_HAS_VIEWED_TOUR,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -61,6 +62,7 @@ export interface ProfileState {
   viewedPlan: boolean;
   weeklyItems: WeeklyItems;
   plan?: Plan;
+  hasViewedTour: boolean;
 }
 
 const initialState: ProfileState = {
@@ -108,6 +110,7 @@ const initialState: ProfileState = {
     quickRoutines: {},
     tests: {},
   },
+  hasViewedTour: false,
 };
 
 const reducer = (
@@ -265,6 +268,8 @@ const reducer = (
         ...state,
         plan: action.payload,
       };
+    case SET_HAS_VIEWED_TOUR:
+      return {...state, hasViewedTour: true};
     default:
       return state;
   }
