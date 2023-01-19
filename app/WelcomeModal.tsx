@@ -14,7 +14,7 @@ const WelcomeModal: React.FC<{
   showSplash: boolean;
   hasViewedTour: boolean;
   setViewed: () => void;
-}> = ({hasViewedTour, showSplash}) => {
+}> = ({hasViewedTour, showSplash, setViewed}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const {
     canStart, // a boolean indicate if you can start tour guide
@@ -76,7 +76,7 @@ const WelcomeModal: React.FC<{
           onPress={() => {
             setModalVisible(false);
             start();
-            // setViewed
+            setViewed();
           }}
         />
       </View>
