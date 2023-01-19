@@ -6,6 +6,7 @@ import styles from '../../../styles/views/More';
 import {
   Alert,
   FlatList,
+  Platform,
   Share,
   StyleSheet,
   TouchableOpacity,
@@ -202,18 +203,6 @@ const More: React.FC<MoreProps> = ({
           data={listItems}
           contentContainerStyle={{marginTop: DevicePixels[20]}}
           renderItem={({item}) => {
-            if (item.tourIndex) {
-              return (
-                <TourGuideZone
-                  maskOffset={-200}
-                  tooltipBottomOffset={-150}
-                  zone={item.tourIndex}
-                  text={item.tourText}
-                  borderRadius={16}>
-                  <MoreItem item={item} />
-                </TourGuideZone>
-              );
-            }
             return <MoreItem item={item} />;
           }}
         />
@@ -223,10 +212,9 @@ const More: React.FC<MoreProps> = ({
         shape="rectangle"
         isTourGuide
         text="Keep up with your goals and access and log your biometric data from your profile"
-        top={DevicePixels[130]}
+        top={Platform.OS === 'ios' ? DevicePixels[127] : DevicePixels[80]}
         width="100%"
         height={DevicePixels[45]}
-        tooltipBottomOffset={50}
       />
     </FastImage>
   );

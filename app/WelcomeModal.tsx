@@ -8,10 +8,12 @@ import Button from './components/commons/Button';
 import {useTourGuideController} from 'rn-tourguide';
 import {MyRootState} from './types/Shared';
 import {connect} from 'react-redux';
+import {setHasViewedTour} from './actions/profile';
 
 const WelcomeModal: React.FC<{
   showSplash: boolean;
   hasViewedTour: boolean;
+  setViewed: () => void;
 }> = ({hasViewedTour, showSplash}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const {
@@ -58,20 +60,23 @@ const WelcomeModal: React.FC<{
           Here are your...
         </Text>
         <GoalSummaries />
+        <Text
+          style={{
+            color: colors.appWhite,
+            marginBottom: DevicePixels[20],
+            fontSize: DevicePixels[16],
+            marginTop: -DevicePixels[10],
+          }}>
+          You can view your goals again under{' '}
+          <Text style={{fontWeight: 'bold'}}>My Profile</Text>, for a brief tour
+          of the app hit the button below...
+        </Text>
         <Button
           text="Start tour"
           onPress={() => {
             setModalVisible(false);
             start();
             // setViewed
-          }}
-        />
-        <Button
-          style={{marginTop: DevicePixels[10]}}
-          text="Skip"
-          onPress={() => {
-            setModalVisible(false);
-            // setViewed()
           }}
         />
       </View>
@@ -83,4 +88,8 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   hasViewedTour: profile.hasViewedTour,
 });
 
-export default connect(mapStateToProps)(WelcomeModal);
+const mapDispatchToProps = {
+  setViewed: setHasViewedTour,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeModal);

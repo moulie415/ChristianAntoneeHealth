@@ -191,6 +191,7 @@ const App: React.FC = () => {
     <PersistGate persistor={persistor}>
       <Provider store={store}>
         <TourGuideProvider
+          androidStatusBarVisible
           backdropColor="rgba(0,0,0,0.6)"
           tooltipComponent={CustomTooltip}>
           <NavigationContainer
