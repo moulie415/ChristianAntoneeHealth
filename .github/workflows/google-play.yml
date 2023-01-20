@@ -30,7 +30,7 @@ jobs:
         run: |
           exec .github/scripts/create-env.sh
       - name: Bump version
-        uses: chkfung/android-version-actions@v1.1
+        uses: chkfung/android-version-actions@v1.2
         with:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
