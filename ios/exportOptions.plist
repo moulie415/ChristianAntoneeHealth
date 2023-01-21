@@ -20,8 +20,8 @@
 	<dict>
 		<key>com.HealthAndMovement</key>
 		<string>Health and Movement Distribution</string>
-		<key>com.HealthAndMovement</key>
-		<string>Health and Movement Development</string>
+		<!-- <key>com.HealthAndMovement</key>
+		<string>Health and Movement Development</string> -->
 		<key>com.HealthAndMovement.watch</key>
 		<string>CA Health Watch Distribution</string>
 		<key>com.HealthAndMovement.watch.extension</key>
