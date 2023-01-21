@@ -26,6 +26,10 @@
 		<string>CA Health Watch Distribution</string>
 		<key>com.HealthAndMovement.watch.extension</key>
 		<string>CA Health Watch Extension Distribution</string>
+    <key>com.HealthAndMovement.watch</key>
+		<string>CA Health Watch Development</string>
+		<key>com.HealthAndMovement.watch.extension</key>
+		<string>CA Health Watch Extension Development</string>
 	</dict>
 </dict>
 </plist>
