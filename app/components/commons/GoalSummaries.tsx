@@ -36,7 +36,11 @@ const GoalCircle: React.FC<{
   suffix,
   fontSize,
 }) => {
-  const [fill, setFill] = useState((100 / goal) * score);
+  const [fill, setFill] = useState(0);
+
+  useEffect(() => {
+    setFill((100 / goal) * score);
+  }, [setFill, goal, score]);
   return (
     <View style={{alignItems: 'center'}}>
       <AnimatedCircularProgress

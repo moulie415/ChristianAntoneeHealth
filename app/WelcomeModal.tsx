@@ -14,19 +14,20 @@ const WelcomeModal: React.FC<{
   showSplash: boolean;
   hasViewedTour: boolean;
   setViewed: () => void;
-}> = ({hasViewedTour, showSplash, setViewed}) => {
+  loggedIn: boolean;
+}> = ({hasViewedTour, showSplash, setViewed, loggedIn}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const {
     canStart, // a boolean indicate if you can start tour guide
     start, // a function to start the tourguide
     getCurrentStep,
   } = useTourGuideController();
-
+  console.log(hasViewedTour, showSplash, loggedIn)
   useEffect(() => {
-    if (!hasViewedTour && !showSplash) {
+    if (!hasViewedTour && !showSplash && loggedIn) {
       setModalVisible(true);
     }
-  }, [showSplash, hasViewedTour]);
+  }, [showSplash, hasViewedTour, loggedIn]);
   return (
     <Modal
       disableBackDrop
@@ -86,6 +87,7 @@ const WelcomeModal: React.FC<{
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   hasViewedTour: profile.hasViewedTour,
+  loggedIn: profile.loggedIn,
 });
 
 const mapDispatchToProps = {
