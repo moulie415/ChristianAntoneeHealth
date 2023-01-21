@@ -22,7 +22,6 @@ const WelcomeModal: React.FC<{
     start, // a function to start the tourguide
     getCurrentStep,
   } = useTourGuideController();
-  console.log(hasViewedTour, showSplash, loggedIn)
   useEffect(() => {
     if (!hasViewedTour && !showSplash && loggedIn) {
       setModalVisible(true);

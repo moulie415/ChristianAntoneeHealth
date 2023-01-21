@@ -212,7 +212,7 @@ const More: React.FC<MoreProps> = ({
         shape="rectangle"
         isTourGuide
         text="Keep up with your goals and access and log your biometric data from your profile"
-        top={Platform.OS === 'ios' ? '15%' : '10%'}
+        top={Platform.OS === 'ios' ? '16%' : '10%'}
         width="100%"
         height={DevicePixels[45]}
       />
