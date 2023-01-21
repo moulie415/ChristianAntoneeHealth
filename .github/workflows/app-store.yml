@@ -69,8 +69,12 @@ jobs:
         run: |
           cd ios
           pod install
-          sudo gem install fastlane
-          fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement" --clean
+          xcodebuild clean -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
+          xcodebuild build -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
+          xcodebuild archive -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -archivePath archive.xcarchive
+          xcodebuild -exportArchive -archivePath archive.xcarchive -exportPath . -exportOptionsPlist exportOptions.plist
+        #sudo gem install fastlane
+        #fastlane gym --workspace "HealthAndMovement.xcworkspace" --scheme "HealthAndMovement" --clean
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
