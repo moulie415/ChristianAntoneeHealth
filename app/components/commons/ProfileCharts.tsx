@@ -1,11 +1,4 @@
-import {
-  View,
-  ScrollView,
-  Dimensions,
-  Linking,
-  TouchableOpacity,
-  InteractionManager,
-} from 'react-native';
+import {View, Dimensions, TouchableOpacity} from 'react-native';
 import React, {
   MutableRefObject,
   ReactNode,
@@ -94,7 +87,7 @@ const Chart: React.FC<{
         style={{
           marginTop: -DevicePixels[20],
           width: Dimensions.get('window').width * 0.9,
-          alignItems: 'center'
+          alignItems: 'center',
         }}>
         <VictoryChart
           maxDomain={{
@@ -213,7 +206,6 @@ const ProfileCharts: React.FC<{
   bodyFatPercentageSamples: Sample[];
   muscleMassSamples: Sample[];
   boneMassSamples: Sample[];
-  getSamplesAction: () => void;
   setShowBodyFatPercentageModal: (show: boolean) => void;
   setShowMuscleMassModal: (show: boolean) => void;
   setShowBoneMassModal: (show: boolean) => void;
@@ -230,7 +222,6 @@ const ProfileCharts: React.FC<{
   bodyFatPercentageSamples,
   muscleMassSamples,
   boneMassSamples,
-  getSamplesAction,
   setShowBodyFatPercentageModal,
   setShowBoneMassModal,
   setShowMuscleMassModal,
@@ -277,19 +268,6 @@ const ProfileCharts: React.FC<{
   } = useMemo(() => {
     return getSampleItems(boneMass, filter, boneMassSamples);
   }, [boneMassSamples, filter, boneMass]);
-
-  useEffect(() => {
-    const init = async () => {
-      //if (await isEnabled()) {
-      getSamplesAction();
-      InteractionManager.runAfterInteractions(() => {
-        setShowCharts(true);
-      });
-
-      //  }
-    };
-    init();
-  }, [getSamplesAction]);
 
   const latestBMI = weightItems?.data[weightItems.data.length - 1]?.y;
   return (
@@ -385,166 +363,156 @@ const ProfileCharts: React.FC<{
           </LinearGradient>
         </TouchableOpacity>
       </View>
-      {showCharts ? (
-        <PagerView ref={pagerRef} style={{flex: 1, height: DevicePixels[450]}}>
-          <Chart
-            isFirst
-            index={0}
-            pagerRef={pagerRef}
-            current={latestBMI}
-            filter={filter}
-            title="BMI"
-            data={weightItems.data}
-            lowest={weightItems.lowest}
-            highest={weightItems.highest}
-            minY={0}
-            maxY={40}
-            capitalize
-            ranges={[18.5, 25.0, 30.0]}
-            colors={[
-              colors.appBlueDark,
-              colors.appGreen,
-              colors.secondaryLight,
-              colors.appRed,
-            ]}
-            labels={['Underweight', 'Normal', 'Overweight', 'Obesity']}
-            footer={
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: Dimensions.get('window').width,
-                  justifyContent: 'space-evenly',
-                }}>
-                <Button
-                  onPress={() => setShowWeightModal(true)}
-                  text="Enter weight"
-                  style={{
-                    width: '42%',
-                    marginTop: DevicePixels[10],
-                  }}
-                />
-                <Button
-                  onPress={() => setShowHeightModal(true)}
-                  text="Enter height"
-                  style={{
-                    width: '42%',
-                    marginTop: DevicePixels[10],
-                  }}
-                />
-              </View>
-            }
-          />
-          <Chart
-            index={1}
-            pagerRef={pagerRef}
-            current={bodyFatPercentage}
-            filter={filter}
-            title="Body fat percentage"
-            highest={bodyFatItems.highest}
-            lowest={bodyFatItems.lowest}
-            minY={0}
-            maxY={30}
-            data={bodyFatItems.data}
-            ranges={[6.0, 13.0, 17.0, 25.0]}
-            colors={[
-              colors.appBlueDark,
-              colors.appGreen,
-              colors.appBlueLight,
-              colors.muscleSecondary,
-              colors.appRed,
-            ]}
-            labels={[
-              'Essential Fat',
-              'Athletes',
-              'Fitness',
-              'Acceptable',
-              'Obesity',
-            ]}
-            suffix="%"
-            footer={
-              <Button
-                onPress={() => setShowBodyFatPercentageModal(true)}
-                text="Enter body fat percentage"
-                style={{
-                  width: DevicePixels[300],
-                  marginTop: DevicePixels[10],
-                }}
-              />
-            }
-          />
-          <Chart
-            index={2}
-            pagerRef={pagerRef}
-            current={muscleMass}
-            filter={filter}
-            minY={0}
-            maxY={70}
-            highest={muscleMassItems.highest}
-            lowest={muscleMassItems.lowest}
-            title="Muscle mass"
-            data={muscleMassItems.data}
-            suffix="kg"
-            ranges={[44.0, 52.4]}
-            colors={[
-              colors.appBlueDark,
-              colors.appGreen,
-              new Color(colors.appGreen).darken(0.4).toString(),
-            ]}
-            labels={['Low', 'Normal', 'High']}
-            footer={
-              <Button
-                onPress={() => setShowMuscleMassModal(true)}
-                text="Enter muscle mass"
-                style={{
-                  width: DevicePixels[300],
 
-                  marginTop: DevicePixels[10],
-                }}
-              />
-            }
-          />
-          <Chart
-            isLast
-            index={3}
-            pagerRef={pagerRef}
-            current={boneMass}
-            title="Bone mass"
-            data={boneMassItems.data}
-            filter={filter}
-            suffix="kg"
-            highest={boneMassItems.highest}
-            lowest={boneMassItems.lowest}
-            minY={0}
-            maxY={10}
-            ranges={[2.09, 3.48]}
-            colors={[
-              colors.secondaryLight,
-              colors.appGreen,
-              new Color(colors.appGreen).darken(0.4).toString(),
-            ]}
-            labels={['Below average', 'Average', 'Above average']}
-            footer={
+      <PagerView ref={pagerRef} style={{flex: 1, height: DevicePixels[450]}}>
+        <Chart
+          isFirst
+          index={0}
+          pagerRef={pagerRef}
+          current={latestBMI}
+          filter={filter}
+          title="BMI"
+          data={weightItems.data}
+          lowest={weightItems.lowest}
+          highest={weightItems.highest}
+          minY={0}
+          maxY={40}
+          capitalize
+          ranges={[18.5, 25.0, 30.0]}
+          colors={[
+            colors.appBlueDark,
+            colors.appGreen,
+            colors.secondaryLight,
+            colors.appRed,
+          ]}
+          labels={['Underweight', 'Normal', 'Overweight', 'Obesity']}
+          footer={
+            <View
+              style={{
+                flexDirection: 'row',
+                width: Dimensions.get('window').width,
+                justifyContent: 'space-evenly',
+              }}>
               <Button
-                onPress={() => setShowBoneMassModal(true)}
-                text="Enter bone mass"
+                onPress={() => setShowWeightModal(true)}
+                text="Enter weight"
                 style={{
-                  width: DevicePixels[300],
+                  width: '42%',
                   marginTop: DevicePixels[10],
                 }}
               />
-            }
-          />
-        </PagerView>
-      ) : (
-        <View
-          style={{
-            height: DevicePixels[280],
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Spinner />
-        </View>
-      )}
+              <Button
+                onPress={() => setShowHeightModal(true)}
+                text="Enter height"
+                style={{
+                  width: '42%',
+                  marginTop: DevicePixels[10],
+                }}
+              />
+            </View>
+          }
+        />
+        <Chart
+          index={1}
+          pagerRef={pagerRef}
+          current={bodyFatPercentage}
+          filter={filter}
+          title="Body fat percentage"
+          highest={bodyFatItems.highest}
+          lowest={bodyFatItems.lowest}
+          minY={0}
+          maxY={30}
+          data={bodyFatItems.data}
+          ranges={[6.0, 13.0, 17.0, 25.0]}
+          colors={[
+            colors.appBlueDark,
+            colors.appGreen,
+            colors.appBlueLight,
+            colors.muscleSecondary,
+            colors.appRed,
+          ]}
+          labels={[
+            'Essential Fat',
+            'Athletes',
+            'Fitness',
+            'Acceptable',
+            'Obesity',
+          ]}
+          suffix="%"
+          footer={
+            <Button
+              onPress={() => setShowBodyFatPercentageModal(true)}
+              text="Enter body fat percentage"
+              style={{
+                width: DevicePixels[300],
+                marginTop: DevicePixels[10],
+              }}
+            />
+          }
+        />
+        <Chart
+          index={2}
+          pagerRef={pagerRef}
+          current={muscleMass}
+          filter={filter}
+          minY={0}
+          maxY={70}
+          highest={muscleMassItems.highest}
+          lowest={muscleMassItems.lowest}
+          title="Muscle mass"
+          data={muscleMassItems.data}
+          suffix="kg"
+          ranges={[44.0, 52.4]}
+          colors={[
+            colors.appBlueDark,
+            colors.appGreen,
+            new Color(colors.appGreen).darken(0.4).toString(),
+          ]}
+          labels={['Low', 'Normal', 'High']}
+          footer={
+            <Button
+              onPress={() => setShowMuscleMassModal(true)}
+              text="Enter muscle mass"
+              style={{
+                width: DevicePixels[300],
+
+                marginTop: DevicePixels[10],
+              }}
+            />
+          }
+        />
+        <Chart
+          isLast
+          index={3}
+          pagerRef={pagerRef}
+          current={boneMass}
+          title="Bone mass"
+          data={boneMassItems.data}
+          filter={filter}
+          suffix="kg"
+          highest={boneMassItems.highest}
+          lowest={boneMassItems.lowest}
+          minY={0}
+          maxY={10}
+          ranges={[2.09, 3.48]}
+          colors={[
+            colors.secondaryLight,
+            colors.appGreen,
+            new Color(colors.appGreen).darken(0.4).toString(),
+          ]}
+          labels={['Below average', 'Average', 'Above average']}
+          footer={
+            <Button
+              onPress={() => setShowBoneMassModal(true)}
+              text="Enter bone mass"
+              style={{
+                width: DevicePixels[300],
+                marginTop: DevicePixels[10],
+              }}
+            />
+          }
+        />
+      </PagerView>
     </>
   );
 };
@@ -557,8 +525,4 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   boneMassSamples: profile.boneMassSamples,
 });
 
-const mapDispatchToProps = {
-  getSamplesAction: getSamples,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileCharts);
+export default connect(mapStateToProps)(ProfileCharts);

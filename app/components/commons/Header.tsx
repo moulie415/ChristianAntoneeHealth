@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import React, {ReactNode} from 'react';
 import BackButton from './BackButton';
 import {navigationRef} from '../../RootNavigation';
@@ -6,6 +6,9 @@ import DevicePixels from '../../helpers/DevicePixels';
 import Text from './Text';
 import colors from '../../constants/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {DrawerActions} from '@react-navigation/routers';
+import Profile from '../../types/Profile';
 
 const Header: React.FC<{
   hasBack?: boolean;
@@ -13,7 +16,8 @@ const Header: React.FC<{
   right?: ReactNode;
   absolute?: boolean;
   customBackPress?: () => void;
-}> = ({hasBack, title, right, absolute, customBackPress}) => {
+  showDrawerMenu?: boolean;
+}> = ({hasBack, title, right, absolute, customBackPress, showDrawerMenu}) => {
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -31,6 +35,19 @@ const Header: React.FC<{
           onPress={customBackPress || navigationRef?.goBack}
         />
       )}
+      {showDrawerMenu && (
+        <TouchableOpacity
+          onPress={() => navigationRef.dispatch(DrawerActions.openDrawer())}
+          style={{margin: DevicePixels[20]}}>
+          <Icon
+            name="bars"
+            color={colors.appWhite}
+            size={DevicePixels[25]}
+            style={{marginLeft: -DevicePixels[3]}}
+          />
+        </TouchableOpacity>
+      )}
+
       {!!title && (
         <Text
           style={{

@@ -7,6 +7,7 @@ import Text from '../../commons/Text';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import FastImage from 'react-native-fast-image';
+import Header from '../../commons/Header';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
@@ -14,6 +15,8 @@ const WhatEquipment: React.FC<{
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
+        <Header showDrawerMenu />
+
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Text
             style={{

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {TouchableOpacity, ScrollView, View, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
@@ -9,7 +9,7 @@ import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
 import {Gender, Unit} from '../../../types/Profile';
 import * as _ from 'lodash';
-import {updateProfile} from '../../../actions/profile';
+import {getSamples, updateProfile} from '../../../actions/profile';
 import {
   BONE_DENSITIES,
   HEIGHTS,
@@ -37,13 +37,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import PickerModal from '../../commons/PickerModal';
 import ProfileCharts from '../../commons/ProfileCharts';
-import GoalSummaries from '../../commons/GoalSummaries';
 import Divider from '../../commons/Divider';
+import Spinner from '../../commons/Spinner';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 const Profile: React.FC<ProfileProps> = ({
   profile,
   navigation,
   updateProfileAction,
+  getSamplesAction,
 }) => {
   const [gender, setGender] = useState<Gender>(profile.gender);
   const [weight, setWeight] = useState<number>(profile.weight);
@@ -124,6 +126,10 @@ const Profile: React.FC<ProfileProps> = ({
       Snackbar.show({text: 'Error updating profile'});
     }
   };
+
+  useEffect(() => {
+    getSamplesAction();
+  }, [getSamplesAction]);
 
   const saveDisabled = !dob || !height || !weight || !gender || equal;
 
@@ -335,8 +341,7 @@ const Profile: React.FC<ProfileProps> = ({
           </SafeAreaView>
         </LinearGradient>
 
-        <GoalSummaries />
-        <Divider />
+        {/* <Animated.View entering={FadeIn.duration(1000)}> */}
         <ProfileCharts
           weight={weight}
           height={height}
@@ -349,6 +354,17 @@ const Profile: React.FC<ProfileProps> = ({
           setShowHeightModal={setShowHeightModal}
           setShowWeightModal={setShowWeightModal}
         />
+        {/* </Animated.View> */}
+        {/* ) : (
+          <View
+            style={{
+              height: DevicePixels[280],
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Spinner />
+          </View>
+        )} */}
         <Divider
           style={{marginTop: DevicePixels[20], marginBottom: DevicePixels[10]}}
         />
@@ -443,6 +459,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 
 const mapDispatchToProps = {
   updateProfileAction: updateProfile,
+  getSamplesAction: getSamples,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

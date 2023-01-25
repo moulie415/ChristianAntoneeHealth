@@ -18,7 +18,7 @@ import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useTourGuideController} from 'rn-tourguide';
-import {ListItem, MoreItem} from './More';
+import {ListItem, MoreItem} from './DrawerContent';
 import {navigate} from '../../../RootNavigation';
 
 const Support: React.FC<SupportProps> = () => {

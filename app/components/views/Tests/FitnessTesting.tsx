@@ -7,6 +7,7 @@ import DevicePixels from '../../../helpers/DevicePixels';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TestCard from '../../commons/TestCard';
 import colors from '../../../constants/colors';
+import Header from '../../commons/Header';
 
 const FitnessTesting: React.FC<FitnessTestingProps> = ({
   navigation,
@@ -15,9 +16,10 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
 }) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <Header showDrawerMenu />
+
       <ScrollView
         contentContainerStyle={{
-          marginTop: DevicePixels[20],
           paddingBottom: DevicePixels[20],
         }}>
         <SafeAreaView>

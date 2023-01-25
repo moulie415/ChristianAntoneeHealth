@@ -73,6 +73,7 @@ export type StackParamList = {
   Home: undefined;
   Exercise: {id: string};
   Fitness: undefined;
+  Goals: undefined;
   Test: {id: string};
   TestResults: {
     testResult: number;
@@ -103,7 +104,6 @@ export type StackParamList = {
   Education: undefined;
   EducationArticle: {education: Education};
   Settings: undefined;
-  More: undefined;
   Profile: undefined;
   History: undefined;
   Notifications: undefined;
@@ -132,7 +132,7 @@ export type StackParamList = {
   WhatArea: {equipment: Equipment};
   WorkoutList: {area: Area; equipment: Equipment};
   Rating: undefined;
-  Drawer: undefined
+  Stack: undefined
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
@@ -193,7 +193,7 @@ const App: React.FC = () => {
       <Provider store={store}>
         <TourGuideProvider
           androidStatusBarVisible
-          backdropColor="rgba(0,0,0,0.6)"
+          backdropColor="rgba(0,0,0,0.8)"
           tooltipComponent={CustomTooltip}>
           <NavigationContainer
             ref={navigationRef}

@@ -32,6 +32,7 @@ import {logError} from '../../../helpers/error';
 import Spinner from '../../commons/Spinner';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
+import Header from '../../commons/Header';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -121,6 +122,7 @@ const Plan: React.FC<{
       {hasPlanLeft ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
+            <Header showDrawerMenu />
             <TabView
               renderTabBar={props => {
                 return (
@@ -186,6 +188,7 @@ const Plan: React.FC<{
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
           <SafeAreaView style={{flex: 1}}>
+            <Header showDrawerMenu />
             <View
               style={{
                 ...StyleSheet.absoluteFillObject,
@@ -197,6 +200,7 @@ const Plan: React.FC<{
               style={{
                 textAlign: 'center',
                 margin: DevicePixels[20],
+                marginTop: 0,
                 color: '#fff',
               }}>
               My workout plan

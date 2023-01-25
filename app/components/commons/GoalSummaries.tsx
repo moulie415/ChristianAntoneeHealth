@@ -14,6 +14,8 @@ import {WeeklyItems} from '../../reducers/profile';
 import QuickRoutine from '../../types/QuickRoutines';
 import profileSaga from '../../sagas/profile';
 import Goals from '../../styles/views/Goals';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from './Header';
 
 const GoalCircle: React.FC<{
   isLast?: boolean;
@@ -42,12 +44,24 @@ const GoalCircle: React.FC<{
     setFill((100 / goal) * score);
   }, [setFill, goal, score]);
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontWeight: 'bold',
+          fontSize: DevicePixels[25],
+          paddingHorizontal: DevicePixels[40],
+          textAlign: 'center',
+          alignSelf: 'center',
+          marginBottom: DevicePixels[30],
+        }}>
+        {title}
+      </Text>
       <AnimatedCircularProgress
         style={{alignSelf: 'center'}}
-        size={DevicePixels[120]}
-        width={DevicePixels[15]}
-        backgroundWidth={DevicePixels[5]}
+        size={DevicePixels[200]}
+        width={DevicePixels[20]}
+        backgroundWidth={DevicePixels[10]}
         fill={fill}
         tintColor={score >= goal ? colors.appGreen : colors.appBlue}
         // tintColorSecondary={colors.appBlueFaded}
@@ -58,7 +72,7 @@ const GoalCircle: React.FC<{
         {fill => (
           <Text
             style={{
-              fontSize: fontSize || DevicePixels[30],
+              fontSize: fontSize || DevicePixels[40],
               color: colors.appWhite,
               fontWeight: 'bold',
               textAlign: 'center',
@@ -72,12 +86,12 @@ const GoalCircle: React.FC<{
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: DevicePixels[16],
-          paddingHorizontal: DevicePixels[20],
+          fontSize: DevicePixels[30],
+          paddingHorizontal: DevicePixels[40],
           textAlign: 'center',
           alignSelf: 'center',
         }}>
-        {`${title} ${score}/${goal}`}
+        {`${score}/${goal}`}
       </Text>
       {!isFirst && (
         <TouchableOpacity
@@ -85,13 +99,13 @@ const GoalCircle: React.FC<{
           style={{
             position: 'absolute',
             left: DevicePixels[0],
-            top: DevicePixels[40],
+            top: '50%',
             padding: DevicePixels[10],
           }}>
           <Icon
             style={{opacity: 0.8}}
             name="chevron-left"
-            size={DevicePixels[30]}
+            size={DevicePixels[50]}
             color="#fff"
           />
         </TouchableOpacity>
@@ -102,13 +116,13 @@ const GoalCircle: React.FC<{
           style={{
             position: 'absolute',
             right: DevicePixels[0],
-            top: DevicePixels[40],
+            top: '50%',
             padding: DevicePixels[10],
           }}>
           <Icon
             style={{opacity: 0.8}}
             name="chevron-right"
-            size={DevicePixels[30]}
+            size={DevicePixels[50]}
             color="#fff"
           />
         </TouchableOpacity>
@@ -199,7 +213,7 @@ const GoalSummaries: React.FC<{
       key="mins"
       goal={minsGoal}
       score={mins}
-      fontSize={DevicePixels[20]}
+      fontSize={DevicePixels[30]}
       suffix={'\nmins'}
     />,
 
@@ -223,7 +237,7 @@ const GoalSummaries: React.FC<{
         index={3}
         goal={3500}
         score={calories}
-        fontSize={DevicePixels[20]}
+        fontSize={DevicePixels[30]}
         suffix={'\nkcal'}
         isLast
       />,
@@ -231,22 +245,25 @@ const GoalSummaries: React.FC<{
   }
 
   return (
-    <>
+    <SafeAreaView
+      style={{
+        backgroundColor: colors.appGrey,
+        flex: 1,
+      }}>
+      <Header showDrawerMenu />
       <Text
         style={{
-          margin: DevicePixels[20],
-          marginTop: DevicePixels[30],
           color: colors.appWhite,
           fontWeight: 'bold',
-          alignSelf: 'center',
-          fontSize: DevicePixels[24],
+          fontSize: DevicePixels[30],
+          textAlign: 'center',
         }}>
         Weekly Goals
       </Text>
-      <PagerView ref={pagerRef} style={{height: DevicePixels[180]}}>
+      <PagerView ref={pagerRef} style={{flex: 1}}>
         {goals}
       </PagerView>
-    </>
+    </SafeAreaView>
   );
 };
 

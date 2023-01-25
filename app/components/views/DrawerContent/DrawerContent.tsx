@@ -1,8 +1,6 @@
 import React, {ReactNode} from 'react';
 import auth from '@react-native-firebase/auth';
 import {connect} from 'react-redux';
-import MoreProps from '../../../types/views/More';
-import styles from '../../../styles/views/More';
 import {
   Alert,
   FlatList,
@@ -28,7 +26,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import * as Sentry from '@sentry/react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
-import {TourGuideZone, TourGuideZoneByPosition} from 'rn-tourguide';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import Profile from '../../../types/Profile';
 
 export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
   return (
@@ -43,7 +42,7 @@ export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
         style={{
           height: DevicePixels[35],
           width: DevicePixels[35],
-          backgroundColor: '#212121',
+          // backgroundColor: '#212121',
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: DevicePixels[5],
@@ -79,8 +78,11 @@ export interface ListItem {
   tourIndex?: number;
   tourText?: string;
 }
-
-const More: React.FC<MoreProps> = ({
+interface Props extends DrawerContentComponentProps {
+  setLoggedInAction: (loggedIn: boolean) => void;
+  profile: Profile;
+}
+const DrawerContent: React.FC<Props> = ({
   navigation,
   setLoggedInAction,
   profile,
@@ -106,15 +108,16 @@ const More: React.FC<MoreProps> = ({
   };
   const listItems: ListItem[] = [
     {
-      title: 'Education',
-      icon: 'book-open',
-      onPress: () => navigation.navigate('Education'),
-    },
-    {
       title: 'My profile',
       icon: 'user',
       onPress: () => navigation.navigate('Profile'),
     },
+    {
+      title: 'Education',
+      icon: 'book-open',
+      onPress: () => navigation.navigate('Education'),
+    },
+
     {
       title: 'Friends',
       icon: 'user-friends',
@@ -172,10 +175,6 @@ const More: React.FC<MoreProps> = ({
       onPress: () => navigation.navigate('Rating'),
     },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
-    {
-      title: `v${getVersion()} (${getBuildNumber()})`,
-      icon: 'code',
-    },
   ];
 
   if (profile.admin) {
@@ -187,36 +186,24 @@ const More: React.FC<MoreProps> = ({
   }
 
   return (
-    <FastImage
-      source={require('../../../images/login.jpeg')}
-      blurRadius={7}
-      style={{flex: 1}}>
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: '#000',
-          opacity: 0.7,
+    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+      <FlatList
+        data={listItems}
+        contentContainerStyle={{marginTop: DevicePixels[20]}}
+        renderItem={({item}) => {
+          return <MoreItem item={item} />;
         }}
       />
-      <SafeAreaView>
-        <FlatList
-          data={listItems}
-          contentContainerStyle={{marginTop: DevicePixels[20]}}
-          renderItem={({item}) => {
-            return <MoreItem item={item} />;
-          }}
-        />
-      </SafeAreaView>
-      <TourGuideZoneByPosition
-        zone={3}
-        shape="rectangle"
-        isTourGuide
-        text="Keep up with your goals and access and log your biometric data from your profile"
-        top={Platform.OS === 'ios' ? '16%' : '10%'}
-        width="100%"
-        height={DevicePixels[45]}
-      />
-    </FastImage>
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontSize: DevicePixels[18],
+          textAlign: 'center',
+          margin: DevicePixels[10],
+        }}>
+        {`v${getVersion()} (${getBuildNumber()})`}
+      </Text>
+    </SafeAreaView>
   );
 };
 
@@ -228,4 +215,4 @@ const mapDispatchToProps = {
   setLoggedInAction: setLoggedIn,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(More);
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);

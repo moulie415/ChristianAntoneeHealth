@@ -5,8 +5,6 @@ import {StackParamList} from './App';
 import colors from './constants/colors';
 import Home from './components/views/Home';
 import FitnessTesting from './components/views/Tests/FitnessTesting';
-import More from './components/views/More/More';
-import MoreIcon from './components/commons/unread/MoreIcon';
 import Plan from './components/views/Plan/Plan';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import {connect} from 'react-redux';
@@ -14,6 +12,7 @@ import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
 import Color from 'color';
 import {TourGuideZone} from 'rn-tourguide';
+import GoalSummaries from './components/commons/GoalSummaries';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -79,12 +78,34 @@ const Tabs: React.FC<{
         name="Fitness"
         component={FitnessTesting}
       />
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Goals',
+          tabBarIcon: ({color, size}) => (
+            <TourGuideZone
+              zone={2}
+              text="View your weekly goals from here"
+              borderRadius={16}>
+              <Icon color={color} size={size} name="bullseye" />
+            </TourGuideZone>
+          ),
+          headerShown: false,
+        }}
+        key="Goals"
+        name="Goals"
+        component={GoalSummaries}
+      />
       {(profile.admin || plansEnabled) && (
         <Tab.Screen
           options={{
             tabBarLabel: 'Plan',
             tabBarIcon: ({color, size}) => (
-              <Icon color={color} size={size} name="calendar-alt" />
+              <TourGuideZone
+                zone={3}
+                text="Access your customized plans here"
+                borderRadius={16}>
+                <Icon color={color} size={size} name="calendar-alt" />
+              </TourGuideZone>
             ),
             headerShown: false,
           }}
@@ -93,23 +114,6 @@ const Tabs: React.FC<{
           component={Plan}
         />
       )}
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'More',
-          tabBarIcon: ({color, size}) => (
-            <TourGuideZone
-              zone={2}
-              text="For everything else there the More tab"
-              borderRadius={16}>
-              <MoreIcon color={color} size={size} />
-            </TourGuideZone>
-          ),
-          headerShown: false,
-        }}
-        key="More"
-        name="More"
-        component={More}
-      />
     </Tab.Navigator>
   );
 };

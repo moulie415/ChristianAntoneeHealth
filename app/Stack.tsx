@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {StackParamList} from './App';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Premium from './components/views/More/Premium';
+import Premium from './components/views/DrawerContent/Premium';
 import Loading from './components/views/Loading';
 import ExerciseList from './components/views/Workout/ExerciseList';
 import CustomizeExercise from './components/views/Workout/CustomizeExercise';
@@ -10,19 +10,19 @@ import ReviewExercises from './components/views/Workout/ReviewExercises';
 import StartWorkout from './components/views/Workout/StartWorkout';
 import EndWorkout from './components/views/Workout/EndWorkout';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import Policies from './components/views/More/Policies';
+import Policies from './components/views/DrawerContent/Policies';
 import Test from './components/views/Tests/Test';
 import QuickRoutineView from './components/views/QuickRoutines/QuickRoutine';
 import TestResults from './components/views/Tests/TestResults';
 import Tabs from './Tabs';
 import Login from './components/views/Login';
 import SignUp from './components/views/SignUp';
-import Profile from './components/views/More/Profile';
-import Notifications from './components/views/More/Notifications';
-import Support from './components/views/More/Support';
-import Terms from './components/views/More/Terms';
-import Settings from './components/views/More/Settings';
-import About from './components/views/More/About';
+import Profile from './components/views/DrawerContent/Profile';
+import Notifications from './components/views/DrawerContent/Notifications';
+import Support from './components/views/DrawerContent/Support';
+import Terms from './components/views/DrawerContent/Terms';
+import Settings from './components/views/DrawerContent/Settings';
+import About from './components/views/DrawerContent/About';
 import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
 import SavedItemsTabs from './SavedItemsTabs';
 import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
@@ -35,16 +35,17 @@ import EducationArticle from './components/views/Education/EducationArticle';
 import FitnessGoal from './components/views/Workout/FitnessGoal';
 import Experience from './components/views/Workout/Experience';
 import WarmUp from './components/views/Workout/WarmUp';
-import Connections from './components/views/More/Connections';
-import AddConnection from './components/views/More/AddConnection';
+import Connections from './components/views/DrawerContent/Connections';
+import AddConnection from './components/views/DrawerContent/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
-import Chat from './components/views/More/Chat';
+import Chat from './components/views/DrawerContent/Chat';
 import Rating from './components/views/Rating';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WhatArea from './components/views/Workout/WhatArea';
 import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
 import PreWorkout from './components/views/Workout/PreWorkout';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import DrawerContent from './components/views/DrawerContent/DrawerContent';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -52,16 +53,10 @@ const Drawer = createDrawerNavigator<StackParamList>();
 
 export const DrawerComponent = () => {
   return (
-    <Drawer.Navigator screenOptions={{headerShown: false}}>
+    <Drawer.Navigator
+      drawerContent={props => <DrawerContent {...props} />}
+      screenOptions={{headerShown: false, swipeEnabled: false}}>
       <Drawer.Screen name="Stack" component={StackComponent} />
-      <Drawer.Screen name="Profile" component={Profile} />
-      <Drawer.Screen name="Education" component={EducationTabs} />
-      <Drawer.Screen name="Connections" component={Connections} />
-      <Drawer.Screen name="Premium" component={Premium} />
-      <Drawer.Screen name="About" component={About} />
-      <Drawer.Screen name="Settings" component={Settings} />
-      <Drawer.Screen name="Support" component={Support} />
-      <Drawer.Screen name="Rating" component={Rating} />
     </Drawer.Navigator>
   );
 };
@@ -126,6 +121,14 @@ const StackComponent = () => {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="WhatArea" component={WhatArea} />
         <Stack.Screen name="WorkoutList" component={WorkoutList} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Education" component={EducationTabs} />
+        <Stack.Screen name="Connections" component={Connections} />
+        <Stack.Screen name="Premium" component={Premium} />
+        <Stack.Screen name="About" component={About} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Support" component={Support} />
+        <Stack.Screen name="Rating" component={Rating} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
     </Stack.Navigator>

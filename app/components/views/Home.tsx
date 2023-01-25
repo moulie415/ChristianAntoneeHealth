@@ -11,8 +11,13 @@ import FastImage from 'react-native-fast-image';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../../types/Profile';
-import {TourGuideZone, useTourGuideController} from 'rn-tourguide';
-import { DrawerActions } from '@react-navigation/native';
+import {
+  TourGuideZone,
+  TourGuideZoneByPosition,
+  useTourGuideController,
+} from 'rn-tourguide';
+import {DrawerActions} from '@react-navigation/native';
+import Header from '../commons/Header';
 
 const {height, width} = Dimensions.get('window');
 
@@ -26,20 +31,21 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
   viewedPlan: boolean;
-}> = ({navigation, profile, viewedPlan}) => {
+  plansEnabled: boolean;
+}> = ({navigation, profile, viewedPlan, plansEnabled}) => {
   const {eventEmitter} = useTourGuideController();
   useEffect(() => {
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
-   // navigation.dispatch(DrawerActions.openDrawer());
+
+    // navigation.dispatch(DrawerActions.openDrawer());
   }, [navigation, viewedPlan]);
 
   const handleOnStepChange = useCallback(
     (step: {order?: number}) => {
-      if (step?.order === 3) {
-        navigation.navigate('More');
-      }
+      // if (step?.order === 3) {
+      // }
     },
     [navigation],
   );
@@ -53,6 +59,7 @@ const Home: React.FC<{
   }, [eventEmitter, handleOnStepChange]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <Header showDrawerMenu />
       <ScrollView>
         <SafeAreaView>
           <FastImage
@@ -61,6 +68,7 @@ const Home: React.FC<{
               width: DevicePixels[95],
               height: DevicePixels[84],
               margin: DevicePixels[40],
+              marginTop: 0,
               alignSelf: 'center',
             }}
           />
@@ -85,12 +93,12 @@ const Home: React.FC<{
             {profile.name?.split(' ')[0] || 'user'}
           </Text> */}
 
-            <HomeCard
-              title="New Workout"
-              subtitle="Start a new workout now"
-              image={require('../../images/Homepage_new_workout.jpeg')}
-              onPress={() => navigation.navigate('Workout')}
-            />
+          <HomeCard
+            title="New Workout"
+            subtitle="Start a new workout now"
+            image={require('../../images/Homepage_new_workout.jpeg')}
+            onPress={() => navigation.navigate('Workout')}
+          />
           <HomeCard
             title="Fitness tests"
             subtitle="Track your fitness overtime"
@@ -132,13 +140,25 @@ const Home: React.FC<{
           />
         </SafeAreaView>
       </ScrollView>
+
+      <TourGuideZoneByPosition
+        shape="circle"
+        text="For everything else use this menu"
+        isTourGuide
+        top={DevicePixels[20]}
+        left={DevicePixels[10]}
+        width={DevicePixels[30]}
+        height={DevicePixels[30]}
+        zone={profile.admin || plansEnabled ? 4 : 3}
+      />
     </View>
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: MyRootState) => ({
   profile: profile.profile,
   viewedPlan: profile.viewedPlan,
+  plansEnabled: settings.plansEnabled,
 });
 
 export default connect(mapStateToProps)(Home);
