@@ -44,20 +44,7 @@ const Tabs: React.FC<{
         key="Home"
         component={Home}
       />
-      {(profile.admin || plansEnabled) && (
-        <Tab.Screen
-          options={{
-            tabBarLabel: 'Plan',
-            tabBarIcon: ({color, size}) => (
-              <Icon color={color} size={size} name="calendar-alt" />
-            ),
-            headerShown: false,
-          }}
-          name="Plan"
-          key="Plan"
-          component={Plan}
-        />
-      )}
+
       <Tab.Screen
         options={{
           tabBarLabel: 'Workout',
@@ -92,6 +79,20 @@ const Tabs: React.FC<{
         name="Fitness"
         component={FitnessTesting}
       />
+      {(profile.admin || plansEnabled) && (
+        <Tab.Screen
+          options={{
+            tabBarLabel: 'Plan',
+            tabBarIcon: ({color, size}) => (
+              <Icon color={color} size={size} name="calendar-alt" />
+            ),
+            headerShown: false,
+          }}
+          name="Plan"
+          key="Plan"
+          component={Plan}
+        />
+      )}
       <Tab.Screen
         options={{
           tabBarLabel: 'More',
