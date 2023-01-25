@@ -23,7 +23,7 @@ import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
 import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import TestType from './types/Test';
-import StackComponent from './Stack';
+import StackComponent, { DrawerComponent } from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import appCheck from '@react-native-firebase/app-check';
 import Education from './types/Education';
@@ -132,6 +132,7 @@ export type StackParamList = {
   WhatArea: {equipment: Equipment};
   WorkoutList: {area: Area; equipment: Equipment};
   Rating: undefined;
+  Drawer: undefined
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
@@ -202,7 +203,7 @@ const App: React.FC = () => {
               // Register the navigation container with the instrumentation
               routingInstrumentation.registerNavigationContainer(navigationRef);
             }}>
-            <StackComponent />
+            <DrawerComponent />
           </NavigationContainer>
 
           {showSplash && (

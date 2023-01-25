@@ -12,6 +12,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../../types/Profile';
 import {TourGuideZone, useTourGuideController} from 'rn-tourguide';
+import { DrawerActions } from '@react-navigation/native';
 
 const {height, width} = Dimensions.get('window');
 
@@ -31,6 +32,7 @@ const Home: React.FC<{
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
+   // navigation.dispatch(DrawerActions.openDrawer());
   }, [navigation, viewedPlan]);
 
   const handleOnStepChange = useCallback(

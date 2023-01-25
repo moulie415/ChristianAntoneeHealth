@@ -44,86 +44,91 @@ import WorkoutList from './components/views/Workout/WorkoutList';
 import WhatArea from './components/views/Workout/WhatArea';
 import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
 import PreWorkout from './components/views/Workout/PreWorkout';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
+const Drawer = createDrawerNavigator<StackParamList>();
+
+export const DrawerComponent = () => {
+  return (
+    <Drawer.Navigator screenOptions={{headerShown: false}}>
+      <Drawer.Screen name="Stack" component={StackComponent} />
+      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Education" component={EducationTabs} />
+      <Drawer.Screen name="Connections" component={Connections} />
+      <Drawer.Screen name="Premium" component={Premium} />
+      <Drawer.Screen name="About" component={About} />
+      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="Support" component={Support} />
+      <Drawer.Screen name="Rating" component={Rating} />
+    </Drawer.Navigator>
+  );
+};
 const StackComponent = () => {
   return (
-    <>
-      <Stack.Navigator
-        initialRouteName="Loading"
-        screenOptions={({route, navigation}) => ({
-          headerBackTitle: null,
-          headerShown: false,
-        })}>
-        <Stack.Group>
-          <Stack.Screen name="Loading" component={Loading} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
-          <Stack.Screen name="SignUpFlow" component={SignUpFlow} />
-          <Stack.Screen name="Tabs" component={Tabs} />
-          <Stack.Screen name="FitnessGoal" component={FitnessGoal} />
-          <Stack.Screen name="Experience" component={Experience} />
-          <Stack.Screen name="WarmUp" component={WarmUp} />
-          <Stack.Screen
-            name="ExerciseList"
-            component={ExerciseList}
-            options={({navigation}) => ({
-              headerTitle: 'Workout',
-              headerRight: () => (
-                <ExerciseListHeaderRight navigation={navigation} />
-              ),
-            })}
-          />
-          <Stack.Screen
-            name="ReviewExercises"
-            component={ReviewExercises}
-            options={({navigation}) => ({
-              headerTitle: 'Workout',
-              headerRight: () => <HeaderShareButton />,
-            })}
-          />
-          <Stack.Screen
-            name="CustomizeExercise"
-            component={CustomizeExercise}
-          />
-          <Stack.Screen name="PreWorkout" component={PreWorkout} />
-          <Stack.Screen name="StartWorkout" component={StartWorkout} />
-          <Stack.Screen name="EndWorkout" component={EndWorkout} />
-          <Stack.Screen name="WorkoutSummary" component={WorkoutSummary} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Notifications" component={Notifications} />
-          <Stack.Screen name="Support" component={Support} />
-          <Stack.Screen name="Terms" component={Terms} />
-          <Stack.Screen name="Settings" component={Settings} />
-          <Stack.Screen name="About" component={About} />
-          <Stack.Screen name="Education" component={EducationTabs} />
-          <Stack.Screen name="EducationArticle" component={EducationArticle} />
-          <Stack.Screen name="Policies" component={Policies} />
-          <Stack.Screen name="Test" component={Test} />
-          <Stack.Screen name="TestResults" component={TestResults} />
-          <Stack.Screen name="PreQuickRoutine" component={PreQuickRoutine} />
-          <Stack.Screen name="QuickRoutine" component={QuickRoutineView} />
-          <Stack.Screen name="EndQuickRoutine" component={EndQuickRoutine} />
-          <Stack.Screen
-            name="QuickRoutineSummary"
-            component={QuickRoutineSummary}
-          />
+    <Stack.Navigator
+      initialRouteName="Loading"
+      screenOptions={({route, navigation}) => ({
+        headerBackTitle: null,
+        headerShown: false,
+      })}>
+      <Stack.Group>
+        <Stack.Screen name="Loading" component={Loading} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
+        <Stack.Screen name="SignUpFlow" component={SignUpFlow} />
+        <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen name="FitnessGoal" component={FitnessGoal} />
+        <Stack.Screen name="Experience" component={Experience} />
+        <Stack.Screen name="WarmUp" component={WarmUp} />
+        <Stack.Screen
+          name="ExerciseList"
+          component={ExerciseList}
+          options={({navigation}) => ({
+            headerTitle: 'Workout',
+            headerRight: () => (
+              <ExerciseListHeaderRight navigation={navigation} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="ReviewExercises"
+          component={ReviewExercises}
+          options={({navigation}) => ({
+            headerTitle: 'Workout',
+            headerRight: () => <HeaderShareButton />,
+          })}
+        />
+        <Stack.Screen name="CustomizeExercise" component={CustomizeExercise} />
+        <Stack.Screen name="PreWorkout" component={PreWorkout} />
+        <Stack.Screen name="StartWorkout" component={StartWorkout} />
+        <Stack.Screen name="EndWorkout" component={EndWorkout} />
+        <Stack.Screen name="WorkoutSummary" component={WorkoutSummary} />
+        <Stack.Screen name="Notifications" component={Notifications} />
+        <Stack.Screen name="Terms" component={Terms} />
+        <Stack.Screen name="EducationArticle" component={EducationArticle} />
+        <Stack.Screen name="Policies" component={Policies} />
+        <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="TestResults" component={TestResults} />
+        <Stack.Screen name="PreQuickRoutine" component={PreQuickRoutine} />
+        <Stack.Screen name="QuickRoutine" component={QuickRoutineView} />
+        <Stack.Screen name="EndQuickRoutine" component={EndQuickRoutine} />
+        <Stack.Screen
+          name="QuickRoutineSummary"
+          component={QuickRoutineSummary}
+        />
 
-          <Stack.Screen name="SavedItems" component={SavedItemsTabs} />
-          <Stack.Screen name="Connections" component={Connections} />
-          <Stack.Screen name="AddConnection" component={AddConnection} />
-          <Stack.Screen name="Chat" component={Chat} />
-          <Stack.Screen name="WhatArea" component={WhatArea} />
-          <Stack.Screen name="WorkoutList" component={WorkoutList} />
-          <Stack.Screen name="Premium" component={Premium} />
-          <Stack.Screen name="Rating" component={Rating} />
-        </Stack.Group>
-        {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
-      </Stack.Navigator>
-    </>
+        <Stack.Screen name="SavedItems" component={SavedItemsTabs} />
+        <Stack.Screen name="AddConnection" component={AddConnection} />
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="WhatArea" component={WhatArea} />
+        <Stack.Screen name="WorkoutList" component={WorkoutList} />
+      </Stack.Group>
+      {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
+    </Stack.Navigator>
   );
 };
 
