@@ -25,19 +25,9 @@ const GoalCircle: React.FC<{
   title: string;
   goal: number;
   score: number;
-  suffix?: string;
-  fontSize?: number;
-}> = ({
-  isLast,
-  isFirst,
-  pagerRef,
-  index,
-  title,
-  goal,
-  score,
-  suffix,
-  fontSize,
-}) => {
+
+  icon?: string;
+}> = ({isLast, isFirst, pagerRef, index, title, goal, score, icon}) => {
   const [fill, setFill] = useState(0);
 
   useEffect(() => {
@@ -70,16 +60,7 @@ const GoalCircle: React.FC<{
         rotation={240}
         lineCap="round">
         {fill => (
-          <Text
-            style={{
-              fontSize: fontSize || DevicePixels[40],
-              color: colors.appWhite,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              alignSelf: 'center',
-            }}>
-            {score + (suffix ? ` ${suffix}` : '')}
-          </Text>
+          <Icon name={icon} size={DevicePixels[50]} color={colors.appWhite} />
         )}
       </AnimatedCircularProgress>
       <Text
@@ -137,7 +118,6 @@ const GoalSummaries: React.FC<{
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
 }> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
-  
   const pagerRef = useRef<PagerView>();
 
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
@@ -206,6 +186,7 @@ const GoalSummaries: React.FC<{
       score={savedQuickRoutines ? savedQuickRoutines.length : 0}
       goal={workoutGoal}
       isFirst
+      icon="dumbbell"
     />,
     <GoalCircle
       title="Minutes spent training"
@@ -214,8 +195,7 @@ const GoalSummaries: React.FC<{
       key="mins"
       goal={minsGoal}
       score={mins}
-      fontSize={DevicePixels[30]}
-      suffix={'\nmins'}
+      icon="stopwatch"
     />,
 
     <GoalCircle
@@ -223,6 +203,7 @@ const GoalSummaries: React.FC<{
       pagerRef={pagerRef}
       index={2}
       key="workoutLevel"
+      icon="tachometer-alt"
       score={workoutLevelScore}
       goal={workoutGoal}
       isLast={!(profile.goal === Goal.WEIGHT_LOSS)}
@@ -238,9 +219,8 @@ const GoalSummaries: React.FC<{
         index={3}
         goal={3500}
         score={calories}
-        fontSize={DevicePixels[30]}
-        suffix={'\nkcal'}
         isLast
+        icon="fire-alt"
       />,
     );
   }

@@ -67,7 +67,7 @@ const SignUp: React.FC<SignUpProps> = ({
         }}
       />
       <SafeAreaView>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <Header title="Registration" hasBack />
           <Text
             style={{

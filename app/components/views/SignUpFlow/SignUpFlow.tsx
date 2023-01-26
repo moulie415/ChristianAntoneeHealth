@@ -56,6 +56,7 @@ import ForwardButton from '../../commons/ForwardButton';
 import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
 import Name from './Name';
+import Goals from './Goals';
 
 const {width} = Dimensions.get('window');
 
@@ -160,7 +161,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       sleepPattern,
       lifestyle,
       medications,
-      fromProfile,
+      fromProfile: !!fromProfile,
     });
   };
 
@@ -345,7 +346,15 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     //   ),
     //   showNext: true,
     // },
+    //
     // 17
+
+    {
+      key: 'goals',
+      showNext: true,
+      component: <Goals goal={goal} />,
+    },
+    // 18
     {
       key: 'complete',
       showNext: true,
