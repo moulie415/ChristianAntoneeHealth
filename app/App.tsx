@@ -23,7 +23,7 @@ import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
 import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import TestType from './types/Test';
-import StackComponent, { DrawerComponent } from './Stack';
+import StackComponent, {DrawerComponent} from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import appCheck from '@react-native-firebase/app-check';
 import Education from './types/Education';
@@ -36,11 +36,13 @@ import FastImage from 'react-native-fast-image';
 import Instabug from 'instabug-reactnative';
 import Text from './components/commons/Text';
 import Button from './components/commons/Button';
-import WelcomeModal from './WelcomeModal';
 import {
   TourGuideProvider, // Main provider
+  useTourGuideController,
 } from 'rn-tourguide';
 import CustomTooltip from './components/commons/CustomTooltip';
+import {setHasViewedTour, setViewedPlan} from './actions/profile';
+import WelcomeModal from './WelcomeModal';
 
 const {height, width} = Dimensions.get('window');
 
@@ -132,7 +134,7 @@ export type StackParamList = {
   WhatArea: {equipment: Equipment};
   WorkoutList: {area: Area; equipment: Equipment};
   Rating: undefined;
-  Stack: undefined
+  Stack: undefined;
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
@@ -188,6 +190,7 @@ const App: React.FC = () => {
       });
   }, []);
 
+
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
@@ -220,7 +223,7 @@ const App: React.FC = () => {
               />
             </View>
           )}
-          <WelcomeModal showSplash={showSplash} />
+          <WelcomeModal showSplash={showSplash}/>
         </TourGuideProvider>
       </Provider>
     </PersistGate>
