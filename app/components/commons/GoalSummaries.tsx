@@ -137,6 +137,7 @@ const GoalSummaries: React.FC<{
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
 }> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
+  
   const pagerRef = useRef<PagerView>();
 
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;

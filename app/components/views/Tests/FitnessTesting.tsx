@@ -16,13 +16,13 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
 }) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <Header showDrawerMenu />
+      <SafeAreaView>
+        <Header showDrawerMenu />
 
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: DevicePixels[20],
-        }}>
-        <SafeAreaView>
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: DevicePixels[20],
+          }}>
           {Object.values(tests).map((item, index) => {
             return (
               <TestCard
@@ -38,8 +38,8 @@ const FitnessTesting: React.FC<FitnessTestingProps> = ({
               />
             );
           })}
-        </SafeAreaView>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };

@@ -6,7 +6,7 @@ import HomeCard from '../commons/HomeCard';
 import DevicePixels from '../../helpers/DevicePixels';
 import colors from '../../constants/colors';
 import Avatar from '../commons/Avatar';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
@@ -57,11 +57,12 @@ const Home: React.FC<{
       eventEmitter.off('stepChange', handleOnStepChange);
     };
   }, [eventEmitter, handleOnStepChange]);
+  const insets = useSafeAreaInsets();
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <Header showDrawerMenu />
-      <ScrollView>
-        <SafeAreaView>
+      <SafeAreaView>
+        <Header showDrawerMenu />
+        <ScrollView>
           <FastImage
             source={require('../../images/logo.png')}
             style={{
@@ -138,15 +139,14 @@ const Home: React.FC<{
             image={require('../../images/Homepage_activity_tracking.jpeg')}
             onPress={() => navigation.navigate('Rating')}
           />
-        </SafeAreaView>
-      </ScrollView>
-
+        </ScrollView>
+      </SafeAreaView>
       <TourGuideZoneByPosition
         shape="circle"
         text="For everything else use this menu"
         isTourGuide
-        top={DevicePixels[20]}
-        left={DevicePixels[10]}
+        top={DevicePixels[18] + insets.top}
+        left={DevicePixels[13]}
         width={DevicePixels[30]}
         height={DevicePixels[30]}
         zone={profile.admin || plansEnabled ? 4 : 3}
