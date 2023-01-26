@@ -28,6 +28,7 @@ import * as Sentry from '@sentry/react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import Profile from '../../../types/Profile';
+import {DrawerActions} from '@react-navigation/routers';
 
 export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
   return (
@@ -94,6 +95,7 @@ const DrawerContent: React.FC<Props> = ({
         text: 'OK',
         onPress: async () => {
           try {
+            navigation.dispatch(DrawerActions.closeDrawer());
             resetToWelcome();
             await messaging().deleteToken();
             await Purchases.logOut();

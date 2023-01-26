@@ -190,7 +190,6 @@ const App: React.FC = () => {
       });
   }, []);
 
-
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
@@ -223,7 +222,7 @@ const App: React.FC = () => {
               />
             </View>
           )}
-          <WelcomeModal showSplash={showSplash}/>
+          <WelcomeModal showSplash={showSplash} />
         </TourGuideProvider>
       </Provider>
     </PersistGate>
