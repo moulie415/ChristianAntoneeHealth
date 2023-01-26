@@ -47,7 +47,14 @@ const Input: React.FC<Props> = props => {
             right: DevicePixels[20],
             width: DevicePixels[30],
           }}>
-          <TouchableOpacity onPress={() => setSecure(!secure)}>
+          <TouchableOpacity
+            hitSlop={{
+              top: DevicePixels[10],
+              bottom: DevicePixels[10],
+              right: DevicePixels[10],
+              left: DevicePixels[10],
+            }}
+            onPress={() => setSecure(!secure)}>
             <Icon
               name={secure ? 'eye' : 'eye-slash'}
               color={colors.appWhite}

@@ -9,6 +9,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {DrawerActions} from '@react-navigation/routers';
 import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
+import {connect} from 'react-redux';
 
 const Header: React.FC<{
   hasBack?: boolean;
@@ -17,8 +19,21 @@ const Header: React.FC<{
   absolute?: boolean;
   customBackPress?: () => void;
   showDrawerMenu?: boolean;
-}> = ({hasBack, title, right, absolute, customBackPress, showDrawerMenu}) => {
+  profile: Profile;
+}> = ({
+  hasBack,
+  title,
+  right,
+  absolute,
+  customBackPress,
+  showDrawerMenu,
+  profile,
+}) => {
   const insets = useSafeAreaInsets();
+  const count = Object.values(profile.unread || {}).reduce(
+    (acc, cur) => acc + cur,
+    0,
+  );
   return (
     <View
       style={{
@@ -45,6 +60,29 @@ const Header: React.FC<{
             size={DevicePixels[25]}
             style={{marginLeft: -DevicePixels[3]}}
           />
+          {profile.premium && count > 0 && (
+            <View
+              style={{
+                width: DevicePixels[20],
+                height: DevicePixels[20],
+                borderRadius: DevicePixels[10],
+                position: 'absolute',
+                alignItems: 'center',
+                justifyContent: 'center',
+                top: -DevicePixels[5],
+                right: -DevicePixels[8],
+                backgroundColor: colors.appRed,
+              }}>
+              <Text
+                style={{
+                  fontSize: DevicePixels[12],
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                }}>
+                {count > 9 ? '9+' : count}
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
       )}
 
@@ -68,4 +106,8 @@ const Header: React.FC<{
   );
 };
 
-export default Header;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(Header);

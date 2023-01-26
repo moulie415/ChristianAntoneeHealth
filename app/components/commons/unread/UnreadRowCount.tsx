@@ -15,16 +15,16 @@ const UnreadRowCount: React.FC<{unread: {[key: string]: number}}> = ({
       <View
         style={{
           marginLeft: DevicePixels[5],
-          width: DevicePixels[30],
-          height: DevicePixels[30],
-          borderRadius: DevicePixels[15],
+          width: DevicePixels[25],
+          height: DevicePixels[25],
+          borderRadius: DevicePixels[13],
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: colors.appBlack,
+          backgroundColor: colors.appRed,
         }}>
         <Text
           style={{
-            fontSize: DevicePixels[20],
+            fontSize: DevicePixels[16],
             fontWeight: 'bold',
             color: colors.appWhite,
           }}>

@@ -95,7 +95,7 @@ const Login: React.FC<LoginProps> = ({
         }}
       />
       <SafeAreaView>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <View style={{}}>
             <View
               style={{

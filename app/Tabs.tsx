@@ -50,7 +50,7 @@ const Tabs: React.FC<{
           tabBarIcon: ({color, size}) => (
             <TourGuideZone
               zone={0}
-              text="Welcome to CA Health, you can start a workout from here"
+              text="Welcome to CA Health! You can start a workout from here"
               borderRadius={16}>
               <Icon color={color} size={size} name="dumbbell" />
             </TourGuideZone>

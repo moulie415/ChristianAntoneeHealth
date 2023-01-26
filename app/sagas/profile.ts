@@ -15,6 +15,7 @@ import {
   takeLatest,
   fork,
   debounce,
+  throttle,
 } from 'redux-saga/effects';
 import {
   setLoggedIn,
@@ -760,7 +761,7 @@ export default function* profileSaga() {
     takeLatest(UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
     takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
-    debounce(1000, GET_CONNECTIONS, getConnections),
+    throttle(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
     debounce(1000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
