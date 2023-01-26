@@ -46,16 +46,25 @@ import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
 import PreWorkout from './components/views/Workout/PreWorkout';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
+import DevicePixels from './helpers/DevicePixels';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
 const Drawer = createDrawerNavigator<StackParamList>();
 
-export const DrawerComponent = () => {
+export const DrawerComponent: React.FC<{showDrawer: boolean}> = ({
+  showDrawer,
+}) => {
   return (
     <Drawer.Navigator
       drawerContent={props => <DrawerContent {...props} />}
-      screenOptions={{headerShown: false, swipeEnabled: false}}>
+      screenOptions={{
+        headerShown: false,
+        swipeEnabled: false,
+        drawerStyle: {
+          width: showDrawer ? DevicePixels[280] : null,
+        },
+      }}>
       <Drawer.Screen name="Stack" component={StackComponent} />
     </Drawer.Navigator>
   );

@@ -142,11 +142,11 @@ const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
 
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
-
   useEffect(() => {
     setTimeout(() => {
       setShowSplash(false);
     }, 5500);
+
   }, []);
 
   useEffect(() => {
@@ -205,7 +205,7 @@ const App: React.FC = () => {
               // Register the navigation container with the instrumentation
               routingInstrumentation.registerNavigationContainer(navigationRef);
             }}>
-            <DrawerComponent />
+            <DrawerComponent showDrawer={!showSplash} />
           </NavigationContainer>
 
           {showSplash && (
