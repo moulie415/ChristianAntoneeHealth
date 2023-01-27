@@ -202,6 +202,8 @@ const App: React.FC = () => {
           <Drawer
             type={Platform.OS === 'ios' ? 'displace' : 'overlay'}
             ref={drawerRef}
+            tweenEasing="easeInQuad"
+            tweenDuration={200}
             styles={{mainOverlay: {backgroundColor: '#000', opacity: 0}}}
             tapToClose
             tweenHandler={ratio => ({
