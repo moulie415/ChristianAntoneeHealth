@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {StackParamList} from './App';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Premium from './components/views/DrawerContent/Premium';
@@ -52,9 +52,12 @@ const Stack = createNativeStackNavigator<StackParamList>();
 
 const Drawer = createDrawerNavigator<StackParamList>();
 
-export const DrawerComponent: React.FC<{showDrawer: boolean}> = ({
-  showDrawer,
-}) => {
+export const DrawerComponent = () => {
+  const [initRender, setInitRender] = useState(true);
+
+  useEffect(() => {
+    setInitRender(false);
+  }, [initRender]);
   return (
     <Drawer.Navigator
       drawerContent={props => <DrawerContent {...props} />}
@@ -62,7 +65,7 @@ export const DrawerComponent: React.FC<{showDrawer: boolean}> = ({
         headerShown: false,
         swipeEnabled: false,
         drawerStyle: {
-          width: showDrawer ? DevicePixels[280] : null,
+          width: initRender ? null : '80%',
         },
       }}>
       <Drawer.Screen name="Stack" component={StackComponent} />

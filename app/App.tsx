@@ -205,7 +205,7 @@ const App: React.FC = () => {
               // Register the navigation container with the instrumentation
               routingInstrumentation.registerNavigationContainer(navigationRef);
             }}>
-            <DrawerComponent showDrawer={!showSplash} />
+            <DrawerComponent  />
           </NavigationContainer>
 
           {showSplash && (
