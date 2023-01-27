@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLoggedIn} from '../../../actions/profile';
 import colors from '../../../constants/colors';
-import {resetToWelcome} from '../../../RootNavigation';
+import {navigationRef, resetToWelcome} from '../../../RootNavigation';
 import {MyRootState} from '../../../types/Shared';
 import Purchases from 'react-native-purchases';
 import {STORE_LINK} from '../../../constants';
@@ -26,9 +26,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import * as Sentry from '@sentry/react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
-import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import Profile from '../../../types/Profile';
-import {DrawerActions} from '@react-navigation/routers';
 
 export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
   return (
@@ -79,14 +77,15 @@ export interface ListItem {
   tourIndex?: number;
   tourText?: string;
 }
-interface Props extends DrawerContentComponentProps {
+interface Props {
   setLoggedInAction: (loggedIn: boolean) => void;
   profile: Profile;
+  close: () => void;
 }
 const DrawerContent: React.FC<Props> = ({
-  navigation,
   setLoggedInAction,
   profile,
+  close,
 }) => {
   const logOut = () => {
     Alert.alert('Are you sure?', '', [
@@ -95,7 +94,7 @@ const DrawerContent: React.FC<Props> = ({
         text: 'OK',
         onPress: async () => {
           try {
-            navigation.dispatch(DrawerActions.closeDrawer());
+            close();
             resetToWelcome();
             await messaging().deleteToken();
             await Purchases.logOut();
@@ -112,22 +111,29 @@ const DrawerContent: React.FC<Props> = ({
     {
       title: 'My profile',
       icon: 'user',
-      onPress: () => navigation.navigate('Profile'),
+      onPress: () => {
+        navigationRef.navigate('Profile');
+        close();
+      },
     },
     {
       title: 'Education',
       icon: 'book-open',
-      onPress: () => navigation.navigate('Education'),
+      onPress: () => {
+        navigationRef.navigate('Education');
+        close();
+      },
     },
 
     {
       title: 'Friends',
       icon: 'user-friends',
       onPress: () => {
+        close();
         if (profile.premium) {
-          navigation.navigate('Connections');
+          navigationRef.navigate('Connections');
         } else {
-          navigation.navigate('Premium');
+          navigationRef.navigate('Premium');
         }
       },
       accessoryRight: profile.premium ? (
@@ -144,22 +150,33 @@ const DrawerContent: React.FC<Props> = ({
     {
       title: 'Premium',
       icon: 'trophy',
-      onPress: () => navigation.navigate('Premium'),
+      onPress: () => {
+        navigationRef.navigate('Premium');
+        close();
+      },
     },
     {
       title: 'About us',
       icon: 'info-circle',
-      onPress: () => navigation.navigate('About'),
+      onPress: () => {
+        navigationRef.navigate('About');
+        close();
+      },
     },
     {
       title: 'Settings',
       icon: 'cog',
-      onPress: () => navigation.navigate('Settings'),
+      onPress: () => {
+        navigationRef.navigate('Settings'), close();
+      },
     },
     {
       title: 'Support',
       icon: 'question-circle',
-      onPress: () => navigation.navigate('Support'),
+      onPress: () => {
+        navigationRef.navigate('Support');
+        close();
+      },
     },
     {
       title: 'Share the app',
@@ -174,7 +191,10 @@ const DrawerContent: React.FC<Props> = ({
     {
       title: 'Rate the app',
       icon: 'star',
-      onPress: () => navigation.navigate('Rating'),
+      onPress: () => {
+        navigationRef.navigate('Rating');
+        close();
+      },
     },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
   ];
@@ -191,7 +211,7 @@ const DrawerContent: React.FC<Props> = ({
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <FlatList
         data={listItems}
-        contentContainerStyle={{marginTop: DevicePixels[20]}}
+        contentContainerStyle={{marginTop: DevicePixels[40]}}
         renderItem={({item}) => {
           return <MoreItem item={item} />;
         }}

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {MutableRefObject, useCallback, useEffect, useState} from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
@@ -16,8 +16,8 @@ import {
   TourGuideZoneByPosition,
   useTourGuideController,
 } from 'rn-tourguide';
-import {DrawerActions} from '@react-navigation/native';
 import Header from '../commons/Header';
+import Drawer from 'react-native-drawer';
 
 const {height, width} = Dimensions.get('window');
 
@@ -32,14 +32,13 @@ const Home: React.FC<{
   profile: Profile;
   viewedPlan: boolean;
   plansEnabled: boolean;
-}> = ({navigation, profile, viewedPlan, plansEnabled}) => {
+  drawerRef: MutableRefObject<Drawer>;
+}> = ({navigation, profile, viewedPlan, plansEnabled, drawerRef}) => {
   const {eventEmitter} = useTourGuideController();
   useEffect(() => {
     if (!viewedPlan) {
       // navigation.navigate('Plan');
     }
-
-    // navigation.dispatch(DrawerActions.openDrawer());
   }, [navigation, viewedPlan]);
 
   const handleOnStepChange = useCallback(
@@ -61,7 +60,7 @@ const Home: React.FC<{
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
-        <Header showDrawerMenu />
+        <Header drawerRef={drawerRef} />
         <ScrollView>
           <FastImage
             source={require('../../images/logo.png')}

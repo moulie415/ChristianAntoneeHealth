@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {MutableRefObject, useEffect, useMemo, useState} from 'react';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Profile, {PlanStatus} from '../../../types/Profile';
@@ -33,6 +33,7 @@ import Spinner from '../../commons/Spinner';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
+import Drawer from 'react-native-drawer';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -48,6 +49,7 @@ const Plan: React.FC<{
   setViewedPlan: () => void;
   getPlan: () => void;
   plan: PlanType;
+  drawerRef: MutableRefObject<Drawer>;
 }> = ({
   profile,
   navigation,
@@ -56,6 +58,7 @@ const Plan: React.FC<{
   setViewedPlan: setViewedPlanAction,
   getPlan: getPlanAction,
   plan,
+  drawerRef,
 }) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
@@ -122,7 +125,7 @@ const Plan: React.FC<{
       {hasPlanLeft ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
-            <Header showDrawerMenu />
+            <Header drawerRef={drawerRef} />
             <TabView
               renderTabBar={props => {
                 return (
@@ -188,7 +191,7 @@ const Plan: React.FC<{
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
           <SafeAreaView style={{flex: 1}}>
-            <Header showDrawerMenu />
+            <Header drawerRef={drawerRef} />
             <View
               style={{
                 ...StyleSheet.absoluteFillObject,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
 import Purchases from 'react-native-purchases';
@@ -23,7 +23,7 @@ import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
 import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import TestType from './types/Test';
-import StackComponent, {DrawerComponent} from './Stack';
+import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import appCheck from '@react-native-firebase/app-check';
 import Education from './types/Education';
@@ -34,8 +34,6 @@ import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
 import Instabug from 'instabug-reactnative';
-import Text from './components/commons/Text';
-import Button from './components/commons/Button';
 import {
   TourGuideProvider, // Main provider
   useTourGuideController,
@@ -43,6 +41,9 @@ import {
 import CustomTooltip from './components/commons/CustomTooltip';
 import {setHasViewedTour, setViewedPlan} from './actions/profile';
 import WelcomeModal from './WelcomeModal';
+import Drawer from 'react-native-drawer';
+import DrawerContent from './components/views/DrawerContent/DrawerContent';
+import DevicePixels from './helpers/DevicePixels';
 
 const {height, width} = Dimensions.get('window');
 
@@ -146,7 +147,6 @@ const App: React.FC = () => {
     setTimeout(() => {
       setShowSplash(false);
     }, 5500);
-
   }, []);
 
   useEffect(() => {
@@ -190,6 +190,8 @@ const App: React.FC = () => {
       });
   }, []);
 
+  const drawerRef = useRef<Drawer>();
+
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
@@ -197,17 +199,35 @@ const App: React.FC = () => {
           androidStatusBarVisible
           backdropColor="rgba(0,0,0,0.8)"
           tooltipComponent={CustomTooltip}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              sagaMiddleware.run(rootSaga);
-              SplashScreen.hide();
-              // Register the navigation container with the instrumentation
-              routingInstrumentation.registerNavigationContainer(navigationRef);
-            }}>
-            <DrawerComponent  />
-          </NavigationContainer>
-
+          <Drawer
+            type={Platform.OS === 'ios' ? 'displace' : 'overlay'}
+            ref={drawerRef}
+            styles={{mainOverlay: {backgroundColor: '#000', opacity: 0}}}
+            tapToClose
+            tweenHandler={ratio => ({
+              mainOverlay: {
+                opacity: ratio / 2,
+              },
+            })}
+            openDrawerOffset={viewPort => {
+              return viewPort.width / 4;
+            }}
+            content={
+              <DrawerContent close={() => drawerRef.current?.close()} />
+            }>
+            <NavigationContainer
+              ref={navigationRef}
+              onReady={() => {
+                sagaMiddleware.run(rootSaga);
+                SplashScreen.hide();
+                // Register the navigation container with the instrumentation
+                routingInstrumentation.registerNavigationContainer(
+                  navigationRef,
+                );
+              }}>
+              <StackComponent drawerRef={drawerRef} />
+            </NavigationContainer>
+          </Drawer>
           {showSplash && (
             <View style={{backgroundColor: colors.appWhite}}>
               <FastImage

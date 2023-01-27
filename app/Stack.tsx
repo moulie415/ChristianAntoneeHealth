@@ -1,4 +1,9 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, {
+  FunctionComponent,
+  MutableRefObject,
+  useEffect,
+  useState,
+} from 'react';
 import {StackParamList} from './App';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Premium from './components/views/DrawerContent/Premium';
@@ -44,35 +49,13 @@ import WorkoutList from './components/views/Workout/WorkoutList';
 import WhatArea from './components/views/Workout/WhatArea';
 import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
 import PreWorkout from './components/views/Workout/PreWorkout';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
 import DevicePixels from './helpers/DevicePixels';
+import Drawer from 'react-native-drawer';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const Drawer = createDrawerNavigator<StackParamList>();
-
-export const DrawerComponent = () => {
-  const [initRender, setInitRender] = useState(true);
-
-  useEffect(() => {
-    setInitRender(false);
-  }, [initRender]);
-  return (
-    <Drawer.Navigator
-      drawerContent={props => <DrawerContent {...props} />}
-      screenOptions={{
-        headerShown: false,
-        swipeEnabled: false,
-        drawerStyle: {
-          width: initRender ? null : '80%',
-        },
-      }}>
-      <Drawer.Screen name="Stack" component={StackComponent} />
-    </Drawer.Navigator>
-  );
-};
-const StackComponent = () => {
+const StackComponent: React.FC<{drawerRef: MutableRefObject<Drawer>}> = ({drawerRef}) => {
   return (
     <Stack.Navigator
       initialRouteName="Loading"
@@ -87,7 +70,10 @@ const StackComponent = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
         <Stack.Screen name="SignUpFlow" component={SignUpFlow} />
-        <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen
+          name="Tabs"
+          children={props => <Tabs {...props} drawerRef={drawerRef} />}
+        />
         <Stack.Screen name="FitnessGoal" component={FitnessGoal} />
         <Stack.Screen name="Experience" component={Experience} />
         <Stack.Screen name="WarmUp" component={WarmUp} />

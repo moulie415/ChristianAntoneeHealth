@@ -1600,15 +1600,6 @@
     react-is "^16.13.0"
     use-latest-callback "^0.1.5"
 
-"@react-navigation/drawer@^6.5.7":
-  version "6.5.7"
-  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-6.5.7.tgz#a687dd909d9f4ae92e07f3cc295986761d19e340"
-  integrity sha512-k8l+G05WrP+Il8USxEcaBtZ2Jv/JFn9dS8O1IlqIoddZITrFjsyDhk3zxeE3RWDcc9u0o7HgHfgKHPXxcT8QRQ==
-  dependencies:
-    "@react-navigation/elements" "^1.3.13"
-    color "^4.2.3"
-    warn-once "^0.1.0"
-
 "@react-navigation/elements@^1.3.13":
   version "1.3.13"
   resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-1.3.13.tgz#5105fa26df8d32810cd9f14d6ec5a3d2c2bb26d2"
@@ -2196,6 +2187,14 @@
   integrity sha512-kDslVYavmmueKoQ6UmsjL/QJlN6MlLjiCjHxoNAv0ke1q7ClnP7hBic7IiJ3CAdryyaaT9YKRZAHguKzg3xphA==
   dependencies:
     react-native-draggable-flatlist "*"
+
+"@types/react-native-drawer@^2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@types/react-native-drawer/-/react-native-drawer-2.5.5.tgz#1d99341bd6bc2bd8537dee348c5a898195375148"
+  integrity sha512-aJ0J2ayMfUSIvhRKg4GuKWF4XB5JCWaD8mTtM2aF4tPrG5c9aSPhREuZvKfbjBXY5EAvhrt4hwc8CxWiPOZhYQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
 
 "@types/react-native-push-notification@^8.1.1":
   version "8.1.1"
@@ -7740,6 +7739,14 @@ react-native-draggable-flatlist@^4.0.0:
   dependencies:
     "@babel/preset-typescript" "^7.17.12"
 
+react-native-drawer@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
+  integrity sha512-cxcQNbSWy5sbGi7anSVp6EDr6JarOBMY9lbFOeLFeVYbONiudoqRKbgEsSDgSw3/LFCLvUXK5zdjXCOedeytxQ==
+  dependencies:
+    prop-types "^15.5.8"
+    tween-functions "^1.0.1"
+
 react-native-events@^1.0.21:
   version "1.0.21"
   resolved "https://registry.yarnpkg.com/react-native-events/-/react-native-events-1.0.21.tgz#d1fbe492a3321d09c630da5132dad10a5312b823"
@@ -9373,6 +9380,11 @@ tsutils@^3.17.1:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
+
+tween-functions@^1.0.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tween-functions/-/tween-functions-1.2.0.tgz#1ae3a50e7c60bb3def774eac707acbca73bbc3ff"
+  integrity sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

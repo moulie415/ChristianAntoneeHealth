@@ -1,5 +1,5 @@
 import {View, TouchableOpacity, Dimensions} from 'react-native';
-import React from 'react';
+import React, {MutableRefObject} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 import DevicePixels from '../../../helpers/DevicePixels';
@@ -8,14 +8,16 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
+import Drawer from 'react-native-drawer';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
-}> = ({navigation}) => {
+  drawerRef: MutableRefObject<Drawer>;
+}> = ({navigation, drawerRef}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
-        <Header showDrawerMenu />
+        <Header drawerRef={drawerRef} />
 
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Text

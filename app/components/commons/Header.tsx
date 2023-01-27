@@ -1,5 +1,5 @@
 import {TouchableOpacity, View} from 'react-native';
-import React, {ReactNode} from 'react';
+import React, {MutableRefObject, ReactNode} from 'react';
 import BackButton from './BackButton';
 import {navigationRef} from '../../RootNavigation';
 import DevicePixels from '../../helpers/DevicePixels';
@@ -7,10 +7,10 @@ import Text from './Text';
 import colors from '../../constants/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {DrawerActions} from '@react-navigation/routers';
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
+import Drawer from 'react-native-drawer';
 
 const Header: React.FC<{
   hasBack?: boolean;
@@ -18,16 +18,16 @@ const Header: React.FC<{
   right?: ReactNode;
   absolute?: boolean;
   customBackPress?: () => void;
-  showDrawerMenu?: boolean;
   profile: Profile;
+  drawerRef?: MutableRefObject<Drawer>;
 }> = ({
   hasBack,
   title,
   right,
   absolute,
   customBackPress,
-  showDrawerMenu,
   profile,
+  drawerRef,
 }) => {
   const insets = useSafeAreaInsets();
   const count = Object.values(profile.unread || {}).reduce(
@@ -50,9 +50,9 @@ const Header: React.FC<{
           onPress={customBackPress || navigationRef?.goBack}
         />
       )}
-      {showDrawerMenu && (
+      {drawerRef?.current && (
         <TouchableOpacity
-          onPress={() => navigationRef.dispatch(DrawerActions.openDrawer())}
+          onPress={() => drawerRef.current?.open()}
           style={{margin: DevicePixels[20]}}>
           <Icon
             name="bars"

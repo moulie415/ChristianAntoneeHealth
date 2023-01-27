@@ -1,5 +1,4 @@
-import React from 'react';
-import FitnessTestingProps from '../../../types/views/FitnessTesting';
+import React, {MutableRefObject} from 'react';
 import {ScrollView, ImageBackground, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -8,16 +7,22 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import TestCard from '../../commons/TestCard';
 import colors from '../../../constants/colors';
 import Header from '../../commons/Header';
+import {StackParamList} from '../../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Test from '../../../types/Test';
+import Profile from '../../../types/Profile';
+import Drawer from 'react-native-drawer';
 
-const FitnessTesting: React.FC<FitnessTestingProps> = ({
-  navigation,
-  tests,
-  profile,
-}) => {
+const FitnessTesting: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'Fitness'>;
+  tests: {[key: string]: Test};
+  profile: Profile;
+  drawerRef: MutableRefObject<Drawer>;
+}> = ({navigation, tests, profile, drawerRef}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
-        <Header showDrawerMenu />
+        <Header drawerRef={drawerRef} />
 
         <ScrollView
           contentContainerStyle={{
