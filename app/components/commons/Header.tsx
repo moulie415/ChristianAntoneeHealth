@@ -52,8 +52,14 @@ const Header: React.FC<{
       )}
       {drawerRef?.current && (
         <TouchableOpacity
+          hitSlop={{
+            top: DevicePixels[10],
+            bottom: DevicePixels[10],
+            right: DevicePixels[10],
+            left: DevicePixels[10],
+          }}
           onPress={() => drawerRef.current?.open()}
-          style={{margin: DevicePixels[20]}}>
+          style={{padding: DevicePixels[20]}}>
           <Icon
             name="bars"
             color={colors.appWhite}
