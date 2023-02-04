@@ -1,4 +1,4 @@
-import {SectionList, View} from 'react-native';
+import {SectionList, View, Dimensions} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
 import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -16,12 +16,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as _ from 'lodash';
 import Education from '../../../types/Education';
 import {getEducationById} from '../../../actions/education';
-import Image from 'react-native-fast-image';
-import ListItem from '../../commons/ListItem';
 import Spinner from '../../commons/Spinner';
 import Divider from '../../commons/Divider';
 import WorkoutCard from '../../commons/WorkoutCard';
 import TestCard from '../../commons/TestCard';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import FastImageAnimated from '../../commons/FastImageAnimated';
+
+const {height, width} = Dimensions.get('window');
 
 const Daily: React.FC<{
   plan: Plan;
@@ -119,6 +121,7 @@ const Daily: React.FC<{
                 padding: 5,
                 marginLeft: 10,
                 color: colors.appWhite,
+                fontSize: 20,
                 fontWeight: 'bold',
               }}>
               {title}
@@ -191,40 +194,71 @@ const Daily: React.FC<{
                     marginLeft: 10,
                     color: colors.appWhite,
                     fontWeight: 'bold',
+                    fontSize: 20
                   }}>
                   Education
                 </Text>
-                {plan.education.map(id => {
-                  const item = education[id];
-                  if (!item) {
-                    return null;
-                  }
-                  return (
-                    <View key={id}>
-                      <Divider />
-                      <ListItem
-                        title={item.title}
-                        onPress={() =>
+                <FlatList
+                  data={plan.education}
+                  renderItem={({item: i}) => {
+                    const item = education[i];
+                    if (!item) {
+                      return null;
+                    }
+                    return (
+                      <TouchableOpacity
+                        style={{
+                          height: 125,
+                          marginHorizontal: 15,
+                          marginBottom: 15,
+                          borderRadius: 10,
+                          overflow: 'hidden',
+                        }}
+                        onPress={() => {
                           navigate('EducationArticle', {
                             education: item,
-                          })
-                        }
-                        description={moment(item.createdate).format(
-                          'DD MMMM YYYY',
-                        )}
-                        accessoryLeft={
-                          <Image
+                          });
+                        }}>
+                        <FastImageAnimated
+                          style={{
+                            position: 'absolute',
+                            height: 125,
+                            width: '100%',
+                          }}
+                          source={{uri: item.image.src}}
+                        />
+
+                        <View
+                          style={{
+                            position: 'absolute',
+                            alignSelf: 'flex-end',
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: width / 1.5,
+                            padding: 10,
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                          }}>
+                          <Text
                             style={{
-                              width: 75,
-                              height: 50,
-                            }}
-                            source={{uri: item.image.src}}
-                          />
-                        }
-                      />
-                    </View>
-                  );
-                })}
+                              color: colors.appWhite,
+                              fontSize: 10,
+                            }}>
+                            {moment(item.createdate).format('DD MMMM YYYY')}
+                          </Text>
+                          <Text
+                            style={{
+                              color: colors.appWhite,
+                              fontSize: 16,
+                              fontWeight: 'bold',
+                            }}>
+                            {item.title}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
               </View>
             )}
           </View>
@@ -236,6 +270,7 @@ const Daily: React.FC<{
               color: colors.appWhite,
               fontWeight: 'bold',
               marginLeft: 10,
+              fontSize: 20,
             }}>
             Other
           </Text>
@@ -243,20 +278,19 @@ const Daily: React.FC<{
         {!!plan.nutrition && !_.isEmpty(plan.nutrition) && (
           <>
             <Divider />
-            <Icon
-              name="apple-alt"
-              size={20}
-              color={colors.appBlue}
-            />
-            <Text
-              style={{
-                padding: 5,
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                marginLeft: 10,
-              }}>
-              Nutritional planning
-            </Text>
+            <View
+              style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
+              <Icon name="apple-alt" size={20} color={colors.appBlue} />
+              <Text
+                style={{
+                  padding: 5,
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                }}>
+                Nutritional planning
+              </Text>
+            </View>
             <View style={{marginLeft: 10}}>
               {!!plan.nutrition.general && (
                 <Text>
@@ -294,17 +328,20 @@ const Daily: React.FC<{
         {!!plan.sleep && !_.isEmpty(plan.sleep) && (
           <>
             <Divider />
-            <ListItem
-              title="Sleep hygiene"
-              description={plan.sleep.general}
-              accessoryLeft={
-                <Icon
-                  name="bed"
-                  size={20}
-                  color={colors.appBlue}
-                />
-              }
-            />
+            <View
+              style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
+              <Icon name="bed" size={20} color={colors.appBlue} />
+              <Text
+                style={{
+                  padding: 5,
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                }}>
+                {`Sleep hygiene: ${plan.sleep.general}`}
+              </Text>
+            </View>
+            <Divider />
           </>
         )}
       </View>

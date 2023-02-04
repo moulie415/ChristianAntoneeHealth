@@ -139,11 +139,7 @@ const ArticleList: React.FC<{
                     bottom: 15,
                     right: 15,
                   }}>
-                  <Icon
-                    name="lock"
-                    size={20}
-                    color={colors.appWhite}
-                  />
+                  <Icon name="lock" size={20} color={colors.appWhite} />
                 </View>
               )}
             </View>
