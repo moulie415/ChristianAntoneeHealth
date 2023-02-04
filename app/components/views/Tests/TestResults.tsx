@@ -36,23 +36,23 @@ const TestResults: React.FC<TestResultsProp> = ({
 }) => {
   const {test, testResult, seconds} = route.params;
   const table = profile.gender === 'male' ? test.mens : test.womens;
-  const isTable = 'age' in table;
+  const isTable = table && 'age' in table;
   const age = profile.dob && moment().diff(profile.dob, 'years');
-  const col = isTable && getTableColumn(table, age);
+  const col = isTable && age && getTableColumn(table, age);
   const score = testResult || seconds;
   const category = isTable && col && getTableCategory(table, col, score);
   const max = isTable && col && getTableMax(table, col);
-  const average = isTable && getTableAverage(table, col);
-  const percentile = !isTable && getPercentile(table, score);
+  const average = isTable && col && getTableAverage(table, col);
+  const percentile = !isTable && table && getPercentile(table, score);
 
   const [fill, setFill] = useState(
-    isTable ? (100 / max) * score : getPercentileFill(percentile),
+    isTable && max ? (100 / max) * score : getPercentileFill(percentile),
   );
 
   const save = useThrottle((saved: boolean) => {
     saveTestAction({
       seconds,
-      result: testResult,
+      result: testResult || 0,
       createdate: new Date(),
       testId: test.id,
       saved,
@@ -83,7 +83,7 @@ const TestResults: React.FC<TestResultsProp> = ({
     } else {
       save(false);
     }
-  }, [saveTestAction, test.id, profile.premium, seconds, testResult]);
+  }, [saveTestAction, test.id, profile.premium, seconds, testResult, save]);
 
   if (!category) {
     return (
@@ -116,7 +116,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           width={15}
           backgroundWidth={5}
           fill={fill}
-          tintColor={getCategoryColor(category || percentile)}
+          tintColor={getCategoryColor((category || percentile) as string)}
           // tintColorSecondary={colors.appBlueFaded}
           backgroundColor={colors.appWhite}
           arcSweepAngle={240}
@@ -141,7 +141,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           }}>
           {!percentile && (
             <>
-              {getScoreIcon(category || percentile) === '-' ? (
+              {getScoreIcon((category || percentile) as string) === '-' ? (
                 <Text
                   style={{
                     fontSize: 30,
@@ -157,7 +157,7 @@ const TestResults: React.FC<TestResultsProp> = ({
                     marginRight: 10,
                     color: colors.appWhite,
                   }}
-                  name={getScoreIcon(category || percentile)}
+                  name={getScoreIcon((category || percentile) as string)}
                 />
               )}
             </>
@@ -165,7 +165,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           <Text style={{color: colors.appWhite}}>
             {isTable
               ? `${getCategoryString(category)} score`
-              : `${capitalizeFirstLetter(percentile)} percentile`}
+              : `${capitalizeFirstLetter(percentile as string)} percentile`}
           </Text>
         </View>
         <View

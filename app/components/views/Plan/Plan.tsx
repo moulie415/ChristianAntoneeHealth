@@ -48,8 +48,8 @@ const Plan: React.FC<{
   loading: boolean;
   setViewedPlan: () => void;
   getPlan: () => void;
-  plan: PlanType;
-  drawerRef: MutableRefObject<Drawer>;
+  plan?: PlanType;
+  drawerRef: MutableRefObject<Drawer | null>;
 }> = ({
   profile,
   navigation,
@@ -84,6 +84,7 @@ const Plan: React.FC<{
           );
         }
       } catch (e) {
+        // @ts-ignore
         Alert.alert('Error fetching Premium offerings', e.message);
         logError(e);
       }

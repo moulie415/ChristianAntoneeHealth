@@ -43,6 +43,7 @@ const SignUp: React.FC<SignUpProps> = ({
       handleAuthAction(user);
     } catch (e) {
       setLoading(false);
+      // @ts-ignore
       Alert.alert('Error', e.message);
     }
   };

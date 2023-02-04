@@ -77,10 +77,13 @@ const WorkoutList: React.FC<{
   }, [getQuickRoutinesAction]);
   useEffect(() => {
     if (quickRoutines) {
-      const ids = Object.values(quickRoutines).reduce((acc, cur) => {
-        const missing = cur.exerciseIds.filter(e => !exercises[e]);
-        return [...acc, ...missing];
-      }, []);
+      const ids: string[] = Object.values(quickRoutines).reduce(
+        (acc: string[], cur) => {
+          const missing = cur.exerciseIds.filter(e => !exercises[e]);
+          return [...acc, ...missing];
+        },
+        [],
+      );
       if (ids && ids.length) {
         getExercisesByIdAction(ids);
       }
@@ -126,7 +129,7 @@ const WorkoutList: React.FC<{
                 item={item}
                 onPress={() => {
                   if (item.premium && !profile.premium) {
-                    navigation.navigate('Premium');
+                    navigation.navigate('Premium', {});
                   } else if (isLoaded && !profile.premium && settings.ads) {
                     setSelectedItem(item);
                     show();

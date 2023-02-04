@@ -14,8 +14,6 @@ import Text from '../../commons/Text';
 const WhatArea: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'WhatArea'>;
   route: RouteProp<StackParamList, 'WhatArea'>;
-  step: number;
-  incrementStep: () => void;
 }> = ({navigation, route}) => {
   const {equipment} = route.params;
   return (

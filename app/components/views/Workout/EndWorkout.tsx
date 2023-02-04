@@ -72,11 +72,11 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
 
             const save = (saved: boolean) => {
               saveAction({
-                calories,
+                calories: calories || 0,
                 seconds,
                 difficulty,
                 createdate: new Date(),
-                workout: workout.map(e => e.id),
+                workout: workout.map(e => e.id || ''),
                 saved,
                 name,
               });

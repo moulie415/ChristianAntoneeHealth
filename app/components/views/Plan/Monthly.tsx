@@ -21,24 +21,25 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Test from '../../../types/Test';
 import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
+import {MarkedDates} from 'react-native-calendars/src/types';
 
-const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
+const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
   plan,
   tests,
 }) => {
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const workoutDates = plan.workouts
-    ? plan.workouts.reduce((acc, cur) => {
+  const workoutDates: string[] = plan?.workouts
+    ? plan.workouts.reduce((acc: string[], cur) => {
         if (cur.dates) {
           return [...acc, ...cur.dates];
         }
         return acc;
       }, [])
     : [];
-  const testDates = plan.tests
-    ? plan.tests.reduce((acc, cur) => {
+  const testDates: string[] = plan?.tests
+    ? plan.tests.reduce((acc: string[], cur) => {
         if (cur.dates) {
           return [...acc, ...cur.dates];
         }
@@ -48,7 +49,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
 
   const uniq = _.uniq([...workoutDates, ...testDates]);
 
-  const dates = uniq.reduce((acc, cur) => {
+  const dates: MarkedDates = uniq.reduce((acc: MarkedDates, cur) => {
     if (cur) {
       return {
         ...acc,
@@ -60,6 +61,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
         },
       };
     }
+    return acc;
   }, {});
 
   const maxDate = moment(
@@ -76,10 +78,10 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
         minDate={minDate}
         onDayPress={({dateString}) => {
           if (dates[dateString]) {
-            const workout = plan.workouts?.find(w => {
+            const workout = plan?.workouts?.find(w => {
               w.dates.includes(dateString);
             });
-            const test = plan.tests?.find(t => {
+            const test = plan?.tests?.find(t => {
               t.dates.includes(dateString);
             });
           }
@@ -128,7 +130,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
                       title: string;
                       details: CalendarEventWritable;
                     }[] = [];
-                    plan.workouts?.forEach(workout => {
+                    plan?.workouts?.forEach(workout => {
                       workout.dates?.forEach(date => {
                         const title = workout.name || 'CA Health Workout';
                         const event: {
@@ -150,7 +152,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
                         events.push(event);
                       });
                     });
-                    plan.tests?.forEach(test => {
+                    plan?.tests?.forEach(test => {
                       test.dates?.forEach(date => {
                         const testObj = tests[test.test];
                         const title = testObj ? testObj.name : 'CA Health Test';

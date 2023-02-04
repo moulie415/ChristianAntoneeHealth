@@ -46,6 +46,7 @@ export const appleSignIn = async () => {
     // Sign the user in with the credential
     return auth().signInWithCredential(appleCredential);
   } catch (e) {
+    // @ts-ignore
     Alert.alert('Error', e.message);
     throw e;
   }
@@ -78,6 +79,7 @@ export const facebookSignIn = async () => {
     return credentials;
   } catch (e) {
     if (e !== 'User cancelled the login process') {
+      // @ts-ignore
       Alert.alert('Error', e.message);
     }
     throw e;
@@ -96,7 +98,9 @@ export const googleSignIn = async () => {
     const credentials = await auth().signInWithCredential(googleCredential);
     return credentials;
   } catch (e) {
+    // @ts-ignore
     if (e.code !== '12501') {
+      // @ts-ignore
       Alert.alert('Error', e.message);
     }
     throw e;
@@ -122,6 +126,7 @@ export const signIn = async (
       throw Error('Please enter both your email and your password');
     }
   } catch (e) {
+    // @ts-ignore
     Alert.alert('Sorry', e.message);
     throw e;
   }

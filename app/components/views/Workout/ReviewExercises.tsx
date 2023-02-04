@@ -20,14 +20,18 @@ import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
 import Divider from '../../commons/Divider';
+import Profile from '../../../types/Profile';
+import {SettingsState} from '../../../reducers/settings';
+import {StackParamList} from '../../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const ReviewExercises: React.FC<ReviewExercisesProps> = ({
-  workout,
-  setWorkoutAction,
-  navigation,
-  profile,
-  settings,
-}) => {
+const ReviewExercises: React.FC<{
+  workout: Exercise[];
+  setWorkoutAction: (workout: Exercise[]) => void;
+  navigation: NativeStackNavigationProp<StackParamList, 'ReviewExercises'>;
+  profile: Profile;
+  settings: SettingsState;
+}> = ({workout, setWorkoutAction, navigation, profile, settings}) => {
   const {load, show, isLoaded, isClosed} = useInterstitialAd(
     UNIT_ID_INTERSTITIAL,
     {
@@ -49,7 +53,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
 
   useEffect(() => {
     if (isClosed) {
-      navigation.navigate('StartWorkout');
+      navigation.navigate('StartWorkout', {name: ''});
     }
   }, [isClosed, navigation]);
 
@@ -113,7 +117,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             </Text>
           </TouchableOpacity>
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id || ''}
         onDragEnd={({data}) => setWorkoutAction(data)}
       />
       <Button
@@ -122,7 +126,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           if (!profile.premium && isLoaded && settings.ads) {
             show();
           } else {
-            navigation.navigate('StartWorkout');
+            navigation.navigate('StartWorkout', {name: ''});
           }
         }}
         style={{

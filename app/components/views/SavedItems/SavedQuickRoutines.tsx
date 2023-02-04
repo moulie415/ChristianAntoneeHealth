@@ -63,7 +63,7 @@ const SavedQuickRoutines: FunctionComponent<{
         {!missingRoutines.length && (
           <FlatList
             data={Object.values(savedQuickRoutines)}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id || ''}
             renderItem={({item}) => {
               const quickRoutine = quickRoutines[item.quickRoutineId];
               return (

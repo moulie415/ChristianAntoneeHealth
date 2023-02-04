@@ -71,29 +71,31 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
   const [surname, setSurname] = useState(profile.surname || '');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
-  const [weight, setWeight] = useState<number>(profile.weight);
+  const [weight, setWeight] = useState<number>(profile.weight || 0);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [equipment, setEquipment] = useState(profile.equipment || '');
   const [experience, setExperience] = useState<Level>(
-    profile.experience || null,
+    profile.experience as Level,
   );
   const [marketing, setMarketing] = useState(profile.marketing || false);
-  const [height, setHeight] = useState<number>(profile.height || null);
-  const [gender, setGender] = useState<Gender>(profile.gender || null);
-  const [goal, setGoal] = useState<Goal>(profile.goal || null);
+  const [height, setHeight] = useState<number>(profile.height as number);
+  const [gender, setGender] = useState<Gender>(profile.gender as Gender);
+  const [goal, setGoal] = useState<Goal>(profile.goal as Goal);
   const [loading, setLoading] = useState(false);
   const [medications, setMedications] = useState(profile.medications || '');
   const [lifestyle, setLifestyle] = useState(profile.lifestyle || '');
   const [sleepPattern, setSleepPattern] = useState<SleepPattern>(
-    profile.sleepPattern || null,
+    profile.sleepPattern as SleepPattern,
   );
   const [stressLevel, setStressLevel] = useState<StressLevel>(
-    profile.stressLevel || null,
+    profile.stressLevel as StressLevel,
   );
   const [occupation, setOccupation] = useState(profile.occupation || '');
   const [injuries, setInjuries] = useState(profile.injuries || '');
   const [trainingAvailability, setTrainingAvailability] =
-    useState<TrainingAvailability>(profile.trainingAvailability || null);
+    useState<TrainingAvailability>(
+      profile.trainingAvailability as TrainingAvailability,
+    );
   const [nutrition, setNutrition] = useState(profile.nutrition || []);
 
   useInit(() => {
@@ -115,9 +117,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
           try {
             await initBiometrics();
             const h = await getHeight();
-            setHeight(h);
+            setHeight(h as number);
             const w = await getWeight();
-            setWeight(w);
+            setWeight(w as number);
             const sex = await getSex();
             if (sex === 'male' || sex === 'female') {
               setGender(sex);
@@ -167,7 +169,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   const [index, setIndex] = useState(0);
 
-  const ref = useRef<Swiper>();
+  const ref = useRef<Swiper>(null);
 
   const goNext = () => ref.current?.scrollTo(index + 1);
 

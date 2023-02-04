@@ -21,13 +21,12 @@ import Drawer from 'react-native-drawer';
 const GoalCircle: React.FC<{
   isLast?: boolean;
   isFirst?: boolean;
-  pagerRef: MutableRefObject<PagerView>;
+  pagerRef: MutableRefObject<PagerView | null>;
   index: number;
   title: string;
   goal: number;
   score: number;
-
-  icon?: string;
+  icon: string;
 }> = ({isLast, isFirst, pagerRef, index, title, goal, score, icon}) => {
   const [fill, setFill] = useState(0);
 
@@ -75,7 +74,7 @@ const GoalCircle: React.FC<{
       </Text>
       {!isFirst && (
         <TouchableOpacity
-          onPress={() => pagerRef.current.setPage(index - 1)}
+          onPress={() => pagerRef.current?.setPage(index - 1)}
           style={{
             position: 'absolute',
             left: 0,
@@ -92,7 +91,7 @@ const GoalCircle: React.FC<{
       )}
       {!isLast && (
         <TouchableOpacity
-          onPress={() => pagerRef.current.setPage(index + 1)}
+          onPress={() => pagerRef.current?.setPage(index + 1)}
           style={{
             position: 'absolute',
             right: 0,
@@ -116,7 +115,7 @@ const GoalSummaries: React.FC<{
   getWeeklyItemsAction: () => void;
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
-  drawerRef: MutableRefObject<Drawer>;
+  drawerRef: MutableRefObject<Drawer | null>;
 }> = ({
   profile,
   getWeeklyItemsAction,
@@ -124,7 +123,7 @@ const GoalSummaries: React.FC<{
   quickRoutinesObj,
   drawerRef,
 }) => {
-  const pagerRef = useRef<PagerView>();
+  const pagerRef = useRef<PagerView>(null);
 
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
   const minsGoal = profile.goal === Goal.WEIGHT_LOSS ? 180 : 150;

@@ -9,7 +9,9 @@ const useInterval = (callback: () => void, delay: number) => {
 
   useEffect(() => {
     const id = setInterval(() => {
-      savedCallback.current();
+      if (savedCallback.current) {
+        savedCallback.current();
+      }
     }, delay);
     return () => clearInterval(id);
   }, [delay]);

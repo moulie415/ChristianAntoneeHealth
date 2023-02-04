@@ -11,7 +11,7 @@ export function navigate(name: any, params?: any) {
 }
 
 export function resetToTabs() {
-  if (navigationRef.current?.getCurrentRoute().name === 'Tabs') {
+  if (navigationRef.current?.getCurrentRoute()?.name === 'Tabs') {
     return;
   }
   navigationRef.current?.dispatch(
@@ -23,7 +23,7 @@ export function resetToTabs() {
 }
 
 export function resetToWelcome() {
-  if (navigationRef.current?.getCurrentRoute().name === 'Login') {
+  if (navigationRef.current?.getCurrentRoute()?.name === 'Login') {
     return;
   }
   navigationRef.current?.dispatch(
@@ -35,5 +35,5 @@ export function resetToWelcome() {
 }
 
 export function goBack() {
-  navigationRef.current.goBack();
+  navigationRef.current?.goBack();
 }

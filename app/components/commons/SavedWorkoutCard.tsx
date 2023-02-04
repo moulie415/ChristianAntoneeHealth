@@ -68,7 +68,7 @@ const SavedWorkoutCard: React.FC<{
         }}
         source={
           quickRoutine
-            ? {uri: quickRoutine.thumbnail.src}
+            ? {uri: quickRoutine.thumbnail?.src}
             : getImage(profile.experience)
         }>
         <View
@@ -136,7 +136,11 @@ const SavedWorkoutCard: React.FC<{
                 fontWeight: 'bold',
                 marginBottom: 5,
               }}>
-              {'name' in item ? item.name : quickRoutine.name}
+              {quickRoutine && 'exerciseIds' in quickRoutine
+                ? quickRoutine.name
+                : 'name' in item
+                ? item.name
+                : ''}
             </Text>
             {quickRoutine && (
               <Text

@@ -10,7 +10,7 @@ export interface GetPlanAction {
 
 export interface SetPlanAction {
   type: typeof SET_PLAN;
-  payload: Plan;
+  payload?: Plan;
 }
 
 export interface SetUsedFreePlanAction {
@@ -27,7 +27,7 @@ export const getPlan = (): GetPlanAction => ({
   type: GET_PLAN,
 });
 
-export const setPlan = (payload: Plan): SetPlanAction => ({
+export const setPlan = (payload?: Plan): SetPlanAction => ({
   type: SET_PLAN,
   payload,
 });

@@ -53,7 +53,7 @@ const ShareModal: React.FC<{
     setVisible(false);
     switch (type) {
       case 'workout':
-        shareWorkout(workout, profile.name);
+        workout && profile.name && shareWorkout(workout, profile.name);
     }
   }, [type, profile.name, setVisible, workout]);
 
@@ -77,7 +77,7 @@ const ShareModal: React.FC<{
           _id: uuid.v4() as string,
           text: `${profile.name} shared a workout with you`,
           type: 'workout',
-          workout: workout.map(exercise => exercise.id),
+          workout: workout?.map(exercise => exercise.id || ''),
           user: {_id: profile.uid, name: profile.name, avatar: profile.avatar},
           pending: true,
           createdAt: moment().valueOf(),

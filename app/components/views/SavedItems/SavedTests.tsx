@@ -59,7 +59,7 @@ const SavedTests: FunctionComponent<{
             data={Object.values(savedTests).sort(
               (a, b) => moment(b).valueOf() - moment(a).valueOf(),
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id || ''}
             renderItem={({item}) => {
               return <SavedTestCard item={item} navigation={navigation} />;
             }}

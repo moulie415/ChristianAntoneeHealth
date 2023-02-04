@@ -1,6 +1,12 @@
 import {View, SectionList, Alert} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
-import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
+import {
+  MyRootState,
+  Plan,
+  PlanExercise,
+  PlanTest,
+  PlanWorkout,
+} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
 
@@ -19,7 +25,7 @@ import WorkoutCard from '../../commons/WorkoutCard';
 import TestCard from '../../commons/TestCard';
 
 const Weekly: React.FC<{
-  plan: Plan;
+  plan?: Plan;
   loading: boolean;
   exercises: {[key: string]: Exercise};
   tests: {[key: string]: Test};
@@ -36,48 +42,54 @@ const Weekly: React.FC<{
   setWorkout: setWorkoutAction,
 }) => {
   const workouts = useMemo(() => {
-    return (
-      plan.workouts?.filter(w =>
-        w.dates.find(
-          d =>
-            (moment(d).isAfter(moment().startOf('day')) ||
-              moment(d).isSame(moment().startOf('day'))) &&
-            moment(d).isBefore(moment().startOf('day').add(7, 'days')),
-        ),
-      ) || []
-    );
-  }, [plan.workouts]);
+    if (plan) {
+      return (
+        plan.workouts?.filter(w =>
+          w.dates.find(
+            d =>
+              (moment(d).isAfter(moment().startOf('day')) ||
+                moment(d).isSame(moment().startOf('day'))) &&
+              moment(d).isBefore(moment().startOf('day').add(7, 'days')),
+          ),
+        ) || []
+      );
+    }
+  }, [plan]);
 
   const tests = useMemo(() => {
-    return (
-      plan.tests?.filter(t =>
-        t.dates.find(
-          d =>
-            (moment(d).isAfter(moment().startOf('day')) ||
-              moment(d).isSame(moment().startOf('day'))) &&
-            moment(d).isBefore(moment().startOf('day').add(7, 'days')),
-        ),
-      ) || []
-    );
-  }, [plan.tests]);
+    if (plan) {
+      return (
+        plan?.tests?.filter(t =>
+          t.dates.find(
+            d =>
+              (moment(d).isAfter(moment().startOf('day')) ||
+                moment(d).isSame(moment().startOf('day'))) &&
+              moment(d).isBefore(moment().startOf('day').add(7, 'days')),
+          ),
+        ) || []
+      );
+    }
+  }, [plan]);
 
   const sections: {title: string; data: (PlanWorkout | PlanTest)[]}[] = [];
 
   for (let i = 0; i < 7; i++) {
-    const day = moment().add(i, 'days');
-    const data = [...workouts, ...tests]
-      .filter(item => {
-        return item.dates.some(date => moment(date).isSame(day, 'day'));
-      })
-      .map(item => {
-        return {...item, today: i === 0};
-      });
-    sections.push({title: moment(day).format('dddd'), data});
+    if (workouts && tests) {
+      const day = moment().add(i, 'days');
+      const data = [...workouts, ...tests]
+        .filter(item => {
+          return item.dates.some(date => moment(date).isSame(day, 'day'));
+        })
+        .map(item => {
+          return {...item, today: i === 0};
+        });
+      sections.push({title: moment(day).format('dddd'), data});
+    }
   }
 
   useEffect(() => {
-    if (workouts.length) {
-      const allExercises = workouts.reduce((acc, cur) => {
+    if (workouts?.length) {
+      const allExercises: string[] = workouts.reduce((acc: string[], cur) => {
         return [...acc, ...cur.exercises.map(e => e.exercise)];
       }, []);
       const missingExerciseIds = allExercises.filter(id => !exercises[id]);
@@ -88,7 +100,7 @@ const Weekly: React.FC<{
   }, [exercises, workouts, getExercisesByIdAction]);
 
   useEffect(() => {
-    if (tests.length) {
+    if (tests?.length) {
       const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
       if (missingTestIds.length) {
         getTestsByIdAction(missingTestIds);

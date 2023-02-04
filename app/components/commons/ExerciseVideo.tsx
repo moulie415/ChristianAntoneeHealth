@@ -44,7 +44,7 @@ const ExerciseVideo: React.FC<{
 }) => {
   const [paused, setPaused] = useState(startedPaused);
   const [hideTime, setHideTime] = useState(moment().unix());
-  const ref = useRef<Video>();
+  const ref = useRef<Video>(null);
   const showControls = paused || moment().unix() < hideTime + 3;
   const [progressData, setProgressData] = useState<OnProgressData>();
   const [orientation, setOrientation] = useState<OrientationType>();
@@ -104,7 +104,7 @@ const ExerciseVideo: React.FC<{
           onPress={() => {
             setHideTime(paused ? moment().unix() - 3 : moment().unix());
             setPaused(!paused);
-            if (!hasPressedPlay) {
+            if (!hasPressedPlay && setHasPressedPlay) {
               setHasPressedPlay(true);
             }
           }}
@@ -189,11 +189,13 @@ const ExerciseVideo: React.FC<{
                 )}
                 onValueChange={value => {
                   const val = value as number;
-                  const seekable =
-                    progressData.seekableDuration /
-                    progressData.playableDuration;
-                  if (val <= seekable) {
-                    ref.current?.seek(progressData.playableDuration * val);
+                  if (progressData) {
+                    const seekable =
+                      progressData.seekableDuration /
+                      progressData.playableDuration;
+                    if (val <= seekable) {
+                      ref.current?.seek(progressData.playableDuration * val);
+                    }
                   }
                 }}
               />

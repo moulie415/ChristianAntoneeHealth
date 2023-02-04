@@ -35,12 +35,25 @@ import FastImage from 'react-native-fast-image';
 import Orientation from 'react-native-orientation-locker';
 import ExerciseArrows from '../../commons/ExerciseArrows';
 import useInterval from '../../../hooks/UseInterval';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Exercise from '../../../types/Exercise';
+import {StackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
+import Profile from '../../../types/Profile';
 
-const StartWorkout: React.FC<StartWorkoutProps> = ({
+const StartWorkout: React.FC<{
+  workout: Exercise[];
+  exerciseNotes: {[key: string]: string};
+  navigation: NativeStackNavigationProp<StackParamList, 'StartWorkout'>;
+  route: RouteProp<StackParamList, 'StartWorkout'>;
+  downloadVideoAction: (id: string) => void;
+  videos: {[key: string]: {src: string; path: string}};
+  loading: boolean;
+  profile: Profile;
+}> = ({
   workout,
   navigation,
   exerciseNotes,
-  setExerciseNoteAction,
   downloadVideoAction,
   videos,
   loading,
@@ -50,7 +63,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const pagerRef = useRef<PagerView>();
+  const pagerRef = useRef<PagerView>(null);
   const [showModal, setShowModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const textInputRef = useRef<TextInput>();
@@ -303,22 +316,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             secondary={exercise.musclesSecondary}
                           />
                         )}
-
-                        {tabIndex === 2 && (
-                          <Input
-                            style={{
-                              height: 100,
-                              textAlignVertical: 'top',
-                              margin: 10,
-                            }}
-                            placeholder="Enter notes here..."
-                            multiline
-                            value={exerciseNotes[exercise.id]}
-                            onChangeText={text =>
-                              setExerciseNoteAction(exercise.id, text)
-                            }
-                          />
-                        )}
                       </View>
 
                       <View
@@ -441,7 +438,6 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
 });
 
 const mapDispatchToProps = {
-  setExerciseNoteAction: setExerciseNote,
   downloadVideoAction: downloadVideo,
 };
 

@@ -171,7 +171,7 @@ export function* viewWorkoutWatcher(action: ViewWorkoutAction) {
       (state: MyRootState) => state.exercises.exercises,
     );
     const filtered = Object.values(updatedExercises).filter(exercise =>
-      ids.includes(exercise.id),
+      ids.includes(exercise.id || ''),
     );
 
     if (filtered.some(exercise => exercise.premium) && !premium && !admin) {
@@ -182,7 +182,7 @@ export function* viewWorkoutWatcher(action: ViewWorkoutAction) {
         'That workout link includes premium exercises, would you like to subscribe to premium?',
         [
           {text: 'No thanks'},
-          {text: 'Yes', onPress: () => navigate('Premium')},
+          {text: 'Yes', onPress: () => navigate('Premium', {})},
         ],
       );
     } else {
@@ -213,6 +213,7 @@ export function* handleDeepLink(url: string) {
         Alert.alert('Error', 'Please log in before using that link');
       }
     } catch (e) {
+      // @ts-ignore
       Alert.alert('Error handling link', e.message);
       resetToTabs();
     }
@@ -242,6 +243,7 @@ export function* handleDeepLink(url: string) {
       }
     } catch (e) {
       resetToTabs();
+      // @ts-ignore
       Alert.alert('Error handling link', e.message);
     }
   } else {

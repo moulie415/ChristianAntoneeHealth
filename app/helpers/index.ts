@@ -57,7 +57,7 @@ const findClosestSampleToDate = (
 };
 
 export const getSampleItems = (
-  profileVal: number,
+  profileVal: number | undefined,
   filter: 6 | 30 | 365,
   samples: Sample[],
 ) => {
@@ -341,7 +341,7 @@ export const getPercentile = (table: PercentileTable, score: number) => {
   }
 };
 
-export const getPercentileFill = (percentile: string) => {
+export const getPercentileFill = (percentile?: string | boolean) => {
   switch (percentile) {
     case '90th':
       return 100;

@@ -348,7 +348,7 @@ const Test: React.FC<TestProps> = ({
                 if (test.type === 'countup') {
                   setSeconds(0);
                 } else {
-                  setSeconds(test.time);
+                  setSeconds(test.time as number);
                 }
               }}
               style={{

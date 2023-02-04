@@ -5,11 +5,15 @@ import moment from 'moment';
 import styles from '../../../styles/views/Profile';
 import ProfileProps from '../../../types/views/Profile';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../../types/Shared';
+import {MyRootState, Sample} from '../../../types/Shared';
 import colors from '../../../constants/colors';
-import {Gender, Unit} from '../../../types/Profile';
+import Profile, {Gender, Unit} from '../../../types/Profile';
 import * as _ from 'lodash';
-import {getSamples, updateProfile} from '../../../actions/profile';
+import {
+  getSamples,
+  updateProfile,
+  UpdateProfilePayload,
+} from '../../../actions/profile';
 import {
   BONE_DENSITIES,
   HEIGHTS,
@@ -40,17 +44,19 @@ import ProfileCharts from '../../commons/ProfileCharts';
 import Divider from '../../commons/Divider';
 import Spinner from '../../commons/Spinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
+import {StackParamList} from '../../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const Profile: React.FC<ProfileProps> = ({
-  profile,
-  navigation,
-  updateProfileAction,
-  getSamplesAction,
-}) => {
-  const [gender, setGender] = useState<Gender>(profile.gender);
-  const [weight, setWeight] = useState<number>(profile.weight);
+const Profile: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
+  profile: Profile;
+  updateProfileAction: (payload: UpdateProfilePayload) => void;
+  getSamplesAction: () => void;
+}> = ({profile, navigation, updateProfileAction, getSamplesAction}) => {
+  const [gender, setGender] = useState<Gender>(profile.gender || 'male');
+  const [weight, setWeight] = useState<number>(profile.weight || 0);
   const [dob, setDob] = useState(profile.dob);
-  const [height, setHeight] = useState<number>(profile.height);
+  const [height, setHeight] = useState<number>(profile.height || 0);
   const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [avatar, setAvatar] = useState(profile.avatar);
   const [loading, setLoading] = useState(false);
@@ -91,8 +97,8 @@ const Profile: React.FC<ProfileProps> = ({
           text: `Error: ${response.errorMessage || response.errorCode}`,
         });
       } else if (!response.didCancel) {
-        const image = response.assets[0];
-        setAvatar(image.uri);
+        const image = response.assets?.[0];
+        setAvatar(image?.uri);
       }
     },
     [],
@@ -104,7 +110,7 @@ const Profile: React.FC<ProfileProps> = ({
       let newAvatar = profile.avatar;
       if (avatar !== profile.avatar) {
         const imageRef = storage().ref(`images/${profile.uid}`).child('avatar');
-        await imageRef.putFile(avatar);
+        await imageRef.putFile(avatar || '');
         newAvatar = await imageRef.getDownloadURL();
       }
       navigation.goBack();
@@ -236,7 +242,7 @@ const Profile: React.FC<ProfileProps> = ({
                       },
                     ]);
                   } else {
-                    navigation.navigate('Premium');
+                    navigation.navigate('Premium', {});
                   }
                 }}
                 style={{

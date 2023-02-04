@@ -128,7 +128,7 @@ const DrawerContent: React.FC<Props> = ({
         if (profile.premium) {
           navigationRef.navigate('Connections');
         } else {
-          navigationRef.navigate('Premium');
+          navigationRef.navigate('Premium', {});
         }
       },
       accessoryRight: profile.premium ? (
@@ -146,7 +146,7 @@ const DrawerContent: React.FC<Props> = ({
       title: 'Premium',
       icon: 'trophy',
       onPress: () => {
-        navigationRef.navigate('Premium');
+        navigationRef.navigate('Premium', {});
         close();
       },
     },

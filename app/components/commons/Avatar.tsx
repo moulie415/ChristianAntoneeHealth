@@ -9,7 +9,7 @@ import colors from '../../constants/colors';
 import {MyRootState} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const AdminCheck: React.FC<{size: number}> = ({size = 30}) => {
+const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
   return (
     <View
       style={{

@@ -1,7 +1,7 @@
 export interface SavedWorkout {
   id?: string;
   workout: string[];
-  calories: number;
+  calories?: number;
   seconds: number;
   difficulty: number;
   createdate: Date;

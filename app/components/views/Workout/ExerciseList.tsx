@@ -70,7 +70,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         // style={{flex: 1}}
         data={filtered}
         refreshControl={<RefreshControl refreshing={loading} />}
-        keyExtractor={(item: Exercise) => item.id}
+        keyExtractor={(item: Exercise) => item.id || ''}
         renderItem={({item}: {item: Exercise}) => {
           const selected = workout.find(e => e.id === item.id);
           return (
@@ -78,14 +78,14 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
               <ListItem
                 onPress={() => {
                   if (item.premium && !profile.premium) {
-                    navigation.navigate('Premium');
+                    navigation.navigate('Premium', {});
                   } else {
                     navigation.navigate('CustomizeExercise', {exercise: item});
                   }
                 }}
                 onLongPress={() => {
                   if (item.premium && !profile.premium) {
-                    navigation.navigate('Premium');
+                    navigation.navigate('Premium', {});
                   } else {
                     selectExercise(item);
                   }
@@ -123,7 +123,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
               />
               {item.premium && !profile.premium && (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Premium')}
+                  onPress={() => navigation.navigate('Premium', {})}
                   style={{
                     ...StyleSheet.absoluteFillObject,
                     backgroundColor: '#000',

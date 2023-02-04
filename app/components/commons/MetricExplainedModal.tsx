@@ -14,7 +14,7 @@ const MetricExplainedModal: React.FC<{
   ranges: number[];
   colors: string[];
   labels: string[];
-  current: number;
+  current?: number;
   title: string;
 }> = ({
   visible,
@@ -26,6 +26,9 @@ const MetricExplainedModal: React.FC<{
   current,
   suffix,
 }) => {
+  if (!current) {
+    return null;
+  }
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
       {visible && (
@@ -75,7 +78,9 @@ const MetricExplainedModal: React.FC<{
                         marginLeft: -10,
                         height: 23,
                       }}>
-                      {isFirst ? '' : `${ranges[index] + suffix || ''}`}
+                      {isFirst
+                        ? ''
+                        : `${ranges[index] + (suffix as string) || ''}`}
                     </Text>
                     <View
                       style={{

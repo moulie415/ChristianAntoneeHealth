@@ -46,20 +46,20 @@ const ArticleList: React.FC<{
   }, [isClosed, navigation, selectedItem]);
 
   const onPress = useCallback(
-    (item: Education) => {
-      if (item.premium) {
+    (item?: Education) => {
+      if (item && item.premium) {
         if (profile.premium) {
           navigation.navigate('EducationArticle', {education: item});
         } else {
-          navigation.navigate('Premium');
+          navigation.navigate('Premium', {});
         }
-      } else if (profile.premium) {
+      } else if (item && profile.premium) {
         navigation.navigate('EducationArticle', {education: item});
       } else {
         if (isLoaded && settings.ads) {
           show();
           setSelectedItem(item);
-        } else {
+        } else if (item) {
           navigation.navigate('EducationArticle', {education: item});
         }
       }

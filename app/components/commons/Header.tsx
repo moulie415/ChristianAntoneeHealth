@@ -19,7 +19,7 @@ const Header: React.FC<{
   absolute?: boolean;
   customBackPress?: () => void;
   profile: Profile;
-  drawerRef?: MutableRefObject<Drawer>;
+  drawerRef?: MutableRefObject<Drawer | null>;
 }> = ({
   hasBack,
   title,

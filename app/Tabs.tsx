@@ -22,7 +22,7 @@ const color = new Color(colors.appWhite);
 const Tabs: React.FC<{
   profile: Profile;
   plansEnabled: boolean;
-  drawerRef: MutableRefObject<Drawer>;
+  drawerRef: MutableRefObject<Drawer | null>;
 }> = ({profile, plansEnabled, drawerRef}) => {
   return (
     <Tab.Navigator

@@ -73,18 +73,20 @@ export enum Equipment {
   EXERCISE_STEP = 'exerciseStep',
 }
 
+export interface PlanExercise {
+  exercise: string;
+  sets: string;
+  reps: string;
+  duration: string;
+  resistanceScale: string;
+  restTime: string;
+  additionalNotes: string;
+}
+
 export interface PlanWorkout {
   name: string;
   dates: string[];
-  exercises: {
-    exercise: string;
-    sets: string;
-    reps: string;
-    duration: string;
-    resistanceScale: string;
-    restTime: string;
-    additionalNotes: string;
-  }[];
+  exercises: PlanExercise[];
   today?: boolean;
 }
 

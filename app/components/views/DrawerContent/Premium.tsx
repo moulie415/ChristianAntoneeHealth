@@ -57,6 +57,7 @@ const Premium: React.FC<PremiumProps> = ({
           );
         }
       } catch (e) {
+        // @ts-ignore
         Alert.alert('Error fetching Premium offerings', e.message);
         logError(e);
       }
@@ -336,7 +337,7 @@ const Premium: React.FC<PremiumProps> = ({
                     🎉 Premium active 🎉
                   </Text>
                   <TouchableOpacity
-                    onPress={() => Linking.openURL(info.managementURL)}>
+                    onPress={() => Linking.openURL(info.managementURL || '')}>
                     <Text
                       style={{
                         textAlign: 'center',
@@ -355,7 +356,8 @@ const Premium: React.FC<PremiumProps> = ({
                       justifyContent: 'space-evenly',
                     }}>
                     {packages.map((p, index) => {
-                      const {title, alt} = getPackageStrings(p);
+                      const packageStrings = getPackageStrings(p);
+                      const title = packageStrings?.title;
                       return (
                         <TouchableOpacity
                           onPress={async () => {
@@ -377,8 +379,10 @@ const Premium: React.FC<PremiumProps> = ({
                               }
                             } catch (e) {
                               setLoading(false);
+                              // @ts-ignore
                               if (!e.userCancelled) {
                                 logError(e);
+                                // @ts-ignore
                                 Alert.alert('Error', e.message);
                               }
                             }

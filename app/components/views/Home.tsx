@@ -32,7 +32,7 @@ const Home: React.FC<{
   profile: Profile;
   viewedPlan: boolean;
   plansEnabled: boolean;
-  drawerRef: MutableRefObject<Drawer>;
+  drawerRef: MutableRefObject<Drawer | null>;
 }> = ({navigation, profile, viewedPlan, plansEnabled, drawerRef}) => {
   const {eventEmitter} = useTourGuideController();
   useEffect(() => {
@@ -50,10 +50,10 @@ const Home: React.FC<{
   );
 
   useEffect(() => {
-    eventEmitter.on('stepChange', handleOnStepChange);
+    eventEmitter?.on('stepChange', handleOnStepChange);
 
     return () => {
-      eventEmitter.off('stepChange', handleOnStepChange);
+      eventEmitter?.off('stepChange', handleOnStepChange);
     };
   }, [eventEmitter, handleOnStepChange]);
   const insets = useSafeAreaInsets();
@@ -121,7 +121,7 @@ const Home: React.FC<{
               if (profile.premium) {
                 navigation.navigate('SavedItems');
               } else {
-                navigation.navigate('Premium');
+                navigation.navigate('Premium', {});
               }
             }}
           />
@@ -130,7 +130,7 @@ const Home: React.FC<{
             title="Premium"
             subtitle="Explore premium features"
             image={require('../../images/Homepage_quick_routine.jpeg')}
-            onPress={() => navigation.navigate('Premium')}
+            onPress={() => navigation.navigate('Premium', {})}
           />
           <HomeCard
             title="Rate the app"

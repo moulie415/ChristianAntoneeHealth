@@ -3,9 +3,8 @@ import {useEffect} from 'react';
 const useInit = (func: () => void) => {
   useEffect(() => {
     if (func && typeof func === 'function') {
-      return func();
+      func();
     }
-    return null;
   }, []);
 };
 

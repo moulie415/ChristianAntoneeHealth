@@ -8,7 +8,7 @@ import {rpeSliderScale} from './RPESlider';
 import Text from './Text';
 
 const WorkoutSummaryInfo: React.FC<{
-  calories: number;
+  calories?: number;
   seconds: number;
   difficulty: number;
 }> = ({
@@ -50,7 +50,7 @@ const WorkoutSummaryInfo: React.FC<{
               fontSize: 50,
               fontWeight: 'bold',
             }}>
-            {Math.floor(calories)}
+            {Math.floor(calories || 0)}
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>

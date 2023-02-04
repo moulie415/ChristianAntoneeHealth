@@ -62,9 +62,7 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({
   route,
   profile,
-  setMessagesAction,
   messagesObj,
-  navigation,
   connection,
   chatId,
   sendMessageAction,
@@ -75,7 +73,7 @@ const Chat: React.FC<ChatProps> = ({
   loading,
 }) => {
   const {uid} = route.params;
-  const ref = useRef<GiftedChat>();
+  const ref = useRef<GiftedChat>(null);
 
   useEffect(() => {
     setReadAction(uid);
@@ -118,11 +116,15 @@ const Chat: React.FC<ChatProps> = ({
   }, []);
 
   const renderCustomView = (props: BubbleProps<Message>) => {
-    switch (props.currentMessage.type) {
+    switch (props.currentMessage?.type) {
       case 'workout':
         return (
           <TouchableOpacity
-            onPress={() => viewWorkoutAction(props.currentMessage.workout)}
+            onPress={() => {
+              if (props.currentMessage?.workout) {
+                viewWorkoutAction(props.currentMessage?.workout);
+              }
+            }}
             style={{
               padding: 10,
               margin: 10,
@@ -144,7 +146,7 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   const renderMessageText = (props: MessageTextProps<Message>) => {
-    switch (props.currentMessage.type) {
+    switch (props.currentMessage?.type) {
       case 'text':
       case 'workout':
         return <MessageText {...props} />;
@@ -157,6 +159,7 @@ const Chat: React.FC<ChatProps> = ({
           },
         };
         return (
+          // @ts-ignore
           <MessageText
             {...newProps}
             textStyle={{

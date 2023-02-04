@@ -25,7 +25,7 @@ const DefaultPath: React.FC<{d: string}> = ({d}) => {
   );
 };
 
-const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
+const MusclesDiagram: React.FC<{primary?: Muscle[]; secondary?: Muscle[]}> = ({
   primary,
   secondary,
 }) => {
@@ -56,7 +56,7 @@ const MusclesDiagram: React.FC<{primary: Muscle[]; secondary: Muscle[]}> = ({
                 flexWrap: 'wrap',
                 marginVertical: 5,
               }}>
-              {primary.map(muscle => (
+              {primary?.map(muscle => (
                 <View
                   key={muscle}
                   style={{

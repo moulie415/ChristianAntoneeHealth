@@ -72,7 +72,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
 
               const save = (saved: boolean) => {
                 saveQuickRoutineAction({
-                  calories,
+                  calories: calories || 0,
                   seconds,
                   difficulty,
                   createdate: new Date(),

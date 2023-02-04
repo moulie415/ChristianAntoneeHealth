@@ -260,7 +260,7 @@ export interface RequestPlanAction {
 
 export interface SetPlanStatus {
   type: typeof SET_PLAN_STATUS;
-  payload: PlanStatus;
+  payload?: PlanStatus;
 }
 
 export interface SetHasViewedTourAction {
@@ -303,7 +303,7 @@ export type ProfileActionTypes =
   | SetBoneMassSamplesAction
   | SetBodyFatPercentageSamplesAction
   | SetMuscleMassSamplesAction
-  | SetHasViewedTourAction 
+  | SetHasViewedTourAction;
 
 export const setProfile = (profile: Profile): setProfileAction => ({
   type: SET_PROFILE,
@@ -525,7 +525,7 @@ export const requestPlan = (): RequestPlanAction => ({
   type: REQUEST_PLAN,
 });
 
-export const setPlanStatus = (payload: PlanStatus): SetPlanStatus => ({
+export const setPlanStatus = (payload?: PlanStatus): SetPlanStatus => ({
   type: SET_PLAN_STATUS,
   payload,
 });

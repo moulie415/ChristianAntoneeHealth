@@ -12,7 +12,7 @@ import Drawer from 'react-native-drawer';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
-  drawerRef: MutableRefObject<Drawer>;
+  drawerRef: MutableRefObject<Drawer | null>;
 }> = ({navigation, drawerRef}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>

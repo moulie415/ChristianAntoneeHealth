@@ -65,7 +65,7 @@ const SavedWorkouts: FunctionComponent<{
   }, [getSavedQuickRoutinesAction]);
 
   const missingExercises: string[] = useMemo(() => {
-    return Object.values(savedWorkouts).reduce((acc, cur) => {
+    return Object.values(savedWorkouts).reduce((acc: string[], cur) => {
       const missing = cur.workout.filter(exercise => !exercises[exercise]);
       return [...acc, ...missing];
     }, []);
@@ -97,8 +97,8 @@ const SavedWorkouts: FunctionComponent<{
             data={[
               ...Object.values(savedWorkouts),
               ...Object.values(savedQuickRoutines),
-            ].sort((a,b) => moment(b).valueOf() - moment(a).valueOf())}
-            keyExtractor={item => item.id}
+            ].sort((a, b) => moment(b).valueOf() - moment(a).valueOf())}
+            keyExtractor={item => item.id || ''}
             renderItem={({item}) => {
               return <SavedWorkoutCard item={item} navigation={navigation} />;
             }}

@@ -80,6 +80,7 @@ export const initBiometrics = async () => {
 export const getHeight = async (): Promise<number | undefined> => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
+      // @ts-ignore
       AppleHealthKit.getLatestHeight(null, (e, result) => {
         if (e) {
           reject(e);
@@ -108,6 +109,7 @@ export const getHeight = async (): Promise<number | undefined> => {
 export const getWeight = async (): Promise<number | undefined> => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
+      // @ts-ignore
       AppleHealthKit.getLatestWeight(null, (e, result) => {
         if (e) {
           reject(e);
@@ -228,10 +230,9 @@ export const getStepSamples = async () => {
   });
 
   // difference between steps and rawSteps?
-  return [].concat.apply(
-    [],
-    response.map(sample => sample.steps),
-  );
+  return response.reduce((acc: {date: string; value: number}[], cur) => {
+    return [...acc, ...cur.steps];
+  }, []);
 };
 
 export const getWeeklySteps = async (): Promise<StepSample[]> => {
@@ -256,11 +257,10 @@ export const getWeeklySteps = async (): Promise<StepSample[]> => {
       );
     });
   }
-  const steps = await GoogleFit.getWeeklySteps();
-  return [].concat.apply(
-    [],
-    steps.map(sample => sample.steps),
-  );
+  const response = await GoogleFit.getWeeklySteps();
+  return response.reduce((acc: {date: string; value: number}[], cur) => {
+    return [...acc, ...cur.steps];
+  }, []);
 };
 
 export const getActivitySamples = async () => {
@@ -289,9 +289,10 @@ export const getActivitySamples = async () => {
   return response;
 };
 
-export const getSex = (): Promise<Gender | undefined> => {
+export const getSex = (): void | Promise<Gender | undefined> => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
+      // @ts-ignore
       AppleHealthKit.getBiologicalSex(null, (e, result) => {
         if (e) {
           reject(e);
@@ -307,7 +308,7 @@ export const getSex = (): Promise<Gender | undefined> => {
   }
 };
 
-export const getDateOfBirth = (): Promise<string | undefined> => {
+export const getDateOfBirth = (): void | Promise<string | undefined> => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getDateOfBirth(null, (e, result) => {
@@ -321,7 +322,10 @@ export const getDateOfBirth = (): Promise<string | undefined> => {
   }
 };
 
-export const saveWeight = async (value: number, unit: Unit) => {
+export const saveWeight = async (value?: number, unit?: Unit) => {
+  if (!value || !unit) {
+    return;
+  }
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
       AppleHealthKit.saveWeight(
@@ -353,7 +357,10 @@ export const saveWeight = async (value: number, unit: Unit) => {
   });
 };
 
-export const saveHeight = async (value: number, unit: Unit) => {
+export const saveHeight = async (value?: number, unit?: Unit) => {
+  if (!value || !unit) {
+    return;
+  }
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
       AppleHealthKit.saveHeight(
@@ -442,6 +449,7 @@ export const saveWorkout = (
       `Error saving workout to ${
         Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
       }`,
+      // @ts-ignore
       e.message,
     );
   }

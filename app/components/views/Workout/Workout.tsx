@@ -35,12 +35,12 @@ const Workout: React.FC<WorkoutProps> = ({
   const sheetRef = useRef<BottomSheet>(null);
 
   const onCancel = () => {
-    sheetRef.current.close();
+    sheetRef.current?.close();
     setSelectedEquipment(equipment);
   };
 
   const onSave = () => {
-    sheetRef.current.close();
+    sheetRef.current?.close();
     setEquipmentAction(selectedEquipment);
   };
 
@@ -175,7 +175,7 @@ const Workout: React.FC<WorkoutProps> = ({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            sheetRef.current.expand();
+            sheetRef.current?.expand();
             setSetting('equipment');
           }}
           style={{

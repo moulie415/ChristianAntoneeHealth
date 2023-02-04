@@ -11,7 +11,7 @@ import Profile from '../../types/Profile';
 import FastImage from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
 
-export const getImage = (level: Level) => {
+export const getImage = (level?: Level) => {
   if (level === Level.INTERMEDIATE) {
     return require('../../images/intermediate.jpg');
   }

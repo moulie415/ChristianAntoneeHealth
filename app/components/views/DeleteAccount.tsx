@@ -119,10 +119,11 @@ const DeleteAccount: React.FC<{
               ) {
                 await appleSignIn();
               }
-              await user.delete();
+              await user?.delete();
               setLoggedInAction(false);
               Alert.alert('Success', 'Your account has been deleted');
             } catch (e) {
+              // @ts-ignore
               Alert.alert('Error', e.message);
             }
             setLoading(false);

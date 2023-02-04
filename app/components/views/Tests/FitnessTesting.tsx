@@ -17,7 +17,7 @@ const FitnessTesting: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Fitness'>;
   tests: {[key: string]: Test};
   profile: Profile;
-  drawerRef: MutableRefObject<Drawer>;
+  drawerRef: MutableRefObject<Drawer | null>;
 }> = ({navigation, tests, profile, drawerRef}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -35,7 +35,7 @@ const FitnessTesting: React.FC<{
                 item={item}
                 onPress={() => {
                   if (item.premium && !profile.premium) {
-                    navigation.navigate('Premium');
+                    navigation.navigate('Premium', {});
                   } else {
                     navigation.navigate('Test', {id: item.id});
                   }

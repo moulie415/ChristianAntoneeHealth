@@ -7,7 +7,7 @@ import {MyRootState} from '../../../types/Shared';
 import Text from '../Text';
 
 const UnreadConnectionCount: React.FC<{
-  unread: {[key: string]: number};
+  unread: {[key: string]: number} | undefined;
   uid: string;
 }> = ({unread, uid}) => {
   if (!unread) {

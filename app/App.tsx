@@ -78,7 +78,7 @@ export type StackParamList = {
   Goals: undefined;
   Test: {id: string};
   TestResults: {
-    testResult: number;
+    testResult?: number;
     test: TestType;
     seconds: number;
   };
@@ -99,7 +99,7 @@ export type StackParamList = {
   EndWorkout: {seconds: number; name?: string; isLast?: boolean};
   WorkoutSummary: {
     seconds: number;
-    calories: number;
+    calories?: number;
     difficulty: number;
     isLast?: boolean;
   };
@@ -123,7 +123,7 @@ export type StackParamList = {
   QuickRoutineSummary: {
     routine: QuickRoutine;
     seconds: number;
-    calories: number;
+    calories?: number;
     difficulty: number;
   };
   SavedItems: undefined;
@@ -153,8 +153,8 @@ const App: React.FC = () => {
     Purchases.configure({
       apiKey:
         Platform.OS === 'ios'
-          ? Config.REVENUE_CAT_IOS_KEY
-          : Config.REVENUE_CAT_ANDROID_KEY,
+          ? (Config.REVENUE_CAT_IOS_KEY as string)
+          : (Config.REVENUE_CAT_ANDROID_KEY as string),
     });
     if (!__DEV__) {
       Sentry.init({
@@ -170,14 +170,19 @@ const App: React.FC = () => {
     }
     if (Platform.OS === 'android') {
       appCheck()
-        .activate(__DEV__ ? Config.APP_CHECK_DEBUG_TOKEN : 'ignored', true)
+        .activate(
+          __DEV__ ? (Config.APP_CHECK_DEBUG_TOKEN as string) : 'ignored',
+          true,
+        )
         .catch(e => {
           logError(e);
         });
     }
 
     Instabug.start(
-      __DEV__ ? Config.INSTABUG_DEV_TOKEN : Config.INSTABUG_PROD_TOKEN,
+      __DEV__
+        ? (Config.INSTABUG_DEV_TOKEN as string)
+        : (Config.INSTABUG_PROD_TOKEN as string),
       [Instabug.invocationEvent.none],
     );
 
@@ -189,7 +194,7 @@ const App: React.FC = () => {
       });
   }, []);
 
-  const drawerRef = useRef<Drawer>();
+  const drawerRef = useRef<Drawer>(null);
 
   return (
     <PersistGate persistor={persistor}>

@@ -163,7 +163,7 @@ const Settings: React.FC<SettingsProps> = ({
                     mode="time"
                     // is24Hour={true}
                     display={Platform.OS === 'ios' ? 'compact' : 'default'}
-                    onChange={(event, d: Date) => {
+                    onChange={(event, d: Date | undefined) => {
                       if (d) {
                         setWorkoutDate(d);
                       }
@@ -214,7 +214,7 @@ const Settings: React.FC<SettingsProps> = ({
                     mode="time"
                     // is24Hour={true}
                     display={Platform.OS === 'ios' ? 'compact' : 'default'}
-                    onChange={(event, d: Date) => {
+                    onChange={(event, d: Date | undefined) => {
                       if (d) {
                         setTestDate(d);
                       }

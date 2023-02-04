@@ -95,9 +95,12 @@ export const difficultyToMET = (difficulty: number): number => {
 export const getCaloriesBurned = (
   duration: number,
   MET: number,
-  weight: number,
-  unit: Unit,
+  weight?: number,
+  unit?: Unit,
 ) => {
+  if (!weight || !unit) {
+    return;
+  }
   return (
     ((duration / 60) *
       (MET * 3.5 * (unit === 'metric' ? weight : weight / 2.205))) /
@@ -188,6 +191,9 @@ export const alertPremiumFeature = () => {
   Alert.alert(
     'Sorry',
     'That feature requires premium, would you like to subscribe to premium?',
-    [{text: 'No thanks'}, {text: 'Yes', onPress: () => navigate('Premium')}],
+    [
+      {text: 'No thanks'},
+      {text: 'Yes', onPress: () => navigate('Premium', {})},
+    ],
   );
 };

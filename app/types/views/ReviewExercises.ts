@@ -10,10 +10,5 @@ type ReviewExercisesNavigationProp = NativeStackNavigationProp<
 >;
 
 export default interface ReviewExercisesProps {
-  workout: Exercise[];
-  setWorkoutAction: (workout: Exercise[]) => void;
-  navigation: ReviewExercisesNavigationProp;
-  profile: Profile;
-  settings: SettingsState;
-  modalVisible: boolean;
+
 }

@@ -25,7 +25,7 @@ import EducationCard from '../../commons/EducationCard';
 import {objectHasNonEmptyValues} from '../../../helpers';
 
 const Daily: React.FC<{
-  plan: Plan;
+  plan?: Plan;
   exercises: {[key: string]: Exercise};
   tests: {[key: string]: Test};
   getExercisesById: (ids: string[]) => void;
@@ -48,31 +48,35 @@ const Daily: React.FC<{
   educationLoading,
 }) => {
   const workouts = useMemo(() => {
-    return (
-      plan.workouts?.filter(w =>
-        w.dates.find(d => moment(d).isSame(moment(), 'day')),
-      ) || []
-    );
-  }, [plan.workouts]);
+    if (plan) {
+      return (
+        plan.workouts?.filter(w =>
+          w.dates.find(d => moment(d).isSame(moment(), 'day')),
+        ) || []
+      );
+    }
+  }, [plan]);
 
   const tests = useMemo(() => {
-    return (
-      plan.tests?.filter(t =>
-        t.dates.find(d => moment(d).isSame(moment(), 'day')),
-      ) || []
-    );
-  }, [plan.tests]);
+    if (plan) {
+      return (
+        plan.tests?.filter(t =>
+          t.dates.find(d => moment(d).isSame(moment(), 'day')),
+        ) || []
+      );
+    }
+  }, [plan]);
 
   const data: {title: string; data: (PlanWorkout | PlanTest)[]}[] = [];
 
-  if (workouts.length) {
+  if (workouts?.length) {
     data.push({
       title: 'Workouts',
       data: workouts,
     });
   }
 
-  if (tests.length) {
+  if (tests?.length) {
     data.push({
       title: 'Tests',
       data: tests,
@@ -80,8 +84,8 @@ const Daily: React.FC<{
   }
 
   useEffect(() => {
-    if (workouts.length) {
-      const allExercises = workouts.reduce((acc, cur) => {
+    if (workouts?.length) {
+      const allExercises: string[] = workouts.reduce((acc: string[], cur) => {
         return [...acc, ...cur.exercises.map(e => e.exercise)];
       }, []);
       const missingExerciseIds = allExercises.filter(id => !exercises[id]);
@@ -92,7 +96,7 @@ const Daily: React.FC<{
   }, [exercises, workouts, getExercisesByIdAction]);
 
   useEffect(() => {
-    if (tests.length) {
+    if (tests?.length) {
       const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
       if (missingTestIds.length) {
         getTestsByIdAction(missingTestIds);
@@ -101,13 +105,13 @@ const Daily: React.FC<{
   }, [getTestsByIdAction, tests, testsObj]);
 
   useEffect(() => {
-    if (plan.education && plan.education.length) {
+    if (plan && plan.education && plan.education.length) {
       const missingEducationIds = plan.education.filter(id => !education[id]);
       if (missingEducationIds.length) {
         getEducationByIdAction(missingEducationIds);
       }
     }
-  }, [plan.education, education, getEducationByIdAction]);
+  }, [plan, education, getEducationByIdAction]);
 
   return (
     <View>
@@ -174,7 +178,7 @@ const Daily: React.FC<{
         </View>
       )}
       <View>
-        {!!plan.education && !!plan.education.length && (
+        {plan && !!plan.education && !!plan.education.length && (
           <View>
             {educationLoading ? (
               <View
@@ -220,7 +224,8 @@ const Daily: React.FC<{
             )}
           </View>
         )}
-        {objectHasNonEmptyValues(plan.nutrition) &&
+        {plan &&
+          objectHasNonEmptyValues(plan.nutrition) &&
           objectHasNonEmptyValues(plan.sleep) && (
             <Text
               style={{
@@ -233,7 +238,7 @@ const Daily: React.FC<{
               Other
             </Text>
           )}
-        {objectHasNonEmptyValues(plan.nutrition) && (
+        {plan && objectHasNonEmptyValues(plan.nutrition) && (
           <>
             <Divider />
             <View
@@ -250,7 +255,7 @@ const Daily: React.FC<{
               </Text>
             </View>
             <View style={{marginLeft: 10}}>
-              {!!plan.nutrition.general && (
+              {plan && !!plan.nutrition.general && (
                 <Text>
                   <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
                     General recommendations:{' '}
@@ -260,7 +265,7 @@ const Daily: React.FC<{
                   </Text>
                 </Text>
               )}
-              {!!plan.nutrition.preWorkout && (
+              {plan && !!plan.nutrition.preWorkout && (
                 <Text>
                   <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
                     Pre-workout:{' '}
@@ -270,7 +275,7 @@ const Daily: React.FC<{
                   </Text>
                 </Text>
               )}
-              {!!plan.nutrition.postWorkout && (
+              {plan && !!plan.nutrition.postWorkout && (
                 <Text>
                   <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
                     Post-workout:{' '}
@@ -283,7 +288,7 @@ const Daily: React.FC<{
             </View>
           </>
         )}
-        {objectHasNonEmptyValues(plan.sleep) && (
+        {plan && objectHasNonEmptyValues(plan.sleep) && (
           <>
             <Divider />
             <View

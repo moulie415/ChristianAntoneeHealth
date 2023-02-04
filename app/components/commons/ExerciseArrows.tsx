@@ -12,7 +12,7 @@ import {hasNotch} from 'react-native-device-info';
 
 const ExerciseArrows: React.FC<{
   exercises: Exercise[];
-  pagerRef: MutableRefObject<PagerView>;
+  pagerRef: MutableRefObject<PagerView | null>;
   fullscreen: boolean;
   index: number;
 }> = ({exercises, pagerRef, fullscreen, index}) => {
@@ -40,7 +40,7 @@ const ExerciseArrows: React.FC<{
     <>
       {exercises[index + 1] && (
         <TouchableOpacity
-          onPress={() => pagerRef.current.setPage(index + 1)}
+          onPress={() => pagerRef.current?.setPage(index + 1)}
           style={{
             position: 'absolute',
             right,
@@ -53,7 +53,7 @@ const ExerciseArrows: React.FC<{
       )}
       {exercises[index - 1] && (
         <TouchableOpacity
-          onPress={() => pagerRef.current.setPage(index - 1)}
+          onPress={() => pagerRef.current?.setPage(index - 1)}
           style={{
             position: 'absolute',
             left,

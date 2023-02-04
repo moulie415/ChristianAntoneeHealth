@@ -234,6 +234,7 @@ function* updateProfile(action: UpdateProfileAction) {
         },
       ],
     );
+
     logError(e);
   }
   const {profile} = yield select((state: MyRootState) => state.profile);
@@ -245,15 +246,15 @@ function* updateProfile(action: UpdateProfileAction) {
   yield put(setProfile(updateObj));
   yield call(Snackbar.show, {text: 'Profile updated'});
   setUserAttributes({
-    birthday: dob,
-    weight: weight?.toString(),
-    height: height?.toString(),
-    marketing: marketing?.toString(),
-    unit,
-    gender,
-    equipment,
-    experience,
-    goal,
+    birthday: dob || '',
+    weight: weight?.toString() || '',
+    height: height?.toString() || '',
+    marketing: marketing?.toString() || '',
+    unit: unit || '',
+    gender: gender || '',
+    equipment: equipment || '',
+    experience: experience || '',
+    goal: goal || '',
   });
 }
 
@@ -289,6 +290,7 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
         yield put(setVideo(id, exercise.video.src, response.path()));
       }
     } catch (e) {
+      // @ts-ignore
       yield call(Alert.alert, 'Error', `Error downloading video: ${e.message}`);
     }
   } else {
@@ -382,7 +384,8 @@ function* signUp(action: SignUpAction) {
       medications,
     });
   } catch (e) {
-    Alert.alert('Error', e.nativeErrorMessage || e.message);
+    // @ts-ignore
+    Alert.alert('Error', e.message);
   }
 }
 
@@ -552,6 +555,7 @@ function* sendMessage(action: SendMessageAction) {
     yield call(api.sendMessage, message, chatId, uid);
     notif.play();
   } catch (e) {
+    // @ts-ignore
     Snackbar.show({text: e.message});
     yield put(setMessage(uid, {...message, sent: false, pending: false}));
   }
@@ -609,9 +613,10 @@ function* requestPlanWorker() {
       yield put(setUsedFreePlan(true));
     } else {
       const offerings: PurchasesOfferings = yield call(Purchases.getOfferings);
-      const pkg = offerings.current.availablePackages.find(
+      const pkg = offerings.current?.availablePackages.find(
         p => p.packageType === 'CUSTOM',
       );
+      // @ts-ignore
       yield call(Purchases.purchasePackage, pkg);
       yield call(api.requestPlan, uid);
       yield put(setPlanStatus(PlanStatus.PENDING));
@@ -621,6 +626,7 @@ function* requestPlanWorker() {
   } catch (e) {
     yield put(setLoading(false));
     logError(e);
+    // @ts-ignore
     if (!e.userCancelled) {
       Snackbar.show({text: 'Error requesting plan'});
     }
@@ -662,7 +668,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
         const avatar = getProfileImage(user);
         const userObj = {
           uid: user.uid,
-          email: user.email,
+          email: user.email || '',
           avatar: avatar || '',
           name: user.displayName || '',
           providerId: user.providerData[0].providerId || '',
@@ -686,12 +692,12 @@ function* handleAuthWorker(action: HandleAuthAction) {
       }
 
       setUserAttributes({
-        email: user.email,
+        email: user.email || '',
         emailVerified: String(user.emailVerified),
         providerId: user.providerData[0].providerId,
         premium: customerInfo.entitlements.active.Premium ? 'true' : 'false',
       });
-      if (doc.exists && doc.data().signedUp) {
+      if (doc.exists && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
         if (available) {
           yield call(initBiometrics);
@@ -702,7 +708,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
             dynamicLinks()
               .getInitialLink()
               .then(link => {
-                resolve(link);
+                if (link) {
+                  resolve(link);
+                }
               });
           });
         };
@@ -717,8 +725,8 @@ function* handleAuthWorker(action: HandleAuthAction) {
         const {premium} = yield select(
           (state: MyRootState) => state.profile.profile,
         );
-        if (doc.data().unread && premium) {
-          yield put(setUnread(doc.data().unread));
+        if (doc.data()?.unread && premium) {
+          yield put(setUnread(doc.data()?.unread));
         }
       } else {
         navigate('SignUpFlow');
@@ -750,6 +758,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
   } catch (e) {
     navigate('Login');
     logError(e);
+    // @ts-ignore
     Alert.alert('Error', e.message);
   }
 }

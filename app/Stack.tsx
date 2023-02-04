@@ -55,14 +55,13 @@ import Drawer from 'react-native-drawer';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const StackComponent: React.FC<{drawerRef: MutableRefObject<Drawer>}> = ({
-  drawerRef,
-}) => {
+const StackComponent: React.FC<{
+  drawerRef: MutableRefObject<Drawer | null>;
+}> = ({drawerRef}) => {
   return (
     <Stack.Navigator
       initialRouteName="Loading"
       screenOptions={({route, navigation}) => ({
-        headerBackTitle: null,
         headerShown: false,
       })}>
       <Stack.Group>
@@ -118,6 +117,8 @@ const StackComponent: React.FC<{drawerRef: MutableRefObject<Drawer>}> = ({
 
         <Stack.Screen name="SavedItems" component={SavedItemsTabs} />
         <Stack.Screen name="AddConnection" component={AddConnection} />
+
+        {/* @ts-ignore */}
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="WhatArea" component={WhatArea} />
         <Stack.Screen name="WorkoutList" component={WorkoutList} />

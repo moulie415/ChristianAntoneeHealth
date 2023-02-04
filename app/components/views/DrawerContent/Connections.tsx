@@ -138,7 +138,7 @@ const Connections: React.FC<{
                       marginBottom: 5,
                       fontStyle: 'italic',
                     }}>
-                    {getSimplifiedTime(createdAt)}
+                    {getSimplifiedTime(createdAt || 0)}
                   </Text>
                   <UnreadConnectionCount uid={item.uid} />
                 </View>

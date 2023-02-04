@@ -137,7 +137,7 @@ const Nutrition: React.FC<{
                     value={supplements}
                   />
                 ) : (
-                  item.items.map(i => {
+                  item.items?.map(i => {
                     const option = `${item.key}: ${i}`;
                     return (
                       <ListItem

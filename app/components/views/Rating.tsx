@@ -69,14 +69,16 @@ const Rating: React.FC<{
               style={{margin: 10}}
               onPress={async () => {
                 setLoading(true);
-                if (rating > 3) {
+                if (rating && rating > 3) {
                   rateApp();
                 } else {
                 }
                 navigation.goBack();
                 Snackbar.show({text: 'Thank you!'});
                 try {
-                  await api.sendFeedback(profile.uid, feedback, rating);
+                  if (rating) {
+                    await api.sendFeedback(profile.uid, feedback, rating);
+                  }
                 } catch (e) {
                   logError(e);
                 }

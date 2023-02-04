@@ -38,7 +38,7 @@ const Chart: React.FC<{
   highest: number;
   filter: 6 | 30 | 365;
   capitalize?: boolean;
-  current: number;
+  current?: number;
   suffix?: string;
   footer?: ReactNode;
   minY?: number;
@@ -46,7 +46,7 @@ const Chart: React.FC<{
   ranges: number[];
   colors: string[];
   labels: string[];
-  pagerRef: MutableRefObject<PagerView>;
+  pagerRef: MutableRefObject<PagerView | null>;
   index: number;
   isLast?: boolean;
   isFirst?: boolean;
@@ -151,20 +151,22 @@ const Chart: React.FC<{
         </View>
         {footer}
       </View>
-      <MetricExplainedModal
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-        suffix={suffix}
-        current={current}
-        ranges={[minY, ...ranges, maxY]}
-        title={title}
-        colors={colorsArr}
-        labels={labels}
-      />
+      {!!minY && !!maxY && !!ranges && (
+        <MetricExplainedModal
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+          suffix={suffix}
+          current={current}
+          ranges={[minY, ...ranges, maxY]}
+          title={title}
+          colors={colorsArr}
+          labels={labels}
+        />
+      )}
 
       {!isFirst && (
         <TouchableOpacity
-          onPress={() => pagerRef.current.setPage(index - 1)}
+          onPress={() => pagerRef.current?.setPage(index - 1)}
           style={{
             position: 'absolute',
             left: 0,
@@ -181,7 +183,7 @@ const Chart: React.FC<{
       )}
       {!isLast && (
         <TouchableOpacity
-          onPress={() => pagerRef.current.setPage(index + 1)}
+          onPress={() => pagerRef.current?.setPage(index + 1)}
           style={{
             position: 'absolute',
             right: 0,
@@ -213,9 +215,9 @@ const ProfileCharts: React.FC<{
   setShowHeightModal: (show: boolean) => void;
   weight: number;
   height: number;
-  bodyFatPercentage: number;
-  muscleMass: number;
-  boneMass: number;
+  bodyFatPercentage?: number;
+  muscleMass?: number;
+  boneMass?: number;
 }> = ({
   weightSamples,
   heightSamples,
@@ -235,7 +237,7 @@ const ProfileCharts: React.FC<{
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
   const [showCharts, setShowCharts] = useState(true);
-  const pagerRef = useRef<PagerView>();
+  const pagerRef = useRef<PagerView>(null);
 
   const weightItems: {
     data: {x: number; y: number}[];
