@@ -68,7 +68,7 @@ const WhatEquipment: React.FC<{
                   style={{
                     color: colors.appWhite,
                     textAlign: 'center',
-                    fontSize: 10,
+                    fontSize: 13,
                   }}>
                   (Dumbbells, exercise ball, exercise mat)
                 </Text>
@@ -111,7 +111,7 @@ const WhatEquipment: React.FC<{
                   style={{
                     color: colors.appWhite,
                     textAlign: 'center',
-                    fontSize: 10,
+                    fontSize: 13,
                   }}>
                   (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
                   benches Kettlebell etc)
