@@ -1,4 +1,4 @@
-import {SectionList, View, Dimensions} from 'react-native';
+import {SectionList, View} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
 import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -21,9 +21,8 @@ import Divider from '../../commons/Divider';
 import WorkoutCard from '../../commons/WorkoutCard';
 import TestCard from '../../commons/TestCard';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import FastImageAnimated from '../../commons/FastImageAnimated';
-
-const {height, width} = Dimensions.get('window');
+import EducationCard from '../../commons/EducationCard';
+import {objectHasNonEmptyValues} from '../../../helpers';
 
 const Daily: React.FC<{
   plan: Plan;
@@ -194,7 +193,7 @@ const Daily: React.FC<{
                     marginLeft: 10,
                     color: colors.appWhite,
                     fontWeight: 'bold',
-                    fontSize: 20
+                    fontSize: 20,
                   }}>
                   Education
                 </Text>
@@ -206,56 +205,14 @@ const Daily: React.FC<{
                       return null;
                     }
                     return (
-                      <TouchableOpacity
-                        style={{
-                          height: 125,
-                          marginHorizontal: 15,
-                          marginBottom: 15,
-                          borderRadius: 10,
-                          overflow: 'hidden',
-                        }}
+                      <EducationCard
+                        item={item}
                         onPress={() => {
                           navigate('EducationArticle', {
                             education: item,
                           });
-                        }}>
-                        <FastImageAnimated
-                          style={{
-                            position: 'absolute',
-                            height: 125,
-                            width: '100%',
-                          }}
-                          source={{uri: item.image.src}}
-                        />
-
-                        <View
-                          style={{
-                            position: 'absolute',
-                            alignSelf: 'flex-end',
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                            width: width / 1.5,
-                            padding: 10,
-                            backgroundColor: 'rgba(0,0,0,0.7)',
-                          }}>
-                          <Text
-                            style={{
-                              color: colors.appWhite,
-                              fontSize: 10,
-                            }}>
-                            {moment(item.createdate).format('DD MMMM YYYY')}
-                          </Text>
-                          <Text
-                            style={{
-                              color: colors.appWhite,
-                              fontSize: 16,
-                              fontWeight: 'bold',
-                            }}>
-                            {item.title}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
+                        }}
+                      />
                     );
                   }}
                 />
@@ -263,19 +220,20 @@ const Daily: React.FC<{
             )}
           </View>
         )}
-        {(!!plan.nutrition || !!plan.sleep) && (
-          <Text
-            style={{
-              padding: 5,
-              color: colors.appWhite,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              fontSize: 20,
-            }}>
-            Other
-          </Text>
-        )}
-        {!!plan.nutrition && !_.isEmpty(plan.nutrition) && (
+        {objectHasNonEmptyValues(plan.nutrition) &&
+          objectHasNonEmptyValues(plan.sleep) && (
+            <Text
+              style={{
+                padding: 5,
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                marginLeft: 10,
+                fontSize: 20,
+              }}>
+              Other
+            </Text>
+          )}
+        {objectHasNonEmptyValues(plan.nutrition) && (
           <>
             <Divider />
             <View
@@ -325,7 +283,7 @@ const Daily: React.FC<{
             </View>
           </>
         )}
-        {!!plan.sleep && !_.isEmpty(plan.sleep) && (
+        {objectHasNonEmptyValues(plan.sleep) && (
           <>
             <Divider />
             <View

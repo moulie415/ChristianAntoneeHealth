@@ -395,3 +395,7 @@ export const greetingMessage = () => {
     ? 'Good evening' // if for some reason the calculation didn't work
     : 'Welcome';
 };
+
+export const objectHasNonEmptyValues = (object: object) => {
+  return object && Object.values(object).some(obj => obj);
+};
