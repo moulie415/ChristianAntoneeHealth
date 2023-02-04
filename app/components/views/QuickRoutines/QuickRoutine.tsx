@@ -270,7 +270,6 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           height: 60,
                           borderRadius: 30,
                           marginBottom: 10,
-                          backgroundColor: colors.appGrey,
                         }}>
                         <Text
                           style={{

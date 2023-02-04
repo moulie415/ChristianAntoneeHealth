@@ -134,7 +134,7 @@ const Weekly: React.FC<{
                         }),
                       );
                     });
-                    navigate('StartWorkout', {name: item.name, isLast});
+                    navigate('PreWorkout', {name: item.name, isLast});
                   } else {
                     Alert.alert('Workout not due today', 'View early?', [
                       {text: 'Cancel'},
@@ -156,7 +156,7 @@ const Weekly: React.FC<{
                               }),
                             );
                           });
-                          navigate('StartWorkout', {name: item.name, isLast});
+                          navigate('PreWorkout', {name: item.name, isLast});
                         },
                       },
                     ]);

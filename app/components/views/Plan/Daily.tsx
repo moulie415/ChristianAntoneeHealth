@@ -149,7 +149,7 @@ const Daily: React.FC<{
                         }),
                       );
                     });
-                    navigate('StartWorkout', {name: item.name, isLast});
+                    navigate('PreWorkout', {name: item.name, isLast});
                   }}
                 />
               );

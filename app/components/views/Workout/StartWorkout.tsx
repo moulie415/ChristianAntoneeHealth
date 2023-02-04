@@ -185,7 +185,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       <View
                         style={{
                           flexDirection: 'row',
-                          justifyContent: 'center',
+                          justifyContent: 'space-evenly',
                           alignItems: 'center',
                           marginTop: 30,
                         }}>
@@ -246,36 +246,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                                 textAlign: 'center',
                               }}>
                               Diagram
-                            </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => setTabIndex(2)}>
-                          <LinearGradient
-                            colors={
-                              tabIndex === 2
-                                ? [colors.appBlueLight, colors.appBlueDark]
-                                : ['transparent', 'transparent']
-                            }
-                            style={{
-                              height: 40,
-                              width: 100,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderRadius: 25,
-                              backgroundColor:
-                                tabIndex === 2
-                                  ? colors.textGrey
-                                  : colors.appGrey,
-                            }}>
-                            <Text
-                              style={{
-                                fontWeight: 'bold',
-                                color: '#fff',
-                                textAlign: 'center',
-                              }}>
-                              Notes
                             </Text>
                           </LinearGradient>
                         </TouchableOpacity>
@@ -360,7 +330,6 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                           height: 60,
                           borderRadius: 30,
                           marginBottom: 10,
-                          backgroundColor: colors.textGrey,
                         }}>
                         <Text
                           style={{
