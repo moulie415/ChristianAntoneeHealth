@@ -26,3 +26,21 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        // jcenter()
+        gradlePluginPortal()
+        google()
+
+        all { ArtifactRepository repo ->
+            if (repo.hasProperty("url") && repo.url.toString().startsWith("https://jcenter.bintray.com/")) {
+                project.logger.warn "Repository ${repo.url} removed."
+                remove repo
+                mavenCentral()
+            }
+        }
+    }
+
+}
