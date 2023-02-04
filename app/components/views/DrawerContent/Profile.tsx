@@ -47,7 +47,7 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const Profile: React.FC<{
+const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
   profile: Profile;
   updateProfileAction: (payload: UpdateProfilePayload) => void;
@@ -464,4 +464,4 @@ const mapDispatchToProps = {
   getSamplesAction: getSamples,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileComponent);
