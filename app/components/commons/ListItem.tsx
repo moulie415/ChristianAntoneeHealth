@@ -1,7 +1,7 @@
 import {TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
 import Text from './Text';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import colors from '../../constants/colors';
 
 const ListItem: React.FC<{
@@ -36,12 +36,12 @@ const ListItem: React.FC<{
         {
           flexDirection: 'row',
           alignItems: 'center',
-          padding: DevicePixels[5],
+          padding: 5,
         },
         style,
       ]}>
       {!!accessoryLeft && accessoryLeft}
-      <View style={{justifyContent: 'center', padding: DevicePixels[5]}}>
+      <View style={{justifyContent: 'center', padding: 5}}>
         <Text style={[{color: colors.appWhite}, titleStyle]}>{title}</Text>
         {!!description && (
           <Text style={[{color: colors.textGrey}, descriptionStyle]}>
@@ -50,8 +50,7 @@ const ListItem: React.FC<{
         )}
       </View>
       {!!accessoryRight && (
-        <View
-          style={{alignItems: 'flex-end', flex: 1, padding: DevicePixels[5]}}>
+        <View style={{alignItems: 'flex-end', flex: 1, padding: 5}}>
           {accessoryRight}
         </View>
       )}

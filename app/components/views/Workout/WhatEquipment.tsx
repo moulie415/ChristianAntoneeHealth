@@ -2,7 +2,7 @@ import {View, TouchableOpacity, Dimensions} from 'react-native';
 import React, {MutableRefObject} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
@@ -23,8 +23,8 @@ const WhatEquipment: React.FC<{
           <Text
             style={{
               color: colors.appWhite,
-              marginHorizontal: DevicePixels[20],
-              fontSize: DevicePixels[22],
+              marginHorizontal: 20,
+              fontSize: 22,
               fontWeight: 'bold',
             }}>
             What equipment do you have?
@@ -36,22 +36,22 @@ const WhatEquipment: React.FC<{
               })
             }
             style={{
-              margin: DevicePixels[20],
-              marginBottom: DevicePixels[10],
-              width: Dimensions.get('window').width - DevicePixels[40],
+              margin: 20,
+              marginBottom: 10,
+              width: Dimensions.get('window').width - 40,
             }}>
             <FastImage
               style={{
-                height: DevicePixels[200],
+                height: 200,
                 justifyContent: 'flex-end',
-                borderRadius: DevicePixels[10],
+                borderRadius: 10,
               }}
               source={require('../../../images/bits-and-pieces.jpg')}>
               <View
                 style={{
-                  padding: DevicePixels[20],
-                  borderBottomLeftRadius: DevicePixels[10],
-                  borderBottomRightRadius: DevicePixels[10],
+                  padding: 20,
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
                   backgroundColor: 'rgba(0,0,0,0.5)',
                 }}>
                 <Text
@@ -59,8 +59,8 @@ const WhatEquipment: React.FC<{
                     textAlign: 'center',
                     color: colors.appWhite,
                     fontWeight: 'bold',
-                    fontSize: DevicePixels[20],
-                    marginBottom: DevicePixels[10],
+                    fontSize: 20,
+                    marginBottom: 10,
                   }}>
                   I’ve got a few bits and pieces
                 </Text>
@@ -68,7 +68,7 @@ const WhatEquipment: React.FC<{
                   style={{
                     color: colors.appWhite,
                     textAlign: 'center',
-                    fontSize: DevicePixels[10],
+                    fontSize: 10,
                   }}>
                   (Dumbbells, exercise ball, exercise mat)
                 </Text>
@@ -79,22 +79,22 @@ const WhatEquipment: React.FC<{
           <TouchableOpacity
             onPress={() => navigation.navigate('WhatArea', {equipment: 'full'})}
             style={{
-              margin: DevicePixels[20],
-              marginTop: DevicePixels[10],
-              width: Dimensions.get('window').width - DevicePixels[40],
+              margin: 20,
+              marginTop: 10,
+              width: Dimensions.get('window').width - 40,
             }}>
             <FastImage
               style={{
-                height: DevicePixels[200],
+                height: 200,
                 justifyContent: 'flex-end',
-                borderRadius: DevicePixels[10],
+                borderRadius: 10,
               }}
               source={require('../../../images/access-to-gym.jpg')}>
               <View
                 style={{
-                  padding: DevicePixels[20],
-                  borderBottomLeftRadius: DevicePixels[10],
-                  borderBottomRightRadius: DevicePixels[10],
+                  padding: 20,
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
                   backgroundColor: 'rgba(0,0,0,0.5)',
                 }}>
                 <Text
@@ -102,8 +102,8 @@ const WhatEquipment: React.FC<{
                     textAlign: 'center',
                     color: colors.appWhite,
                     fontWeight: 'bold',
-                    fontSize: DevicePixels[20],
-                    marginBottom: DevicePixels[10],
+                    fontSize: 20,
+                    marginBottom: 10,
                   }}>
                   I’ve got access to a gym
                 </Text>
@@ -111,7 +111,7 @@ const WhatEquipment: React.FC<{
                   style={{
                     color: colors.appWhite,
                     textAlign: 'center',
-                    fontSize: DevicePixels[10],
+                    fontSize: 10,
                   }}>
                   (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
                   benches Kettlebell etc)

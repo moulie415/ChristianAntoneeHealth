@@ -5,7 +5,7 @@ import {RouteProp} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
 import Header from '../../commons/Header';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Button from '../../commons/Button';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -49,9 +49,9 @@ const PreQuickRoutine: React.FC<{
       <ScrollView
         style={{
           flex: 1,
-          borderTopLeftRadius: DevicePixels[30],
-          borderTopRightRadius: DevicePixels[30],
-          marginTop: -DevicePixels[30],
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          marginTop: -30,
           backgroundColor: colors.appGrey,
         }}>
         <Text
@@ -59,9 +59,9 @@ const PreQuickRoutine: React.FC<{
             fontWeight: 'bold',
             color: colors.appWhite,
             textAlign: 'center',
-            marginTop: DevicePixels[30],
-            marginBottom: DevicePixels[10],
-            fontSize: DevicePixels[20],
+            marginTop: 30,
+            marginBottom: 10,
+            fontSize: 20,
           }}>
           {name}
         </Text>
@@ -69,15 +69,15 @@ const PreQuickRoutine: React.FC<{
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginVertical: DevicePixels[10],
+            marginVertical: 10,
           }}>
-          <View style={{width: DevicePixels[55], alignItems: 'center'}}>
+          <View style={{width: 55, alignItems: 'center'}}>
             <Icon
               name="stopwatch"
-              size={DevicePixels[25]}
+              size={25}
               color={colors.appWhite}
               style={{
-                marginHorizontal: DevicePixels[15],
+                marginHorizontal: 15,
               }}
             />
           </View>
@@ -88,15 +88,15 @@ const PreQuickRoutine: React.FC<{
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginVertical: DevicePixels[10],
+            marginVertical: 10,
           }}>
-          <View style={{width: DevicePixels[55], alignItems: 'center'}}>
+          <View style={{width: 55, alignItems: 'center'}}>
             <Icon
               name="running"
-              size={DevicePixels[25]}
+              size={25}
               color={colors.appWhite}
               style={{
-                marginHorizontal: DevicePixels[15],
+                marginHorizontal: 15,
               }}
             />
           </View>
@@ -108,15 +108,15 @@ const PreQuickRoutine: React.FC<{
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginVertical: DevicePixels[10],
+            marginVertical: 10,
           }}>
-          <View style={{width: DevicePixels[55], alignItems: 'center'}}>
+          <View style={{width: 55, alignItems: 'center'}}>
             <Icon
               name="tachometer-alt"
-              size={DevicePixels[22]}
+              size={22}
               color={colors.appWhite}
               style={{
-                marginHorizontal: DevicePixels[15],
+                marginHorizontal: 15,
               }}
             />
           </View>
@@ -128,15 +128,15 @@ const PreQuickRoutine: React.FC<{
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginVertical: DevicePixels[10],
+            marginVertical: 10,
           }}>
-          <View style={{width: DevicePixels[55], alignItems: 'center'}}>
+          <View style={{width: 55, alignItems: 'center'}}>
             <Icon
               name="dumbbell"
-              size={DevicePixels[20]}
+              size={20}
               color={colors.appWhite}
               style={{
-                marginHorizontal: DevicePixels[15],
+                marginHorizontal: 15,
               }}
             />
           </View>
@@ -148,15 +148,15 @@ const PreQuickRoutine: React.FC<{
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginVertical: DevicePixels[10],
+            marginVertical: 10,
           }}>
-          <View style={{width: DevicePixels[55], alignItems: 'center'}}>
+          <View style={{width: 55, alignItems: 'center'}}>
             <Icon
               name="child"
-              size={DevicePixels[25]}
+              size={25}
               color={colors.appWhite}
               style={{
-                marginHorizontal: DevicePixels[15],
+                marginHorizontal: 15,
               }}
             />
           </View>
@@ -165,7 +165,7 @@ const PreQuickRoutine: React.FC<{
           )} body`}</Text>
         </View>
         <Button
-          style={{margin: DevicePixels[15]}}
+          style={{margin: 15}}
           text="Start workout"
           onPress={() =>
             navigation.navigate('QuickRoutine', {routine: route.params.routine})

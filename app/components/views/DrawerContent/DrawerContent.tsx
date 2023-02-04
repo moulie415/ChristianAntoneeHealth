@@ -17,7 +17,7 @@ import {navigationRef, resetToWelcome} from '../../../RootNavigation';
 import {MyRootState} from '../../../types/Shared';
 import Purchases from 'react-native-purchases';
 import {STORE_LINK} from '../../../constants';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import messaging from '@react-native-firebase/messaging';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 import {logError} from '../../../helpers/error';
@@ -35,30 +35,25 @@ export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        padding: DevicePixels[10],
+        padding: 10,
       }}>
       <View
         style={{
-          height: DevicePixels[35],
-          width: DevicePixels[35],
+          height: 35,
+          width: 35,
           // backgroundColor: '#212121',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: DevicePixels[5],
+          borderRadius: 5,
         }}>
-        <Icon
-          size={DevicePixels[20]}
-          color={colors.appWhite}
-          solid
-          name={item.icon}
-        />
+        <Icon size={20} color={colors.appWhite} solid name={item.icon} />
       </View>
       <Text
         style={{
           color: colors.appWhite,
-          fontSize: DevicePixels[18],
+          fontSize: 18,
           fontWeight: 'bold',
-          marginLeft: DevicePixels[15],
+          marginLeft: 15,
         }}>
         {item.title}
       </Text>
@@ -141,8 +136,8 @@ const DrawerContent: React.FC<Props> = ({
       ) : (
         <Icon
           name="lock"
-          size={DevicePixels[20]}
-          style={{marginRight: DevicePixels[10]}}
+          size={20}
+          style={{marginRight: 10}}
           color={colors.appWhite}
         />
       ),
@@ -211,7 +206,7 @@ const DrawerContent: React.FC<Props> = ({
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <FlatList
         data={listItems}
-        contentContainerStyle={{marginTop: DevicePixels[40]}}
+        contentContainerStyle={{marginTop: 40}}
         renderItem={({item}) => {
           return <MoreItem item={item} />;
         }}
@@ -219,9 +214,9 @@ const DrawerContent: React.FC<Props> = ({
       <Text
         style={{
           color: colors.appWhite,
-          fontSize: DevicePixels[18],
+          fontSize: 18,
           textAlign: 'center',
-          margin: DevicePixels[10],
+          margin: 10,
         }}>
         {`v${getVersion()} (${getBuildNumber()})`}
       </Text>

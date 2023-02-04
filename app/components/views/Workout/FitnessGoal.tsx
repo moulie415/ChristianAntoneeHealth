@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
 } from 'react-native';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import globalStyles from '../../../styles/globalStyles';
 import {Goal, MyRootState} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
@@ -45,7 +45,7 @@ const FitnessGoal: React.FC<{
                   navigation.goBack();
                 }}
                 key={title}
-                style={{flex: 1, marginBottom: DevicePixels[5]}}>
+                style={{flex: 1, marginBottom: 5}}>
                 <ImageLoader
                   source={image}
                   overlay
@@ -57,12 +57,10 @@ const FitnessGoal: React.FC<{
                     position: 'absolute',
                     bottom: 0,
                     top: 0,
-                    left: DevicePixels[20],
+                    left: 20,
                     justifyContent: 'center',
                   }}>
-                  <Text style={[{color: '#fff'}]}>
-                    {title}
-                  </Text>
+                  <Text style={[{color: '#fff'}]}>{title}</Text>
                 </View>
               </TouchableOpacity>
             </Fragment>

@@ -20,7 +20,7 @@ import {
 import {setPremium} from '../../../actions/profile';
 import {connect} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
@@ -87,7 +87,7 @@ const Premium: React.FC<PremiumProps> = ({
       navigation.setOptions({
         headerLeft: () => (
           <TouchableOpacity
-            style={{padding: DevicePixels[10]}}
+            style={{padding: 10}}
             onPress={() => navigation.goBack()}>
             <Text style={{color: colors.appBlue}}>Cancel</Text>
           </TouchableOpacity>
@@ -108,33 +108,33 @@ const Premium: React.FC<PremiumProps> = ({
         <View style={{flex: 1, justifyContent: 'center'}}>
           <View
             style={{
-              marginHorizontal: DevicePixels[10],
-              borderRadius: DevicePixels[20],
-              marginBottom: DevicePixels[20],
+              marginHorizontal: 10,
+              borderRadius: 20,
+              marginBottom: 20,
               backgroundColor: 'rgba(0,0,0,0.8)',
             }}>
             <View
               style={{
-                margin: DevicePixels[20],
+                margin: 20,
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   textAlign: 'center',
                   fontWeight: 'bold',
-                  fontSize: DevicePixels[25],
-                  marginBottom: DevicePixels[10],
+                  fontSize: 25,
+                  marginBottom: 10,
                 }}>
                 PREMIUM
               </Text>
               <View
                 style={{
                   flexDirection: 'row',
-                  marginBottom: DevicePixels[20],
+                  marginBottom: 20,
                 }}>
                 <Icon
-                  style={{marginRight: DevicePixels[10]}}
-                  size={DevicePixels[20]}
+                  style={{marginRight: 10}}
+                  size={20}
                   color={colors.appWhite}
                   name="dumbbell"
                 />
@@ -142,14 +142,14 @@ const Premium: React.FC<PremiumProps> = ({
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: DevicePixels[18],
+                      fontSize: 18,
                       color: colors.appWhite,
                     }}>
                     Workouts
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[14],
+                      fontSize: 14,
                       color: colors.appWhite,
                     }}>
                     Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
@@ -162,11 +162,11 @@ const Premium: React.FC<PremiumProps> = ({
               <View
                 style={{
                   flexDirection: 'row',
-                  marginBottom: DevicePixels[20],
+                  marginBottom: 20,
                 }}>
                 <Icon
-                  style={{marginRight: DevicePixels[10]}}
-                  size={DevicePixels[20]}
+                  style={{marginRight: 10}}
+                  size={20}
                   color={colors.appWhite}
                   name="book-open"
                 />
@@ -174,14 +174,14 @@ const Premium: React.FC<PremiumProps> = ({
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: DevicePixels[18],
+                      fontSize: 18,
                       color: colors.appWhite,
                     }}>
                     Educational Articles
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[14],
+                      fontSize: 14,
                       color: colors.appWhite,
                     }}>
                     Gain access to <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
@@ -192,11 +192,11 @@ const Premium: React.FC<PremiumProps> = ({
               <View
                 style={{
                   flexDirection: 'row',
-                  marginBottom: DevicePixels[20],
+                  marginBottom: 20,
                 }}>
                 <Icon
-                  style={{marginRight: DevicePixels[10]}}
-                  size={DevicePixels[20]}
+                  style={{marginRight: 10}}
+                  size={20}
                   color={colors.appWhite}
                   name="heartbeat"
                 />
@@ -204,14 +204,14 @@ const Premium: React.FC<PremiumProps> = ({
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: DevicePixels[18],
+                      fontSize: 18,
                       color: colors.appWhite,
                     }}>
                     Fitness Testing
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[14],
+                      fontSize: 14,
                       color: colors.appWhite,
                     }}>
                     See how you rank against others by unlocking{' '}
@@ -223,11 +223,11 @@ const Premium: React.FC<PremiumProps> = ({
               <View
                 style={{
                   flexDirection: 'row',
-                  marginBottom: DevicePixels[20],
+                  marginBottom: 20,
                 }}>
                 <Icon
-                  style={{marginRight: DevicePixels[10]}}
-                  size={DevicePixels[20]}
+                  style={{marginRight: 10}}
+                  size={20}
                   color={colors.appWhite}
                   name="user-friends"
                 />
@@ -235,14 +235,14 @@ const Premium: React.FC<PremiumProps> = ({
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: DevicePixels[18],
+                      fontSize: 18,
                       color: colors.appWhite,
                     }}>
                     One-to-One Communication
                   </Text>
                   <Text
                     style={{
-                      fontSize: DevicePixels[14],
+                      fontSize: 14,
                       color: colors.appWhite,
                     }}>
                     Ask questions and discuss health and fitness topics directly
@@ -254,11 +254,11 @@ const Premium: React.FC<PremiumProps> = ({
                 <View
                   style={{
                     flexDirection: 'row',
-                    marginBottom: DevicePixels[20],
+                    marginBottom: 20,
                   }}>
                   <Icon
-                    style={{marginRight: DevicePixels[10]}}
-                    size={DevicePixels[20]}
+                    style={{marginRight: 10}}
+                    size={20}
                     color={colors.appWhite}
                     name="calendar-alt"
                   />
@@ -268,13 +268,13 @@ const Premium: React.FC<PremiumProps> = ({
                       style={{
                         fontWeight: 'bold',
                         color: colors.appWhite,
-                        fontSize: DevicePixels[18],
+                        fontSize: 18,
                       }}>
                       Customized plans
                     </Text>
                     <Text
                       style={{
-                        fontSize: DevicePixels[14],
+                        fontSize: 14,
                         color: colors.appWhite,
                       }}>
                       Purchase customized monthly plans tailored specifically to
@@ -289,11 +289,11 @@ const Premium: React.FC<PremiumProps> = ({
                 <View
                   style={{
                     flexDirection: 'row',
-                    marginBottom: DevicePixels[20],
+                    marginBottom: 20,
                   }}>
                   <Icon
-                    style={{marginRight: DevicePixels[10]}}
-                    size={DevicePixels[20]}
+                    style={{marginRight: 10}}
+                    size={20}
                     color={colors.appWhite}
                     name="comment-slash"
                   />
@@ -302,13 +302,13 @@ const Premium: React.FC<PremiumProps> = ({
                       style={{
                         fontWeight: 'bold',
                         color: colors.appWhite,
-                        fontSize: DevicePixels[18],
+                        fontSize: 18,
                       }}>
                       Remove Ads
                     </Text>
                     <Text
                       style={{
-                        fontSize: DevicePixels[14],
+                        fontSize: 14,
                         color: colors.appWhite,
                       }}>
                       Enjoy the full content of the app Ad-free
@@ -324,14 +324,14 @@ const Premium: React.FC<PremiumProps> = ({
                 <View
                   style={{
                     alignItems: 'center',
-                    paddingBottom: DevicePixels[20],
+                    paddingBottom: 20,
                   }}>
                   <Text
                     style={{
                       textAlign: 'center',
                       color: colors.appWhite,
                       fontWeight: 'bold',
-                      fontSize: DevicePixels[20],
+                      fontSize: 20,
                     }}>
                     🎉 Premium active 🎉
                   </Text>
@@ -393,9 +393,9 @@ const Premium: React.FC<PremiumProps> = ({
                             start={{x: 0, y: 0}}
                             end={{x: 1, y: 0}}
                             style={{
-                              height: DevicePixels[100],
-                              width: DevicePixels[160],
-                              borderRadius: DevicePixels[10],
+                              height: 100,
+                              width: 160,
+                              borderRadius: 10,
                               justifyContent: 'center',
                               alignItems: 'center',
                             }}>
@@ -405,7 +405,7 @@ const Premium: React.FC<PremiumProps> = ({
                                 textAlign: 'center',
                                 fontWeight: 'bold',
                                 color: colors.appWhite,
-                                fontSize: DevicePixels[18],
+                                fontSize: 18,
                               }}>
                               {title}
                             </Text>
@@ -414,7 +414,7 @@ const Premium: React.FC<PremiumProps> = ({
                               style={{
                                 textAlign: 'center',
                                 color: colors.appWhite,
-                                fontSize: DevicePixels[14],
+                                fontSize: 14,
                               }}>
                               {p.product.priceString}
                             </Text>
@@ -424,14 +424,14 @@ const Premium: React.FC<PremiumProps> = ({
                               position: 'absolute',
                               right: 0,
                               left: 0,
-                              top: -DevicePixels[10],
+                              top: -10,
                             }}>
                             <View
                               style={{
-                                height: DevicePixels[35],
-                                borderRadius: DevicePixels[20],
+                                height: 35,
+                                borderRadius: 20,
                                 backgroundColor: colors.appWhite,
-                                width: DevicePixels[115],
+                                width: 115,
                                 alignSelf: 'center',
                                 justifyContent: 'center',
                               }}>
@@ -442,7 +442,7 @@ const Premium: React.FC<PremiumProps> = ({
                                     index === 0
                                       ? colors.appBlue
                                       : colors.secondaryDark,
-                                  fontSize: DevicePixels[16],
+                                  fontSize: 16,
                                 }}>{`${p.product.priceString[0]}${monthlyPrice(
                                 p,
                               ).toFixed(2)}/mo`}</Text>
@@ -480,9 +480,9 @@ const Premium: React.FC<PremiumProps> = ({
                     <Text
                       style={{
                         textAlign: 'center',
-                        marginTop: DevicePixels[10],
-                        marginBottom: DevicePixels[20],
-                        padding: DevicePixels[10],
+                        marginTop: 10,
+                        marginBottom: 20,
+                        padding: 10,
                         color: colors.appWhite,
                         fontWeight: 'bold',
                         textDecorationLine: 'underline',
@@ -494,7 +494,7 @@ const Premium: React.FC<PremiumProps> = ({
                   {/* {!hasUsedTrial && (
                   <Text
                     style={{
-                      paddingBottom: DevicePixels[20],
+                      paddingBottom: 20,
                       textAlign: 'center',
                     }}>{`${pkg.product.price_string}/month after`}</Text>
                 )} */}

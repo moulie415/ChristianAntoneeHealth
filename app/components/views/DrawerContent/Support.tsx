@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import SupportProps from '../../../types/views/Support';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
@@ -77,7 +77,7 @@ const Support: React.FC<SupportProps> = () => {
         <Header hasBack title="Support" />
         <FlatList
           data={items}
-          contentContainerStyle={{marginTop: DevicePixels[20]}}
+          contentContainerStyle={{marginTop: 20}}
           renderItem={({item}) => {
             return <MoreItem item={item} />;
           }}

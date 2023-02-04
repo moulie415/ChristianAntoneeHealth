@@ -4,7 +4,7 @@ import {Alert, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {getCaloriesBurned} from '../../../helpers/exercises';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {saveWorkout as saveWorkoutAction} from '../../../actions/exercises';
 import {saveWorkout} from '../../../helpers/biometrics';
 import Button from '../../commons/Button';
@@ -38,11 +38,11 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
         <Header hasBack title="Workout Complete!" />
 
         <RPESlider rpe={difficulty} setRpe={setDifficulty} />
-        {/* <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
+        {/* <Text style={{color: colors.appWhite, margin: 10}}>
           Workout note
         </Text>
         <Input
-          style={{minHeight: DevicePixels[50], margin: DevicePixels[10]}}
+          style={{minHeight: 50, margin: 10}}
           multiline
           placeholder="Add details about this workout"
           value={note}
@@ -51,7 +51,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
         <Button
           text="Save & Continue"
           disabled={loading}
-          style={{margin: DevicePixels[10]}}
+          style={{margin: 10}}
           onPress={async () => {
             setLoading(true);
             await saveWorkout(

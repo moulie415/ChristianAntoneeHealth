@@ -6,7 +6,7 @@ import {getSavedTests, getTestsById} from '../../../actions/tests';
 import {SavedTest} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import ImageOverlay from '../../commons/ImageOverlay';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Test from '../../../types/Test';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';

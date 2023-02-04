@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import ExerciseListHeaderRightProps from '../../types/commons/ExerciseListHeaderRight';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Text from './Text';
 
 const ExerciseListHeaderRight: React.FC<ExerciseListHeaderRightProps> = ({
@@ -16,8 +16,8 @@ const ExerciseListHeaderRight: React.FC<ExerciseListHeaderRightProps> = ({
       <Text
         style={{
           color: colors.appBlue,
-          padding: DevicePixels[10],
-          fontSize: DevicePixels[18],
+          padding: 10,
+          fontSize: 18,
         }}>
         Next
       </Text>

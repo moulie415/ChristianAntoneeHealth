@@ -1,7 +1,7 @@
 import {TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Unit} from '../../../types/Profile';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 
@@ -14,9 +14,9 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
       <Text
         style={{
           color: colors.appWhite,
-          marginTop: DevicePixels[30],
+          marginTop: 30,
           textAlign: 'center',
-          marginBottom: DevicePixels[10],
+          marginBottom: 10,
         }}>
         Preferred unit?
       </Text>
@@ -24,19 +24,19 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
         style={{
           flex: 1,
           justifyContent: 'flex-end',
-          paddingBottom: DevicePixels[175],
+          paddingBottom: 175,
         }}>
         <TouchableOpacity
           onPress={() => setUnit('metric')}
           style={{
-            marginBottom: DevicePixels[20],
+            marginBottom: 20,
             backgroundColor:
               unit === 'metric' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
+            padding: 10,
             borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-            width: DevicePixels[200],
+            borderWidth: 1,
+            borderRadius: 5,
+            width: 200,
           }}>
           <Text
             style={{
@@ -49,14 +49,14 @@ const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
         <TouchableOpacity
           onPress={() => setUnit('imperial')}
           style={{
-            marginBottom: DevicePixels[20],
+            marginBottom: 20,
             backgroundColor:
               unit === 'imperial' ? colors.darkBlue : colors.appWhite,
-            padding: DevicePixels[10],
+            padding: 10,
             borderColor: colors.darkBlue,
-            borderWidth: DevicePixels[1],
-            borderRadius: DevicePixels[5],
-            width: DevicePixels[200],
+            borderWidth: 1,
+            borderRadius: 5,
+            width: 200,
           }}>
           <Text
             style={{

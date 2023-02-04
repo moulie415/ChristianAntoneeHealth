@@ -16,7 +16,7 @@ import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
 import * as _ from 'lodash';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import Button from '../../commons/Button';
 import Divider from '../../commons/Divider';
@@ -68,13 +68,13 @@ const Settings: React.FC<SettingsProps> = ({
         <Header hasBack title="Settings" />
         <ScrollView
           keyboardShouldPersistTaps="always"
-          contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
+          contentContainerStyle={{paddingBottom: 100}}>
           {(settings.plansEnabled || profile.admin) && (
             <>
               <Text
                 style={{
-                  margin: DevicePixels[10],
-                  fontSize: DevicePixels[22],
+                  margin: 10,
+                  fontSize: 22,
                   color: colors.appWhite,
                   fontWeight: 'bold',
                 }}>
@@ -86,16 +86,16 @@ const Settings: React.FC<SettingsProps> = ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  margin: DevicePixels[10],
+                  margin: 10,
                   backgroundColor: '#212121',
-                  height: DevicePixels[60],
-                  paddingHorizontal: DevicePixels[10],
-                  borderRadius: DevicePixels[5],
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 5,
                 }}>
                 <Text
                   style={{
                     color: colors.appWhite,
-                    fontSize: DevicePixels[16],
+                    fontSize: 16,
                     fontWeight: 'bold',
                   }}>
                   Workout reminders
@@ -111,16 +111,16 @@ const Settings: React.FC<SettingsProps> = ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  margin: DevicePixels[10],
+                  margin: 10,
                   backgroundColor: '#212121',
-                  height: DevicePixels[60],
-                  paddingHorizontal: DevicePixels[10],
-                  borderRadius: DevicePixels[5],
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 5,
                 }}>
                 <Text
                   style={{
                     color: colors.appWhite,
-                    fontSize: DevicePixels[16],
+                    fontSize: 16,
                     fontWeight: 'bold',
                   }}>
                   Fitness test reminder
@@ -138,17 +138,17 @@ const Settings: React.FC<SettingsProps> = ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  margin: DevicePixels[10],
+                  margin: 10,
                   backgroundColor: '#212121',
-                  height: DevicePixels[60],
-                  paddingHorizontal: DevicePixels[10],
-                  borderRadius: DevicePixels[5],
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 5,
                 }}>
                 <Text
                   style={{
                     flex: 1,
                     color: colors.appWhite,
-                    fontSize: DevicePixels[16],
+                    fontSize: 16,
                     fontWeight: 'bold',
                   }}>
                   Time of workout reminder
@@ -156,7 +156,7 @@ const Settings: React.FC<SettingsProps> = ({
                 {(showWorkoutDate || Platform.OS === 'ios') && (
                   <DateTimePicker
                     disabled={!workoutReminders}
-                    style={{width: DevicePixels[90]}}
+                    style={{width: 90}}
                     testID="dateTimePicker"
                     value={new Date(workoutDate)}
                     // placeholderText="Select date"
@@ -189,17 +189,17 @@ const Settings: React.FC<SettingsProps> = ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  margin: DevicePixels[10],
+                  margin: 10,
                   backgroundColor: '#212121',
-                  height: DevicePixels[60],
-                  paddingHorizontal: DevicePixels[10],
-                  borderRadius: DevicePixels[5],
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 5,
                 }}>
                 <Text
                   style={{
                     flex: 1,
                     color: colors.appWhite,
-                    fontSize: DevicePixels[16],
+                    fontSize: 16,
                     fontWeight: 'bold',
                   }}>
                   Time of test reminder
@@ -207,7 +207,7 @@ const Settings: React.FC<SettingsProps> = ({
                 {(showTestDate || Platform.OS === 'ios') && (
                   <DateTimePicker
                     disabled={!testReminders}
-                    style={{width: DevicePixels[90]}}
+                    style={{width: 90}}
                     testID="dateTimePicker"
                     value={new Date(testDate)}
                     // placeholderText="Select date"
@@ -235,9 +235,9 @@ const Settings: React.FC<SettingsProps> = ({
               <Text
                 style={{
                   fontStyle: 'italic',
-                  fontSize: DevicePixels[12],
+                  fontSize: 12,
                   color: colors.appWhite,
-                  marginLeft: DevicePixels[10],
+                  marginLeft: 10,
                 }}>
                 Please note these reminders are for custom plans
               </Text>
@@ -245,10 +245,10 @@ const Settings: React.FC<SettingsProps> = ({
           )}
           <Text
             style={{
-              margin: DevicePixels[10],
+              margin: 10,
               color: colors.appWhite,
               fontWeight: 'bold',
-              fontSize: DevicePixels[22],
+              fontSize: 22,
             }}>
             Emails
           </Text>
@@ -257,16 +257,16 @@ const Settings: React.FC<SettingsProps> = ({
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              margin: DevicePixels[10],
+              margin: 10,
               backgroundColor: '#212121',
-              height: DevicePixels[60],
-              paddingHorizontal: DevicePixels[10],
-              borderRadius: DevicePixels[5],
+              height: 60,
+              paddingHorizontal: 10,
+              borderRadius: 5,
             }}>
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
+                fontSize: 16,
                 fontWeight: 'bold',
                 width: '80%',
               }}>
@@ -287,8 +287,8 @@ const Settings: React.FC<SettingsProps> = ({
           text="Save"
           disabled={equal || loading}
           style={{
-            margin: DevicePixels[10],
-            marginBottom: DevicePixels[20],
+            margin: 10,
+            marginBottom: 20,
             position: 'absolute',
             left: 0,
             right: 0,

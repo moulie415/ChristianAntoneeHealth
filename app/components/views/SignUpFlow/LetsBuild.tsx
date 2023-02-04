@@ -2,11 +2,11 @@ import {ScrollView} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Button from '../../commons/Button';
 import FastImage from 'react-native-fast-image';
 
-const WIDTH = DevicePixels[150];
+const WIDTH = 150;
 
 const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
   return (
@@ -14,15 +14,15 @@ const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[10],
+        margin: 10,
       }}
       bounces={false}>
       <Text
         style={{
           color: colors.appWhite,
           textAlign: 'center',
-          fontSize: DevicePixels[25],
-          marginBottom: DevicePixels[10],
+          fontSize: 25,
+          marginBottom: 10,
           fontWeight: 'bold',
         }}>
         Welcome to Christian Antonee Health
@@ -43,8 +43,8 @@ const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
           color: colors.appWhite,
           alignSelf: 'center',
           fontFamily: 'MrDafoe-Regular',
-          fontSize: DevicePixels[25],
-          marginTop: DevicePixels[10]
+          fontSize: 25,
+          marginTop: 10,
         }}>
         Christian Antonee
       </Text>
@@ -54,9 +54,9 @@ const LetsBuild: React.FC<{goNext: () => void}> = ({goNext}) => {
           width: WIDTH,
           height: WIDTH * 1.5,
           alignSelf: 'center',
-          borderRadius: DevicePixels[10],
-          marginVertical: DevicePixels[15],
-          borderWidth: DevicePixels[2],
+          borderRadius: 10,
+          marginVertical: 15,
+          borderWidth: 2,
           borderColor: colors.textGrey,
         }}
       />

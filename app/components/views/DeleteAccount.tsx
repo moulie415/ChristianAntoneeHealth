@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
@@ -48,9 +48,9 @@ const DeleteAccount: React.FC<{
         <Text
           style={{
             color: '#fff',
-            margin: DevicePixels[10],
+            margin: 10,
             fontWeight: 'bold',
-            lineHeight: DevicePixels[20],
+            lineHeight: 20,
           }}>
           {`We're sad to see you go, please enter your email${
             requiresPassword ? ' and password' : ''
@@ -58,7 +58,7 @@ const DeleteAccount: React.FC<{
         </Text>
         <View
           style={{
-            margin: DevicePixels[10],
+            margin: 10,
           }}>
           <Input
             placeholder="Email"
@@ -71,7 +71,7 @@ const DeleteAccount: React.FC<{
           />
         </View>
         {requiresPassword && (
-          <View style={{margin: DevicePixels[10]}}>
+          <View style={{margin: 10}}>
             <Input
               placeholder="Password"
               onChangeText={p => setPassword(p)}
@@ -129,8 +129,8 @@ const DeleteAccount: React.FC<{
           }}
           loading={loading}
           style={{
-            margin: DevicePixels[10],
-            marginTop: DevicePixels[5],
+            margin: 10,
+            marginTop: 5,
           }}
           disabled={
             email !== profile.email ||

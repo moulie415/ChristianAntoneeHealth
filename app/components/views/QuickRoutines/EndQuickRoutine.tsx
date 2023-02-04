@@ -3,7 +3,7 @@ import {Alert, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {saveWorkout} from '../../../helpers/biometrics';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 import {saveQuickRoutine} from '../../../actions/quickRoutines';
 import colors from '../../../constants/colors';
@@ -36,13 +36,13 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
         <Header hasBack title="Workout Complete!" />
-        <View style={{flex: 1, marginTop: DevicePixels[40]}}>
+        <View style={{flex: 1, marginTop: 40}}>
           <RPESlider setRpe={setDifficulty} rpe={difficulty} />
-          {/* <Text style={{color: colors.appWhite, margin: DevicePixels[10]}}>
+          {/* <Text style={{color: colors.appWhite, margin: 10}}>
           Workout note
         </Text>
         <Input
-          style={{minHeight: DevicePixels[50], margin: DevicePixels[10]}}
+          style={{minHeight: 50, margin: 10}}
           multiline
           placeholder="Add details about this workout"
           value={note}
@@ -51,7 +51,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
           <Button
             text="Save & Continue"
             disabled={loading}
-            style={{margin: DevicePixels[10]}}
+            style={{margin: 10}}
             onPress={async () => {
               setLoading(true);
               await saveWorkout(

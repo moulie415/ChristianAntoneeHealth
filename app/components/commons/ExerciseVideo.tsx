@@ -9,7 +9,7 @@ import {
 import Video, {OnProgressData} from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getVideoHeight} from '../../helpers';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {logError} from '../../helpers/error';
 import colors from '../../constants/colors';
 import moment from 'moment';
@@ -109,23 +109,21 @@ const ExerciseVideo: React.FC<{
             }
           }}
           style={{
-            height: DevicePixels[50],
-            width: DevicePixels[50],
-            borderRadius: DevicePixels[25],
+            height: 50,
+            width: 50,
+            borderRadius: 25,
             backgroundColor: colors.appWhite,
             position: 'absolute',
-            top: fullscreen
-              ? Dimensions.get('window').height / 2 - DevicePixels[25]
-              : '18%',
-            left: Dimensions.get('window').width / 2 - DevicePixels[25],
+            top: fullscreen ? Dimensions.get('window').height / 2 - 25 : '18%',
+            left: Dimensions.get('window').width / 2 - 25,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
           <Icon
             name={paused ? 'play' : 'pause'}
             color={colors.appBlue}
-            size={DevicePixels[20]}
-            style={{marginRight: paused ? -DevicePixels[3] : 0}}
+            size={20}
+            style={{marginRight: paused ? -3 : 0}}
           />
         </TouchableOpacity>
       )}
@@ -141,14 +139,14 @@ const ExerciseVideo: React.FC<{
             }}
             style={{
               position: 'absolute',
-              top: fullscreen ? undefined : getVideoHeight() - DevicePixels[85],
+              top: fullscreen ? undefined : getVideoHeight() - 85,
               bottom: fullscreen ? '5%' : undefined,
-              right: DevicePixels[20],
+              right: 20,
             }}>
             <Icon
               name={fullscreen ? 'compress' : 'expand'}
               color={colors.appWhite}
-              size={DevicePixels[30]}
+              size={30}
             />
           </TouchableOpacity>
           {fullscreen && (
@@ -175,17 +173,17 @@ const ExerciseVideo: React.FC<{
                 renderThumbComponent={() => (
                   <LinearGradient
                     style={{
-                      width: DevicePixels[30],
-                      height: DevicePixels[30],
-                      borderRadius: DevicePixels[15],
+                      width: 30,
+                      height: 30,
+                      borderRadius: 15,
                       backgroundColor: colors.appBlue,
                     }}
                     colors={[colors.appBlueLight, colors.appBlueDark]}
                     hitSlop={{
-                      top: DevicePixels[10],
-                      bottom: DevicePixels[10],
-                      left: DevicePixels[10],
-                      right: DevicePixels[10],
+                      top: 10,
+                      bottom: 10,
+                      left: 10,
+                      right: 10,
                     }}
                   />
                 )}

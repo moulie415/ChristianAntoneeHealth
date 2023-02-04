@@ -8,7 +8,7 @@ import {Equipment, MyRootState, Goal} from '../../../types/Shared';
 import {setEquipment, setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import BottomSheet from '@gorhom/bottom-sheet';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {capitalizeFirstLetter} from '../../../helpers';
 import EquipmentMenu from './EquipmentMenu';
 import ImageLoader from '../../commons/ImageLoader';
@@ -71,7 +71,7 @@ const Workout: React.FC<WorkoutProps> = ({
           }}
           style={{
             flex: 1,
-            marginBottom: DevicePixels[5],
+            marginBottom: 5,
           }}>
           <ImageLoader
             style={{width: '100%', flex: 1}}
@@ -85,7 +85,7 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Goal</Text>
@@ -95,16 +95,15 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
             <Text
               style={{
                 right: 0,
                 color: '#fff',
-                marginRight: DevicePixels[20],
+                marginRight: 20,
                 fontWeight: 'bold',
-   
               }}>
               {getGoalString(fitnessGoal)}
             </Text>
@@ -114,10 +113,10 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+            <Icon name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -126,7 +125,7 @@ const Workout: React.FC<WorkoutProps> = ({
           }}
           style={{
             flex: 1,
-            marginBottom: DevicePixels[5],
+            marginBottom: 5,
           }}>
           <ImageLoader
             style={{width: '100%', flex: 1}}
@@ -140,7 +139,7 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Exercise experience</Text>
@@ -150,14 +149,14 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
             <Text
               style={{
                 right: 0,
                 color: '#fff',
-                marginRight: DevicePixels[20],
+                marginRight: 20,
                 fontWeight: 'bold',
               }}>
               {capitalizeFirstLetter(level)}
@@ -168,10 +167,10 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+            <Icon name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -181,7 +180,7 @@ const Workout: React.FC<WorkoutProps> = ({
           }}
           style={{
             flex: 1,
-            marginBottom: DevicePixels[5],
+            marginBottom: 5,
           }}>
           <ImageLoader
             style={{width: '100%', flex: 1}}
@@ -195,7 +194,7 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Available Equipment</Text>
@@ -205,14 +204,14 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
             <Text
               style={{
                 right: 0,
                 color: '#fff',
-                marginRight: DevicePixels[20],
+                marginRight: 20,
                 fontWeight: 'bold',
               }}>
               {availableEquipmentString()}
@@ -223,10 +222,10 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+            <Icon name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -248,7 +247,7 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Warm-up & Cool-down</Text>
@@ -258,14 +257,14 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
             <Text
               style={{
                 right: 0,
                 color: '#fff',
-                marginRight: DevicePixels[20],
+                marginRight: 20,
                 fontWeight: 'bold',
               }}>
               {warmUp.length + coolDown.length + ' selected'}
@@ -276,10 +275,10 @@ const Workout: React.FC<WorkoutProps> = ({
               position: 'absolute',
               bottom: 0,
               top: 0,
-              right: DevicePixels[20],
+              right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={DevicePixels[20]} />
+            <Icon name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <Button
@@ -298,7 +297,7 @@ const Workout: React.FC<WorkoutProps> = ({
               Alert.alert('Sorry', 'Please specify equipment first');
             }
           }}
-          style={{margin: DevicePixels[10]}}
+          style={{margin: 10}}
         />
       </SafeAreaView>
       <BottomSheet
@@ -312,14 +311,14 @@ const Workout: React.FC<WorkoutProps> = ({
             justifyContent: 'space-between',
             backgroundColor: colors.button,
             alignItems: 'center',
-            borderTopLeftRadius: DevicePixels[5],
-            borderTopRightRadius: DevicePixels[5],
+            borderTopLeftRadius: 5,
+            borderTopRightRadius: 5,
           }}>
           <TouchableOpacity onPress={onCancel}>
             <Text
               style={{
                 color: colors.appBlue,
-                padding: DevicePixels[10],
+                padding: 10,
                 fontWeight: 'bold',
               }}>
               CANCEL
@@ -332,7 +331,7 @@ const Workout: React.FC<WorkoutProps> = ({
             <Text
               style={{
                 color: colors.appBlue,
-                padding: DevicePixels[10],
+                padding: 10,
                 fontWeight: 'bold',
               }}>
               SAVE
@@ -345,7 +344,7 @@ const Workout: React.FC<WorkoutProps> = ({
               backgroundColor: '#fff',
             }}>
             <TouchableOpacity
-              style={{padding: DevicePixels[10]}}
+              style={{padding: 10}}
               onPress={() => {
                 selectedEquipment.length === Object.keys(Equipment).length
                   ? setSelectedEquipment([])
@@ -355,7 +354,7 @@ const Workout: React.FC<WorkoutProps> = ({
                 style={{
                   textAlign: 'right',
                   fontWeight: 'bold',
-                  // fontSize: DevicePixels[20],
+                  // fontSize: 20,
                   color: colors.appBlue,
                 }}>
                 {selectedEquipment.length === Object.keys(Equipment).length

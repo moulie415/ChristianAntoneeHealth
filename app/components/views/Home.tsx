@@ -3,7 +3,7 @@ import {Dimensions, ScrollView, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeCard from '../commons/HomeCard';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import colors from '../../constants/colors';
 import Avatar from '../commons/Avatar';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -23,7 +23,7 @@ const {height, width} = Dimensions.get('window');
 
 const RATIO = height / width;
 
-const ROW_MARGIN = DevicePixels[10] * RATIO;
+const ROW_MARGIN = 10 * RATIO;
 
 type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 
@@ -65,9 +65,9 @@ const Home: React.FC<{
           <FastImage
             source={require('../../images/logo.png')}
             style={{
-              width: DevicePixels[95],
-              height: DevicePixels[84],
-              margin: DevicePixels[40],
+              width: 95,
+              height: 84,
+              margin: 40,
               marginTop: 0,
               alignSelf: 'center',
             }}
@@ -75,8 +75,8 @@ const Home: React.FC<{
 
           {/* <Text
             style={{
-              marginLeft: DevicePixels[20],
-              fontSize: DevicePixels[14],
+              marginLeft: 20,
+              fontSize: 14,
               color: colors.appWhite,
               fontWeight: 'bold',
             }}>
@@ -84,9 +84,9 @@ const Home: React.FC<{
           </Text> */}
           {/* <Text
             style={{
-              marginLeft: DevicePixels[20],
-              marginBottom: DevicePixels[20],
-              fontSize: DevicePixels[30],
+              marginLeft: 20,
+              marginBottom: 20,
+              fontSize: 30,
               color: colors.appWhite,
               fontWeight: 'bold',
             }}>
@@ -144,10 +144,10 @@ const Home: React.FC<{
         shape="circle"
         text="For everything else use this menu"
         isTourGuide
-        top={DevicePixels[18] + insets.top}
-        left={DevicePixels[13]}
-        width={DevicePixels[30]}
-        height={DevicePixels[30]}
+        top={18 + insets.top}
+        left={13}
+        width={30}
+        height={30}
         zone={profile.admin || plansEnabled ? 4 : 3}
       />
     </View>

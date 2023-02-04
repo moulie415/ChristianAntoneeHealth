@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import colors from '../../../constants/colors';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -56,9 +56,9 @@ const Nutrition: React.FC<{
       <Text
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
+          marginVertical: 20,
 
-          fontSize: DevicePixels[20],
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         Nutritional habits?
@@ -71,8 +71,8 @@ const Nutrition: React.FC<{
         }}
         removeClippedSubviews={false}
         contentContainerStyle={{
-          paddingBottom: DevicePixels[50],
-          width: DevicePixels[250],
+          paddingBottom: 50,
+          width: 250,
         }}
         scrollEnabled
         data={items}
@@ -87,7 +87,7 @@ const Nutrition: React.FC<{
                 accessoryLeft={
                   <Icon
                     name={nutrition.includes(item) ? 'check-square' : 'square'}
-                    size={DevicePixels[15]}
+                    size={15}
                     solid={nutrition.includes(item)}
                     color={colors.appWhite}
                   />
@@ -114,9 +114,9 @@ const Nutrition: React.FC<{
                 accessoryRight={
                   <Icon
                     name={open[item.key] ? 'chevron-down' : 'chevron-right'}
-                    size={DevicePixels[15]}
+                    size={15}
                     color={colors.appWhite}
-                    style={{marginRight: DevicePixels[10]}}
+                    style={{marginRight: 10}}
                   />
                 }
                 onPress={() => setOpen({...open, [item.key]: !open[item.key]})}
@@ -127,7 +127,7 @@ const Nutrition: React.FC<{
                     placeholder="List supplements here..."
                     multiline
                     style={{
-                      height: DevicePixels[100],
+                      height: 100,
                       textAlignVertical: 'top',
                     }}
                     onChangeText={text => {
@@ -148,15 +148,15 @@ const Nutrition: React.FC<{
                                 ? 'check-square'
                                 : 'square'
                             }
-                            size={DevicePixels[15]}
+                            size={15}
                             solid={nutrition.includes(option)}
                             color={colors.appWhite}
-                            style={{marginRight: DevicePixels[10]}}
+                            style={{marginRight: 10}}
                           />
                         }
                         style={{
                           backgroundColor: 'transparent',
-                          marginLeft: DevicePixels[10],
+                          marginLeft: 10,
                         }}
                         title={i}
                         key={i}

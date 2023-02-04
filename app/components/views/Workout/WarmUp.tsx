@@ -3,7 +3,7 @@ import {View, SafeAreaView, TouchableOpacity, Switch} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
 import {setCoolDown, setWarmUp} from '../../../actions/exercises';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import globalStyles from '../../../styles/globalStyles';
 import {CoolDown, MyRootState, WarmUp} from '../../../types/Shared';
 import Divider from '../../commons/Divider';
@@ -46,7 +46,7 @@ const WarmUpAndCoolDown: React.FC<{
           onPress={() => {
             setItemsCollapsed({0: !itemsCollapsed[0], 1: true});
           }}
-          style={{flex: 1, marginBottom: DevicePixels[5]}}>
+          style={{flex: 1, marginBottom: 5}}>
           <ImageLoader
             source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
             overlay
@@ -57,12 +57,10 @@ const WarmUpAndCoolDown: React.FC<{
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
-            <Text style={[{color: '#fff'}]}>
-              Warm-up
-            </Text>
+            <Text style={[{color: '#fff'}]}>Warm-up</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[0]}>
@@ -115,7 +113,7 @@ const WarmUpAndCoolDown: React.FC<{
           onPress={() => {
             setItemsCollapsed({0: true, 1: !itemsCollapsed[1], 2: true});
           }}
-          style={{flex: 1, marginBottom: DevicePixels[5]}}>
+          style={{flex: 1, marginBottom: 5}}>
           <ImageLoader
             source={require('../../../images/2nd_carousel_image_fitness_tracking.jpeg')}
             overlay
@@ -126,12 +124,10 @@ const WarmUpAndCoolDown: React.FC<{
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
-            <Text style={[{color: '#fff'}]}>
-              Cool-down
-            </Text>
+            <Text style={[{color: '#fff'}]}>Cool-down</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[1]}>

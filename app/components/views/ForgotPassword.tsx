@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
@@ -38,7 +38,7 @@ const ForgotPassword: React.FC<{
         <Header hasBack title="Forgot password" />
         <Input
           style={{
-            margin: DevicePixels[20],
+            margin: 20,
             marginTop: 0,
           }}
           placeholder="Email"
@@ -63,7 +63,7 @@ const ForgotPassword: React.FC<{
           }}
           loading={loading}
           style={{
-            marginHorizontal: DevicePixels[20],
+            marginHorizontal: 20,
           }}
           text="Send password reset email"
           disabled={!email || loading}

@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {PERCENTAGES} from '../../constants';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux';
@@ -75,17 +75,17 @@ const Chart: React.FC<{
     <View style={{alignItems: 'center'}}>
       <Text
         style={{
-          margin: DevicePixels[20],
+          margin: 20,
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: DevicePixels[20],
+          fontSize: 20,
           marginBottom: 0,
         }}>
         {title}
       </Text>
       <View
         style={{
-          marginTop: -DevicePixels[20],
+          marginTop: -20,
           width: Dimensions.get('window').width * 0.9,
           alignItems: 'center',
         }}>
@@ -95,13 +95,13 @@ const Chart: React.FC<{
           }}
           minDomain={{y: minY !== undefined ? minY : lowest - 5}}
           width={Dimensions.get('window').width * 0.9}
-          height={DevicePixels[250]}
+          height={250}
           theme={VictoryTheme.material}>
           <VictoryArea style={{data: {fill: colors.appBlue}}} data={data} />
           {/* <VictoryLine style={{data: {fill: colors.appBlue}}} data={data} /> */}
 
           <VictoryAxis
-            offsetY={DevicePixels[50]}
+            offsetY={50}
             tickFormat={x => {
               if (filter === 6) {
                 return moment(x).format('dd');
@@ -116,14 +116,14 @@ const Chart: React.FC<{
           />
           <VictoryAxis dependentAxis tickFormat={x => `${x}${suffix || ''}`} />
         </VictoryChart>
-        <View style={{marginLeft: DevicePixels[20]}}>
+        <View style={{marginLeft: 20}}>
           {current !== undefined && (
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
-                marginHorizontal: DevicePixels[20],
-                marginVertical: DevicePixels[10],
+                fontSize: 16,
+                marginHorizontal: 20,
+                marginVertical: 10,
                 textAlign: 'center',
               }}>
               Your current{' '}
@@ -141,8 +141,8 @@ const Chart: React.FC<{
                 color: colors.appWhite,
                 fontWeight: 'bold',
                 textDecorationLine: 'underline',
-                marginHorizontal: DevicePixels[20],
-                marginBottom: DevicePixels[20],
+                marginHorizontal: 20,
+                marginBottom: 20,
                 textAlign: 'center',
               }}>
               What does this mean?
@@ -167,14 +167,14 @@ const Chart: React.FC<{
           onPress={() => pagerRef.current.setPage(index - 1)}
           style={{
             position: 'absolute',
-            left: DevicePixels[0],
-            top: DevicePixels[150],
-            padding: DevicePixels[10],
+            left: 0,
+            top: 150,
+            padding: 10,
           }}>
           <Icon
             style={{opacity: 0.8}}
             name="chevron-left"
-            size={DevicePixels[30]}
+            size={30}
             color="#fff"
           />
         </TouchableOpacity>
@@ -184,14 +184,14 @@ const Chart: React.FC<{
           onPress={() => pagerRef.current.setPage(index + 1)}
           style={{
             position: 'absolute',
-            right: DevicePixels[0],
-            top: DevicePixels[150],
-            padding: DevicePixels[10],
+            right: 0,
+            top: 150,
+            padding: 10,
           }}>
           <Icon
             style={{opacity: 0.8}}
             name="chevron-right"
-            size={DevicePixels[30]}
+            size={30}
             color="#fff"
           />
         </TouchableOpacity>
@@ -274,12 +274,12 @@ const ProfileCharts: React.FC<{
     <>
       <Text
         style={{
-          marginTop: DevicePixels[20],
+          marginTop: 20,
 
           color: colors.appWhite,
           fontWeight: 'bold',
           alignSelf: 'center',
-          fontSize: DevicePixels[24],
+          fontSize: 24,
         }}>
         Biometric tracking
       </Text>
@@ -288,7 +288,7 @@ const ProfileCharts: React.FC<{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           alignItems: 'center',
-          marginTop: DevicePixels[30],
+          marginTop: 30,
         }}>
         <TouchableOpacity style={{}} onPress={() => setFilter(6)}>
           <LinearGradient
@@ -298,11 +298,11 @@ const ProfileCharts: React.FC<{
                 : ['transparent', 'transparent']
             }
             style={{
-              height: DevicePixels[40],
-              paddingHorizontal: DevicePixels[10],
+              height: 40,
+              paddingHorizontal: 10,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: DevicePixels[25],
+              borderRadius: 25,
             }}>
             <Text
               style={{
@@ -322,11 +322,11 @@ const ProfileCharts: React.FC<{
                 : ['transparent', 'transparent']
             }
             style={{
-              height: DevicePixels[40],
-              paddingHorizontal: DevicePixels[10],
+              height: 40,
+              paddingHorizontal: 10,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: DevicePixels[25],
+              borderRadius: 25,
             }}>
             <Text
               style={{
@@ -346,11 +346,11 @@ const ProfileCharts: React.FC<{
                 : ['transparent', 'transparent']
             }
             style={{
-              height: DevicePixels[40],
-              paddingHorizontal: DevicePixels[10],
+              height: 40,
+              paddingHorizontal: 10,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: DevicePixels[25],
+              borderRadius: 25,
             }}>
             <Text
               style={{
@@ -364,7 +364,7 @@ const ProfileCharts: React.FC<{
         </TouchableOpacity>
       </View>
 
-      <PagerView ref={pagerRef} style={{flex: 1, height: DevicePixels[450]}}>
+      <PagerView ref={pagerRef} style={{flex: 1, height: 450}}>
         <Chart
           isFirst
           index={0}
@@ -398,7 +398,7 @@ const ProfileCharts: React.FC<{
                 text="Enter weight"
                 style={{
                   width: '42%',
-                  marginTop: DevicePixels[10],
+                  marginTop: 10,
                 }}
               />
               <Button
@@ -406,7 +406,7 @@ const ProfileCharts: React.FC<{
                 text="Enter height"
                 style={{
                   width: '42%',
-                  marginTop: DevicePixels[10],
+                  marginTop: 10,
                 }}
               />
             </View>
@@ -444,8 +444,8 @@ const ProfileCharts: React.FC<{
               onPress={() => setShowBodyFatPercentageModal(true)}
               text="Enter body fat percentage"
               style={{
-                width: DevicePixels[300],
-                marginTop: DevicePixels[10],
+                width: 300,
+                marginTop: 10,
               }}
             />
           }
@@ -474,9 +474,9 @@ const ProfileCharts: React.FC<{
               onPress={() => setShowMuscleMassModal(true)}
               text="Enter muscle mass"
               style={{
-                width: DevicePixels[300],
+                width: 300,
 
-                marginTop: DevicePixels[10],
+                marginTop: 10,
               }}
             />
           }
@@ -506,8 +506,8 @@ const ProfileCharts: React.FC<{
               onPress={() => setShowBoneMassModal(true)}
               text="Enter bone mass"
               style={{
-                width: DevicePixels[300],
-                marginTop: DevicePixels[10],
+                width: 300,
+                marginTop: 10,
               }}
             />
           }

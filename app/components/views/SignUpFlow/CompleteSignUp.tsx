@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
@@ -26,22 +26,22 @@ const CompleteSignUp: React.FC<{
       style={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          fontSize: DevicePixels[20],
+          marginVertical: 20,
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         Almost there...
       </Text>
-      <View style={{marginLeft: DevicePixels[10]}}>
+      <View style={{marginLeft: 10}}>
         <TouchableOpacity
           style={{
             flexDirection: 'row',
-            marginBottom: DevicePixels[10],
+            marginBottom: 10,
             alignItems: 'center',
           }}
           onPress={() => setPrivacy(!privacy)}>
@@ -50,7 +50,7 @@ const CompleteSignUp: React.FC<{
             onPress={() => setPrivacy(!privacy)}
             iconStyle={{color: colors.appWhite}}
           />
-          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
+          <Text style={{marginLeft: 10, color: colors.appWhite}}>
             I've read the{' '}
             <Text
               onPress={() => {
@@ -69,7 +69,7 @@ const CompleteSignUp: React.FC<{
           onPress={() => setMarketing(!marketing)}
           style={{
             flexDirection: 'row',
-            marginBottom: DevicePixels[20],
+            marginBottom: 20,
             alignItems: 'center',
           }}>
           <Checkbox
@@ -77,7 +77,7 @@ const CompleteSignUp: React.FC<{
             onPress={() => setMarketing(!marketing)}
             iconStyle={{color: colors.appWhite}}
           />
-          <Text style={{marginLeft: DevicePixels[10], color: colors.appWhite}}>
+          <Text style={{marginLeft: 10, color: colors.appWhite}}>
             I want to join the CA Health mailing list and receive relevant
             articles offers and promotions
           </Text>

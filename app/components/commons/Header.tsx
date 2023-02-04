@@ -2,7 +2,7 @@ import {TouchableOpacity, View} from 'react-native';
 import React, {MutableRefObject, ReactNode} from 'react';
 import BackButton from './BackButton';
 import {navigationRef} from '../../RootNavigation';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Text from './Text';
 import colors from '../../constants/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -46,42 +46,42 @@ const Header: React.FC<{
       }}>
       {hasBack && (
         <BackButton
-          style={{margin: DevicePixels[20]}}
+          style={{margin: 20}}
           onPress={customBackPress || navigationRef?.goBack}
         />
       )}
       {drawerRef?.current && (
         <TouchableOpacity
           hitSlop={{
-            top: DevicePixels[10],
-            bottom: DevicePixels[10],
-            right: DevicePixels[10],
-            left: DevicePixels[10],
+            top: 10,
+            bottom: 10,
+            right: 10,
+            left: 10,
           }}
           onPress={() => drawerRef.current?.open()}
-          style={{padding: DevicePixels[20]}}>
+          style={{padding: 20}}>
           <Icon
             name="bars"
             color={colors.appWhite}
-            size={DevicePixels[25]}
-            style={{marginLeft: -DevicePixels[3]}}
+            size={25}
+            style={{marginLeft: -3}}
           />
           {profile.premium && count > 0 && (
             <View
               style={{
-                width: DevicePixels[20],
-                height: DevicePixels[20],
-                borderRadius: DevicePixels[10],
+                width: 20,
+                height: 20,
+                borderRadius: 10,
                 position: 'absolute',
                 alignItems: 'center',
                 justifyContent: 'center',
-                top: -DevicePixels[5],
-                right: -DevicePixels[8],
+                top: -5,
+                right: -8,
                 backgroundColor: colors.appRed,
               }}>
               <Text
                 style={{
-                  fontSize: DevicePixels[12],
+                  fontSize: 12,
                   fontWeight: 'bold',
                   color: colors.appWhite,
                 }}>
@@ -96,15 +96,14 @@ const Header: React.FC<{
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: DevicePixels[22],
+            fontSize: 22,
             fontWeight: 'bold',
           }}>
           {title}
         </Text>
       )}
       {!!right && (
-        <View
-          style={{flex: 1, alignItems: 'flex-end', margin: DevicePixels[20]}}>
+        <View style={{flex: 1, alignItems: 'flex-end', margin: 20}}>
           {right}
         </View>
       )}

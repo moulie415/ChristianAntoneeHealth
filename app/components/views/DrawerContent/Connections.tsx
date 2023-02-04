@@ -15,7 +15,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
 import Message from '../../../types/Message';
 import {getSimplifiedTime} from '../../../helpers/profile';
@@ -78,9 +78,9 @@ const Connections: React.FC<{
           <Text
             style={{
               textAlign: 'center',
-              padding: DevicePixels[20],
+              padding: 20,
               color: colors.appWhite,
-              fontSize: DevicePixels[20],
+              fontSize: 20,
             }}>
             No friends yet, press the invite button in the top right to send a
             link.
@@ -98,7 +98,7 @@ const Connections: React.FC<{
               <TouchableOpacity
                 onPress={() => navigation.navigate('Chat', {uid: item.uid})}
                 style={{
-                  padding: DevicePixels[10],
+                  padding: 10,
                   flexDirection: 'row',
                   backgroundColor: colors.borderColor,
                 }}>
@@ -110,7 +110,7 @@ const Connections: React.FC<{
                   <Avatar
                     src={item.avatar}
                     name={`${item.name} ${item.surname || ''}`}
-                    size={DevicePixels[40]}
+                    size={40}
                     uid={item.uid}
                   />
                 </View>
@@ -121,7 +121,7 @@ const Connections: React.FC<{
                   <Text
                     style={{
                       color: colors.appWhite,
-                      fontSize: DevicePixels[12],
+                      fontSize: 12,
                     }}>
                     {truncate(lastMessage, 35)}
                   </Text>
@@ -133,9 +133,9 @@ const Connections: React.FC<{
                   }}>
                   <Text
                     style={{
-                      fontSize: DevicePixels[10],
+                      fontSize: 10,
                       color: colors.appWhite,
-                      marginBottom: DevicePixels[5],
+                      marginBottom: 5,
                       fontStyle: 'italic',
                     }}>
                     {getSimplifiedTime(createdAt)}

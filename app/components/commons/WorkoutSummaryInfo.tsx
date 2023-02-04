@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React from 'react';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {getDifficultyEmoji} from '../../helpers/exercises';
 import moment from 'moment';
 import {rpeSliderScale} from './RPESlider';
@@ -22,10 +22,10 @@ const WorkoutSummaryInfo: React.FC<{
       <Text
         style={{
           color: colors.appWhite,
-          fontSize: DevicePixels[22],
+          fontSize: 22,
           fontWeight: 'bold',
           textAlign: 'center',
-          margin: DevicePixels[20],
+          margin: 20,
         }}>
         Summary
       </Text>
@@ -38,16 +38,16 @@ const WorkoutSummaryInfo: React.FC<{
         <View style={{alignItems: 'center'}}>
           <Text
             style={{
-              marginBottom: DevicePixels[20],
+              marginBottom: 20,
               color: colors.appWhite,
-              fontSize: DevicePixels[20],
+              fontSize: 20,
             }}>
             Calories burned
           </Text>
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: DevicePixels[50],
+              fontSize: 50,
               fontWeight: 'bold',
             }}>
             {Math.floor(calories)}
@@ -56,42 +56,40 @@ const WorkoutSummaryInfo: React.FC<{
         <View style={{alignItems: 'center'}}>
           <Text
             style={{
-              marginBottom: DevicePixels[20],
+              marginBottom: 20,
               color: colors.appWhite,
-              fontSize: DevicePixels[20],
+              fontSize: 20,
             }}>
             Time spent active
           </Text>
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: DevicePixels[40],
+              fontSize: 40,
               fontWeight: 'bold',
             }}>
             {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{color: colors.appWhite, fontSize: DevicePixels[20]}}>
-            RPE
-          </Text>
+          <Text style={{color: colors.appWhite, fontSize: 20}}>RPE</Text>
 
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: DevicePixels[50],
+              fontSize: 50,
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
             {difficulty}
           </Text>
-          <Text style={{fontSize: DevicePixels[70], color: colors.appWhite}}>
+          <Text style={{fontSize: 70, color: colors.appWhite}}>
             {getDifficultyEmoji(difficulty)}
           </Text>
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: DevicePixels[25],
+              fontSize: 25,
               fontWeight: 'bold',
               textAlign: 'center',
             }}>

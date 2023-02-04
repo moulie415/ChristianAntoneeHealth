@@ -1,7 +1,7 @@
 import React from 'react';
 import ViewMoreText from 'react-native-view-more-text';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Text from './Text';
 
 const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
@@ -9,7 +9,7 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
     return (
       <Text
         style={{
-          margin: DevicePixels[10],
+          margin: 10,
           marginTop: 0,
           color: colors.appBlue,
           fontWeight: 'bold',
@@ -24,7 +24,7 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
     return (
       <Text
         style={{
-          margin: DevicePixels[10],
+          margin: 10,
           marginTop: 0,
           color: colors.appBlue,
           fontWeight: 'bold',
@@ -40,9 +40,8 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
       renderViewLess={renderViewLess}
       numberOfLines={lines || 3}
       textStyle={{
-        margin: DevicePixels[10],
+        margin: 10,
         marginBottom: 0,
-  
       }}>
       <Text style={{color: colors.appWhite}}>{text}</Text>
     </ViewMoreText>

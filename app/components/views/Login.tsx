@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {handleAuth, signUp} from '../../actions/profile';
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
@@ -99,27 +99,27 @@ const Login: React.FC<LoginProps> = ({
           <View style={{}}>
             <View
               style={{
-                width: DevicePixels[175],
-                height: DevicePixels[175],
-                borderRadius: DevicePixels[90],
+                width: 175,
+                height: 175,
+                borderRadius: 90,
                 backgroundColor: 'rgba(255,255,255, 0.2)',
                 justifyContent: 'center',
                 alignSelf: 'center',
                 alignItems: 'center',
-                marginTop: DevicePixels[60],
+                marginTop: 60,
               }}>
               <View
                 style={{
-                  width: DevicePixels[150],
-                  height: DevicePixels[150],
-                  borderRadius: DevicePixels[75],
+                  width: 150,
+                  height: 150,
+                  borderRadius: 75,
                   backgroundColor: colors.appWhite,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                 <Image
                   source={require('../../images/logo.png')}
-                  style={{width: DevicePixels[90], height: DevicePixels[79]}}
+                  style={{width: 90, height: 79}}
                 />
               </View>
             </View>
@@ -128,8 +128,8 @@ const Login: React.FC<LoginProps> = ({
               onChangeText={setEmail}
               value={email}
               containerStyle={{
-                marginHorizontal: DevicePixels[20],
-                marginTop: DevicePixels[60],
+                marginHorizontal: 20,
+                marginTop: 60,
               }}
               placeholder="Email"
               autoCapitalize="none"
@@ -141,8 +141,8 @@ const Login: React.FC<LoginProps> = ({
               onChangeText={setPass}
               value={pass}
               containerStyle={{
-                marginHorizontal: DevicePixels[20],
-                marginTop: DevicePixels[20],
+                marginHorizontal: 20,
+                marginTop: 20,
               }}
               placeholder="Password"
               autoCapitalize="none"
@@ -153,15 +153,15 @@ const Login: React.FC<LoginProps> = ({
             <TouchableOpacity
               onPress={() => navigation.navigate('ForgotPassword')}
               hitSlop={{
-                top: DevicePixels[10],
-                bottom: DevicePixels[10],
-                right: DevicePixels[10],
-                left: DevicePixels[10],
+                top: 10,
+                bottom: 10,
+                right: 10,
+                left: 10,
               }}
               style={{
                 alignSelf: 'flex-end',
-                marginRight: DevicePixels[20],
-                marginTop: DevicePixels[10],
+                marginRight: 20,
+                marginTop: 10,
               }}>
               <Text style={{color: colors.appWhite}}>Forgot password?</Text>
             </TouchableOpacity>
@@ -171,8 +171,8 @@ const Login: React.FC<LoginProps> = ({
               loading={loading}
               text="Log in"
               style={{
-                marginHorizontal: DevicePixels[20],
-                marginTop: DevicePixels[20],
+                marginHorizontal: 20,
+                marginTop: 20,
               }}
               onPress={signInEmail}
             />
@@ -180,7 +180,7 @@ const Login: React.FC<LoginProps> = ({
               style={{
                 color: '#fff',
                 textAlign: 'center',
-                paddingVertical: DevicePixels[10],
+                paddingVertical: 10,
               }}>
               OR
             </Text>
@@ -190,20 +190,20 @@ const Login: React.FC<LoginProps> = ({
                   disabled={disabled}
                   onPress={signInApple}
                   style={{
-                    height: DevicePixels[70],
-                    width: DevicePixels[70],
-                    marginHorizontal: DevicePixels[5],
-                    marginLeft: DevicePixels[10],
+                    height: 70,
+                    width: 70,
+                    marginHorizontal: 5,
+                    marginLeft: 10,
                     borderColor: '#36415F',
-                    borderWidth: DevicePixels[2],
-                    borderRadius: DevicePixels[20],
+                    borderWidth: 2,
+                    borderRadius: 20,
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
                   {appleLoading ? (
                     <Spinner />
                   ) : (
-                    <Icon name="apple" color="#fff" size={DevicePixels[35]} />
+                    <Icon name="apple" color="#fff" size={35} />
                   )}
                 </TouchableOpacity>
               )}
@@ -211,51 +211,42 @@ const Login: React.FC<LoginProps> = ({
                 onPress={signInFacebook}
                 disabled={disabled}
                 style={{
-                  height: DevicePixels[70],
-                  width: DevicePixels[70],
-                  marginHorizontal: DevicePixels[5],
-                  marginLeft:
-                    Platform.OS === 'ios' ? DevicePixels[5] : DevicePixels[10],
+                  height: 70,
+                  width: 70,
+                  marginHorizontal: 5,
+                  marginLeft: Platform.OS === 'ios' ? 5 : 10,
                   borderColor: '#36415F',
-                  borderWidth: DevicePixels[2],
-                  borderRadius: DevicePixels[20],
+                  borderWidth: 2,
+                  borderRadius: 20,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                 {facebookLoading ? (
                   <Spinner />
                 ) : (
-                  <Icon
-                    color="#fff"
-                    name="facebook-f"
-                    size={DevicePixels[35]}
-                  />
+                  <Icon color="#fff" name="facebook-f" size={35} />
                 )}
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={signInGoogle}
                 disabled={disabled}
                 style={{
-                  height: DevicePixels[70],
-                  width: DevicePixels[70],
-                  marginHorizontal: DevicePixels[5],
-                  marginRight: DevicePixels[10],
+                  height: 70,
+                  width: 70,
+                  marginHorizontal: 5,
+                  marginRight: 10,
 
                   borderColor: '#36415F',
-                  borderWidth: DevicePixels[2],
-                  borderRadius: DevicePixels[20],
+                  borderWidth: 2,
+                  borderRadius: 20,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                {googleLoading ? (
-                  <Spinner />
-                ) : (
-                  <GoogleLogo width={DevicePixels[35]} />
-                )}
+                {googleLoading ? <Spinner /> : <GoogleLogo width={35} />}
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              style={{marginTop: DevicePixels[20], alignSelf: 'center'}}
+              style={{marginTop: 20, alignSelf: 'center'}}
               onPress={() => {
                 navigation.navigate('SignUp');
               }}>

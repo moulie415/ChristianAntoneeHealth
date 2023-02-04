@@ -3,7 +3,7 @@ import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {setLevel} from '../../../actions/exercises';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import globalStyles from '../../../styles/globalStyles';
 import {Level, MyRootState} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
@@ -33,7 +33,7 @@ const Experience: React.FC<{
           onPress={() => {
             setItemsCollapsed({0: !itemsCollapsed[0], 1: true, 2: true});
           }}
-          style={{flex: 1, marginBottom: DevicePixels[5]}}>
+          style={{flex: 1, marginBottom: 5}}>
           <ImageLoader
             source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
             overlay
@@ -44,7 +44,7 @@ const Experience: React.FC<{
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Beginner</Text>
@@ -64,16 +64,12 @@ const Experience: React.FC<{
               level === Level.BEGINNER ? (
                 <Icon
                   name="check-circle"
-                  size={DevicePixels[20]}
+                  size={20}
                   solid
                   color={colors.appBlue}
                 />
               ) : (
-                <Icon
-                  name="circle"
-                  size={DevicePixels[20]}
-                  color={colors.appBlue}
-                />
+                <Icon name="circle" size={20} color={colors.appBlue} />
               )
             }
           />
@@ -82,7 +78,7 @@ const Experience: React.FC<{
           onPress={() => {
             setItemsCollapsed({0: true, 1: !itemsCollapsed[1], 2: true});
           }}
-          style={{flex: 1, marginBottom: DevicePixels[5]}}>
+          style={{flex: 1, marginBottom: 5}}>
           <ImageLoader
             source={require('../../../images/2nd_carousel_image_fitness_tracking.jpeg')}
             overlay
@@ -93,7 +89,7 @@ const Experience: React.FC<{
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Intermediate</Text>
@@ -113,16 +109,12 @@ const Experience: React.FC<{
               level === Level.INTERMEDIATE ? (
                 <Icon
                   name="check-circle"
-                  size={DevicePixels[20]}
+                  size={20}
                   solid
                   color={colors.appBlue}
                 />
               ) : (
-                <Icon
-                  name="circle"
-                  size={DevicePixels[20]}
-                  color={colors.appBlue}
-                />
+                <Icon name="circle" size={20} color={colors.appBlue} />
               )
             }
           />
@@ -131,7 +123,7 @@ const Experience: React.FC<{
           onPress={() => {
             setItemsCollapsed({0: true, 1: true, 2: !itemsCollapsed[2]});
           }}
-          style={{flex: 1, marginBottom: DevicePixels[5]}}>
+          style={{flex: 1, marginBottom: 5}}>
           <ImageLoader
             source={require('../../../images/3rd_carousel_image_fitness_testing.jpeg')}
             overlay
@@ -143,7 +135,7 @@ const Experience: React.FC<{
               position: 'absolute',
               bottom: 0,
               top: 0,
-              left: DevicePixels[20],
+              left: 20,
               justifyContent: 'center',
             }}>
             <Text style={[{color: '#fff'}]}>Advanced</Text>
@@ -164,16 +156,12 @@ const Experience: React.FC<{
               level === Level.ADVANCED ? (
                 <Icon
                   name="check-circle"
-                  size={DevicePixels[20]}
+                  size={20}
                   solid
                   color={colors.appBlue}
                 />
               ) : (
-                <Icon
-                  name="circle"
-                  size={DevicePixels[20]}
-                  color={colors.appBlue}
-                />
+                <Icon name="circle" size={20} color={colors.appBlue} />
               )
             }
           />

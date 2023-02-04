@@ -11,7 +11,7 @@ import Exercise from '../../types/Exercise';
 import {setShareModalVisible} from '../../actions/exercises';
 import {getConnections} from '../../actions/profile';
 import {FlatList, View} from 'react-native';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import Chat from '../../types/Chat';
@@ -90,16 +90,16 @@ const ShareModal: React.FC<{
       <View
         style={{
           backgroundColor: '#fff',
-          paddingVertical: DevicePixels[10],
-          borderRadius: DevicePixels[10],
+          paddingVertical: 10,
+          borderRadius: 10,
         }}>
         <Text style={{textAlign: 'center'}}>{title}</Text>
-        <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
+        <Text style={{textAlign: 'center', marginBottom: 10}}>
           (Send message to friends)
         </Text>
         <Divider />
         <FlatList
-          style={{height: DevicePixels[200]}}
+          style={{height: 200}}
           data={Object.values(connections)}
           ItemSeparatorComponent={Divider}
           renderItem={({item}) => (
@@ -122,34 +122,29 @@ const ShareModal: React.FC<{
               accessoryRight={
                 selected.includes(item.uid) ? (
                   <Icon
-                    size={DevicePixels[20]}
+                    size={20}
                     name="check-circle"
                     solid
                     color={colors.appBlue}
                   />
                 ) : (
-                  <Icon
-                    size={DevicePixels[20]}
-                    name="circle"
-                    color={colors.appBlue}
-                  />
+                  <Icon size={20} name="circle" color={colors.appBlue} />
                 )
               }
             />
           )}
         />
 
-        <View
-          style={{flexDirection: 'row', paddingHorizontal: DevicePixels[10]}}>
+        <View style={{flexDirection: 'row', paddingHorizontal: 10}}>
           <Button
             text="Cancel"
-            style={{marginRight: DevicePixels[10]}}
+            style={{marginRight: 10}}
             onPress={() => setVisible(false)}
           />
           <Button text="Share external" onPress={shareExternal} />
           <Button
             text="Send"
-            style={{marginLeft: DevicePixels[10]}}
+            style={{marginLeft: 10}}
             disabled={!selected.length || loading}
             onPress={async () => {
               try {

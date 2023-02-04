@@ -2,7 +2,7 @@ import {View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {SavedQuickRoutine, SavedWorkout} from '../../types/SavedItem';
 import FastImage from 'react-native-fast-image';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {getEquipmentString, getImage, getLevelString} from './WorkoutCard';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
@@ -61,10 +61,10 @@ const SavedWorkoutCard: React.FC<{
       key={item.id}>
       <FastImage
         style={{
-          height: DevicePixels[140],
-          marginHorizontal: DevicePixels[10],
-          marginBottom: DevicePixels[10],
-          borderRadius: DevicePixels[10],
+          height: 140,
+          marginHorizontal: 10,
+          marginBottom: 10,
+          borderRadius: 10,
         }}
         source={
           quickRoutine
@@ -73,22 +73,22 @@ const SavedWorkoutCard: React.FC<{
         }>
         <View
           style={{
-            height: DevicePixels[140],
+            height: 140,
             justifyContent: 'center',
-            padding: DevicePixels[10],
-            borderRadius: DevicePixels[10],
+            padding: 10,
+            borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: DevicePixels[16],
+              fontSize: 16,
             }}>
             {`${moment(item.createdate).format('MMMM Do YYYY')}`}
           </Text>
           <View
             style={{
-              marginBottom: DevicePixels[5],
+              marginBottom: 5,
               flexDirection: 'row',
               alignItems: 'center',
             }}>
@@ -96,14 +96,14 @@ const SavedWorkoutCard: React.FC<{
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: DevicePixels[12],
+                  fontSize: 12,
                 }}>
                 Duration
               </Text>
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: DevicePixels[12],
+                  fontSize: 12,
                 }}>
                 <Text style={{fontWeight: 'bold'}}>
                   {moment()
@@ -117,8 +117,8 @@ const SavedWorkoutCard: React.FC<{
             {'difficulty' in item && (
               <Text
                 style={{
-                  fontSize: DevicePixels[30],
-                  marginHorizontal: DevicePixels[5],
+                  fontSize: 30,
+                  marginHorizontal: 5,
                 }}>
                 {getDifficultyEmoji(item.difficulty)}
               </Text>
@@ -127,14 +127,14 @@ const SavedWorkoutCard: React.FC<{
 
           <View
             style={{
-              width: DevicePixels[220],
+              width: 220,
             }}>
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
+                fontSize: 16,
                 fontWeight: 'bold',
-                marginBottom: DevicePixels[5],
+                marginBottom: 5,
               }}>
               {'name' in item ? item.name : quickRoutine.name}
             </Text>
@@ -142,7 +142,7 @@ const SavedWorkoutCard: React.FC<{
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: DevicePixels[12],
+                  fontSize: 12,
                 }}>
                 {`${getLevelString(quickRoutine.level)} - ${getEquipmentString(
                   quickRoutine.equipment,

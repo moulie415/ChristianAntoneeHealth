@@ -1,7 +1,7 @@
 import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import colors from '../../constants/colors';
 
 const ForwardButton: React.FC<TouchableOpacityProps> = props => {
@@ -9,9 +9,9 @@ const ForwardButton: React.FC<TouchableOpacityProps> = props => {
     <TouchableOpacity
       style={{
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: DevicePixels[40],
-        height: DevicePixels[40],
-        borderRadius: DevicePixels[20],
+        width: 40,
+        height: 40,
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -19,8 +19,8 @@ const ForwardButton: React.FC<TouchableOpacityProps> = props => {
       <Icon
         name="chevron-right"
         color={colors.appWhite}
-        size={DevicePixels[25]}
-        style={{marginRight: -DevicePixels[3]}}
+        size={25}
+        style={{marginRight: -3}}
       />
     </TouchableOpacity>
   );

@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {useEffect} from 'react';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import {getVideoHeight} from '../../../helpers';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import globalStyles from '../../../styles/globalStyles';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import Button from '../../commons/Button';
@@ -80,7 +80,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         <View
           style={{
             height: getVideoHeight(),
-            marginBottom: DevicePixels[10],
+            marginBottom: 10,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -90,7 +90,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
       <Text
         style={{
           textAlign: 'center',
-          margin: DevicePixels[10],
+          margin: 10,
           marginBottom: 0,
         }}>
         {exercise.name}
@@ -99,12 +99,12 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
         vertical={false}
         data={[0, 1, 2, 3, 4]}
         sliderWidth={width}
-        itemWidth={width - DevicePixels[75]}
+        itemWidth={width - 75}
         renderItem={({item}: {item: number}) => {
           return (
             <View
               style={{
-                marginVertical: DevicePixels[20],
+                marginVertical: 20,
                 borderRadius: 10,
                 ...globalStyles.boxShadow,
               }}>
@@ -119,8 +119,8 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[300],
-                    padding: DevicePixels[10],
+                    height: 300,
+                    padding: 10,
                   }}>
                   <Text>Description</Text>
                   <Text>{exercise.description}</Text>
@@ -131,7 +131,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[300],
+                    height: 300,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -139,7 +139,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   {/* @ts-ignore */}
                   <Picker
                     style={{
-                      height: DevicePixels[200],
+                      height: 200,
                       backgroundColor: 'transparent',
                     }}
                     textColor={colors.appWhite}
@@ -162,7 +162,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[300],
+                    height: 300,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -170,7 +170,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   {/* @ts-ignore */}
                   <Picker
                     style={{
-                      height: DevicePixels[200],
+                      height: 200,
                       backgroundColor: 'transparent',
                     }}
                     textColor={colors.appWhite}
@@ -193,7 +193,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   style={{
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    height: DevicePixels[300],
+                    height: 300,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -201,7 +201,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
                   {/* @ts-ignore */}
                   <Picker
                     style={{
-                      height: DevicePixels[200],
+                      height: 200,
                       backgroundColor: 'transparent',
                     }}
                     textColor={colors.appWhite}
@@ -232,7 +232,7 @@ const CustomizeExercise: React.FC<CustomizeExerciseProps> = ({
             ? 'Remove exercise'
             : 'Add exercise'
         }
-        style={{margin: DevicePixels[10]}}
+        style={{margin: 10}}
         onPress={selectExercise}
       />
     </ScrollView>

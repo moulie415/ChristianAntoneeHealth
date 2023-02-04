@@ -7,7 +7,7 @@ import {
   getSavedWorkouts,
   setWorkout,
 } from '../../../actions/exercises';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {SavedQuickRoutine, SavedWorkout} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';

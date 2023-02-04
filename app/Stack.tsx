@@ -50,12 +50,14 @@ import WhatArea from './components/views/Workout/WhatArea';
 import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
 import PreWorkout from './components/views/Workout/PreWorkout';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
-import DevicePixels from './helpers/DevicePixels';
+
 import Drawer from 'react-native-drawer';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const StackComponent: React.FC<{drawerRef: MutableRefObject<Drawer>}> = ({drawerRef}) => {
+const StackComponent: React.FC<{drawerRef: MutableRefObject<Drawer>}> = ({
+  drawerRef,
+}) => {
   return (
     <Stack.Navigator
       initialRouteName="Loading"

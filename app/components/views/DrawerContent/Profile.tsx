@@ -17,7 +17,7 @@ import {
   PERCENTAGES,
   WEIGHTS,
 } from '../../../constants';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Avatar from '../../commons/Avatar';
 import {
   launchCamera,
@@ -138,13 +138,13 @@ const Profile: React.FC<ProfileProps> = ({
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
-        contentContainerStyle={{paddingBottom: DevicePixels[100]}}>
+        contentContainerStyle={{paddingBottom: 100}}>
         <LinearGradient
           colors={[colors.appBlueLight, colors.appBlueDark]}
           style={{
-            height: DevicePixels[350],
-            borderBottomLeftRadius: DevicePixels[20],
-            borderBottomRightRadius: DevicePixels[20],
+            height: 350,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
           }}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}>
@@ -186,7 +186,7 @@ const Profile: React.FC<ProfileProps> = ({
                   </Text>
                   {/* <Icon
                     name="edit"
-                    size={DevicePixels[20]}
+                    size={20}
                     color={colors.appWhite}
                   /> */}
                 </TouchableOpacity>
@@ -195,7 +195,7 @@ const Profile: React.FC<ProfileProps> = ({
             <View
               style={{
                 flexDirection: 'row',
-                margin: DevicePixels[20],
+                margin: 20,
                 marginBottom: 0,
                 alignItems: 'center',
               }}>
@@ -240,18 +240,18 @@ const Profile: React.FC<ProfileProps> = ({
                   }
                 }}
                 style={{
-                  width: DevicePixels[90],
-                  height: DevicePixels[90],
-                  borderRadius: DevicePixels[45],
+                  width: 90,
+                  height: 90,
+                  borderRadius: 45,
                   backgroundColor: colors.appWhite,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  marginRight: DevicePixels[10],
+                  marginRight: 10,
                 }}>
                 <Avatar
                   name={`${profile.name} ${profile.surname || ''}`}
                   src={avatar}
-                  size={DevicePixels[80]}
+                  size={80}
                   uid={profile.uid}
                   hideCheck
                 />
@@ -261,14 +261,14 @@ const Profile: React.FC<ProfileProps> = ({
                     top: 0,
                     right: 0,
                     backgroundColor: colors.appWhite,
-                    height: DevicePixels[30],
-                    width: DevicePixels[30],
-                    borderRadius: DevicePixels[15],
+                    height: 30,
+                    width: 30,
+                    borderRadius: 15,
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
                   <Icon
-                    size={DevicePixels[15]}
+                    size={15}
                     name={profile.premium ? 'pencil-alt' : 'lock'}
                     color={colors.appBlue}
                   />
@@ -277,7 +277,7 @@ const Profile: React.FC<ProfileProps> = ({
               <View>
                 <Text
                   style={{
-                    fontSize: DevicePixels[25],
+                    fontSize: 25,
                     fontWeight: 'bold',
                     color: colors.appWhite,
                   }}>
@@ -285,7 +285,7 @@ const Profile: React.FC<ProfileProps> = ({
                 </Text>
                 <Text
                   style={{
-                    fontSize: DevicePixels[19],
+                    fontSize: 19,
                     color: colors.appWhite,
                   }}>
                   {moment(dob).format('DD MMM YYYY')}
@@ -296,44 +296,42 @@ const Profile: React.FC<ProfileProps> = ({
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
-                marginTop: DevicePixels[20],
+                marginTop: 20,
               }}>
               <TouchableOpacity onPress={() => setShowWeightModal(true)}>
                 <Text
                   style={{
-                    fontSize: DevicePixels[30],
+                    fontSize: 30,
                     fontWeight: 'bold',
                     color: colors.appWhite,
                     textAlign: 'center',
                   }}>
                   {weight}
                 </Text>
-                <Text
-                  style={{fontSize: DevicePixels[17], color: colors.appWhite}}>
+                <Text style={{fontSize: 17, color: colors.appWhite}}>
                   Weight (kg)
                 </Text>
               </TouchableOpacity>
               <View
                 style={{
-                  height: DevicePixels[30],
-                  width: DevicePixels[5],
+                  height: 30,
+                  width: 5,
                   backgroundColor: 'rgba(255,255,255,0.5)',
-                  borderRadius: DevicePixels[20],
+                  borderRadius: 20,
                   alignSelf: 'center',
                 }}
               />
               <TouchableOpacity onPress={() => setShowHeightModal(true)}>
                 <Text
                   style={{
-                    fontSize: DevicePixels[30],
+                    fontSize: 30,
                     fontWeight: 'bold',
                     color: colors.appWhite,
                     textAlign: 'center',
                   }}>
                   {height}
                 </Text>
-                <Text
-                  style={{fontSize: DevicePixels[17], color: colors.appWhite}}>
+                <Text style={{fontSize: 17, color: colors.appWhite}}>
                   Height (cm)
                 </Text>
               </TouchableOpacity>
@@ -358,20 +356,18 @@ const Profile: React.FC<ProfileProps> = ({
         {/* ) : (
           <View
             style={{
-              height: DevicePixels[280],
+              height: 280,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
             <Spinner />
           </View>
         )} */}
-        <Divider
-          style={{marginTop: DevicePixels[20], marginBottom: DevicePixels[10]}}
-        />
+        <Divider style={{marginTop: 20, marginBottom: 10}} />
         <Button
           variant="danger"
           text=" Delete my account"
-          style={{margin: DevicePixels[20]}}
+          style={{margin: 20}}
           onPress={() => navigation.navigate('DeleteAccount')}
         />
       </ScrollView>
@@ -380,8 +376,8 @@ const Profile: React.FC<ProfileProps> = ({
         onPress={onSave}
         disabled={saveDisabled}
         style={{
-          margin: DevicePixels[10],
-          marginBottom: DevicePixels[20],
+          margin: 10,
+          marginBottom: 20,
           position: 'absolute',
           left: 0,
           right: 0,

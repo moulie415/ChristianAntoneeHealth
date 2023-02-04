@@ -6,7 +6,7 @@ import {
   getDifficultyText,
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {saveWorkout, setShareModalVisible} from '../../../actions/exercises';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -70,21 +70,17 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
           text="Return Home"
           onPress={resetToTabs}
           style={{
-            margin: DevicePixels[10],
-            marginBottom: DevicePixels[20],
+            margin: 10,
+            marginBottom: 20,
           }}
         />
-        <Button
-          text="Return Home"
-          onPress={resetToTabs}
-          style={{margin: DevicePixels[10]}}
-        />
+        <Button text="Return Home" onPress={resetToTabs} style={{margin: 10}} />
         <Button
           text="Share workout"
           onPress={() => setShareModalVisibleAction(true)}
           style={{
-            margin: DevicePixels[10],
-            marginBottom: DevicePixels[20],
+            margin: 10,
+            marginBottom: 20,
           }}
         />
         <ShareModal title="Share workout" type="workout" workout={workout} />

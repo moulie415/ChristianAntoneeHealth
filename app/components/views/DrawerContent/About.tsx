@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import colors from '../../../constants/colors';
 import AboutProps from '../../../types/views/About';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
@@ -21,7 +21,7 @@ const About: React.FC<AboutProps> = () => {
       <FastImage
         source={require('../../../images/login.jpeg')}
         blurRadius={3}
-        style={{height: DevicePixels[200]}}>
+        style={{height: 200}}>
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -36,10 +36,10 @@ const About: React.FC<AboutProps> = () => {
       <View
         style={{
           flex: 1,
-          borderTopLeftRadius: DevicePixels[30],
-          borderTopRightRadius: DevicePixels[30],
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
           backgroundColor: colors.appGrey,
-          marginTop: -DevicePixels[30],
+          marginTop: -30,
         }}>
         <TouchableOpacity
           onPress={() => Linking.openURL('https://christianantonee.com')}>
@@ -48,9 +48,9 @@ const About: React.FC<AboutProps> = () => {
               color: colors.appWhite,
               fontWeight: 'bold',
               textDecorationLine: 'underline',
-              fontSize: DevicePixels[20],
+              fontSize: 20,
               textAlign: 'center',
-              marginTop: DevicePixels[20]
+              marginTop: 20,
             }}>
             christianantonee.com
           </Text>
@@ -58,7 +58,7 @@ const About: React.FC<AboutProps> = () => {
 
         <Text
           style={{
-            margin: DevicePixels[10],
+            margin: 10,
 
             color: colors.appWhite,
           }}>
@@ -68,7 +68,7 @@ const About: React.FC<AboutProps> = () => {
         </Text>
         <Text
           style={{
-            margin: DevicePixels[10],
+            margin: 10,
 
             color: colors.appWhite,
           }}>

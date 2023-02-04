@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Profile from '../../../types/Profile';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import Text from '../Text';
 
 const MoreIcon: React.FC<{
@@ -23,19 +23,19 @@ const MoreIcon: React.FC<{
       {profile.premium && count > 0 && (
         <View
           style={{
-            width: DevicePixels[17],
-            height: DevicePixels[17],
-            borderRadius: DevicePixels[9],
+            width: 17,
+            height: 17,
+            borderRadius: 9,
             position: 'absolute',
             alignItems: 'center',
             justifyContent: 'center',
-            top: DevicePixels[3],
-            right: DevicePixels[17],
+            top: 3,
+            right: 17,
             backgroundColor: colors.appRed,
           }}>
           <Text
             style={{
-              fontSize: DevicePixels[10],
+              fontSize: 10,
               fontWeight: 'bold',
               color: '#fff',
             }}>

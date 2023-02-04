@@ -4,7 +4,7 @@ import moment from 'moment';
 import DatePicker, {Event} from '@react-native-community/datetimepicker';
 import colors from '../../../constants/colors';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Button from '../../commons/Button';
 
 const Age: React.FC<{
@@ -18,13 +18,13 @@ const Age: React.FC<{
       style={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[40],
+        margin: 40,
       }}>
       <Text
         style={{
           textAlign: 'center',
-          marginBottom: DevicePixels[20],
-          fontSize: DevicePixels[20],
+          marginBottom: 20,
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         What's your age?
@@ -33,8 +33,8 @@ const Age: React.FC<{
         style={{
           color: colors.appWhite,
           textAlign: 'center',
-          marginBottom: DevicePixels[20],
-          fontSize: DevicePixels[30],
+          marginBottom: 20,
+          fontSize: 30,
           fontWeight: 'bold',
         }}>
         {moment().diff(dob, 'years')}

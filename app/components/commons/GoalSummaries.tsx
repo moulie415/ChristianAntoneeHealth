@@ -1,7 +1,7 @@
 import {View, TouchableOpacity} from 'react-native';
 import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
 import PagerView from 'react-native-pager-view';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
@@ -40,19 +40,19 @@ const GoalCircle: React.FC<{
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: DevicePixels[25],
-          paddingHorizontal: DevicePixels[40],
+          fontSize: 25,
+          paddingHorizontal: 40,
           textAlign: 'center',
           alignSelf: 'center',
-          marginBottom: DevicePixels[30],
+          marginBottom: 30,
         }}>
         {title}
       </Text>
       <AnimatedCircularProgress
         style={{alignSelf: 'center'}}
-        size={DevicePixels[200]}
-        width={DevicePixels[20]}
-        backgroundWidth={DevicePixels[10]}
+        size={200}
+        width={20}
+        backgroundWidth={10}
         fill={fill}
         tintColor={score >= goal ? colors.appGreen : colors.appBlue}
         // tintColorSecondary={colors.appBlueFaded}
@@ -60,16 +60,14 @@ const GoalCircle: React.FC<{
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
-        {fill => (
-          <Icon name={icon} size={DevicePixels[50]} color={colors.appWhite} />
-        )}
+        {fill => <Icon name={icon} size={50} color={colors.appWhite} />}
       </AnimatedCircularProgress>
       <Text
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: DevicePixels[30],
-          paddingHorizontal: DevicePixels[40],
+          fontSize: 30,
+          paddingHorizontal: 40,
           textAlign: 'center',
           alignSelf: 'center',
         }}>
@@ -80,14 +78,14 @@ const GoalCircle: React.FC<{
           onPress={() => pagerRef.current.setPage(index - 1)}
           style={{
             position: 'absolute',
-            left: DevicePixels[0],
+            left: 0,
             top: '50%',
-            padding: DevicePixels[10],
+            padding: 10,
           }}>
           <Icon
             style={{opacity: 0.8}}
             name="chevron-left"
-            size={DevicePixels[50]}
+            size={50}
             color="#fff"
           />
         </TouchableOpacity>
@@ -97,14 +95,14 @@ const GoalCircle: React.FC<{
           onPress={() => pagerRef.current.setPage(index + 1)}
           style={{
             position: 'absolute',
-            right: DevicePixels[0],
+            right: 0,
             top: '50%',
-            padding: DevicePixels[10],
+            padding: 10,
           }}>
           <Icon
             style={{opacity: 0.8}}
             name="chevron-right"
-            size={DevicePixels[50]}
+            size={50}
             color="#fff"
           />
         </TouchableOpacity>
@@ -244,7 +242,7 @@ const GoalSummaries: React.FC<{
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: DevicePixels[30],
+          fontSize: 30,
           textAlign: 'center',
         }}>
         Weekly Goals

@@ -2,7 +2,7 @@ import React, {ReactNode, useState} from 'react';
 import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {TextInputProps} from 'react-native';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface Props extends TextInputProps {
@@ -26,13 +26,13 @@ const Input: React.FC<Props> = props => {
         style={[
           {
             borderColor: colors.appWhite,
-            height: DevicePixels[70],
-            borderWidth: DevicePixels[2],
-            borderRadius: DevicePixels[20],
+            height: 70,
+            borderWidth: 2,
+            borderRadius: 20,
             fontFamily: 'MontserratAlternates-Regular',
             color: colors.appWhite,
-            padding: DevicePixels[20],
-            paddingTop: props.multiline ? DevicePixels[10] : DevicePixels[20],
+            padding: 20,
+            paddingTop: props.multiline ? 10 : 20,
           },
           props.style,
         ]}
@@ -41,24 +41,24 @@ const Input: React.FC<Props> = props => {
         <View
           style={{
             position: 'absolute',
-            height: DevicePixels[70],
+            height: 70,
             justifyContent: 'center',
             alignItems: 'flex-end',
-            right: DevicePixels[20],
-            width: DevicePixels[30],
+            right: 20,
+            width: 30,
           }}>
           <TouchableOpacity
             hitSlop={{
-              top: DevicePixels[10],
-              bottom: DevicePixels[10],
-              right: DevicePixels[10],
-              left: DevicePixels[10],
+              top: 10,
+              bottom: 10,
+              right: 10,
+              left: 10,
             }}
             onPress={() => setSecure(!secure)}>
             <Icon
               name={secure ? 'eye' : 'eye-slash'}
               color={colors.appWhite}
-              size={DevicePixels[20]}
+              size={20}
             />
           </TouchableOpacity>
         </View>
@@ -69,11 +69,11 @@ const Input: React.FC<Props> = props => {
             position: 'absolute',
             width: '100%',
 
-            height: DevicePixels[70],
+            height: 70,
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
-            right: DevicePixels[20],
+            right: 20,
           }}>
           {props.accessoryRight}
         </View>

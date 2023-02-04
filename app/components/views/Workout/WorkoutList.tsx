@@ -12,7 +12,7 @@ import {
 } from '../../../actions/quickRoutines';
 import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getExercisesById} from '../../../actions/exercises';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Profile from '../../../types/Profile';
 import {SettingsState} from '../../../reducers/settings';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
@@ -114,7 +114,7 @@ const WorkoutList: React.FC<{
         <Header hasBack />
         <FlatList
           ListEmptyComponent={() => (
-            <SafeAreaView style={{height: height - DevicePixels[50]}}>
+            <SafeAreaView style={{height: height - 50}}>
               <AbsoluteSpinner loading />
             </SafeAreaView>
           )}

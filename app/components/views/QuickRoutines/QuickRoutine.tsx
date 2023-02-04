@@ -8,7 +8,7 @@ import {MyRootState} from '../../../types/Shared';
 import QuickRoutineProps from '../../../types/views/QuickRoutine';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
 import MusclesDiagram from '../../commons/MusclesDiagram';
@@ -126,7 +126,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                   <View
                     style={{
                       height: getVideoHeight(),
-                      marginBottom: DevicePixels[10],
+                      marginBottom: 10,
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor: 'rgba(0,0,0,0.2)',
@@ -147,9 +147,9 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      top: getVideoHeight() - DevicePixels[30],
-                      borderTopLeftRadius: DevicePixels[30],
-                      borderTopRightRadius: DevicePixels[30],
+                      top: getVideoHeight() - 30,
+                      borderTopLeftRadius: 30,
+                      borderTopRightRadius: 30,
                       overflow: 'hidden',
                       backgroundColor: colors.appGrey,
                     }}>
@@ -159,7 +159,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           flexDirection: 'row',
                           justifyContent: 'space-evenly',
                           alignItems: 'center',
-                          marginTop: DevicePixels[30],
+                          marginTop: 30,
                         }}>
                         <TouchableOpacity
                           style={{}}
@@ -171,11 +171,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                                 : ['transparent', 'transparent']
                             }
                             style={{
-                              height: DevicePixels[40],
-                              paddingHorizontal: DevicePixels[10],
+                              height: 40,
+                              paddingHorizontal: 10,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: DevicePixels[25],
+                              borderRadius: 25,
                               backgroundColor:
                                 tabIndex === 0
                                   ? colors.textGrey
@@ -201,11 +201,11 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                                 : ['transparent', 'transparent']
                             }
                             style={{
-                              height: DevicePixels[40],
-                              paddingHorizontal: DevicePixels[10],
+                              height: 40,
+                              paddingHorizontal: 10,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: DevicePixels[25],
+                              borderRadius: 25,
                               backgroundColor:
                                 tabIndex === 1
                                   ? colors.textGrey
@@ -225,7 +225,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           <Icon
                             name="info-circle"
                             color={colors.appWhite}
-                            size={DevicePixels[30]}
+                            size={30}
                           />
                         </TouchableOpacity>
                       </View>
@@ -237,13 +237,13 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                margin: DevicePixels[10],
+                                margin: 10,
                                 marginBottom: 0,
                               }}>
                               <Text
                                 style={{
                                   color: colors.appWhite,
-                                  fontSize: DevicePixels[20],
+                                  fontSize: 20,
                                   fontWeight: 'bold',
                                 }}>
                                 {exercise.name}
@@ -266,18 +266,18 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                           alignItems: 'center',
-                          margin: DevicePixels[10],
-                          height: DevicePixels[60],
-                          borderRadius: DevicePixels[30],
-                          marginBottom: DevicePixels[10],
+                          margin: 10,
+                          height: 60,
+                          borderRadius: 30,
+                          marginBottom: 10,
                           backgroundColor: colors.appGrey,
                         }}>
                         <Text
                           style={{
                             fontWeight: 'bold',
                             color: colors.appWhite,
-                            fontSize: DevicePixels[20],
-                            padding: DevicePixels[15],
+                            fontSize: 20,
+                            padding: 15,
                           }}>{`Exercise ${index + 1}/${
                           exercises.length
                         }`}</Text>
@@ -286,16 +286,16 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                           style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon
                             name="stopwatch"
-                            size={DevicePixels[20]}
+                            size={20}
                             color={colors.appWhite}
                           />
                           <Text
                             style={{
                               fontWeight: 'bold',
                               color: colors.appWhite,
-                              fontSize: DevicePixels[20],
-                              paddingLeft: DevicePixels[5],
-                              padding: DevicePixels[15],
+                              fontSize: 20,
+                              paddingLeft: 5,
+                              padding: 15,
                             }}>
                             {moment()
                               .utc()
@@ -307,8 +307,8 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                             onPress={() => setTimerPaused(!timerPaused)}>
                             <Icon
                               name={timerPaused ? 'play' : 'pause'}
-                              size={DevicePixels[30]}
-                              style={{marginRight: DevicePixels[10]}}
+                              size={30}
+                              style={{marginRight: 10}}
                               color={colors.appWhite}
                             />
                           </TouchableOpacity>
@@ -330,7 +330,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                             },
                           ]);
                         }}
-                        style={{margin: DevicePixels[10]}}
+                        style={{margin: 10}}
                       />
                     </ScrollView>
                   </View>
@@ -346,26 +346,26 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             backgroundColor: colors.appGrey,
             width: '95%',
             alignSelf: 'center',
-            borderRadius: DevicePixels[10],
+            borderRadius: 10,
           }}>
           <Icon
-            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+            style={{alignSelf: 'center', margin: 10}}
             name="info-circle"
             color={colors.appWhite}
-            size={DevicePixels[30]}
+            size={30}
           />
           <Text
             style={{
               textAlign: 'center',
-              padding: DevicePixels[15],
-              fontSize: DevicePixels[25],
+              padding: 15,
+              fontSize: 25,
               paddingTop: 0,
               color: colors.appWhite,
               fontWeight: 'bold',
             }}>
             Instructions
           </Text>
-          <View style={{marginBottom: DevicePixels[10]}}>
+          <View style={{marginBottom: 10}}>
             {routine.steps ? (
               routine.steps.map(step => {
                 return (
@@ -373,13 +373,13 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
                     key={step}
                     style={{
                       flexDirection: 'row',
-                      margin: DevicePixels[10],
+                      margin: 10,
                       alignItems: 'center',
                     }}>
                     <Text
                       style={{
                         color: colors.appWhite,
-                        marginRight: DevicePixels[10],
+                        marginRight: 10,
                       }}>
                       ●
                     </Text>
@@ -393,7 +393,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
               <Text
                 style={{
                   color: colors.appWhite,
-                  marginHorizontal: DevicePixels[20],
+                  marginHorizontal: 20,
                 }}>
                 {routine.instructions}
               </Text>
@@ -403,7 +403,7 @@ const QuickRoutineView: React.FC<QuickRoutineProps> = ({
             text="OK"
             onPress={() => setShowModal(false)}
             style={{
-              margin: DevicePixels[10],
+              margin: 10,
             }}
           />
         </View>

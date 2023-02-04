@@ -7,7 +7,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 
@@ -26,8 +26,8 @@ const WhatArea: React.FC<{
         <Text
           style={{
             color: colors.appWhite,
-            margin: DevicePixels[20],
-            fontSize: DevicePixels[22],
+            margin: 20,
+            fontSize: 22,
             fontWeight: 'bold',
           }}>
           What the body area you want to focus on from here
@@ -38,31 +38,31 @@ const WhatArea: React.FC<{
             navigation.navigate('WorkoutList', {equipment, area: 'upper'})
           }
           style={{
-            margin: DevicePixels[20],
-            marginTop: DevicePixels[5],
-            borderRadius: DevicePixels[5],
-            width: Dimensions.get('window').width - DevicePixels[40],
+            margin: 20,
+            marginTop: 5,
+            borderRadius: 5,
+            width: Dimensions.get('window').width - 40,
           }}>
           <FastImage
             style={{
-              height: DevicePixels[120],
+              height: 120,
               justifyContent: 'flex-end',
-              borderRadius: DevicePixels[10],
+              borderRadius: 10,
             }}
             source={require('../../../images/upper-body.jpg')}>
             <View
               style={{
-                height: DevicePixels[120],
+                height: 120,
                 justifyContent: 'center',
-                borderRadius: DevicePixels[10],
+                borderRadius: 10,
                 backgroundColor: 'rgba(0,0,0,0.5)',
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  marginLeft: DevicePixels[25],
-                  fontSize: DevicePixels[22],
+                  marginLeft: 25,
+                  fontSize: 22,
                 }}>
                 UPPER BODY
               </Text>
@@ -74,31 +74,31 @@ const WhatArea: React.FC<{
             navigation.navigate('WorkoutList', {equipment, area: 'lower'})
           }
           style={{
-            margin: DevicePixels[20],
-            marginTop: DevicePixels[5],
-            borderRadius: DevicePixels[5],
-            width: Dimensions.get('window').width - DevicePixels[40],
+            margin: 20,
+            marginTop: 5,
+            borderRadius: 5,
+            width: Dimensions.get('window').width - 40,
           }}>
           <FastImage
             style={{
-              height: DevicePixels[120],
+              height: 120,
               justifyContent: 'flex-end',
-              borderRadius: DevicePixels[10],
+              borderRadius: 10,
             }}
             source={require('../../../images/lower-body.jpg')}>
             <View
               style={{
-                height: DevicePixels[120],
+                height: 120,
                 justifyContent: 'center',
-                borderRadius: DevicePixels[10],
+                borderRadius: 10,
                 backgroundColor: 'rgba(0,0,0,0.5)',
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  marginLeft: DevicePixels[25],
-                  fontSize: DevicePixels[22],
+                  marginLeft: 25,
+                  fontSize: 22,
                 }}>
                 LOWER BODY
               </Text>
@@ -110,31 +110,31 @@ const WhatArea: React.FC<{
             navigation.navigate('WorkoutList', {equipment, area: 'full'})
           }
           style={{
-            margin: DevicePixels[20],
-            marginTop: DevicePixels[5],
-            borderRadius: DevicePixels[5],
-            width: Dimensions.get('window').width - DevicePixels[40],
+            margin: 20,
+            marginTop: 5,
+            borderRadius: 5,
+            width: Dimensions.get('window').width - 40,
           }}>
           <FastImage
             style={{
-              height: DevicePixels[120],
+              height: 120,
               justifyContent: 'flex-end',
-              borderRadius: DevicePixels[10],
+              borderRadius: 10,
             }}
             source={require('../../../images/full-body.jpg')}>
             <View
               style={{
-                height: DevicePixels[120],
+                height: 120,
                 justifyContent: 'center',
-                borderRadius: DevicePixels[10],
+                borderRadius: 10,
                 backgroundColor: 'rgba(0,0,0,0.5)',
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  marginLeft: DevicePixels[25],
-                  fontSize: DevicePixels[22],
+                  marginLeft: 25,
+                  fontSize: 22,
                 }}>
                 FULL BODY
               </Text>

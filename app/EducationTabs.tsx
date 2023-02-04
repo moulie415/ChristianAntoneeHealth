@@ -8,7 +8,7 @@ import Header from './components/commons/Header';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import colors from './constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
-import DevicePixels from './helpers/DevicePixels';
+
 import Text from './components/commons/Text';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -52,11 +52,11 @@ const EducationTabs: React.FC<{
                               : ['transparent', 'transparent']
                           }
                           style={{
-                            height: DevicePixels[45],
-                            paddingHorizontal: DevicePixels[20],
+                            height: 45,
+                            paddingHorizontal: 20,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderRadius: DevicePixels[25],
+                            borderRadius: 25,
                           }}
                           start={{x: 0, y: 0}}
                           end={{x: 1, y: 0}}>
@@ -76,7 +76,7 @@ const EducationTabs: React.FC<{
                   style={{
                     backgroundColor: 'transparent',
                   }}
-                  contentContainerStyle={{marginBottom: DevicePixels[20]}}
+                  contentContainerStyle={{marginBottom: 20}}
                   indicatorStyle={{backgroundColor: 'transparent'}}
                 />
               </ScrollView>

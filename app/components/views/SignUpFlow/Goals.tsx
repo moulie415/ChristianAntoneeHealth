@@ -1,6 +1,5 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-import DevicePixels from '../../../helpers/DevicePixels';
 
 import colors from '../../../constants/colors';
 import {Goal} from '../../../types/Shared';
@@ -23,32 +22,32 @@ const Goals: React.FC<{
       style={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           color: colors.appWhite,
-          fontSize: DevicePixels[25],
+          fontSize: 25,
           textAlign: 'center',
-          marginBottom: DevicePixels[20],
+          marginBottom: 20,
         }}>
         Here's a summary of your weekly goals...
       </Text>
       <View style={{alignItems: 'center'}}>
         <Icon
           name="dumbbell"
-          size={DevicePixels[40]}
+          size={40}
           color={colors.appWhite}
           style={{
-            marginHorizontal: DevicePixels[15],
+            marginHorizontal: 15,
           }}
         />
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: DevicePixels[20],
-            marginTop: DevicePixels[10],
-            marginBottom: DevicePixels[20],
+            fontSize: 20,
+            marginTop: 10,
+            marginBottom: 20,
             textAlign: 'center',
           }}>
           <Text style={{fontWeight: 'bold'}}>{workoutGoal}</Text>
@@ -56,18 +55,18 @@ const Goals: React.FC<{
         </Text>
         <Icon
           name="stopwatch"
-          size={DevicePixels[50]}
+          size={50}
           color={colors.appWhite}
           style={{
-            marginHorizontal: DevicePixels[15],
+            marginHorizontal: 15,
           }}
         />
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: DevicePixels[20],
-            marginTop: DevicePixels[10],
-            marginBottom: DevicePixels[20],
+            fontSize: 20,
+            marginTop: 10,
+            marginBottom: 20,
             textAlign: 'center',
           }}>
           <Text style={{fontWeight: 'bold'}}>{minsGoal}</Text>
@@ -76,18 +75,18 @@ const Goals: React.FC<{
 
         <Icon
           name="tachometer-alt"
-          size={DevicePixels[40]}
+          size={40}
           color={colors.appWhite}
           style={{
-            marginHorizontal: DevicePixels[15],
+            marginHorizontal: 15,
           }}
         />
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: DevicePixels[20],
-            marginTop: DevicePixels[10],
-            marginBottom: DevicePixels[20],
+            fontSize: 20,
+            marginTop: 10,
+            marginBottom: 20,
             textAlign: 'center',
           }}>
           <Text
@@ -100,19 +99,19 @@ const Goals: React.FC<{
           <>
             <Icon
               name="fire-alt"
-              size={DevicePixels[50]}
+              size={50}
               color={colors.appWhite}
               style={{
-                marginHorizontal: DevicePixels[15],
+                marginHorizontal: 15,
               }}
             />
 
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[20],
-                marginTop: DevicePixels[10],
-                marginBottom: DevicePixels[20],
+                fontSize: 20,
+                marginTop: 10,
+                marginBottom: 20,
                 textAlign: 'center',
               }}>
               <Text style={{fontWeight: 'bold'}}>{3500}</Text>

@@ -3,7 +3,7 @@ import React, {useEffect, useMemo} from 'react';
 import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import {getExercisesById, setWorkout} from '../../../actions/exercises';
 import {getTestsById} from '../../../actions/tests';
@@ -103,8 +103,8 @@ const Weekly: React.FC<{
         renderSectionHeader={({section: {title}}) => (
           <Text
             style={{
-              padding: DevicePixels[5],
-              marginLeft: DevicePixels[10],
+              padding: 5,
+              marginLeft: 10,
               color: colors.appWhite,
               fontWeight: 'bold',
             }}>

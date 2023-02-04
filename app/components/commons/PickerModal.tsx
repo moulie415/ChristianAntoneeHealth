@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React from 'react';
 import Modal from './Modal';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {Picker} from 'react-native-wheel-pick';
 import Button from './Button';
 
@@ -19,20 +19,16 @@ const PickerModal: React.FC<{
           backgroundColor: '#fff',
           width: '90%',
           alignSelf: 'center',
-          borderRadius: DevicePixels[10],
+          borderRadius: 10,
         }}>
         <Picker
-          style={{height: DevicePixels[200], backgroundColor: 'transparent'}}
+          style={{height: 200, backgroundColor: 'transparent'}}
           /* @ts-ignore */
           selectedValue={selectedValue}
           pickerData={pickerData}
           onValueChange={onValueChange}
         />
-        <Button
-          text="Close"
-          style={{margin: DevicePixels[10]}}
-          onPress={onRequestClose}
-        />
+        <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
       </View>
     </Modal>
   );

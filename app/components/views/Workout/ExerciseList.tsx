@@ -10,7 +10,7 @@ import ExerciseListProps from '../../../types/views/ExerciseList';
 import {getExercises, setWorkout} from '../../../actions/exercises';
 import {truncate} from '../../../helpers';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {FlatList} from 'react-native-gesture-handler';
 import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
@@ -99,8 +99,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                   !item.premium || profile.premium ? (
                     <Image
                       style={{
-                        height: DevicePixels[50],
-                        width: DevicePixels[75],
+                        height: 50,
+                        width: 75,
                       }}
                       source={
                         item.thumbnail
@@ -111,12 +111,12 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                   ) : (
                     <View
                       style={{
-                        height: DevicePixels[50],
-                        width: DevicePixels[75],
+                        height: 50,
+                        width: 75,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Icon name="lock" size={DevicePixels[30]} />
+                      <Icon name="lock" size={30} />
                     </View>
                   )
                 }

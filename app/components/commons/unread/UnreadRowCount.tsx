@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {View} from 'react-native';
 import Text from '../Text';
 
@@ -14,17 +14,17 @@ const UnreadRowCount: React.FC<{unread: {[key: string]: number}}> = ({
     return (
       <View
         style={{
-          marginLeft: DevicePixels[5],
-          width: DevicePixels[25],
-          height: DevicePixels[25],
-          borderRadius: DevicePixels[13],
+          marginLeft: 5,
+          width: 25,
+          height: 25,
+          borderRadius: 13,
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
         }}>
         <Text
           style={{
-            fontSize: DevicePixels[16],
+            fontSize: 16,
             fontWeight: 'bold',
             color: colors.appWhite,
           }}>

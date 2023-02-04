@@ -3,7 +3,7 @@ import React, {MutableRefObject, useState} from 'react';
 import Exercise from '../../types/Exercise';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PagerView from 'react-native-pager-view';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {
   OrientationType,
   useOrientationChange,
@@ -17,9 +17,7 @@ const ExerciseArrows: React.FC<{
   index: number;
 }> = ({exercises, pagerRef, fullscreen, index}) => {
   const [orientation, setOrientation] = useState<OrientationType>();
-  const top = fullscreen
-    ? Dimensions.get('window').height / 2 - DevicePixels[15]
-    : '18%';
+  const top = fullscreen ? Dimensions.get('window').height / 2 - 15 : '18%';
   useOrientationChange(o => {
     setOrientation(o);
   });
@@ -28,15 +26,15 @@ const ExerciseArrows: React.FC<{
     Platform.OS === 'ios' &&
     orientation === OrientationType['LANDSCAPE-RIGHT'] &&
     hasNotch()
-      ? DevicePixels[30]
-      : DevicePixels[5];
+      ? 30
+      : 5;
 
   const left =
     Platform.OS === 'ios' &&
     orientation === OrientationType['LANDSCAPE-LEFT'] &&
     hasNotch()
-      ? DevicePixels[30]
-      : DevicePixels[5];
+      ? 30
+      : 5;
 
   return (
     <>
@@ -48,9 +46,9 @@ const ExerciseArrows: React.FC<{
             right,
             top,
             zIndex: 9,
-            padding: DevicePixels[10],
+            padding: 10,
           }}>
-          <Icon name="chevron-right" size={DevicePixels[30]} color="#fff" />
+          <Icon name="chevron-right" size={30} color="#fff" />
         </TouchableOpacity>
       )}
       {exercises[index - 1] && (
@@ -61,9 +59,9 @@ const ExerciseArrows: React.FC<{
             left,
             top,
             zIndex: 9,
-            padding: DevicePixels[10],
+            padding: 10,
           }}>
-          <Icon name="chevron-left" size={DevicePixels[30]} color="#fff" />
+          <Icon name="chevron-left" size={30} color="#fff" />
         </TouchableOpacity>
       )}
     </>

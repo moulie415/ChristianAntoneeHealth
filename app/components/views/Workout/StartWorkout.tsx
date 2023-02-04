@@ -19,7 +19,7 @@ import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import {getVideoHeight} from '../../../helpers';
 import Countdown from '../../commons/Countdown';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import ViewMore from '../../commons/ViewMore';
@@ -88,14 +88,14 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          marginRight: DevicePixels[5],
+          marginRight: 5,
         }}>
         <Text
           style={{
             color: colors.appWhite,
             textAlign: 'center',
-            marginRight: DevicePixels[5],
-            fontSize: DevicePixels[16],
+            marginRight: 5,
+            fontSize: 16,
           }}>{`/ resistance scale: ${resistanceScale}`}</Text>
       </View>
     );
@@ -154,7 +154,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                   <View
                     style={{
                       height: getVideoHeight(),
-                      marginBottom: DevicePixels[10],
+                      marginBottom: 10,
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor: 'rgba(0,0,0,0.2)',
@@ -175,9 +175,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      top: getVideoHeight() - DevicePixels[30],
-                      borderTopLeftRadius: DevicePixels[30],
-                      borderTopRightRadius: DevicePixels[30],
+                      top: getVideoHeight() - 30,
+                      borderTopLeftRadius: 30,
+                      borderTopRightRadius: 30,
                       overflow: 'hidden',
                       backgroundColor: colors.appGrey,
                     }}>
@@ -187,7 +187,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                           flexDirection: 'row',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          marginTop: DevicePixels[30],
+                          marginTop: 30,
                         }}>
                         <TouchableOpacity
                           style={{}}
@@ -199,11 +199,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                                 : ['transparent', 'transparent']
                             }
                             style={{
-                              height: DevicePixels[40],
-                              width: DevicePixels[100],
+                              height: 40,
+                              width: 100,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: DevicePixels[25],
+                              borderRadius: 25,
                               backgroundColor:
                                 tabIndex === 0
                                   ? colors.textGrey
@@ -229,11 +229,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                                 : ['transparent', 'transparent']
                             }
                             style={{
-                              height: DevicePixels[40],
-                              width: DevicePixels[100],
+                              height: 40,
+                              width: 100,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: DevicePixels[25],
+                              borderRadius: 25,
                               backgroundColor:
                                 tabIndex === 1
                                   ? colors.textGrey
@@ -259,11 +259,11 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                                 : ['transparent', 'transparent']
                             }
                             style={{
-                              height: DevicePixels[40],
-                              width: DevicePixels[100],
+                              height: 40,
+                              width: 100,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: DevicePixels[25],
+                              borderRadius: 25,
                               backgroundColor:
                                 tabIndex === 2
                                   ? colors.textGrey
@@ -285,9 +285,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                           <>
                             <Text
                               style={{
-                                margin: DevicePixels[10],
+                                margin: 10,
                                 color: colors.appWhite,
-                                fontSize: DevicePixels[20],
+                                fontSize: 20,
                                 fontWeight: 'bold',
                               }}>
                               {exercise.name}
@@ -296,7 +296,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                               style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                margin: DevicePixels[10],
+                                margin: 10,
                                 marginVertical: 0,
                               }}>
                               <View
@@ -308,7 +308,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                                   style={{
                                     color: colors.appWhite,
                                     textAlign: 'center',
-                                    fontSize: DevicePixels[16],
+                                    fontSize: 16,
                                   }}>{`${exercise.reps} reps / ${exercise.sets} sets `}</Text>
                                 <ResistanceScale
                                   resistanceScale={exercise.resistanceScale}
@@ -319,7 +319,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                                 <Icon
                                   name="info-circle"
                                   color={colors.appWhite}
-                                  size={DevicePixels[30]}
+                                  size={30}
                                 />
                               </TouchableOpacity>
                             </View>
@@ -337,9 +337,9 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                         {tabIndex === 2 && (
                           <Input
                             style={{
-                              height: DevicePixels[100],
+                              height: 100,
                               textAlignVertical: 'top',
-                              margin: DevicePixels[10],
+                              margin: 10,
                             }}
                             placeholder="Enter notes here..."
                             multiline
@@ -356,34 +356,34 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                           alignItems: 'center',
-                          margin: DevicePixels[10],
-                          height: DevicePixels[60],
-                          borderRadius: DevicePixels[30],
-                          marginBottom: DevicePixels[10],
+                          margin: 10,
+                          height: 60,
+                          borderRadius: 30,
+                          marginBottom: 10,
                           backgroundColor: colors.textGrey,
                         }}>
                         <Text
                           style={{
                             fontWeight: 'bold',
                             color: colors.appWhite,
-                            fontSize: DevicePixels[20],
-                            padding: DevicePixels[15],
+                            fontSize: 20,
+                            padding: 15,
                           }}>{`Exercise ${index + 1}/${workout.length}`}</Text>
 
                         <View
                           style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon
                             name="stopwatch"
-                            size={DevicePixels[20]}
+                            size={20}
                             color={colors.appWhite}
                           />
                           <Text
                             style={{
                               fontWeight: 'bold',
                               color: colors.appWhite,
-                              fontSize: DevicePixels[20],
-                              paddingLeft: DevicePixels[5],
-                              padding: DevicePixels[15],
+                              fontSize: 20,
+                              paddingLeft: 5,
+                              padding: 15,
                             }}>
                             {moment()
                               .utc()
@@ -395,8 +395,8 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             onPress={() => setTimerPaused(!timerPaused)}>
                             <Icon
                               name={timerPaused ? 'play' : 'pause'}
-                              size={DevicePixels[30]}
-                              style={{marginRight: DevicePixels[10]}}
+                              size={30}
+                              style={{marginRight: 10}}
                               color={colors.appWhite}
                             />
                           </TouchableOpacity>
@@ -419,7 +419,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
                             },
                           ]);
                         }}
-                        style={{margin: DevicePixels[10]}}
+                        style={{margin: 10}}
                       />
                     </ScrollView>
                   </View>
@@ -434,18 +434,18 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           style={{
             backgroundColor: '#fff',
             alignSelf: 'center',
-            borderRadius: DevicePixels[10],
+            borderRadius: 10,
           }}>
           <Icon
-            style={{alignSelf: 'center', margin: DevicePixels[10]}}
+            style={{alignSelf: 'center', margin: 10}}
             name="info-circle"
             color={colors.appBlue}
-            size={DevicePixels[20]}
+            size={20}
           />
           <Text
             style={{
               textAlign: 'center',
-              padding: DevicePixels[15],
+              padding: 15,
               paddingTop: 0,
             }}>
             Resistance scale explained
@@ -454,7 +454,7 @@ const StartWorkout: React.FC<StartWorkoutProps> = ({
           <Button
             text="OK"
             onPress={() => setShowModal(false)}
-            style={{margin: DevicePixels[10]}}
+            style={{margin: 10}}
           />
         </View>
       </Modal>

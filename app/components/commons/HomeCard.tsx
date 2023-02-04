@@ -9,7 +9,7 @@ import {
   ImageURISource,
 } from 'react-native';
 import {connect} from 'react-redux';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -19,7 +19,7 @@ import FastImage, {Source} from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
-const CARD_HEIGHT = DevicePixels[125];
+const CARD_HEIGHT = 125;
 
 const HomeCard: React.FC<{
   title: string;
@@ -33,9 +33,9 @@ const HomeCard: React.FC<{
     <TouchableOpacity
       style={{
         height: CARD_HEIGHT,
-        marginHorizontal: DevicePixels[20],
-        marginBottom: DevicePixels[15],
-        borderRadius: DevicePixels[10],
+        marginHorizontal: 20,
+        marginBottom: 15,
+        borderRadius: 10,
         overflow: 'hidden',
       }}
       onPress={onPress}>
@@ -56,13 +56,13 @@ const HomeCard: React.FC<{
           top: 0,
           bottom: 0,
           width: width / 2,
-          padding: DevicePixels[10],
+          padding: 10,
           backgroundColor: 'rgba(0,0,0,0.7)',
         }}>
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: DevicePixels[18],
+            fontSize: 18,
             fontWeight: 'bold',
           }}>
           {title}
@@ -79,10 +79,10 @@ const HomeCard: React.FC<{
           <View
             style={{
               position: 'absolute',
-              bottom: DevicePixels[15],
-              right: DevicePixels[15],
+              bottom: 15,
+              right: 15,
             }}>
-            <Icon name="lock" size={DevicePixels[20]} color={colors.appWhite} />
+            <Icon name="lock" size={20} color={colors.appWhite} />
           </View>
         )}
       </View>

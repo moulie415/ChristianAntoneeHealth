@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {equipmentItemReadableString} from '../../../helpers/exercises';
 import {Equipment} from '../../../types/Shared';
 import Divider from '../../commons/Divider';
@@ -31,16 +31,12 @@ const EquipmentMenu: React.FC<{
                 selected ? (
                   <Icon
                     name="check-circle"
-                    size={DevicePixels[20]}
+                    size={20}
                     solid
                     color={colors.appBlue}
                   />
                 ) : (
-                  <Icon
-                    name="circle"
-                    size={DevicePixels[20]}
-                    color={colors.appBlue}
-                  />
+                  <Icon name="circle" size={20} color={colors.appBlue} />
                 )
               }
             />

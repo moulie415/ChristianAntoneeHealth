@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -14,15 +14,15 @@ const Occupation: React.FC<{
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          width: DevicePixels[250],
+          marginVertical: 20,
+          width: 250,
           color: colors.appWhite,
-          fontSize: DevicePixels[20],
+          fontSize: 20,
         }}>
         Occupation?
       </Text>
@@ -31,7 +31,7 @@ const Occupation: React.FC<{
         placeholder="e.g. Doctor, lawyer..."
         value={occupation}
         onChangeText={setOccupation}
-        style={{marginHorizontal: DevicePixels[10]}}
+        style={{marginHorizontal: 10}}
       />
     </KeyboardAwareScrollView>
   );

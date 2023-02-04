@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Spinner from './Spinner';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -45,16 +45,16 @@ const Button: React.FC<Props> = ({
       disabled={disabled}
       style={[
         {
-          borderRadius: DevicePixels[10],
+          borderRadius: 10,
           overflow: 'hidden',
         },
         props.style,
       ]}>
       <LinearGradient
         style={{
-          height: DevicePixels[60],
+          height: 60,
           justifyContent: 'center',
-          padding: DevicePixels[10],
+          padding: 10,
           opacity: disabled ? 0.5 : 1,
         }}
         colors={gradient()}
@@ -71,7 +71,7 @@ const Button: React.FC<Props> = ({
                 color:
                   variant === 'secondary' ? colors.appBlue : colors.appWhite,
                 textAlign: 'center',
-                fontSize: DevicePixels[20],
+                fontSize: 20,
               },
               textStyle,
             ]}>

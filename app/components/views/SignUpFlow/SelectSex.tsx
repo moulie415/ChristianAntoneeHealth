@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Gender} from '../../../types/Profile';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
@@ -20,15 +20,15 @@ const SelectSex: React.FC<{
       style={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           color: colors.appWhite,
 
           textAlign: 'center',
-          marginBottom: DevicePixels[20],
-          fontSize: DevicePixels[20],
+          marginBottom: 20,
+          fontSize: 20,
         }}>
         What's your gender?
       </Text>
@@ -36,8 +36,8 @@ const SelectSex: React.FC<{
       <Button
         text="Female"
         style={{
-          marginBottom: DevicePixels[20],
-          marginHorizontal: DevicePixels[20],
+          marginBottom: 20,
+          marginHorizontal: 20,
         }}
         onPress={() => setGender('female')}
         variant={gender === 'female' ? 'primary' : 'secondary'}
@@ -45,7 +45,7 @@ const SelectSex: React.FC<{
 
       <Button
         text="Male"
-        style={{marginHorizontal: DevicePixels[20]}}
+        style={{marginHorizontal: 20}}
         onPress={() => setGender('male')}
         variant={gender === 'male' ? 'primary' : 'secondary'}
       />

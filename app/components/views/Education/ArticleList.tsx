@@ -14,7 +14,7 @@ import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Education from '../../../types/Education';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
@@ -89,17 +89,17 @@ const ArticleList: React.FC<{
         return (
           <TouchableOpacity
             style={{
-              height: DevicePixels[125],
-              marginHorizontal: DevicePixels[20],
-              marginBottom: DevicePixels[15],
-              borderRadius: DevicePixels[10],
+              height: 125,
+              marginHorizontal: 20,
+              marginBottom: 15,
+              borderRadius: 10,
               overflow: 'hidden',
             }}
             onPress={() => onPress(item)}>
             <FastImageAnimated
               style={{
                 position: 'absolute',
-                height: DevicePixels[125],
+                height: 125,
                 width: '100%',
               }}
               source={{uri: item.image.src}}
@@ -113,20 +113,20 @@ const ArticleList: React.FC<{
                 top: 0,
                 bottom: 0,
                 width: width / 1.5,
-                padding: DevicePixels[10],
+                padding: 10,
                 backgroundColor: 'rgba(0,0,0,0.7)',
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: DevicePixels[10],
+                  fontSize: 10,
                 }}>
                 {moment(item.createdate).format('DD MMMM YYYY')}
               </Text>
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: DevicePixels[16],
+                  fontSize: 16,
                   fontWeight: 'bold',
                 }}>
                 {item.title}
@@ -136,12 +136,12 @@ const ArticleList: React.FC<{
                 <View
                   style={{
                     position: 'absolute',
-                    bottom: DevicePixels[15],
-                    right: DevicePixels[15],
+                    bottom: 15,
+                    right: 15,
                   }}>
                   <Icon
                     name="lock"
-                    size={DevicePixels[20]}
+                    size={20}
                     color={colors.appWhite}
                   />
                 </View>

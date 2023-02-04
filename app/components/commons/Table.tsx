@@ -4,7 +4,7 @@ import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import {Cell, Table as TableType} from '../../types/Test';
@@ -95,25 +95,25 @@ const Table: React.FC<{
         }}>
         <Text
           style={{
-            margin: DevicePixels[10],
+            margin: 10,
             color: colors.appWhite,
             fontWeight: 'bold',
           }}>
           {title || 'Table'}
         </Text>
         <Icon
-          style={{padding: DevicePixels[10]}}
+          style={{padding: 10}}
           name={collapsed ? 'plus' : 'minus'}
           color={colors.appWhite}
-          size={DevicePixels[20]}
+          size={20}
         />
       </TouchableOpacity>
       <Collapsible collapsed={collapsed}>
         <ScrollView
           horizontal
           style={{
-            paddingVertical: DevicePixels[10],
-            marginHorizontal: DevicePixels[10],
+            paddingVertical: 10,
+            marginHorizontal: 10,
           }}>
           <View>
             <View style={{flexDirection: 'row'}}>
@@ -125,13 +125,13 @@ const Table: React.FC<{
                   <Text
                     key={Math.random()}
                     style={{
-                      padding: DevicePixels[2],
+                      padding: 2,
                       borderWidth: StyleSheet.hairlineWidth,
                       borderColor: colors.appWhite,
                       width: CELL_WIDTH,
                       textAlign: 'center',
                       fontWeight: 'bold',
-                      fontSize: DevicePixels[12],
+                      fontSize: 12,
                       backgroundColor: isAgeIndex ? colors.appBlue : undefined,
                       color: colors.appWhite,
                     }}>
@@ -147,13 +147,13 @@ const Table: React.FC<{
                     <Text
                       key={Math.random()}
                       style={{
-                        padding: DevicePixels[2],
+                        padding: 2,
                         borderColor: colors.appWhite,
                         borderWidth: StyleSheet.hairlineWidth,
                         width: CELL_WIDTH,
                         textAlign: 'center',
                         fontWeight: index === 0 ? 'bold' : 'normal',
-                        fontSize: DevicePixels[12],
+                        fontSize: 12,
                         color: colors.appWhite,
                       }}>
                       {cell}

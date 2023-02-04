@@ -4,7 +4,7 @@ import Image from 'react-native-fast-image';
 import React from 'react';
 import {ScrollView, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {StackParamList} from '../../../App';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import moment from 'moment';
 import {getEducationCategoryString} from '../../../helpers';
 import Text from '../../commons/Text';
@@ -22,8 +22,8 @@ const EducationArticle: React.FC<{
       <ScrollView contentContainerStyle={{}}>
         <Image
           style={{
-            height: DevicePixels[350],
-            marginBottom: DevicePixels[10],
+            height: 350,
+            marginBottom: 10,
           }}
           source={{uri: education.image.src}}>
           <View
@@ -39,21 +39,21 @@ const EducationArticle: React.FC<{
 
         <View
           style={{
-            padding: DevicePixels[20],
-            borderTopLeftRadius: DevicePixels[30],
-            borderTopRightRadius: DevicePixels[30],
-            marginTop: -DevicePixels[35],
+            padding: 20,
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            marginTop: -35,
             backgroundColor: colors.appWhite,
           }}>
           <Text
             style={{
-              fontSize: DevicePixels[20],
+              fontSize: 20,
               fontWeight: 'bold',
-              marginBottom: DevicePixels[10],
+              marginBottom: 10,
             }}>
             {education.title}
           </Text>
-          <Text style={{fontSize: DevicePixels[12]}}>{`${moment(
+          <Text style={{fontSize: 12}}>{`${moment(
             education.createdate,
           ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
             education.category,

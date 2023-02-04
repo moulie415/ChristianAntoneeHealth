@@ -16,7 +16,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {requestPlan, setViewedPlan} from '../../../actions/profile';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {getPlan} from '../../../actions/plan';
 import moment from 'moment';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
@@ -143,11 +143,11 @@ const Plan: React.FC<{
                                 : ['transparent', 'transparent']
                             }
                             style={{
-                              height: DevicePixels[45],
-                              paddingHorizontal: DevicePixels[20],
+                              height: 45,
+                              paddingHorizontal: 20,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: DevicePixels[25],
+                              borderRadius: 25,
                             }}
                             start={{x: 0, y: 0}}
                             end={{x: 1, y: 0}}>
@@ -171,7 +171,7 @@ const Plan: React.FC<{
                       backgroundColor: 'transparent',
                     }}
                     contentContainerStyle={{
-                      marginVertical: DevicePixels[20],
+                      marginVertical: 20,
                       justifyContent: 'space-evenly',
                     }}
                     indicatorStyle={{backgroundColor: 'transparent'}}
@@ -202,7 +202,7 @@ const Plan: React.FC<{
             <Text
               style={{
                 textAlign: 'center',
-                margin: DevicePixels[20],
+                margin: 20,
                 marginTop: 0,
                 color: '#fff',
               }}>
@@ -211,7 +211,7 @@ const Plan: React.FC<{
 
             {(profile.planStatus === PlanStatus.UNINITIALIZED ||
               !hasPlanLeft) && (
-              <View style={{margin: DevicePixels[20], marginTop: 0}}>
+              <View style={{margin: 20, marginTop: 0}}>
                 <Text style={{lineHeight: 25, color: '#fff'}}>
                   This is your the screen for your personal customized plan,
                   once requested we will try and get your plan to you as soon as
@@ -225,8 +225,8 @@ const Plan: React.FC<{
             )}
 
             {profile.planStatus === PlanStatus.PENDING && (
-              <View style={{margin: DevicePixels[10], alignItems: 'center'}}>
-                <Text style={{marginBottom: DevicePixels[10], color: '#fff'}}>
+              <View style={{margin: 10, alignItems: 'center'}}>
+                <Text style={{marginBottom: 10, color: '#fff'}}>
                   Your plan is currently{' '}
                   <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
                     PENDING
@@ -243,7 +243,7 @@ const Plan: React.FC<{
                   return (
                     <Button
                       key={p.identifier}
-                      style={{margin: DevicePixels[20]}}
+                      style={{margin: 20}}
                       disabled={loading}
                       text={`Request workout plan ${
                         profile.usedFreePlan
@@ -271,7 +271,7 @@ const Plan: React.FC<{
                 !hasPlanLeft && (
                   <Button
                     style={{
-                      margin: DevicePixels[20],
+                      margin: 20,
                       marginTop: 0,
                     }}
                     disabled={loading}

@@ -9,7 +9,7 @@ import TestProps from '../../../types/views/Test';
 import colors from '../../../constants/colors';
 import Countdown from '../../commons/Countdown';
 import Table from '../../commons/Table';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
@@ -148,11 +148,11 @@ const Test: React.FC<TestProps> = ({
       <View
         style={{
           flexDirection: 'row',
-          margin: DevicePixels[10],
+          margin: 10,
           justifyContent: 'space-between',
           alignItems: 'center',
           position: 'absolute',
-          top: DevicePixels[10] + insets.top,
+          top: 10 + insets.top,
         }}>
         <View
           style={{
@@ -161,16 +161,12 @@ const Test: React.FC<TestProps> = ({
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}>
-          <Icon
-            name="stopwatch"
-            size={DevicePixels[30]}
-            color={colors.appWhite}
-          />
+          <Icon name="stopwatch" size={30} color={colors.appWhite} />
           <Text
             style={{
-              marginLeft: DevicePixels[10],
+              marginLeft: 10,
               color: colors.appWhite,
-              fontSize: DevicePixels[22],
+              fontSize: 22,
               fontWeight: 'bold',
             }}>
             {getTimeString()}
@@ -181,14 +177,14 @@ const Test: React.FC<TestProps> = ({
       <View
         style={{
           paddingBottom: 220,
-          borderTopLeftRadius: DevicePixels[30],
-          borderTopRightRadius: DevicePixels[30],
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
           backgroundColor: colors.appGrey,
-          top: -DevicePixels[30],
+          top: -30,
         }}>
         <KeyboardAwareScrollView
           // keyboardShouldPersistTaps="always"
-          extraScrollHeight={DevicePixels[75]}
+          extraScrollHeight={75}
           contentContainerStyle={{paddingBottom: 220}}>
           {complete ? (
             <View style={{margin: 20}}>
@@ -197,7 +193,7 @@ const Test: React.FC<TestProps> = ({
                   textAlign: 'center',
                   marginBottom: 10,
                   color: colors.appWhite,
-                  fontSize: DevicePixels[20],
+                  fontSize: 20,
                   fontWeight: 'bold',
                 }}>
                 Test complete!
@@ -252,9 +248,9 @@ const Test: React.FC<TestProps> = ({
 
               <Text
                 style={{
-                  margin: DevicePixels[10],
-                  marginTop: DevicePixels[20],
-                  fontSize: DevicePixels[20],
+                  margin: 10,
+                  marginTop: 20,
+                  fontSize: 20,
                   fontWeight: 'bold',
                   color: colors.appWhite,
                 }}>
@@ -262,15 +258,15 @@ const Test: React.FC<TestProps> = ({
               </Text>
               <View
                 style={{
-                  marginHorizontal: DevicePixels[10],
-                  marginBottom: DevicePixels[10],
+                  marginHorizontal: 10,
+                  marginBottom: 10,
                 }}>
                 {test.how?.map(h => {
                   return (
                     <Text
                       style={{
                         color: colors.appWhite,
-                        fontSize: DevicePixels[11],
+                        fontSize: 11,
                       }}
                       key={h}>
                       {h}
@@ -315,8 +311,7 @@ const Test: React.FC<TestProps> = ({
                   />
                 )}
               {test.source && (
-                <Text
-                  style={{margin: DevicePixels[10], color: colors.appWhite}}>
+                <Text style={{margin: 10, color: colors.appWhite}}>
                   {test.source}
                 </Text>
               )}
@@ -342,7 +337,7 @@ const Test: React.FC<TestProps> = ({
                 }
               }}
               style={{
-                margin: DevicePixels[10],
+                margin: 10,
               }}
             />
           )}
@@ -357,7 +352,7 @@ const Test: React.FC<TestProps> = ({
                 }
               }}
               style={{
-                margin: DevicePixels[10],
+                margin: 10,
               }}
             />
           )}

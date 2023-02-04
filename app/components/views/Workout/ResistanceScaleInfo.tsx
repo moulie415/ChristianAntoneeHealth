@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React from 'react';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Color from 'color';
 import colors from '../../../constants/colors';
 
@@ -64,7 +64,7 @@ const items: {
 
 const ResistanceScaleInfo = () => {
   return (
-    <View style={{width: DevicePixels[300]}}>
+    <View style={{width: 300}}>
       {items.map(item => {
         return (
           <View
@@ -73,12 +73,12 @@ const ResistanceScaleInfo = () => {
               flexDirection: 'row',
               alignItems: 'center',
               backgroundColor: item.color,
-              padding: DevicePixels[5],
-              paddingVertical: DevicePixels[10],
+              padding: 5,
+              paddingVertical: 10,
             }}>
             <Text
               style={{
-                width: DevicePixels[30],
+                width: 30,
                 textAlign: 'center',
                 color: item.textColor,
                 fontWeight: 'bold',
@@ -89,7 +89,7 @@ const ResistanceScaleInfo = () => {
               <Text style={{color: item.textColor, fontWeight: 'bold'}}>
                 {item.title}
               </Text>
-              <Text style={{color: item.textColor, fontSize: DevicePixels[10]}}>
+              <Text style={{color: item.textColor, fontSize: 10}}>
                 {item.description}
               </Text>
             </View>

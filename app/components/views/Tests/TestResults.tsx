@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import TestResultsProp from '../../../types/views/TestResults';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import moment from 'moment';
@@ -88,7 +88,7 @@ const TestResults: React.FC<TestResultsProp> = ({
   if (!category) {
     return (
       <View style={{flex: 1, padding: 20}}>
-        <Text style={{textAlign: 'center', marginBottom: DevicePixels[10]}}>
+        <Text style={{textAlign: 'center', marginBottom: 10}}>
           Sorry, your age is out of the range to see the results for this test,
           please make sure you've set your age correctly on your profile
         </Text>
@@ -102,19 +102,19 @@ const TestResults: React.FC<TestResultsProp> = ({
         <Text
           style={{
             textAlign: 'center',
-            marginBottom: DevicePixels[10],
+            marginBottom: 10,
             color: colors.appWhite,
             fontWeight: 'bold',
-            fontSize: DevicePixels[20],
+            fontSize: 20,
           }}>
           Test complete!
         </Text>
 
         <AnimatedCircularProgress
           style={{alignSelf: 'center'}}
-          size={DevicePixels[120]}
-          width={DevicePixels[15]}
-          backgroundWidth={DevicePixels[5]}
+          size={120}
+          width={15}
+          backgroundWidth={5}
           fill={fill}
           tintColor={getCategoryColor(category || percentile)}
           // tintColorSecondary={colors.appBlueFaded}
@@ -125,7 +125,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           {fill => (
             <Text
               style={{
-                fontSize: DevicePixels[30],
+                fontSize: 30,
                 color: colors.appWhite,
                 fontWeight: 'bold',
               }}>
@@ -144,8 +144,8 @@ const TestResults: React.FC<TestResultsProp> = ({
               {getScoreIcon(category || percentile) === '-' ? (
                 <Text
                   style={{
-                    fontSize: DevicePixels[30],
-                    marginRight: DevicePixels[10],
+                    fontSize: 30,
+                    marginRight: 10,
                     color: colors.appWhite,
                   }}>
                   -
@@ -153,8 +153,8 @@ const TestResults: React.FC<TestResultsProp> = ({
               ) : (
                 <Icon
                   style={{
-                    fontSize: DevicePixels[20],
-                    marginRight: DevicePixels[10],
+                    fontSize: 20,
+                    marginRight: 10,
                     color: colors.appWhite,
                   }}
                   name={getScoreIcon(category || percentile)}
@@ -208,7 +208,7 @@ const TestResults: React.FC<TestResultsProp> = ({
           <Button
             text="Return Home"
             onPress={resetToTabs}
-            style={{marginBottom: DevicePixels[10]}}
+            style={{marginBottom: 10}}
           />
         </View>
       </SafeAreaView>

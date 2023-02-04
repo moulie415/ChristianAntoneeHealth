@@ -9,7 +9,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './components/commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from './constants/colors';
-import DevicePixels from './helpers/DevicePixels';
+
 import Text from './components/commons/Text';
 import FastImage from 'react-native-fast-image';
 
@@ -48,11 +48,11 @@ const SavedItemsTabs: React.FC<{
                             : ['transparent', 'transparent']
                         }
                         style={{
-                          height: DevicePixels[45],
-                          paddingHorizontal: DevicePixels[20],
+                          height: 45,
+                          paddingHorizontal: 20,
                           alignItems: 'center',
                           justifyContent: 'center',
-                          borderRadius: DevicePixels[25],
+                          borderRadius: 25,
                         }}
                         start={{x: 0, y: 0}}
                         end={{x: 1, y: 0}}>
@@ -73,7 +73,7 @@ const SavedItemsTabs: React.FC<{
                   backgroundColor: 'transparent',
                 }}
                 contentContainerStyle={{
-                  marginBottom: DevicePixels[20],
+                  marginBottom: 20,
                   justifyContent: 'space-evenly',
                 }}
                 indicatorStyle={{backgroundColor: 'transparent'}}

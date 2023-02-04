@@ -26,7 +26,7 @@ import Message from '../../../types/Message';
 import {ImageBackground, Platform, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import {viewWorkout} from '../../../actions/exercises';
@@ -124,19 +124,15 @@ const Chat: React.FC<ChatProps> = ({
           <TouchableOpacity
             onPress={() => viewWorkoutAction(props.currentMessage.workout)}
             style={{
-              padding: DevicePixels[10],
-              margin: DevicePixels[10],
+              padding: 10,
+              margin: 10,
               borderRadius: 5,
               backgroundColor: '#fff',
               justifyContent: 'space-evenly',
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Icon
-              size={DevicePixels[30]}
-              name="dumbbell"
-              style={{color: colors.appBlue}}
-            />
+            <Icon size={30} name="dumbbell" style={{color: colors.appBlue}} />
             <Text style={{fontWeight: 'bold', color: colors.appBlue}}>
               Press to view workout
             </Text>
@@ -178,7 +174,7 @@ const Chat: React.FC<ChatProps> = ({
         {...props}
         containerStyle={{
           left: {
-            marginRight: Platform.OS === 'ios' ? DevicePixels[10] : 0,
+            marginRight: Platform.OS === 'ios' ? 10 : 0,
           },
           right: {},
         }}
@@ -188,7 +184,7 @@ const Chat: React.FC<ChatProps> = ({
               uid={connection.uid}
               name={`${connection.name} ${connection.surname || ''}`}
               src={connection.avatar}
-              size={DevicePixels[30]}
+              size={30}
             />
           ) : null
         }
@@ -220,7 +216,7 @@ const Chat: React.FC<ChatProps> = ({
           renderCustomView={renderCustomView}
           ref={ref}
           messagesContainerStyle={{
-            paddingTop: Platform.OS === 'ios' ? 0 : DevicePixels[50],
+            paddingTop: Platform.OS === 'ios' ? 0 : 50,
           }}
           loadEarlier={showLoadEarlier}
           isLoadingEarlier={loading}

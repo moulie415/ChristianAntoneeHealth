@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import Text from '../../commons/Text';
 import ImageOverlay from '../../commons/ImageOverlay';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import colors from '../../../constants/colors';
 import Exercise from '../../../types/Exercise';
 import Test from '../../../types/Test';
@@ -116,8 +116,8 @@ const Daily: React.FC<{
           renderSectionHeader={({section: {title}}) => (
             <Text
               style={{
-                padding: DevicePixels[5],
-                marginLeft: DevicePixels[10],
+                padding: 5,
+                marginLeft: 10,
                 color: colors.appWhite,
                 fontWeight: 'bold',
               }}>
@@ -165,7 +165,7 @@ const Daily: React.FC<{
           }}
         />
       ) : (
-        <View style={{padding: DevicePixels[10]}}>
+        <View style={{padding: 10}}>
           <Text style={{textAlign: 'center'}}>
             No workouts scheduled for today
           </Text>
@@ -179,7 +179,7 @@ const Daily: React.FC<{
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: DevicePixels[50],
+                  height: 50,
                 }}>
                 <Spinner />
               </View>
@@ -187,8 +187,8 @@ const Daily: React.FC<{
               <View>
                 <Text
                   style={{
-                    padding: DevicePixels[5],
-                    marginLeft: DevicePixels[10],
+                    padding: 5,
+                    marginLeft: 10,
                     color: colors.appWhite,
                     fontWeight: 'bold',
                   }}>
@@ -215,8 +215,8 @@ const Daily: React.FC<{
                         accessoryLeft={
                           <Image
                             style={{
-                              width: DevicePixels[75],
-                              height: DevicePixels[50],
+                              width: 75,
+                              height: 50,
                             }}
                             source={{uri: item.image.src}}
                           />
@@ -232,10 +232,10 @@ const Daily: React.FC<{
         {(!!plan.nutrition || !!plan.sleep) && (
           <Text
             style={{
-              padding: DevicePixels[5],
+              padding: 5,
               color: colors.appWhite,
               fontWeight: 'bold',
-              marginLeft: DevicePixels[10],
+              marginLeft: 10,
             }}>
             Other
           </Text>
@@ -245,19 +245,19 @@ const Daily: React.FC<{
             <Divider />
             <Icon
               name="apple-alt"
-              size={DevicePixels[20]}
+              size={20}
               color={colors.appBlue}
             />
             <Text
               style={{
-                padding: DevicePixels[5],
+                padding: 5,
                 color: colors.appWhite,
                 fontWeight: 'bold',
-                marginLeft: DevicePixels[10],
+                marginLeft: 10,
               }}>
               Nutritional planning
             </Text>
-            <View style={{marginLeft: DevicePixels[10]}}>
+            <View style={{marginLeft: 10}}>
               {!!plan.nutrition.general && (
                 <Text>
                   <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
@@ -300,7 +300,7 @@ const Daily: React.FC<{
               accessoryLeft={
                 <Icon
                   name="bed"
-                  size={DevicePixels[20]}
+                  size={20}
                   color={colors.appBlue}
                 />
               }

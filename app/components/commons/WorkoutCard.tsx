@@ -1,7 +1,7 @@
 import {View, TouchableOpacity, ImageBackground} from 'react-native';
 import React from 'react';
 import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {Goal, Level, MyRootState, PlanWorkout} from '../../types/Shared';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
@@ -55,10 +55,10 @@ const WorkoutCard: React.FC<{
       key={'id' in item ? item.id : item.name}>
       <FastImageAnimated
         style={{
-          height: DevicePixels[120],
-          marginHorizontal: DevicePixels[10],
-          marginBottom: DevicePixels[10],
-          borderRadius: DevicePixels[10],
+          height: 120,
+          marginHorizontal: 10,
+          marginBottom: 10,
+          borderRadius: 10,
         }}
         source={
           'thumbnail' in item && item.thumbnail
@@ -67,31 +67,31 @@ const WorkoutCard: React.FC<{
         }>
         <View
           style={{
-            height: DevicePixels[120],
+            height: 120,
             justifyContent: 'center',
-            padding: DevicePixels[10],
-            borderRadius: DevicePixels[10],
+            padding: 10,
+            borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           {locked ? (
             <View style={{}}>
-              <Icon name="lock" color="#fff" size={DevicePixels[40]} />
+              <Icon name="lock" color="#fff" size={40} />
             </View>
           ) : (
-            <View style={{marginBottom: DevicePixels[5]}}>
+            <View style={{marginBottom: 5}}>
               {'duration' in item ? (
                 <>
                   <Text
                     style={{
                       color: colors.appWhite,
-                      fontSize: DevicePixels[12],
+                      fontSize: 12,
                     }}>
                     Under
                   </Text>
                   <Text
                     style={{
                       color: colors.appWhite,
-                      fontSize: DevicePixels[12],
+                      fontSize: 12,
                     }}>
                     <Text style={{fontWeight: 'bold'}}>{item.duration}</Text>
                     {' mins'}
@@ -111,14 +111,14 @@ const WorkoutCard: React.FC<{
           )}
           <View
             style={{
-              width: DevicePixels[250],
+              width: 250,
             }}>
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
+                fontSize: 16,
                 fontWeight: 'bold',
-                marginBottom: DevicePixels[5],
+                marginBottom: 5,
               }}>
               {item.name}
             </Text>
@@ -126,7 +126,7 @@ const WorkoutCard: React.FC<{
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: DevicePixels[12],
+                  fontSize: 12,
                 }}>
                 {`${getLevelString(item.level)} - ${getEquipmentString(
                   item.equipment,

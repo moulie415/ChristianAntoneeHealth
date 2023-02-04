@@ -8,7 +8,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Text from './Text';
 
 const {width} = Dimensions.get('window');
@@ -33,7 +33,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({
   children,
   containerStyle,
   contentPosition = 'center',
-  height = DevicePixels[300],
+  height = 300,
   overlayAlpha = 0.5,
   overlayColor = '#000000',
   rounded,
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    margin: DevicePixels[20],
+    margin: 20,
     color: 'white',
     textAlign: 'center',
-    fontSize: DevicePixels[16],
+    fontSize: 16,
   },
 });
 

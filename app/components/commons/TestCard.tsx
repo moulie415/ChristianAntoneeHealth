@@ -1,7 +1,7 @@
 import {View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Test from '../../types/Test';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux';
@@ -28,18 +28,18 @@ const TestCard: React.FC<{
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
       <FastImage
         style={{
-          height: DevicePixels[140],
-          marginHorizontal: DevicePixels[15],
-          marginBottom: DevicePixels[10],
-          borderRadius: DevicePixels[10],
+          height: 140,
+          marginHorizontal: 15,
+          marginBottom: 10,
+          borderRadius: 10,
         }}
         source={image}>
         <View
           style={{
-            height: DevicePixels[140],
+            height: 140,
             justifyContent: 'center',
-            padding: DevicePixels[10],
-            borderRadius: DevicePixels[10],
+            padding: 10,
+            borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           {item.premium && !profile.premium && (
@@ -49,22 +49,22 @@ const TestCard: React.FC<{
                 top: 0,
                 right: 0,
                 bottom: 0,
-                margin: DevicePixels[10],
+                margin: 10,
               }}>
-              <Icon name="lock" color="#fff" size={DevicePixels[30]} />
+              <Icon name="lock" color="#fff" size={30} />
             </View>
           )}
           <View
             style={{
               position: 'absolute',
               bottom: 0,
-              width: DevicePixels[200],
-              margin: DevicePixels[20],
+              width: 200,
+              margin: 20,
             }}>
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
+                fontSize: 16,
                 fontWeight: 'bold',
               }}>
               {item.name}

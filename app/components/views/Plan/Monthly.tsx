@@ -11,7 +11,7 @@ import RNCalendarEvents, {
 } from 'react-native-calendar-events';
 import Button from '../../commons/Button';
 import {logError} from '../../../helpers/error';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Modal from '../../commons/Modal';
 import Text from '../../commons/Text';
 import {FlatList} from 'react-native-gesture-handler';
@@ -87,7 +87,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
       />
       <Button
         text="Sync with native calendar"
-        style={{margin: DevicePixels[20]}}
+        style={{margin: 20}}
         onPress={async () => {
           try {
             const permission = await RNCalendarEvents.requestPermissions();
@@ -109,10 +109,10 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
         <View
           style={{
             backgroundColor: '#fff',
-            paddingBottom: DevicePixels[10],
-            borderRadius: DevicePixels[10],
+            paddingBottom: 10,
+            borderRadius: 10,
           }}>
-          <Text style={{textAlign: 'center', padding: DevicePixels[15]}}>
+          <Text style={{textAlign: 'center', padding: 15}}>
             Select a calendar to sync with
           </Text>
           <Divider />
@@ -195,8 +195,8 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
                 accessoryLeft={
                   <Icon
                     name="calendar-alt"
-                    size={DevicePixels[20]}
-                    style={{margin: DevicePixels[5]}}
+                    size={20}
+                    style={{margin: 5}}
                     color={colors.appBlue}
                   />
                 }

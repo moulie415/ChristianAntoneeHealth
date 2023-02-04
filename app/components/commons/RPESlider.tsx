@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {Slider} from '@miblanchard/react-native-slider';
 import colors from '../../constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
@@ -98,17 +98,17 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
         style={{
           color: colors.appWhite,
           textAlign: 'center',
-          fontSize: DevicePixels[25],
-          marginBottom: DevicePixels[20],
+          fontSize: 25,
+          marginBottom: 20,
         }}>
         Rate of perceived exertion{' '}
         <Text style={{fontWeight: 'bold'}}>(RPE)</Text>
       </Text>
       <AnimatedCircularProgress
         style={{alignSelf: 'center'}}
-        size={DevicePixels[120]}
-        width={DevicePixels[15]}
-        backgroundWidth={DevicePixels[5]}
+        size={120}
+        width={15}
+        backgroundWidth={5}
         fill={10 * rpe}
         tintColor={rpeSliderScale[rpe - 1].color}
         // tintColorSecondary={colors.appBlueFaded}
@@ -119,7 +119,7 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
         {fill => (
           <Text
             style={{
-              fontSize: DevicePixels[30],
+              fontSize: 30,
               color: colors.appWhite,
               fontWeight: 'bold',
               textAlign: 'center',
@@ -130,10 +130,10 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
       </AnimatedCircularProgress>
       <Text
         style={{
-          margin: DevicePixels[10],
-          marginTop: DevicePixels[20],
+          margin: 10,
+          marginTop: 20,
           color: colors.appWhite,
-          textAlign: 'center'
+          textAlign: 'center',
         }}>
         How hard did you find that workout?
       </Text>
@@ -148,9 +148,9 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
             <View
               style={{
                 backgroundColor: colors.appWhite,
-                height: DevicePixels[30],
-                width: DevicePixels[30],
-                borderRadius: DevicePixels[15],
+                height: 30,
+                width: 30,
+                borderRadius: 15,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -159,9 +159,9 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0.5}}
                 style={{
-                  height: DevicePixels[26],
-                  width: DevicePixels[26],
-                  borderRadius: DevicePixels[13],
+                  height: 26,
+                  width: 26,
+                  borderRadius: 13,
                 }}
               />
             </View>
@@ -169,23 +169,23 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
         }}
         minimumTrackTintColor={colors.appBlue}
         maximumTrackTintColor={colors.appWhite}
-        containerStyle={{marginHorizontal: DevicePixels[20]}}
+        containerStyle={{marginHorizontal: 20}}
         onValueChange={val => typeof val === 'object' && setRpe(val[0])}
       />
 
       <View
         style={{
-          margin: DevicePixels[10],
+          margin: 10,
           justifyContent: 'center',
           flexDirection: 'row',
           alignItems: 'center',
-          height: DevicePixels[100],
+          height: 100,
         }}>
         <Text
           style={{
-            fontSize: DevicePixels[30],
+            fontSize: 30,
             textAlign: 'center',
-            width: DevicePixels[60],
+            width: 60,
           }}>
           {getDifficultyEmoji(rpe)}
         </Text>

@@ -43,7 +43,6 @@ import {setHasViewedTour, setViewedPlan} from './actions/profile';
 import WelcomeModal from './WelcomeModal';
 import Drawer from 'react-native-drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
-import DevicePixels from './helpers/DevicePixels';
 
 const {height, width} = Dimensions.get('window');
 

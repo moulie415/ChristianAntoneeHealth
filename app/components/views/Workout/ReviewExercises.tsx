@@ -13,7 +13,7 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {setWorkout} from '../../../actions/exercises';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import ShareModal from '../../commons/ShareModal';
 import Button from '../../commons/Button';
 import {useInterstitialAd} from 'react-native-google-mobile-ads';
@@ -66,7 +66,7 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
           description={truncate(item.description, 75)}
           accessoryLeft={
             <Image
-              style={{height: DevicePixels[50], width: DevicePixels[75]}}
+              style={{height: 50, width: 75}}
               source={
                 item.thumbnail
                   ? {uri: item.thumbnail.src}
@@ -82,12 +82,8 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
 
   return (
     <View style={{flex: 1}}>
-      <Text style={{margin: DevicePixels[10], marginBottom: 0}}>
-        Review exercises
-      </Text>
-      <Text style={{marginHorizontal: DevicePixels[10]}}>
-        (Hold and drag to reorder)
-      </Text>
+      <Text style={{margin: 10, marginBottom: 0}}>Review exercises</Text>
+      <Text style={{marginHorizontal: 10}}>(Hold and drag to reorder)</Text>
       <DraggableFlatList
         data={workout}
         ItemSeparatorComponent={Divider}
@@ -98,19 +94,19 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
             onPress={navigation.goBack}>
             <View
               style={{
-                height: DevicePixels[50],
-                width: DevicePixels[75],
+                height: 50,
+                width: 75,
                 backgroundColor: colors.appBlue,
-                marginLeft: DevicePixels[7],
+                marginLeft: 7,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Icon name="plus" color="#fff" size={DevicePixels[25]} />
+              <Icon name="plus" color="#fff" size={25} />
             </View>
             <Text
               style={{
                 alignSelf: 'center',
-                marginLeft: DevicePixels[10],
+                marginLeft: 10,
                 color: colors.appBlue,
               }}>
               Add exercise
@@ -131,9 +127,9 @@ const ReviewExercises: React.FC<ReviewExercisesProps> = ({
         }}
         style={{
           position: 'absolute',
-          bottom: DevicePixels[30],
-          left: DevicePixels[10],
-          right: DevicePixels[10],
+          bottom: 30,
+          left: 10,
+          right: 10,
         }}
       />
       <ShareModal title="Share workout" type="workout" workout={workout} />

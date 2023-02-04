@@ -9,7 +9,7 @@ import {
   getSavedQuickRoutines,
 } from '../../../actions/quickRoutines';
 import {StackParamList} from '../../../App';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {getDifficultyEmoji} from '../../../helpers/exercises';
 import QuickRoutine from '../../../types/QuickRoutines';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
@@ -85,8 +85,8 @@ const SavedQuickRoutines: FunctionComponent<{
                   accessoryLeft={
                     <ImageOverlay
                       containerStyle={{
-                        height: DevicePixels[75],
-                        width: DevicePixels[75],
+                        height: 75,
+                        width: 75,
                       }}
                       overlayAlpha={0.4}
                       source={
@@ -96,7 +96,7 @@ const SavedQuickRoutines: FunctionComponent<{
                       }>
                       <View style={{alignItems: 'center'}}>
                         <Text
-                          style={{color: '#fff', fontSize: DevicePixels[12]}}>
+                          style={{color: '#fff', fontSize: 12}}>
                           {'Duration '}
                         </Text>
                         <Text style={{color: '#fff'}}>
@@ -110,7 +110,7 @@ const SavedQuickRoutines: FunctionComponent<{
                     </ImageOverlay>
                   }
                   accessoryRight={
-                    <Text style={{fontSize: DevicePixels[30]}}>
+                    <Text style={{fontSize: 30}}>
                       {getDifficultyEmoji(item.difficulty)}
                     </Text>
                   }

@@ -2,7 +2,7 @@ import {View} from 'react-native';
 import React, {useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import StarRating from 'react-native-star-rating';
 import {rateApp} from '../../helpers';
 import Button from '../commons/Button';
@@ -38,15 +38,15 @@ const Rating: React.FC<{
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <View
             style={{
-              padding: DevicePixels[20],
-              paddingTop: DevicePixels[40],
-              borderTopLeftRadius: DevicePixels[30],
-              borderTopRightRadius: DevicePixels[30],
+              padding: 20,
+              paddingTop: 40,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
               backgroundColor: 'rgba(0,0,0,0.8)',
-              height: DevicePixels[450],
+              height: 450,
             }}>
             <StarRating
-              containerStyle={{marginHorizontal: DevicePixels[40]}}
+              containerStyle={{marginHorizontal: 40}}
               fullStarColor="#FFC24C"
               emptyStarColor="#6a4f1f"
               rating={rating}
@@ -60,13 +60,13 @@ const Rating: React.FC<{
               onChangeText={setFeedback}
               multiline
               style={{
-                height: DevicePixels[200],
-                marginVertical: DevicePixels[20],
+                height: 200,
+                marginVertical: 20,
                 textAlignVertical: 'top',
               }}
             />
             <Button
-              style={{margin: DevicePixels[10]}}
+              style={{margin: 10}}
               onPress={async () => {
                 setLoading(true);
                 if (rating > 3) {

@@ -4,7 +4,7 @@ import {SavedTest} from '../../types/SavedItem';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import Test from '../../types/Test';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import FastImage from 'react-native-fast-image';
 import {getTestImage} from '../../helpers/images';
 import Profile from '../../types/Profile';
@@ -34,18 +34,18 @@ const SavedTestCard: React.FC<{
       key={test.name}>
       <FastImage
         style={{
-          height: DevicePixels[140],
-          marginHorizontal: DevicePixels[15],
-          marginBottom: DevicePixels[10],
-          borderRadius: DevicePixels[10],
+          height: 140,
+          marginHorizontal: 15,
+          marginBottom: 10,
+          borderRadius: 10,
         }}
         source={image}>
         <View
           style={{
-            height: DevicePixels[140],
+            height: 140,
             justifyContent: 'center',
-            padding: DevicePixels[10],
-            borderRadius: DevicePixels[10],
+            padding: 10,
+            borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
           {test.premium && !profile.premium && (
@@ -55,9 +55,9 @@ const SavedTestCard: React.FC<{
                 top: 0,
                 right: 0,
                 bottom: 0,
-                margin: DevicePixels[10],
+                margin: 10,
               }}>
-              <Icon name="lock" color="#fff" size={DevicePixels[30]} />
+              <Icon name="lock" color="#fff" size={30} />
             </View>
           )}
 
@@ -65,13 +65,13 @@ const SavedTestCard: React.FC<{
             style={{
               position: 'absolute',
               top: 0,
-              width: DevicePixels[200],
-              margin: DevicePixels[20],
+              width: 200,
+              margin: 20,
             }}>
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
+                fontSize: 16,
               }}>
               {`${moment(item.createdate).format('MMMM Do YYYY')}`}
             </Text>
@@ -89,13 +89,13 @@ const SavedTestCard: React.FC<{
             style={{
               position: 'absolute',
               bottom: 0,
-              width: DevicePixels[200],
-              margin: DevicePixels[20],
+              width: 200,
+              margin: 20,
             }}>
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: DevicePixels[16],
+                fontSize: 16,
                 fontWeight: 'bold',
               }}>
               {test.name}

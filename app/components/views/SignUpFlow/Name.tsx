@@ -1,5 +1,5 @@
 import React from 'react';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Input from '../../commons/Input';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
@@ -16,21 +16,21 @@ const Name: React.FC<{
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[40],
+        margin: 40,
       }}
       style={{}}>
       <Text
         style={{
           textAlign: 'center',
-          marginBottom: DevicePixels[20],
-          fontSize: DevicePixels[20],
+          marginBottom: 20,
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         What's your name?
       </Text>
       <Input
         containerStyle={{
-          marginHorizontal: DevicePixels[20],
+          marginHorizontal: 20,
         }}
         placeholder="First Name"
         onChangeText={setName}
@@ -40,8 +40,8 @@ const Name: React.FC<{
       />
       <Input
         containerStyle={{
-          marginHorizontal: DevicePixels[20],
-          marginTop: DevicePixels[20],
+          marginHorizontal: 20,
+          marginTop: 20,
         }}
         placeholder="Last Name"
         onChangeText={setSurname}

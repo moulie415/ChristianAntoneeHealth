@@ -4,7 +4,6 @@ import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
 
 const AddConnectionButton: FunctionComponent<{
   navigation: NativeStackNavigationProp<StackParamList>;
@@ -13,8 +12,8 @@ const AddConnectionButton: FunctionComponent<{
     <TouchableOpacity onPress={() => navigation.navigate('AddConnection')}>
       <Icon
         color={colors.appWhite}
-        size={DevicePixels[20]}
-        style={{padding: DevicePixels[10]}}
+        size={20}
+        style={{padding: 10}}
         name="user-plus"
       />
     </TouchableOpacity>

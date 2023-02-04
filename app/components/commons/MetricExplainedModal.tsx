@@ -2,7 +2,7 @@ import {View} from 'react-native';
 import React from 'react';
 import Modal from './Modal';
 import Button from './Button';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import colors from '../../constants/colors';
 import Text from './Text';
 import * as _ from 'lodash';
@@ -34,13 +34,13 @@ const MetricExplainedModal: React.FC<{
             backgroundColor: colors.appGrey,
             width: '100%',
             alignSelf: 'center',
-            borderRadius: DevicePixels[10],
+            borderRadius: 10,
           }}>
           <Text
             style={{
               textAlign: 'center',
-              padding: DevicePixels[15],
-              fontSize: DevicePixels[25],
+              padding: 15,
+              fontSize: 25,
               color: colors.appWhite,
               fontWeight: 'bold',
             }}>
@@ -49,8 +49,8 @@ const MetricExplainedModal: React.FC<{
           <View
             style={{
               flexDirection: 'row',
-              marginHorizontal: DevicePixels[10],
-              marginBottom: DevicePixels[20],
+              marginHorizontal: 10,
+              marginBottom: 20,
             }}>
             {!!colorsArr.length &&
               !!ranges.length &&
@@ -72,27 +72,27 @@ const MetricExplainedModal: React.FC<{
                       style={{
                         textAlign: 'left',
                         color: colors.appWhite,
-                        marginLeft: -DevicePixels[10],
-                        height: DevicePixels[23],
+                        marginLeft: -10,
+                        height: 23,
                       }}>
                       {isFirst ? '' : `${ranges[index] + suffix || ''}`}
                     </Text>
                     <View
                       style={{
                         backgroundColor: color,
-                        height: DevicePixels[7],
+                        height: 7,
                         justifyContent: 'center',
                       }}>
                       {isInRange && (
                         <View
                           style={{
-                            height: DevicePixels[15],
-                            width: DevicePixels[15],
+                            height: 15,
+                            width: 15,
                             backgroundColor: colors.appWhite,
-                            borderRadius: DevicePixels[8],
+                            borderRadius: 8,
                             left: `${percentage}%`,
-                            marginLeft: -DevicePixels[8],
-                            borderWidth: DevicePixels[2],
+                            marginLeft: -8,
+                            borderWidth: 2,
                             borderColor: color,
                           }}
                         />
@@ -100,8 +100,8 @@ const MetricExplainedModal: React.FC<{
                     </View>
                     <Text
                       style={{
-                        fontSize: DevicePixels[9],
-                        marginTop: DevicePixels[10],
+                        fontSize: 9,
+                        marginTop: 10,
                         color: colors.appWhite,
                         textAlign: 'center',
                         fontWeight: 'bold',
@@ -112,11 +112,7 @@ const MetricExplainedModal: React.FC<{
                 );
               })}
           </View>
-          <Button
-            text="Close"
-            style={{margin: DevicePixels[10]}}
-            onPress={onRequestClose}
-          />
+          <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
         </View>
       )}
     </Modal>

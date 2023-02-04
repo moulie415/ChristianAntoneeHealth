@@ -2,7 +2,7 @@ import {View} from 'react-native';
 import React from 'react';
 import {Goal} from '../../../types/Shared';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
 
@@ -15,13 +15,13 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
       style={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          fontSize: DevicePixels[20],
+          marginVertical: 20,
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         What's your goal?
@@ -29,29 +29,29 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
       <Button
         text="Improve my strength and fitness"
         style={{
-          marginBottom: DevicePixels[20],
-          marginHorizontal: DevicePixels[20],
+          marginBottom: 20,
+          marginHorizontal: 20,
         }}
-        textStyle={{fontSize: DevicePixels[15]}}
+        textStyle={{fontSize: 15}}
         onPress={() => setGoal(Goal.STRENGTH)}
         variant={goal === Goal.STRENGTH ? 'primary' : 'secondary'}
       />
       <Button
         text=" Weight loss"
         style={{
-          marginBottom: DevicePixels[20],
-          marginHorizontal: DevicePixels[20],
+          marginBottom: 20,
+          marginHorizontal: 20,
         }}
-        textStyle={{fontSize: DevicePixels[15]}}
+        textStyle={{fontSize: 15}}
         onPress={() => setGoal(Goal.WEIGHT_LOSS)}
         variant={goal === Goal.WEIGHT_LOSS ? 'primary' : 'secondary'}
       />
       <Button
         text="Become more active"
-        textStyle={{fontSize: DevicePixels[15]}}
+        textStyle={{fontSize: 15}}
         style={{
-          marginBottom: DevicePixels[20],
-          marginHorizontal: DevicePixels[20],
+          marginBottom: 20,
+          marginHorizontal: 20,
         }}
         onPress={() => setGoal(Goal.ACTIVE)}
         variant={goal === Goal.ACTIVE ? 'primary' : 'secondary'}

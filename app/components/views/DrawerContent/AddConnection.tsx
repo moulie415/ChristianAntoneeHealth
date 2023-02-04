@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {generateLink} from '../../../helpers/api';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Clipboard from '@react-native-clipboard/clipboard';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import Button from '../../commons/Button';
 import Snackbar from 'react-native-snackbar';
 import {ImageBackground, Share, StyleSheet, View} from 'react-native';
@@ -38,7 +38,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
         <Text
           style={{
             color: colors.appWhite,
-            margin: DevicePixels[10],
+            margin: 10,
             marginTop: 0,
           }}>
           Send an invite link to someone you want to connect with, this link
@@ -47,7 +47,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
         </Text>
         <Input
           disabled
-          containerStyle={{margin: DevicePixels[10]}}
+          containerStyle={{margin: 10}}
           value={link}
           placeholder="Press button to generate link"
           accessoryRight={
@@ -55,7 +55,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
               <>
                 <IconButton
                   icon="clipboard"
-                  style={{marginRight: DevicePixels[5]}}
+                  style={{marginRight: 5}}
                   onPress={() => {
                     Clipboard.setString(link);
                     Snackbar.show({text: 'Link copied to clipboard!'});
@@ -86,7 +86,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
         />
         <Button
           text="Generate"
-          style={{margin: DevicePixels[10]}}
+          style={{margin: 10}}
           disabled={!!link || loading}
           loading={loading}
           onPress={async () => {

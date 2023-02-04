@@ -1,6 +1,6 @@
 import {ImageBackground, StyleSheet, View} from 'react-native';
 import React from 'react';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import colors from '../../../constants/colors';
 import Text from '../../commons/Text';
 import Input from '../../commons/Input';
@@ -15,14 +15,14 @@ const SelectEquipment: React.FC<{
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
+          marginVertical: 20,
 
-          fontSize: DevicePixels[20],
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         What equipment do you have?
@@ -31,9 +31,9 @@ const SelectEquipment: React.FC<{
       <Input
         placeholder="e.g. dumbbells, barbells, squat rack..."
         style={{
-          height: DevicePixels[100],
+          height: 100,
           textAlignVertical: 'top',
-          marginHorizontal: DevicePixels[10],
+          marginHorizontal: 10,
         }}
         multiline
         onChangeText={setEquipment}

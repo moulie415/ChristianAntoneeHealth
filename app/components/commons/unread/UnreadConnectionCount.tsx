@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import {MyRootState} from '../../../types/Shared';
 import Text from '../Text';
 
@@ -18,16 +18,16 @@ const UnreadConnectionCount: React.FC<{
     return (
       <View
         style={{
-          width: DevicePixels[18],
-          height: DevicePixels[18],
-          borderRadius: DevicePixels[9],
+          width: 18,
+          height: 18,
+          borderRadius: 9,
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
         }}>
         <Text
           style={{
-            fontSize: DevicePixels[10],
+            fontSize: 10,
             fontWeight: 'bold',
             color: '#fff',
           }}>

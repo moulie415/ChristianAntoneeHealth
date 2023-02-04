@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 import SignUpProps from '../../types/views/SignUp';
 import {handleAuth} from '../../actions/profile';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
 import Input from '../commons/Input';
@@ -72,7 +72,7 @@ const SignUp: React.FC<SignUpProps> = ({
           <Text
             style={{
               color: colors.appWhite,
-              margin: DevicePixels[20],
+              margin: 20,
               marginTop: 0,
             }}>
             Please enter your personal details, then we will send you a
@@ -80,7 +80,7 @@ const SignUp: React.FC<SignUpProps> = ({
           </Text>
           <Input
             containerStyle={{
-              marginHorizontal: DevicePixels[20],
+              marginHorizontal: 20,
             }}
             placeholder="First Name"
             onChangeText={setName}
@@ -90,8 +90,8 @@ const SignUp: React.FC<SignUpProps> = ({
           />
           <Input
             containerStyle={{
-              marginHorizontal: DevicePixels[20],
-              marginTop: DevicePixels[20],
+              marginHorizontal: 20,
+              marginTop: 20,
             }}
             placeholder="Last Name"
             onChangeText={setSurname}
@@ -101,8 +101,8 @@ const SignUp: React.FC<SignUpProps> = ({
           />
           <Input
             containerStyle={{
-              marginHorizontal: DevicePixels[20],
-              marginTop: DevicePixels[20],
+              marginHorizontal: 20,
+              marginTop: 20,
             }}
             placeholder="Email"
             onChangeText={setEmail}
@@ -114,8 +114,8 @@ const SignUp: React.FC<SignUpProps> = ({
           />
           <Input
             containerStyle={{
-              marginHorizontal: DevicePixels[20],
-              marginTop: DevicePixels[20],
+              marginHorizontal: 20,
+              marginTop: 20,
             }}
             placeholder="Password"
             secure
@@ -127,8 +127,8 @@ const SignUp: React.FC<SignUpProps> = ({
           />
           <Input
             containerStyle={{
-              marginHorizontal: DevicePixels[20],
-              marginTop: DevicePixels[20],
+              marginHorizontal: 20,
+              marginTop: 20,
             }}
             placeholder="Confirm password"
             secure
@@ -146,24 +146,24 @@ const SignUp: React.FC<SignUpProps> = ({
             onPress={signUp}
             text="Sign Up"
             style={{
-              marginHorizontal: DevicePixels[20],
-              marginTop: DevicePixels[20],
+              marginHorizontal: 20,
+              marginTop: 20,
             }}
           />
 
           <TouchableOpacity
-            style={{marginTop: DevicePixels[10]}}
+            style={{marginTop: 10}}
             onPress={() => navigation.navigate('Login')}
             hitSlop={{
-              top: DevicePixels[10],
-              bottom: DevicePixels[10],
-              right: DevicePixels[10],
-              left: DevicePixels[10],
+              top: 10,
+              bottom: 10,
+              right: 10,
+              left: 10,
             }}>
             <Text
               style={{
                 color: '#fff',
-                marginHorizontal: DevicePixels[20],
+                marginHorizontal: 20,
                 textAlign: 'center',
               }}>
               Already have an account or want to use {getAuthString()}

@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from '../../commons/Text';
-import DevicePixels from '../../../helpers/DevicePixels';
+
 import colors from '../../../constants/colors';
 import Input from '../../commons/Input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -14,13 +14,13 @@ const PhysicalInjuries: React.FC<{
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
-        margin: DevicePixels[50],
+        margin: 50,
       }}>
       <Text
         style={{
           textAlign: 'center',
-          marginVertical: DevicePixels[20],
-          fontSize: DevicePixels[20],
+          marginVertical: 20,
+          fontSize: 20,
           color: colors.appWhite,
         }}>
         Physical injuries?
@@ -29,9 +29,9 @@ const PhysicalInjuries: React.FC<{
       <Input
         placeholder="e.g. acute or chronic conditions"
         style={{
-          height: DevicePixels[100],
+          height: 100,
           textAlignVertical: 'top',
-          marginHorizontal: DevicePixels[10],
+          marginHorizontal: 10,
         }}
         multiline
         onChangeText={setInjuries}

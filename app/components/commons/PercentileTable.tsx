@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
-import DevicePixels from '../../helpers/DevicePixels';
+
 import {PercentileTable as PercentileTableType} from '../../types/Test';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
@@ -18,12 +18,12 @@ const Row: React.FC<{percentile: string; table: PercentileTableType}> = ({
     <View style={{flexDirection: 'row'}}>
       <Text
         style={{
-          padding: DevicePixels[2],
+          padding: 2,
           borderWidth: StyleSheet.hairlineWidth,
           width: CELL_WIDTH,
           textAlign: 'center',
           fontWeight: 'bold',
-          fontSize: DevicePixels[12],
+          fontSize: 12,
           color: colors.appWhite,
           borderColor: colors.appWhite,
         }}>
@@ -32,12 +32,12 @@ const Row: React.FC<{percentile: string; table: PercentileTableType}> = ({
 
       <Text
         style={{
-          padding: DevicePixels[2],
+          padding: 2,
           borderWidth: StyleSheet.hairlineWidth,
           width: CELL_WIDTH,
           textAlign: 'center',
           fontWeight: 'bold',
-          fontSize: DevicePixels[12],
+          fontSize: 12,
           color: colors.appWhite,
           borderColor: colors.appWhite,
         }}>
@@ -65,19 +65,19 @@ const PercentileTable: React.FC<{
         }}>
         <Text
           style={{
-            margin: DevicePixels[10],
+            margin: 10,
             color: colors.appWhite,
           }}>
           {title || 'Percentile table'}
         </Text>
         <Icon
-          style={{padding: DevicePixels[10]}}
+          style={{padding: 10}}
           name={collapsed ? 'plus' : 'minus'}
           color={colors.appWhite}
-          size={DevicePixels[20]}
+          size={20}
         />
       </TouchableOpacity>
-      <Collapsible style={{marginLeft: DevicePixels[10]}} collapsed={collapsed}>
+      <Collapsible style={{marginLeft: 10}} collapsed={collapsed}>
         <Row percentile="90th" table={table} />
         <Row percentile="80th" table={table} />
         <Row percentile="70th" table={table} />
