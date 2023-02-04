@@ -26,7 +26,7 @@ const FitnessTesting: React.FC<{
 
         <ScrollView
           contentContainerStyle={{
-            paddingBottom: 20,
+            paddingBottom: 60,
           }}>
           {Object.values(tests).map((item, index) => {
             return (

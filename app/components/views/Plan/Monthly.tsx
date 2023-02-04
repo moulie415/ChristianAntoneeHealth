@@ -85,7 +85,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
           }
         }}
       />
-      <Button
+      {/* <Button
         text="Sync with native calendar"
         style={{margin: 20}}
         onPress={async () => {
@@ -102,7 +102,7 @@ const Monthly: React.FC<{plan: Plan; tests: {[key: string]: Test}}> = ({
             Snackbar.show({text: 'Error syncing calendar'});
           }
         }}
-      />
+      /> */}
       <Modal
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}>

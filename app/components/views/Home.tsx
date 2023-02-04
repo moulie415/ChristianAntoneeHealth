@@ -61,7 +61,7 @@ const Home: React.FC<{
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
         <Header drawerRef={drawerRef} />
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 60}}>
           <FastImage
             source={require('../../images/logo.png')}
             style={{
