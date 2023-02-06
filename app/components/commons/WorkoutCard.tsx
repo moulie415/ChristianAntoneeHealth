@@ -111,7 +111,7 @@ const WorkoutCard: React.FC<{
           )}
           <View
             style={{
-              width: 250,
+              width: 300,
             }}>
             <Text
               style={{
@@ -126,7 +126,7 @@ const WorkoutCard: React.FC<{
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: 12,
+                  fontSize: 14,
                 }}>
                 {`${getLevelString(item.level)} - ${getEquipmentString(
                   item.equipment,
