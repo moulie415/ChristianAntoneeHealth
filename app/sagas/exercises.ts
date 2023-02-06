@@ -213,8 +213,9 @@ export function* handleDeepLink(url: string) {
         Alert.alert('Error', 'Please log in before using that link');
       }
     } catch (e) {
-      // @ts-ignore
-      Alert.alert('Error handling link', e.message);
+      if (e instanceof Error) {
+        Alert.alert('Error handling link', e.message);
+      }
       resetToTabs();
     }
   } else if (parsed.url === 'https://healthandmovement/invite') {
@@ -243,8 +244,9 @@ export function* handleDeepLink(url: string) {
       }
     } catch (e) {
       resetToTabs();
-      // @ts-ignore
-      Alert.alert('Error handling link', e.message);
+      if (e instanceof Error) {
+        Alert.alert('Error handling link', e.message);
+      }
     }
   } else {
     Alert.alert('Error', 'Invalid link');

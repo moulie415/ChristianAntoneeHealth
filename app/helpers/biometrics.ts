@@ -445,13 +445,14 @@ export const saveWorkout = (
       });
     }
   } catch (e) {
-    Alert.alert(
-      `Error saving workout to ${
-        Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
-      }`,
-      // @ts-ignore
-      e.message,
-    );
+    if (e instanceof Error) {
+      Alert.alert(
+        `Error saving workout to ${
+          Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+        }`,
+        e.message,
+      );
+    }
   }
 };
 

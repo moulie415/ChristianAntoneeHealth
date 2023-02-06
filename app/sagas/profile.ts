@@ -290,8 +290,13 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
         yield put(setVideo(id, exercise.video.src, response.path()));
       }
     } catch (e) {
-      // @ts-ignore
-      yield call(Alert.alert, 'Error', `Error downloading video: ${e.message}`);
+      if (e instanceof Error) {
+        yield call(
+          Alert.alert,
+          'Error',
+          `Error downloading video: ${e.message}`,
+        );
+      }
     }
   } else {
     yield call(
@@ -384,8 +389,9 @@ function* signUp(action: SignUpAction) {
       medications,
     });
   } catch (e) {
-    // @ts-ignore
-    Alert.alert('Error', e.message);
+    if (e instanceof Error) {
+      Alert.alert('Error', e.message);
+    }
   }
 }
 
@@ -555,8 +561,9 @@ function* sendMessage(action: SendMessageAction) {
     yield call(api.sendMessage, message, chatId, uid);
     notif.play();
   } catch (e) {
-    // @ts-ignore
-    Snackbar.show({text: e.message});
+    if (e instanceof Error) {
+      Snackbar.show({text: e.message});
+    }
     yield put(setMessage(uid, {...message, sent: false, pending: false}));
   }
 }
@@ -703,23 +710,27 @@ function* handleAuthWorker(action: HandleAuthAction) {
           yield call(initBiometrics);
         }
         resetToTabs();
-        const getLinkPromise = () => {
-          return new Promise<FirebaseDynamicLinksTypes.DynamicLink>(resolve => {
-            dynamicLinks()
-              .getInitialLink()
-              .then(link => {
-                if (link) {
-                  resolve(link);
-                }
-              });
-          });
-        };
-        const link: FirebaseDynamicLinksTypes.DynamicLink = yield call(
-          getLinkPromise,
-        );
+        try {
+          const getLinkPromise = () => {
+            return new Promise<FirebaseDynamicLinksTypes.DynamicLink | null>(
+              resolve => {
+                dynamicLinks()
+                  .getInitialLink()
+                  .then(link => {
+                    resolve(link);
+                  });
+              },
+            );
+          };
+          const link: FirebaseDynamicLinksTypes.DynamicLink = yield call(
+            getLinkPromise,
+          );
 
-        if (link && link.url) {
-          yield call(handleDeepLink, link.url);
+          if (link && link.url) {
+            yield call(handleDeepLink, link.url);
+          }
+        } catch (e: unknown) {
+          logError(e);
         }
 
         const {premium} = yield select(
@@ -758,8 +769,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
   } catch (e) {
     navigate('Login');
     logError(e);
-    // @ts-ignore
-    Alert.alert('Error', e.message);
+    if (e instanceof Error) {
+      Alert.alert('Error', e.message);
+    }
   }
 }
 
