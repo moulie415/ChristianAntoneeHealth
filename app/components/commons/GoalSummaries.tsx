@@ -55,7 +55,7 @@ const GoalCircle: React.FC<{
         fill={fill}
         tintColor={score >= goal ? colors.appGreen : colors.appBlue}
         // tintColorSecondary={colors.appBlueFaded}
-        backgroundColor={colors.appWhite}
+        backgroundColor={colors.textGrey}
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
@@ -65,7 +65,7 @@ const GoalCircle: React.FC<{
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: 30,
+          fontSize: 27,
           paddingHorizontal: 40,
           textAlign: 'center',
           alignSelf: 'center',
