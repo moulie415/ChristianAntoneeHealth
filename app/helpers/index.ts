@@ -369,7 +369,7 @@ export const getPercentileFill = (percentile?: string | boolean) => {
 export const getEducationCategoryString = (category: Category) => {
   switch (category) {
     case Category.EXERCISE:
-      return 'Education Articles';
+      return 'Exercise Articles';
     case Category.NUTRITIONAL:
       return 'Nutritional Info';
     default:
