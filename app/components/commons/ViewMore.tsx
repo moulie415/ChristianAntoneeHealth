@@ -42,7 +42,7 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
       textStyle={{
         margin: 10,
         marginBottom: 0,
-        lineHeight: 20
+        lineHeight: 25,
       }}>
       <Text style={{color: colors.appWhite}}>{text}</Text>
     </ViewMoreText>

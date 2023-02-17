@@ -24,6 +24,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 import {getTestImage} from '../../../helpers/images';
+import ViewMore from '../../commons/ViewMore';
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -258,21 +259,10 @@ const Test: React.FC<TestProps> = ({
               </Text>
               <View
                 style={{
-                  marginHorizontal: 10,
+  
                   marginBottom: 10,
                 }}>
-                {test.how?.map(h => {
-                  return (
-                    <Text
-                      style={{
-                        color: colors.appWhite,
-                        fontSize: 11,
-                      }}
-                      key={h}>
-                      {h}
-                    </Text>
-                  );
-                })}
+                <ViewMore text={test.how?.join('')} lines={7} />
               </View>
 
               <Divider />
