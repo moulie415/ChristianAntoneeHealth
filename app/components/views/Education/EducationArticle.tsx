@@ -47,13 +47,14 @@ const EducationArticle: React.FC<{
           }}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 25,
               fontWeight: 'bold',
               marginBottom: 10,
+              fontFamily: 'Helvetica',
             }}>
             {education.title}
           </Text>
-          <Text style={{fontSize: 12}}>{`${moment(
+          <Text style={{fontSize: 12, fontFamily: 'Helvetica'}}>{`${moment(
             education.createdate,
           ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
             education.category,
