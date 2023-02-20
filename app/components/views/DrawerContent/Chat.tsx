@@ -232,10 +232,10 @@ const Chat: React.FC<ChatProps> = ({
                 {...props}
                 textStyle={{
                   right: {
-                    fontFamily: 'MontserratAlternates-Regular',
+                    fontFamily: 'Helvetica',
                   },
                   left: {
-                    fontFamily: 'MontserratAlternates-Regular',
+                    fontFamily: 'Helvetica',
                   },
                 }}
                 wrapperStyle={{

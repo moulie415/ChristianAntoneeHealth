@@ -27,7 +27,13 @@ import StackComponent from './Stack';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import appCheck from '@react-native-firebase/app-check';
 import Education from './types/Education';
-import {Dimensions, Platform, View, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import Config from 'react-native-config';
 import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
@@ -236,7 +242,7 @@ const App: React.FC = () => {
           </Drawer>
           {showSplash && (
             <View style={{backgroundColor: colors.appWhite}}>
-              <FastImage
+              <Image
                 source={require('./images/splash.gif')}
                 style={{
                   height,

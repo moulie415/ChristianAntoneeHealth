@@ -28,7 +28,7 @@ const WhatArea: React.FC<{
             fontSize: 22,
             fontWeight: 'bold',
           }}>
-          What the body area you want to focus on from here
+           What area do you want to focus on?
         </Text>
 
         <TouchableOpacity

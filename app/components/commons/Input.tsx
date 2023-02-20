@@ -29,7 +29,7 @@ const Input: React.FC<Props> = props => {
             height: 70,
             borderWidth: 2,
             borderRadius: 20,
-            fontFamily: 'MontserratAlternates-Regular',
+            fontFamily: 'Helvetica',
             color: colors.appWhite,
             padding: 20,
             paddingTop: props.multiline ? 10 : 20,
