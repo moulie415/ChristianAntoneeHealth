@@ -197,7 +197,7 @@ const Plan: React.FC<{
               style={{
                 ...StyleSheet.absoluteFillObject,
                 backgroundColor: '#000',
-                opacity: 0.7,
+                opacity: 0.8,
               }}
             />
             <Text
@@ -205,7 +205,9 @@ const Plan: React.FC<{
                 textAlign: 'center',
                 margin: 20,
                 marginTop: 0,
-                color: '#fff',
+                fontSize: 25,
+                fontWeight: 'bold',
+                color: colors.appWhite
               }}>
               My workout plan
             </Text>
