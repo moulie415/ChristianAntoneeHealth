@@ -16,7 +16,7 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Exercise from '../../../types/Exercise';
-import { getEquipmentList } from '../../../helpers/exercises';
+import {getEquipmentList} from '../../../helpers/exercises';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -153,9 +153,13 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>{`${capitalizeFirstLetter(
-            equipment,
-          )} equipment (${equipmentList.join(', ')})`}</Text>
+          <Text style={{color: colors.appWhite}}>
+            {equipmentList && equipmentList.length
+              ? `${capitalizeFirstLetter(
+                  equipment,
+                )} equipment (${equipmentList.join(', ')})`
+              : 'No equipment needed'}
+          </Text>
         </View>
         <View
           style={{

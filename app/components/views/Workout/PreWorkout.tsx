@@ -97,7 +97,9 @@ const PreWorkout: React.FC<{
             />
           </View>
           <Text style={{color: colors.appWhite}}>
-            {equipmentList.join(', ')}
+            {equipmentList && equipmentList.length
+              ? equipmentList.join(', ')
+              : 'No equipment needed'}
           </Text>
         </View>
 
