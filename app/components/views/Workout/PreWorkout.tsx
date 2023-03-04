@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -14,6 +14,7 @@ import Button from '../../commons/Button';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Exercise from '../../../types/Exercise';
+import {getEquipmentList} from '../../../helpers/exercises';
 
 const PreWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreWorkout'>;
@@ -21,6 +22,8 @@ const PreWorkout: React.FC<{
   workout: Exercise[];
 }> = ({route, navigation, workout}) => {
   const {isLast, name} = route.params;
+
+  const equipmentList = getEquipmentList(workout);
 
   return (
     <>
@@ -57,25 +60,6 @@ const PreWorkout: React.FC<{
           }}>
           {name}
         </Text>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
-              name="stopwatch"
-              size={25}
-              color={colors.appWhite}
-              style={{
-                marginHorizontal: 15,
-              }}
-            />
-          </View>
-          <Text
-            style={{color: colors.appWhite}}>{`Under ${duration} mins`}</Text>
-        </View> */}
         <View
           style={{
             flexDirection: 'row',
@@ -96,27 +80,7 @@ const PreWorkout: React.FC<{
             workout.length > 1 ? 'exercises' : 'exercise'
           } `}</Text>
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
-              name="tachometer-alt"
-              size={22}
-              color={colors.appWhite}
-              style={{
-                marginHorizontal: 15,
-              }}
-            />
-          </View>
-          <Text style={{color: colors.appWhite}}>
-            {capitalizeFirstLetter(level)}
-          </Text>
-        </View> */}
-        {/* <View
+        <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -132,30 +96,11 @@ const PreWorkout: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>{`${capitalizeFirstLetter(
-            equipment,
-          )} equipment`}</Text>
-        </View> */}
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
-              name="child"
-              size={25}
-              color={colors.appWhite}
-              style={{
-                marginHorizontal: 15,
-              }}
-            />
-          </View>
-          <Text style={{color: colors.appWhite}}>{`${capitalizeFirstLetter(
-            area,
-          )} body`}</Text>
-        </View> */}
+          <Text style={{color: colors.appWhite}}>
+            {equipmentList.join(', ')}
+          </Text>
+        </View>
+
         <Button
           style={{margin: 15}}
           text="Start workout"

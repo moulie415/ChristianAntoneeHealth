@@ -155,7 +155,7 @@ const PreQuickRoutine: React.FC<{
           </View>
           <Text style={{color: colors.appWhite}}>{`${capitalizeFirstLetter(
             equipment,
-          )} equipment, (${equipmentList.join(', ')})`}</Text>
+          )} equipment (${equipmentList.join(', ')})`}</Text>
         </View>
         <View
           style={{
