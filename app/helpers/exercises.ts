@@ -7,6 +7,7 @@ import Exercise, {Muscle} from '../types/Exercise';
 import {Unit} from '../types/Profile';
 import {Equipment, Level} from '../types/Shared';
 import {logError} from './error';
+import * as _ from 'lodash';
 
 const levelMapping = {
   null: 0,
@@ -196,4 +197,15 @@ export const alertPremiumFeature = () => {
       {text: 'Yes', onPress: () => navigate('Premium', {})},
     ],
   );
+};
+
+export const getEquipmentList = (exercises: Exercise[]) => {
+  const equipment = exercises.reduce((acc: Equipment[], cur) => {
+    if (cur.equipment) {
+      return [...acc, ...cur.equipment];
+    }
+    return acc;
+  }, []);
+
+  return _.uniq(equipment.map(item => equipmentItemReadableString(item)));
 };

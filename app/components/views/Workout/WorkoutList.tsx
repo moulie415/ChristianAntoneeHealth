@@ -93,7 +93,7 @@ const WorkoutList: React.FC<{
   useEffect(() => {
     if (isClosed && selectedItem) {
       getExercisesByIdAction(selectedItem.exerciseIds);
-      navigation.navigate('QuickRoutine', {routine: selectedItem});
+      navigation.navigate('PreQuickRoutine', {routine: selectedItem});
       startQuickRoutineAction(selectedItem);
     }
   }, [

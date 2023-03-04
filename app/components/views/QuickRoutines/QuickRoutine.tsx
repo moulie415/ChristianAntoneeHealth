@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {getVideoHeight} from '../../../helpers';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
-import QuickRoutineProps from '../../../types/views/QuickRoutine';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 
@@ -23,8 +22,21 @@ import LinearGradient from 'react-native-linear-gradient';
 import Orientation from 'react-native-orientation-locker';
 import ExerciseArrows from '../../commons/ExerciseArrows';
 import useInterval from '../../../hooks/UseInterval';
+import {StackParamList} from '../../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RouteProp} from '@react-navigation/core';
+import Exercise from '../../../types/Exercise';
 
-const QuickRoutineView: React.FC<QuickRoutineProps> = ({
+const QuickRoutineView: React.FC<{
+  downloadVideoAction: (id: string) => void;
+  videos: {[key: string]: {src: string; path: string}};
+  loading: boolean;
+  route: RouteProp<StackParamList, 'QuickRoutine'>;
+  navigation: NativeStackNavigationProp<StackParamList, 'QuickRoutine'>;
+  setExerciseNoteAction: (exercise: string, note: string) => void;
+  exerciseNotes: {[key: string]: string};
+  exercisesObj: {[key: string]: Exercise};
+}> = ({
   downloadVideoAction,
   videos,
   loading,

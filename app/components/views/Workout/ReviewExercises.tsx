@@ -53,7 +53,7 @@ const ReviewExercises: React.FC<{
 
   useEffect(() => {
     if (isClosed) {
-      navigation.navigate('StartWorkout', {name: ''});
+      navigation.navigate('PreWorkout', {name: ''});
     }
   }, [isClosed, navigation]);
 
@@ -126,7 +126,7 @@ const ReviewExercises: React.FC<{
           if (!profile.premium && isLoaded && settings.ads) {
             show();
           } else {
-            navigation.navigate('StartWorkout', {name: ''});
+            navigation.navigate('PreWorkout', {name: ''});
           }
         }}
         style={{

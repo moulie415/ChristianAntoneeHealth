@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
@@ -13,11 +13,16 @@ import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import {MyRootState} from '../../../types/Shared';
+import {connect} from 'react-redux';
+import Exercise from '../../../types/Exercise';
+import { getEquipmentList } from '../../../helpers/exercises';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
   route: RouteProp<StackParamList, 'PreQuickRoutine'>;
-}> = ({route, navigation}) => {
+  exercisesObj: {[key: string]: Exercise};
+}> = ({route, navigation, exercisesObj}) => {
   const {
     routine: {
       name,
@@ -30,6 +35,14 @@ const PreQuickRoutine: React.FC<{
       instructions,
     },
   } = route.params;
+  const exercises = useMemo(() => {
+    return exerciseIds.map(id => {
+      return exercisesObj[id];
+    });
+  }, [exercisesObj, exerciseIds]);
+
+  const equipmentList = getEquipmentList(exercises);
+
   return (
     <>
       <FastImage
@@ -142,7 +155,7 @@ const PreQuickRoutine: React.FC<{
           </View>
           <Text style={{color: colors.appWhite}}>{`${capitalizeFirstLetter(
             equipment,
-          )} equipment`}</Text>
+          )} equipment, (${equipmentList.join(', ')})`}</Text>
         </View>
         <View
           style={{
@@ -176,4 +189,8 @@ const PreQuickRoutine: React.FC<{
   );
 };
 
-export default PreQuickRoutine;
+const mapStateToProps = ({exercises}: MyRootState) => ({
+  exercisesObj: exercises.exercises,
+});
+
+export default connect(mapStateToProps)(PreQuickRoutine);

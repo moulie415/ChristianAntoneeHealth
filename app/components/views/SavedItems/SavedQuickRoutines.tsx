@@ -70,7 +70,7 @@ const SavedQuickRoutines: FunctionComponent<{
                 <ListItem
                   onPress={() => {
                     getExercisesByIdAction(quickRoutine.exerciseIds);
-                    navigation.navigate('QuickRoutine', {
+                    navigation.navigate('PreQuickRoutine', {
                       routine: quickRoutine,
                     });
                   }}
