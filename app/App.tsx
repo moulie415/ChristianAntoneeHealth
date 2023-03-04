@@ -242,16 +242,29 @@ const App: React.FC = () => {
           </Drawer>
           {showSplash && (
             <View style={{backgroundColor: colors.appWhite}}>
-              <Image
-                source={require('./images/splash.gif')}
-                style={{
-                  height,
-                  width: '75%',
-                  backgroundColor: colors.appWhite,
-                  alignSelf: 'center',
-                }}
-                resizeMode="contain"
-              />
+              {Platform.OS === 'ios' ? (
+                <Image
+                  source={require('./images/splash.gif')}
+                  style={{
+                    height,
+                    width: '75%',
+                    backgroundColor: colors.appWhite,
+                    alignSelf: 'center',
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <FastImage
+                  source={require('./images/splash.gif')}
+                  style={{
+                    height,
+                    width: '75%',
+                    backgroundColor: colors.appWhite,
+                    alignSelf: 'center',
+                  }}
+                  resizeMode="contain"
+                />
+              )}
             </View>
           )}
           <WelcomeModal showSplash={showSplash} />
