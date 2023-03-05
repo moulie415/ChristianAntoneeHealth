@@ -1,5 +1,5 @@
 import {ImageBackground, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 import colors from '../../../constants/colors';
 import Text from '../../commons/Text';
@@ -9,7 +9,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const SelectEquipment: React.FC<{
   equipment: string;
   setEquipment: (equipment: string) => void;
-}> = ({equipment, setEquipment}) => {
+}> = ({setEquipment, equipment}) => {
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
@@ -37,7 +37,7 @@ const SelectEquipment: React.FC<{
         }}
         multiline
         onChangeText={setEquipment}
-        value={equipment}
+        defaultValue={equipment}
         placeholderTextColor={colors.appWhite}
       />
     </KeyboardAwareScrollView>

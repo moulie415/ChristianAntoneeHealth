@@ -35,7 +35,7 @@ const PhysicalInjuries: React.FC<{
         }}
         multiline
         onChangeText={setInjuries}
-        value={injuries}
+        defaultValue={injuries}
       />
     </KeyboardAwareScrollView>
   );

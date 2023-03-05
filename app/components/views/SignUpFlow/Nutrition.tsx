@@ -134,7 +134,7 @@ const Nutrition: React.FC<{
                       setSupplements(text);
                       updateSupplements(text);
                     }}
-                    value={supplements}
+                    defaultValue={supplements}
                   />
                 ) : (
                   item.items?.map(i => {

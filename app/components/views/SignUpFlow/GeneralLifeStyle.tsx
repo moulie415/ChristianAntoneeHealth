@@ -35,7 +35,7 @@ const GeneralLifestyle: React.FC<{
         }}
         multiline
         onChangeText={setLifestyle}
-        value={lifestyle}
+        defaultValue={lifestyle}
         placeholderTextColor={colors.appWhite}
       />
     </KeyboardAwareScrollView>

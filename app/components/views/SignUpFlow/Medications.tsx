@@ -35,7 +35,7 @@ const Medications: React.FC<{
         }}
         multiline
         onChangeText={setMedications}
-        value={medications}
+        defaultValue={medications}
         placeholderTextColor={colors.appWhite}
       />
     </KeyboardAwareScrollView>
