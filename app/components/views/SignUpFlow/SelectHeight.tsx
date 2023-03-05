@@ -47,7 +47,7 @@ const SelectHeight: React.FC<{
         {`${height} ${unit === 'metric' ? 'cm' : 'inches'}`}
       </Text>
 
-      {(index === 5 || height) && (
+      {(index === 5 || !!height) && (
         /* @ts-ignore */
         <Picker
           style={{height: 200, backgroundColor: 'transparent'}}
