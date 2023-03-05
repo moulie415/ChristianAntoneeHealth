@@ -75,8 +75,8 @@ const Header: React.FC<{
                 position: 'absolute',
                 alignItems: 'center',
                 justifyContent: 'center',
-                top: -5,
-                right: -8,
+                top: 7,
+                right: 7,
                 backgroundColor: colors.appRed,
               }}>
               <Text
