@@ -31,12 +31,13 @@ import {
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {PlanStatus} from '../types/Profile';
-import {SavedQuickRoutine, SavedTest} from '../types/SavedItem';
+import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import {Plan, Sample, StepSample} from '../types/Shared';
 
 export interface WeeklyItems {
   quickRoutines: {[key: string]: SavedQuickRoutine};
   tests: {[key: string]: SavedTest};
+  workouts: {[key: string]: SavedWorkout};
 }
 
 export interface ProfileState {
@@ -109,6 +110,7 @@ const initialState: ProfileState = {
   weeklyItems: {
     quickRoutines: {},
     tests: {},
+    workouts: {},
   },
   hasViewedTour: false,
 };

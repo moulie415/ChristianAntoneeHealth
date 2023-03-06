@@ -74,8 +74,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
             marginBottom: 20,
           }}
         />
-        <Button text="Return Home" onPress={resetToTabs} style={{margin: 10}} />
-        <Button
+        {/* <Button
           text="Share workout"
           onPress={() => setShareModalVisibleAction(true)}
           style={{
@@ -83,7 +82,7 @@ const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
             marginBottom: 20,
           }}
         />
-        <ShareModal title="Share workout" type="workout" workout={workout} />
+        <ShareModal title="Share workout" type="workout" workout={workout} /> */}
       </SafeAreaView>
     </FastImage>
   );

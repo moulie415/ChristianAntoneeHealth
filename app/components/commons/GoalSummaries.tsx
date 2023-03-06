@@ -139,8 +139,13 @@ const GoalSummaries: React.FC<{
     getWeeklyItemsAction();
   }, [getWeeklyItemsAction]);
 
-  const savedQuickRoutines =
-    weeklyItems?.quickRoutines && Object.values(weeklyItems.quickRoutines);
+  const savedWorkouts = weeklyItems?.workouts
+    ? Object.values(weeklyItems.workouts)
+    : [];
+
+  const savedQuickRoutines = weeklyItems?.quickRoutines
+    ? Object.values(weeklyItems.quickRoutines)
+    : [];
 
   const quickRoutines =
     savedQuickRoutines &&
@@ -168,19 +173,18 @@ const GoalSummaries: React.FC<{
       }).length
     : 0;
 
-  const mins = savedQuickRoutines
-    ? Math.round(
-        savedQuickRoutines.reduce((acc, cur) => {
-          return acc + cur.seconds / 60;
-        }, 0),
-      )
-    : 0;
+  const mins = Math.round(
+    [...savedWorkouts, ...savedQuickRoutines].reduce((acc, cur) => {
+      return acc + cur.seconds / 60;
+    }, 0),
+  );
 
-  const calories = savedQuickRoutines
-    ? savedQuickRoutines.reduce((acc, cur) => {
-        return acc + cur.calories;
-      }, 0)
-    : 0;
+  const calories = [...savedWorkouts, ...savedQuickRoutines].reduce(
+    (acc, cur) => {
+      return acc + (cur.calories || 0);
+    },
+    0,
+  );
 
   const goals = [
     <GoalCircle
@@ -188,7 +192,7 @@ const GoalSummaries: React.FC<{
       pagerRef={pagerRef}
       index={0}
       key="workout"
-      score={savedQuickRoutines ? savedQuickRoutines.length : 0}
+      score={[...savedWorkouts, ...savedQuickRoutines].length}
       goal={workoutGoal}
       isFirst
       icon="dumbbell"

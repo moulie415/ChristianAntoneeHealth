@@ -426,6 +426,23 @@ export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
     {},
   );
 
+  const workoutsQuery = await db()
+    .collection('users')
+    .doc(uid)
+    .collection('savedWorkouts')
+    .where('createdate', '>=', startOfWeek)
+    .limit(200)
+    .get();
+
+  const workouts = workoutsQuery.docs.reduce(
+    (acc: {[id: string]: SavedWorkout}, cur) => {
+      const workout: any = cur.data();
+      acc[cur.id] = {...workout, id: cur.id};
+      return acc;
+    },
+    {},
+  );
+
   const testsQuery = await db()
     .collection('users')
     .doc(uid)
@@ -442,7 +459,7 @@ export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
     {},
   );
 
-  return {quickRoutines, tests};
+  return {quickRoutines, tests, workouts};
 };
 
 export const getEducation = async () => {
