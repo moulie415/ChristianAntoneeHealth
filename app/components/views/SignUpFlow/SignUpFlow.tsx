@@ -78,7 +78,7 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     profile.experience as Level,
   );
   const [marketing, setMarketing] = useState(profile.marketing || false);
-  const [height, setHeight] = useState<number>(profile.height as number);
+  const [height, setHeight] = useState<number>((profile.height as number) || 0);
   const [gender, setGender] = useState<Gender>(profile.gender as Gender);
   const [goal, setGoal] = useState<Goal>(profile.goal as Goal);
   const [loading, setLoading] = useState(false);
@@ -207,11 +207,11 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       ),
     },
     // 3
-    {
-      showNext: !!gender,
-      key: 'sex',
-      component: <SelectSex gender={gender} setGender={setGender} />,
-    },
+    // {
+    //   showNext: !!gender,
+    //   key: 'sex',
+    //   component: <SelectSex gender={gender} setGender={setGender} />,
+    // },
     // {
     //   color: colors.appBlue,
     //   showNext: !!unit,
@@ -219,33 +219,33 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     //   component: <SelectUnit unit={unit} setUnit={setUnit} />,
     // },
     // 4
-    {
-      showNext: !!weight,
-      key: 'weight',
-      component: (
-        <SelectWeight
-          weight={weight}
-          setWeight={setWeight}
-          unit={unit}
-          gender={gender}
-          index={index}
-        />
-      ),
-    },
+    // {
+    //   showNext: !!weight,
+    //   key: 'weight',
+    //   component: (
+    //     <SelectWeight
+    //       weight={weight}
+    //       setWeight={setWeight}
+    //       unit={unit}
+    //       gender={gender}
+    //       index={index}
+    //     />
+    //   ),
+    // },
     // 5
-    {
-      key: 'height',
-      showNext: !!height,
-      component: (
-        <SelectHeight
-          height={height}
-          setHeight={setHeight}
-          unit={unit}
-          gender={gender}
-          index={index}
-        />
-      ),
-    },
+    // {
+    //   key: 'height',
+    //   showNext: !!height,
+    //   component: (
+    //     <SelectHeight
+    //       height={height}
+    //       setHeight={setHeight}
+    //       unit={unit}
+    //       gender={gender}
+    //       index={index}
+    //     />
+    //   ),
+    // },
     // 6
     {
       key: 'goal',
@@ -253,24 +253,24 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
     // 7
-    {
-      key: 'experience',
-      showNext: !!experience,
-      component: (
-        <SelectExperience
-          experience={experience}
-          setExperience={setExperience}
-        />
-      ),
-    },
+    // {
+    //   key: 'experience',
+    //   showNext: !!experience,
+    //   component: (
+    //     <SelectExperience
+    //       experience={experience}
+    //       setExperience={setExperience}
+    //     />
+    //   ),
+    // },
     // 8
-    {
-      key: 'equipment',
-      showNext: true,
-      component: (
-        <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
-      ),
-    },
+    // {
+    //   key: 'equipment',
+    //   showNext: true,
+    //   component: (
+    //     <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
+    //   ),
+    // },
     // 9
 
     // {
@@ -284,43 +284,43 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     //   ),
     // },
     // 10
-    {
-      key: 'lifestyle',
-      showNext: true,
-      component: (
-        <GeneralLifestyle lifestyle={lifestyle} setLifestyle={setLifestyle} />
-      ),
-    },
+    // {
+    //   key: 'lifestyle',
+    //   showNext: true,
+    //   component: (
+    //     <GeneralLifestyle lifestyle={lifestyle} setLifestyle={setLifestyle} />
+    //   ),
+    // },
     // 11
-    {
-      key: 'sleep',
-      showNext: !!sleepPattern,
-      component: (
-        <SleepPatterns
-          sleepPattern={sleepPattern}
-          setSleepPattern={setSleepPattern}
-        />
-      ),
-    },
+    // {
+    //   key: 'sleep',
+    //   showNext: !!sleepPattern,
+    //   component: (
+    //     <SleepPatterns
+    //       sleepPattern={sleepPattern}
+    //       setSleepPattern={setSleepPattern}
+    //     />
+    //   ),
+    // },
     // 12
-    {
-      key: 'stresslevel',
-      showNext: !!stressLevel,
-      component: (
-        <StressLevels
-          stressLevel={stressLevel}
-          setStressLevel={setStressLevel}
-        />
-      ),
-    },
+    // {
+    //   key: 'stresslevel',
+    //   showNext: !!stressLevel,
+    //   component: (
+    //     <StressLevels
+    //       stressLevel={stressLevel}
+    //       setStressLevel={setStressLevel}
+    //     />
+    //   ),
+    // },
     // 13
-    {
-      key: 'occupation',
-      component: (
-        <Occupation occupation={occupation} setOccupation={setOccupation} />
-      ),
-      showNext: true,
-    },
+    // {
+    //   key: 'occupation',
+    //   component: (
+    //     <Occupation occupation={occupation} setOccupation={setOccupation} />
+    //   ),
+    //   showNext: true,
+    // },
     // 14
     // {
     //   key: 'injuries',
@@ -330,16 +330,16 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
     //   showNext: true,
     // },
     // 15
-    {
-      key: 'training',
-      component: (
-        <SelectTrainingAvailability
-          trainingAvailability={trainingAvailability}
-          setTrainingAvailability={setTrainingAvailability}
-        />
-      ),
-      showNext: !!trainingAvailability,
-    },
+    // {
+    //   key: 'training',
+    //   component: (
+    //     <SelectTrainingAvailability
+    //       trainingAvailability={trainingAvailability}
+    //       setTrainingAvailability={setTrainingAvailability}
+    //     />
+    //   ),
+    //   showNext: !!trainingAvailability,
+    // },
     // 16
     // {
     //   key: 'nutrition',
