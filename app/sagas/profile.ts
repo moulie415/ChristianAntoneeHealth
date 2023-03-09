@@ -573,7 +573,7 @@ function* premiumUpdatedWorker() {
     const {premium, uid} = yield select(
       (state: MyRootState) => state.profile.profile,
     );
-    if (oldPremium !== premium) {
+    if (!_.isEqual(oldPremium, premium)) {
       yield call(api.updateUser, {premium}, uid);
     }
   }
