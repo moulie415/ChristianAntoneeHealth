@@ -259,47 +259,38 @@ const Test: React.FC<TestProps> = ({
               </Text>
               <View
                 style={{
-  
                   marginBottom: 10,
                 }}>
                 <ViewMore text={test.how?.join('')} lines={7} />
               </View>
 
               <Divider />
-              {test.mens &&
-                'age' in test.mens &&
-                (profile.gender === 'male' || !profile.gender) && (
-                  <Table
-                    table={test.mens}
-                    metric={test.metric}
-                    title="Mens table"
-                  />
-                )}
-              {test.womens &&
-                'age' in test.womens &&
-                (profile.gender === 'female' || !profile.gender) && (
-                  <Table
-                    table={test.womens}
-                    metric={test.metric}
-                    title="Women's table"
-                  />
-                )}
-              {test.mens &&
-                '10th' in test.mens &&
-                (profile.gender === 'male' || !profile.gender) && (
-                  <PercentileTable
-                    table={test.mens}
-                    title="Mens percentile table"
-                  />
-                )}
-              {test.womens &&
-                '10th' in test.womens &&
-                (profile.gender === 'female' || !profile.gender) && (
-                  <PercentileTable
-                    table={test.womens}
-                    title="Women's percentile table"
-                  />
-                )}
+              {test.mens && 'age' in test.mens && (
+                <Table
+                  table={test.mens}
+                  metric={test.metric}
+                  title="Mens table"
+                />
+              )}
+              {test.womens && 'age' in test.womens && (
+                <Table
+                  table={test.womens}
+                  metric={test.metric}
+                  title="Women's table"
+                />
+              )}
+              {test.mens && '10th' in test.mens && (
+                <PercentileTable
+                  table={test.mens}
+                  title="Mens percentile table"
+                />
+              )}
+              {test.womens && '10th' in test.womens && (
+                <PercentileTable
+                  table={test.womens}
+                  title="Women's percentile table"
+                />
+              )}
               {test.source && (
                 <Text style={{margin: 10, color: colors.appWhite}}>
                   {test.source}

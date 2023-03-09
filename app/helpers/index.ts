@@ -241,7 +241,10 @@ export const getScoreIcon = (category: string) => {
   }
 };
 
-export const getCategoryString = (category: string) => {
+export const getCategoryString = (category?: string) => {
+  if (!category) {
+    return null;
+  }
   if (category === 'aboveAverage') {
     return 'Above average';
   }
@@ -320,7 +323,7 @@ export const getTableMax = (table: Table, col: string) => {
   return max;
 };
 
-export const getTableAverage = (table: Table, col: string) => {
+export const getTableAverage = (table: Table, col?: string) => {
   // @ts-ignore
   return table.average[col];
 };

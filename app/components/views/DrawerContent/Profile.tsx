@@ -53,7 +53,9 @@ const ProfileComponent: React.FC<{
   updateProfileAction: (payload: UpdateProfilePayload) => void;
   getSamplesAction: () => void;
 }> = ({profile, navigation, updateProfileAction, getSamplesAction}) => {
-  const [gender, setGender] = useState<Gender>(profile.gender || 'male');
+  const [gender, setGender] = useState<Gender>(
+    (profile.gender as Gender) || null,
+  );
   const [weight, setWeight] = useState<number>(profile.weight || 0);
   const [dob, setDob] = useState(profile.dob);
   const [height, setHeight] = useState<number>(profile.height || 0);
@@ -137,7 +139,7 @@ const ProfileComponent: React.FC<{
     getSamplesAction();
   }, [getSamplesAction]);
 
-  const saveDisabled = !dob || !height || !weight || !gender || equal;
+  const saveDisabled = !dob || equal;
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
