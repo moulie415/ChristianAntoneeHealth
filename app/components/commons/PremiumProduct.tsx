@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import React from 'react';
 import Purchases, {
   PurchasesEntitlementInfo,
@@ -58,9 +58,15 @@ const PremiumProduct: React.FC<{
   const locked = isLockedPackage(p) && !profile.client && !profile.admin;
   return (
     <TouchableOpacity
-      disabled={locked}
       onPress={async () => {
         try {
+          if (locked) {
+            Alert.alert(
+              'Product unavailable',
+              'Please get in contact with Christian if you think you should have access to this product',
+            );
+            return;
+          }
           setLoading(true);
           const {customerInfo, productIdentifier} =
             await Purchases.purchasePackage(p);
