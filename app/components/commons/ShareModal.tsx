@@ -86,7 +86,7 @@ const ShareModal: React.FC<{
   };
 
   return (
-    <Modal visible={visible && profile.premium}>
+    <Modal visible={visible && !!profile.premium}>
       <View
         style={{
           backgroundColor: '#fff',

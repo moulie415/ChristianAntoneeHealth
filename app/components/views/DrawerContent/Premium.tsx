@@ -5,8 +5,8 @@ import Purchases, {
   PACKAGE_TYPE,
   CustomerInfo,
   PurchasesPackage,
+  PurchasesEntitlementInfo,
 } from 'react-native-purchases';
-import PremiumProps from '../../../types/views/Premium';
 import colors from '../../../constants/colors';
 import {
   ActivityIndicator,
@@ -31,13 +31,20 @@ import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
 import {FlatList} from 'react-native';
 import PremiumProduct from '../../commons/PremiumProduct';
+import {SettingsState} from '../../../reducers/settings';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
+import { CLIENT_PREMIUM } from '../../../constants';
 
-const Premium: React.FC<PremiumProps> = ({
-  navigation,
-  setPremiumAction,
-  settings,
-  route,
-}) => {
+const Premium: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
+  setPremiumAction: (
+    premium: false | {[key: string]: PurchasesEntitlementInfo},
+  ) => void;
+  settings: SettingsState;
+  route: RouteProp<StackParamList, 'Premium'>;
+}> = ({navigation, setPremiumAction, settings, route}) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
@@ -304,12 +311,12 @@ const Premium: React.FC<PremiumProps> = ({
                       if (
                         typeof restore.entitlements.active.Premium !==
                           'undefined' ||
-                        typeof restore.entitlements.active['Client Premium'] !==
+                        typeof restore.entitlements.active[CLIENT_PREMIUM] !==
                           'undefined'
                       ) {
                         setLoading(false);
                         navigation.goBack();
-                        setPremiumAction(true);
+                        setPremiumAction(restore.entitlements.active);
                         Snackbar.show({text: 'Premium re-activated'});
                       } else {
                         setLoading(false);
