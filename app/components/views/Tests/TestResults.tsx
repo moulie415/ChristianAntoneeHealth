@@ -29,7 +29,7 @@ import useThrottle from '../../../hooks/UseThrottle';
 import FastImage from 'react-native-fast-image';
 import Test, {PercentileTable, Table} from '../../../types/Test';
 import Profile from '../../../types/Profile';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const getData = (
   test: Test,
@@ -263,7 +263,9 @@ const TestResults: React.FC<TestResultsProp> = ({
                 ? getCategoryString(data?.categoryMens)
                 : `${data?.percentileMens}`}
             </Text>
-            {isTable ? ` for men of your age (${age}). ` : ' percentile '}
+            {isTable
+              ? ` for men of your age (${age}). `
+              : ' percentile for men. '}
             {data?.averageMens ? (
               <Text>{`The average for men of your age is between ${data?.averageMens.lower} and ${data?.averageMens.higher}`}</Text>
             ) : (
@@ -378,7 +380,9 @@ const TestResults: React.FC<TestResultsProp> = ({
                 ? getCategoryString(data?.categoryWomens)
                 : `${data?.percentileWomens}`}
             </Text>
-            {isTable ? ` for women of your age (${age}). ` : ' percentile '}
+            {isTable
+              ? ` for women of your age (${age}). `
+              : ' percentile for women. '}
             {data?.averageWomens ? (
               <Text>{`The average for women your age is between ${data?.averageWomens.lower} and ${data?.averageWomens.higher}`}</Text>
             ) : (
