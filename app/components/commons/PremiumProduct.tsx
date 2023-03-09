@@ -55,7 +55,7 @@ const PremiumProduct: React.FC<{
 }> = ({p, setLoading, setPremiumAction, onActivated, index, profile}) => {
   const packageStrings = getPackageStrings(p);
   const title = packageStrings?.title;
-  const locked = isLockedPackage(p) && !profile.client; //&& !profile.admin;
+  const locked = isLockedPackage(p) && !profile.client && !profile.admin;
   return (
     <TouchableOpacity
       disabled={locked}
