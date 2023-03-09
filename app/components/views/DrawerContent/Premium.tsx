@@ -35,7 +35,7 @@ import {SettingsState} from '../../../reducers/settings';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import { CLIENT_PREMIUM } from '../../../constants';
+import {CLIENT_PREMIUM} from '../../../constants';
 
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
@@ -285,6 +285,49 @@ const Premium: React.FC<{
                 <FlatList
                   data={packages}
                   numColumns={2}
+                  contentContainerStyle={{minHeight: 200}}
+                  ListFooterComponent={
+                    <TouchableOpacity
+                      onPress={async () => {
+                        try {
+                          setLoading(true);
+                          const restore = await Purchases.restorePurchases();
+                          if (
+                            typeof restore.entitlements.active.Premium !==
+                              'undefined' ||
+                            typeof restore.entitlements.active[
+                              CLIENT_PREMIUM
+                            ] !== 'undefined'
+                          ) {
+                            setLoading(false);
+                            navigation.goBack();
+                            setPremiumAction(restore.entitlements.active);
+                            Snackbar.show({text: 'Premium re-activated'});
+                          } else {
+                            setLoading(false);
+                            Snackbar.show({
+                              text: 'No previous active subscription found',
+                            });
+                          }
+                        } catch (e) {
+                          logError(e);
+                          setLoading(false);
+                        }
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 10,
+                          marginBottom: 20,
+                          padding: 10,
+                          color: colors.appWhite,
+                          fontWeight: 'bold',
+                          textDecorationLine: 'underline',
+                        }}>
+                        Restore purchases
+                      </Text>
+                    </TouchableOpacity>
+                  }
                   columnWrapperStyle={{
                     justifyContent: 'space-evenly',
                     paddingTop: 25,
@@ -302,46 +345,6 @@ const Premium: React.FC<{
                     );
                   }}
                 />
-
-                <TouchableOpacity
-                  onPress={async () => {
-                    try {
-                      setLoading(true);
-                      const restore = await Purchases.restorePurchases();
-                      if (
-                        typeof restore.entitlements.active.Premium !==
-                          'undefined' ||
-                        typeof restore.entitlements.active[CLIENT_PREMIUM] !==
-                          'undefined'
-                      ) {
-                        setLoading(false);
-                        navigation.goBack();
-                        setPremiumAction(restore.entitlements.active);
-                        Snackbar.show({text: 'Premium re-activated'});
-                      } else {
-                        setLoading(false);
-                        Snackbar.show({
-                          text: 'No previous active subscription found',
-                        });
-                      }
-                    } catch (e) {
-                      logError(e);
-                      setLoading(false);
-                    }
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      marginTop: 10,
-                      marginBottom: 20,
-                      padding: 10,
-                      color: colors.appWhite,
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                    }}>
-                    Restore purchases
-                  </Text>
-                </TouchableOpacity>
 
                 {/* {!hasUsedTrial && (
                   <Text
