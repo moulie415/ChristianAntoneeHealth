@@ -108,6 +108,7 @@ const PremiumProduct: React.FC<{
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
+          padding: 5,
         }}>
         <Text
           style={{
@@ -115,7 +116,8 @@ const PremiumProduct: React.FC<{
             textAlign: 'center',
             fontWeight: 'bold',
             color: colors.appWhite,
-            fontSize: 18,
+            fontSize: 16,
+            marginTop: 10,
           }}>
           {title}
         </Text>
