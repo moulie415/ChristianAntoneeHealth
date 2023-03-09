@@ -12,13 +12,12 @@ import {
 import * as _ from 'lodash';
 import {GET_PLAN, setPlan} from '../actions/plan';
 import {
-  setPlanStatus,
   SET_TEST_REMINDERS,
   SET_WORKOUT_REMINDERS,
   SET_WORKOUT_REMINDER_TIME,
 } from '../actions/profile';
 import {logError} from '../helpers/error';
-import Profile, {PlanStatus} from '../types/Profile';
+import Profile from '../types/Profile';
 import {MyRootState, Plan} from '../types/Shared';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import PushNotification from 'react-native-push-notification';
@@ -130,43 +129,9 @@ function* planWatcher() {
   }
 }
 
-function onPlanStatusChanged(uid: string) {
-  return eventChannel(emitter => {
-    const subscriber = db()
-      .collection('users')
-      .doc(uid)
-      .onSnapshot(
-        snapshot => {
-          emitter(snapshot);
-        },
-        error => {
-          logError(error);
-        },
-      );
-    return subscriber;
-  });
-}
-
-function* planStateWatcher(uid: string) {
-  const channel: EventChannel<FirebaseFirestoreTypes.DocumentSnapshot> =
-    yield call(onPlanStatusChanged, uid);
-  while (true) {
-    const user: FirebaseFirestoreTypes.DocumentSnapshot = yield take(channel);
-    yield call(handlePlanUpdate, user.data() as Profile);
-  }
-}
-
-function* handlePlanUpdate(user: Profile) {
-  yield put(setPlanStatus(user.planStatus));
-  if (user.planStatus === PlanStatus.COMPLETE) {
-    yield fork(planWatcher);
-  }
-}
-
 function* getPlanWorker() {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    yield fork(planStateWatcher, uid);
+    yield fork(planWatcher);
   } catch (e) {
     logError(e);
   }

@@ -63,7 +63,7 @@ const WorkoutCard: React.FC<{
         source={
           'thumbnail' in item && item.thumbnail
             ? {uri: item.thumbnail.src}
-            : getImage('level' in item ? item.level : profile.experience)
+            : getImage('level' in item ? item.level : Level.ADVANCED)
         }>
         <View
           style={{

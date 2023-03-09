@@ -23,6 +23,7 @@ import Divider from '../../commons/Divider';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import Toggle from '../../commons/Toggle';
+import {CLIENT_PREMIUM} from '../../../constants';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
@@ -69,7 +70,8 @@ const Settings: React.FC<SettingsProps> = ({
         <ScrollView
           keyboardShouldPersistTaps="always"
           contentContainerStyle={{paddingBottom: 100}}>
-          {(settings.plansEnabled || profile.admin) && (
+          {((profile.premium && profile.premium[CLIENT_PREMIUM]) ||
+            profile.admin) && (
             <>
               <Text
                 style={{

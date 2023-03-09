@@ -45,7 +45,6 @@ import {
   useTourGuideController,
 } from 'rn-tourguide';
 import CustomTooltip from './components/commons/CustomTooltip';
-import {setHasViewedTour, setViewedPlan} from './actions/profile';
 import WelcomeModal from './WelcomeModal';
 import Drawer from 'react-native-drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';

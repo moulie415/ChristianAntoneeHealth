@@ -1,18 +1,12 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {AppStateStatus} from 'react-native';
+import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import {WeeklyItems} from '../reducers/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import Profile, {
-  Gender,
-  PlanStatus,
-  SleepPattern,
-  StressLevel,
-  TrainingAvailability,
-  Unit,
-} from '../types/Profile';
+import Profile, {Gender, Unit} from '../types/Profile';
 import {Equipment} from '../types/QuickRoutines';
 import {Goal, Level, Sample, StepSample} from '../types/Shared';
 
@@ -50,8 +44,6 @@ export const LOAD_EARLIER_MESSAGES = 'LOAD_EARLIER_MESSAGES';
 export const SET_VIEWED_PLAN = 'SET_VIEWED_PLAN';
 export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
-export const REQUEST_PLAN = 'REQUEST_PLAN';
-export const SET_PLAN_STATUS = 'SET_PLAN_STATUS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 
 interface setProfileAction {
@@ -70,20 +62,9 @@ export interface SignUpPayload {
   dob: string;
   weight: number;
   height: number;
-  unit: Unit;
   gender: Gender;
-  experience: Level;
-  equipment: string;
   marketing: boolean;
   goal: Goal;
-  nutrition: string[];
-  trainingAvailability: TrainingAvailability;
-  injuries: string;
-  occupation: string;
-  stressLevel: StressLevel;
-  sleepPattern: SleepPattern;
-  lifestyle: string;
-  medications: string;
   fromProfile?: boolean;
 }
 
@@ -94,8 +75,6 @@ export interface UpdateProfilePayload {
   gender?: Gender;
   unit?: Unit;
   marketing?: boolean;
-  experience?: Level;
-  equipment?: string;
   goal?: Goal;
   avatar?: string;
   bodyFatPercentage?: number;
@@ -179,7 +158,7 @@ export interface HandleAuthAction {
 
 export interface SetPremiumAction {
   type: typeof SET_PREMIUM;
-  payload: boolean;
+  payload: false | {[key: string]: PurchasesEntitlementInfo};
 }
 
 export interface SetAdminAction {
@@ -241,10 +220,6 @@ export interface LoadEarlierMessagesAction {
   payload: {chatId: string; uid: string; startAfter: number};
 }
 
-export interface SetViewedPlanAction {
-  type: typeof SET_VIEWED_PLAN;
-}
-
 export interface GetWeeklyItemsAction {
   type: typeof GET_WEEKLY_ITEMS;
 }
@@ -252,15 +227,6 @@ export interface GetWeeklyItemsAction {
 export interface SetWeeklyItemsAction {
   type: typeof SET_WEEKLY_ITEMS;
   payload: WeeklyItems;
-}
-
-export interface RequestPlanAction {
-  type: typeof REQUEST_PLAN;
-}
-
-export interface SetPlanStatus {
-  type: typeof SET_PLAN_STATUS;
-  payload?: PlanStatus;
 }
 
 export interface SetHasViewedTourAction {
@@ -294,11 +260,8 @@ export type ProfileActionTypes =
   | SetUnreadAction
   | SetAppStateAction
   | LoadEarlierMessagesAction
-  | SetViewedPlanAction
   | GetWeeklyItemsAction
   | SetWeeklyItemsAction
-  | RequestPlanAction
-  | SetPlanStatus
   | SetHeightSamplesAction
   | SetBoneMassSamplesAction
   | SetBodyFatPercentageSamplesAction
@@ -409,7 +372,9 @@ export const handleAuth = (user: FirebaseAuthTypes.User) => ({
   payload: user,
 });
 
-export const setPremium = (premium: boolean): SetPremiumAction => ({
+export const setPremium = (
+  premium: false | {[key: string]: PurchasesEntitlementInfo},
+): SetPremiumAction => ({
   type: SET_PREMIUM,
   payload: premium,
 });
@@ -508,25 +473,12 @@ export const loadEarlierMessages = (
   payload: {chatId, uid, startAfter},
 });
 
-export const setViewedPlan = (): SetViewedPlanAction => ({
-  type: SET_VIEWED_PLAN,
-});
-
 export const getWeeklyItems = (): GetWeeklyItemsAction => ({
   type: GET_WEEKLY_ITEMS,
 });
 
 export const setWeeklyItems = (payload: WeeklyItems): SetWeeklyItemsAction => ({
   type: SET_WEEKLY_ITEMS,
-  payload,
-});
-
-export const requestPlan = (): RequestPlanAction => ({
-  type: REQUEST_PLAN,
-});
-
-export const setPlanStatus = (payload?: PlanStatus): SetPlanStatus => ({
-  type: SET_PLAN_STATUS,
   payload,
 });
 

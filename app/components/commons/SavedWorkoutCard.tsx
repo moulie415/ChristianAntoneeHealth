@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 
 import {getEquipmentString, getImage, getLevelString} from './WorkoutCard';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
+import {Level, MyRootState} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
 import Profile from '../../types/Profile';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -69,7 +69,7 @@ const SavedWorkoutCard: React.FC<{
         source={
           quickRoutine
             ? {uri: quickRoutine.thumbnail?.src}
-            : getImage(profile.experience)
+            : getImage(Level.ADVANCED)
         }>
         <View
           style={{

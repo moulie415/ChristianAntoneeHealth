@@ -1,5 +1,5 @@
 import {AppState, AppStateStatus} from 'react-native';
-import {PlanActionTypes, SET_PLAN, SET_USED_FREE_PLAN} from '../actions/plan';
+import {PlanActionTypes, SET_PLAN} from '../actions/plan';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -19,9 +19,7 @@ import {
   SET_MESSAGE,
   SET_UNREAD,
   SET_APP_STATE,
-  SET_VIEWED_PLAN,
   SET_WEEKLY_ITEMS,
-  SET_PLAN_STATUS,
   SET_HEIGHT_SAMPLES,
   SET_BODY_FAT_PERCENTAGE_SAMPLES,
   SET_MUSCLE_MASS_SAMPLES,
@@ -30,7 +28,7 @@ import {
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import Profile, {PlanStatus} from '../types/Profile';
+import Profile from '../types/Profile';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import {Plan, Sample, StepSample} from '../types/Shared';
 
@@ -60,7 +58,6 @@ export interface ProfileState {
   messages: {[key: string]: {[key: string]: Message}};
   chats: {[key: string]: Chat};
   state: AppStateStatus;
-  viewedPlan: boolean;
   weeklyItems: WeeklyItems;
   plan?: Plan;
   hasViewedTour: boolean;
@@ -72,7 +69,6 @@ const initialState: ProfileState = {
     email: '',
     uid: '',
     unread: {},
-    planStatus: PlanStatus.UNINITIALIZED,
     premium: false,
   },
   loggedIn: false,
@@ -106,7 +102,6 @@ const initialState: ProfileState = {
   messages: {},
   chats: {},
   state: AppState.currentState,
-  viewedPlan: false,
   weeklyItems: {
     quickRoutines: {},
     tests: {},
@@ -239,31 +234,10 @@ const reducer = (
         ...state,
         state: action.payload,
       };
-    case SET_VIEWED_PLAN:
-      return {
-        ...state,
-        viewedPlan: true,
-      };
     case SET_WEEKLY_ITEMS:
       return {
         ...state,
         weeklyItems: action.payload,
-      };
-    case SET_PLAN_STATUS:
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          planStatus: action.payload,
-        },
-      };
-    case SET_USED_FREE_PLAN:
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          usedFreePlan: action.payload,
-        },
       };
     case SET_PLAN:
       return {

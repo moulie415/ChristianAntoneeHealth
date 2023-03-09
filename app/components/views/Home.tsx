@@ -18,6 +18,7 @@ import {
 } from 'rn-tourguide';
 import Header from '../commons/Header';
 import Drawer from 'react-native-drawer';
+import {CLIENT_PREMIUM} from '../../constants';
 
 const {height, width} = Dimensions.get('window');
 
@@ -30,16 +31,9 @@ type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
-  viewedPlan: boolean;
-  plansEnabled: boolean;
   drawerRef: MutableRefObject<Drawer | null>;
-}> = ({navigation, profile, viewedPlan, plansEnabled, drawerRef}) => {
+}> = ({navigation, profile, drawerRef}) => {
   const {eventEmitter} = useTourGuideController();
-  useEffect(() => {
-    if (!viewedPlan) {
-      // navigation.navigate('Plan');
-    }
-  }, [navigation, viewedPlan]);
 
   const handleOnStepChange = useCallback(
     (step: {order?: number}) => {
@@ -148,16 +142,18 @@ const Home: React.FC<{
         left={13}
         width={30}
         height={30}
-        zone={profile.admin || plansEnabled ? 4 : 3}
+        zone={
+          profile.admin || (profile.premium && profile.premium[CLIENT_PREMIUM])
+            ? 4
+            : 3
+        }
       />
     </View>
   );
 };
 
-const mapStateToProps = ({profile, settings}: MyRootState) => ({
+const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
-  viewedPlan: profile.viewedPlan,
-  plansEnabled: settings.plansEnabled,
 });
 
 export default connect(mapStateToProps)(Home);

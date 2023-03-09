@@ -29,6 +29,8 @@ import Header from '../../commons/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
+import {FlatList} from 'react-native';
+import PremiumProduct from '../../commons/PremiumProduct';
 
 const Premium: React.FC<PremiumProps> = ({
   navigation,
@@ -50,11 +52,10 @@ const Premium: React.FC<PremiumProps> = ({
           offerings.current !== null &&
           offerings.current.availablePackages.length !== 0
         ) {
-          setPackages(
-            offerings.current.availablePackages.filter(
-              p => p.packageType !== 'CUSTOM',
-            ),
-          );
+          // offerings.current.availablePackages.forEach(pkg => {
+          //   console.log(pkg.product.productCategory);
+          // });
+          setPackages(offerings.current.availablePackages);
         }
       } catch (e) {
         // @ts-ignore
@@ -64,24 +65,6 @@ const Premium: React.FC<PremiumProps> = ({
     };
     getOfferings();
   }, []);
-
-  const getPackageStrings = (p: PurchasesPackage) => {
-    switch (p.packageType) {
-      case PACKAGE_TYPE.MONTHLY:
-        return {title: 'monthly', alt: 'month'};
-      case PACKAGE_TYPE.ANNUAL:
-        return {title: 'yearly', alt: 'year'};
-    }
-  };
-
-  const monthlyPrice = (p: PurchasesPackage) => {
-    switch (p.packageType) {
-      case PACKAGE_TYPE.ANNUAL:
-        return p.product.price / 12;
-      default:
-        return p.product.price;
-    }
-  };
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -133,12 +116,14 @@ const Premium: React.FC<PremiumProps> = ({
                   flexDirection: 'row',
                   marginBottom: 20,
                 }}>
-                <Icon
-                  style={{marginRight: 10}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="dumbbell"
-                />
+                <View style={{justifyContent: 'center'}}>
+                  <Icon
+                    style={{marginRight: 10}}
+                    size={20}
+                    color={colors.appWhite}
+                    name="dumbbell"
+                  />
+                </View>
                 <View style={{flex: 1}}>
                   <Text
                     style={{
@@ -165,12 +150,14 @@ const Premium: React.FC<PremiumProps> = ({
                   flexDirection: 'row',
                   marginBottom: 20,
                 }}>
-                <Icon
-                  style={{marginRight: 10}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="book-open"
-                />
+                <View style={{justifyContent: 'center'}}>
+                  <Icon
+                    style={{marginRight: 10}}
+                    size={20}
+                    color={colors.appWhite}
+                    name="book-open"
+                  />
+                </View>
                 <View style={{flex: 1}}>
                   <Text
                     style={{
@@ -195,12 +182,14 @@ const Premium: React.FC<PremiumProps> = ({
                   flexDirection: 'row',
                   marginBottom: 20,
                 }}>
-                <Icon
-                  style={{marginRight: 10}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="heartbeat"
-                />
+                <View style={{justifyContent: 'center'}}>
+                  <Icon
+                    style={{marginRight: 10}}
+                    size={20}
+                    color={colors.appWhite}
+                    name="heartbeat"
+                  />
+                </View>
                 <View style={{flex: 1}}>
                   <Text
                     style={{
@@ -221,71 +210,7 @@ const Premium: React.FC<PremiumProps> = ({
                   </Text>
                 </View>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 20,
-                }}>
-                <Icon
-                  style={{marginRight: 10}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="user-friends"
-                />
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                      color: colors.appWhite,
-                    }}>
-                    One-to-One Communication
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.appWhite,
-                    }}>
-                    Ask questions and discuss health and fitness topics directly
-                    with Christian using our in-app messaging
-                  </Text>
-                </View>
-              </View>
-              {settings.plansEnabled && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginBottom: 20,
-                  }}>
-                  <Icon
-                    style={{marginRight: 10}}
-                    size={20}
-                    color={colors.appWhite}
-                    name="calendar-alt"
-                  />
 
-                  <View style={{flex: 1}}>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        color: colors.appWhite,
-                        fontSize: 18,
-                      }}>
-                      Customized plans
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: colors.appWhite,
-                      }}>
-                      Purchase customized monthly plans tailored specifically to
-                      you. Get your first plan{' '}
-                      <Text style={{fontWeight: 'bold'}}>FREE</Text> with
-                      premium!
-                    </Text>
-                  </View>
-                </View>
-              )}
               {settings.ads && (
                 <View
                   style={{
@@ -321,7 +246,7 @@ const Premium: React.FC<PremiumProps> = ({
           </View>
           {packages.length ? (
             <>
-              {premiumActive ? (
+              {premiumActive && (
                 <View
                   style={{
                     alignItems: 'center',
@@ -348,162 +273,77 @@ const Premium: React.FC<PremiumProps> = ({
                     </Text>
                   </TouchableOpacity>
                 </View>
-              ) : (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                    }}>
-                    {packages.map((p, index) => {
-                      const packageStrings = getPackageStrings(p);
-                      const title = packageStrings?.title;
-                      return (
-                        <TouchableOpacity
-                          onPress={async () => {
-                            try {
-                              setLoading(true);
-                              const {customerInfo, productIdentifier} =
-                                await Purchases.purchasePackage(p);
-                              if (
-                                typeof customerInfo.entitlements.active
-                                  .Premium !== 'undefined'
-                              ) {
-                                setLoading(false);
-                                navigation.goBack();
-                                setPremiumAction(true);
-                                Snackbar.show({text: 'Premium activated!'});
-                                if (onActivated) {
-                                  onActivated();
-                                }
-                              }
-                            } catch (e) {
-                              setLoading(false);
-                              // @ts-ignore
-                              if (!e.userCancelled) {
-                                logError(e);
-                                // @ts-ignore
-                                Alert.alert('Error', e.message);
-                              }
-                            }
-                          }}
-                          key={p.identifier}>
-                          <LinearGradient
-                            colors={
-                              index === 0
-                                ? [colors.appBlueLight, colors.appBlueDark]
-                                : [colors.secondaryLight, colors.secondaryDark]
-                            }
-                            start={{x: 0, y: 0}}
-                            end={{x: 1, y: 0}}
-                            style={{
-                              height: 100,
-                              width: 160,
-                              borderRadius: 10,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            }}>
-                            <Text
-                              style={{
-                                textTransform: 'uppercase',
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                color: colors.appWhite,
-                                fontSize: 18,
-                              }}>
-                              {title}
-                            </Text>
+              )}
+              <>
+                <FlatList
+                  data={packages}
+                  numColumns={2}
+                  columnWrapperStyle={{
+                    justifyContent: 'space-evenly',
+                    paddingTop: 25,
+                  }}
+                  keyExtractor={item => item.identifier}
+                  renderItem={({item, index}) => {
+                    return (
+                      <PremiumProduct
+                        p={item}
+                        onActivated={onActivated}
+                        setLoading={setLoading}
+                        index={index}
+                        setPremiumAction={setPremiumAction}
+                      />
+                    );
+                  }}
+                />
 
-                            <Text
-                              style={{
-                                textAlign: 'center',
-                                color: colors.appWhite,
-                                fontSize: 14,
-                              }}>
-                              {p.product.priceString}
-                            </Text>
-                          </LinearGradient>
-                          <View
-                            style={{
-                              position: 'absolute',
-                              right: 0,
-                              left: 0,
-                              top: -10,
-                            }}>
-                            <View
-                              style={{
-                                height: 35,
-                                borderRadius: 20,
-                                backgroundColor: colors.appWhite,
-                                width: 115,
-                                alignSelf: 'center',
-                                justifyContent: 'center',
-                              }}>
-                              <Text
-                                style={{
-                                  textAlign: 'center',
-                                  color:
-                                    index === 0
-                                      ? colors.appBlue
-                                      : colors.secondaryDark,
-                                  fontSize: 16,
-                                }}>{`${p.product.priceString[0]}${monthlyPrice(
-                                p,
-                              ).toFixed(2)}/mo`}</Text>
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-
-                  <TouchableOpacity
-                    onPress={async () => {
-                      try {
-                        setLoading(true);
-                        const restore = await Purchases.restorePurchases();
-                        if (
-                          typeof restore.entitlements.active.Premium !==
+                <TouchableOpacity
+                  onPress={async () => {
+                    try {
+                      setLoading(true);
+                      const restore = await Purchases.restorePurchases();
+                      if (
+                        typeof restore.entitlements.active.Premium !==
+                          'undefined' ||
+                        typeof restore.entitlements.active['Client Premium'] !==
                           'undefined'
-                        ) {
-                          setLoading(false);
-                          navigation.goBack();
-                          setPremiumAction(true);
-                          Snackbar.show({text: 'Premium re-activated'});
-                        } else {
-                          setLoading(false);
-                          Snackbar.show({
-                            text: 'No previous active subscription found',
-                          });
-                        }
-                      } catch (e) {
-                        logError(e);
+                      ) {
                         setLoading(false);
+                        navigation.goBack();
+                        setPremiumAction(true);
+                        Snackbar.show({text: 'Premium re-activated'});
+                      } else {
+                        setLoading(false);
+                        Snackbar.show({
+                          text: 'No previous active subscription found',
+                        });
                       }
+                    } catch (e) {
+                      logError(e);
+                      setLoading(false);
+                    }
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 10,
+                      marginBottom: 20,
+                      padding: 10,
+                      color: colors.appWhite,
+                      fontWeight: 'bold',
+                      textDecorationLine: 'underline',
                     }}>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        marginTop: 10,
-                        marginBottom: 20,
-                        padding: 10,
-                        color: colors.appWhite,
-                        fontWeight: 'bold',
-                        textDecorationLine: 'underline',
-                      }}>
-                      Restore purchases
-                    </Text>
-                  </TouchableOpacity>
+                    Restore purchases
+                  </Text>
+                </TouchableOpacity>
 
-                  {/* {!hasUsedTrial && (
+                {/* {!hasUsedTrial && (
                   <Text
                     style={{
                       paddingBottom: 20,
                       textAlign: 'center',
                     }}>{`${pkg.product.price_string}/month after`}</Text>
                 )} */}
-                </>
-              )}
+              </>
             </>
           ) : (
             <ActivityIndicator />

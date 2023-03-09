@@ -1,7 +1,7 @@
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import Exercise from '../types/Exercise';
-import Profile, {PlanStatus} from '../types/Profile';
+import Profile from '../types/Profile';
 import Test from '../types/Test';
 import {CoolDown, Goal, Level, WarmUp} from '../types/Shared';
 import QuickRoutine from '../types/QuickRoutines';
@@ -584,12 +584,6 @@ export const getSettings = async () => {
   return snapshot.docs[0].data();
 };
 
-export const requestPlan = async (uid: string) => {
-  return db()
-    .collection('users')
-    .doc(uid)
-    .update({planStatus: PlanStatus.PENDING});
-};
 
 export const sendFeedback = async (
   uid: string,

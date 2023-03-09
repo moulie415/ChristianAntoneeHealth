@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
-import WorkoutSummaryProps from '../../../types/views/WorkoutSummary';
 import {
   getDifficultyEmoji,
   getDifficultyText,
@@ -13,7 +12,6 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ShareModal from '../../commons/ShareModal';
 import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
-import {requestPlan} from '../../../actions/profile';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -21,32 +19,32 @@ import colors from '../../../constants/colors';
 import FastImage from 'react-native-fast-image';
 import WorkoutSummaryInfo from '../../commons/WorkoutSummaryInfo';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
+import {SavedWorkout} from '../../../types/SavedItem';
+import Profile from '../../../types/Profile';
+import Exercise from '../../../types/Exercise';
 
-const WorkoutSummary: React.FC<WorkoutSummaryProps> = ({
+const WorkoutSummary: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'WorkoutSummary'>;
+  route: RouteProp<StackParamList, 'WorkoutSummary'>;
+  profile: Profile;
+  saveWorkoutAction: (workout: SavedWorkout) => void;
+  workout: Exercise[];
+  setShareModalVisibleAction: (payload: boolean) => void;
+}> = ({
   route,
   profile,
   navigation,
   saveWorkoutAction,
   workout,
   setShareModalVisibleAction,
-  requestPlan: requestPlanAction,
 }) => {
   const {calories, seconds, difficulty, isLast} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
   useBackHandler(() => true);
 
-  useEffect(() => {
-    if (isLast) {
-      Alert.alert(
-        'Want a new plan?',
-        'That was the last workout in your plan do you want to request a new plan?',
-        [
-          {text: 'Yes', onPress: requestPlanAction},
-          {text: 'No', style: 'cancel'},
-        ],
-      );
-    }
-  }, [isLast, requestPlanAction]);
   return (
     <FastImage
       source={require('../../../images/login.jpeg')}
@@ -96,7 +94,6 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
 const mapDispatchToProps = {
   saveWorkoutAction: saveWorkout,
   setShareModalVisibleAction: setShareModalVisible,
-  requestPlan,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutSummary);

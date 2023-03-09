@@ -14,6 +14,7 @@ import Color from 'color';
 import {TourGuideZone} from 'rn-tourguide';
 import GoalSummaries from './components/commons/GoalSummaries';
 import Drawer from 'react-native-drawer';
+import {CLIENT_PREMIUM} from './constants';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -21,9 +22,8 @@ const color = new Color(colors.appWhite);
 
 const Tabs: React.FC<{
   profile: Profile;
-  plansEnabled: boolean;
   drawerRef: MutableRefObject<Drawer | null>;
-}> = ({profile, plansEnabled, drawerRef}) => {
+}> = ({profile, drawerRef}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -97,7 +97,8 @@ const Tabs: React.FC<{
         name="Goals"
         children={props => <GoalSummaries {...props} drawerRef={drawerRef} />}
       />
-      {(profile.admin || plansEnabled) && (
+      {(profile.admin ||
+        (profile.premium && profile.premium[CLIENT_PREMIUM])) && (
         <Tab.Screen
           options={{
             tabBarLabel: 'Plan',
@@ -120,9 +121,8 @@ const Tabs: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, settings}: MyRootState) => ({
+const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
-  plansEnabled: settings.plansEnabled,
 });
 
 export default connect(mapStateToProps)(Tabs);

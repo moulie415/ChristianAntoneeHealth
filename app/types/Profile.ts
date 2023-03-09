@@ -1,3 +1,4 @@
+import { PurchasesEntitlementInfo } from 'react-native-purchases';
 import {Goal, Level} from './Shared';
 
 export type Gender = 'male' | 'female';
@@ -20,16 +21,9 @@ export enum TrainingAvailability {
   FOUR_PLUS = 4,
 }
 
-export enum PlanStatus {
-  UNINITIALIZED = 1,
-  PENDING = 2,
-  COMPLETE = 3,
-}
-
 export default interface Profile {
   email: string;
   uid: string;
-  planStatus?: PlanStatus;
   name?: string;
   surname?: string;
   avatar?: string;
@@ -42,19 +36,10 @@ export default interface Profile {
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;
-  premium?: boolean;
+  client?: boolean;
+  premium?: false | {[key: string]: PurchasesEntitlementInfo};
   unread?: {[key: string]: number};
-  sleepPattern?: SleepPattern;
-  stressLevel?: StressLevel;
-  equipment?: string;
-  trainingAvailability?: TrainingAvailability;
-  usedFreePlan?: boolean;
-  experience?: Level;
-  medications?: string;
-  nutrition?: string[];
-  injuries?: string;
-  occupation?: string;
-  lifestyle?: string;
+
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;

@@ -49,8 +49,6 @@ import {
   setMessagesObj,
   GET_WEEKLY_ITEMS,
   setWeeklyItems,
-  REQUEST_PLAN,
-  setPlanStatus,
   setHeightSamples,
   SET_PREMIUM,
   setBodyFatPercentageSamples,
@@ -59,7 +57,7 @@ import {
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
-import Profile, {PlanStatus} from '../types/Profile';
+import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
@@ -104,8 +102,8 @@ import {logError} from '../helpers/error';
 import Message from '../types/Message';
 import {WeeklyItems} from '../reducers/profile';
 import {getQuickRoutinesById} from '../actions/quickRoutines';
-import {setUsedFreePlan} from '../actions/plan';
 import _ from 'lodash';
+import {CLIENT_PREMIUM} from '../constants';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -187,9 +185,6 @@ function* updateProfile(action: UpdateProfileAction) {
     unit,
     dob,
     gender,
-    equipment,
-    experience,
-    marketing,
     goal,
     avatar,
     bodyFatPercentage,
@@ -249,11 +244,8 @@ function* updateProfile(action: UpdateProfileAction) {
     birthday: dob || '',
     weight: weight?.toString() || '',
     height: height?.toString() || '',
-    marketing: marketing?.toString() || '',
     unit: unit || '',
     gender: gender || '',
-    equipment: equipment || '',
-    experience: experience || '',
     goal: goal || '',
   });
 }
@@ -309,34 +301,14 @@ function* downloadVideoWorker(action: DownloadVideoAction) {
 }
 
 function* signUp(action: SignUpAction) {
-  const {
-    name,
-    surname,
-    dob,
-    weight,
-    unit,
-    height,
-    gender,
-    equipment,
-    experience,
-    goal,
-    marketing,
-    nutrition,
-    trainingAvailability,
-    injuries,
-    occupation,
-    stressLevel,
-    sleepPattern,
-    lifestyle,
-    medications,
-    fromProfile,
-  } = action.payload;
+  const {name, surname, dob, weight, height, gender, goal, fromProfile} =
+    action.payload;
   try {
     try {
       const enabled: boolean = yield call(isEnabled);
       if (enabled) {
-        yield call(saveWeight, weight, unit);
-        yield call(saveHeight, height, unit);
+        yield call(saveWeight, weight);
+        yield call(saveHeight, height);
       }
     } catch (e) {
       console.log(e);
@@ -349,7 +321,6 @@ function* signUp(action: SignUpAction) {
         ...profile,
         signedUp: true,
         ...action.payload,
-        planStatus: PlanStatus.UNINITIALIZED,
         signUpDate: moment().unix(),
       },
       profile.uid,
@@ -358,7 +329,6 @@ function* signUp(action: SignUpAction) {
       setProfile({
         ...profile,
         ...action.payload,
-        planStatus: PlanStatus.UNINITIALIZED,
       }),
     );
     if (fromProfile) {
@@ -373,20 +343,8 @@ function* signUp(action: SignUpAction) {
       birthday: dob,
       weight: weight?.toString(),
       height: height?.toString(),
-      unit,
       gender,
-      experience,
-      equipment,
-      marketing: marketing?.toString(),
       goal,
-      nutrition: nutrition.toString(),
-      trainingAvailability: trainingAvailability.toString(),
-      injuries,
-      occupation,
-      stressLevel,
-      sleepPattern: sleepPattern.toString(),
-      lifestyle,
-      medications,
     });
   } catch (e) {
     if (e instanceof Error) {
@@ -606,40 +564,6 @@ function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
   }
 }
 
-function* requestPlanWorker() {
-  try {
-    yield put(setLoading(true));
-    const {uid, usedFreePlan} = yield select(
-      (state: MyRootState) => state.profile.profile,
-    );
-    if (!usedFreePlan) {
-      yield call(api.requestPlan, uid);
-      yield put(setPlanStatus(PlanStatus.PENDING));
-      Snackbar.show({text: 'Your plan has been requested'});
-      yield call(api.updateUser, {usedFreePlan: true}, uid);
-      yield put(setUsedFreePlan(true));
-    } else {
-      const offerings: PurchasesOfferings = yield call(Purchases.getOfferings);
-      const pkg = offerings.current?.availablePackages.find(
-        p => p.packageType === 'CUSTOM',
-      );
-      // @ts-ignore
-      yield call(Purchases.purchasePackage, pkg);
-      yield call(api.requestPlan, uid);
-      yield put(setPlanStatus(PlanStatus.PENDING));
-      Snackbar.show({text: 'Your plan has been requested'});
-    }
-    yield put(setLoading(false));
-  } catch (e) {
-    yield put(setLoading(false));
-    logError(e);
-    // @ts-ignore
-    if (!e.userCancelled) {
-      Snackbar.show({text: 'Error requesting plan'});
-    }
-  }
-}
-
 function* premiumUpdatedWorker() {
   while (true) {
     const oldPremium: boolean = yield select(
@@ -691,8 +615,12 @@ function* handleAuthWorker(action: HandleAuthAction) {
       );
       const isAdmin = settings.admins.includes(user.uid);
       yield put(setAdmin(isAdmin));
-      if (customerInfo.entitlements.active.Premium || isAdmin) {
-        yield put(setPremium(true));
+      if (
+        customerInfo.entitlements.active.Premium ||
+        customerInfo.entitlements.active[CLIENT_PREMIUM] ||
+        isAdmin
+      ) {
+        yield put(setPremium(customerInfo.entitlements.active));
         yield fork(getConnections);
       } else {
         yield put(setPremium(false));
@@ -788,7 +716,6 @@ export default function* profileSaga() {
     takeLatest(SET_CHATS, chatsWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
     takeLatest(GET_WEEKLY_ITEMS, getWeeklyItems),
-    takeLatest(REQUEST_PLAN, requestPlanWorker),
     debounce(3000, SET_PREMIUM, premiumUpdatedWorker),
   ]);
 

@@ -10,16 +10,9 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import {
-  Gender,
-  SleepPattern,
-  StressLevel,
-  TrainingAvailability,
-  Unit,
-} from '../../../types/Profile';
+import Profile, {Gender} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
-import SignUpFlowProps from '../../../types/views/SIgnUpFlow';
-import {signUp} from '../../../actions/profile';
+import {signUp, SignUpPayload} from '../../../actions/profile';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
 import Age from './Age';
 import {
@@ -32,24 +25,11 @@ import {
   linkToGoogleFit,
 } from '../../../helpers/biometrics';
 import {logError} from '../../../helpers/error';
-import SelectWeight from './SelectWeight';
-import SelectSex from './SelectSex';
 import useInit from '../../../hooks/UseInit';
-import SelectHeight from './SelectHeight';
 import SelectGoal from './SelectGoal';
-import SelectExperience from './SelectExperience';
-import SelectEquipment from './SelectEquipment';
 import * as Progress from 'react-native-progress';
 import CompleteSignUp from './CompleteSignUp';
 import LetsBuild from './LetsBuild';
-import Medications from './Medications';
-import GeneralLifestyle from './GeneralLifeStyle';
-import SleepPatterns from './SleepPatterns';
-import StressLevels from './StressLevels';
-import Occupation from './Occupation';
-import PhysicalInjuries from './PhysicalInjuries';
-import SelectTrainingAvailability from './TrainingAvailability';
-import Nutrition from './Nutrition';
 import Swiper from 'react-native-swiper';
 import BackButton from '../../commons/BackButton';
 import ForwardButton from '../../commons/ForwardButton';
@@ -57,46 +37,32 @@ import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
 import Name from './Name';
 import Goals from './Goals';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
 
 const {width} = Dimensions.get('window');
 
-const SignUpFlow: React.FC<SignUpFlowProps> = ({
-  navigation,
-  route,
-  profile,
-  signUp: signUpAction,
-}) => {
+const SignUpFlow: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'SignUpFlow'>;
+  route: RouteProp<StackParamList, 'SignUpFlow'>;
+  profile: Profile;
+  signUp: (payload: SignUpPayload) => void;
+}> = ({navigation, route, profile, signUp: signUpAction}) => {
   const fromProfile = route.params?.fromProfile;
   const [name, setName] = useState(profile.name || '');
   const [surname, setSurname] = useState(profile.surname || '');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight || 0);
-  const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
-  const [equipment, setEquipment] = useState(profile.equipment || '');
-  const [experience, setExperience] = useState<Level>(
-    profile.experience as Level,
-  );
+
   const [marketing, setMarketing] = useState(profile.marketing || false);
   const [height, setHeight] = useState<number>((profile.height as number) || 0);
-  const [gender, setGender] = useState<Gender>(profile.gender as Gender);
-  const [goal, setGoal] = useState<Goal>(profile.goal as Goal);
+  const [gender, setGender] = useState<Gender>(
+    (profile.gender as Gender) || null,
+  );
+  const [goal, setGoal] = useState<Goal>((profile.goal as Goal) || null);
   const [loading, setLoading] = useState(false);
-  const [medications, setMedications] = useState(profile.medications || '');
-  const [lifestyle, setLifestyle] = useState(profile.lifestyle || '');
-  const [sleepPattern, setSleepPattern] = useState<SleepPattern>(
-    profile.sleepPattern as SleepPattern,
-  );
-  const [stressLevel, setStressLevel] = useState<StressLevel>(
-    profile.stressLevel as StressLevel,
-  );
-  const [occupation, setOccupation] = useState(profile.occupation || '');
-  const [injuries, setInjuries] = useState(profile.injuries || '');
-  const [trainingAvailability, setTrainingAvailability] =
-    useState<TrainingAvailability>(
-      profile.trainingAvailability as TrainingAvailability,
-    );
-  const [nutrition, setNutrition] = useState(profile.nutrition || []);
 
   useInit(() => {
     const setup = async () => {
@@ -149,20 +115,9 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
       dob,
       weight,
       height,
-      unit,
       gender,
       goal,
-      experience,
-      equipment,
       marketing,
-      nutrition,
-      trainingAvailability,
-      injuries,
-      occupation,
-      stressLevel,
-      sleepPattern,
-      lifestyle,
-      medications,
       fromProfile: !!fromProfile,
     });
   };
@@ -175,11 +130,11 @@ const SignUpFlow: React.FC<SignUpFlowProps> = ({
 
   const slides = [
     // 0
-    {
-      showNext: false,
-      key: 'letsBuild',
-      component: <LetsBuild goNext={goNext} />,
-    },
+    // {
+    //   showNext: false,
+    //   key: 'letsBuild',
+    //   component: <LetsBuild goNext={goNext} />,
+    // },
     // 1
     {
       showNext: !!name && !!surname,

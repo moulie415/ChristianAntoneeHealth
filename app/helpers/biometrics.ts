@@ -322,7 +322,7 @@ export const getDateOfBirth = (): void | Promise<string | undefined> => {
   }
 };
 
-export const saveWeight = async (value?: number, unit?: Unit) => {
+export const saveWeight = async (value?: number, unit = 'metric') => {
   if (!value || !unit) {
     return;
   }
@@ -357,7 +357,7 @@ export const saveWeight = async (value?: number, unit?: Unit) => {
   });
 };
 
-export const saveHeight = async (value?: number, unit?: Unit) => {
+export const saveHeight = async (value?: number, unit = 'metric') => {
   if (!value || !unit) {
     return;
   }

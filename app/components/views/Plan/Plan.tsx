@@ -10,11 +10,10 @@ import {
 import React, {MutableRefObject, useEffect, useMemo, useState} from 'react';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import Profile, {PlanStatus} from '../../../types/Profile';
+import Profile from '../../../types/Profile';
 import Button from '../../commons/Button';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
-import {requestPlan, setViewedPlan} from '../../../actions/profile';
 import Text from '../../commons/Text';
 
 import {getPlan} from '../../../actions/plan';
@@ -44,18 +43,14 @@ const renderScene = SceneMap({
 const Plan: React.FC<{
   profile: Profile;
   navigation: NativeStackNavigationProp<StackParamList, 'Plan'>;
-  requestPlan: () => void;
   loading: boolean;
-  setViewedPlan: () => void;
   getPlan: () => void;
   plan?: PlanType;
   drawerRef: MutableRefObject<Drawer | null>;
 }> = ({
   profile,
   navigation,
-  requestPlan: requestPlanAction,
   loading,
-  setViewedPlan: setViewedPlanAction,
   getPlan: getPlanAction,
   plan,
   drawerRef,
@@ -63,9 +58,8 @@ const Plan: React.FC<{
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   useEffect(() => {
-    setViewedPlanAction();
     getPlanAction();
-  }, [setViewedPlanAction, getPlanAction]);
+  }, [getPlanAction]);
 
   useEffect(() => {
     const getOfferings = async () => {
@@ -207,88 +201,16 @@ const Plan: React.FC<{
                 marginTop: 0,
                 fontSize: 25,
                 fontWeight: 'bold',
-                color: colors.appWhite
+                color: colors.appWhite,
               }}>
               My workout plan
             </Text>
 
-            {(profile.planStatus === PlanStatus.UNINITIALIZED ||
-              !hasPlanLeft) && (
-              <View style={{margin: 20, marginTop: 0}}>
-                <Text style={{lineHeight: 25, color: '#fff'}}>
-                  This is your the screen for your personal customized plan,
-                  once requested we will try and get your plan to you as soon as
-                  we can and once completed it will appear here.
-                  <Text style={{fontWeight: 'bold', color: '#fff'}}>
-                    {' '}
-                    Get your first plan free!!
-                  </Text>
-                </Text>
-              </View>
-            )}
-
-            {profile.planStatus === PlanStatus.PENDING && (
-              <View style={{margin: 10, alignItems: 'center'}}>
-                <Text style={{marginBottom: 10, color: '#fff'}}>
-                  Your plan is currently{' '}
-                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
-                    PENDING
-                  </Text>{' '}
-                  we will notify you when it becomes available
-                </Text>
-                <Spinner style={{borderColor: '#fff'}} />
-              </View>
-            )}
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
-              {profile.planStatus !== PlanStatus.PENDING &&
-                !hasPlanLeft &&
-                packages.map(p => {
-                  return (
-                    <Button
-                      key={p.identifier}
-                      style={{margin: 20}}
-                      disabled={loading}
-                      text={`Request workout plan ${
-                        profile.usedFreePlan
-                          ? '(' + p.product.priceString + ')'
-                          : ''
-                      }`}
-                      loading={loading}
-                      onPress={() => {
-                        if (profile.premium) {
-                          requestPlanAction();
-                        } else {
-                          navigation.navigate('Premium', {
-                            onActivated: () => {
-                              requestPlanAction();
-                            },
-                          });
-                        }
-                      }}
-                    />
-                  );
-                })}
-
-              {!profile.premium &&
-                profile.planStatus !== PlanStatus.PENDING &&
-                !hasPlanLeft && (
-                  <Button
-                    style={{
-                      margin: 20,
-                      marginTop: 0,
-                    }}
-                    disabled={loading}
-                    text="No thanks, I just want premium"
-                    loading={loading}
-                    onPress={() => {
-                      navigation.navigate('Premium', {
-                        onActivated: () => {
-                          navigation.navigate('Home');
-                        },
-                      });
-                    }}
-                  />
-                )}
+            <View style={{margin: 20, marginTop: 0}}>
+              <Text style={{lineHeight: 25, color: '#fff'}}>
+                This is your the screen for your personal customized plan, when
+                Christian creates your plan it will appear here.
+              </Text>
             </View>
           </SafeAreaView>
         </FastImage>
@@ -304,8 +226,6 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 });
 
 const mapDispatchToProps = {
-  requestPlan,
-  setViewedPlan,
   getPlan,
 };
 
