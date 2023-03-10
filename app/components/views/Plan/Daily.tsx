@@ -172,7 +172,8 @@ const Daily: React.FC<{
         />
       ) : (
         <View style={{padding: 10}}>
-          <Text style={{textAlign: 'center'}}>
+          <Text
+            style={{textAlign: 'center', color: colors.appWhite, fontSize: 20}}>
             No workouts scheduled for today
           </Text>
         </View>
@@ -256,31 +257,35 @@ const Daily: React.FC<{
             </View>
             <View style={{marginLeft: 10}}>
               {plan && !!plan.nutrition.general && (
-                <Text>
-                  <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
+                <Text style={{marginBottom: 10, marginRight: 10}}>
+                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
                     General recommendations:{' '}
                   </Text>
-                  <Text style={{color: colors.textGrey}}>
+                  <Text style={{color: colors.appWhite}}>
                     {plan.nutrition.general}
                   </Text>
                 </Text>
               )}
               {plan && !!plan.nutrition.preWorkout && (
-                <Text>
-                  <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
+                <Text style={{marginBottom: 10, marginRight: 10}}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: colors.appWhite,
+                    }}>
                     Pre-workout:{' '}
                   </Text>
-                  <Text style={{color: colors.textGrey}}>
+                  <Text style={{color: colors.appWhite}}>
                     {plan.nutrition.preWorkout}
                   </Text>
                 </Text>
               )}
               {plan && !!plan.nutrition.postWorkout && (
-                <Text>
-                  <Text style={{fontWeight: 'bold', color: colors.textGrey}}>
+                <Text style={{marginBottom: 10, marginRight: 10}}>
+                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
                     Post-workout:{' '}
                   </Text>
-                  <Text style={{color: colors.textGrey}}>
+                  <Text style={{color: colors.appWhite}}>
                     {plan.nutrition.postWorkout}
                   </Text>
                 </Text>
@@ -300,6 +305,7 @@ const Daily: React.FC<{
                   color: colors.appWhite,
                   fontWeight: 'bold',
                   marginLeft: 10,
+                  marginRight: 10,
                 }}>
                 {`Sleep hygiene: ${plan.sleep.general}`}
               </Text>
