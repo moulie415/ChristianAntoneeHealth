@@ -17,6 +17,8 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Exercise from '../../../types/Exercise';
 import {getEquipmentList} from '../../../helpers/exercises';
+import Video from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -33,6 +35,7 @@ const PreQuickRoutine: React.FC<{
       level,
       exerciseIds,
       instructions,
+      preview,
     },
   } = route.params;
   const exercises = useMemo(() => {
@@ -45,20 +48,34 @@ const PreQuickRoutine: React.FC<{
 
   return (
     <>
-      <FastImage
-        source={{uri: thumbnail?.src}}
-        style={{height: getVideoHeight()}}>
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: '#000',
-            opacity: 0.5,
-          }}
-        />
-        <SafeAreaView>
-          <Header hasBack />
-        </SafeAreaView>
-      </FastImage>
+      {preview?.src ? (
+        <>
+          <Video
+            source={{uri: convertToProxyURL(preview.src)}}
+            style={{height: getVideoHeight(), width: '100%'}}
+            resizeMode={'cover'}
+            repeat
+            disableFocus
+          />
+          <Header absolute hasBack />
+        </>
+      ) : (
+        <FastImage
+          source={{uri: thumbnail?.src}}
+          style={{height: getVideoHeight()}}>
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              backgroundColor: '#000',
+              opacity: 0.5,
+            }}
+          />
+          <SafeAreaView>
+            <Header hasBack />
+          </SafeAreaView>
+        </FastImage>
+      )}
+
       <ScrollView
         style={{
           flex: 1,

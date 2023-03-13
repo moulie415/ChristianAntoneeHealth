@@ -15,4 +15,5 @@ export default interface QuickRoutine {
   thumbnail?: {src: string; title: string};
   instructions?: string;
   steps?: string[];
+  preview?: {src: string; title: string};
 }
