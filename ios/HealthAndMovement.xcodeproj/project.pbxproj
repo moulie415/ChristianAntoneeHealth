@@ -13,8 +13,6 @@
 		0A24F535261784EB00859CAB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A24F534261784EB00859CAB /* HealthKit.framework */; };
 		0A33190427D39ADF00C74CD6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33190327D39ADF00C74CD6 /* logo.png */; };
 		0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */; };
-		0A701BC126BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
-		0A701BC226BF219A00EB809A /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0A701BC026BF219A00EB809A /* Configuration.storekit */; };
 		0A8218D92844D0B200C94F96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8218D82844D0B200C94F96 /* Assets.xcassets */; };
 		0A8218DF2844D0B300C94F96 /* CA Health WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0A8218DE2844D0B300C94F96 /* CA Health WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0A8218E42844D0B300C94F96 /* HealthAndMovementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8218E32844D0B300C94F96 /* HealthAndMovementApp.swift */; };
@@ -135,7 +133,6 @@
 		0A33190327D39ADF00C74CD6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../app/images/logo.png; sourceTree = "<group>"; };
 		0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HealthAndMovement/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A6FCF5C2760C6F70090931A /* HealthAndMovementDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HealthAndMovementDebug.entitlements; path = HealthAndMovement/HealthAndMovementDebug.entitlements; sourceTree = "<group>"; };
-		0A701BC026BF219A00EB809A /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		0A701BC526BF232800EB809A /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		0A8218D62844D0B100C94F96 /* CA Health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CA Health.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A8218D82844D0B200C94F96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -364,7 +361,6 @@
 			children = (
 				0AB82E47278E202400DBEE1A /* notif.wav */,
 				0A24E31326DCFE050030CD7E /* countdown.wav */,
-				0A701BC026BF219A00EB809A /* Configuration.storekit */,
 				0A701BC526BF232800EB809A /* StoreKitTestCertificate.cer */,
 				0ABF7D9925FCF2D0008BB70F /* File.swift */,
 				0A058F51242FC5E1006B658E /* Fonts */,
@@ -551,7 +547,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A701BC226BF219A00EB809A /* Configuration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +573,6 @@
 			files = (
 				0A24E31426DCFFEA0030CD7E /* countdown.wav in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				0A701BC126BF219A00EB809A /* Configuration.storekit in Resources */,
 				0AB82E48278E202400DBEE1A /* notif.wav in Resources */,
 				0A33190427D39ADF00C74CD6 /* logo.png in Resources */,
 				0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */,
