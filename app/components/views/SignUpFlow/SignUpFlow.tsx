@@ -190,19 +190,19 @@ const SignUpFlow: React.FC<{
       ),
     },
     // 5
-    {
-      key: 'height',
-      showNext: !!height,
-      component: (
-        <SelectHeight
-          height={height}
-          setHeight={setHeight}
-          unit="metric"
-          gender={gender}
-          index={index}
-        />
-      ),
-    },
+    // {
+    //   key: 'height',
+    //   showNext: !!height,
+    //   component: (
+    //     <SelectHeight
+    //       height={height}
+    //       setHeight={setHeight}
+    //       unit="metric"
+    //       gender={gender}
+    //       index={index}
+    //     />
+    //   ),
+    // },
     // 6
     {
       key: 'goal',
