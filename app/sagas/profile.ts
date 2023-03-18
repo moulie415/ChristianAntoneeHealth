@@ -195,10 +195,10 @@ function* updateProfile(action: UpdateProfileAction) {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const enabled: boolean = yield call(isEnabled);
     if (enabled) {
-      if (height && unit) {
+      if (weight && unit) {
         yield call(saveWeight, weight, unit);
       }
-      if (weight && unit) {
+      if (height && unit) {
         yield call(saveHeight, height, unit);
       }
       if (bodyFatPercentage !== undefined) {

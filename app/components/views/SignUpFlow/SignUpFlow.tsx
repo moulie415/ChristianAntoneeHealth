@@ -40,6 +40,8 @@ import Goals from './Goals';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
+import SelectWeight from './SelectWeight';
+import SelectHeight from './SelectHeight';
 
 const {width} = Dimensions.get('window');
 
@@ -174,33 +176,33 @@ const SignUpFlow: React.FC<{
     //   component: <SelectUnit unit={unit} setUnit={setUnit} />,
     // },
     // 4
-    // {
-    //   showNext: !!weight,
-    //   key: 'weight',
-    //   component: (
-    //     <SelectWeight
-    //       weight={weight}
-    //       setWeight={setWeight}
-    //       unit={unit}
-    //       gender={gender}
-    //       index={index}
-    //     />
-    //   ),
-    // },
+    {
+      showNext: !!weight,
+      key: 'weight',
+      component: (
+        <SelectWeight
+          weight={weight}
+          setWeight={setWeight}
+          unit="metric"
+          gender={gender}
+          index={index}
+        />
+      ),
+    },
     // 5
-    // {
-    //   key: 'height',
-    //   showNext: !!height,
-    //   component: (
-    //     <SelectHeight
-    //       height={height}
-    //       setHeight={setHeight}
-    //       unit={unit}
-    //       gender={gender}
-    //       index={index}
-    //     />
-    //   ),
-    // },
+    {
+      key: 'height',
+      showNext: !!height,
+      component: (
+        <SelectHeight
+          height={height}
+          setHeight={setHeight}
+          unit="metric"
+          gender={gender}
+          index={index}
+        />
+      ),
+    },
     // 6
     {
       key: 'goal',
