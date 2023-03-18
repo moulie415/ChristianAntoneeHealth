@@ -17,17 +17,26 @@ import Goals from '../../styles/views/Goals';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './Header';
 import Drawer from 'react-native-drawer';
+// @ts-ignore
+import Confetti from 'react-native-confetti';
+
+interface GoalSet {
+  title: string;
+  key: string;
+  goal: number;
+  score: number;
+  icon: string;
+}
 
 const GoalCircle: React.FC<{
   isLast?: boolean;
-  isFirst?: boolean;
   pagerRef: MutableRefObject<PagerView | null>;
   index: number;
   title: string;
   goal: number;
   score: number;
   icon: string;
-}> = ({isLast, isFirst, pagerRef, index, title, goal, score, icon}) => {
+}> = ({isLast, pagerRef, index, title, goal, score, icon}) => {
   const [fill, setFill] = useState(0);
 
   useEffect(() => {
@@ -72,7 +81,7 @@ const GoalCircle: React.FC<{
         }}>
         {`${score}/${goal}`}
       </Text>
-      {!isFirst && (
+      {index !== 0 && (
         <TouchableOpacity
           onPress={() => pagerRef.current?.setPage(index - 1)}
           style={{
@@ -135,6 +144,8 @@ const GoalSummaries: React.FC<{
       ? 'Intermediate/advanced'
       : 'Beginner/intermediate';
 
+  const confettiRef = useRef<Confetti>(null);
+
   useEffect(() => {
     getWeeklyItemsAction();
   }, [getWeeklyItemsAction]);
@@ -186,52 +197,38 @@ const GoalSummaries: React.FC<{
     0,
   );
 
-  const goals = [
-    <GoalCircle
-      title="Workouts completed"
-      pagerRef={pagerRef}
-      index={0}
-      key="workout"
-      score={[...savedWorkouts, ...savedQuickRoutines].length}
-      goal={workoutGoal}
-      isFirst
-      icon="dumbbell"
-    />,
-    <GoalCircle
-      title="Minutes spent training"
-      pagerRef={pagerRef}
-      index={1}
-      key="mins"
-      goal={minsGoal}
-      score={mins}
-      icon="stopwatch"
-    />,
-
-    <GoalCircle
-      title={`${workoutLevelTitleString} workouts completed`}
-      pagerRef={pagerRef}
-      index={2}
-      key="workoutLevel"
-      icon="tachometer-alt"
-      score={workoutLevelScore}
-      goal={workoutGoal}
-      isLast={!(profile.goal === Goal.WEIGHT_LOSS)}
-    />,
+  const goals: GoalSet[] = [
+    {
+      title: 'Workouts completed',
+      key: 'workout',
+      score: [...savedWorkouts, ...savedQuickRoutines].length,
+      goal: workoutGoal,
+      icon: 'dumbbell',
+    },
+    {
+      title: 'Minutes spent training',
+      key: 'mins',
+      goal: minsGoal,
+      score: mins,
+      icon: 'stopwatch',
+    },
+    {
+      title: `${workoutLevelTitleString} workouts completed`,
+      key: 'workoutLevel',
+      icon: 'tachometer-alt',
+      score: workoutLevelScore,
+      goal: workoutGoal,
+    },
   ];
 
   if (profile.goal === Goal.WEIGHT_LOSS) {
-    goals.push(
-      <GoalCircle
-        title="Calories burned"
-        pagerRef={pagerRef}
-        key="calories"
-        index={3}
-        goal={3500}
-        score={calories}
-        isLast
-        icon="fire-alt"
-      />,
-    );
+    goals.push({
+      title: 'Calories burned',
+      key: 'calories',
+      goal: 3500,
+      score: calories,
+      icon: 'fire-alt',
+    });
   }
 
   return (
@@ -250,9 +247,34 @@ const GoalSummaries: React.FC<{
         }}>
         Weekly Goals
       </Text>
-      <PagerView ref={pagerRef} style={{flex: 1}}>
-        {goals}
+      <PagerView
+        onPageSelected={e => {
+          const position = e.nativeEvent.position;
+          const {score, goal} = goals[position];
+          if (score >= goal) {
+            confettiRef.current?.startConfetti();
+          } else {
+            confettiRef.current?.stopConfetti();
+          }
+        }}
+        ref={pagerRef}
+        style={{flex: 1}}>
+        {goals.map(({goal, score, title, key, icon}, index) => {
+          return (
+            <GoalCircle
+              pagerRef={pagerRef}
+              title={title}
+              key={key}
+              icon={icon}
+              goal={goal}
+              score={score}
+              index={index}
+              isLast={index === goals.length - 1}
+            />
+          );
+        })}
       </PagerView>
+      <Confetti ref={confettiRef} duration={3000} confettiCount={200} />
     </SafeAreaView>
   );
 };

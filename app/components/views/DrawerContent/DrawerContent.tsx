@@ -151,7 +151,7 @@ const DrawerContent: React.FC<Props> = ({
       },
     },
     {
-      title: 'About us',
+      title: 'About',
       icon: 'info-circle',
       onPress: () => {
         navigationRef.navigate('About');
