@@ -12,7 +12,6 @@ import Text from './Text';
 const countdown = new Sound('countdown.wav', Sound.MAIN_BUNDLE, e => {
   if (e) {
     console.warn('failed to load the sound', e);
-    console.log(e.code);
     return;
   }
 });
