@@ -1,9 +1,4 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
 import React, {useState} from 'react';
 import {Gender} from '../../../types/Profile';
 
@@ -30,7 +25,7 @@ const SelectSex: React.FC<{
           marginBottom: 20,
           fontSize: 20,
         }}>
-        What's your gender?
+        What's your sex?
       </Text>
 
       <Button
@@ -45,9 +40,15 @@ const SelectSex: React.FC<{
 
       <Button
         text="Male"
-        style={{marginHorizontal: 20}}
+        style={{marginBottom: 20, marginHorizontal: 20}}
         onPress={() => setGender('male')}
         variant={gender === 'male' ? 'primary' : 'secondary'}
+      />
+      <Button
+        text="Prefer not to say"
+        style={{marginHorizontal: 20}}
+        onPress={() => setGender(null)}
+        variant={gender === null ? 'primary' : 'secondary'}
       />
     </View>
   );

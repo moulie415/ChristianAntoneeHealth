@@ -42,6 +42,7 @@ import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import SelectWeight from './SelectWeight';
 import SelectHeight from './SelectHeight';
+import SelectSex from './SelectSex';
 
 const {width} = Dimensions.get('window');
 
@@ -164,11 +165,11 @@ const SignUpFlow: React.FC<{
       ),
     },
     // 3
-    // {
-    //   showNext: !!gender,
-    //   key: 'sex',
-    //   component: <SelectSex gender={gender} setGender={setGender} />,
-    // },
+    {
+      showNext: !!gender,
+      key: 'sex',
+      component: <SelectSex gender={gender} setGender={setGender} />,
+    },
     // {
     //   color: colors.appBlue,
     //   showNext: !!unit,
@@ -209,104 +210,6 @@ const SignUpFlow: React.FC<{
       showNext: !!goal,
       component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
-    // 7
-    // {
-    //   key: 'experience',
-    //   showNext: !!experience,
-    //   component: (
-    //     <SelectExperience
-    //       experience={experience}
-    //       setExperience={setExperience}
-    //     />
-    //   ),
-    // },
-    // 8
-    // {
-    //   key: 'equipment',
-    //   showNext: true,
-    //   component: (
-    //     <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
-    //   ),
-    // },
-    // 9
-
-    // {
-    //   key: 'medications',
-    //   showNext: true,
-    //   component: (
-    //     <Medications
-    //       medications={medications}
-    //       setMedications={setMedications}
-    //     />
-    //   ),
-    // },
-    // 10
-    // {
-    //   key: 'lifestyle',
-    //   showNext: true,
-    //   component: (
-    //     <GeneralLifestyle lifestyle={lifestyle} setLifestyle={setLifestyle} />
-    //   ),
-    // },
-    // 11
-    // {
-    //   key: 'sleep',
-    //   showNext: !!sleepPattern,
-    //   component: (
-    //     <SleepPatterns
-    //       sleepPattern={sleepPattern}
-    //       setSleepPattern={setSleepPattern}
-    //     />
-    //   ),
-    // },
-    // 12
-    // {
-    //   key: 'stresslevel',
-    //   showNext: !!stressLevel,
-    //   component: (
-    //     <StressLevels
-    //       stressLevel={stressLevel}
-    //       setStressLevel={setStressLevel}
-    //     />
-    //   ),
-    // },
-    // 13
-    // {
-    //   key: 'occupation',
-    //   component: (
-    //     <Occupation occupation={occupation} setOccupation={setOccupation} />
-    //   ),
-    //   showNext: true,
-    // },
-    // 14
-    // {
-    //   key: 'injuries',
-    //   component: (
-    //     <PhysicalInjuries injuries={injuries} setInjuries={setInjuries} />
-    //   ),
-    //   showNext: true,
-    // },
-    // 15
-    // {
-    //   key: 'training',
-    //   component: (
-    //     <SelectTrainingAvailability
-    //       trainingAvailability={trainingAvailability}
-    //       setTrainingAvailability={setTrainingAvailability}
-    //     />
-    //   ),
-    //   showNext: !!trainingAvailability,
-    // },
-    // 16
-    // {
-    //   key: 'nutrition',
-    //   component: (
-    //     <Nutrition nutrition={nutrition} setNutrition={setNutrition} />
-    //   ),
-    //   showNext: true,
-    // },
-    //
-    // 17
 
     {
       key: 'goals',

@@ -343,7 +343,7 @@ function* signUp(action: SignUpAction) {
       birthday: dob,
       weight: weight?.toString(),
       height: height?.toString(),
-      gender,
+      gender: gender || '',
       goal,
     });
   } catch (e) {

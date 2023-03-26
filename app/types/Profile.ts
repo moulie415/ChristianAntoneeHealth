@@ -1,7 +1,7 @@
-import { PurchasesEntitlementInfo } from 'react-native-purchases';
+import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {Goal, Level} from './Shared';
 
-export type Gender = 'male' | 'female';
+export type Gender = 'male' | 'female' | null;
 
 export type Unit = 'metric' | 'imperial';
 
@@ -43,4 +43,4 @@ export default interface Profile {
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;
-}
+};
