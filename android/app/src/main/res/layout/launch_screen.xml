@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal|center_vertical"
     android:background="@color/white">
-     <ImageView
+     <!-- <ImageView
          android:id="@+id/imageView"
          android:layout_width="180dp"
          android:layout_height="180dp"
-         android:src="@drawable/logo" />
+         android:src="@drawable/logo" /> -->
 </LinearLayout>
 
