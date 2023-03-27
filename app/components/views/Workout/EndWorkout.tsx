@@ -23,7 +23,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds, name, isLast} = route.params;
+  const {seconds, name} = route.params;
 
   const calories = getCaloriesBurned(
     seconds,
@@ -66,7 +66,6 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
                 calories,
                 seconds,
                 difficulty,
-                isLast,
               });
             };
 

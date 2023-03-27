@@ -1,6 +1,13 @@
-import {SectionList, View} from 'react-native';
+import {ScrollView, SectionList, View} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
-import {MyRootState, Plan, PlanTest, PlanWorkout} from '../../../types/Shared';
+import {
+  MyRootState,
+  Plan,
+  PlanNutrition,
+  PlanSleep,
+  PlanTest,
+  PlanWorkout,
+} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Text from '../../commons/Text';
@@ -23,6 +30,8 @@ import TestCard from '../../commons/TestCard';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import EducationCard from '../../commons/EducationCard';
 import {objectHasNonEmptyValues} from '../../../helpers';
+import NutritionCard from '../../commons/NutritionCard';
+import SleepCard from '../../commons/SleepCard';
 
 const Daily: React.FC<{
   plan?: Plan;
@@ -67,7 +76,10 @@ const Daily: React.FC<{
     }
   }, [plan]);
 
-  const data: {title: string; data: (PlanWorkout | PlanTest)[]}[] = [];
+  const data: {
+    title: string;
+    data: (PlanWorkout | PlanTest | PlanSleep | PlanNutrition | string)[];
+  }[] = [];
 
   if (workouts?.length) {
     data.push({
@@ -81,6 +93,31 @@ const Daily: React.FC<{
       title: 'Tests',
       data: tests,
     });
+  }
+
+  if (plan?.education) {
+    data.push({title: 'Education', data: plan.education});
+  }
+
+  if (plan?.sleep && plan.sleep.general) {
+    data.push({
+      title: '',
+      data: [plan.sleep],
+    });
+  }
+
+  if (
+    plan?.nutrition &&
+    (plan.nutrition.general ||
+      plan.nutrition.preWorkout ||
+      plan.nutrition.postWorkout)
+  ) {
+    if (plan.nutrition.preWorkout) {
+      data.push({
+        title: '',
+        data: [plan.nutrition],
+      });
+    }
   }
 
   useEffect(() => {
@@ -114,62 +151,50 @@ const Daily: React.FC<{
   }, [plan, education, getEducationByIdAction]);
 
   return (
-    <View>
-      {data.length ? (
-        <SectionList
-          sections={data}
-          renderSectionHeader={({section: {title}}) => (
-            <Text
-              style={{
-                padding: 5,
-                marginLeft: 10,
-                color: colors.appWhite,
-                fontSize: 20,
-                fontWeight: 'bold',
-              }}>
-              {title}
-            </Text>
-          )}
-          renderItem={({item}) => {
-            if ('name' in item) {
-              return (
-                <WorkoutCard
-                  key={item.name}
-                  disabled={loading}
-                  item={item}
-                  onPress={() => {
-                    setWorkoutAction(
-                      item.exercises.map(e => {
-                        return {
-                          ...exercises[e.exercise],
-                          ...e,
-                        };
-                      }),
-                    );
-                    const isLast = !data.some(section => {
-                      section.data.some(i =>
-                        i.dates.some(date => {
-                          item.dates.some(d => moment(d).isBefore(date));
-                        }),
-                      );
-                    });
-                    navigate('PreWorkout', {name: item.name, isLast});
-                  }}
-                />
-              );
-            }
+    <ScrollView>
+      <Text
+        style={{
+          marginLeft: 10,
+          color: colors.appWhite,
+          fontSize: 30,
+          textAlign: 'center',
+          fontWeight: 'bold',
+        }}>
+        Today's Plan
+      </Text>
+      {workouts?.length ? (
+        <>
+          <Text
+            style={{
+              padding: 5,
+              marginLeft: 10,
+              color: colors.appWhite,
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>
+            Workouts
+          </Text>
+          {workouts.map(workout => {
             return (
-              <TestCard
-                key={item.test}
-                item={testsObj[item.test]}
+              <WorkoutCard
+                key={workout.name}
                 disabled={loading}
+                item={workout}
                 onPress={() => {
-                  navigate('Test', {id: item.test});
+                  setWorkoutAction(
+                    workout.exercises.map(e => {
+                      return {
+                        ...exercises[e.exercise],
+                        ...e,
+                      };
+                    }),
+                  );
+                  navigate('PreWorkout', {name: workout.name});
                 }}
               />
             );
-          }}
-        />
+          })}
+        </>
       ) : (
         <View style={{padding: 10}}>
           <Text
@@ -178,143 +203,57 @@ const Daily: React.FC<{
           </Text>
         </View>
       )}
-      <View>
-        {plan && !!plan.education && !!plan.education.length && (
-          <View>
-            {educationLoading ? (
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 50,
-                }}>
-                <Spinner />
-              </View>
-            ) : (
-              <View>
-                <Text
-                  style={{
-                    padding: 5,
-                    marginLeft: 10,
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    fontSize: 20,
-                  }}>
-                  Education
-                </Text>
-                <FlatList
-                  data={plan.education}
-                  renderItem={({item: i}) => {
-                    const item = education[i];
-                    if (!item) {
-                      return null;
-                    }
-                    return (
-                      <EducationCard
-                        item={item}
-                        onPress={() => {
-                          navigate('EducationArticle', {
-                            education: item,
-                          });
-                        }}
-                      />
-                    );
-                  }}
-                />
-              </View>
+      {!!tests?.length && (
+        <>
+          <Text
+            style={{
+              padding: 5,
+              marginLeft: 10,
+              color: colors.appWhite,
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>
+            Tests
+          </Text>
+          {tests.map(test => {
+            return (
+              <TestCard
+                key={test.test}
+                item={testsObj[test.test]}
+                disabled={loading}
+                onPress={() => {
+                  navigate('Test', {id: test.test});
+                }}
+              />
+            );
+          })}
+        </>
+      )}
+      {(objectHasNonEmptyValues(plan?.sleep) ||
+        objectHasNonEmptyValues(plan?.nutrition)) && (
+        <>
+          <Text
+            style={{
+              padding: 5,
+              marginLeft: 10,
+              color: colors.appWhite,
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>
+            Other
+          </Text>
+          {plan?.nutrition &&
+            (plan.nutrition.general ||
+              plan.nutrition.preWorkout ||
+              plan.nutrition.postWorkout) && (
+              <NutritionCard nutrition={plan.nutrition} />
             )}
-          </View>
-        )}
-        {plan &&
-          objectHasNonEmptyValues(plan.nutrition) &&
-          objectHasNonEmptyValues(plan.sleep) && (
-            <Text
-              style={{
-                padding: 5,
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                marginLeft: 10,
-                fontSize: 20,
-              }}>
-              Other
-            </Text>
+          {plan?.sleep && plan.sleep.general && (
+            <SleepCard sleep={plan.sleep} />
           )}
-        {plan && objectHasNonEmptyValues(plan.nutrition) && (
-          <>
-            <Divider />
-            <View
-              style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
-              <Icon name="apple-alt" size={20} color={colors.appBlue} />
-              <Text
-                style={{
-                  padding: 5,
-                  color: colors.appWhite,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                }}>
-                Nutritional planning
-              </Text>
-            </View>
-            <View style={{marginLeft: 10}}>
-              {plan && !!plan.nutrition.general && (
-                <Text style={{marginBottom: 10, marginRight: 10}}>
-                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
-                    General recommendations:{' '}
-                  </Text>
-                  <Text style={{color: colors.appWhite}}>
-                    {plan.nutrition.general}
-                  </Text>
-                </Text>
-              )}
-              {plan && !!plan.nutrition.preWorkout && (
-                <Text style={{marginBottom: 10, marginRight: 10}}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: colors.appWhite,
-                    }}>
-                    Pre-workout:{' '}
-                  </Text>
-                  <Text style={{color: colors.appWhite}}>
-                    {plan.nutrition.preWorkout}
-                  </Text>
-                </Text>
-              )}
-              {plan && !!plan.nutrition.postWorkout && (
-                <Text style={{marginBottom: 10, marginRight: 10}}>
-                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
-                    Post-workout:{' '}
-                  </Text>
-                  <Text style={{color: colors.appWhite}}>
-                    {plan.nutrition.postWorkout}
-                  </Text>
-                </Text>
-              )}
-            </View>
-          </>
-        )}
-        {plan && objectHasNonEmptyValues(plan.sleep) && (
-          <>
-            <Divider />
-            <View
-              style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
-              <Icon name="bed" size={20} color={colors.appBlue} />
-              <Text
-                style={{
-                  padding: 5,
-                  color: colors.appWhite,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                  marginRight: 10,
-                }}>
-                {`Sleep hygiene: ${plan.sleep.general}`}
-              </Text>
-            </View>
-            <Divider />
-          </>
-        )}
-      </View>
-    </View>
+        </>
+      )}
+    </ScrollView>
   );
 };
 

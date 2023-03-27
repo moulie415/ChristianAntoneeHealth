@@ -18,6 +18,8 @@ import {
   Equipment as EquipmentItem,
   WarmUp,
   CoolDown,
+  PlanNutrition,
+  PlanSleep,
 } from './types/Shared';
 import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
@@ -99,14 +101,13 @@ export type StackParamList = {
   };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
-  PreWorkout: {name?: string; isLast?: boolean};
-  StartWorkout: {name?: string; isLast?: boolean};
-  EndWorkout: {seconds: number; name?: string; isLast?: boolean};
+  PreWorkout: {name?: string};
+  StartWorkout: {name?: string};
+  EndWorkout: {seconds: number; name?: string};
   WorkoutSummary: {
     seconds: number;
     calories?: number;
     difficulty: number;
-    isLast?: boolean;
   };
   Education: undefined;
   EducationArticle: {education: Education};
@@ -140,6 +141,8 @@ export type StackParamList = {
   WorkoutList: {area: Area; equipment: Equipment};
   Rating: undefined;
   Stack: undefined;
+  Nutrition: {nutrition: PlanNutrition};
+  Sleep: {sleep: PlanSleep};
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

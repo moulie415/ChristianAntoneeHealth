@@ -139,14 +139,7 @@ const Weekly: React.FC<{
                         };
                       }),
                     );
-                    const isLast = !sections.some(section => {
-                      section.data.some(i =>
-                        i.dates.some(date => {
-                          item.dates.some(d => moment(d).isBefore(date));
-                        }),
-                      );
-                    });
-                    navigate('PreWorkout', {name: item.name, isLast});
+                    navigate('PreWorkout', {name: item.name});
                   } else {
                     Alert.alert('Workout not due today', 'View early?', [
                       {text: 'Cancel'},
@@ -161,14 +154,7 @@ const Weekly: React.FC<{
                               };
                             }),
                           );
-                          const isLast = !sections.some(section => {
-                            section.data.some(i =>
-                              i.dates.some(date => {
-                                item.dates.some(d => moment(d).isBefore(date));
-                              }),
-                            );
-                          });
-                          navigate('PreWorkout', {name: item.name, isLast});
+                          navigate('PreWorkout', {name: item.name});
                         },
                       },
                     ]);

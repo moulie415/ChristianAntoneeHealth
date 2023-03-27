@@ -68,7 +68,6 @@ const StartWorkout: React.FC<{
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const textInputRef = useRef<TextInput>();
   const name = route.params?.name;
-  const isLast = route.params?.isLast;
   const [fullscreen, setFullScreen] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
 
@@ -379,7 +378,6 @@ const StartWorkout: React.FC<{
                                 navigation.navigate('EndWorkout', {
                                   seconds,
                                   name,
-                                  isLast,
                                 });
                               },
                             },

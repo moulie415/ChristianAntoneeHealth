@@ -41,7 +41,7 @@ const WorkoutSummary: React.FC<{
   workout,
   setShareModalVisibleAction,
 }) => {
-  const {calories, seconds, difficulty, isLast} = route.params;
+  const {calories, seconds, difficulty} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
   useBackHandler(() => true);
 

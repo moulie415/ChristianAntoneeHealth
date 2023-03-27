@@ -399,6 +399,6 @@ export const greetingMessage = () => {
     : 'Welcome';
 };
 
-export const objectHasNonEmptyValues = (object: object) => {
+export const objectHasNonEmptyValues = (object?: object) => {
   return object && Object.values(object).some(obj => obj);
 };
