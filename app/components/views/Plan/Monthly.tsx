@@ -38,16 +38,8 @@ const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
         return acc;
       }, [])
     : [];
-  const testDates: string[] = plan?.tests
-    ? plan.tests.reduce((acc: string[], cur) => {
-        if (cur.dates) {
-          return [...acc, ...cur.dates];
-        }
-        return acc;
-      }, [])
-    : [];
 
-  const uniq = _.uniq([...workoutDates, ...testDates]);
+  const uniq = _.uniq(workoutDates);
 
   const dates: MarkedDates = uniq.reduce((acc: MarkedDates, cur) => {
     if (cur) {
@@ -80,9 +72,6 @@ const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
           if (dates[dateString]) {
             const workout = plan?.workouts?.find(w => {
               w.dates.includes(dateString);
-            });
-            const test = plan?.tests?.find(t => {
-              t.dates.includes(dateString);
             });
           }
         }}
@@ -152,29 +141,7 @@ const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
                         events.push(event);
                       });
                     });
-                    plan?.tests?.forEach(test => {
-                      test.dates?.forEach(date => {
-                        const testObj = tests[test.test];
-                        const title = testObj ? testObj.name : 'CA Health Test';
-                        const event: {
-                          title: string;
-                          details: CalendarEventWritable;
-                        } = {
-                          title,
-                          details: {
-                            startDate: moment(date)
-                              .set('hours', 9)
-                              .toISOString(),
-                            endDate: moment(date)
-                              .set('hours', 10)
-                              .toISOString(),
-                            calendarId: item.id,
-                            allDay: true,
-                          },
-                        };
-                        events.push(event);
-                      });
-                    });
+
                     await Promise.all(
                       events.map(event => {
                         return RNCalendarEvents.saveEvent(

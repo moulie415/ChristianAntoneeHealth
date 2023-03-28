@@ -90,11 +90,6 @@ export interface PlanWorkout {
   today?: boolean;
 }
 
-export interface PlanTest {
-  test: string;
-  dates: string[];
-  today?: boolean;
-}
 
 export interface PlanNutrition {
   preWorkout: string;
@@ -112,7 +107,7 @@ export interface Plan {
   workouts: PlanWorkout[];
   nutrition: PlanNutrition;
   sleep: PlanSleep;
-  tests: PlanTest[];
+  tests: string[];
   education: string[];
 }
 

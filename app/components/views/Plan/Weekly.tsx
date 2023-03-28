@@ -4,7 +4,6 @@ import {
   MyRootState,
   Plan,
   PlanExercise,
-  PlanTest,
   PlanWorkout,
 } from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -56,34 +55,24 @@ const Weekly: React.FC<{
     }
   }, [plan]);
 
-  const tests = useMemo(() => {
-    if (plan) {
-      return (
-        plan?.tests?.filter(t =>
-          t.dates.find(
-            d =>
-              (moment(d).isAfter(moment().startOf('day')) ||
-                moment(d).isSame(moment().startOf('day'))) &&
-              moment(d).isBefore(moment().startOf('day').add(7, 'days')),
-          ),
-        ) || []
-      );
-    }
-  }, [plan]);
-
-  const sections: {title: string; data: (PlanWorkout | PlanTest)[]}[] = [];
+  const sections: {title: string; data: PlanWorkout[]}[] = [];
 
   for (let i = 0; i < 7; i++) {
-    if (workouts && tests) {
+    if (workouts) {
       const day = moment().add(i, 'days');
-      const data = [...workouts, ...tests]
+      const data = workouts
         .filter(item => {
           return item.dates.some(date => moment(date).isSame(day, 'day'));
         })
         .map(item => {
           return {...item, today: i === 0};
         });
-      sections.push({title: moment(day).format('dddd'), data});
+      if (data.length) {
+        sections.push({
+          title: `${moment(day).format('dddd')} ${i === 0 ? '(today)' : ''}`,
+          data,
+        });
+      }
     }
   }
 
@@ -98,15 +87,6 @@ const Weekly: React.FC<{
       }
     }
   }, [exercises, workouts, getExercisesByIdAction]);
-
-  useEffect(() => {
-    if (tests?.length) {
-      const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
-      if (missingTestIds.length) {
-        getTestsByIdAction(missingTestIds);
-      }
-    }
-  }, [getTestsByIdAction, tests, testsObj]);
 
   return (
     <View>
@@ -127,6 +107,7 @@ const Weekly: React.FC<{
           if ('name' in item) {
             return (
               <WorkoutCard
+                plan
                 key={item.name}
                 item={item}
                 onPress={() => {
@@ -163,27 +144,7 @@ const Weekly: React.FC<{
               />
             );
           }
-          return (
-            <TestCard
-              key={item.test}
-              item={testsObj[item.test]}
-              onPress={() => {
-                if (item.today) {
-                  navigate('Test', {id: item.test});
-                } else {
-                  Alert.alert('Test not due today', 'View early?', [
-                    {text: 'Cancel'},
-                    {
-                      text: 'Yes',
-                      onPress: () => {
-                        navigate('Test', {id: item.test});
-                      },
-                    },
-                  ]);
-                }
-              }}
-            />
-          );
+          return null;
         }}
       />
     </View>

@@ -6,6 +6,7 @@ import {navigationRef} from '../../RootNavigation';
 import {PlanSleep} from '../../types/Shared';
 import Text from './Text';
 import colors from '../../constants/colors';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
   return (
@@ -26,22 +27,34 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
             borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 16,
-              fontWeight: 'bold',
-              marginBottom: 5,
-            }}>
-            Sleep
-          </Text>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 14,
-            }}>
-            View your personalised sleep advice
-          </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name="bed"
+              color={colors.appWhite}
+              size={20}
+              style={{marginHorizontal: 10}}
+            />
+            <View>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                }}>
+                Sleep
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 16,
+                  marginTop: 5,
+                  fontWeight: 'bold',
+                  width: 280,
+                }}>
+                Your personalised sleep advice
+              </Text>
+            </View>
+          </View>
         </View>
       </FastImage>
     </TouchableOpacity>

@@ -1,18 +1,9 @@
 import {ScrollView, SectionList, View} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
-import {
-  MyRootState,
-  Plan,
-  PlanNutrition,
-  PlanSleep,
-  PlanTest,
-  PlanWorkout,
-} from '../../../types/Shared';
+import {MyRootState, Plan} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Text from '../../commons/Text';
-import ImageOverlay from '../../commons/ImageOverlay';
-
 import colors from '../../../constants/colors';
 import Exercise from '../../../types/Exercise';
 import Test from '../../../types/Test';
@@ -23,15 +14,13 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as _ from 'lodash';
 import Education from '../../../types/Education';
 import {getEducationById} from '../../../actions/education';
-import Spinner from '../../commons/Spinner';
-import Divider from '../../commons/Divider';
 import WorkoutCard from '../../commons/WorkoutCard';
 import TestCard from '../../commons/TestCard';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import EducationCard from '../../commons/EducationCard';
+
 import {objectHasNonEmptyValues} from '../../../helpers';
 import NutritionCard from '../../commons/NutritionCard';
 import SleepCard from '../../commons/SleepCard';
+import EducationCard from '../../commons/EducationCard';
 
 const Daily: React.FC<{
   plan?: Plan;
@@ -66,60 +55,6 @@ const Daily: React.FC<{
     }
   }, [plan]);
 
-  const tests = useMemo(() => {
-    if (plan) {
-      return (
-        plan.tests?.filter(t =>
-          t.dates.find(d => moment(d).isSame(moment(), 'day')),
-        ) || []
-      );
-    }
-  }, [plan]);
-
-  const data: {
-    title: string;
-    data: (PlanWorkout | PlanTest | PlanSleep | PlanNutrition | string)[];
-  }[] = [];
-
-  if (workouts?.length) {
-    data.push({
-      title: 'Workouts',
-      data: workouts,
-    });
-  }
-
-  if (tests?.length) {
-    data.push({
-      title: 'Tests',
-      data: tests,
-    });
-  }
-
-  if (plan?.education) {
-    data.push({title: 'Education', data: plan.education});
-  }
-
-  if (plan?.sleep && plan.sleep.general) {
-    data.push({
-      title: '',
-      data: [plan.sleep],
-    });
-  }
-
-  if (
-    plan?.nutrition &&
-    (plan.nutrition.general ||
-      plan.nutrition.preWorkout ||
-      plan.nutrition.postWorkout)
-  ) {
-    if (plan.nutrition.preWorkout) {
-      data.push({
-        title: '',
-        data: [plan.nutrition],
-      });
-    }
-  }
-
   useEffect(() => {
     if (workouts?.length) {
       const allExercises: string[] = workouts.reduce((acc: string[], cur) => {
@@ -133,13 +68,13 @@ const Daily: React.FC<{
   }, [exercises, workouts, getExercisesByIdAction]);
 
   useEffect(() => {
-    if (tests?.length) {
-      const missingTestIds = tests.map(t => t.test).filter(id => !testsObj[id]);
+    if (plan?.tests) {
+      const missingTestIds = plan.tests.filter(id => !testsObj[id]);
       if (missingTestIds.length) {
         getTestsByIdAction(missingTestIds);
       }
     }
-  }, [getTestsByIdAction, tests, testsObj]);
+  }, [getTestsByIdAction, testsObj, plan]);
 
   useEffect(() => {
     if (plan && plan.education && plan.education.length) {
@@ -154,10 +89,9 @@ const Daily: React.FC<{
     <ScrollView>
       <Text
         style={{
-          marginLeft: 10,
-          marginBottom: 10,
+          margin: 10,
           color: colors.appWhite,
-          fontSize: 30,
+          fontSize: 25,
           textAlign: 'center',
           fontWeight: 'bold',
         }}>
@@ -168,6 +102,7 @@ const Daily: React.FC<{
           {workouts.map(workout => {
             return (
               <WorkoutCard
+                plan
                 key={workout.name}
                 disabled={loading}
                 item={workout}
@@ -194,22 +129,28 @@ const Daily: React.FC<{
           </Text>
         </View>
       )}
-      {!!tests?.length && (
+      {!!plan?.tests.length && (
         <>
-          {tests.map(test => {
-            return (
-              <TestCard
-                key={test.test}
-                item={testsObj[test.test]}
-                disabled={loading}
-                onPress={() => {
-                  navigate('Test', {id: test.test});
-                }}
-              />
-            );
+          {plan.tests.map(test => {
+            const item = testsObj[test];
+            if (item) {
+              return (
+                <TestCard
+                  plan
+                  key={item.id}
+                  item={item}
+                  disabled={loading}
+                  onPress={() => {
+                    navigate('Test', {id: item.id});
+                  }}
+                />
+              );
+            }
+            return null;
           })}
         </>
       )}
+
       {(objectHasNonEmptyValues(plan?.sleep) ||
         objectHasNonEmptyValues(plan?.nutrition)) && (
         <>
@@ -222,6 +163,24 @@ const Daily: React.FC<{
           {plan?.sleep && plan.sleep.general && (
             <SleepCard sleep={plan.sleep} />
           )}
+        </>
+      )}
+      {!!plan?.education.length && (
+        <>
+          {plan.education.map(edu => {
+            const item = education[edu];
+            if (item) {
+              return (
+                <EducationCard
+                  onPress={() =>
+                    navigate('EducationArticle', {education: item})
+                  }
+                  item={item}
+                />
+              );
+            }
+            return null;
+          })}
         </>
       )}
     </ScrollView>

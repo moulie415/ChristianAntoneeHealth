@@ -19,7 +19,7 @@ const EducationArticle: React.FC<{
   const {width} = useWindowDimensions();
   return (
     <View>
-      <ScrollView contentContainerStyle={{}}>
+      <ScrollView bounces={false} contentContainerStyle={{}}>
         <Image
           style={{
             height: 350,

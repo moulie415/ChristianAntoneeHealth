@@ -46,7 +46,8 @@ const WorkoutCard: React.FC<{
   onPress: () => void;
   profile: Profile;
   disabled?: boolean;
-}> = ({item, onPress, profile, disabled}) => {
+  plan?: boolean;
+}> = ({item, onPress, profile, disabled, plan}) => {
   const locked = 'premium' in item && item.premium && !profile.premium;
   return (
     <TouchableOpacity
@@ -73,67 +74,102 @@ const WorkoutCard: React.FC<{
             borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          {locked ? (
-            <View style={{}}>
-              <Icon name="lock" color="#fff" size={40} />
+          {plan ? (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name="dumbbell"
+                color={colors.appWhite}
+                size={30}
+                style={{marginHorizontal: 10}}
+              />
+              <View>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                  }}>
+                  Workout
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    marginTop: 5,
+                    fontWeight: 'bold',
+                  }}>
+                  {item.name}
+                </Text>
+              </View>
             </View>
           ) : (
-            <View style={{marginBottom: 5}}>
-              {'duration' in item ? (
-                <>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      fontSize: 12,
-                    }}>
-                    Under
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      fontSize: 12,
-                    }}>
-                    <Text style={{fontWeight: 'bold'}}>{item.duration}</Text>
-                    {' mins'}
-                  </Text>
-                </>
+            <>
+              {locked ? (
+                <View style={{}}>
+                  <Icon name="lock" color="#fff" size={40} />
+                </View>
               ) : (
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                    {item.exercises.length + ' '}
-                  </Text>
-                  <Text style={{color: colors.appWhite}}>
-                    {item.exercises.length > 1 ? 'exercises' : 'exercise'}
-                  </Text>
+                <View style={{marginBottom: 5}}>
+                  {'duration' in item ? (
+                    <>
+                      <Text
+                        style={{
+                          color: colors.appWhite,
+                          fontSize: 12,
+                        }}>
+                        Under
+                      </Text>
+                      <Text
+                        style={{
+                          color: colors.appWhite,
+                          fontSize: 12,
+                        }}>
+                        <Text style={{fontWeight: 'bold'}}>
+                          {item.duration}
+                        </Text>
+                        {' mins'}
+                      </Text>
+                    </>
+                  ) : (
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                        {item.exercises.length + ' '}
+                      </Text>
+                      <Text style={{color: colors.appWhite}}>
+                        {item.exercises.length > 1 ? 'exercises' : 'exercise'}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               )}
-            </View>
-          )}
-          <View
-            style={{
-              width: 300,
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: 16,
-                fontWeight: 'bold',
-                marginBottom: 5,
-              }}>
-              {item.name}
-            </Text>
-            {'level' in item && (
-              <Text
+              <View
                 style={{
-                  color: colors.appWhite,
-                  fontSize: 14,
+                  width: 300,
                 }}>
-                {`${getLevelString(item.level)} - ${getEquipmentString(
-                  item.equipment,
-                )}`}
-              </Text>
-            )}
-          </View>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    marginBottom: 5,
+                  }}>
+                  {item.name}
+                </Text>
+                {'level' in item && (
+                  <Text
+                    style={{
+                      color: colors.appWhite,
+                      fontSize: 14,
+                    }}>
+                    {`${getLevelString(item.level)} - ${getEquipmentString(
+                      item.equipment,
+                    )}`}
+                  </Text>
+                )}
+              </View>
+            </>
+          )}
         </View>
       </FastImageAnimated>
     </TouchableOpacity>

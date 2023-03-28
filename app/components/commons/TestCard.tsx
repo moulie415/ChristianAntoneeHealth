@@ -17,7 +17,8 @@ const TestCard: React.FC<{
   profile: Profile;
   tests: {[key: string]: Test};
   disabled?: boolean;
-}> = ({item, onPress, profile, tests, disabled}) => {
+  plan?: boolean;
+}> = ({item, onPress, profile, tests, disabled, plan}) => {
   if (!item) {
     return null;
   }
@@ -28,7 +29,7 @@ const TestCard: React.FC<{
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
       <FastImage
         style={{
-          height: 140,
+          height: 120,
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
@@ -42,34 +43,66 @@ const TestCard: React.FC<{
             borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          {item.premium && !profile.premium && (
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                bottom: 0,
-                margin: 10,
-              }}>
-              <Icon name="lock" color="#fff" size={30} />
+          {plan ? (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name="heartbeat"
+                color={colors.appWhite}
+                size={30}
+                style={{marginHorizontal: 10}}
+              />
+              <View>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                  }}>
+                  Test
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    marginTop: 5,
+                    fontWeight: 'bold',
+                  }}>
+                  {item.name}
+                </Text>
+              </View>
             </View>
+          ) : (
+            <>
+              {item.premium && !profile.premium && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    margin: 10,
+                  }}>
+                  <Icon name="lock" color="#fff" size={30} />
+                </View>
+              )}
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: 20,
+                  width: 200,
+                  margin: 20,
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}>
+                  {item.name}
+                </Text>
+              </View>
+            </>
           )}
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              width: 200,
-              margin: 20,
-            }}>
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: 16,
-                fontWeight: 'bold',
-              }}>
-              {item.name}
-            </Text>
-          </View>
         </View>
       </FastImage>
     </TouchableOpacity>

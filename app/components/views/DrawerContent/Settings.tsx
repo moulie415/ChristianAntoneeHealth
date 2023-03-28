@@ -108,7 +108,7 @@ const Settings: React.FC<SettingsProps> = ({
                 />
               </View>
 
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -131,7 +131,7 @@ const Settings: React.FC<SettingsProps> = ({
                   value={testReminders}
                   onValueChange={setTestRemindersAction}
                 />
-              </View>
+              </View> */}
 
               <TouchableOpacity
                 onPress={() => setShowTestDate(true)}
@@ -184,7 +184,7 @@ const Settings: React.FC<SettingsProps> = ({
                 )}
               </TouchableOpacity>
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => setShowTestDate(true)}
                 disabled={Platform.OS === 'ios'}
                 style={{
@@ -233,7 +233,7 @@ const Settings: React.FC<SettingsProps> = ({
                     </Text>
                   </TouchableOpacity>
                 )}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <Text
                 style={{
                   fontStyle: 'italic',

@@ -52,22 +52,22 @@ export function* schedulePlanReminders() {
         });
       });
     }
-    if (plan.tests && testReminders) {
-      plan.tests.forEach(test => {
-        test.dates.forEach(d => {
-          const date = moment(d)
-            .set('hours', moment(testReminderTime).hours())
-            .set('minutes', moment(testReminderTime).minutes());
-          if (date.isAfter(moment())) {
-            scheduleLocalNotification(
-              'Reminder to do your fitness test for today',
-              date.toDate(),
-              TEST_REMINDERS_CHANNEL_ID,
-            );
-          }
-        });
-      });
-    }
+    // if (plan.tests && testReminders) {
+    //   plan.tests.forEach(test => {
+    //     test.dates.forEach(d => {
+    //       const date = moment(d)
+    //         .set('hours', moment(testReminderTime).hours())
+    //         .set('minutes', moment(testReminderTime).minutes());
+    //       if (date.isAfter(moment())) {
+    //         scheduleLocalNotification(
+    //           'Reminder to do your fitness test for today',
+    //           date.toDate(),
+    //           TEST_REMINDERS_CHANNEL_ID,
+    //         );
+    //       }
+    //     });
+    //   });
+    // }
   }
 }
 

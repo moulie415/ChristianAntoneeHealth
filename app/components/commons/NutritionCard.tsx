@@ -6,6 +6,7 @@ import {navigationRef} from '../../RootNavigation';
 import {PlanNutrition} from '../../types/Shared';
 import Text from './Text';
 import colors from '../../constants/colors';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
   return (
@@ -27,22 +28,34 @@ const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
             borderRadius: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 16,
-              fontWeight: 'bold',
-              marginBottom: 5,
-            }}>
-            Nutrition
-          </Text>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 14,
-            }}>
-            View your personalised nutrition advice
-          </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name="utensils"
+              color={colors.appWhite}
+              size={30}
+              style={{marginHorizontal: 10}}
+            />
+            <View>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                }}>
+                Nutrition
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 16,
+                  marginTop: 5,
+                  fontWeight: 'bold',
+                  width: 280,
+                }}>
+                Your personalised nutrition advice
+              </Text>
+            </View>
+          </View>
         </View>
       </FastImage>
     </TouchableOpacity>

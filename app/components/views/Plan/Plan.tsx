@@ -89,20 +89,13 @@ const Plan: React.FC<{
   const hasPlanLeft = useMemo(() => {
     return (
       plan &&
-      (plan.workouts?.some(workout =>
+      plan.workouts?.some(workout =>
         workout.dates.find(
           date =>
             moment(date).isAfter(moment().startOf('day')) ||
             moment(date).isSame(moment().startOf('day')),
         ),
-      ) ||
-        plan.tests?.some(test =>
-          test.dates.find(
-            date =>
-              moment(date).isAfter(moment().startOf('day')) ||
-              moment(date).isSame(moment().startOf('day')),
-          ),
-        ))
+      )
     );
   }, [plan]);
 
@@ -126,6 +119,7 @@ const Plan: React.FC<{
                 return (
                   <TabBar
                     {...props}
+
                     renderTabBarItem={props => {
                       return (
                         <TouchableOpacity
@@ -166,7 +160,7 @@ const Plan: React.FC<{
                       backgroundColor: 'transparent',
                     }}
                     contentContainerStyle={{
-                      marginVertical: 20,
+                      marginVertical: 0,
                       justifyContent: 'space-evenly',
                     }}
                     indicatorStyle={{backgroundColor: 'transparent'}}
