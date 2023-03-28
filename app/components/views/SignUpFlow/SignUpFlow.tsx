@@ -166,7 +166,7 @@ const SignUpFlow: React.FC<{
     },
     // 3
     {
-      showNext: !!gender,
+      showNext: true,
       key: 'sex',
       component: <SelectSex gender={gender} setGender={setGender} />,
     },

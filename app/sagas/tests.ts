@@ -22,6 +22,7 @@ import * as api from '../helpers/api';
 import {SavedTest} from '../types/SavedItem';
 import {MyRootState} from '../types/Shared';
 import Test from '../types/Test';
+import {logError} from '../helpers/error';
 
 export function* getTests() {
   const tests: {[key: string]: Test} = yield call(api.getTests);
@@ -36,6 +37,7 @@ function* saveTest(action: SaveTestAction) {
       yield call(Snackbar.show, {text: 'Test saved'});
     }
   } catch (e) {
+    logError(e);
     yield call(Snackbar.show, {text: 'Error saving test'});
   }
 }
@@ -52,6 +54,7 @@ function* getSavedTests() {
     yield put(setSavedTests(savedTests));
     yield put(setLoading(false));
   } catch (e) {
+    logError(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error getting saved tests'});
   }
@@ -67,6 +70,7 @@ function* getTestsById(action: GetTestsByIdAction) {
     }
     yield put(setLoading(false));
   } catch (e) {
+    logError(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error fetching tests'});
   }

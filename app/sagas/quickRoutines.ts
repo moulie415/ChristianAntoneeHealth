@@ -22,12 +22,17 @@ import {MyRootState} from '../types/Shared';
 import Snackbar from 'react-native-snackbar';
 import {SavedQuickRoutine} from '../types/SavedItem';
 import {setLoading} from '../actions/exercises';
+import {logError} from '../helpers/error';
 
 export function* getQuickRoutines() {
-  const routines: {[key: string]: QuickRoutine} = yield call(
-    api.getQuickRoutines,
-  );
-  yield put(setQuickRoutines(routines));
+  try {
+    const routines: {[key: string]: QuickRoutine} = yield call(
+      api.getQuickRoutines,
+    );
+    yield put(setQuickRoutines(routines));
+  } catch (e) {
+    logError(e);
+  }
 }
 
 function* saveQuickRoutine(action: SaveQuickRoutineAction) {
@@ -38,7 +43,7 @@ function* saveQuickRoutine(action: SaveQuickRoutineAction) {
       yield call(Snackbar.show, {text: 'Workout saved '});
     }
   } catch (e) {
-    console.log(e);
+    logError(e);
     yield call(Snackbar.show, {text: 'Error saving workout'});
   }
 }
@@ -54,6 +59,7 @@ export function* getSavedQuickRoutines() {
     yield put(setSavedQuickRoutine(savedQuickRoutines));
     yield put(setLoading(false));
   } catch (e) {
+    logError(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error getting saved workouts'});
   }
@@ -72,6 +78,7 @@ function* getQuickRoutinesById(action: GetQuickRoutinesByIdAction) {
     }
     yield put(setLoading(false));
   } catch (e) {
+    logError(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error fetching workouts'});
   }

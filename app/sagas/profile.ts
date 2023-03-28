@@ -523,6 +523,7 @@ function* sendMessage(action: SendMessageAction) {
       Snackbar.show({text: e.message});
     }
     yield put(setMessage(uid, {...message, sent: false, pending: false}));
+    logError(e);
   }
 }
 

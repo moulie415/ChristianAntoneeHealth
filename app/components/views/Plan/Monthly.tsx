@@ -22,11 +22,16 @@ import Test from '../../../types/Test';
 import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
 import {MarkedDates} from 'react-native-calendars/src/types';
+import {navigate} from '../../../RootNavigation';
+import {setWorkout} from '../../../actions/exercises';
+import Exercise from '../../../types/Exercise';
 
-const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
-  plan,
-  tests,
-}) => {
+const Monthly: React.FC<{
+  plan?: Plan;
+  tests: {[key: string]: Test};
+  setWorkout: (workout: Exercise[]) => void;
+  exercises: {[key: string]: Exercise};
+}> = ({plan, tests, setWorkout: setWorkoutAction, exercises}) => {
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -63,16 +68,29 @@ const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
   const minDate = moment().format('YYYY-MM-DD');
 
   return (
-    <View>
+    <View style={{marginTop: 20, marginHorizontal: 20}}>
       <Calendar
+        style={{borderRadius: 10}}
         markedDates={dates}
         maxDate={maxDate}
         minDate={minDate}
         onDayPress={({dateString}) => {
           if (dates[dateString]) {
             const workout = plan?.workouts?.find(w => {
-              w.dates.includes(dateString);
+              return w.dates.includes(dateString);
             });
+
+            if (workout) {
+              setWorkoutAction(
+                workout.exercises.map(e => {
+                  return {
+                    ...exercises[e.exercise],
+                    ...e,
+                  };
+                }),
+              );
+              navigate('PreWorkout', {name: workout.name});
+            }
           }
         }}
       />
@@ -182,9 +200,14 @@ const Monthly: React.FC<{plan?: Plan; tests: {[key: string]: Test}}> = ({
   );
 };
 
-const mapStateToProps = ({profile, tests}: MyRootState) => ({
+const mapStateToProps = ({profile, tests, exercises}: MyRootState) => ({
   plan: profile.plan,
   tests: tests.tests,
+  exercises: exercises.exercises,
 });
 
-export default connect(mapStateToProps)(Monthly);
+const mapDispatchToProps = {
+  setWorkout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Monthly);

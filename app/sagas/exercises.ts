@@ -102,6 +102,7 @@ export function* saveWorkout(action: SaveWorkoutAction) {
       yield call(Snackbar.show, {text: 'Workout saved'});
     }
   } catch (e) {
+    logError(e);
     yield call(Snackbar.show, {text: 'Error saving workout'});
   }
 }
@@ -117,6 +118,7 @@ function* getSavedWorkouts() {
     yield put(setSavedWorkouts(workouts));
     yield put(setLoading(false));
   } catch (e) {
+    logError(e);
     yield put(setLoading(false));
     Snackbar.show({text: 'Error getting saved workouts'});
   }
@@ -195,6 +197,7 @@ export function* viewWorkoutWatcher(action: ViewWorkoutAction) {
     resetToTabs();
     Snackbar.show({text: 'Error fetching exercises'});
     yield put(setLoading(false));
+    logError(e);
   }
 }
 
