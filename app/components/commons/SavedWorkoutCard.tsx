@@ -61,7 +61,7 @@ const SavedWorkoutCard: React.FC<{
       key={item.id}>
       <FastImage
         style={{
-          height: 140,
+          height: 120,
           marginHorizontal: 10,
           marginBottom: 10,
           borderRadius: 10,

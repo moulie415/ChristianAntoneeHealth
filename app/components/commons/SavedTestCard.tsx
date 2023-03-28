@@ -34,7 +34,7 @@ const SavedTestCard: React.FC<{
       key={test.name}>
       <FastImage
         style={{
-          height: 140,
+          height: 120,
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
@@ -88,7 +88,7 @@ const SavedTestCard: React.FC<{
           <View
             style={{
               position: 'absolute',
-              bottom: 0,
+              bottom: 20,
               width: 200,
               margin: 20,
             }}>

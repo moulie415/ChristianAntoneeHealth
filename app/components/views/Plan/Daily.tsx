@@ -69,9 +69,11 @@ const Daily: React.FC<{
 
   useEffect(() => {
     if (plan?.tests) {
-      const missingTestIds = plan.tests.filter(id => !testsObj[id]);
-      if (missingTestIds.length) {
-        getTestsByIdAction(missingTestIds);
+      if (Object.values(testsObj).length) {
+        const missingTestIds = plan.tests.filter(id => !testsObj[id]);
+        if (missingTestIds.length) {
+          getTestsByIdAction(missingTestIds);
+        }
       }
     }
   }, [getTestsByIdAction, testsObj, plan]);
@@ -172,6 +174,7 @@ const Daily: React.FC<{
             if (item) {
               return (
                 <EducationCard
+                  key={item.id}
                   onPress={() =>
                     navigate('EducationArticle', {education: item})
                   }
