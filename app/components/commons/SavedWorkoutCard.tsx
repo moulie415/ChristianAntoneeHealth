@@ -142,7 +142,7 @@ const SavedWorkoutCard: React.FC<{
                 ? item.name
                 : ''}
             </Text>
-            {quickRoutine && (
+            {/* {quickRoutine && (
               <Text
                 style={{
                   color: colors.appWhite,
@@ -152,7 +152,7 @@ const SavedWorkoutCard: React.FC<{
                   quickRoutine.equipment,
                 )}`}
               </Text>
-            )}
+            )} */}
           </View>
         </View>
       </FastImage>
