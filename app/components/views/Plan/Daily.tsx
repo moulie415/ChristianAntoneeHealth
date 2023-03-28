@@ -131,7 +131,7 @@ const Daily: React.FC<{
           </Text>
         </View>
       )}
-      {!!plan?.tests.length && (
+      {!!plan?.tests?.length && (
         <>
           {plan.tests.map(test => {
             const item = testsObj[test];
@@ -167,7 +167,7 @@ const Daily: React.FC<{
           )}
         </>
       )}
-      {!!plan?.education.length && (
+      {!!plan?.education?.length && (
         <>
           {plan.education.map(edu => {
             const item = education[edu];
