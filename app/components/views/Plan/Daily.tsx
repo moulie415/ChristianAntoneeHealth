@@ -155,6 +155,7 @@ const Daily: React.FC<{
       <Text
         style={{
           marginLeft: 10,
+          marginBottom: 10,
           color: colors.appWhite,
           fontSize: 30,
           textAlign: 'center',
@@ -164,16 +165,6 @@ const Daily: React.FC<{
       </Text>
       {workouts?.length ? (
         <>
-          <Text
-            style={{
-              padding: 5,
-              marginLeft: 10,
-              color: colors.appWhite,
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            Workouts
-          </Text>
           {workouts.map(workout => {
             return (
               <WorkoutCard
@@ -205,16 +196,6 @@ const Daily: React.FC<{
       )}
       {!!tests?.length && (
         <>
-          <Text
-            style={{
-              padding: 5,
-              marginLeft: 10,
-              color: colors.appWhite,
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            Tests
-          </Text>
           {tests.map(test => {
             return (
               <TestCard
@@ -232,16 +213,6 @@ const Daily: React.FC<{
       {(objectHasNonEmptyValues(plan?.sleep) ||
         objectHasNonEmptyValues(plan?.nutrition)) && (
         <>
-          <Text
-            style={{
-              padding: 5,
-              marginLeft: 10,
-              color: colors.appWhite,
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            Other
-          </Text>
           {plan?.nutrition &&
             (plan.nutrition.general ||
               plan.nutrition.preWorkout ||
