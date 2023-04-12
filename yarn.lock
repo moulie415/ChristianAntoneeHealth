@@ -2123,59 +2123,59 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-firebase/analytics@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-16.5.2.tgz#0e073a806a8d6f3c16df096a3cd2e3e0e4b8f8b0"
-  integrity sha512-UEfiSG8yE4rqyE7BYkIhENiQcPscgvLLIoZOi5tSEBMiJN2GLm8gs1eF/9VSIGFOVstU7juz744j/iEOmX6UIg==
+"@react-native-firebase/analytics@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-17.4.2.tgz#f1d2e6e7dcb7152ef29962d5bbcb653194a6385f"
+  integrity sha512-hWidKfex0Yv/1cJ+WPQ/UMwSoSFnehEn3CQBhFTSKXdo8OrIymCpv74/9q3IWpvBRICCtgbRF8ZpqITJv6TCmA==
 
-"@react-native-firebase/app-check@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-check/-/app-check-16.5.2.tgz#96f8266a40c4524137cc110d176c43a1c9139cae"
-  integrity sha512-HcMpd5K09IDH5E6ie2gherzaXZNANVtDYjzCApPQv+05IwIiFzbohxdvCd4k5+4rbwksmuw7OV8lX5dnkCdGHQ==
+"@react-native-firebase/app-check@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-check/-/app-check-17.4.2.tgz#d4985f344081278f711940e62c33af441af39264"
+  integrity sha512-YLUWpidrUMonniSbW7E1E8hQzqHO+Cd7X71QbdxsZ1AMfXKCfpgzrlVlicTvwWiAM/mCYqHUO1jX7rBC0WWIOw==
 
-"@react-native-firebase/app@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-16.5.2.tgz#b67866ce605f366409e3039fa461ac601065edb0"
-  integrity sha512-BKRFadp/oEu8y4jBvO7/+9bQjEoYJv/7tgZWXG2Pt+qiQLvL7PJCnWjN+OzBE8Vcfy7pAXQYQZ9vrDvm4evyOQ==
+"@react-native-firebase/app@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-17.4.2.tgz#29c1959fbc7cd15dc73bcd01c8a228021c8b5c5a"
+  integrity sha512-8oj29shxA2lxwmOxpxJ/nHVSEqK5ebHJW1WUKIBwcLTvfi+EFI7CKzPG+BFpYtdapH5BuK+yQjuReRNBy+oQjQ==
   dependencies:
     "@expo/config-plugins" "^5.0.4"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-16.5.2.tgz#4664b36368a4ea182eec449c0ac3631b0dabd87a"
-  integrity sha512-BzeAdn9qMQIu+f349DM7BfEY4gPmMYgxODWraZJY3map69dwZJ5kLPe+/0CUbjebMa3Zw5HREI07socYhNdayg==
+"@react-native-firebase/auth@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-17.4.2.tgz#d8994ccc99567ad8d5c8af0d99b9455abaffe2fb"
+  integrity sha512-JF6e7vMdHJelos42DqtlPurzzhFBb3OtYeCjhaOmyWwToD1tvCGGO1GkiXbWZcZIOuL6SCXBwvtvCHac+9YZXA==
   dependencies:
     "@expo/config-plugins" "^5.0.4"
     plist "^3.0.5"
 
-"@react-native-firebase/dynamic-links@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-16.5.2.tgz#ec17d8d07372e788ca948fa85da4f1f70c728991"
-  integrity sha512-Ge8Bd0WgW263Mzd7Iqg2O39GEOV3yyV4jZIg0hL0q4o82UUd8Id77MJ3LiSQ/2ag9V1oNWCZtRrl2ldOBbVLVA==
+"@react-native-firebase/dynamic-links@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-17.4.2.tgz#b390cc854c39f3b1e86590a6668957ef1817533f"
+  integrity sha512-htllTe2MSdH8MdXZAZ6R4CCXuX3rCKWPDkZcbgy9XQMNfJkL6ekn64C8/lAix5Z76wRkQs+nDhzWh2fxX3QN4A==
   dependencies:
     "@expo/config-plugins" "^5.0.4"
 
-"@react-native-firebase/firestore@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-16.5.2.tgz#df4c2255a200154f3529268bfcc61c95ab56f2f8"
-  integrity sha512-BU0OsYBUthCliJKcXQyXCShqlwYSWV2EQUI2dXodE2EVkWYUCYfPCz9fnGMHAsJCVbK4p8XmCgGzh4vlBM8upQ==
+"@react-native-firebase/firestore@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-17.4.2.tgz#d46fb140c068f74cb761ce5ce893c773ac0d4c90"
+  integrity sha512-FWkFcPZaw4qXfoblfk6+xfwopGyjg3Vv3sv3sbRMh7XJt4FpOsRPmK3N6LTevRvP6tt3HNd4bBGvcIm/pTKP6w==
 
-"@react-native-firebase/functions@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-16.5.2.tgz#8f5b40d9a24b62285346831fe1282f00bffc736c"
-  integrity sha512-ITq6QFabchljzXEnUZZ7G4AlItbCxZq7wjSNNPdxc/RPYwCyFaiTP9uKF9co3v5u4QwaZ0A1ml8XLRhCclgHpw==
+"@react-native-firebase/functions@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-17.4.2.tgz#fa7b35c6fb28981cd8ae2288273c8dfbd9b0a865"
+  integrity sha512-Av4pPvdXEVZwUbNxSLWYzE16FuZyQwyy+hIfguJizGeh8KL5UQi7zLmMRLvg/t3yHry+jjanb9EDEwKPpBOZ3w==
 
-"@react-native-firebase/messaging@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-16.5.2.tgz#c062b07859b7873e0c963d3f7e3b283247a6bb3d"
-  integrity sha512-wT3iPj8kCFBGvha0a8kIcgSJyIuCMoyKr2eMyBO09j75ym0/G/TBpZc6luYnOnJccMSaT0uPageEa3ymT6VQwg==
+"@react-native-firebase/messaging@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-17.4.2.tgz#ebc589bd0e77783f4b4330d71287fd150f9dc120"
+  integrity sha512-WgqDFjx4JfCed459jrFtzYcejIoBbQKBKGM5lSjmH/cIGU+5Kp9g0x5QNrXdZL5dNo91bW+jJB/6JMjOLH56fw==
 
-"@react-native-firebase/storage@^16.5.2":
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-16.5.2.tgz#c6803c9e9400348566005ed183cba2960a764aef"
-  integrity sha512-O7/S6QQDLzDIbGxivzigUb4GRfkfmgEn/nB7bbxCqfQEW1HjjQWFTOtkl7LU2lRJVErfxQIHnPZgFix52XkkVw==
+"@react-native-firebase/storage@^17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-17.4.2.tgz#936ffa2e381c62445b01d86d1331eba9842026a7"
+  integrity sha512-NMjurwTkLs8vsX6C2p5EMKcMsL9WOnC795Z3BIbqI7NGMuxuGx7OfIEbXG03JIOjH+NhX+3XHp+N2OFAEhEbAw==
 
 "@react-native-google-signin/google-signin@^9.0.2":
   version "9.0.2"

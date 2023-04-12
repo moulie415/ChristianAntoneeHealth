@@ -14,11 +14,14 @@ import {
 } from './app/sagas/profile';
 import {setUnread} from './app/actions/profile';
 import {alertPremiumFeature} from './app/helpers/exercises';
+import messaging from '@react-native-firebase/messaging';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
-  onRegister: token => {
-    
+  onRegister: ({token}) => {
+    if (token) {
+      messaging().setAPNSToken(token);
+    }
   },
 
   // (required) Called when a remote or local notification is opened or received
