@@ -17,7 +17,9 @@ import {alertPremiumFeature} from './app/helpers/exercises';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
-  onRegister: token => {},
+  onRegister: token => {
+    
+  },
 
   // (required) Called when a remote or local notification is opened or received
   onNotification: notification => {

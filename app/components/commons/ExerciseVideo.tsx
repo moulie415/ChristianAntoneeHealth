@@ -188,6 +188,7 @@ const ExerciseVideo: React.FC<{
                   />
                 )}
                 onValueChange={value => {
+                  // @ts-ignore
                   const val = value as number;
                   if (progressData) {
                     const seekable =
