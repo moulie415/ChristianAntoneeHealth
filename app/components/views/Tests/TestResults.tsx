@@ -1,8 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-
+import React, {useEffect} from 'react';
 import TestResultsProp from '../../../types/views/TestResults';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import moment from 'moment';
 import colors from '../../../constants/colors';
 import {MyRootState} from '../../../types/Shared';
@@ -27,9 +24,11 @@ import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useThrottle from '../../../hooks/UseThrottle';
 import FastImage from 'react-native-fast-image';
-import Test, {PercentileTable, Table} from '../../../types/Test';
+import Test from '../../../types/Test';
 import Profile from '../../../types/Profile';
 import {ScrollView} from 'react-native-gesture-handler';
+import Table from '../../commons/Table';
+import PercentileTable from '../../commons/PercentileTable';
 
 const getData = (
   test: Test,
@@ -93,23 +92,16 @@ const TestResults: React.FC<TestResultsProp> = ({
   // const table = profile.gender === 'male' ? test.mens : test.womens;
   const age = profile.dob && moment().diff(profile.dob, 'years');
 
+  const gender = profile.gender;
+
+  const noGender = !gender;
+
+  const showMens = noGender || gender === 'male';
+
+  const showWomens = noGender || gender === 'female';
+
   const score = testResult || seconds;
 
-  const isTable = test.mens && 'age' in test.mens;
-
-  const data = getData(test, profile, seconds, testResult);
-
-  const [fillMens, setFillMens] = useState(
-    isTable && data && 'maxMens' in data
-      ? (100 / (data.maxMens || 0)) * score
-      : getPercentileFill(data?.percentileMens),
-  );
-
-  const [fillWomens, setFillWomens] = useState(
-    isTable && data && 'maxWomens' in data
-      ? (100 / (data.maxWomens || 0)) * score
-      : getPercentileFill(data?.percentileWomens),
-  );
 
   const save = useThrottle((saved: boolean) => {
     saveTestAction({
@@ -161,239 +153,30 @@ const TestResults: React.FC<TestResultsProp> = ({
           Test complete!
         </Text>
 
-        <Text
-          style={{
-            color: colors.appWhite,
-            textAlign: 'center',
-            marginTop: 30,
-            fontSize: 20,
-          }}>
-          Mens
-        </Text>
-        <AnimatedCircularProgress
-          style={{alignSelf: 'center', marginTop: 20}}
-          size={120}
-          width={15}
-          backgroundWidth={5}
-          fill={fillMens}
-          tintColor={getCategoryColor(
-            (data?.categoryMens || data?.percentileMens) as string,
-          )}
-          // tintColorSecondary={colors.appBlueFaded}
-          backgroundColor={colors.appWhite}
-          arcSweepAngle={240}
-          rotation={240}
-          lineCap="round">
-          {fill => (
-            <Text
-              style={{
-                fontSize: 30,
-                color: colors.appWhite,
-                fontWeight: 'bold',
-              }}>
-              {score}
-            </Text>
-          )}
-        </AnimatedCircularProgress>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          {!data?.percentileMens && (
-            <>
-              {getScoreIcon(
-                (data?.categoryMens || data?.percentileMens) as string,
-              ) === '-' ? (
-                <Text
-                  style={{
-                    fontSize: 30,
-                    marginRight: 10,
-                    color: colors.appWhite,
-                  }}>
-                  -
-                </Text>
-              ) : (
-                <Icon
-                  style={{
-                    fontSize: 20,
-                    marginRight: 10,
-                    color: colors.appWhite,
-                  }}
-                  name={getScoreIcon(
-                    (data?.categoryMens || data?.percentileMens) as string,
-                  )}
-                />
-              )}
-            </>
-          )}
-          <Text style={{color: colors.appWhite}}>
-            {isTable
-              ? `${getCategoryString(data?.categoryMens)} score`
-              : `${capitalizeFirstLetter(
-                  data?.percentileMens as string,
-                )} percentile`}
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: 10,
-            marginTop: 20,
-          }}>
-          <Icon
-            style={{
-              fontSize: 20,
-              marginHorizontal: 10,
-              color: colors.appWhite,
-            }}
-            name="tachometer-alt"
+        {showMens && test.mens && 'age' in test.mens && (
+          <Table table={test.mens} metric={test.metric} title="Mens table" />
+        )}
+        {showWomens && test.womens && 'age' in test.womens && (
+          <Table
+            table={test.womens}
+            metric={test.metric}
+            title="Women's table"
           />
-          <Text
-            style={{
-              fontSize: 16,
-              flex: 1,
-              color: colors.appWhite,
-            }}>
-            {isTable ? 'You score is ' : 'You scored in the '}
-            <Text style={{fontWeight: 'bold'}}>
-              {isTable
-                ? getCategoryString(data?.categoryMens)
-                : `${data?.percentileMens}`}
-            </Text>
-            {isTable
-              ? ` for men of your age (${age}). `
-              : ' percentile for men. '}
-            {data?.averageMens ? (
-              <Text>{`The average for men of your age is between ${data?.averageMens.lower} and ${data?.averageMens.higher}`}</Text>
-            ) : (
-              <Text>
-                {data?.percentileMens === 'bottom'
-                  ? ''
-                  : `This means you scored higher than ${data?.percentileMens}% of men`}
-              </Text>
-            )}
-          </Text>
-        </View>
-
-        <Text
-          style={{
-            color: colors.appWhite,
-            textAlign: 'center',
-            marginTop: 30,
-            fontSize: 20,
-          }}>
-          Womens
-        </Text>
-        <AnimatedCircularProgress
-          style={{alignSelf: 'center', marginTop: 20}}
-          size={120}
-          width={15}
-          backgroundWidth={5}
-          fill={fillWomens}
-          tintColor={getCategoryColor(
-            (data?.categoryWomens || data?.percentileWomens) as string,
-          )}
-          // tintColorSecondary={colors.appBlueFaded}
-          backgroundColor={colors.appWhite}
-          arcSweepAngle={240}
-          rotation={240}
-          lineCap="round">
-          {fill => (
-            <Text
-              style={{
-                fontSize: 30,
-                color: colors.appWhite,
-                fontWeight: 'bold',
-              }}>
-              {score}
-            </Text>
-          )}
-        </AnimatedCircularProgress>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          {!data?.percentileWomens && (
-            <>
-              {getScoreIcon(
-                (data?.categoryWomens || data?.percentileWomens) as string,
-              ) === '-' ? (
-                <Text
-                  style={{
-                    fontSize: 30,
-                    marginRight: 10,
-                    color: colors.appWhite,
-                  }}>
-                  -
-                </Text>
-              ) : (
-                <Icon
-                  style={{
-                    fontSize: 20,
-                    marginRight: 10,
-                    color: colors.appWhite,
-                  }}
-                  name={getScoreIcon(
-                    (data?.categoryWomens || data?.percentileWomens) as string,
-                  )}
-                />
-              )}
-            </>
-          )}
-          <Text style={{color: colors.appWhite}}>
-            {isTable
-              ? `${getCategoryString(data?.categoryWomens)} score`
-              : `${capitalizeFirstLetter(
-                  data?.percentileWomens as string,
-                )} percentile`}
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: 10,
-            marginTop: 20,
-          }}>
-          <Icon
-            style={{
-              fontSize: 20,
-              marginHorizontal: 10,
-              color: colors.appWhite,
-            }}
-            name="tachometer-alt"
+        )}
+        {showMens && test.mens && '10th' in test.mens && (
+          <PercentileTable table={test.mens} title="Mens percentile table" />
+        )}
+        {showWomens && test.womens && '10th' in test.womens && (
+          <PercentileTable
+            table={test.womens}
+            title="Women's percentile table"
           />
-          <Text
-            style={{
-              fontSize: 16,
-              flex: 1,
-              color: colors.appWhite,
-            }}>
-            {isTable ? 'You score is ' : 'You scored in the '}
-            <Text style={{fontWeight: 'bold'}}>
-              {isTable
-                ? getCategoryString(data?.categoryWomens)
-                : `${data?.percentileWomens}`}
-            </Text>
-            {isTable
-              ? ` for women of your age (${age}). `
-              : ' percentile for women. '}
-            {data?.averageWomens ? (
-              <Text>{`The average for women your age is between ${data?.averageWomens.lower} and ${data?.averageWomens.higher}`}</Text>
-            ) : (
-              <Text>
-                {data?.percentileWomens === 'bottom'
-                  ? ''
-                  : `This means you scored higher than ${data?.percentileWomens}% of women`}
-              </Text>
-            )}
+        )}
+        {test.source && (
+          <Text style={{margin: 10, color: colors.appWhite}}>
+            {test.source}
           </Text>
-        </View>
+        )}
 
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <Button

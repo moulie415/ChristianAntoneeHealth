@@ -230,8 +230,17 @@ const Test: React.FC<TestProps> = ({
                   style={{width: 100, marginVertical: 5}}
                 />
               )}
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 16,
+                  marginBottom: 10,
+                }}>
+                See how you rank against others in the same gender and age
+                category:
+              </Text>
               <Button
-                text="See results"
+                text="GO"
                 onPress={() =>
                   navigation.navigate('TestResults', {
                     test,
@@ -264,7 +273,7 @@ const Test: React.FC<TestProps> = ({
                 <ViewMore text={test.how?.join('')} lines={7} />
               </View>
 
-              <Divider />
+              {/* <Divider />
               {test.mens && 'age' in test.mens && (
                 <Table
                   table={test.mens}
@@ -295,7 +304,7 @@ const Test: React.FC<TestProps> = ({
                 <Text style={{margin: 10, color: colors.appWhite}}>
                   {test.source}
                 </Text>
-              )}
+              )} */}
             </>
           )}
           {!(testStarted && test.type === 'countdown') && !complete && (
