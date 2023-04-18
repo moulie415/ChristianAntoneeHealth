@@ -24,7 +24,10 @@ import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useThrottle from '../../../hooks/UseThrottle';
 import FastImage from 'react-native-fast-image';
-import Test from '../../../types/Test';
+import Test, {
+  PercentileTable as PercentileTableType,
+  Table as TableType,
+} from '../../../types/Test';
 import Profile from '../../../types/Profile';
 import {ScrollView} from 'react-native-gesture-handler';
 import Table from '../../commons/Table';
@@ -102,7 +105,6 @@ const TestResults: React.FC<TestResultsProp> = ({
 
   const score = testResult || seconds;
 
-
   const save = useThrottle((saved: boolean) => {
     saveTestAction({
       seconds,
@@ -153,25 +155,42 @@ const TestResults: React.FC<TestResultsProp> = ({
           Test complete!
         </Text>
 
-        {showMens && test.mens && 'age' in test.mens && (
-          <Table table={test.mens} metric={test.metric} title="Mens table" />
-        )}
-        {showWomens && test.womens && 'age' in test.womens && (
+        {showMens && test.mens && 'age' in test.mens && test.mens.age && (
           <Table
-            table={test.womens}
+            score={score}
+            table={test.mens}
             metric={test.metric}
-            title="Women's table"
+            title="Mens table"
           />
         )}
-        {showMens && test.mens && '10th' in test.mens && (
-          <PercentileTable table={test.mens} title="Mens percentile table" />
-        )}
-        {showWomens && test.womens && '10th' in test.womens && (
+        {showWomens &&
+          test.womens &&
+          'age' in test.womens &&
+          test.womens.age && (
+            <Table
+              score={score}
+              table={test.womens}
+              metric={test.metric}
+              title="Women's table"
+            />
+          )}
+        {showMens && test.mens && '10th' in test.mens && test.mens['10th'] && (
           <PercentileTable
-            table={test.womens}
-            title="Women's percentile table"
+            score={score}
+            table={test.mens}
+            title="Mens percentile table"
           />
         )}
+        {showWomens &&
+          test.womens &&
+          '10th' in test.womens &&
+          test.womens['10th'] && (
+            <PercentileTable
+              score={score}
+              table={test.womens}
+              title="Women's percentile table"
+            />
+          )}
         {test.source && (
           <Text style={{margin: 10, color: colors.appWhite}}>
             {test.source}
