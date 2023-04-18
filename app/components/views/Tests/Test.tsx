@@ -22,9 +22,10 @@ import Header from '../../commons/Header';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import FastImage from 'react-native-fast-image';
-import {getTestImage} from '../../../helpers/images';
 import ViewMore from '../../commons/ViewMore';
+import FastImageAnimated from '../../commons/FastImageAnimated';
+import Video from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -117,10 +118,6 @@ const Test: React.FC<TestProps> = ({
     }
   };
 
-  const image = getTestImage(
-    Object.values(tests).findIndex(i => i.id === test.id),
-  );
-
   return (
     <View style={{flex: 1}}>
       {showCountdown && (
@@ -132,19 +129,29 @@ const Test: React.FC<TestProps> = ({
         />
       )}
 
-      <FastImage
-        source={image}
-        style={{
-          height: getVideoHeight(),
-        }}>
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: '#000',
-            opacity: 0.4,
-          }}
+      {test.video?.src ? (
+        <Video
+          source={{uri: convertToProxyURL(test.video?.src)}}
+          style={{height: getVideoHeight(), width: '100%'}}
+          resizeMode={'cover'}
+          repeat
+          disableFocus
         />
-      </FastImage>
+      ) : (
+        <FastImageAnimated
+          source={{uri: test.thumbnail.src}}
+          style={{
+            height: getVideoHeight(),
+          }}>
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              backgroundColor: '#000',
+              opacity: 0.4,
+            }}
+          />
+        </FastImageAnimated>
+      )}
       <Header hasBack absolute />
       <View
         style={{

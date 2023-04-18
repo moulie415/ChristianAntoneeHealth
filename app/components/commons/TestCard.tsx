@@ -7,9 +7,9 @@ import colors from '../../constants/colors';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import Profile from '../../types/Profile';
-import {getTestImage} from '../../helpers/images';
 import Text from './Text';
 import FastImage from 'react-native-fast-image';
+import FastImageAnimated from './FastImageAnimated';
 
 const TestCard: React.FC<{
   item: Test;
@@ -22,19 +22,17 @@ const TestCard: React.FC<{
   if (!item) {
     return null;
   }
-  const image = getTestImage(
-    Object.values(tests).findIndex(i => i.id === item.id),
-  );
+
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
-      <FastImage
+      <FastImageAnimated
         style={{
           height: 120,
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
         }}
-        source={image}>
+        source={{uri: item.thumbnail.src}}>
         <View
           style={{
             height: 140,
@@ -104,7 +102,7 @@ const TestCard: React.FC<{
             </>
           )}
         </View>
-      </FastImage>
+      </FastImageAnimated>
     </TouchableOpacity>
   );
 };

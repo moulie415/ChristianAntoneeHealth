@@ -5,8 +5,6 @@ import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import Test from '../../types/Test';
 
-import FastImage from 'react-native-fast-image';
-import {getTestImage} from '../../helpers/images';
 import Profile from '../../types/Profile';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -14,6 +12,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Text from './Text';
 import moment from 'moment';
+import FastImageAnimated from './FastImageAnimated';
 
 const SavedTestCard: React.FC<{
   item: SavedTest;
@@ -25,21 +24,18 @@ const SavedTestCard: React.FC<{
   if (!test) {
     return null;
   }
-  const image = getTestImage(
-    Object.values(tests).findIndex(i => i.id === test.id),
-  );
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('Test', {id: test.id})}
       key={test.name}>
-      <FastImage
+      <FastImageAnimated
         style={{
           height: 120,
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
         }}
-        source={image}>
+        source={{uri: test.thumbnail.src}}>
         <View
           style={{
             height: 140,
@@ -102,7 +98,7 @@ const SavedTestCard: React.FC<{
             </Text>
           </View>
         </View>
-      </FastImage>
+      </FastImageAnimated>
     </TouchableOpacity>
   );
 };
