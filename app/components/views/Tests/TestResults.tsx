@@ -4,6 +4,7 @@ import moment from 'moment';
 import colors from '../../../constants/colors';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
+import Hyperlink from 'react-native-hyperlink';
 import {
   capitalizeFirstLetter,
   getCategoryColor,
@@ -32,6 +33,7 @@ import Profile from '../../../types/Profile';
 import {ScrollView} from 'react-native-gesture-handler';
 import Table from '../../commons/Table';
 import PercentileTable from '../../commons/PercentileTable';
+import {keyHasValue} from '../../../helpers/table';
 
 const getData = (
   test: Test,
@@ -155,18 +157,21 @@ const TestResults: React.FC<TestResultsProp> = ({
           Test complete!
         </Text>
 
-        {showMens && test.mens && 'age' in test.mens && test.mens.age && (
-          <Table
-            score={score}
-            table={test.mens}
-            metric={test.metric}
-            title="Mens table"
-          />
-        )}
+        {showMens &&
+          test.mens &&
+          'age' in test.mens &&
+          keyHasValue(test.mens, 'age') && (
+            <Table
+              score={score}
+              table={test.mens}
+              metric={test.metric}
+              title="Mens table"
+            />
+          )}
         {showWomens &&
           test.womens &&
           'age' in test.womens &&
-          test.womens.age && (
+          keyHasValue(test.womens, 'age') && (
             <Table
               score={score}
               table={test.womens}
@@ -192,9 +197,11 @@ const TestResults: React.FC<TestResultsProp> = ({
             />
           )}
         {test.source && (
-          <Text style={{margin: 10, color: colors.appWhite}}>
-            {test.source}
-          </Text>
+          <Hyperlink linkStyle={{color: colors.appBlue}}>
+            <Text style={{margin: 10, color: colors.appWhite}}>
+              {test.source}
+            </Text>
+          </Hyperlink>
         )}
 
         <View style={{flex: 1, justifyContent: 'flex-end'}}>

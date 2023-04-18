@@ -7,6 +7,7 @@ import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import {Table as TableType} from '../../types/Test';
 import Text from './Text';
+import {keyHasValue} from '../../helpers/table';
 
 const CELL_WIDTH = 65;
 
@@ -37,18 +38,6 @@ const Table: React.FC<{
   profile: Profile;
   score: number;
 }> = ({table, title, metric, profile, score}) => {
-  //
-
-  const keyHasValue = (key: string) => {
-    for (let i = 0; i < 6; i++) {
-      // @ts-ignore
-      if (table[key][`col${i + 1}`].lower || table[key][`col${i + 1}`].higher) {
-        return true;
-      }
-    }
-    return false;
-  };
-
   const colHasValue = (col: {lower: string; higher: string}) => {
     return col.lower || col.higher;
   };
@@ -66,10 +55,10 @@ const Table: React.FC<{
     'excellent',
   ];
 
-  const validHeaderKeys = headerKeys.filter(key => keyHasValue(key));
+  const validHeaderKeys = headerKeys.filter(key => keyHasValue(table, key));
 
-  const getCellValue = (col: {higher: string; lower: string}) => {
-    const metricStr = metric ? metric : '';
+  const getCellValue = (col: {higher: string; lower: string}, key: string) => {
+    const metricStr = metric && key !== 'age' ? metric : '';
     if (col.lower && col.higher) {
       return `${col.lower} - ${col.higher}${metricStr}`;
     }
@@ -97,6 +86,9 @@ const Table: React.FC<{
 
   return (
     <>
+      <Text style={{color: colors.appWhite, marginBottom: 5, fontSize: 15}}>
+        {title}
+      </Text>
       <ScrollView
         horizontal
         style={{
@@ -106,29 +98,29 @@ const Table: React.FC<{
         <View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.cell, styles.cellHeader]}>Age</Text>
-            {keyHasValue('veryPoor') && (
+            {keyHasValue(table, 'veryPoor') && (
               <Text style={[styles.cell, styles.cellHeader]}>Very Poor</Text>
             )}
-            {keyHasValue('poor') && (
+            {keyHasValue(table, 'poor') && (
               <Text style={[styles.cell, styles.cellHeader]}>Poor</Text>
             )}
-            {keyHasValue('belowAverage') && (
+            {keyHasValue(table, 'belowAverage') && (
               <Text style={[styles.cell, styles.cellHeader]}>
                 Below Average
               </Text>
             )}
-            {keyHasValue('average') && (
+            {keyHasValue(table, 'average') && (
               <Text style={[styles.cell, styles.cellHeader]}>Average</Text>
             )}
-            {keyHasValue('aboveAverage') && (
+            {keyHasValue(table, 'aboveAverage') && (
               <Text style={[styles.cell, styles.cellHeader]}>
                 Above Average
               </Text>
             )}
-            {keyHasValue('good') && (
+            {keyHasValue(table, 'good') && (
               <Text style={[styles.cell, styles.cellHeader]}>Good</Text>
             )}
-            {keyHasValue('excellent') && (
+            {keyHasValue(table, 'excellent') && (
               <Text style={[styles.cell, styles.cellHeader]}>Excellent</Text>
             )}
           </View>
@@ -145,6 +137,7 @@ const Table: React.FC<{
                     const highlight = shouldHighlight(col, key);
                     return (
                       <Text
+                        key={key}
                         style={[
                           styles.cell,
                           i === 0 ? styles.cellHeader : {},
@@ -155,7 +148,7 @@ const Table: React.FC<{
                             : {},
                         ]}>
                         {/* @ts-ignore */}
-                        {getCellValue(table[key][col])}
+                        {getCellValue(table[key][col], key)}
                       </Text>
                     );
                   }

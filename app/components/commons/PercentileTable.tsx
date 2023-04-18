@@ -1,19 +1,26 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import colors from '../../constants/colors';
-
 import {PercentileTable as PercentileTableType} from '../../types/Test';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
-import Collapsible from 'react-native-collapsible';
-import Divider from './Divider';
 
 const CELL_WIDTH = 100;
 
-const Row: React.FC<{percentile: string; table: PercentileTableType}> = ({
-  percentile,
-  table,
-}) => {
+const Row: React.FC<{
+  row: number;
+  table: PercentileTableType;
+  score: number;
+}> = ({row, table, score}) => {
+  const percentile = `${row}0th`;
+  const nextPercentile = `${row + 1}0th`;
+  const highlight =
+    // @ts-ignore
+    score > table[percentile] &&
+    // @ts-ignore
+    (!table[nextPercentile] ||
+      // @ts-ignore
+      score < table[nextPercentile]);
+
   return (
     <View style={{flexDirection: 'row'}}>
       <Text
@@ -24,8 +31,9 @@ const Row: React.FC<{percentile: string; table: PercentileTableType}> = ({
           textAlign: 'center',
           fontWeight: 'bold',
           fontSize: 12,
-          color: colors.appWhite,
-          borderColor: colors.appWhite,
+          color: colors.appBlue,
+          borderColor: colors.appBlack,
+          backgroundColor: colors.appWhite,
         }}>
         {percentile}
       </Text>
@@ -40,6 +48,7 @@ const Row: React.FC<{percentile: string; table: PercentileTableType}> = ({
           fontSize: 12,
           color: colors.appWhite,
           borderColor: colors.appWhite,
+          backgroundColor: highlight ? colors.appBlue : undefined,
         }}>
         {/* @ts-ignore */}
         {table[percentile]}
@@ -53,18 +62,15 @@ const PercentileTable: React.FC<{
   title: string;
   score: number;
 }> = ({table, title, score}) => {
+  const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <>
-      <Row percentile="90th" table={table} />
-      <Row percentile="80th" table={table} />
-      <Row percentile="70th" table={table} />
-      <Row percentile="60th" table={table} />
-      <Row percentile="50th" table={table} />
-      <Row percentile="40th" table={table} />
-      <Row percentile="30th" table={table} />
-      <Row percentile="20th" table={table} />
-      <Row percentile="10th" table={table} />
-      <Divider />
+      <Text style={{color: colors.appWhite, marginBottom: 5, fontSize: 15}}>
+        {title}
+      </Text>
+      {rows.map(row => {
+        return <Row key={row} row={row} table={table} score={score} />;
+      })}
     </>
   );
 };
