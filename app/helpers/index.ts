@@ -282,6 +282,7 @@ export const getTableColumn = (table: Table, age: number) => {
     Object.keys(table.age).find(c => {
       // @ts-ignore
       const values: Cell = table.age[c];
+      console.log(table, age, c, values);
       if (
         (!values.higher || age <= Number(values.higher)) &&
         (!values.lower || age >= Number(values.lower))

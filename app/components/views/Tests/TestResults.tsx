@@ -5,18 +5,6 @@ import colors from '../../../constants/colors';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Hyperlink from 'react-native-hyperlink';
-import {
-  capitalizeFirstLetter,
-  getCategoryColor,
-  getCategoryString,
-  getPercentile,
-  getPercentileFill,
-  getScoreIcon,
-  getTableAverage,
-  getTableCategory,
-  getTableColumn,
-  getTableMax,
-} from '../../../helpers';
 import {resetToTabs} from '../../../RootNavigation';
 import {saveTest} from '../../../actions/tests';
 import {Alert, ImageBackground, View} from 'react-native';
@@ -24,68 +12,12 @@ import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useThrottle from '../../../hooks/UseThrottle';
-import FastImage from 'react-native-fast-image';
-import Test, {
-  PercentileTable as PercentileTableType,
-  Table as TableType,
-} from '../../../types/Test';
-import Profile from '../../../types/Profile';
 import {ScrollView} from 'react-native-gesture-handler';
 import Table from '../../commons/Table';
 import PercentileTable from '../../commons/PercentileTable';
 import {keyHasValue} from '../../../helpers/table';
-
-const getData = (
-  test: Test,
-  profile: Profile,
-  seconds: number,
-  testResult?: number,
-) => {
-  const score = testResult || seconds;
-  const age = (profile.dob && moment().diff(profile.dob, 'years')) || 0;
-  if (
-    test &&
-    test.mens &&
-    test.womens &&
-    'age' in test.mens &&
-    'age' in test.womens
-  ) {
-    const colMens = getTableColumn(test.mens, age);
-    const colWomens = getTableColumn(test.womens, age);
-
-    const averageMens = colMens && getTableAverage(test.mens, colMens);
-    const averageWomens = colMens && getTableAverage(test.womens, colMens);
-
-    const categoryMens = colMens && getTableCategory(test.mens, colMens, score);
-    const categoryWomens =
-      colWomens && getTableCategory(test.womens, colWomens, score);
-
-    const maxMens = colMens && getTableMax(test.mens, colMens);
-
-    const maxWomens = colWomens && getTableMax(test.womens, colWomens);
-
-    return {
-      colMens,
-      colWomens,
-      averageMens,
-      averageWomens,
-      categoryMens,
-      categoryWomens,
-      maxMens,
-      maxWomens,
-    };
-  }
-  if (
-    test.mens &&
-    test.womens &&
-    !('age' in test.mens) &&
-    !('age' in test.womens)
-  ) {
-    const percentileMens = getPercentile(test.mens, score);
-    const percentileWomens = getPercentile(test.womens, score);
-    return {percentileMens, percentileWomens};
-  }
-};
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import TestResultText from './TestResultText';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,
@@ -101,9 +33,9 @@ const TestResults: React.FC<TestResultsProp> = ({
 
   const noGender = !gender;
 
-  const showMens = noGender || gender === 'male';
+  const showMens = gender === 'male';
 
-  const showWomens = noGender || gender === 'female';
+  const showWomens = gender === 'female';
 
   const score = testResult || seconds;
 
@@ -196,12 +128,19 @@ const TestResults: React.FC<TestResultsProp> = ({
               title="Women's percentile table"
             />
           )}
-        {test.source && (
+        {!noGender && test.source && (
           <Hyperlink linkStyle={{color: colors.appBlue}}>
             <Text style={{margin: 10, color: colors.appWhite}}>
               {test.source}
             </Text>
           </Hyperlink>
+        )}
+
+        {!noGender && test.mens && test.womens && (
+          <TestResultText
+            table={showMens ? test.mens : test.womens}
+            score={score}
+          />
         )}
 
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
