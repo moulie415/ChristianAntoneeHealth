@@ -32,7 +32,7 @@ const TestCard: React.FC<{
           marginBottom: 10,
           borderRadius: 10,
         }}
-        source={{uri: item.thumbnail.src}}>
+        source={{uri: item.thumbnail?.src}}>
         <View
           style={{
             height: 140,
