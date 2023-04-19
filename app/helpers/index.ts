@@ -9,6 +9,7 @@ import {PercentileTable, Table} from '../types/Test';
 import {Category} from '../types/Education';
 import {logError} from './error';
 import InAppReview from 'react-native-in-app-review';
+import {TABLE_HEADER_KEYS} from '../constants';
 
 const {height, width} = Dimensions.get('window');
 
@@ -282,7 +283,6 @@ export const getTableColumn = (table: Table, age: number) => {
     Object.keys(table.age).find(c => {
       // @ts-ignore
       const values: Cell = table.age[c];
-      console.log(table, age, c, values);
       if (
         (!values.higher || age <= Number(values.higher)) &&
         (!values.lower || age >= Number(values.lower))
@@ -295,10 +295,12 @@ export const getTableColumn = (table: Table, age: number) => {
 
 export const getTableCategory = (table: Table, col: string, score: number) => {
   return Object.keys(table).find(key => {
-    if (key !== 'age') {
+    if (key !== 'age' && TABLE_HEADER_KEYS.includes(key)) {
       // @ts-ignore
       const values: Cell = table[key][col];
+
       if (
+        (values.higher || values.lower) &&
         (!values.higher || score <= Number(values.higher)) &&
         (!values.lower || score >= Number(values.lower))
       ) {
@@ -343,6 +345,7 @@ export const getPercentile = (table: PercentileTable, score: number) => {
     }
     prevPercentile = percentile;
   }
+  return '';
 };
 
 export const getPercentileFill = (percentile?: string | boolean) => {

@@ -29,19 +29,24 @@ const TestResultText: React.FC<{
   }
 
   const age = moment().diff(profile.dob, 'years');
-  
+
   const percentile =
     '10th' in table && table['10th'] && getPercentile(table, score);
+  const column =
+    'age' in table && keyHasValue(table, 'age') && getTableColumn(table, age);
   const category =
     'age' in table &&
+    column &&
     keyHasValue(table, 'age') &&
-    getTableCategory(table, '', score);
-    const column = 'age' in table &&
-    keyHasValue(table, 'age')  && getTableColumn(table, age)
-    const average ='age' in table &&
-    keyHasValue(table, 'age') && column && getTableAverage(table, column)
+    getTableCategory(table, column, score);
+
+  const average =
+    'age' in table &&
+    keyHasValue(table, 'age') &&
+    column &&
+    getTableAverage(table, column);
   return (
-    <View>
+    <View style={{marginTop: 10}}>
       <View
         style={{
           flexDirection: 'row',
@@ -71,7 +76,7 @@ const TestResultText: React.FC<{
             )}
           </>
         )}
-        <Text style={{color: colors.appWhite}}>
+        <Text style={{color: colors.appWhite, fontSize: 18}}>
           {category
             ? `${getCategoryString(category)} score`
             : `${capitalizeFirstLetter(percentile as string)} percentile`}
@@ -111,7 +116,9 @@ const TestResultText: React.FC<{
             <Text>
               {percentile === 'bottom'
                 ? ''
-                : `This means you scored higher than ${percentile}% of men`}
+                : `This means you scored higher than ${
+                    percentile && percentile.replace('th', '')
+                  }% of men`}
             </Text>
           )}
         </Text>

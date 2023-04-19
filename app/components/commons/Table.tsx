@@ -8,6 +8,7 @@ import {MyRootState} from '../../types/Shared';
 import {Table as TableType} from '../../types/Test';
 import Text from './Text';
 import {keyHasValue} from '../../helpers/table';
+import {TABLE_HEADER_KEYS} from '../../constants';
 
 const CELL_WIDTH = 65;
 
@@ -42,20 +43,11 @@ const Table: React.FC<{
     return col.lower || col.higher;
   };
 
-  const cols = ['col1', 'col2', 'col3', 'col4', 'col4', 'col5', 'col6'];
+  const cols = ['col1', 'col2', 'col3', 'col4', 'col5', 'col6'];
 
-  const headerKeys = [
-    'age',
-    'veryPoor',
-    'poor',
-    'belowAverage',
-    'average',
-    'aboveAverage',
-    'good',
-    'excellent',
-  ];
-
-  const validHeaderKeys = headerKeys.filter(key => keyHasValue(table, key));
+  const validHeaderKeys = TABLE_HEADER_KEYS.filter(key =>
+    keyHasValue(table, key),
+  );
 
   const getCellValue = (col: {higher: string; lower: string}, key: string) => {
     const metricStr = metric && key !== 'age' ? metric : '';
@@ -127,7 +119,7 @@ const Table: React.FC<{
           {cols.map((col, index) => {
             return (
               <View
-                key={Math.random()}
+                key={col + index}
                 style={{
                   flexDirection: 'row',
                 }}>

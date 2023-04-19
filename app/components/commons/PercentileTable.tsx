@@ -64,14 +64,14 @@ const PercentileTable: React.FC<{
 }> = ({table, title, score}) => {
   const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
-    <>
+    <View style={{paddingVertical: 10, marginHorizontal: 10}}>
       <Text style={{color: colors.appWhite, marginBottom: 5, fontSize: 15}}>
         {title}
       </Text>
       {rows.map(row => {
         return <Row key={row} row={row} table={table} score={score} />;
       })}
-    </>
+    </View>
   );
 };
 

@@ -18,6 +18,8 @@ import PercentileTable from '../../commons/PercentileTable';
 import {keyHasValue} from '../../../helpers/table';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import TestResultText from './TestResultText';
+import Header from '../../commons/Header';
+import Divider from '../../commons/Divider';
 
 const TestResults: React.FC<TestResultsProp> = ({
   route,
@@ -76,65 +78,72 @@ const TestResults: React.FC<TestResultsProp> = ({
   }, [saveTestAction, test.id, profile.premium, seconds, testResult, save]);
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView style={{flex: 1, padding: 20}}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginBottom: 10,
-            color: colors.appWhite,
-            fontWeight: 'bold',
-            fontSize: 20,
-          }}>
-          Test complete!
-        </Text>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontSize: 22,
+          fontWeight: 'bold',
+          padding: 10,
+          textAlign: 'center',
+        }}>
+        Test Complete!
+      </Text>
+      <View>
+        <View style={{padding: 10, paddingTop: 0}}>
+          {showMens &&
+            test.mens &&
+            'age' in test.mens &&
+            keyHasValue(test.mens, 'age') && (
+              <Table
+                score={score}
+                table={test.mens}
+                metric={test.metric}
+                title="Mens table"
+              />
+            )}
+          {showWomens &&
+            test.womens &&
+            'age' in test.womens &&
+            keyHasValue(test.womens, 'age') && (
+              <Table
+                score={score}
+                table={test.womens}
+                metric={test.metric}
+                title="Women's table"
+              />
+            )}
+          {showMens &&
+            test.mens &&
+            '10th' in test.mens &&
+            test.mens['10th'] && (
+              <PercentileTable
+                score={score}
+                table={test.mens}
+                title="Mens percentile table"
+              />
+            )}
+          {showWomens &&
+            test.womens &&
+            '10th' in test.womens &&
+            test.womens['10th'] && (
+              <PercentileTable
+                score={score}
+                table={test.womens}
+                title="Women's percentile table"
+              />
+            )}
+        </View>
 
-        {showMens &&
-          test.mens &&
-          'age' in test.mens &&
-          keyHasValue(test.mens, 'age') && (
-            <Table
-              score={score}
-              table={test.mens}
-              metric={test.metric}
-              title="Mens table"
-            />
-          )}
-        {showWomens &&
-          test.womens &&
-          'age' in test.womens &&
-          keyHasValue(test.womens, 'age') && (
-            <Table
-              score={score}
-              table={test.womens}
-              metric={test.metric}
-              title="Women's table"
-            />
-          )}
-        {showMens && test.mens && '10th' in test.mens && test.mens['10th'] && (
-          <PercentileTable
-            score={score}
-            table={test.mens}
-            title="Mens percentile table"
-          />
-        )}
-        {showWomens &&
-          test.womens &&
-          '10th' in test.womens &&
-          test.womens['10th'] && (
-            <PercentileTable
-              score={score}
-              table={test.womens}
-              title="Women's percentile table"
-            />
-          )}
         {!noGender && test.source && (
-          <Hyperlink linkStyle={{color: colors.appBlue}}>
+          <Hyperlink linkDefault linkStyle={{color: colors.appBlue}}>
             <Text style={{margin: 10, color: colors.appWhite}}>
               {test.source}
             </Text>
           </Hyperlink>
         )}
+
+        <Divider style={{marginBottom: 10}} />
 
         {!noGender && test.mens && test.womens && (
           <TestResultText
@@ -142,16 +151,22 @@ const TestResults: React.FC<TestResultsProp> = ({
             score={score}
           />
         )}
+      </View>
 
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
-          <Button
-            text="Return Home"
-            onPress={resetToTabs}
-            style={{marginBottom: 10, marginTop: 20}}
-          />
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          backgroundColor: colors.appGrey,
+          padding: 20,
+        }}>
+        <Button
+          text="Return Home"
+          onPress={resetToTabs}
+          style={{marginBottom: 10, marginTop: 20}}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
