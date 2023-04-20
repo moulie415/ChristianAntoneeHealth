@@ -277,7 +277,7 @@ const Test: React.FC<TestProps> = ({
                 style={{
                   marginBottom: 10,
                 }}>
-                <ViewMore text={test.how?.join('')} lines={7} />
+                <ViewMore text={test.summary} lines={7} />
               </View>
 
               {/* <Divider />

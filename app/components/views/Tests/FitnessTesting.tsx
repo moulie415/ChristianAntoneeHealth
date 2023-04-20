@@ -28,21 +28,23 @@ const FitnessTesting: React.FC<{
           contentContainerStyle={{
             paddingBottom: 60,
           }}>
-          {Object.values(tests).map((item, index) => {
-            return (
-              <TestCard
-                key={item.id}
-                item={item}
-                onPress={() => {
-                  if (item.premium && !profile.premium) {
-                    navigation.navigate('Premium', {});
-                  } else {
-                    navigation.navigate('Test', {id: item.id});
-                  }
-                }}
-              />
-            );
-          })}
+          {Object.values(tests)
+            .filter(item => !item.disabled)
+            .map((item, index) => {
+              return (
+                <TestCard
+                  key={item.id}
+                  item={item}
+                  onPress={() => {
+                    if (item.premium && !profile.premium) {
+                      navigation.navigate('Premium', {});
+                    } else {
+                      navigation.navigate('Test', {id: item.id});
+                    }
+                  }}
+                />
+              );
+            })}
         </ScrollView>
       </SafeAreaView>
     </View>

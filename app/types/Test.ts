@@ -3,7 +3,7 @@ export default interface Test {
   name: string;
   type: 'countdown' | 'countup' | 'untimed';
   time?: number;
-  how: string[];
+  summary?: string;
   metric?: string;
   mens?: Table | PercentileTable;
   womens?: Table | PercentileTable;
