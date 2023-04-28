@@ -2,14 +2,13 @@ import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
 import colors from '../../../constants/colors';
 import Countdown from '../../commons/Countdown';
 import Table from '../../commons/Table';
-
 import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getVideoHeight} from '../../../helpers';
 import PercentileTable from '../../commons/PercentileTable';
@@ -26,6 +25,9 @@ import ViewMore from '../../commons/ViewMore';
 import FastImageAnimated from '../../commons/FastImageAnimated';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
+import {calculateVO2Max} from '../../../helpers/tests';
+import Modal from '../../commons/Modal';
+import {TouchableOpacity} from 'react-native';
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -43,6 +45,8 @@ const Test: React.FC<TestProps> = ({
   const [testResult, setTestResult] = useState<number>();
   const [testNote, setTestNote] = useState('');
   const [start, setStart] = useState(0);
+  const [heartRate, setHeartRate] = useState(0);
+  const [showVo2Modal, setShowVo2Modal] = useState(false);
 
   const insets = useSafeAreaInsets();
 
@@ -210,6 +214,75 @@ const Test: React.FC<TestProps> = ({
                 <Text style={{color: colors.appWhite}}>
                   Enter result of test below
                 </Text>
+              ) : test.formula === 'vo2' ? (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        marginRight: 10,
+                      }}>
+                      {'Time spent walking (seconds)'}
+                    </Text>
+                    <Input
+                      value={seconds?.toString()}
+                      onChangeText={val =>
+                        setSeconds(Number(val.replace(/[^0-9]/g, '')))
+                      }
+                      keyboardType="numeric"
+                      style={{width: 100, marginVertical: 5}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        marginRight: 10,
+                      }}>
+                      {'Heart rate'}
+                    </Text>
+                    <Input
+                      value={heartRate?.toString()}
+                      onChangeText={val =>
+                        setHeartRate(Number(val.replace(/[^0-9]/g, '')))
+                      }
+                      keyboardType="numeric"
+                      style={{width: 100, marginVertical: 5}}
+                    />
+                  </View>
+
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: colors.appWhite,
+                      marginTop: 10,
+                    }}>
+                    {`VO2 max = ${calculateVO2Max(
+                      profile,
+                      seconds,
+                      heartRate,
+                    )?.toFixed(2)}`}
+                  </Text>
+                  <TouchableOpacity onPress={() => setShowVo2Modal(true)}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        textDecorationLine: 'underline',
+                        color: colors.appBlue,
+                        marginBottom: 10,
+                      }}>
+                      How is this calculated?
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               ) : (
                 <Text
                   style={{
@@ -248,13 +321,22 @@ const Test: React.FC<TestProps> = ({
               </Text>
               <Button
                 text="GO"
-                onPress={() =>
-                  navigation.navigate('TestResults', {
-                    test,
-                    testResult,
-                    seconds,
-                  })
-                }
+                onPress={() => {
+                  if (test.formula === 'vo2') {
+                    navigation.navigate('TestResults', {
+                      test,
+                      testResult:
+                        calculateVO2Max(profile, seconds, heartRate) || 0,
+                      seconds,
+                    });
+                  } else {
+                    navigation.navigate('TestResults', {
+                      test,
+                      testResult,
+                      seconds,
+                    });
+                  }
+                }}
                 style={{marginTop: 10}}
                 disabled={!testResult && test.type !== 'countup'}
               />
@@ -279,45 +361,21 @@ const Test: React.FC<TestProps> = ({
                 }}>
                 <ViewMore text={test.summary || ''} lines={7} />
               </View>
-
-              {/* <Divider />
-              {test.mens && 'age' in test.mens && (
-                <Table
-                  table={test.mens}
-                  metric={test.metric}
-                  title="Mens table"
-                />
-              )}
-              {test.womens && 'age' in test.womens && (
-                <Table
-                  table={test.womens}
-                  metric={test.metric}
-                  title="Women's table"
-                />
-              )}
-              {test.mens && '10th' in test.mens && (
-                <PercentileTable
-                  table={test.mens}
-                  title="Mens percentile table"
-                />
-              )}
-              {test.womens && '10th' in test.womens && (
-                <PercentileTable
-                  table={test.womens}
-                  title="Women's percentile table"
-                />
-              )}
-              {test.source && (
-                <Text style={{margin: 10, color: colors.appWhite}}>
-                  {test.source}
-                </Text>
-              )} */}
             </>
           )}
           {!(testStarted && test.type === 'countdown') && !complete && (
             <Button
               text={getButtonString()}
               onPress={() => {
+                if (
+                  test.formula === 'vo2' &&
+                  (!profile.dob || !profile.weight || !profile.gender)
+                ) {
+                  return Alert.alert(
+                    'Sorry',
+                    "To calculate your VO2 max, you need to make sure you've set your age, weight and sex",
+                  );
+                }
                 if (testStarted) {
                   setComplete(true);
                 } else {
@@ -355,6 +413,30 @@ const Test: React.FC<TestProps> = ({
           )}
         </KeyboardAwareScrollView>
       </View>
+      <Modal visible={showVo2Modal}>
+        <View
+          style={{
+            backgroundColor: colors.appGrey,
+            margin: 20,
+            padding: 20,
+            borderRadius: 10,
+          }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontStyle: 'italic',
+              marginBottom: 10,
+              color: colors.appWhite,
+              lineHeight: 30,
+            }}>
+            VO2 max = 132.853 - (0.0769 x your weight in pounds) - (0.3877 x
+            your age) + (6.315 if you are male or 0 if you are female) - (3.2649
+            x your walking time in seconds/60 (minutes)) - (0.1565 x your heart
+            rate at the end of the test)
+          </Text>
+          <Button onPress={() => setShowVo2Modal(false)} text="Close" />
+        </View>
+      </Modal>
     </View>
   );
 };
