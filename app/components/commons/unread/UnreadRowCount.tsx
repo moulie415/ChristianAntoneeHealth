@@ -9,7 +9,15 @@ import Text from '../Text';
 const UnreadRowCount: React.FC<{
   unread: {[key: string]: number} | undefined;
 }> = ({unread}) => {
-  const count = Object.values(unread || {}).reduce((acc, cur) => acc + cur, 0);
+  const count = Object.keys(unread || {}).reduce((acc, cur) => {
+    if (cur !== 'plan') {
+      const num = unread?.[cur];
+      if (num) {
+        return acc + num;
+      }
+    }
+    return acc;
+  }, 0);
   if (count > 0) {
     return (
       <View

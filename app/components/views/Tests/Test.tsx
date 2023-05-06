@@ -46,7 +46,6 @@ const Test: React.FC<TestProps> = ({
   const [testNote, setTestNote] = useState('');
   const [start, setStart] = useState(0);
   const [heartRate, setHeartRate] = useState(0);
-  const [showVo2Modal, setShowVo2Modal] = useState(false);
 
   const insets = useSafeAreaInsets();
 
@@ -271,17 +270,6 @@ const Test: React.FC<TestProps> = ({
                       heartRate,
                     )?.toFixed(2)}`}
                   </Text>
-                  <TouchableOpacity onPress={() => setShowVo2Modal(true)}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        textDecorationLine: 'underline',
-                        color: colors.appBlue,
-                        marginBottom: 10,
-                      }}>
-                      How is this calculated?
-                    </Text>
-                  </TouchableOpacity>
                 </View>
               ) : (
                 <Text
@@ -413,30 +401,7 @@ const Test: React.FC<TestProps> = ({
           )}
         </KeyboardAwareScrollView>
       </View>
-      <Modal visible={showVo2Modal}>
-        <View
-          style={{
-            backgroundColor: colors.appGrey,
-            margin: 20,
-            padding: 20,
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontStyle: 'italic',
-              marginBottom: 10,
-              color: colors.appWhite,
-              lineHeight: 30,
-            }}>
-            VO2 max = 132.853 - (0.0769 x your weight in pounds) - (0.3877 x
-            your age) + (6.315 if you are male or 0 if you are female) - (3.2649
-            x your walking time in seconds/60 (minutes)) - (0.1565 x your heart
-            rate at the end of the test)
-          </Text>
-          <Button onPress={() => setShowVo2Modal(false)} text="Close" />
-        </View>
-      </Modal>
+
     </View>
   );
 };

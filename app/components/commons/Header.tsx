@@ -30,10 +30,16 @@ const Header: React.FC<{
   drawerRef,
 }) => {
   const insets = useSafeAreaInsets();
-  const count = Object.values(profile.unread || {}).reduce(
-    (acc, cur) => acc + cur,
-    0,
-  );
+  const count = Object.keys(profile.unread || {}).reduce((acc, cur) => {
+    if (cur !== 'plan') {
+      const num = profile.unread?.[cur];
+      if (num) {
+        return acc + num;
+      }
+    }
+    return acc;
+  }, 0);
+
   return (
     <View
       style={{

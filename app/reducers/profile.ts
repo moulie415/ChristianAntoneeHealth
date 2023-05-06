@@ -25,6 +25,7 @@ import {
   SET_MUSCLE_MASS_SAMPLES,
   SET_BONE_MASS_SAMPLES,
   SET_HAS_VIEWED_TOUR,
+  SET_READ,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -228,6 +229,14 @@ const reducer = (
       return {
         ...state,
         profile: {...state.profile, unread: action.payload},
+      };
+    case SET_READ:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          unread: {...state.profile.unread, [action.payload]: 0},
+        },
       };
     case SET_APP_STATE:
       return {

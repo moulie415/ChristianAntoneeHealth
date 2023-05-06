@@ -15,6 +15,7 @@ import {TourGuideZone} from 'rn-tourguide';
 import GoalSummaries from './components/commons/GoalSummaries';
 import Drawer from 'react-native-drawer';
 import {CLIENT_PREMIUM} from './constants';
+import PlanTabIcon from './PlanTabIcon';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -107,7 +108,7 @@ const Tabs: React.FC<{
                 zone={3}
                 text="Access your customized plans here"
                 borderRadius={16}>
-                <Icon color={color} size={size} name="calendar-alt" />
+                <PlanTabIcon color={color} size={size} />
               </TourGuideZone>
             ),
             headerShown: false,

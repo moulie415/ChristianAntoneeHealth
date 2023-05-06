@@ -15,7 +15,6 @@ import Button from '../../commons/Button';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
-
 import {getPlan} from '../../../actions/plan';
 import moment from 'moment';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
@@ -33,6 +32,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
 import Drawer from 'react-native-drawer';
+import {useFocusEffect} from '@react-navigation/native';
+import {setRead} from '../../../actions/profile';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -47,6 +48,7 @@ const Plan: React.FC<{
   getPlan: () => void;
   plan?: PlanType;
   drawerRef: MutableRefObject<Drawer | null>;
+  setRead: (key: string) => void;
 }> = ({
   profile,
   navigation,
@@ -54,6 +56,7 @@ const Plan: React.FC<{
   getPlan: getPlanAction,
   plan,
   drawerRef,
+  setRead: setReadAction,
 }) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
@@ -108,6 +111,12 @@ const Plan: React.FC<{
     {key: 'monthly', title: 'Monthly'},
   ]);
 
+  useFocusEffect(() => {
+    if (profile.unread?.plan) {
+      setReadAction('plan');
+    }
+  });
+
   return (
     <>
       {hasPlanLeft ? (
@@ -119,7 +128,6 @@ const Plan: React.FC<{
                 return (
                   <TabBar
                     {...props}
-
                     renderTabBarItem={props => {
                       return (
                         <TouchableOpacity
@@ -221,6 +229,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
 
 const mapDispatchToProps = {
   getPlan,
+  setRead,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Plan);

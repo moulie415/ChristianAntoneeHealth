@@ -584,7 +584,6 @@ export const getSettings = async () => {
   return snapshot.docs[0].data();
 };
 
-
 export const sendFeedback = async (
   uid: string,
   feedback: string,

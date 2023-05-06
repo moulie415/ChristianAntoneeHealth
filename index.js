@@ -44,6 +44,11 @@ PushNotification.configure({
           message: notification.message || '',
           title: notification.title || '',
         });
+        const {unread, premium} = store.getState().profile.profile;
+        if (premium) {
+          const newUnread = unread && unread.plan ? unread.plan + 1 : 1;
+          store.dispatch(setUnread({...unread, ['plan']: newUnread}));
+        }
       }
     }
     if (notification.data.channelId === CONNECTION_ID) {

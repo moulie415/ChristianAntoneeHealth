@@ -444,6 +444,9 @@ function* getConnections() {
         if (connections[cur]) {
           return {...acc, [cur]: currentUnread[cur]};
         }
+        if (cur === 'plan') {
+          return {...acc, [cur]: currentUnread[cur]};
+        }
         return acc;
       }, {});
       if (!_.isEqual(currentUnread, newUnread)) {
