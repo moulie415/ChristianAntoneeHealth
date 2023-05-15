@@ -12,6 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import colors from '../../../constants/colors';
 import RPESlider from '../../commons/RPESlider';
+import useThrottle from '../../../hooks/UseThrottle';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
@@ -23,7 +24,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds, name} = route.params;
+  const {seconds, planWorkout} = route.params;
 
   const calories = getCaloriesBurned(
     seconds,
@@ -31,6 +32,18 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     profile.weight,
     'metric',
   );
+
+  const save = useThrottle((saved: boolean) => {
+    saveAction({
+      calories: calories || 0,
+      seconds,
+      difficulty,
+      createdate: new Date(),
+      workout: workout.map(e => e.id || ''),
+      saved,
+      planWorkout,
+    });
+  }, 3000);
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -69,17 +82,6 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
               });
             };
 
-            const save = (saved: boolean) => {
-              saveAction({
-                calories: calories || 0,
-                seconds,
-                difficulty,
-                createdate: new Date(),
-                workout: workout.map(e => e.id || ''),
-                saved,
-                name,
-              });
-            };
             if (profile.premium) {
               Alert.alert(
                 'Save workout',

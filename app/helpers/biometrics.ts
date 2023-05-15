@@ -4,7 +4,7 @@ import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import Profile, {Gender, Unit} from '../types/Profile';
-import {StepSample} from '../types/Shared';
+import {PlanWorkout, StepSample} from '../types/Shared';
 import {logError} from './error';
 import db from '@react-native-firebase/firestore';
 import {getCaloriesBurned} from './exercises';

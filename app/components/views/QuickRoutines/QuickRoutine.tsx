@@ -67,7 +67,7 @@ const QuickRoutineView: React.FC<{
     if (routine.instructions || routine.steps) {
       setShowModal(true);
     }
-  }, [navigation, routine.instructions, routine.steps]);
+  }, [routine.instructions, routine.steps]);
 
   useInterval(() => {
     if (routineStarted && !timerPaused) {
@@ -233,13 +233,15 @@ const QuickRoutineView: React.FC<{
                             </Text>
                           </LinearGradient>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setShowModal(true)}>
-                          <Icon
-                            name="info-circle"
-                            color={colors.appWhite}
-                            size={30}
-                          />
-                        </TouchableOpacity>
+                        {(routine.steps || routine.instructions) && (
+                          <TouchableOpacity onPress={() => setShowModal(true)}>
+                            <Icon
+                              name="info-circle"
+                              color={colors.appWhite}
+                              size={30}
+                            />
+                          </TouchableOpacity>
+                        )}
                       </View>
                       <View>
                         {tabIndex === 0 && (

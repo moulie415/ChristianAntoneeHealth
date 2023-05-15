@@ -65,9 +65,10 @@ const StartWorkout: React.FC<{
   const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showResistanceModal, setShowResistanceModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const textInputRef = useRef<TextInput>();
-  const name = route.params?.name;
+  const planWorkout = route.params?.planWorkout;
   const [fullscreen, setFullScreen] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
 
@@ -88,6 +89,12 @@ const StartWorkout: React.FC<{
       navigation.setOptions({headerTitle: workout[index].name});
     }
   }, [index, navigation, workout]);
+
+  useEffect(() => {
+    if (planWorkout.steps) {
+      setShowModal(true);
+    }
+  }, [planWorkout.steps]);
 
   const ResistanceScale: React.FC<{resistanceScale?: string}> = ({
     resistanceScale,
@@ -261,6 +268,15 @@ const StartWorkout: React.FC<{
                             </Text>
                           </LinearGradient>
                         </TouchableOpacity>
+                        {planWorkout?.steps && (
+                          <TouchableOpacity onPress={() => setShowModal(true)}>
+                            <Icon
+                              name="info-circle"
+                              color={colors.appWhite}
+                              size={30}
+                            />
+                          </TouchableOpacity>
+                        )}
                       </View>
                       <View>
                         {tabIndex === 0 && (
@@ -278,32 +294,71 @@ const StartWorkout: React.FC<{
                               style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
+                                justifyContent: 'space-evenly',
                                 margin: 10,
                                 marginVertical: 0,
+                                flexWrap: 'wrap',
                               }}>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  justifyContent: 'flex-start',
-                                }}>
-                                <Text
+                              {!!exercise.reps && (
+                                <View
                                   style={{
-                                    color: colors.appWhite,
-                                    textAlign: 'center',
-                                    fontSize: 16,
-                                  }}>{`${exercise.reps} reps / ${exercise.sets} sets `}</Text>
-                                <ResistanceScale
-                                  resistanceScale={exercise.resistanceScale}
-                                />
-                              </View>
-                              <TouchableOpacity
-                                onPress={() => setShowModal(true)}>
-                                <Icon
-                                  name="info-circle"
-                                  color={colors.appWhite}
-                                  size={30}
-                                />
-                              </TouchableOpacity>
+                                    backgroundColor: colors.appBlue,
+                                    padding: 2,
+                                    paddingHorizontal: 5,
+                                    borderRadius: 10,
+                                    marginVertical: 2,
+                                    marginRight: 5,
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: colors.appWhite,
+                                      textAlign: 'center',
+                                      textTransform: 'uppercase',
+                                      fontSize: 16,
+                                      fontWeight: 'bold',
+                                    }}>{`${exercise.reps} reps`}</Text>
+                                </View>
+                              )}
+                              {!!exercise.sets && (
+                                <View
+                                  style={{
+                                    backgroundColor: colors.appBlue,
+                                    padding: 2,
+                                    paddingHorizontal: 5,
+                                    borderRadius: 10,
+                                    marginVertical: 2,
+                                    marginRight: 5,
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: colors.appWhite,
+                                      textAlign: 'center',
+                                      textTransform: 'uppercase',
+                                      fontWeight: 'bold',
+                                      fontSize: 16,
+                                    }}>{`${exercise.sets} sets `}</Text>
+                                </View>
+                              )}
+                              {!!exercise.resistanceScale && (
+                                <View
+                                  style={{
+                                    backgroundColor: colors.appBlue,
+                                    padding: 2,
+                                    paddingHorizontal: 5,
+                                    borderRadius: 10,
+                                    marginVertical: 2,
+                                    marginRight: 5,
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: colors.appWhite,
+                                      textAlign: 'center',
+                                      textTransform: 'uppercase',
+                                      fontWeight: 'bold',
+                                      fontSize: 16,
+                                    }}>{`resistance scale: ${exercise.resistanceScale}`}</Text>
+                                </View>
+                              )}
                             </View>
                             <ViewMore text={exercise.description} lines={5} />
                           </>
@@ -377,7 +432,7 @@ const StartWorkout: React.FC<{
                               onPress: () => {
                                 navigation.navigate('EndWorkout', {
                                   seconds,
-                                  name,
+                                  planWorkout,
                                 });
                               },
                             },
@@ -393,7 +448,9 @@ const StartWorkout: React.FC<{
           })}
         </PagerView>
       )}
-      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
+      <Modal
+        visible={showResistanceModal}
+        onRequestClose={() => setShowResistanceModal(false)}>
         <View
           style={{
             backgroundColor: '#fff',
@@ -417,8 +474,67 @@ const StartWorkout: React.FC<{
           <ResistanceScaleInfo />
           <Button
             text="OK"
-            onPress={() => setShowModal(false)}
+            onPress={() => setShowResistanceModal(false)}
             style={{margin: 10}}
+          />
+        </View>
+      </Modal>
+      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
+        <View
+          style={{
+            backgroundColor: colors.appGrey,
+            width: '95%',
+            alignSelf: 'center',
+            borderRadius: 10,
+          }}>
+          <Icon
+            style={{alignSelf: 'center', margin: 10}}
+            name="info-circle"
+            color={colors.appWhite}
+            size={30}
+          />
+          <Text
+            style={{
+              textAlign: 'center',
+              padding: 15,
+              fontSize: 25,
+              paddingTop: 0,
+              color: colors.appWhite,
+              fontWeight: 'bold',
+            }}>
+            Instructions
+          </Text>
+          <View style={{marginBottom: 10}}>
+            {planWorkout?.steps &&
+              planWorkout?.steps.map(step => {
+                return (
+                  <View
+                    key={step}
+                    style={{
+                      flexDirection: 'row',
+                      margin: 10,
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        marginRight: 10,
+                      }}>
+                      ●
+                    </Text>
+                    <Text style={{color: colors.appWhite, flex: 1}}>
+                      {step}
+                    </Text>
+                  </View>
+                );
+              })}
+          </View>
+          <Button
+            text="OK"
+            onPress={() => setShowModal(false)}
+            style={{
+              margin: 10,
+            }}
           />
         </View>
       </Modal>

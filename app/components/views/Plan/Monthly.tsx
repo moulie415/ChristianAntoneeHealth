@@ -89,7 +89,7 @@ const Monthly: React.FC<{
                   };
                 }),
               );
-              navigate('PreWorkout', {name: workout.name});
+              navigate('PreWorkout', {planWorkout: workout});
             }
           }
         }}

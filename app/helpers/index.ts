@@ -147,7 +147,6 @@ export const getBMIItems = (
           findClosestSampleToDate(heightSamples, day, height)) ||
         height;
       const bmi = getBMI(heightSample, weightSample);
-      console.log(bmi, heightSample, weightSample);
       if (bmi > highest) {
         highest = bmi;
       }

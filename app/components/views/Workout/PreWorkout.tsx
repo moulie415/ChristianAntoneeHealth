@@ -21,7 +21,7 @@ const PreWorkout: React.FC<{
   route: RouteProp<StackParamList, 'PreWorkout'>;
   workout: Exercise[];
 }> = ({route, navigation, workout}) => {
-  const {name} = route.params;
+  const {planWorkout} = route.params;
 
   const equipmentList = getEquipmentList(workout);
 
@@ -58,7 +58,7 @@ const PreWorkout: React.FC<{
             marginBottom: 10,
             fontSize: 20,
           }}>
-          {name}
+          {planWorkout.name}
         </Text>
         <View
           style={{
@@ -106,7 +106,7 @@ const PreWorkout: React.FC<{
         <Button
           style={{margin: 15}}
           text="Start workout"
-          onPress={() => navigation.navigate('StartWorkout', {name})}
+          onPress={() => navigation.navigate('StartWorkout', {planWorkout})}
         />
       </ScrollView>
     </>

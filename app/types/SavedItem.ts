@@ -1,3 +1,5 @@
+import {PlanWorkout} from './Shared';
+
 export interface SavedWorkout {
   id?: string;
   workout: string[];
@@ -6,7 +8,7 @@ export interface SavedWorkout {
   difficulty: number;
   createdate: Date;
   saved?: boolean;
-  name?: string;
+  planWorkout?: PlanWorkout;
 }
 
 export interface SavedTest {

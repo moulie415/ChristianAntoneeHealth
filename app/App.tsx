@@ -20,6 +20,7 @@ import {
   CoolDown,
   PlanNutrition,
   PlanSleep,
+  PlanWorkout,
 } from './types/Shared';
 import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
@@ -50,6 +51,7 @@ import CustomTooltip from './components/commons/CustomTooltip';
 import WelcomeModal from './WelcomeModal';
 import Drawer from 'react-native-drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
+import { SavedWorkout } from './types/SavedItem';
 
 const {height, width} = Dimensions.get('window');
 
@@ -101,9 +103,9 @@ export type StackParamList = {
   };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
-  PreWorkout: {name?: string};
-  StartWorkout: {name?: string};
-  EndWorkout: {seconds: number; name?: string};
+  PreWorkout: {planWorkout: PlanWorkout};
+  StartWorkout: {planWorkout: PlanWorkout};
+  EndWorkout: {seconds: number; planWorkout: PlanWorkout};
   WorkoutSummary: {
     seconds: number;
     calories?: number;

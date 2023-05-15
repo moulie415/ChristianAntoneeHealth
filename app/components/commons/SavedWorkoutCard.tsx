@@ -44,13 +44,13 @@ const SavedWorkoutCard: React.FC<{
   return (
     <TouchableOpacity
       onPress={() => {
-        if ('workout' in item) {
+        if ('planWorkout' in item && item.planWorkout) {
           setWorkoutAction(
             item.workout.map(id => {
               return exercises[id];
             }),
           );
-          navigation.navigate('PreWorkout', {name: item.name});
+          navigation.navigate('PreWorkout', {planWorkout: item.planWorkout});
         } else if (quickRoutine) {
           getExercisesByIdAction(quickRoutine.exerciseIds);
           navigation.navigate('PreQuickRoutine', {
@@ -138,8 +138,8 @@ const SavedWorkoutCard: React.FC<{
               }}>
               {quickRoutine && 'exerciseIds' in quickRoutine
                 ? quickRoutine.name
-                : 'name' in item
-                ? item.name
+                : 'planWorkout' in item
+                ? item.planWorkout?.name
                 : ''}
             </Text>
             {/* {quickRoutine && (

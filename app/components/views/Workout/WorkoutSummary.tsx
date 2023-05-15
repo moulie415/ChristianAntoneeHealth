@@ -1,17 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import moment from 'moment';
-import {
-  getDifficultyEmoji,
-  getDifficultyText,
-} from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
-
 import {saveWorkout, setShareModalVisible} from '../../../actions/exercises';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import ShareModal from '../../commons/ShareModal';
-import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -33,14 +25,7 @@ const WorkoutSummary: React.FC<{
   saveWorkoutAction: (workout: SavedWorkout) => void;
   workout: Exercise[];
   setShareModalVisibleAction: (payload: boolean) => void;
-}> = ({
-  route,
-  profile,
-  navigation,
-  saveWorkoutAction,
-  workout,
-  setShareModalVisibleAction,
-}) => {
+}> = ({route}) => {
   const {calories, seconds, difficulty} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
   useBackHandler(() => true);

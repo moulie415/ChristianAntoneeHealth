@@ -12,6 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import RPESlider from '../../commons/RPESlider';
 import {getCaloriesBurned} from '../../../helpers/exercises';
+import useThrottle from '../../../hooks/UseThrottle';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
@@ -31,6 +32,17 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     profile.weight,
     'metric',
   );
+
+  const save = useThrottle((saved: boolean) => {
+    saveQuickRoutineAction({
+      calories: calories || 0,
+      seconds,
+      difficulty,
+      createdate: new Date(),
+      quickRoutineId: routine.id,
+      saved,
+    });
+  }, 3000);
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -70,16 +82,6 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
                 });
               };
 
-              const save = (saved: boolean) => {
-                saveQuickRoutineAction({
-                  calories: calories || 0,
-                  seconds,
-                  difficulty,
-                  createdate: new Date(),
-                  quickRoutineId: routine.id,
-                  saved,
-                });
-              };
               if (profile.premium) {
                 Alert.alert(
                   'Save workout',

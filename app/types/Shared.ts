@@ -85,6 +85,7 @@ export interface PlanExercise {
 
 export interface PlanWorkout {
   name: string;
+  steps?: string[];
   dates: string[];
   exercises: PlanExercise[];
   today?: boolean;
