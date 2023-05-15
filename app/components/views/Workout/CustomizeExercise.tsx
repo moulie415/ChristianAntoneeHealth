@@ -208,11 +208,7 @@ const CustomizeExercise: React.FC<{
                     pickerData={RESISTANCE.map(value => {
                       return {
                         label:
-                          value === 0
-                            ? 'Bodyweight'
-                            : `${value.toString()} ${
-                                profile.unit === 'metric' ? 'kg' : 'lbs'
-                              }`,
+                          value === 0 ? 'Bodyweight' : `${value.toString()} kg`,
                         value: String(value),
                       };
                     })}

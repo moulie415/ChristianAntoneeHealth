@@ -405,7 +405,7 @@ export const saveWorkout = (
       seconds,
       difficulty,
       profile.weight,
-      profile.unit,
+      'metric',
     );
     if (Platform.OS === 'ios') {
       return new Promise((resolve, reject) => {

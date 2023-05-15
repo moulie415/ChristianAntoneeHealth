@@ -29,7 +29,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     seconds,
     difficulty,
     profile.weight,
-    profile.unit,
+    'metric',
   );
 
   return (

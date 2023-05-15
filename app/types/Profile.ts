@@ -31,7 +31,6 @@ export default interface Profile {
   weight?: number;
   height?: number;
   goal?: Goal;
-  unit?: Unit;
   marketing?: boolean;
   dob?: string;
   signedUp?: boolean;

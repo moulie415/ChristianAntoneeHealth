@@ -59,7 +59,6 @@ const ProfileComponent: React.FC<{
   const [weight, setWeight] = useState<number>(profile.weight || 0);
   const [dob, setDob] = useState(profile.dob);
   const [height, setHeight] = useState<number>(profile.height || 0);
-  const [unit, setUnit] = useState<Unit>(profile.unit || 'metric');
   const [avatar, setAvatar] = useState(profile.avatar);
   const [loading, setLoading] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
@@ -83,7 +82,6 @@ const ProfileComponent: React.FC<{
     weight,
     dob,
     height,
-    unit,
     ...(avatar !== undefined ? {avatar} : {}),
     ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
     ...(muscleMass !== undefined ? {muscleMass} : {}),
@@ -121,7 +119,6 @@ const ProfileComponent: React.FC<{
         dob,
         height,
         weight,
-        unit,
         ...(newAvatar !== undefined ? {avatar: newAvatar} : {}),
         ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
         ...(muscleMass !== undefined ? {muscleMass} : {}),
@@ -397,7 +394,7 @@ const ProfileComponent: React.FC<{
         selectedValue={String(height)}
         pickerData={HEIGHTS.map(value => {
           return {
-            label: `${value.toString()} ${unit === 'metric' ? 'cm' : 'inches'}`,
+            label: `${value.toString()} cm`,
             value: String(value),
           };
         })}
@@ -409,7 +406,7 @@ const ProfileComponent: React.FC<{
         selectedValue={String(weight)}
         pickerData={WEIGHTS.map(value => {
           return {
-            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
+            label: `${value.toString()} kg`,
             value: String(value),
           };
         })}
@@ -433,7 +430,7 @@ const ProfileComponent: React.FC<{
         selectedValue={String(muscleMass)}
         pickerData={MUSCLE_MASSES.map(value => {
           return {
-            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
+            label: `${value.toString()} kg`,
             value: String(value),
           };
         })}
@@ -445,7 +442,7 @@ const ProfileComponent: React.FC<{
         selectedValue={String(boneMass)}
         pickerData={BONE_DENSITIES.map(value => {
           return {
-            label: `${value.toString()} ${unit === 'metric' ? 'kg' : 'lbs'}`,
+            label: `${value.toString()} kg`,
             value: String(value),
           };
         })}

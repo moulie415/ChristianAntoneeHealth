@@ -75,7 +75,6 @@ export interface UpdateProfilePayload {
   weight?: number;
   height?: number;
   gender?: Gender;
-  unit?: Unit;
   marketing?: boolean;
   goal?: Goal;
   avatar?: string;

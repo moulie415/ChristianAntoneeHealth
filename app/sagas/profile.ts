@@ -115,13 +115,13 @@ type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
-  const {unit, uid} = yield select(
+  const { uid} = yield select(
     (state: MyRootState) => state.profile.profile,
   );
-  const weightSamples: Sample[] = yield call(getWeightSamples, unit);
+  const weightSamples: Sample[] = yield call(getWeightSamples, 'metric');
   yield put(setWeightSamples(weightSamples));
 
-  const heightSamples: Sample[] = yield call(getHeightSamples, unit);
+  const heightSamples: Sample[] = yield call(getHeightSamples, 'metric');
   yield put(setHeightSamples(heightSamples));
 
   const bodyFatPercentageSamples: Sample[] = yield call(
@@ -182,7 +182,6 @@ function* updateProfile(action: UpdateProfileAction) {
   const {
     weight,
     height,
-    unit,
     dob,
     gender,
     goal,
@@ -195,11 +194,11 @@ function* updateProfile(action: UpdateProfileAction) {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const enabled: boolean = yield call(isEnabled);
     if (enabled) {
-      if (weight && unit) {
-        yield call(saveWeight, weight, unit);
+      if (weight) {
+        yield call(saveWeight, weight, 'metric');
       }
-      if (height && unit) {
-        yield call(saveHeight, height, unit);
+      if (height) {
+        yield call(saveHeight, height, 'metric');
       }
       if (bodyFatPercentage !== undefined) {
         yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
@@ -244,7 +243,7 @@ function* updateProfile(action: UpdateProfileAction) {
     birthday: dob || '',
     weight: weight?.toString() || '',
     height: height?.toString() || '',
-    unit: unit || '',
+    unit: 'metric',
     gender: gender || '',
     goal: goal || '',
   });

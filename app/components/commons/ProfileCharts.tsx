@@ -272,6 +272,7 @@ const ProfileCharts: React.FC<{
   }, [boneMassSamples, filter, boneMass]);
 
   const latestBMI = weightItems?.data[weightItems.data.length - 1]?.y;
+
   return (
     <>
       <Text
@@ -366,7 +367,7 @@ const ProfileCharts: React.FC<{
         </TouchableOpacity>
       </View>
 
-      <PagerView ref={pagerRef} style={{flex: 1, height: 450}}>
+      <PagerView ref={pagerRef} style={{flex: 1, height: 350}}>
         <Chart
           isFirst
           index={0}
@@ -414,6 +415,7 @@ const ProfileCharts: React.FC<{
             </View>
           }
         />
+
         <Chart
           index={1}
           pagerRef={pagerRef}

@@ -29,7 +29,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     seconds,
     difficulty,
     profile.weight,
-    profile.unit,
+    'metric',
   );
 
   return (
