@@ -96,30 +96,6 @@ const StartWorkout: React.FC<{
     }
   }, [planWorkout.steps]);
 
-  const ResistanceScale: React.FC<{resistanceScale?: string}> = ({
-    resistanceScale,
-  }) => {
-    if (!resistanceScale) {
-      return null;
-    }
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginRight: 5,
-        }}>
-        <Text
-          style={{
-            color: colors.appWhite,
-            textAlign: 'center',
-            marginRight: 5,
-            fontSize: 16,
-          }}>{`/ resistance scale: ${resistanceScale}`}</Text>
-      </View>
-    );
-  };
-
   const loadingExercises = !workout || workout.some(e => e === undefined);
 
   return (
@@ -340,7 +316,8 @@ const StartWorkout: React.FC<{
                                 </View>
                               )}
                               {!!exercise.resistanceScale && (
-                                <View
+                                <TouchableOpacity
+                                  onPress={() => setShowResistanceModal(true)}
                                   style={{
                                     backgroundColor: colors.appBlue,
                                     padding: 2,
@@ -357,7 +334,7 @@ const StartWorkout: React.FC<{
                                       fontWeight: 'bold',
                                       fontSize: 16,
                                     }}>{`resistance scale: ${exercise.resistanceScale}`}</Text>
-                                </View>
+                                </TouchableOpacity>
                               )}
                             </View>
                             <ViewMore text={exercise.description} lines={5} />

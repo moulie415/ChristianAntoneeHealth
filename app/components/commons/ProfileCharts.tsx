@@ -151,7 +151,7 @@ const Chart: React.FC<{
         </View>
         {footer}
       </View>
-      {!!minY && !!maxY && !!ranges && (
+      {minY !== undefined && !!maxY && !!ranges && (
         <MetricExplainedModal
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
