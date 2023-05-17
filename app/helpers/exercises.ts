@@ -209,3 +209,19 @@ export const getEquipmentList = (exercises: Exercise[]) => {
 
   return _.uniq(equipment.map(item => equipmentItemReadableString(item)));
 };
+
+export const getMusclesList = (exercises: Exercise[]) => {
+  const muscles = exercises.reduce((acc: Muscle[], cur) => {
+    if (cur.muscles && cur.musclesSecondary) {
+      return [...acc, ...cur.muscles, ...cur.musclesSecondary];
+    }
+    if (cur.muscles) {
+      return [...acc, ...cur.muscles];
+    }
+    if (cur.musclesSecondary) {
+      return [...acc, ...cur.musclesSecondary];
+    }
+    return acc;
+  }, []);
+  return _.uniq(muscles.map(item => muscleReadableString(item)));
+};

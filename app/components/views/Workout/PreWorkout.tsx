@@ -14,7 +14,7 @@ import Button from '../../commons/Button';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Exercise from '../../../types/Exercise';
-import {getEquipmentList} from '../../../helpers/exercises';
+import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
 
 const PreWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreWorkout'>;
@@ -24,7 +24,7 @@ const PreWorkout: React.FC<{
   const {planWorkout} = route.params;
 
   const equipmentList = getEquipmentList(workout);
-
+  const musclesList = getMusclesList(workout);
   return (
     <>
       <FastImage
@@ -96,13 +96,32 @@ const PreWorkout: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>
+          <Text style={{color: colors.appWhite, flex: 1}}>
             {equipmentList && equipmentList.length
               ? equipmentList.join(', ')
               : 'No equipment needed'}
           </Text>
         </View>
-
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 10,
+          }}>
+          <View style={{width: 55, alignItems: 'center'}}>
+            <Icon
+              name="child"
+              size={25}
+              color={colors.appWhite}
+              style={{
+                marginHorizontal: 15,
+              }}
+            />
+          </View>
+          <Text style={{color: colors.appWhite, flex: 1}}>
+            {musclesList && musclesList.length ? musclesList.join(', ') : ''}
+          </Text>
+        </View>
         <Button
           style={{margin: 15}}
           text="Start workout"

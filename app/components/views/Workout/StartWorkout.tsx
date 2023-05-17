@@ -434,17 +434,10 @@ const StartWorkout: React.FC<{
             alignSelf: 'center',
             borderRadius: 10,
           }}>
-          <Icon
-            style={{alignSelf: 'center', margin: 10}}
-            name="info-circle"
-            color={colors.appBlue}
-            size={20}
-          />
           <Text
             style={{
               textAlign: 'center',
               padding: 15,
-              paddingTop: 0,
             }}>
             Resistance scale explained
           </Text>

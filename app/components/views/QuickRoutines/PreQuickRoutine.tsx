@@ -130,9 +130,9 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>{`${exerciseIds.length} ${
-            exerciseIds.length > 1 ? 'exercises' : 'exercise'
-          } `}</Text>
+          <Text style={{color: colors.appWhite, flex: 1}}>{`${
+            exerciseIds.length
+          } ${exerciseIds.length > 1 ? 'exercises' : 'exercise'} `}</Text>
         </View>
         <View
           style={{
@@ -150,7 +150,7 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>
+          <Text style={{color: colors.appWhite, flex: 1}}>
             {capitalizeFirstLetter(level)}
           </Text>
         </View>
@@ -170,7 +170,7 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>
+          <Text style={{color: colors.appWhite, flex: 1}}>
             {equipmentList && equipmentList.length
               ? `${capitalizeFirstLetter(
                   equipment,
@@ -194,7 +194,8 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite}}>{`${capitalizeFirstLetter(
+          <Text
+            style={{color: colors.appWhite, flex: 1}}>{`${capitalizeFirstLetter(
             area,
           )} body`}</Text>
         </View>

@@ -78,6 +78,9 @@ export const initBiometrics = async () => {
 };
 
 export const getHeight = async (): Promise<number | undefined> => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       // @ts-ignore
@@ -107,6 +110,9 @@ export const getHeight = async (): Promise<number | undefined> => {
 };
 
 export const getWeight = async (): Promise<number | undefined> => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       // @ts-ignore
@@ -136,6 +142,9 @@ export const getWeight = async (): Promise<number | undefined> => {
 };
 
 export const getWeightSamples = async (unit: Unit) => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getWeightSamples(
@@ -170,6 +179,9 @@ export const getWeightSamples = async (unit: Unit) => {
 };
 
 export const getHeightSamples = async (unit: Unit) => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getHeightSamples(
@@ -205,6 +217,9 @@ export const getHeightSamples = async (unit: Unit) => {
 };
 
 export const getStepSamples = async () => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getDailyStepCountSamples(
@@ -236,6 +251,9 @@ export const getStepSamples = async () => {
 };
 
 export const getWeeklySteps = async (): Promise<StepSample[]> => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return [];
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getDailyStepCountSamples(
@@ -264,6 +282,9 @@ export const getWeeklySteps = async (): Promise<StepSample[]> => {
 };
 
 export const getActivitySamples = async () => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getSamples(
@@ -326,6 +347,9 @@ export const saveWeight = async (value?: number, unit = 'metric') => {
   if (!value || !unit) {
     return;
   }
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
       AppleHealthKit.saveWeight(
@@ -361,6 +385,9 @@ export const saveHeight = async (value?: number, unit = 'metric') => {
   if (!value || !unit) {
     return;
   }
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
       AppleHealthKit.saveHeight(
@@ -391,13 +418,16 @@ export const saveHeight = async (value?: number, unit = 'metric') => {
   });
 };
 
-export const saveWorkout = (
+export const saveWorkout = async (
   seconds: number,
   difficulty: number,
   profile: Profile,
   name: string,
   description: string,
 ) => {
+  if (!(await isAvailable()) || !(await isEnabled())) {
+    return;
+  }
   try {
     const startDate = moment().subtract(seconds, 'seconds').toISOString();
     const endDate = moment().toISOString();
