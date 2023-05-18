@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
-
 import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
 import MusclesDiagram from '../../commons/MusclesDiagram';
@@ -26,6 +25,9 @@ import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/core';
 import Exercise from '../../../types/Exercise';
+import WorkoutTabs from '../../commons/WorkoutTabs';
+import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
+import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 
 const QuickRoutineView: React.FC<{
   downloadVideoAction: (id: string) => void;
@@ -89,11 +91,22 @@ const QuickRoutineView: React.FC<{
     }
   }, [exercises, index, navigation]);
 
+  const [showResistanceModal, setShowResistanceModal] = useState(false);
+
   return (
     <View style={{flex: 1}}>
       <Header
         hasBack
         absolute
+        right={
+          routine.steps ? (
+            <TouchableOpacity
+              style={{marginTop: 10}}
+              onPress={() => setShowModal(true)}>
+              <Icon name="info-circle" color={colors.appWhite} size={30} />
+            </TouchableOpacity>
+          ) : null
+        }
         customBackPress={() => {
           Alert.alert('Exit workout', 'Are you sure?', [
             {
@@ -166,167 +179,33 @@ const QuickRoutineView: React.FC<{
                       backgroundColor: colors.appGrey,
                     }}>
                     <ScrollView keyboardShouldPersistTaps="always">
-                      <View
+                      <Text
                         style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                          marginTop: 30,
+                          marginTop: 20,
+                          color: colors.appWhite,
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                         
                         }}>
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => setTabIndex(0)}>
-                          <LinearGradient
-                            colors={
-                              tabIndex === 0
-                                ? [colors.appBlueLight, colors.appBlueDark]
-                                : ['transparent', 'transparent']
-                            }
-                            style={{
-                              height: 40,
-                              paddingHorizontal: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderRadius: 25,
-                              backgroundColor:
-                                tabIndex === 0
-                                  ? colors.textGrey
-                                  : colors.appGrey,
-                            }}>
-                            <Text
-                              style={{
-                                fontWeight: 'bold',
-                                color: '#fff',
-                                textAlign: 'center',
-                              }}>
-                              Description
-                            </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={{}}
-                          onPress={() => setTabIndex(1)}>
-                          <LinearGradient
-                            colors={
-                              tabIndex === 1
-                                ? [colors.appBlueLight, colors.appBlueDark]
-                                : ['transparent', 'transparent']
-                            }
-                            style={{
-                              height: 40,
-                              paddingHorizontal: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderRadius: 25,
-                              backgroundColor:
-                                tabIndex === 1
-                                  ? colors.textGrey
-                                  : colors.appGrey,
-                            }}>
-                            <Text
-                              style={{
-                                fontWeight: 'bold',
-                                color: '#fff',
-                                textAlign: 'center',
-                              }}>
-                              Diagram
-                            </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                        {(routine.steps || routine.instructions) && (
-                          <TouchableOpacity onPress={() => setShowModal(true)}>
-                            <Icon
-                              name="info-circle"
-                              color={colors.appWhite}
-                              size={30}
-                            />
-                          </TouchableOpacity>
-                        )}
-                      </View>
-                      <View>
-                        {tabIndex === 0 && (
-                          <>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                margin: 10,
-                                marginBottom: 0,
-                              }}>
-                              <Text
-                                style={{
-                                  color: colors.appWhite,
-                                  fontSize: 20,
-                                  fontWeight: 'bold',
-                                }}>
-                                {exercise.name}
-                              </Text>
-                            </View>
-                            <ViewMore text={exercise.description} lines={5} />
-                          </>
-                        )}
+                        {exercise.name}
+                      </Text>
+                      <WorkoutTabs
+                        tabIndex={tabIndex}
+                        setTabIndex={setTabIndex}
+                        exercise={exercise}
+                        i={i}
+                        index={index}
+                        setShowResistanceModal={setShowResistanceModal}
+                      />
 
-                        {tabIndex === 1 && i === index && (
-                          <MusclesDiagram
-                            primary={exercise.muscles}
-                            secondary={exercise.musclesSecondary}
-                          />
-                        )}
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          margin: 10,
-                          height: 60,
-                          borderRadius: 30,
-                          marginBottom: 10,
-                        }}>
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            color: colors.appWhite,
-                            fontSize: 20,
-                            padding: 15,
-                          }}>{`Exercise ${index + 1}/${
-                          exercises.length
-                        }`}</Text>
-
-                        <View
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon
-                            name="stopwatch"
-                            size={20}
-                            color={colors.appWhite}
-                          />
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: colors.appWhite,
-                              fontSize: 20,
-                              paddingLeft: 5,
-                              padding: 15,
-                            }}>
-                            {moment()
-                              .utc()
-                              .startOf('day')
-                              .add({seconds})
-                              .format('mm:ss')}
-                          </Text>
-                          <TouchableOpacity
-                            onPress={() => setTimerPaused(!timerPaused)}>
-                            <Icon
-                              name={timerPaused ? 'play' : 'pause'}
-                              size={30}
-                              style={{marginRight: 10}}
-                              color={colors.appWhite}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
+                      <WorkoutTabFooter
+                        seconds={seconds}
+                        setTimerPaused={setTimerPaused}
+                        timerPaused={timerPaused}
+                        workout={exercises}
+                        index={index}
+                      />
                       <Button
                         text="End Workout"
                         onPress={() => {
@@ -418,6 +297,30 @@ const QuickRoutineView: React.FC<{
             style={{
               margin: 10,
             }}
+          />
+        </View>
+      </Modal>
+      <Modal
+        visible={showResistanceModal}
+        onRequestClose={() => setShowResistanceModal(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            alignSelf: 'center',
+            borderRadius: 10,
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              padding: 15,
+            }}>
+            Resistance scale explained
+          </Text>
+          <ResistanceScaleInfo />
+          <Button
+            text="OK"
+            onPress={() => setShowResistanceModal(false)}
+            style={{margin: 10}}
           />
         </View>
       </Modal>
