@@ -40,6 +40,8 @@ export default interface Exercise {
   resistanceScale?: string;
   duration?: string;
   notes?: string;
+  weight?: string;
+
 }
 
 export type Muscle =

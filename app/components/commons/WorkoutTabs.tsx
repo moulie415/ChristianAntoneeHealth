@@ -16,7 +16,10 @@ const WorkoutTabs: React.FC<{
   setShowResistanceModal: (show: boolean) => void;
 }> = ({tabIndex, setTabIndex, exercise, setShowResistanceModal, i, index}) => {
   const hasSetsRepsTab =
-    !!exercise.reps || !!exercise.reps || !!exercise.resistanceScale;
+    !!exercise.reps ||
+    !!exercise.reps ||
+    !!exercise.resistanceScale ||
+    !!exercise.weight;
   const tabs = ['Description', 'Diagram'];
   if (hasSetsRepsTab) {
     tabs.unshift('Reps/Sets');
@@ -66,77 +69,58 @@ const WorkoutTabs: React.FC<{
       </View>
       <View>
         {tabIndex === 0 && hasSetsRepsTab && (
-          <>
-            <View
-              style={{
-                alignItems: 'flex-start',
-                justifyContent: 'space-evenly',
-                margin: 10,
-                marginVertical: 0,
-              }}>
-              {!!exercise.reps && (
-                <View
+          <View
+            style={{
+              alignItems: 'flex-start',
+              justifyContent: 'space-evenly',
+              marginHorizontal: 20,
+              height: 200,
+            }}>
+            {!!exercise.reps && (
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                }}>{`Reps: ${exercise.reps}`}</Text>
+            )}
+            {!!exercise.sets && (
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                }}>{`Sets: ${exercise.sets}`}</Text>
+            )}
+            {!!exercise.resistanceScale && (
+              <TouchableOpacity
+                onPress={() => setShowResistanceModal(true)}
+                style={{}}>
+                <Text
                   style={{
-                    //      backgroundColor: colors.appBlue,
-                    padding: 2,
-                    paddingHorizontal: 5,
-                    borderRadius: 10,
-                    marginVertical: 5,
-                    marginRight: 5,
-                  }}>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      textAlign: 'center',
-                      textTransform: 'uppercase',
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                    }}>{`Reps: ${exercise.reps}`}</Text>
-                </View>
-              )}
-              {!!exercise.sets && (
-                <View
-                  style={{
-                    //    backgroundColor: colors.appBlue,
-                    padding: 2,
-                    paddingHorizontal: 5,
-                    borderRadius: 10,
-                    marginVertical: 5,
-                    marginRight: 5,
-                  }}>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      textAlign: 'center',
-                      textTransform: 'uppercase',
-                      fontWeight: 'bold',
-                      fontSize: 20,
-                    }}>{`Sets: ${exercise.sets}`}</Text>
-                </View>
-              )}
-              {!!exercise.resistanceScale && (
-                <TouchableOpacity
-                  onPress={() => setShowResistanceModal(true)}
-                  style={{
-                    backgroundColor: colors.appBlue,
-                    padding: 2,
-                    paddingHorizontal: 5,
-                    borderRadius: 10,
-                    marginVertical: 5,
-                    marginRight: 5,
-                  }}>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      textAlign: 'center',
-                      textTransform: 'uppercase',
-                      fontWeight: 'bold',
-                      fontSize: 20,
-                    }}>{`resistance scale: ${exercise.resistanceScale}`}</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          </>
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                    textTransform: 'uppercase',
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                  }}>{`resistance scale: ${exercise.resistanceScale}`}</Text>
+              </TouchableOpacity>
+            )}
+            {!!exercise.weight && (
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                }}>{`Weight: ${exercise.weight}`}</Text>
+            )}
+          </View>
         )}
 
         {((tabIndex === 1 && hasSetsRepsTab) ||

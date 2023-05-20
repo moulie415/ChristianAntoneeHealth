@@ -18,10 +18,9 @@ const WorkoutTabFooter: React.FC<{
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        margin: 10,
+        marginHorizontal: 10,
         height: 60,
         borderRadius: 30,
-        marginBottom: 10,
       }}>
       <Text
         style={{
