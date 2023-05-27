@@ -89,19 +89,6 @@ const Plan: React.FC<{
     getOfferings();
   }, []);
 
-  const hasPlanLeft = useMemo(() => {
-    return (
-      plan &&
-      plan.workouts?.some(workout =>
-        workout.dates.find(
-          date =>
-            moment(date).isAfter(moment().startOf('day')) ||
-            moment(date).isSame(moment().startOf('day')),
-        ),
-      )
-    );
-  }, [plan]);
-
   const layout = useWindowDimensions();
 
   const [index, setIndex] = useState(0);
@@ -119,7 +106,7 @@ const Plan: React.FC<{
 
   return (
     <>
-      {hasPlanLeft ? (
+      {plan ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
             <Header drawerRef={drawerRef} />

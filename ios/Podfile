@@ -43,7 +43,6 @@ target 'HealthAndMovement' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-  pod 'GoogleSignIn', '~> 6.2.2'
 
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"

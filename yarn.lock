@@ -2148,10 +2148,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-17.5.0.tgz#6b55f24f0fe949bad4e29a0f0e344b93b2e50844"
   integrity sha512-E5lemuaGCFxMCDIFvAlaG98SwLNJz9RIhg0f5up/uU9oZ9JIeodbWvwfZMlSupmvaKTvM2U+YFFmugdv2q9jrg==
 
-"@react-native-google-signin/google-signin@^9.0.2":
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-9.0.2.tgz#fd9d0cbb58591265c2ea9404b2d2ea7e514b9ea9"
-  integrity sha512-oTD0ZT6ZSH7CZjM1i6hR/gFAXv9As7nxhN99XGliNxf6SChZcQRwGeaz1DjoYrWExWDVX00EH1Per3dMjhAWkQ==
+"@react-native-google-signin/google-signin@^10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-10.0.1.tgz#5ca5208c6677aca7e8b12f73699de3048d9a5a31"
+  integrity sha512-oZoU2lfKyn0s0GqqdFsi4v2FSENrxQYQU9DD/RSkxDdkIQ49Wwo6p5LKlgXY04GwZEVdYMuvZN3G89gQW0ig2g==
 
 "@react-native-masked-view/masked-view@^0.2.9":
   version "0.2.9"
@@ -5050,7 +5050,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-fbjs@^0.8.4, fbjs@^0.8.9:
+fbjs@^0.8.4:
   version "0.8.18"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.18.tgz#9835e0addb9aca2eff53295cd79ca1cfc7c9662a"
   integrity sha512-EQaWFK+fEPSoibjNy8IxUtaFOMXcWsY0JaVrQoZR9zC8N2Ygf9iDITPWjUTVIax95b6I742JFLqASHfsag/vKA==
@@ -8008,7 +8008,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.7.x, prop-types@^15.8.1:
+prop-types@*, prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.7.x, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8016,13 +8016,6 @@ prop-types@*, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
     react-is "^16.13.1"
-
-prop-types@15.5.8:
-  version "15.5.8"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
-  integrity sha512-QiDx7s0lWoAVxmEmOYnn3rIZGduup2PZgj3rta5O5y0NfPKu3ApWi+GdMfTto7PmO/5+p4yamSLMZkj0jaTL4A==
-  dependencies:
-    fbjs "^0.8.9"
 
 prop-types@15.7.2:
   version "15.7.2"
@@ -8151,17 +8144,17 @@ react-native-calendar-events@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz#6cb78bf712457ca9928dae95b428c91e7b895ae0"
   integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
 
-react-native-calendars@^1.1297.0:
-  version "1.1297.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1297.0.tgz#a9c241b0f3ab149a6b64e5ce253cace71a72299b"
-  integrity sha512-up74+QFVT9p+WSQxV5IgjlU6u5LbZ5w+t1G2sqdzMFmAxaC4dFLBcUI558u6LHfQEPDrTBC5X70qLnROVxRX/g==
+react-native-calendars@^1.1298.0:
+  version "1.1298.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1298.0.tgz#f3e4b4c18b451657505f702ea01dc43b3a849dce"
+  integrity sha512-+g9b6ceYQn+kEzS2dK5RsOhXR4Ue659EOVTpg+5kFZBHbgwqIqSwpKQIXwK6h8jkDMpUgjMYn4qVLYHW77FzWw==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     lodash "^4.17.15"
     memoize-one "^5.2.1"
     prop-types "^15.5.10"
     react-native-swipe-gestures "^1.0.5"
-    recyclerlistview "^3.0.5"
+    recyclerlistview "^4.0.0"
     xdate "^0.8.0"
   optionalDependencies:
     moment "^2.29.4"
@@ -8272,10 +8265,10 @@ react-native-flipper@^0.190.0:
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.190.0.tgz#367e17b02690ddca0b3a02a19cb3c81efcf19574"
   integrity sha512-hkVked8cWBVUVZJSAX8GY+B4AaJ/sdYDRqeAcLcQ16kyMzyHxU3PWu27mXTYoRJqA2W85iAIaE1rONYoaEiKnA==
 
-react-native-gesture-handler@^2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.10.0.tgz#54a1840cccac1dc4d5a48b8dc703eac30f077b3d"
-  integrity sha512-vuNupfa8+6MAUMgbZMk5jSxrmqWyNnR/gR77/iuhdx6cPg1z2MJeeJNmqEtKQcF0InvHp45dOoyRK62peqTJ3Q==
+react-native-gesture-handler@^2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.10.1.tgz#ca5f0f09bfa8d0560f492fc599fa64a64dcdd231"
+  integrity sha512-vDJx3KnheMLEPg35chQW6aiNGqfv3tmWGRRzmfVvqnvvIt5pNkxXe8+x7CYpfIAAnqNLaK1xiozvMkzZPRw1vw==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -8335,10 +8328,10 @@ react-native-hyperlink@^0.0.22:
     linkify-it "^4.0.1"
     mdurl "^1.0.1"
 
-react-native-image-picker@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.3.1.tgz#836ab13c228174728a0bd68293b27dc5e1affa0f"
-  integrity sha512-zRCjtlE3KOeaWDM8gXzTwXfvo3ZeF2XMkHceU7CVCtKRleKxna/E4XWIPu/lXO2qlMdnSx1WvfPSbqzAX0qxpA==
+react-native-image-picker@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.4.0.tgz#a693fbd3057d48667d87a340a3c6bdb599120983"
+  integrity sha512-qtLroIqpHADaR0/XJBD7E0boq+AAVT6wXvY4+pzrHjx12Lx2BhpFZH0rlWc/HIqeWBhZckAIpZ0ndapiGEMdYg==
 
 react-native-in-app-review@^4.3.3:
   version "4.3.3"
@@ -8408,10 +8401,10 @@ react-native-progress@^5.0.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-purchases@^5.14.0:
-  version "5.14.0"
-  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-5.14.0.tgz#2c1d00d9e91a015c673b1c381e31b21fc686aaa2"
-  integrity sha512-cek8SdFJ8obcKh3OwEQvSd8WLKhs4jsVRsTTfJnGZMXlxFXfv1GS0F4BnAD/eP5J1GcAUw1RGyJB9gC/iqoglw==
+react-native-purchases@^5.15.0:
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-5.15.0.tgz#48e5cb7409d037222a541504219169341b69e85e"
+  integrity sha512-BOe0ICTsuW+IxeKLvlu+iPExbP0TOMmm+UUGy1FQrdIzIwSzwbSIQEZahgbkxmadf5JjL2htaYBKzaoyajAEJw==
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"
@@ -8743,13 +8736,13 @@ recast@^0.20.3, recast@^0.20.4:
     source-map "~0.6.1"
     tslib "^2.0.1"
 
-recyclerlistview@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-3.0.5.tgz#50bf5bcaa401d56bb6bb264354083f4d424408eb"
-  integrity sha512-JVHz13u520faEsbVqFrJOMuJjc4mJlOXODe5QdqAJHdl5/IpyYeo83uiHrpzxyLb8QtJ0889JMlDik+Z1Ed0QQ==
+recyclerlistview@^4.0.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-4.2.0.tgz#a140149aaa470c9787a1426452651934240d69ef"
+  integrity sha512-uuBCi0c+ggqHKwrzPX4Z/mJOzsBbjZEAwGGmlwpD/sD7raXixdAbdJ6BTcAmuWG50Cg4ru9p12M94Njwhr/27A==
   dependencies:
     lodash.debounce "4.0.8"
-    prop-types "15.5.8"
+    prop-types "15.8.1"
     ts-object-utils "0.0.5"
 
 redux-flipper@^2.0.2:
