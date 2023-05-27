@@ -1,5 +1,5 @@
 //import './wdyr';
-import {AppRegistry, Platform} from 'react-native';
+import {AppRegistry, Linking, Platform} from 'react-native';
 import App, {store} from './app/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
@@ -28,6 +28,10 @@ PushNotification.configure({
   onNotification: notification => {
     console.log('NOTIFICATION:', notification);
     if (notification.userInteraction) {
+      if (notification.data.url) {
+        Linking.openURL(notification.data.url);
+        return;
+      }
       if (
         notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID ||
         notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID
