@@ -115,9 +115,7 @@ type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
-  const { uid} = yield select(
-    (state: MyRootState) => state.profile.profile,
-  );
+  const {uid} = yield select((state: MyRootState) => state.profile.profile);
   const weightSamples: Sample[] = yield call(getWeightSamples, 'metric');
   yield put(setWeightSamples(weightSamples));
 
@@ -683,8 +681,12 @@ function* handleAuthWorker(action: HandleAuthAction) {
             authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
             authStatus === messaging.AuthorizationStatus.PROVISIONAL;
           if (enabled) {
-            const FCMToken = await messaging().getToken();
-            api.setFCMToken(user.uid, FCMToken);
+            try {
+              const FCMToken = await messaging().getToken();
+              api.setFCMToken(user.uid, FCMToken);
+            } catch (e) {
+              logError(e);
+            }
           }
         });
     } else if (user) {

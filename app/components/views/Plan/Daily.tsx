@@ -126,7 +126,12 @@ const Daily: React.FC<{
       ) : (
         <View style={{padding: 10}}>
           <Text
-            style={{textAlign: 'center', color: colors.appWhite, fontSize: 20}}>
+            style={{
+              textAlign: 'center',
+              color: colors.appWhite,
+              fontSize: 20,
+              marginBottom: 10,
+            }}>
             No workouts scheduled for today
           </Text>
         </View>
@@ -175,6 +180,7 @@ const Daily: React.FC<{
               return (
                 <EducationCard
                   key={item.id}
+                  plan
                   onPress={() =>
                     navigate('EducationArticle', {education: item})
                   }

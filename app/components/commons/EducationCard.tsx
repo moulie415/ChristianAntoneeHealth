@@ -16,11 +16,12 @@ const EducationCard: React.FC<{
   item: Education;
   onPress: (item?: Education) => void;
   profile: Profile;
-}> = ({item, onPress, profile}) => {
+  plan?: boolean;
+}> = ({item, onPress, profile, plan}) => {
   return (
     <TouchableOpacity
       style={{
-        height: 125,
+        height: plan ? undefined : 125,
         marginHorizontal: 15,
         marginBottom: 15,
         borderRadius: 10,
@@ -35,45 +36,83 @@ const EducationCard: React.FC<{
         }}
         source={{uri: item.image.src}}
       />
-
-      <View
-        style={{
-          position: 'absolute',
-          alignSelf: 'flex-end',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: width / 1.5,
-          padding: 10,
-          backgroundColor: 'rgba(0,0,0,0.7)',
-        }}>
-        <Text
+      {plan ? (
+        <View
           style={{
-            color: colors.appWhite,
-            fontSize: 10,
+            height: 120,
+            justifyContent: 'center',
+            padding: 10,
+            borderRadius: 10,
+            backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          {moment(item.createdate).format('DD MMMM YYYY')}
-        </Text>
-        <Text
-          style={{
-            color: colors.appWhite,
-            fontSize: 16,
-            fontWeight: 'bold',
-          }}>
-          {item.title}
-        </Text>
-
-        {item.premium && !profile.premium && (
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 15,
-              right: 15,
-            }}>
-            <Icon name="lock" size={20} color={colors.appWhite} />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name="book-open"
+              color={colors.appWhite}
+              size={30}
+              style={{marginHorizontal: 10}}
+            />
+            <View>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                }}>
+                Education
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 16,
+                  marginTop: 5,
+                  fontWeight: 'bold',
+                }}>
+                {item.title}
+              </Text>
+            </View>
           </View>
-        )}
-      </View>
+        </View>
+      ) : (
+        <View
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-end',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: width / 1.5,
+            padding: 10,
+            backgroundColor: 'rgba(0,0,0,0.7)',
+          }}>
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontSize: 10,
+            }}>
+            {moment(item.createdate).format('DD MMMM YYYY')}
+          </Text>
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontSize: 16,
+              fontWeight: 'bold',
+            }}>
+            {item.title}
+          </Text>
+
+          {item.premium && !profile.premium && (
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 15,
+                right: 15,
+              }}>
+              <Icon name="lock" size={20} color={colors.appWhite} />
+            </View>
+          )}
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

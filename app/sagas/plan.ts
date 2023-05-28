@@ -77,15 +77,68 @@ function onPlanChanged(uid: string) {
       .collection('plans')
       .where('user', '==', uid)
       .orderBy('createdate')
-      .limitToLast(1)
+      .limitToLast(100)
       .onSnapshot(
         snapshot => {
-          if (snapshot.docs[0]) {
+          // check for plan that has workouts  either today
+          // or before and after today and make it the current plan
+          let doc = snapshot.docs?.find(d => {
+            const plan = d.data() as Plan;
+            return plan?.workouts?.some(workout => {
+              return (
+                workout.dates?.some(date =>
+                  moment(date).isSameOrAfter(moment(), 'day'),
+                ) &&
+                workout.dates?.some(date =>
+                  moment(date).isSameOrBefore(moment(), 'day'),
+                )
+              );
+            });
+          });
+
+          // if we haven't found the plan yet make it a plan with
+          // workouts in the future but the workouts that are soonest to occur
+
+          if (!doc) {
+            const filtered = snapshot.docs?.filter(d => {
+              const plan = d.data() as Plan;
+              return plan?.workouts?.some(workout => {
+                return workout.dates?.some(date =>
+                  moment(date).isSameOrAfter(moment(), 'day'),
+                );
+              });
+            });
+
+            filtered.forEach(d => {
+              const current = d.data() as Plan;
+              let earliestDate = current.workouts[0]?.dates?.[0];
+              current.workouts.forEach(workout => {
+                workout.dates.forEach(date => {
+                  if (moment(date).isBefore(moment(earliestDate))) {
+                    earliestDate = date;
+                    doc = d;
+                  }
+                });
+              });
+            });
+          }
+
+          // if we still haven't found one just make it the latest plan to be created
+          if (!doc) {
+            const sorted = snapshot.docs.sort((a, b) => {
+              return (
+                moment(b.data().createdate?.toDate()).unix() -
+                moment(a.data().createdate?.toDate()).unix()
+              );
+            });
+            doc = sorted[0];
+          }
+          if (doc) {
             emitter({
-              ...snapshot.docs[0].data(),
-              id: snapshot.docs[0].id,
-              createdate: snapshot.docs[0].data().createdate?.toDate(),
-              lastupdate: snapshot.docs[0].data().lastupdate?.toDate(),
+              ...doc.data(),
+              id: doc.id,
+              createdate: doc.data().createdate?.toDate(),
+              lastupdate: doc.data().lastupdate?.toDate(),
             });
           } else {
             emitter({});
