@@ -595,5 +595,5 @@ export const sendFeedback = async (
 export const getClientList = async () => {
   return (await db().collection('clientList').get()).docs[0]
     ?.data()
-    ?.emails?.map((email: string) => email.trim());
+    ?.emails?.map((email: string) => email.trim().toLowerCase());
 };
