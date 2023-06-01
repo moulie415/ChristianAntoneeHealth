@@ -1,5 +1,5 @@
 import Exercise from '../types/Exercise';
-import { Area } from '../types/QuickRoutines';
+import {Area} from '../types/QuickRoutines';
 import {SavedWorkout} from '../types/SavedItem';
 import {CoolDown, Equipment, Goal, Level, WarmUp} from '../types/Shared';
 import {SetLoggedInAction} from './profile';
@@ -14,7 +14,6 @@ export const SET_LOADING = 'SET_LOADING';
 export const SET_WORKOUT = 'SET_WORKOUT';
 export const SET_EXERCISE_NOTE = 'SET_EXERCISE_NOTE';
 export const SET_WORKOUT_NOTE = 'SET_WORKOUT_NOTE';
-export const DOWNLOAD_VIDEO = 'DOWNLOAD_VIDEO';
 export const SET_VIDEO = 'SET_VIDEO';
 export const SET_VIDEO_LOADING = 'VIDEO_LOADING';
 export const SAVE_WORKOUT = 'SAVED_WORKOUT';
@@ -81,11 +80,6 @@ export interface SetExerciseNoteAction {
 export interface SetWorkoutNoteAction {
   type: typeof SET_WORKOUT_NOTE;
   payload: {workout: string; note: string};
-}
-
-export interface DownloadVideoAction {
-  type: typeof DOWNLOAD_VIDEO;
-  payload: string;
 }
 
 export interface SetVideoLoadingAction {
@@ -205,10 +199,7 @@ export const setExerciseNote = (
   payload: {exercise, note},
 });
 
-export const downloadVideo = (id: string): DownloadVideoAction => ({
-  type: DOWNLOAD_VIDEO,
-  payload: id,
-});
+
 
 export const setVideo = (
   id: string,
@@ -288,7 +279,6 @@ export type ExercisesActions =
   | SetWorkoutAction
   | SetExerciseNoteAction
   | SetWorkoutNoteAction
-  | DownloadVideoAction
   | SetVideoAction
   | SetVideoLoadingAction
   | SetLoadingAction

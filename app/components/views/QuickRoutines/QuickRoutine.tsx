@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../../types/Shared';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
-import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
+import {setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
@@ -30,7 +30,6 @@ import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 
 const QuickRoutineView: React.FC<{
-  downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
   route: RouteProp<StackParamList, 'QuickRoutine'>;
@@ -39,7 +38,6 @@ const QuickRoutineView: React.FC<{
   exerciseNotes: {[key: string]: string};
   exercisesObj: {[key: string]: Exercise};
 }> = ({
-  downloadVideoAction,
   videos,
   loading,
   route,
@@ -337,7 +335,6 @@ const mapStateToProps = ({exercises}: MyRootState) => ({
 });
 
 const mapDispatchToProps = {
-  downloadVideoAction: downloadVideo,
   setExerciseNoteAction: setExerciseNote,
 };
 

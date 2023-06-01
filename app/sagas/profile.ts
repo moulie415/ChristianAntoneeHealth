@@ -79,12 +79,6 @@ import {
 } from '../helpers/biometrics';
 import Snackbar from 'react-native-snackbar';
 import googleFit, {ActivitySampleResponse} from 'react-native-google-fit';
-import {
-  DownloadVideoAction,
-  DOWNLOAD_VIDEO,
-  setVideo,
-  setVideoLoading,
-} from '../actions/exercises';
 import Exercise from '../types/Exercise';
 import Purchases, {PurchasesOfferings} from 'react-native-purchases';
 import {setUserAttributes} from '../helpers/profile';
@@ -247,56 +241,6 @@ function* updateProfile(action: UpdateProfileAction) {
   });
 }
 
-function* downloadVideoWorker(action: DownloadVideoAction) {
-  const id = action.payload;
-  const {exercises, videos} = yield select(
-    (state: MyRootState) => state.exercises,
-  );
-  const exercise: Exercise = exercises[id];
-  const video: {src: string; path: string} | undefined = videos[id];
-  if (exercise.video) {
-    try {
-      let exists = true;
-      if (video && video.path && Platform.OS === 'ios') {
-        exists = yield call(RNFetchBlob.fs.exists, video.path);
-      }
-      if (!exists && video) {
-        const {uid} = yield select(
-          (state: MyRootState) => state.profile.profile,
-        );
-        analytics().logEvent('redownload_video', {os: Platform.OS, uid});
-      }
-      if (!video || video.src !== exercise.video.src || !exists) {
-        yield put(setVideoLoading(true));
-        const response: FetchBlobResponse = yield call(
-          RNFetchBlob.config({
-            fileCache: true,
-            appendExt: 'mp4',
-          }).fetch,
-          'GET',
-          exercise.video.src,
-        );
-        yield put(setVideo(id, exercise.video.src, response.path()));
-      }
-    } catch (e) {
-      if (e instanceof Error) {
-        yield call(
-          Alert.alert,
-          'Error',
-          `Error downloading video: ${e.message}`,
-        );
-      }
-    }
-  } else {
-    yield call(
-      Alert.alert,
-      'Sorry',
-      'Video has not yet been uploaded for this exercise',
-    );
-  }
-  yield put(setVideoLoading(false));
-}
-
 function* signUp(action: SignUpAction) {
   const {name, surname, dob, weight, height, gender, goal, fromProfile} =
     action.payload;
@@ -312,6 +256,9 @@ function* signUp(action: SignUpAction) {
     }
 
     const {profile} = yield select((state: MyRootState) => state.profile);
+    const clientList: string[] = yield call(api.getClientList);
+    console.log(clientList);
+    const client = !!(clientList && clientList.includes(profile.email));
     yield call(
       api.updateUser,
       {
@@ -319,6 +266,7 @@ function* signUp(action: SignUpAction) {
         signedUp: true,
         ...action.payload,
         signUpDate: moment().unix(),
+        client,
       },
       profile.uid,
     );
@@ -326,6 +274,7 @@ function* signUp(action: SignUpAction) {
       setProfile({
         ...profile,
         ...action.payload,
+        client,
       }),
     );
     if (fromProfile) {
@@ -714,7 +663,6 @@ export default function* profileSaga() {
     takeLatest(GET_SAMPLES, getSamplesWorker),
     takeLatest(UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
-    takeLatest(DOWNLOAD_VIDEO, downloadVideoWorker),
     throttle(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
     debounce(1000, SET_READ, setRead),

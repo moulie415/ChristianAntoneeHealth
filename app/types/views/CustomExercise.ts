@@ -19,7 +19,6 @@ export default interface CustomizeExerciseProps {
   workout: Exercise[];
   setWorkoutAction: (workout: Exercise[]) => void;
   navigation: CustomizeExerciseNavigationProp;
-  downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
   profile: Profile;

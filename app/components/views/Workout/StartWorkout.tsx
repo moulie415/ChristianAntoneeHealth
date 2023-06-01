@@ -14,12 +14,8 @@ import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 import {MyRootState} from '../../../types/Shared';
-import StartWorkoutProps from '../../../types/views/StartWorkout';
-import {downloadVideo, setExerciseNote} from '../../../actions/exercises';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import {getVideoHeight} from '../../../helpers';
-import Countdown from '../../commons/Countdown';
-
 import Text from '../../commons/Text';
 import MusclesDiagram from '../../commons/MusclesDiagram';
 import ViewMore from '../../commons/ViewMore';
@@ -48,7 +44,6 @@ const StartWorkout: React.FC<{
   exerciseNotes: {[key: string]: string};
   navigation: NativeStackNavigationProp<StackParamList, 'StartWorkout'>;
   route: RouteProp<StackParamList, 'StartWorkout'>;
-  downloadVideoAction: (id: string) => void;
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
   profile: Profile;
@@ -56,7 +51,6 @@ const StartWorkout: React.FC<{
   workout,
   navigation,
   exerciseNotes,
-  downloadVideoAction,
   videos,
   loading,
   profile,
@@ -337,7 +331,6 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
 });
 
 const mapDispatchToProps = {
-  downloadVideoAction: downloadVideo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);

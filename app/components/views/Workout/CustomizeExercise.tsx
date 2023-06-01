@@ -5,7 +5,7 @@ import {Picker} from 'react-native-wheel-pick';
 import CustomizeExerciseProps from '../../../types/views/CustomExercise';
 import Carousel from 'react-native-snap-carousel';
 import {Goal, MyRootState} from '../../../types/Shared';
-import {downloadVideo, setWorkout} from '../../../actions/exercises';
+import {setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import {useEffect} from 'react';
 import ExerciseVideo from '../../commons/ExerciseVideo';
