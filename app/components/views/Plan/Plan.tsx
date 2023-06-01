@@ -34,6 +34,7 @@ import Header from '../../commons/Header';
 import Drawer from 'react-native-drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {setRead} from '../../../actions/profile';
+import {CLIENT_PREMIUM} from '../../../constants';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -104,9 +105,12 @@ const Plan: React.FC<{
     }
   });
 
+  const hasClientPremium =
+    (profile.premium && profile.premium[CLIENT_PREMIUM]) || profile.admin;
+
   return (
     <>
-      {plan ? (
+      {plan && profile.premium && profile.premium[CLIENT_PREMIUM] ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
             <Header drawerRef={drawerRef} />
@@ -198,8 +202,26 @@ const Plan: React.FC<{
             <View style={{margin: 20, marginTop: 0}}>
               <Text style={{lineHeight: 25, color: '#fff'}}>
                 This is your the screen for your personal customized plan, when
-                Christian creates your plan it will appear here.
+                Christian creates your plan it will appear here.{' '}
+                {hasClientPremium ? (
+                  <Text>
+                    You're are already subscribed to Client Premium so you just
+                    need to wait for Christian to create your plan.
+                  </Text>
+                ) : (
+                  <Text>
+                    To view your plan also make sure you're subscribed to Client
+                    Premium.
+                  </Text>
+                )}
               </Text>
+              {!hasClientPremium && (
+                <Button
+                  style={{marginTop: 20}}
+                  text="Get Client Premium"
+                  onPress={() => navigation.navigate('Premium', {})}
+                />
+              )}
             </View>
           </SafeAreaView>
         </FastImage>

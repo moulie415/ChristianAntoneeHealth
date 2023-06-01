@@ -14,7 +14,6 @@ import Color from 'color';
 import {TourGuideZone} from 'rn-tourguide';
 import GoalSummaries from './components/commons/GoalSummaries';
 import Drawer from 'react-native-drawer';
-import {CLIENT_PREMIUM} from './constants';
 import PlanTabIcon from './PlanTabIcon';
 
 const Tab = createBottomTabNavigator<StackParamList>();
@@ -98,8 +97,7 @@ const Tabs: React.FC<{
         name="Goals"
         children={props => <GoalSummaries {...props} drawerRef={drawerRef} />}
       />
-      {(profile.admin ||
-        (profile.premium && profile.premium[CLIENT_PREMIUM])) && (
+      {(profile.admin || profile.client) && (
         <Tab.Screen
           options={{
             tabBarLabel: 'Plan',

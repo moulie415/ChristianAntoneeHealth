@@ -36,6 +36,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import {CLIENT_PREMIUM} from '../../../constants';
+import Profile from '../../../types/Profile';
 
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
@@ -44,7 +45,8 @@ const Premium: React.FC<{
   ) => void;
   settings: SettingsState;
   route: RouteProp<StackParamList, 'Premium'>;
-}> = ({navigation, setPremiumAction, settings, route}) => {
+  profile: Profile;
+}> = ({navigation, setPremiumAction, settings, route, profile}) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
@@ -334,15 +336,21 @@ const Premium: React.FC<{
                   }}
                   keyExtractor={item => item.identifier}
                   renderItem={({item, index}) => {
-                    return (
-                      <PremiumProduct
-                        p={item}
-                        onActivated={onActivated}
-                        setLoading={setLoading}
-                        index={index}
-                        setPremiumAction={setPremiumAction}
-                      />
-                    );
+                    if (
+                      (profile.client && item.packageType === 'CUSTOM') ||
+                      (!profile.client && item.packageType !== 'CUSTOM')
+                    ) {
+                      return (
+                        <PremiumProduct
+                          p={item}
+                          onActivated={onActivated}
+                          setLoading={setLoading}
+                          index={index}
+                          setPremiumAction={setPremiumAction}
+                        />
+                      );
+                    }
+                    return null;
                   }}
                 />
 
@@ -364,8 +372,9 @@ const Premium: React.FC<{
     </FastImage>
   );
 };
-const mapStateToProps = ({settings}: MyRootState) => ({
+const mapStateToProps = ({settings, profile}: MyRootState) => ({
   settings,
+  profile: profile.profile,
 });
 
 const mapDispatchToProps = {
