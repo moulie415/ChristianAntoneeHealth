@@ -4,4 +4,5 @@ ls
 DSYM=$(find ~/Library/Developer/Xcode/Archives/ -name "*.dSYM")
 echo $DSYM
 ls
-ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/HealthAndMovement/GoogleService-Info.plist -p ios $DSYM
+sentry-cli --auth-token $SENTRY_TOKEN upload-dif --org henry-moule --project health-and-movement $DSYM
+# ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/HealthAndMovement/GoogleService-Info.plist -p ios $DSYM

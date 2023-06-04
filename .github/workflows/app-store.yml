@@ -98,6 +98,15 @@ jobs:
           APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
         run: |
           xcrun altool --upload-app -t ios -f "ios/$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
-      # - name: Upload dSYM to Firebase
-      #   run: |
-      #     exec .github/scripts/upload-dsym.sh
+      - name: Setup Sentry CLI
+        uses: mathieu-bour/setup-sentry-cli@v1
+        with:
+          version: latest # optional if 'latest'
+          token: ${{ SECRETS.SENTRY_TOKEN }} # from GitHub secrets
+          organization: henry-moule
+          project: health-and-movement
+      - name: Upload dSYM to Sentry
+        env:
+          SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+        run: |
+          exec .github/scripts/upload-dsym.sh
