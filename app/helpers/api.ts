@@ -239,7 +239,7 @@ export const getExercisesById = async (ids: string[]) => {
   if (!ids?.length) {
     return [];
   }
-  const validIds = ids.map(id => id);
+  const validIds = ids.filter(id => id);
   const snapshot = await db()
     .collection('exercises')
     .where(db.FieldPath.documentId(), 'in', validIds)
@@ -286,7 +286,7 @@ export const getTestsById = async (ids: string[]) => {
   if (!ids?.length) {
     return [];
   }
-  const validIds = ids.map(id => id);
+  const validIds = ids.filter(id => id);
   const snapshot = await db()
     .collection('tests')
     .where(db.FieldPath.documentId(), 'in', validIds)
@@ -321,7 +321,7 @@ export const getQuickRoutinesById = async (ids: string[]) => {
   if (!ids?.length) {
     return [];
   }
-  const validIds = ids.map(id => id);
+  const validIds = ids.filter(id => id);
   const snapshot = await db()
     .collection('quickRoutines')
     .where(db.FieldPath.documentId(), 'in', validIds)
@@ -487,7 +487,7 @@ export const getEducationById = async (ids: string[]) => {
   if (!ids?.length) {
     return [];
   }
-  const validIds = ids.map(id => id);
+  const validIds = ids.filter(id => id);
   const snapshot = await db()
     .collection('education')
     .where(db.FieldPath.documentId(), 'in', validIds)
