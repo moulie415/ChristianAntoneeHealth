@@ -856,7 +856,7 @@ PODS:
   - hermes-engine (0.71.8):
     - hermes-engine/Pre-built (= 0.71.8)
   - hermes-engine/Pre-built (0.71.8)
-  - Instabug (11.10.1)
+  - Instabug (11.12.0)
   - KTVCocoaHTTPServer (1.0.0):
     - CocoaAsyncSocket
   - KTVHTTPCache (2.0.1):
@@ -1342,7 +1342,7 @@ PODS:
     - Firebase/Storage (= 10.7.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.10.1):
+  - RNGestureHandler (2.10.2):
     - React-Core
   - RNGoogleMobileAds (10.3.2):
     - Google-Mobile-Ads-SDK (= 10.3.0)
@@ -1351,15 +1351,15 @@ PODS:
   - RNGoogleSignin (10.0.1):
     - GoogleSignIn (~> 7.0)
     - React-Core
-  - RNInstabug (11.10.0):
-    - Instabug (= 11.10.1)
+  - RNInstabug (11.12.0):
+    - Instabug (= 11.12.0)
     - React-Core
   - RNPermissions (3.8.0):
     - React-Core
   - RNPurchases (5.15.0):
     - PurchasesHybridCommon (= 4.16.0)
     - React-Core
-  - RNReanimated (3.1.0):
+  - RNReanimated (3.2.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1780,7 +1780,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   hermes-engine: 47986d26692ae75ee7a17ab049caee8864f855de
-  Instabug: 8b0fcb6dd1bb91ae30a80176431d3e7f57ec3c4f
+  Instabug: fe77a2b326fb7e7079fac27dc20117c2da792a75
   KTVCocoaHTTPServer: df8d7b861e603ff8037e9b2138aca2563a6b768d
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
@@ -1855,13 +1855,13 @@ SPEC CHECKSUMS:
   RNFBFunctions: ce593c74f48a6ed8bb093b4302e107becbc6e640
   RNFBMessaging: 216693dd5ba4f18ba65fb39fc73a44a23c26190f
   RNFBStorage: b9daf1fcc51e6de5ed3781d36a2a795e90a9489d
-  RNGestureHandler: 42ec7c28dd02d540ed6c9159c57a98ff016492dc
+  RNGestureHandler: f75d81410b40aaa99e71ae8f8bb7a88620c95042
   RNGoogleMobileAds: 3032aa481cbc5c93bf9d08d8247b681cf4a00c9f
   RNGoogleSignin: ccaa4a81582cf713eea562c5dd9dc1961a715fd0
-  RNInstabug: 461ac240d658da2727c01f89ddb5428842c950ca
+  RNInstabug: 289bdfabfa30de22347f6c7a2902133ab4b673a6
   RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
   RNPurchases: 311bdc0a6cdb36d19fb46de5d94c474cff78c9d6
-  RNReanimated: b1220a0e5168745283ff5d53bfc7d2144b2cee1b
+  RNReanimated: c931b356bda56c0196110bdc462e48e4c2668dc3
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSentry: 4fb2cd7d2d6cb94423c24884488206ef881da136
   RNSnackbar: 3727b42bf6c4314a53c18185b5203e915a4ab020
