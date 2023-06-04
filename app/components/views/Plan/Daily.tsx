@@ -62,7 +62,7 @@ const Daily: React.FC<{
       }, []);
       const missingExerciseIds = allExercises.filter(id => !exercises[id]);
       if (missingExerciseIds.length) {
-        getExercisesByIdAction(missingExerciseIds);
+        missingExerciseIds);
       }
     }
   }, [exercises, workouts, getExercisesByIdAction]);

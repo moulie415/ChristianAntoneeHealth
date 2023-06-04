@@ -236,9 +236,13 @@ export const getAllExercises = async () => {
 };
 
 export const getExercisesById = async (ids: string[]) => {
+  if (!ids?.length) {
+    return [];
+  }
+  const validIds = ids.map(id => id);
   const snapshot = await db()
     .collection('exercises')
-    .where(db.FieldPath.documentId(), 'in', ids)
+    .where(db.FieldPath.documentId(), 'in', validIds)
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
     const exercise: any = cur.data();
@@ -279,9 +283,13 @@ export const getTests = async () => {
 };
 
 export const getTestsById = async (ids: string[]) => {
+  if (!ids?.length) {
+    return [];
+  }
+  const validIds = ids.map(id => id);
   const snapshot = await db()
     .collection('tests')
-    .where(db.FieldPath.documentId(), 'in', ids)
+    .where(db.FieldPath.documentId(), 'in', validIds)
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
     const test: any = cur.data();
@@ -310,9 +318,13 @@ export const getQuickRoutines = async () => {
 };
 
 export const getQuickRoutinesById = async (ids: string[]) => {
+  if (!ids?.length) {
+    return [];
+  }
+  const validIds = ids.map(id => id);
   const snapshot = await db()
     .collection('quickRoutines')
-    .where(db.FieldPath.documentId(), 'in', ids)
+    .where(db.FieldPath.documentId(), 'in', validIds)
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
     const quickRoutine: any = cur.data();
@@ -472,9 +484,13 @@ export const getEducation = async () => {
 };
 
 export const getEducationById = async (ids: string[]) => {
+  if (!ids?.length) {
+    return [];
+  }
+  const validIds = ids.map(id => id);
   const snapshot = await db()
     .collection('education')
-    .where(db.FieldPath.documentId(), 'in', ids)
+    .where(db.FieldPath.documentId(), 'in', validIds)
     .get();
   return snapshot.docs.reduce((acc: {[id: string]: Education}, cur) => {
     const test: any = cur.data();

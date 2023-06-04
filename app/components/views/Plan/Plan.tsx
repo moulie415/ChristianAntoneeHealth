@@ -110,7 +110,7 @@ const Plan: React.FC<{
 
   return (
     <>
-      {plan && profile.premium && profile.premium[CLIENT_PREMIUM] ? (
+      {plan && hasClientPremium ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
             <Header drawerRef={drawerRef} />
