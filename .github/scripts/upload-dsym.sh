@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ls
-DSYM=$(find ~/Library/Developer/Xcode/Archives/ -name "*.dSYM")
+DSYM=$(find ios -name "*.dSYM")
 echo $DSYM
 ls
 sentry-cli --auth-token $SENTRY_TOKEN upload-dif --org henry-moule --project health-and-movement $DSYM
