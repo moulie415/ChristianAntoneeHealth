@@ -103,6 +103,19 @@ const Weekly: React.FC<{
             {title}
           </Text>
         )}
+        ListEmptyComponent={
+          <View style={{padding: 10}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: colors.appWhite,
+                fontSize: 20,
+                marginVertical: 10,
+              }}>
+              No workouts scheduled for this week
+            </Text>
+          </View>
+        }
         renderItem={({item}) => {
           if ('name' in item) {
             return (

@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import reducer from './reducers';
 import {Provider} from 'react-redux';
-import Purchases from 'react-native-purchases';
+import Purchases, {LOG_LEVEL} from 'react-native-purchases';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import {persistStore} from 'redux-persist';
 import {createStore, applyMiddleware, compose} from 'redux';
@@ -42,7 +42,7 @@ import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
-import Instabug from 'instabug-reactnative';
+import Instabug, {InvocationEvent} from 'instabug-reactnative';
 import {
   TourGuideProvider, // Main provider
   useTourGuideController,
@@ -145,7 +145,7 @@ export type StackParamList = {
   Stack: undefined;
   Nutrition: {nutrition: PlanNutrition};
   Sleep: {sleep: PlanSleep};
-  MonthlyDayView: {workouts: PlanWorkout[]};
+  MonthlyDayView: {workouts: PlanWorkout[]; date: string};
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
@@ -160,7 +160,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    Purchases.setDebugLogsEnabled(true);
+    Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
     Purchases.configure({
       apiKey:
         Platform.OS === 'ios'
@@ -179,23 +179,29 @@ const App: React.FC = () => {
         ],
       });
     }
-    if (Platform.OS === 'android') {
-      appCheck()
-        .activate(
-          __DEV__ ? (Config.APP_CHECK_DEBUG_TOKEN as string) : 'ignored',
-          true,
-        )
-        .catch(e => {
-          logError(e);
-        });
-    }
+    const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider();
+    rnfbProvider.configure({
+      android: {
+        provider: __DEV__ ? 'debug' : 'playIntegrity',
+        debugToken: Config.APP_CHECK_DEBUG_TOKEN,
+      },
+      apple: {
+        provider: __DEV__ ? 'debug' : 'appAttestWithDeviceCheckFallback',
+        debugToken: Config.APP_CHECK_DEBUG_TOKEN,
+      },
+    });
 
-    Instabug.start(
-      __DEV__
+    appCheck().initializeAppCheck({
+      provider: rnfbProvider,
+      isTokenAutoRefreshEnabled: true,
+    });
+
+    Instabug.init({
+      token: __DEV__
         ? (Config.INSTABUG_DEV_TOKEN as string)
         : (Config.INSTABUG_PROD_TOKEN as string),
-      [Instabug.invocationEvent.none],
-    );
+      invocationEvents: [InvocationEvent.none],
+    });
 
     MobileAds()
       .initialize()

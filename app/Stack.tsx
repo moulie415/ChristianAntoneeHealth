@@ -54,6 +54,7 @@ import DrawerContent from './components/views/DrawerContent/DrawerContent';
 import Drawer from 'react-native-drawer';
 import PlanNutrition from './components/views/Plan/PlanNutrition';
 import PlanSleep from './components/views/Plan/PlanSleep';
+import MonthlyDayView from './components/views/Plan/MonthlyDayView';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -134,6 +135,7 @@ const StackComponent: React.FC<{
         <Stack.Screen name="Rating" component={Rating} />
         <Stack.Screen name="Nutrition" component={PlanNutrition} />
         <Stack.Screen name="Sleep" component={PlanSleep} />
+        <Stack.Screen name="MonthlyDayView" component={MonthlyDayView} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
     </Stack.Navigator>

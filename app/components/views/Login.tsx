@@ -246,7 +246,7 @@ const Login: React.FC<LoginProps> = ({
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              style={{marginTop: 20, alignSelf: 'center'}}
+              style={{marginVertical: 20, alignSelf: 'center'}}
               onPress={() => {
                 navigation.navigate('SignUp');
               }}>

@@ -8,6 +8,10 @@ import {setWorkout} from '../../../actions/exercises';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import Exercise from '../../../types/Exercise';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Header from '../../commons/Header';
+import colors from '../../../constants/colors';
+import moment from 'moment';
 
 const MonthlyDayView: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'MonthlyDayView'>;
@@ -15,30 +19,35 @@ const MonthlyDayView: React.FC<{
   setWorkout: (workout: Exercise[]) => void;
   exercises: {[key: string]: Exercise};
 }> = ({navigation, route, setWorkout: setWorkoutAction, exercises}) => {
-  const {workouts} = route.params;
+  const {workouts, date} = route.params;
   return (
-    <ScrollView>
-      {workouts.map(workout => {
-        return (
-          <WorkoutCard
-            plan
-            key={workout.name}
-            item={workout}
-            onPress={() => {
-              setWorkoutAction(
-                workout.exercises.map(e => {
-                  return {
-                    ...exercises[e.exercise],
-                    ...e,
-                  };
-                }),
-              );
-              navigation.navigate('PreWorkout', {planWorkout: workout});
-            }}
-          />
-        );
-      })}
-    </ScrollView>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <SafeAreaView style={{flex: 1}}>
+        <Header hasBack title={moment(date).format('MMMM Do')} />
+        <ScrollView>
+          {workouts.map(workout => {
+            return (
+              <WorkoutCard
+                plan
+                key={workout.name}
+                item={workout}
+                onPress={() => {
+                  setWorkoutAction(
+                    workout.exercises.map(e => {
+                      return {
+                        ...exercises[e.exercise],
+                        ...e,
+                      };
+                    }),
+                  );
+                  navigation.navigate('PreWorkout', {planWorkout: workout});
+                }}
+              />
+            );
+          })}
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 };
 

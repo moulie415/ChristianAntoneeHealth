@@ -11,11 +11,13 @@
 #import <React/RCTLinkingManager.h>
 #import "AVFoundation/AVFoundation.h"
 #import "Orientation.h"
+#import "RNFBAppCheckModule.h" 
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [RNFBAppCheckModule sharedInstance];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }

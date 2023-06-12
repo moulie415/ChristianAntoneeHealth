@@ -52,9 +52,7 @@ const Monthly: React.FC<{
         ...acc,
         [cur]: {
           selected: true,
-          selectedColor: moment(cur).endOf('day').isBefore(moment())
-            ? colors.button
-            : colors.appBlue,
+          selectedColor: colors.appBlue,
         },
       };
     }
@@ -65,23 +63,29 @@ const Monthly: React.FC<{
     Math.max(...uniq.map(date => moment(date).valueOf())),
   ).format('YYYY-MM-DD');
 
-  const minDate = moment().format('YYYY-MM-DD');
+  const minDate = moment(
+    Math.min(...uniq.map(date => moment(date).valueOf())),
+  ).format('YYYY-MM-DD');
 
   return (
     <View style={{marginTop: 20, marginHorizontal: 20}}>
       <Calendar
         style={{borderRadius: 10}}
         markedDates={dates}
-        maxDate={maxDate}
         minDate={minDate}
+        maxDate={maxDate}
+        onPress={date => {
+          console.log(date);
+        }}
         onDayPress={({dateString}) => {
+          console.log(dateString);
           if (dates[dateString]) {
             const workouts = plan?.workouts?.filter(w => {
               return w.dates.includes(dateString);
             });
 
             if (workouts) {
-              navigate('MonthlyDayView', {workouts});
+              navigate('MonthlyDayView', {workouts, date: dateString});
             }
           }
         }}
