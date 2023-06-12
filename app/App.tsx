@@ -51,7 +51,7 @@ import CustomTooltip from './components/commons/CustomTooltip';
 import WelcomeModal from './WelcomeModal';
 import Drawer from 'react-native-drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
-import { SavedWorkout } from './types/SavedItem';
+import {SavedWorkout} from './types/SavedItem';
 
 const {height, width} = Dimensions.get('window');
 
@@ -145,6 +145,7 @@ export type StackParamList = {
   Stack: undefined;
   Nutrition: {nutrition: PlanNutrition};
   Sleep: {sleep: PlanSleep};
+  MonthlyDayView: {workouts: PlanWorkout[]};
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

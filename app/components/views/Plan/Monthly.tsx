@@ -76,20 +76,12 @@ const Monthly: React.FC<{
         minDate={minDate}
         onDayPress={({dateString}) => {
           if (dates[dateString]) {
-            const workout = plan?.workouts?.find(w => {
+            const workouts = plan?.workouts?.filter(w => {
               return w.dates.includes(dateString);
             });
 
-            if (workout) {
-              setWorkoutAction(
-                workout.exercises.map(e => {
-                  return {
-                    ...exercises[e.exercise],
-                    ...e,
-                  };
-                }),
-              );
-              navigate('PreWorkout', {planWorkout: workout});
+            if (workouts) {
+              navigate('MonthlyDayView', {workouts});
             }
           }
         }}
