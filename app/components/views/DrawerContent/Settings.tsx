@@ -24,6 +24,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import Toggle from '../../commons/Toggle';
 import {CLIENT_PREMIUM} from '../../../constants';
+import isTestFlight from '../../../helpers/isTestFlight';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
@@ -71,7 +72,8 @@ const Settings: React.FC<SettingsProps> = ({
           keyboardShouldPersistTaps="always"
           contentContainerStyle={{paddingBottom: 100}}>
           {((profile.premium && profile.premium[CLIENT_PREMIUM]) ||
-            profile.admin) && (
+            profile.admin ||
+            isTestFlight()) && (
             <>
               <Text
                 style={{

@@ -19,6 +19,7 @@ import {
 import Header from '../commons/Header';
 import Drawer from 'react-native-drawer';
 import {CLIENT_PREMIUM} from '../../constants';
+import isTestFlight from '../../helpers/isTestFlight';
 
 const {height, width} = Dimensions.get('window');
 
@@ -143,7 +144,9 @@ const Home: React.FC<{
         width={30}
         height={30}
         zone={
-          profile.admin || (profile.premium && profile.premium[CLIENT_PREMIUM])
+          profile.admin ||
+          (profile.premium && profile.premium[CLIENT_PREMIUM]) ||
+          isTestFlight()
             ? 4
             : 3
         }

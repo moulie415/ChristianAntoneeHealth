@@ -74,11 +74,7 @@ const Monthly: React.FC<{
         markedDates={dates}
         minDate={minDate}
         maxDate={maxDate}
-        onPress={date => {
-          console.log(date);
-        }}
         onDayPress={({dateString}) => {
-          console.log(dateString);
           if (dates[dateString]) {
             const workouts = plan?.workouts?.filter(w => {
               return w.dates.includes(dateString);

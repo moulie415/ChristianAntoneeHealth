@@ -98,6 +98,7 @@ import {WeeklyItems} from '../reducers/profile';
 import {getQuickRoutinesById} from '../actions/quickRoutines';
 import _ from 'lodash';
 import {CLIENT_PREMIUM} from '../constants';
+import isTestFlight from '../helpers/isTestFlight';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -568,7 +569,8 @@ function* handleAuthWorker(action: HandleAuthAction) {
       if (
         customerInfo.entitlements.active.Premium ||
         customerInfo.entitlements.active[CLIENT_PREMIUM] ||
-        isAdmin
+        isAdmin ||
+        isTestFlight()
       ) {
         yield put(setPremium(customerInfo.entitlements.active));
         yield fork(getConnections);

@@ -8530,6 +8530,11 @@ react-native-tab-view@^3.5.1:
   dependencies:
     use-latest-callback "^0.1.5"
 
+react-native-test-flight@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-test-flight/-/react-native-test-flight-1.1.0.tgz#85e3b71daee00976b3e3cd65f6ffb27fbe896d86"
+  integrity sha512-9mAjbtnklqhpDLz5whRWjPVPO2yGpKztFvp/JKWuN236jgHN/Zdv/e+PqmnD43pg+snl+O45UjYQTLzN0+KT3g==
+
 react-native-typing-animation@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/react-native-typing-animation/-/react-native-typing-animation-0.1.7.tgz#8f2cf08d9400ae543a110292eb7d71523dda5528"

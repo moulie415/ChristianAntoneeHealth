@@ -35,6 +35,7 @@ import Drawer from 'react-native-drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {setRead} from '../../../actions/profile';
 import {CLIENT_PREMIUM} from '../../../constants';
+import isTestFlight from '../../../helpers/isTestFlight';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -106,7 +107,9 @@ const Plan: React.FC<{
   });
 
   const hasClientPremium =
-    (profile.premium && profile.premium[CLIENT_PREMIUM]) || profile.admin;
+    (profile.premium && profile.premium[CLIENT_PREMIUM]) ||
+    profile.admin ||
+    isTestFlight();
 
   return (
     <>

@@ -1438,6 +1438,8 @@ PODS:
     - React-Core
   - RNSVG (13.9.0):
     - React-Core
+  - RNTestFlight (1.1.0):
+    - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
   - RNWatch (1.1.0):
@@ -1538,6 +1540,7 @@ DEPENDENCIES:
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNTestFlight (from `../node_modules/react-native-test-flight`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1763,6 +1766,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sound"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNTestFlight:
+    :path: "../node_modules/react-native-test-flight"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   RNWatch:
@@ -1902,6 +1907,7 @@ SPEC CHECKSUMS:
   RNSnackbar: 3727b42bf6c4314a53c18185b5203e915a4ab020
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
+  RNTestFlight: 3419178faa8527ecfe803607fd338a3803f1fb0d
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNWatch: fd30ca40a5b5ef58dcbc195638e68219bc455236
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
