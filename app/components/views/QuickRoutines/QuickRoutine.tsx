@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScrollView, TouchableOpacity, Alert, View} from 'react-native';
-import moment from 'moment';
 import {connect} from 'react-redux';
 import {getVideoHeight} from '../../../helpers';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -9,18 +8,14 @@ import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import {setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
-import MusclesDiagram from '../../commons/MusclesDiagram';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
-import LinearGradient from 'react-native-linear-gradient';
 import Orientation from 'react-native-orientation-locker';
 import ExerciseArrows from '../../commons/ExerciseArrows';
-import useInterval from '../../../hooks/UseInterval';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/core';
@@ -28,6 +23,7 @@ import Exercise from '../../../types/Exercise';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
+import useBackgroundTimer from '../../../hooks/UseBackGroundTimer';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -69,7 +65,7 @@ const QuickRoutineView: React.FC<{
     }
   }, [routine.instructions, routine.steps]);
 
-  useInterval(() => {
+  useBackgroundTimer(() => {
     if (routineStarted && !timerPaused) {
       setSeconds(seconds + 1);
     }
@@ -184,7 +180,6 @@ const QuickRoutineView: React.FC<{
                           fontSize: 20,
                           fontWeight: 'bold',
                           textAlign: 'center',
-                         
                         }}>
                         {exercise.name}
                       </Text>

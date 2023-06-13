@@ -1,15 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
-  Dimensions,
   ScrollView,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Image from 'react-native-fast-image';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
@@ -17,20 +14,14 @@ import {MyRootState} from '../../../types/Shared';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import {getVideoHeight} from '../../../helpers';
 import Text from '../../commons/Text';
-import MusclesDiagram from '../../commons/MusclesDiagram';
-import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
 import ResistanceScaleInfo from './ResistanceScaleInfo';
 import Button from '../../commons/Button';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import LinearGradient from 'react-native-linear-gradient';
-import Input from '../../commons/Input';
-import FastImage from 'react-native-fast-image';
 import Orientation from 'react-native-orientation-locker';
 import ExerciseArrows from '../../commons/ExerciseArrows';
-import useInterval from '../../../hooks/UseInterval';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Exercise from '../../../types/Exercise';
 import {StackParamList} from '../../../App';
@@ -38,6 +29,7 @@ import {RouteProp} from '@react-navigation/native';
 import Profile from '../../../types/Profile';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
+import useBackgroundTimer from '../../../hooks/UseBackGroundTimer';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -68,7 +60,7 @@ const StartWorkout: React.FC<{
   const [fullscreen, setFullScreen] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
 
-  useInterval(() => {
+  useBackgroundTimer(() => {
     if (!timerPaused) {
       setSeconds(seconds + 1);
     }
@@ -330,7 +322,6 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);
