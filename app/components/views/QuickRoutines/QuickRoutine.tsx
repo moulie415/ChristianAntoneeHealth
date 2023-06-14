@@ -28,6 +28,7 @@ import Exercise from '../../../types/Exercise';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
+import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -47,7 +48,6 @@ const QuickRoutineView: React.FC<{
   exercisesObj,
 }) => {
   const {routine} = route.params;
-  const [seconds, setSeconds] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
@@ -55,7 +55,6 @@ const QuickRoutineView: React.FC<{
   const [showModal, setShowModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const [fullscreen, setFullScreen] = useState(false);
-  const [timerPaused, setTimerPaused] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -69,11 +68,10 @@ const QuickRoutineView: React.FC<{
     }
   }, [routine.instructions, routine.steps]);
 
-  useInterval(() => {
-    if (routineStarted && !timerPaused) {
-      setSeconds(seconds + 1);
-    }
-  }, 1000);
+  const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(
+    1000,
+    !routineStarted,
+  );
 
   const loadingExercises = !exercises || exercises.some(e => e === undefined);
 
@@ -184,7 +182,6 @@ const QuickRoutineView: React.FC<{
                           fontSize: 20,
                           fontWeight: 'bold',
                           textAlign: 'center',
-                         
                         }}>
                         {exercise.name}
                       </Text>

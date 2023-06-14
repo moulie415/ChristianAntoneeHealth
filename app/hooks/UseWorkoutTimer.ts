@@ -1,0 +1,52 @@
+import {useEffect, useRef, useState} from 'react';
+import moment from 'moment';
+import {useAppState} from './UseAppState';
+import BackgroundTimer from 'react-native-background-timer';
+
+const useWorkoutTimer = (delay: number, notStarted?: boolean) => {
+  const savedCallback = useRef<() => void>();
+  const [seconds, setSeconds] = useState(0);
+  const [timerPaused, setTimerPaused] = useState(false);
+
+  const lastKnownTime = useRef<number>();
+  const appState = useAppState();
+  const [currentState, setCurrentState] = useState(appState);
+
+  useEffect(() => {
+    if (appState !== currentState) {
+      setCurrentState(appState);
+      const isForeground =
+        currentState.match(/inactive|background/) && appState === 'active';
+      if (isForeground && !timerPaused && lastKnownTime.current) {
+        setSeconds(seconds + (moment().unix() - lastKnownTime.current));
+      } else if (!isForeground && !timerPaused) {
+        lastKnownTime.current = moment().unix();
+      }
+    }
+  }, [appState, currentState, timerPaused, seconds]);
+
+  useEffect(() => {
+    savedCallback.current = () => {
+      const isForeground = appState === 'active';
+      if (!notStarted && !timerPaused && isForeground) {
+        setSeconds(seconds + delay / 1000);
+      }
+    };
+  }, [delay, notStarted, timerPaused, seconds, appState, currentState]);
+
+  useEffect(() => {
+    const id = BackgroundTimer.setInterval(() => {
+      if (savedCallback.current) {
+        savedCallback.current();
+      }
+    }, delay);
+    return () => {
+      console.log('test');
+      BackgroundTimer.clearInterval(id);
+    };
+  }, [delay]);
+
+  return {seconds, setTimerPaused, timerPaused};
+};
+
+export default useWorkoutTimer;

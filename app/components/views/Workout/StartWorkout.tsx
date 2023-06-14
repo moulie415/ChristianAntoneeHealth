@@ -38,6 +38,7 @@ import {RouteProp} from '@react-navigation/native';
 import Profile from '../../../types/Profile';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
+import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -58,7 +59,6 @@ const StartWorkout: React.FC<{
 }) => {
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
-  const [seconds, setSeconds] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const [showModal, setShowModal] = useState(false);
   const [showResistanceModal, setShowResistanceModal] = useState(false);
@@ -66,13 +66,8 @@ const StartWorkout: React.FC<{
   const textInputRef = useRef<TextInput>();
   const planWorkout = route.params?.planWorkout;
   const [fullscreen, setFullScreen] = useState(false);
-  const [timerPaused, setTimerPaused] = useState(false);
 
-  useInterval(() => {
-    if (!timerPaused) {
-      setSeconds(seconds + 1);
-    }
-  }, 1000);
+  const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(1000);
 
   useEffect(() => {
     if (tabIndex === 2) {
@@ -330,7 +325,6 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);
