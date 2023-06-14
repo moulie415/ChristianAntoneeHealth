@@ -40,10 +40,7 @@ const useWorkoutTimer = (delay: number, notStarted?: boolean) => {
         savedCallback.current();
       }
     }, delay);
-    return () => {
-      console.log('test');
-      BackgroundTimer.clearInterval(id);
-    };
+    return () => BackgroundTimer.clearInterval(id);
   }, [delay]);
 
   return {seconds, setTimerPaused, timerPaused};
