@@ -239,6 +239,7 @@ function* updateProfile(action: UpdateProfileAction) {
     unit: 'metric',
     gender: gender || '',
     goal: goal || '',
+    uid: profile.uid || '',
   });
 }
 
@@ -292,6 +293,7 @@ function* signUp(action: SignUpAction) {
       height: height?.toString(),
       gender: gender || '',
       goal,
+      uid: profile.uid || '',
     });
   } catch (e) {
     if (e instanceof Error) {
@@ -583,6 +585,9 @@ function* handleAuthWorker(action: HandleAuthAction) {
         emailVerified: String(user.emailVerified),
         providerId: user.providerData[0].providerId,
         premium: customerInfo.entitlements.active.Premium ? 'true' : 'false',
+        uid: user.uid || '',
+        name: doc.exists ? doc.data()?.name || '' : '',
+        surname: doc.exists ? doc.data()?.surname || '' : '',
       });
       if (doc.exists && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);

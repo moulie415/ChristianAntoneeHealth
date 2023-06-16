@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
 import Header from '../../commons/Header';
@@ -46,6 +46,19 @@ const PreQuickRoutine: React.FC<{
 
   const equipmentList = getEquipmentList(exercises);
 
+  const [paused, setPaused] = useState(false);
+  const focused = useIsFocused();
+
+  useEffect(() => {
+    if (focused) {
+      setPaused(false);
+    } else {
+      setPaused(true);
+    }
+  }, [focused]);
+
+  console.log(focused);
+
   return (
     <>
       {preview?.src ? (
@@ -56,6 +69,7 @@ const PreQuickRoutine: React.FC<{
             resizeMode={'cover'}
             repeat
             disableFocus
+            paused={paused}
           />
           <Header absolute hasBack />
         </>

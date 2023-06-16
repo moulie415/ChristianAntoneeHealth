@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/react-native';
 export const logError = (e: Error | any) => {
   try {
     if (__DEV__) {
-      console.log(e);
+      console.warn(e);
     }
     Sentry.captureException(e);
   } catch (err) {

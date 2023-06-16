@@ -717,21 +717,21 @@ PODS:
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseAppCheckInterop (10.10.0)
+  - FirebaseAppCheckInterop (10.11.0)
   - FirebaseAuth (10.10.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
-  - FirebaseAuthInterop (10.10.0)
+  - FirebaseAuthInterop (10.11.0)
   - FirebaseCore (10.10.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
   - FirebaseCoreExtension (10.10.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.10.0):
+  - FirebaseCoreInternal (10.11.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseDynamicLinks (10.10.0):
     - FirebaseCore (~> 10.0)
@@ -756,7 +756,7 @@ PODS:
     - FirebaseMessagingInterop (~> 10.0)
     - FirebaseSharedSwift (~> 10.0)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
-  - FirebaseInstallations (10.10.0):
+  - FirebaseInstallations (10.11.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -770,8 +770,8 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseMessagingInterop (10.10.0)
-  - FirebaseSharedSwift (10.10.0)
+  - FirebaseMessagingInterop (10.11.0)
+  - FirebaseSharedSwift (10.11.0)
   - FirebaseStorage (10.10.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseAuthInterop (~> 10.0)
@@ -1381,7 +1381,7 @@ PODS:
     - Firebase/Storage (= 10.10.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.11.0):
+  - RNGestureHandler (2.12.0):
     - React-Core
   - RNGoogleMobileAds (10.3.2):
     - Google-Mobile-Ads-SDK (= 10.3.0)
@@ -1398,11 +1398,12 @@ PODS:
   - RNPurchases (5.16.0):
     - PurchasesHybridCommon (= 4.18.0)
     - React-Core
-  - RNReanimated (3.2.0):
+  - RNReanimated (3.3.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
     - glog
+    - hermes-engine
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -1412,6 +1413,7 @@ PODS:
     - React-Core/RCTWebSocket
     - React-CoreModules
     - React-cxxreact
+    - React-hermes
     - React-jsi
     - React-jsiexecutor
     - React-jsinspector
@@ -1425,12 +1427,12 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.20.0):
+  - RNScreens (3.21.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (5.5.0):
+  - RNSentry (5.6.0):
     - React-Core
-    - Sentry/HybridSDK (= 8.7.1)
+    - Sentry/HybridSDK (= 8.7.3)
   - RNSnackbar (2.6.2):
     - React-Core
   - RNSound (0.11.2):
@@ -1452,9 +1454,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry/HybridSDK (8.7.1):
-    - SentryPrivate (= 8.7.1)
-  - SentryPrivate (8.7.1)
+  - Sentry/HybridSDK (8.7.3):
+    - SentryPrivate (= 8.7.3)
+  - SentryPrivate (8.7.3)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1799,19 +1801,19 @@ SPEC CHECKSUMS:
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
   FirebaseAnalytics: 7bc7de519111dae802f5bc0c9c083918f8b8870d
   FirebaseAppCheck: 2e00dc026f02fdba40c811e0d94fb19b6ddf5de5
-  FirebaseAppCheckInterop: 7d3521f56872cf74a01792c0a095a30e054ff6ae
+  FirebaseAppCheckInterop: 255b6c0292fe5da995c8b2df0c02f6a3ca7f61b4
   FirebaseAuth: 5ddbe23ebc4e647469261f5c59cd12a04f37c8e6
-  FirebaseAuthInterop: edf6ead0428515d8efc10810c2dabc3a4ec70501
+  FirebaseAuthInterop: 44e34efef7145776a107b9e7f79ed44beb4738fa
   FirebaseCore: d027ff503d37edb78db98429b11f580a24a7df2a
   FirebaseCoreExtension: 8d93ebbf6838a874b4ed82a564c9d6705f8365dd
-  FirebaseCoreInternal: 971029061d326000d65bfdc21f5502c75c8b0893
+  FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
   FirebaseDynamicLinks: 3f61f496236d30fa749377159fb7b3d82ecb3c49
   FirebaseFirestore: b3bb12a497c9d13e80ec3158dbb75ded03592e8d
   FirebaseFunctions: d844b145af57400aa81cba226168362714218b33
-  FirebaseInstallations: 52153982b057d3afcb4e1fbb3eb0b6d00611e681
+  FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
   FirebaseMessaging: 8a3b9a8b98ce72a42d22e69865cf662e38d2d6f5
-  FirebaseMessagingInterop: b7dc8717556f583cceb05fca3105b6be40b58dcd
-  FirebaseSharedSwift: e6563601d23a27079051d2b6036bad2602851485
+  FirebaseMessagingInterop: c78a2df8002e0b51fc446a687b5ba357b81e9e90
+  FirebaseSharedSwift: c590d181c8b80ebf85f2606f4d366cf72f82f184
   FirebaseStorage: a12297f786e81e653864d87723ec30381eb90220
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
@@ -1901,15 +1903,15 @@ SPEC CHECKSUMS:
   RNFBFunctions: 3ec0c8924cd5827c7c4ab9d44e7d342d47aa93de
   RNFBMessaging: a0cf20be8f41d89af98f5611d5db432c59371f68
   RNFBStorage: 9d93d92e4e9de37a26402d522c421e3b570fe6fa
-  RNGestureHandler: 026038a97d4c8649ce397a22e162ca58b4e6c230
+  RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNGoogleMobileAds: 3032aa481cbc5c93bf9d08d8247b681cf4a00c9f
   RNGoogleSignin: ccaa4a81582cf713eea562c5dd9dc1961a715fd0
   RNInstabug: 289bdfabfa30de22347f6c7a2902133ab4b673a6
   RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
   RNPurchases: 6744af10718d9bd85b9daaa6c1b47196e295b6b4
-  RNReanimated: c931b356bda56c0196110bdc462e48e4c2668dc3
-  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: 4fb2cd7d2d6cb94423c24884488206ef881da136
+  RNReanimated: 9976fbaaeb8a188c36026154c844bf374b3b7eeb
+  RNScreens: d037903436160a4b039d32606668350d2a808806
+  RNSentry: 9f0447b3ce13806f544903748de423259ead8552
   RNSnackbar: 3727b42bf6c4314a53c18185b5203e915a4ab020
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
@@ -1918,8 +1920,8 @@ SPEC CHECKSUMS:
   RNWatch: fd30ca40a5b5ef58dcbc195638e68219bc455236
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 11776f6a25a128808d793d0d41bb7ad873b5ae4f
-  SentryPrivate: b3c448eacdabe9eab7679a2e0af609c608f91572
+  Sentry: c7a86f43510a7d5678d4de28d78c28ab351d295b
+  SentryPrivate: 2eaabf598a46d4b9b8822aef766df2a84caf2e6f
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
 
 PODFILE CHECKSUM: da8783e9694cfcf7fcb4313523d640f6219488e0
