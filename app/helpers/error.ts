@@ -5,7 +5,11 @@ export const logError = (e: Error | any) => {
     if (__DEV__) {
       console.warn(e);
     }
-    Sentry.captureException(e);
+    if (!(e instanceof Error)) {
+      Sentry.captureException(new Error(JSON.stringify(e)));
+    } else {
+      Sentry.captureException(e);
+    }
   } catch (err) {
     if (err instanceof Error) {
       console.warn(e);

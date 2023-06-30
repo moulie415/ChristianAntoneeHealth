@@ -14,7 +14,6 @@ import {StackParamList} from '../../../App';
 import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
 import SavedTestCard from '../../commons/SavedTestCard';
-import {openSettings} from 'react-native-permissions';
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
