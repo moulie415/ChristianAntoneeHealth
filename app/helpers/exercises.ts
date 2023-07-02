@@ -4,10 +4,11 @@ import {capitalizeFirstLetter} from '.';
 import {STORE_LINK} from '../constants';
 import {navigate} from '../RootNavigation';
 import Exercise, {Muscle} from '../types/Exercise';
-import {Unit} from '../types/Profile';
+import {Gender, Unit} from '../types/Profile';
 import {Equipment, Level} from '../types/Shared';
 import {logError} from './error';
 import * as _ from 'lodash';
+import moment from 'moment';
 
 const levelMapping = {
   null: 0,
@@ -97,15 +98,38 @@ export const getCaloriesBurned = (
   duration: number,
   MET: number,
   weight?: number,
-  unit?: Unit,
 ) => {
-  if (!weight || !unit) {
+  if (!weight) {
     return;
+  }
+  return ((duration / 60) * (MET * 3.5 * weight)) / 200;
+};
+
+export const getCaloriesBurnedFromAverageHeartRate = (
+  duration: number,
+  averageHeartRate: number,
+  dob?: string,
+  weight?: number,
+  sex?: Gender,
+) => {
+  if (!weight || !sex || !dob) {
+    return;
+  }
+  const age = moment().diff(dob, 'years');
+  if (sex === 'male') {
+    return (
+      ((duration / 60) *
+        (0.6309 * averageHeartRate +
+          0.1988 * weight +
+          0.2017 * age -
+          55.0969)) /
+      4.184
+    );
   }
   return (
     ((duration / 60) *
-      (MET * 3.5 * (unit === 'metric' ? weight : weight / 2.205))) /
-    200
+      (0.4472 * averageHeartRate - 0.1263 * weight + 0.074 * age - 20.4022)) /
+    4.184
   );
 };
 

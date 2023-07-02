@@ -1,10 +1,8 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {Alert, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import {getCaloriesBurned} from '../../../helpers/exercises';
-
 import {saveWorkout as saveWorkoutAction} from '../../../actions/exercises';
 import {saveWorkout} from '../../../helpers/biometrics';
 import Button from '../../commons/Button';
@@ -13,6 +11,7 @@ import Header from '../../commons/Header';
 import colors from '../../../constants/colors';
 import RPESlider from '../../commons/RPESlider';
 import useThrottle from '../../../hooks/UseThrottle';
+import useWorkoutData from '../../../hooks/UseWorkoutData';
 
 const EndWorkout: React.FC<EndWorkoutProps> = ({
   route,
@@ -26,12 +25,16 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [note, setNote] = useState('');
   const {seconds, planWorkout} = route.params;
 
-  const calories = getCaloriesBurned(
-    seconds,
-    difficulty,
-    profile.weight,
-    'metric',
-  );
+  const {
+    loading: isLoading,
+    averageHeartRate,
+    heartRateSamples,
+    calories,
+  } = useWorkoutData(seconds, profile, difficulty, new Date());
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   const save = useThrottle((saved: boolean) => {
     saveAction({
@@ -69,10 +72,9 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
             setLoading(true);
             await saveWorkout(
               seconds,
-              difficulty,
-              profile,
               'CA Health workout',
               workout.map(e => e.name).join(', '),
+              calories || 0,
             );
             const navigate = () => {
               navigation.navigate('WorkoutSummary', {

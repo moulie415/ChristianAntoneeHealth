@@ -1,9 +1,8 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {Alert, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {saveWorkout} from '../../../helpers/biometrics';
-
 import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 import {saveQuickRoutine} from '../../../actions/quickRoutines';
 import colors from '../../../constants/colors';
@@ -11,8 +10,8 @@ import Button from '../../commons/Button';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import RPESlider from '../../commons/RPESlider';
-import {getCaloriesBurned} from '../../../helpers/exercises';
 import useThrottle from '../../../hooks/UseThrottle';
+import useWorkoutData from '../../../hooks/UseWorkoutData';
 
 const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   route,
@@ -23,15 +22,20 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
+
   const [note, setNote] = useState('');
   const {seconds, routine} = route.params;
 
-  const calories = getCaloriesBurned(
-    seconds,
-    difficulty,
-    profile.weight,
-    'metric',
-  );
+  const {
+    loading: isLoading,
+    averageHeartRate,
+    heartRateSamples,
+    calories,
+  } = useWorkoutData(seconds, profile, difficulty, new Date());
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   const save = useThrottle((saved: boolean) => {
     saveQuickRoutineAction({
@@ -68,10 +72,9 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
               setLoading(true);
               await saveWorkout(
                 seconds,
-                difficulty,
-                profile,
                 'CA Health workout',
                 routine.name,
+                calories || 0,
               );
               const navigate = () => {
                 navigation.navigate('QuickRoutineSummary', {

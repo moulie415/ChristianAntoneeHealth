@@ -1,6 +1,10 @@
 import {Alert, Linking, Platform} from 'react-native';
-import AppleHealthKit from 'react-native-health';
-import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
+import AppleHealthKit, {HealthValue} from 'react-native-health';
+import GoogleFit, {
+  ActivityType,
+  BucketUnit,
+  HeartRateResponse,
+} from 'react-native-google-fit';
 import moment from 'moment';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import Profile, {Gender, Unit} from '../types/Profile';
@@ -418,12 +422,39 @@ export const saveHeight = async (value?: number, unit = 'metric') => {
   });
 };
 
+export const getHeartRateSamples = async (
+  startDate: Date,
+  endDate: Date,
+): Promise<HealthValue[] | HeartRateResponse[]> => {
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.getHeartRateSamples(
+        {
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        },
+      );
+    });
+  }
+  return GoogleFit.getHeartRateSamples({
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
+    bucketUnit: BucketUnit.SECOND,
+  });
+};
+
 export const saveWorkout = async (
   seconds: number,
-  difficulty: number,
-  profile: Profile,
   name: string,
   description: string,
+  calories: number,
 ) => {
   if (!(await isAvailable()) || !(await isEnabled())) {
     return;
@@ -431,12 +462,6 @@ export const saveWorkout = async (
   try {
     const startDate = moment().subtract(seconds, 'seconds').toISOString();
     const endDate = moment().toISOString();
-    const calories = getCaloriesBurned(
-      seconds,
-      difficulty,
-      profile.weight,
-      'metric',
-    );
     if (Platform.OS === 'ios') {
       return new Promise((resolve, reject) => {
         AppleHealthKit.saveWorkout(
