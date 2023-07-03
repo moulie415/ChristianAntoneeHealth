@@ -86,7 +86,7 @@ const Monthly: React.FC<{
           }
         }}
       />
-      {/* <Button
+      <Button
         text="Sync with native calendar"
         style={{margin: 20}}
         onPress={async () => {
@@ -103,7 +103,7 @@ const Monthly: React.FC<{
             Snackbar.show({text: 'Error syncing calendar'});
           }
         }}
-      /> */}
+      />
       <Modal
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}>
@@ -145,7 +145,6 @@ const Monthly: React.FC<{
                               .set('hours', 10)
                               .toISOString(),
                             calendarId: item.id,
-                            allDay: true,
                           },
                         };
                         events.push(event);
