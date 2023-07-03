@@ -21,6 +21,7 @@ import {
   PlanNutrition,
   PlanSleep,
   PlanWorkout,
+  ExerciseEvent,
 } from './types/Shared';
 import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
@@ -104,7 +105,12 @@ export type StackParamList = {
   ReviewExercises: undefined;
   PreWorkout: {planWorkout: PlanWorkout};
   StartWorkout: {planWorkout: PlanWorkout};
-  EndWorkout: {seconds: number; planWorkout: PlanWorkout; endTime: Date};
+  EndWorkout: {
+    seconds: number;
+    planWorkout: PlanWorkout;
+    endTime: Date;
+    exerciseEvents: ExerciseEvent[];
+  };
   WorkoutSummary: {
     seconds: number;
     calories?: number;
@@ -126,7 +132,12 @@ export type StackParamList = {
   QuickRoutines: undefined;
   PreQuickRoutine: {routine: QuickRoutine};
   QuickRoutine: {routine: QuickRoutine};
-  EndQuickRoutine: {routine: QuickRoutine; seconds: number; endTime: Date};
+  EndQuickRoutine: {
+    routine: QuickRoutine;
+    seconds: number;
+    endTime: Date;
+    exerciseEvents: ExerciseEvent[];
+  };
   QuickRoutineSummary: {
     routine: QuickRoutine;
     seconds: number;

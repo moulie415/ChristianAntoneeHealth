@@ -23,7 +23,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds, planWorkout, endTime} = route.params;
+  const {seconds, planWorkout, endTime, exerciseEvents} = route.params;
 
   const {
     loading: isLoading,
@@ -45,6 +45,9 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       workout: workout.map(e => e.id || ''),
       saved,
       planWorkout,
+      averageHeartRate,
+      heartRateSamples,
+      exerciseEvents,
     });
   }, 3000);
 

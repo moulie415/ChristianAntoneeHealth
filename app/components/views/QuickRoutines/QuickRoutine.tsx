@@ -29,6 +29,7 @@ import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
+import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -72,6 +73,8 @@ const QuickRoutineView: React.FC<{
     1000,
     !routineStarted,
   );
+
+  const {exerciseEvents} = useExerciseEvents(index, seconds);
 
   const loadingExercises = !exercises || exercises.some(e => e === undefined);
 
@@ -213,6 +216,7 @@ const QuickRoutineView: React.FC<{
                                   seconds,
                                   routine,
                                   endTime: new Date(),
+                                  exerciseEvents,
                                 });
                               },
                             },

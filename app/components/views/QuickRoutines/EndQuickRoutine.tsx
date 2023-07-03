@@ -24,7 +24,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   const [loading, setLoading] = useState(false);
 
   const [note, setNote] = useState('');
-  const {seconds, routine, endTime} = route.params;
+  const {seconds, routine, endTime, exerciseEvents} = route.params;
 
   const {
     loading: isLoading,
@@ -32,8 +32,6 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     heartRateSamples,
     calories,
   } = useWorkoutData(seconds, profile, difficulty, endTime);
-
-  console.log(isLoading, averageHeartRate, heartRateSamples, calories);
 
   useEffect(() => {
     setLoading(isLoading);
@@ -47,6 +45,9 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
       createdate: new Date(),
       quickRoutineId: routine.id,
       saved,
+      averageHeartRate,
+      heartRateSamples,
+      exerciseEvents,
     });
   }, 3000);
 

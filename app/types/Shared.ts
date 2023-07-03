@@ -54,6 +54,11 @@ export interface StepSample {
   value: number;
 }
 
+export interface ExerciseEvent {
+  value: number;
+  seconds: number;
+}
+
 export enum Equipment {
   NONE = 'none',
   BARBELLS = 'barbells',
@@ -90,7 +95,6 @@ export interface PlanWorkout {
   exercises: PlanExercise[];
   today?: boolean;
 }
-
 
 export interface PlanNutrition {
   preWorkout: string;

@@ -39,6 +39,7 @@ import Profile from '../../../types/Profile';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
+import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -68,6 +69,7 @@ const StartWorkout: React.FC<{
   const [fullscreen, setFullScreen] = useState(false);
 
   const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(1000);
+  const {exerciseEvents} = useExerciseEvents(index, seconds);
 
   useEffect(() => {
     if (tabIndex === 2) {
@@ -215,6 +217,7 @@ const StartWorkout: React.FC<{
                                   seconds,
                                   planWorkout,
                                   endTime: new Date(),
+                                  exerciseEvents,
                                 });
                               },
                             },
