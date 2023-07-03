@@ -5178,11 +5178,6 @@ event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
-events@^3.0.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
-  integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
-
 execa@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-0.7.0.tgz#944becd34cc41ee32a63a9faf27ad5a65fc59777"
@@ -8771,13 +8766,6 @@ react-native-drawer@^2.5.1:
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
-
-react-native-events@^1.0.21:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/react-native-events/-/react-native-events-1.0.21.tgz#d1fbe492a3321d09c630da5132dad10a5312b823"
-  integrity sha512-qBolATOf+xzUkYOlOK3I4Nm/l6Y5vtng8dAM9TPHy170NSKKpsgirAnaCO82+nEkniEanm+Nb/cP4pFVPQAeaQ==
-  dependencies:
-    events "^3.0.0"
 
 react-native-fast-image@^8.5.11:
   version "8.5.11"
