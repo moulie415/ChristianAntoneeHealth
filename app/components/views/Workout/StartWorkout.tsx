@@ -214,6 +214,7 @@ const StartWorkout: React.FC<{
                                 navigation.navigate('EndWorkout', {
                                   seconds,
                                   planWorkout,
+                                  endTime: new Date(),
                                 });
                               },
                             },

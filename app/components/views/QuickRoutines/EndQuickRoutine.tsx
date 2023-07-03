@@ -24,14 +24,16 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   const [loading, setLoading] = useState(false);
 
   const [note, setNote] = useState('');
-  const {seconds, routine} = route.params;
+  const {seconds, routine, endTime} = route.params;
 
   const {
     loading: isLoading,
     averageHeartRate,
     heartRateSamples,
     calories,
-  } = useWorkoutData(seconds, profile, difficulty, new Date());
+  } = useWorkoutData(seconds, profile, difficulty, endTime);
+
+  console.log(isLoading, averageHeartRate, heartRateSamples, calories);
 
   useEffect(() => {
     setLoading(isLoading);

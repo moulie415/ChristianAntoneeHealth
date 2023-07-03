@@ -212,6 +212,7 @@ const QuickRoutineView: React.FC<{
                                 navigation.navigate('EndQuickRoutine', {
                                   seconds,
                                   routine,
+                                  endTime: new Date(),
                                 });
                               },
                             },

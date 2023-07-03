@@ -23,14 +23,14 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds, planWorkout} = route.params;
+  const {seconds, planWorkout, endTime} = route.params;
 
   const {
     loading: isLoading,
     averageHeartRate,
     heartRateSamples,
     calories,
-  } = useWorkoutData(seconds, profile, difficulty, new Date());
+  } = useWorkoutData(seconds, profile, difficulty, endTime);
 
   useEffect(() => {
     setLoading(isLoading);

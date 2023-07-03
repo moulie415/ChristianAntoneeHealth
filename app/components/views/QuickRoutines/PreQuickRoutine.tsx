@@ -19,12 +19,14 @@ import Exercise from '../../../types/Exercise';
 import {getEquipmentList} from '../../../helpers/exercises';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
+import Spinner from '../../commons/Spinner';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
   route: RouteProp<StackParamList, 'PreQuickRoutine'>;
   exercisesObj: {[key: string]: Exercise};
 }> = ({route, navigation, exercisesObj}) => {
+  const [loading, setLoading] = useState(false);
   const {
     routine: {
       name,
@@ -57,8 +59,6 @@ const PreQuickRoutine: React.FC<{
     }
   }, [focused]);
 
-  console.log(focused);
-
   return (
     <>
       {preview?.src ? (
@@ -67,10 +67,21 @@ const PreQuickRoutine: React.FC<{
             source={{uri: convertToProxyURL(preview.src)}}
             style={{height: getVideoHeight(), width: '100%'}}
             resizeMode={'cover'}
+            onLoad={() => setLoading(false)}
+            onLoadStart={() => setLoading(true)}
             repeat
             disableFocus
             paused={paused}
           />
+          {loading && (
+            <Spinner
+              style={{
+                position: 'absolute',
+                left: '45%',
+                top: getVideoHeight() / 2,
+              }}
+            />
+          )}
           <Header absolute hasBack />
         </>
       ) : (

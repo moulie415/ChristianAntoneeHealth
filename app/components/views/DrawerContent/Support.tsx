@@ -13,7 +13,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import SupportProps from '../../../types/views/Support';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
-import Instabug from 'instabug-reactnative';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -38,7 +37,10 @@ const Support: React.FC<SupportProps> = () => {
     {
       title: 'Report a problem',
       icon: 'bug',
-      onPress: () => Instabug.show(),
+      onPress: () =>
+        Linking.openURL(
+          'mailto:info@christianantonee.com?subject=CA Health Bug Report',
+        ),
     },
     {
       title: 'Contact us',

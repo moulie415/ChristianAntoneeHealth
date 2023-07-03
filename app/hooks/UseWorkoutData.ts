@@ -15,7 +15,6 @@ const useWorkoutData = (
   difficulty: number,
   endDate: Date,
 ) => {
-  console.log(endDate);
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -39,10 +38,11 @@ const useWorkoutData = (
     getSamples();
   }, [endDate, seconds]);
 
-  const averageHeartRate =
-    heartRateSamples.reduce((acc, cur) => {
-      return acc + cur.value;
-    }, 0) / heartRateSamples.length;
+  const averageHeartRate = heartRateSamples.length
+    ? heartRateSamples.reduce((acc, cur) => {
+        return acc + cur.value;
+      }, 0) / heartRateSamples.length
+    : 0;
 
   return {
     loading,

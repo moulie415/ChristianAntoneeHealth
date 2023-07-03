@@ -42,7 +42,6 @@ import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
-import Instabug, {InvocationEvent} from 'instabug-reactnative';
 import {
   TourGuideProvider, // Main provider
   useTourGuideController,
@@ -105,7 +104,7 @@ export type StackParamList = {
   ReviewExercises: undefined;
   PreWorkout: {planWorkout: PlanWorkout};
   StartWorkout: {planWorkout: PlanWorkout};
-  EndWorkout: {seconds: number; planWorkout: PlanWorkout};
+  EndWorkout: {seconds: number; planWorkout: PlanWorkout; endTime: Date};
   WorkoutSummary: {
     seconds: number;
     calories?: number;
@@ -127,7 +126,7 @@ export type StackParamList = {
   QuickRoutines: undefined;
   PreQuickRoutine: {routine: QuickRoutine};
   QuickRoutine: {routine: QuickRoutine};
-  EndQuickRoutine: {routine: QuickRoutine; seconds: number};
+  EndQuickRoutine: {routine: QuickRoutine; seconds: number; endTime: Date};
   QuickRoutineSummary: {
     routine: QuickRoutine;
     seconds: number;
@@ -194,13 +193,6 @@ const App: React.FC = () => {
     appCheck().initializeAppCheck({
       provider: rnfbProvider,
       isTokenAutoRefreshEnabled: true,
-    });
-
-    Instabug.init({
-      token: __DEV__
-        ? (Config.INSTABUG_DEV_TOKEN as string)
-        : (Config.INSTABUG_PROD_TOKEN as string),
-      invocationEvents: [InvocationEvent.none],
     });
 
     MobileAds()
