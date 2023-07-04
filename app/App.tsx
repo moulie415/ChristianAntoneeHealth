@@ -22,6 +22,7 @@ import {
   PlanSleep,
   PlanWorkout,
   ExerciseEvent,
+  PauseEvent,
 } from './types/Shared';
 import ExerciseType from './types/Exercise';
 import {useEffect} from 'react';
@@ -104,12 +105,14 @@ export type StackParamList = {
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
   PreWorkout: {planWorkout: PlanWorkout};
-  StartWorkout: {planWorkout: PlanWorkout};
+  StartWorkout: {planWorkout: PlanWorkout; startTime: Date};
   EndWorkout: {
     seconds: number;
     planWorkout: PlanWorkout;
     endTime: Date;
     exerciseEvents: ExerciseEvent[];
+    pauseEvents: PauseEvent[];
+    startTime: Date;
   };
   WorkoutSummary: {
     seconds: number;
@@ -131,12 +134,14 @@ export type StackParamList = {
   Loading: undefined;
   QuickRoutines: undefined;
   PreQuickRoutine: {routine: QuickRoutine};
-  QuickRoutine: {routine: QuickRoutine};
+  QuickRoutine: {routine: QuickRoutine; startTime: Date};
   EndQuickRoutine: {
     routine: QuickRoutine;
     seconds: number;
+    startTime: Date;
     endTime: Date;
     exerciseEvents: ExerciseEvent[];
+    pauseEvents: PauseEvent[];
   };
   QuickRoutineSummary: {
     routine: QuickRoutine;

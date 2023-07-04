@@ -125,7 +125,12 @@ const PreWorkout: React.FC<{
         <Button
           style={{margin: 15}}
           text="Start workout"
-          onPress={() => navigation.navigate('StartWorkout', {planWorkout})}
+          onPress={() =>
+            navigation.navigate('StartWorkout', {
+              planWorkout,
+              startTime: new Date(),
+            })
+          }
         />
       </ScrollView>
     </>

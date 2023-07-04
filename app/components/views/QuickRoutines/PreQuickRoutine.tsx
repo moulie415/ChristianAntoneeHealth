@@ -228,7 +228,10 @@ const PreQuickRoutine: React.FC<{
           style={{margin: 15}}
           text="Start workout"
           onPress={() =>
-            navigation.navigate('QuickRoutine', {routine: route.params.routine})
+            navigation.navigate('QuickRoutine', {
+              routine: route.params.routine,
+              startTime: new Date(),
+            })
           }
         />
       </ScrollView>

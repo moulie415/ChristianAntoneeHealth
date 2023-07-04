@@ -11,7 +11,15 @@ const WorkoutTabFooter: React.FC<{
   seconds: number;
   timerPaused: boolean;
   setTimerPaused: (paused: boolean) => void;
-}> = ({index, workout, seconds, setTimerPaused, timerPaused}) => {
+  onTimerPaused: (paused: boolean) => void;
+}> = ({
+  index,
+  workout,
+  seconds,
+  setTimerPaused,
+  timerPaused,
+  onTimerPaused,
+}) => {
   return (
     <View
       style={{
@@ -42,7 +50,11 @@ const WorkoutTabFooter: React.FC<{
           }}>
           {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
         </Text>
-        <TouchableOpacity onPress={() => setTimerPaused(!timerPaused)}>
+        <TouchableOpacity
+          onPress={() => {
+            onTimerPaused && onTimerPaused(!timerPaused);
+            setTimerPaused(!timerPaused);
+          }}>
           <Icon
             name={timerPaused ? 'play' : 'pause'}
             size={30}

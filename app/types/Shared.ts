@@ -56,7 +56,12 @@ export interface StepSample {
 
 export interface ExerciseEvent {
   value: number;
-  seconds: number;
+  time: Date;
+}
+
+export interface PauseEvent {
+  paused: boolean;
+  time: Date;
 }
 
 export enum Equipment {

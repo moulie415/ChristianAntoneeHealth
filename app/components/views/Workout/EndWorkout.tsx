@@ -23,7 +23,14 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
-  const {seconds, planWorkout, endTime, exerciseEvents} = route.params;
+  const {
+    seconds,
+    planWorkout,
+    endTime,
+    exerciseEvents,
+    pauseEvents,
+    startTime,
+  } = route.params;
 
   const {
     loading: isLoading,
@@ -48,6 +55,9 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       averageHeartRate,
       heartRateSamples,
       exerciseEvents,
+      pauseEvents,
+      startTime,
+      endTime,
     });
   }, 3000);
 

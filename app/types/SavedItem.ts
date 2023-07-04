@@ -1,4 +1,4 @@
-import {ExerciseEvent, PlanWorkout, Sample} from './Shared';
+import {ExerciseEvent, PauseEvent, PlanWorkout, Sample} from './Shared';
 
 export interface SavedWorkout {
   id?: string;
@@ -12,6 +12,9 @@ export interface SavedWorkout {
   averageHeartRate: number;
   heartRateSamples: Sample[];
   exerciseEvents: ExerciseEvent[];
+  pauseEvents: PauseEvent[];
+  startTime: Date;
+  endTime: Date;
 }
 
 export interface SavedTest {
@@ -34,4 +37,7 @@ export interface SavedQuickRoutine {
   averageHeartRate: number;
   heartRateSamples: Sample[];
   exerciseEvents: ExerciseEvent[];
+  pauseEvents: PauseEvent[];
+  startTime: Date;
+  endTime: Date;
 }

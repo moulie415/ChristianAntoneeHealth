@@ -4,7 +4,7 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {getVideoHeight} from '../../../helpers';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {MyRootState} from '../../../types/Shared';
+import {MyRootState, PauseEvent} from '../../../types/Shared';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import {setExerciseNote} from '../../../actions/exercises';
@@ -48,7 +48,7 @@ const QuickRoutineView: React.FC<{
   setExerciseNoteAction,
   exercisesObj,
 }) => {
-  const {routine} = route.params;
+  const {routine, startTime} = route.params;
   const [tabIndex, setTabIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
@@ -56,6 +56,7 @@ const QuickRoutineView: React.FC<{
   const [showModal, setShowModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const [fullscreen, setFullScreen] = useState(false);
+  const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -74,7 +75,7 @@ const QuickRoutineView: React.FC<{
     !routineStarted,
   );
 
-  const {exerciseEvents} = useExerciseEvents(index, seconds);
+  const {exerciseEvents} = useExerciseEvents(index);
 
   const loadingExercises = !exercises || exercises.some(e => e === undefined);
 
@@ -198,6 +199,12 @@ const QuickRoutineView: React.FC<{
                       />
 
                       <WorkoutTabFooter
+                        onTimerPaused={paused =>
+                          setPauseEvents([
+                            ...pauseEvents,
+                            {time: new Date(), paused},
+                          ])
+                        }
                         seconds={seconds}
                         setTimerPaused={setTimerPaused}
                         timerPaused={timerPaused}
@@ -217,6 +224,8 @@ const QuickRoutineView: React.FC<{
                                   routine,
                                   endTime: new Date(),
                                   exerciseEvents,
+                                  startTime,
+                                  pauseEvents,
                                 });
                               },
                             },

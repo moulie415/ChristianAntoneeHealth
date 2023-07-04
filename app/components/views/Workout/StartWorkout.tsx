@@ -13,7 +13,7 @@ import Image from 'react-native-fast-image';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
-import {MyRootState} from '../../../types/Shared';
+import {MyRootState, PauseEvent} from '../../../types/Shared';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import {getVideoHeight} from '../../../helpers';
 import Text from '../../commons/Text';
@@ -66,10 +66,12 @@ const StartWorkout: React.FC<{
   const [hasPressedPlay, setHasPressedPlay] = useState(false);
   const textInputRef = useRef<TextInput>();
   const planWorkout = route.params?.planWorkout;
+  const startTime = route.params?.startTime;
   const [fullscreen, setFullScreen] = useState(false);
+  const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
 
   const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(1000);
-  const {exerciseEvents} = useExerciseEvents(index, seconds);
+  const {exerciseEvents} = useExerciseEvents(index);
 
   useEffect(() => {
     if (tabIndex === 2) {
@@ -199,6 +201,12 @@ const StartWorkout: React.FC<{
                       />
 
                       <WorkoutTabFooter
+                        onTimerPaused={paused =>
+                          setPauseEvents([
+                            ...pauseEvents,
+                            {time: new Date(), paused},
+                          ])
+                        }
                         seconds={seconds}
                         setTimerPaused={setTimerPaused}
                         timerPaused={timerPaused}
@@ -218,6 +226,8 @@ const StartWorkout: React.FC<{
                                   planWorkout,
                                   endTime: new Date(),
                                   exerciseEvents,
+                                  pauseEvents,
+                                  startTime,
                                 });
                               },
                             },

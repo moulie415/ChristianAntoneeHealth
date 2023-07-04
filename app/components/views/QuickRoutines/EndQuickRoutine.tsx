@@ -24,7 +24,8 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
   const [loading, setLoading] = useState(false);
 
   const [note, setNote] = useState('');
-  const {seconds, routine, endTime, exerciseEvents} = route.params;
+  const {seconds, routine, endTime, exerciseEvents, startTime, pauseEvents} =
+    route.params;
 
   const {
     loading: isLoading,
@@ -48,6 +49,9 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
       averageHeartRate,
       heartRateSamples,
       exerciseEvents,
+      pauseEvents,
+      startTime,
+      endTime,
     });
   }, 3000);
 
