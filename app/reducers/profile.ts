@@ -1,5 +1,9 @@
 import {AppState, AppStateStatus} from 'react-native';
-import {PlanActionTypes, SET_PLAN} from '../actions/plan';
+import {
+  PlanActionTypes,
+  SET_PLAN,
+  SET_SYNCED_PLAN_EVENT,
+} from '../actions/plan';
 import {
   SET_PROFILE,
   SET_LOGGED_IN,
@@ -62,6 +66,7 @@ export interface ProfileState {
   weeklyItems: WeeklyItems;
   plan?: Plan;
   hasViewedTour: boolean;
+  syncedPlanEvents: {[key: string]: string};
 }
 
 const initialState: ProfileState = {
@@ -109,6 +114,7 @@ const initialState: ProfileState = {
     workouts: {},
   },
   hasViewedTour: false,
+  syncedPlanEvents: {},
 };
 
 const reducer = (
@@ -255,6 +261,14 @@ const reducer = (
       };
     case SET_HAS_VIEWED_TOUR:
       return {...state, hasViewedTour: true};
+    case SET_SYNCED_PLAN_EVENT:
+      return {
+        ...state,
+        syncedPlanEvents: {
+          ...state.syncedPlanEvents,
+          [action.payload.key]: action.payload.id,
+        },
+      };
     default:
       return state;
   }
