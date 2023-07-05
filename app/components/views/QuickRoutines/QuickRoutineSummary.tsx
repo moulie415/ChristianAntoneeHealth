@@ -25,7 +25,8 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   navigation,
   profile,
 }) => {
-  const {calories, seconds, difficulty, routine} = route.params;
+  const {calories, seconds, difficulty, routine, averageHeartRate} =
+    route.params;
   useBackHandler(() => true);
   return (
     <FastImage
@@ -44,6 +45,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
           calories={calories}
           difficulty={difficulty}
           seconds={seconds}
+          averageHeartRate={averageHeartRate}
         />
 
         <Button

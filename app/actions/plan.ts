@@ -3,6 +3,8 @@ import {Plan} from '../types/Shared';
 export const GET_PLAN = 'GET_PLAN';
 export const SET_PLAN = 'SET_PLAN';
 export const SET_SYNCED_PLAN_EVENT = 'SET_SYNCED_PLAN_EVENT';
+export const SYNC_PLAN_WITH_CALENDAR = 'SYNC_PLAN_WITH_CALENDAR';
+export const SET_CALENDAR_ID = 'SET_CALENDAR_ID';
 
 export interface GetPlanAction {
   type: typeof GET_PLAN;
@@ -18,10 +20,22 @@ export interface SetSyncedPlanEventAction {
   payload: {key: string; id: string};
 }
 
+export interface SyncPlanWithCalendarAction {
+  type: typeof SYNC_PLAN_WITH_CALENDAR;
+  payload: {plan: Plan; sync: boolean; calendarId?: string};
+}
+
+export interface SetCalendarIdAction {
+  type: typeof SET_CALENDAR_ID;
+  payload: string;
+}
+
 export type PlanActionTypes =
   | GetPlanAction
   | SetPlanAction
-  | SetSyncedPlanEventAction;
+  | SetSyncedPlanEventAction
+  | SyncPlanWithCalendarAction
+  | SetCalendarIdAction;
 
 export const getPlan = (): GetPlanAction => ({
   type: GET_PLAN,
@@ -38,4 +52,17 @@ export const setSyncedPlanEvent = (
 ): SetSyncedPlanEventAction => ({
   type: SET_SYNCED_PLAN_EVENT,
   payload: {key, id},
+});
+
+export const syncPlanWithCalendar = (
+  plan: Plan,
+  sync: boolean,
+): SyncPlanWithCalendarAction => ({
+  type: SYNC_PLAN_WITH_CALENDAR,
+  payload: {plan, sync},
+});
+
+export const setCalendarId = (id: string): SetCalendarIdAction => ({
+  type: SET_CALENDAR_ID,
+  payload: id,
 });

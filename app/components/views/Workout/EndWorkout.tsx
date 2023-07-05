@@ -94,6 +94,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
                 calories,
                 seconds,
                 difficulty,
+                averageHeartRate,
               });
             };
 

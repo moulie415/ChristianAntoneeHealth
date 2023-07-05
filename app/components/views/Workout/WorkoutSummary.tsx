@@ -3,7 +3,7 @@ import {resetToTabs} from '../../../RootNavigation';
 import {saveWorkout, setShareModalVisible} from '../../../actions/exercises';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import { StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -26,7 +26,7 @@ const WorkoutSummary: React.FC<{
   workout: Exercise[];
   setShareModalVisibleAction: (payload: boolean) => void;
 }> = ({route}) => {
-  const {calories, seconds, difficulty} = route.params;
+  const {calories, seconds, difficulty, averageHeartRate} = route.params;
   const [buttonDisabled, setButtonDisabled] = useState(false);
   useBackHandler(() => true);
 
@@ -47,6 +47,7 @@ const WorkoutSummary: React.FC<{
           calories={calories}
           difficulty={difficulty}
           seconds={seconds}
+          averageHeartRate={averageHeartRate}
         />
 
         <Button
@@ -57,6 +58,7 @@ const WorkoutSummary: React.FC<{
             marginBottom: 20,
           }}
         />
+
         {/* <Button
           text="Share workout"
           onPress={() => setShareModalVisibleAction(true)}

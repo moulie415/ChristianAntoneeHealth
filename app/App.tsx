@@ -118,6 +118,7 @@ export type StackParamList = {
     seconds: number;
     calories?: number;
     difficulty: number;
+    averageHeartRate: number;
   };
   Education: undefined;
   EducationArticle: {education: Education};
@@ -148,6 +149,7 @@ export type StackParamList = {
     seconds: number;
     calories?: number;
     difficulty: number;
+    averageHeartRate: number;
   };
   SavedItems: undefined;
   Connections: undefined;

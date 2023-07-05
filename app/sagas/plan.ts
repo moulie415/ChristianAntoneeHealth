@@ -10,7 +10,14 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 import * as _ from 'lodash';
-import {GET_PLAN, setPlan} from '../actions/plan';
+import {
+  GET_PLAN,
+  setPlan,
+  setSyncedPlanEvent,
+  SYNC_PLAN_WITH_CALENDAR,
+  syncPlanWithCalendar,
+  SyncPlanWithCalendarAction,
+} from '../actions/plan';
 import {
   SET_TEST_REMINDERS,
   SET_WORKOUT_REMINDERS,
@@ -27,6 +34,76 @@ import {
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './profile';
 import moment from 'moment';
+import RNCalendarEvents, {
+  CalendarEventWritable,
+} from 'react-native-calendar-events';
+
+function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
+  try {
+    const {plan, sync} = action.payload;
+    if (sync) {
+      const {calendarId} = yield select((state: MyRootState) => state.profile);
+      if (!calendarId) {
+        throw new Error('No valid calendar found');
+      }
+      const events: {
+        title: string;
+        details: CalendarEventWritable;
+      }[] = [];
+
+      const keys: string[] = [];
+
+      const {syncedPlanEvents} = yield select(
+        (state: MyRootState) => state.profile,
+      );
+
+      plan?.workouts?.forEach(workout => {
+        workout.dates?.forEach(date => {
+          const title = workout.name || 'CA Health Workout';
+          const key = `${plan.id}${title}${date}`;
+          const currentId = syncedPlanEvents[key];
+          const event: {
+            title: string;
+            details: CalendarEventWritable;
+          } = {
+            title,
+            details: {
+              ...(currentId ? {id: currentId} : {}),
+              startDate: moment(date).set('hours', 9).toISOString(),
+              endDate: moment(date).set('hours', 10).toISOString(),
+              calendarId,
+            },
+          };
+          events.push(event);
+          keys.push(key);
+        });
+      });
+
+      for (let i = 0; i < events.length; i++) {
+        const key = keys[i];
+        const event = events[i];
+        let id: string;
+        try {
+          id = yield call(
+            RNCalendarEvents.saveEvent,
+            event.title,
+            event.details,
+          );
+        } catch (e) {
+          id = yield call(
+            RNCalendarEvents.saveEvent,
+            event.title,
+            _.omit(event.details, ['id']),
+          );
+        }
+        yield put(setSyncedPlanEvent(key, id));
+      }
+    }
+  } catch (e) {
+    logError(e);
+    Snackbar.show({text: 'Error syncing calendar'});
+  }
+}
 
 export function* schedulePlanReminders() {
   PushNotification.cancelAllLocalNotifications();
@@ -174,6 +251,12 @@ function* planWatcher() {
           Snackbar.show({text: 'Your plan has been updated'});
         }
         yield put(setPlan(plan as Plan));
+        const {syncPlanWithCalendar: sync, calendarId} = yield select(
+          (state: MyRootState) => state.profile,
+        );
+        if (sync && calendarId) {
+          yield put(syncPlanWithCalendar(plan as Plan, sync));
+        }
       }
       yield call(schedulePlanReminders);
     }
@@ -197,5 +280,6 @@ export default function* planSaga() {
     takeLatest(SET_WORKOUT_REMINDER_TIME, schedulePlanReminders),
     takeLatest(SET_TEST_REMINDERS, schedulePlanReminders),
     takeLatest(SET_TEST_REMINDERS, schedulePlanReminders),
+    takeLatest(SYNC_PLAN_WITH_CALENDAR, syncPlanWithCalendarWorker),
   ]);
 }

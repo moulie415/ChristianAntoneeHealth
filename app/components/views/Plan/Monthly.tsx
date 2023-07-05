@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {CalendarType, MyRootState, Plan} from '../../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -22,22 +22,26 @@ import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
 import {MarkedDates} from 'react-native-calendars/src/types';
 import {navigate} from '../../../RootNavigation';
-import {setWorkout} from '../../../actions/exercises';
-import Exercise from '../../../types/Exercise';
-import {setSyncedPlanEvent} from '../../../actions/plan';
+import {
+  setCalendarId,
+  setSyncedPlanEvent,
+  syncPlanWithCalendar,
+} from '../../../actions/plan';
+import Toggle from '../../commons/Toggle';
 
 const Monthly: React.FC<{
   plan?: Plan;
-  syncedPlanEvents: {[key: string]: string};
-  setSyncedPlanEvent: (key: string, id: string) => void;
+  syncPlanWithCalendar: boolean;
+  syncPlanWithCalendarAction: (plan: Plan, sync: boolean) => void;
+  setCalendarId: (id: string) => void;
 }> = ({
   plan,
-  syncedPlanEvents,
-  setSyncedPlanEvent: setSyncedPlanEventAction,
+  syncPlanWithCalendar: syncWithCalendar,
+  syncPlanWithCalendarAction,
+  setCalendarId: setCalendarIdAction,
 }) => {
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
   const workoutDates: string[] = plan?.workouts
     ? plan.workouts.reduce((acc: string[], cur) => {
         if (cur.dates) {
@@ -62,61 +66,6 @@ const Monthly: React.FC<{
     return acc;
   }, {});
 
-  const syncWithCalendar = async (calendarId: string) => {
-    try {
-      const events: {
-        title: string;
-        details: CalendarEventWritable;
-      }[] = [];
-
-      const keys: string[] = [];
-
-      plan?.workouts?.forEach(workout => {
-        workout.dates?.forEach(date => {
-          const title = workout.name || 'CA Health Workout';
-          const key = `${plan.id}${title}${date}`;
-          const currentId = syncedPlanEvents[key];
-          const event: {
-            title: string;
-            details: CalendarEventWritable;
-          } = {
-            title,
-            details: {
-              ...(currentId ? {id: currentId} : {}),
-              startDate: moment(date).set('hours', 9).toISOString(),
-              endDate: moment(date).set('hours', 10).toISOString(),
-              calendarId,
-            },
-          };
-          events.push(event);
-          keys.push(key);
-        });
-      });
-
-      for (let i = 0; i < events.length; i++) {
-        const key = keys[i];
-        const event = events[i];
-        let id;
-        try {
-          id = await RNCalendarEvents.saveEvent(event.title, event.details);
-        } catch (e) {
-          id = await RNCalendarEvents.saveEvent(
-            event.title,
-            _.omit(event.details, ['id']),
-          );
-        }
-        setSyncedPlanEventAction(key, id);
-      }
-
-      setModalVisible(false);
-      Snackbar.show({text: 'Calendar synced successfully'});
-    } catch (e) {
-      logError(e);
-      console.log(e);
-      Snackbar.show({text: 'Error syncing calendar'});
-    }
-  };
-
   const maxDate = moment(
     Math.max(...uniq.map(date => moment(date).valueOf())),
   ).format('YYYY-MM-DD');
@@ -124,6 +73,32 @@ const Monthly: React.FC<{
   const minDate = moment(
     Math.min(...uniq.map(date => moment(date).valueOf())),
   ).format('YYYY-MM-DD');
+
+  const toggle = async (sync: boolean) => {
+    try {
+      if (plan) {
+        if (sync) {
+          const permission = await RNCalendarEvents.requestPermissions();
+          if (permission === 'authorized') {
+            const calendars = await RNCalendarEvents.findCalendars();
+            const list = calendars.filter(c => c.isPrimary);
+            setCalendarList(list);
+            if (list.length && list.length > 1) {
+              setModalVisible(true);
+            } else {
+              setCalendarIdAction(list[0].id);
+              syncPlanWithCalendarAction(plan, sync);
+            }
+          }
+        } else {
+          syncPlanWithCalendarAction(plan, sync);
+        }
+      }
+    } catch (e) {
+      logError(e);
+      Snackbar.show({text: 'Error syncing calendar'});
+    }
+  };
 
   return (
     <View style={{marginTop: 20, marginHorizontal: 20}}>
@@ -144,31 +119,33 @@ const Monthly: React.FC<{
           }
         }}
       />
-      <Button
-        text="Sync with native calendar"
-        style={{margin: 20}}
-        disabled={loading}
-        onPress={async () => {
-          try {
-            setLoading(true);
-            const permission = await RNCalendarEvents.requestPermissions();
-            if (permission === 'authorized') {
-              const calendars = await RNCalendarEvents.findCalendars();
-              const list = calendars.filter(c => c.isPrimary);
-              setCalendarList(list);
-              if (list.length && list.length > 1) {
-                setModalVisible(true);
-              } else {
-                await syncWithCalendar(list[0].id);
-              }
-            }
-          } catch (e) {
-            logError(e);
-            Snackbar.show({text: 'Error syncing calendar'});
-          }
-          setLoading(false);
+      <TouchableOpacity
+        onPress={() => {
+          toggle(!syncWithCalendar);
         }}
-      />
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 10,
+          backgroundColor: colors.appBlue,
+          borderColor: colors.appWhite,
+          borderWidth: 1,
+          marginTop: 20,
+          height: 60,
+          paddingHorizontal: 10,
+          borderRadius: 10,
+        }}>
+        <Text
+          style={{
+            color: colors.appWhite,
+            fontSize: 16,
+            fontWeight: 'bold',
+          }}>
+          Sync with native calendar
+        </Text>
+        {plan && <Toggle value={syncWithCalendar} onValueChange={toggle} />}
+      </TouchableOpacity>
       <Modal
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}>
@@ -190,36 +167,41 @@ const Monthly: React.FC<{
             Select a calendar to sync with
           </Text>
 
-          <FlatList
-            data={calendarList}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <ListItem
-                style={{
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                  borderTopWidth: StyleSheet.hairlineWidth,
-                  borderColor: colors.appWhite,
-                  marginHorizontal: 40,
-                }}
-                // titleStyle={{color: colors.appGrey}}
-                onPress={() => syncWithCalendar(item.id)}
-                accessoryLeft={
-                  <Icon
-                    name="calendar-alt"
-                    size={20}
-                    style={{margin: 5}}
-                    color={colors.appBlue}
-                  />
-                }
-                key={item.id}
-                title={item.title}
-              />
-            )}
-            ItemSeparatorComponent={Divider}
-          />
+          {plan && (
+            <FlatList
+              data={calendarList}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => (
+                <ListItem
+                  style={{
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderTopWidth: StyleSheet.hairlineWidth,
+                    borderColor: colors.appWhite,
+                    marginHorizontal: 40,
+                  }}
+                  // titleStyle={{color: colors.appGrey}}
+                  onPress={() => {
+                    setModalVisible(false);
+                    setCalendarIdAction(item.id);
+                    syncPlanWithCalendarAction(plan, true);
+                  }}
+                  accessoryLeft={
+                    <Icon
+                      name="calendar-alt"
+                      size={20}
+                      style={{margin: 5}}
+                      color={colors.appBlue}
+                    />
+                  }
+                  key={item.id}
+                  title={item.title}
+                />
+              )}
+              ItemSeparatorComponent={Divider}
+            />
+          )}
         </View>
       </Modal>
-      <AbsoluteSpinner loading={loading} />
     </View>
   );
 };
@@ -227,10 +209,12 @@ const Monthly: React.FC<{
 const mapStateToProps = ({profile}: MyRootState) => ({
   plan: profile.plan,
   syncedPlanEvents: profile.syncedPlanEvents,
+  syncPlanWithCalendar: profile.syncPlanWithCalendar,
 });
 
 const mapDispatchToProps = {
-  setSyncedPlanEvent,
+  setCalendarId,
+  syncPlanWithCalendarAction: syncPlanWithCalendar,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Monthly);

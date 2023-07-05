@@ -89,6 +89,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
                   seconds,
                   difficulty,
                   routine,
+                  averageHeartRate,
                 });
               };
 

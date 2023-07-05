@@ -1,8 +1,10 @@
 import {AppState, AppStateStatus} from 'react-native';
 import {
   PlanActionTypes,
+  SET_CALENDAR_ID,
   SET_PLAN,
   SET_SYNCED_PLAN_EVENT,
+  SYNC_PLAN_WITH_CALENDAR,
 } from '../actions/plan';
 import {
   SET_PROFILE,
@@ -67,6 +69,8 @@ export interface ProfileState {
   plan?: Plan;
   hasViewedTour: boolean;
   syncedPlanEvents: {[key: string]: string};
+  calendarId?: string;
+  syncPlanWithCalendar: boolean;
 }
 
 const initialState: ProfileState = {
@@ -115,6 +119,7 @@ const initialState: ProfileState = {
   },
   hasViewedTour: false,
   syncedPlanEvents: {},
+  syncPlanWithCalendar: false,
 };
 
 const reducer = (
@@ -268,6 +273,16 @@ const reducer = (
           ...state.syncedPlanEvents,
           [action.payload.key]: action.payload.id,
         },
+      };
+    case SET_CALENDAR_ID:
+      return {
+        ...state,
+        calendarId: action.payload,
+      };
+    case SYNC_PLAN_WITH_CALENDAR:
+      return {
+        ...state,
+        syncPlanWithCalendar: action.payload.sync,
       };
     default:
       return state;
