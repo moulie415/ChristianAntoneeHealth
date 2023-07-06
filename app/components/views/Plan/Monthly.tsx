@@ -128,13 +128,10 @@ const Monthly: React.FC<{
           justifyContent: 'space-between',
           alignItems: 'center',
           margin: 10,
-          backgroundColor: colors.appBlue,
-          borderColor: colors.appWhite,
-          borderWidth: 1,
-          marginTop: 20,
           height: 60,
           paddingHorizontal: 10,
-          borderRadius: 10,
+          borderRadius: 5,
+          marginTop: 20,
         }}>
         <Text
           style={{

@@ -53,7 +53,7 @@ function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
 
       const keys: string[] = [];
 
-      const {syncedPlanEvents} = yield select(
+      const {syncedPlanEvents, reminderTime} = yield select(
         (state: MyRootState) => state.profile,
       );
 
@@ -69,8 +69,15 @@ function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
             title,
             details: {
               ...(currentId ? {id: currentId} : {}),
-              startDate: moment(date).set('hours', 9).toISOString(),
-              endDate: moment(date).set('hours', 10).toISOString(),
+              startDate: moment(date)
+                .set('hours', moment(reminderTime).hours())
+                .set('minutes', moment(reminderTime).minutes())
+                .toISOString(),
+              endDate: moment(date)
+                .set('hours', moment(reminderTime).hours())
+                .set('minutes', moment(reminderTime).minutes())
+                .add(1, 'hour')
+                .toISOString(),
               calendarId,
             },
           };
@@ -110,8 +117,14 @@ export function* schedulePlanReminders() {
   const plan: Plan | undefined = yield select(
     (state: MyRootState) => state.profile.plan,
   );
-  const {testReminders, workoutReminders, reminderTime, testReminderTime} =
-    yield select((state: MyRootState) => state.profile);
+  const {
+    testReminders,
+    workoutReminders,
+    reminderTime,
+    testReminderTime,
+    syncPlanWithCalendar: sync,
+    calendarId,
+  } = yield select((state: MyRootState) => state.profile);
   if (plan) {
     if (plan.workouts && workoutReminders) {
       plan.workouts.forEach(workout => {
@@ -128,6 +141,10 @@ export function* schedulePlanReminders() {
           }
         });
       });
+    }
+
+    if (sync && calendarId) {
+      yield put(syncPlanWithCalendar(plan as Plan, sync));
     }
     // if (plan.tests && testReminders) {
     //   plan.tests.forEach(test => {
