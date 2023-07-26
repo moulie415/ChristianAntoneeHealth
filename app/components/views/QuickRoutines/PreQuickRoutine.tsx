@@ -20,6 +20,7 @@ import {getEquipmentList} from '../../../helpers/exercises';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import Spinner from '../../commons/Spinner';
+import ConnectedApps from '../../commons/ConnectedApps';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -224,6 +225,7 @@ const PreQuickRoutine: React.FC<{
             area,
           )} body`}</Text>
         </View>
+        <ConnectedApps />
         <Button
           style={{margin: 15}}
           text="Start workout"

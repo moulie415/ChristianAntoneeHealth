@@ -15,6 +15,7 @@ import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Exercise from '../../../types/Exercise';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
+import ConnectedApps from '../../commons/ConnectedApps';
 
 const PreWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreWorkout'>;
@@ -122,6 +123,7 @@ const PreWorkout: React.FC<{
             {musclesList && musclesList.length ? musclesList.join(', ') : ''}
           </Text>
         </View>
+        <ConnectedApps />
         <Button
           style={{margin: 15}}
           text="Start workout"
