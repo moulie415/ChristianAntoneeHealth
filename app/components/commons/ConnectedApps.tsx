@@ -13,7 +13,7 @@ const ConnectedApps: React.FC<{profile: Profile}> = ({profile}) => {
         text="connect"
         onPress={() =>
           Linking.openURL(
-            `${Config.ROOT_API_URL}/auth/garmin?uid=${profile.uid}`,
+            `${Config.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
           )
         }
       />

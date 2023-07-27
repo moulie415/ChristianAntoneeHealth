@@ -42,4 +42,9 @@ export default interface Profile {
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;
+  garminAccessTokenSecret?: string;
+  garminAccessSecret?: string;
+  polarAccessToken?: string;
+  fitbitToken?: string;
+  fitbitRefreshToken?: string;
 };

@@ -49,6 +49,7 @@ import Profile from '../types/Profile';
 import {alertPremiumFeature} from '../helpers/exercises';
 import {logError} from '../helpers/error';
 import * as _ from 'lodash';
+import {setProfile} from '../actions/profile';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -203,56 +204,85 @@ export function* viewWorkoutWatcher(action: ViewWorkoutAction) {
 
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
-  if (parsed.url === 'https://healthandmovement/workout') {
-    try {
-      const {loggedIn} = yield select((state: MyRootState) => state.profile);
-      if (loggedIn) {
-        navigate('Loading');
-        if (typeof parsed.query.exercises === 'string') {
-          const exerciseIds = parsed.query.exercises.split(',');
-          yield put(viewWorkout(exerciseIds));
-        }
-      } else {
-        Alert.alert('Error', 'Please log in before using that link');
-      }
-    } catch (e) {
-      if (e instanceof Error) {
-        Alert.alert('Error handling link', e.message);
-      }
-      resetToTabs();
-    }
-  } else if (parsed.url === 'https://healthandmovement/invite') {
-    try {
-      const {loggedIn, profile} = yield select(
-        (state: MyRootState) => state.profile,
-      );
-      if (loggedIn) {
-        navigate('Loading');
-        if (profile.premium) {
-          if (typeof parsed.query.value === 'string') {
-            const user: Profile = yield call(
-              api.acceptInviteLink,
-              parsed.query.value,
-            );
-            Snackbar.show({text: `You are now connected with ${user.name}`});
-            resetToTabs();
-            navigate('Connections');
+  console.log(url, parsed);
+  const {loggedIn, profile} = yield select(
+    (state: MyRootState) => state.profile,
+  );
+  switch (parsed.url) {
+    case 'https://healthandmovement/workout':
+      try {
+        if (loggedIn) {
+          navigate('Loading');
+          if (typeof parsed.query.exercises === 'string') {
+            const exerciseIds = parsed.query.exercises.split(',');
+            yield put(viewWorkout(exerciseIds));
           }
         } else {
-          resetToTabs();
-          alertPremiumFeature();
+          Alert.alert('Error', 'Please log in before using that link');
         }
+      } catch (e) {
+        if (e instanceof Error) {
+          Alert.alert('Error handling link', e.message);
+        }
+        resetToTabs();
+      }
+      break;
+    case 'https://healthandmovement/invite':
+      try {
+        if (loggedIn) {
+          navigate('Loading');
+          if (profile.premium) {
+            if (typeof parsed.query.value === 'string') {
+              const user: Profile = yield call(
+                api.acceptInviteLink,
+                parsed.query.value,
+              );
+              Snackbar.show({text: `You are now connected with ${user.name}`});
+              resetToTabs();
+              navigate('Connections');
+            }
+          } else {
+            resetToTabs();
+            alertPremiumFeature();
+          }
+        } else {
+          Alert.alert('Error', 'Please log in before using that link');
+        }
+      } catch (e) {
+        resetToTabs();
+        if (e instanceof Error) {
+          Alert.alert('Error handling link', e.message);
+        }
+      }
+      break;
+    case 'https://healthandmovement/garmin':
+      const {garminAccessTokenSecret, garminAccessSecret} = parsed.query;
+      if (garminAccessTokenSecret && garminAccessSecret) {
+        yield put(
+          setProfile({...profile, garminAccessSecret, garminAccessTokenSecret}),
+        );
       } else {
-        Alert.alert('Error', 'Please log in before using that link');
+        Alert.alert('Error', 'Error processing link');
       }
-    } catch (e) {
-      resetToTabs();
-      if (e instanceof Error) {
-        Alert.alert('Error handling link', e.message);
+      break;
+    case 'https://healthandmovement/polar':
+      const {polarAccessToken} = parsed.query;
+      if (polarAccessToken) {
+        yield put(setProfile({...profile, polarAccessToken}));
+      } else {
+        Alert.alert('Error', 'Error processing link');
       }
-    }
-  } else {
-    Alert.alert('Error', 'Invalid link');
+      break;
+    case 'https://healthandmovement/fitbit':
+      const {fitbitToken, fitbitRefreshToken} = parsed.query;
+      if (fitbitToken && fitbitRefreshToken) {
+        yield put(setProfile({...profile, fitbitToken, fitbitRefreshToken}));
+      } else {
+        Alert.alert('Error', 'Error processing link');
+      }
+      break;
+    default:
+      Alert.alert('Error', 'Invalid link');
   }
 }
 
