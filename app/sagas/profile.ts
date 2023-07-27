@@ -259,7 +259,6 @@ function* signUp(action: SignUpAction) {
 
     const {profile} = yield select((state: MyRootState) => state.profile);
     const clientList: string[] = yield call(api.getClientList);
-    console.log(clientList);
     const client = !!(clientList && clientList.includes(profile.email));
     yield call(
       api.updateUser,
