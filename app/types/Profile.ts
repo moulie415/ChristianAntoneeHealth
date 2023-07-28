@@ -43,7 +43,7 @@ export default interface Profile {
   muscleMass?: number;
   boneMass?: number;
   garminAccessTokenSecret?: string;
-  garminAccessSecret?: string;
+  garminAccessToken?: string;
   polarAccessToken?: string;
   fitbitToken?: string;
   fitbitRefreshToken?: string;

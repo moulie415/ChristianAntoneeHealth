@@ -1,23 +1,22 @@
-import {View, Linking} from 'react-native';
-import React from 'react';
-import Button from './Button';
-import Config from 'react-native-config';
+import {View} from 'react-native';
+import React, {useState} from 'react';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
+import ConnectedAppsModal from './ConnectedAppsModal';
+import Button from './Button';
 
-const ConnectedApps: React.FC<{profile: Profile}> = ({profile}) => {
+const ConnectedApps: React.FC<{
+  profile: Profile;
+}> = ({profile}) => {
+  const [showModal, setShowModal] = useState(false);
   return (
-    <View>
-      <Button
-        text="connect"
-        onPress={() =>
-          Linking.openURL(
-            `${Config.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
-          )
-        }
-      />
-    </View>
+    <>
+      <View>
+        <Button text="connect" onPress={() => setShowModal(true)} />
+      </View>
+      <ConnectedAppsModal visible={showModal} setVisible={setShowModal} />
+    </>
   );
 };
 

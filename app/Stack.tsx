@@ -137,7 +137,8 @@ const StackComponent: React.FC<{
         <Stack.Screen name="Sleep" component={PlanSleep} />
         <Stack.Screen name="MonthlyDayView" component={MonthlyDayView} />
       </Stack.Group>
-      {/* <Stack.Group screenOptions={{presentation: 'modal'}}></Stack.Group> */}
+      {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
+      </Stack.Group> */}
     </Stack.Navigator>
   );
 };

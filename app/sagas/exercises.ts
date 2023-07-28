@@ -256,10 +256,10 @@ export function* handleDeepLink(url: string) {
       }
       break;
     case 'https://healthandmovement/garmin':
-      const {garminAccessTokenSecret, garminAccessSecret} = parsed.query;
-      if (garminAccessTokenSecret && garminAccessSecret) {
+      const {garminAccessTokenSecret, garminAccessToken} = parsed.query;
+      if (garminAccessTokenSecret && garminAccessToken) {
         yield put(
-          setProfile({...profile, garminAccessSecret, garminAccessTokenSecret}),
+          setProfile({...profile, garminAccessToken, garminAccessTokenSecret}),
         );
       } else {
         Alert.alert('Error', 'Error processing link');
