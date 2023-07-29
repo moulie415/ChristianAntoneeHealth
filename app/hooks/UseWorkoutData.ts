@@ -8,6 +8,7 @@ import {
   getCaloriesBurned,
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
+import * as polar from '../helpers/polar';
 
 const useWorkoutData = (
   seconds: number,
@@ -16,6 +17,16 @@ const useWorkoutData = (
   endDate: Date,
 ) => {
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
+  const [polarHeartRateSamples, setPolarHeartRateSamples] = useState<Sample[]>(
+    [],
+  );
+  const [fitbitHeartRateSamples, setFitbitHeartRateSamples] = useState<
+    Sample[]
+  >([]);
+  const [garminHeartRateSamples, setGarminHeartRateSamples] = useState<
+    Sample[]
+  >([]);
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getSamples = async () => {
@@ -30,27 +41,51 @@ const useWorkoutData = (
             return {startDate, endDate: e, value};
           }),
         );
+        if (profile.polarAccessToken) {
+          const pSamples = await polar.getHeartRateSamplesWithRange(
+            profile.polarAccessToken,
+            moment(endDate).subtract(seconds, 'seconds').toDate(),
+            endDate,
+          );
+          setPolarHeartRateSamples(pSamples);
+        }
       } catch (e) {
         logError(e);
       }
       setLoading(false);
     };
     getSamples();
-  }, [endDate, seconds]);
+  }, [endDate, seconds, profile.polarAccessToken]);
 
-  const averageHeartRate = heartRateSamples.length
-    ? heartRateSamples.reduce((acc, cur) => {
+  const getValidHeartRateSamples = () => {
+    if (polarHeartRateSamples.length) {
+      return polarHeartRateSamples;
+    }
+    if (garminHeartRateSamples.length) {
+      return garminHeartRateSamples;
+    }
+
+    if (fitbitHeartRateSamples.length) {
+      return fitbitHeartRateSamples;
+    }
+    return heartRateSamples;
+  };
+
+  const validHeartRateSamples = getValidHeartRateSamples();
+
+  const averageHeartRate = validHeartRateSamples.length
+    ? validHeartRateSamples.reduce((acc, cur) => {
         return acc + cur.value;
-      }, 0) / heartRateSamples.length
+      }, 0) / validHeartRateSamples.length
     : 0;
 
   return {
     loading,
-    heartRateSamples,
+    heartRateSamples: validHeartRateSamples,
     averageHeartRate,
     calories:
-      heartRateSamples &&
-      heartRateSamples.length &&
+      validHeartRateSamples &&
+      validHeartRateSamples.length &&
       profile.dob &&
       profile.gender
         ? getCaloriesBurnedFromAverageHeartRate(

@@ -261,6 +261,7 @@ export function* handleDeepLink(url: string) {
         yield put(
           setProfile({...profile, garminAccessToken, garminAccessTokenSecret}),
         );
+        Snackbar.show({text: 'Garmin Connect authorization successful'});
       } else {
         Alert.alert('Error', 'Error processing link');
       }
@@ -269,6 +270,7 @@ export function* handleDeepLink(url: string) {
       const {polarAccessToken} = parsed.query;
       if (polarAccessToken) {
         yield put(setProfile({...profile, polarAccessToken}));
+        Snackbar.show({text: 'Polar authorization successful'});
       } else {
         Alert.alert('Error', 'Error processing link');
       }
@@ -277,6 +279,7 @@ export function* handleDeepLink(url: string) {
       const {fitbitToken, fitbitRefreshToken} = parsed.query;
       if (fitbitToken && fitbitRefreshToken) {
         yield put(setProfile({...profile, fitbitToken, fitbitRefreshToken}));
+        Snackbar.show({text: 'Fitbit authorization successful'});
       } else {
         Alert.alert('Error', 'Error processing link');
       }

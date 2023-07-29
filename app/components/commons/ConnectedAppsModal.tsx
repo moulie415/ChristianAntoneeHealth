@@ -1,4 +1,4 @@
-import {View, Linking, TouchableOpacity} from 'react-native';
+import {View, Linking, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
 import Button from './Button';
 import {MyRootState} from '../../types/Shared';
@@ -10,7 +10,7 @@ import colors from '../../constants/colors';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
 
-const IMAGE_SIZE = 75;
+const IMAGE_SIZE = Dimensions.get('window').width / 5;
 
 const ConnectedAppsModal: React.FC<{
   profile: Profile;
@@ -35,13 +35,13 @@ const ConnectedAppsModal: React.FC<{
             fontWeight: 'bold',
             marginBottom: 20,
           }}>
-          Connected Apps
+          Connect Apps
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${Config.ROOT_API_URL}auth/polar?uid=${profile.uid}`,
+                `${Config.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
               )
             }>
             <FastImageAnimated
@@ -56,7 +56,7 @@ const ConnectedAppsModal: React.FC<{
               style={{
                 color: colors.appWhite,
                 textAlign: 'center',
-                marginTop: 5,
+                marginTop: 10,
                 fontSize: 16,
               }}>
               {'Garmin\nConnect'}
@@ -110,6 +110,9 @@ const ConnectedAppsModal: React.FC<{
               {'Fitbit'}
             </Text>
           </TouchableOpacity>
+        </View>
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <Button onPress={() => setVisible(false)} text="Close" />
         </View>
       </View>
     </Modal>

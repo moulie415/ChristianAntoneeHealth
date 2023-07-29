@@ -10,6 +10,21 @@ const ConnectedApps: React.FC<{
   profile: Profile;
 }> = ({profile}) => {
   const [showModal, setShowModal] = useState(false);
+  const {
+    garminAccessToken,
+    garminAccessTokenSecret,
+    polarAccessToken,
+    fitbitRefreshToken,
+    fitbitToken,
+  } = profile;
+
+  console.log({
+    garminAccessToken,
+    garminAccessTokenSecret,
+    polarAccessToken,
+    fitbitRefreshToken,
+    fitbitToken,
+  });
   return (
     <>
       <View>
