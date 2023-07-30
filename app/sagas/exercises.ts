@@ -204,7 +204,6 @@ export function* viewWorkoutWatcher(action: ViewWorkoutAction) {
 
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
-  console.log(url, parsed);
   const {loggedIn, profile} = yield select(
     (state: MyRootState) => state.profile,
   );

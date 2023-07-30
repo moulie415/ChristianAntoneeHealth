@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import Text from './Text';
 import FastImage, {Source} from 'react-native-fast-image';
+import FastImageAnimated from './FastImageAnimated';
 
 const {height, width} = Dimensions.get('window');
 
@@ -39,7 +40,7 @@ const HomeCard: React.FC<{
         overflow: 'hidden',
       }}
       onPress={onPress}>
-      <FastImage
+      <FastImageAnimated
         style={{
           position: 'absolute',
           height: CARD_HEIGHT,

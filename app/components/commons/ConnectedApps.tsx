@@ -1,30 +1,33 @@
 import {View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import ConnectedAppsModal from './ConnectedAppsModal';
 import Button from './Button';
+import {getActivityDetails} from '../../helpers/garmin';
+import moment from 'moment';
+import {getHeartRateSamplesWithRange} from '../../helpers/polar';
 
 const ConnectedApps: React.FC<{
   profile: Profile;
 }> = ({profile}) => {
   const [showModal, setShowModal] = useState(false);
-  const {
-    garminAccessToken,
-    garminAccessTokenSecret,
-    polarAccessToken,
-    fitbitRefreshToken,
-    fitbitToken,
-  } = profile;
+  const {polarAccessToken, fitbitRefreshToken, fitbitToken} = profile;
 
   console.log({
-    garminAccessToken,
-    garminAccessTokenSecret,
     polarAccessToken,
     fitbitRefreshToken,
     fitbitToken,
   });
+
+  useEffect(() => {
+    getHeartRateSamplesWithRange(
+      polarAccessToken,
+      moment().startOf('day').toDate(),
+      moment().endOf('day').toDate(),
+    );
+  }, [polarAccessToken]);
   return (
     <>
       <View>
