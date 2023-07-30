@@ -42,7 +42,7 @@ const useWorkoutData = (
           }),
         );
         if (profile.polarAccessToken) {
-          const pSamples = await polar.getHeartRateSamplesWithRange(
+          const pSamples = await polar.getHeartRateSamples(
             profile.polarAccessToken,
             moment(endDate).subtract(seconds, 'seconds').toDate(),
             endDate,

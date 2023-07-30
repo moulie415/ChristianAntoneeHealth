@@ -5,16 +5,6 @@ import Snackbar from 'react-native-snackbar';
 import Config from 'react-native-config';
 import axios from 'axios';
 
-const makeRequest = async (url: string, token: string) => {
-  const headers = {
-    Accept: 'application/json',
-    Authorization: `Bearer ${token}`,
-  };
-  console.log(url, headers);
-  const response = await fetch(url, {headers});
-  return response.json();
-};
-
 interface GarminActivityDetail {
   userId: string;
   summaryId: string;
@@ -84,24 +74,34 @@ type GarminActivityDetailResponse = GarminActivityDetail[];
 export const getActivityDetails = async (
   token: string,
   tokenSecret: string,
-  from: number,
-  to: number,
+  from: Date,
+  to: Date,
 ): Promise<Sample[]> => {
   try {
-    const response = await axios.get(
+    const {data}: {data: GarminActivityDetailResponse} = await axios.get(
       `${Config.ROOT_API_URL}garmin/activityDetails`,
       {
         params: {
-          uploadStartTimeInSeconds: from,
-          uploadEndTimeInSeconds: to,
+          uploadStartTimeInSeconds: moment(from).unix(),
+          uploadEndTimeInSeconds: moment(to).unix(),
           accessToken: token,
           accessTokenSecret: tokenSecret,
         },
       },
     );
 
-    console.log(response.data);
-    return [];
+    return data.reduce((acc: Sample[], cur) => {
+      return [
+        ...acc,
+        ...cur.samples.map(sample => {
+          return {
+            value: sample.heartRate,
+            startDate: moment(sample.startTimeInSeconds).toISOString(),
+            endDate: moment(sample.startTimeInSeconds).toISOString(),
+          };
+        }),
+      ];
+    }, []);
   } catch (e) {
     logError(e);
     Snackbar.show({text: 'Error fetching polar heart rate samples'});

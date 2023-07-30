@@ -50,6 +50,7 @@ import {alertPremiumFeature} from '../helpers/exercises';
 import {logError} from '../helpers/error';
 import * as _ from 'lodash';
 import {setProfile} from '../actions/profile';
+import * as polar from '../helpers/polar';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -269,6 +270,7 @@ export function* handleDeepLink(url: string) {
       const {polarAccessToken} = parsed.query;
       if (polarAccessToken) {
         yield put(setProfile({...profile, polarAccessToken}));
+        yield call(polar.registerUser, profile.uid, polarAccessToken as string);
         Snackbar.show({text: 'Polar authorization successful'});
       } else {
         Alert.alert('Error', 'Error processing link');
