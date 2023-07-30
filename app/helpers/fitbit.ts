@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {logError} from './error';
+import {Sample} from '../types/Shared';
+import moment from 'moment';
 
 export interface FitbitHeartRateResponse {
   'activities-heart': ActivitiesHeart[];
@@ -46,6 +48,22 @@ export const getHeartRateTimeSeriesByDate = async (
         },
       },
     );
+    const samples: Sample[] = [];
+    data['activities-heart'].forEach(activity => {
+      if (
+        moment(activity.dateTime).isAfter(from) &&
+        moment(activity.dateTime).isBefore(to)
+      ) {
+        activity.value.heartRateZones.forEach(zone => {
+          samples.push({
+            value: zone.max,
+            startDate: moment(activity.dateTime).toISOString(),
+            endDate: moment(activity.dateTime).toISOString(),
+          });
+        });
+      }
+    });
+    return samples;
   } catch (e) {
     logError(e);
   }
