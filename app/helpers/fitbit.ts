@@ -66,5 +66,6 @@ export const getHeartRateTimeSeriesByDate = async (
     return samples;
   } catch (e) {
     logError(e);
+    return [];
   }
 };

@@ -9,6 +9,26 @@ import Modal from './Modal';
 import colors from '../../constants/colors';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
+const ConnectedIcon: React.FC = () => {
+  return (
+    <View
+      style={{
+        backgroundColor: colors.appGreen,
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+      }}>
+      <Icon name="check" color={colors.appWhite} />
+    </View>
+  );
+};
 
 const IMAGE_SIZE = Dimensions.get('window').width / 5;
 
@@ -44,14 +64,18 @@ const ConnectedAppsModal: React.FC<{
                 `${Config.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
               )
             }>
-            <FastImageAnimated
-              style={{
-                width: IMAGE_SIZE,
-                height: IMAGE_SIZE,
-                borderRadius: IMAGE_SIZE / 2,
-              }}
-              source={require('../../images/garmin.png')}
-            />
+            <View>
+              <FastImageAnimated
+                style={{
+                  width: IMAGE_SIZE,
+                  height: IMAGE_SIZE,
+                  borderRadius: IMAGE_SIZE / 2,
+                }}
+                source={require('../../images/garmin.png')}
+              />
+              {!!profile.garminAccessToken &&
+                !!profile.garminAccessTokenSecret && <ConnectedIcon />}
+            </View>
             <Text
               style={{
                 color: colors.appWhite,
@@ -68,14 +92,17 @@ const ConnectedAppsModal: React.FC<{
                 `${Config.ROOT_API_URL}auth/polar?uid=${profile.uid}`,
               )
             }>
-            <FastImageAnimated
-              style={{
-                width: IMAGE_SIZE,
-                height: IMAGE_SIZE,
-                borderRadius: IMAGE_SIZE / 2,
-              }}
-              source={require('../../images/polar.png')}
-            />
+            <View>
+              <FastImageAnimated
+                style={{
+                  width: IMAGE_SIZE,
+                  height: IMAGE_SIZE,
+                  borderRadius: IMAGE_SIZE / 2,
+                }}
+                source={require('../../images/polar.png')}
+              />
+              {!!profile.polarAccessToken && <ConnectedIcon />}
+            </View>
             <Text
               style={{
                 color: colors.appWhite,
@@ -92,14 +119,19 @@ const ConnectedAppsModal: React.FC<{
                 `${Config.ROOT_API_URL}auth/fitbit?uid=${profile.uid}`,
               )
             }>
-            <FastImageAnimated
-              style={{
-                width: IMAGE_SIZE,
-                height: IMAGE_SIZE,
-                borderRadius: IMAGE_SIZE / 2,
-              }}
-              source={require('../../images/fitbit.png')}
-            />
+            <View>
+              <FastImageAnimated
+                style={{
+                  width: IMAGE_SIZE,
+                  height: IMAGE_SIZE,
+                  borderRadius: IMAGE_SIZE / 2,
+                }}
+                source={require('../../images/fitbit.png')}
+              />
+              {!!profile.fitbitToken && !!profile.fitbitRefreshToken && (
+                <ConnectedIcon />
+              )}
+            </View>
             <Text
               style={{
                 color: colors.appWhite,

@@ -9,6 +9,8 @@ import {
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
 import * as polar from '../helpers/polar';
+import * as garmin from '../helpers/garmin';
+import * as fitbit from '../helpers/fitbit';
 
 const useWorkoutData = (
   seconds: number,
@@ -49,13 +51,30 @@ const useWorkoutData = (
           );
           setPolarHeartRateSamples(pSamples);
         }
+        if (profile.garminAccessToken && profile.garminAccessTokenSecret) {
+          const gSamples = await garmin.getActivityDetails(
+            profile.garminAccessToken,
+            profile.garminAccessTokenSecret,
+            moment(endDate).subtract(seconds, 'seconds').toDate(),
+            endDate,
+          );
+          setGarminHeartRateSamples(gSamples);
+        }
+        if (profile.fitbitToken) {
+          const fSamples = await fitbit.getHeartRateTimeSeriesByDate(
+            profile.fitbitToken,
+            moment(endDate).subtract(seconds, 'seconds').toDate(),
+            endDate,
+          );
+          setFitbitHeartRateSamples(fSamples);
+        }
       } catch (e) {
         logError(e);
       }
       setLoading(false);
     };
     getSamples();
-  }, [endDate, seconds, profile.polarAccessToken]);
+  }, [endDate, seconds, profile]);
 
   const getValidHeartRateSamples = () => {
     if (polarHeartRateSamples.length) {
