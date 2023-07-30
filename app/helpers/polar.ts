@@ -61,7 +61,7 @@ export const getHeartRateSamples = async (
     }, []);
   } catch (e) {
     logError(e);
-    Snackbar.show({text: 'Error fetching polar heart rate samples'});
+    Snackbar.show({text: 'Error fetching Polar heart rate samples'});
     return [];
   }
 };

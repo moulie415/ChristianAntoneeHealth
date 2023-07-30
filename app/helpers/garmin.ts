@@ -104,7 +104,7 @@ export const getActivityDetails = async (
     }, []);
   } catch (e) {
     logError(e);
-    Snackbar.show({text: 'Error fetching polar heart rate samples'});
+    Snackbar.show({text: 'Error fetching Garmin heart rate samples'});
     return [];
   }
 };

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {logError} from './error';
 import {Sample} from '../types/Shared';
 import moment from 'moment';
+import Snackbar from 'react-native-snackbar';
 
 export interface FitbitHeartRateResponse {
   'activities-heart': ActivitiesHeart[];
@@ -36,12 +37,13 @@ export interface HeartRateZone {
 
 export const getHeartRateTimeSeriesByDate = async (
   token: string,
+  fitbitUserId: string,
   from: Date,
   to: Date,
 ) => {
   try {
     const {data}: {data: FitbitHeartRateResponse} = await axios.get(
-      'https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json',
+      `https://api.fitbit.com/1/user/${fitbitUserId}/activities/heart/date/today/1d.json`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,6 +67,7 @@ export const getHeartRateTimeSeriesByDate = async (
     });
     return samples;
   } catch (e) {
+    Snackbar.show({text: 'Error fetching Fitbit heart rate samples'});
     logError(e);
     return [];
   }

@@ -10,14 +10,6 @@ const ConnectedApps: React.FC<{
   profile: Profile;
 }> = ({profile}) => {
   const [showModal, setShowModal] = useState(false);
-  const {polarAccessToken, fitbitRefreshToken, fitbitToken} = profile;
-
-  console.log({
-    polarAccessToken,
-    fitbitRefreshToken,
-    fitbitToken,
-  });
-
 
   return (
     <>

@@ -277,9 +277,22 @@ export function* handleDeepLink(url: string) {
       }
       break;
     case 'https://healthandmovement/fitbit':
-      const {fitbitToken, fitbitRefreshToken} = parsed.query;
+      const {
+        fitbitToken,
+        fitbitRefreshToken,
+        fitbitUserId,
+        fitbitTokenExpiresIn,
+      } = parsed.query;
       if (fitbitToken && fitbitRefreshToken) {
-        yield put(setProfile({...profile, fitbitToken, fitbitRefreshToken}));
+        yield put(
+          setProfile({
+            ...profile,
+            fitbitToken,
+            fitbitRefreshToken,
+            fitbitUserId,
+            fitbitTokenExpiresIn,
+          }),
+        );
         Snackbar.show({text: 'Fitbit authorization successful'});
       } else {
         Alert.alert('Error', 'Error processing link');

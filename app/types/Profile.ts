@@ -47,4 +47,6 @@ export default interface Profile {
   polarAccessToken?: string;
   fitbitToken?: string;
   fitbitRefreshToken?: string;
+  fitbitUserId?: string;
+  fitbitTokenExpiresIn: string;
 };
