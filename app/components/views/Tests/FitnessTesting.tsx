@@ -11,18 +11,16 @@ import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Test from '../../../types/Test';
 import Profile from '../../../types/Profile';
-import Drawer from 'react-native-drawer';
 
 const FitnessTesting: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Fitness'>;
   tests: {[key: string]: Test};
   profile: Profile;
-  drawerRef: MutableRefObject<Drawer | null>;
-}> = ({navigation, tests, profile, drawerRef}) => {
+}> = ({navigation, tests, profile}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
-        <Header drawerRef={drawerRef} />
+        <Header showDrawerMenuButton />
 
         <ScrollView
           contentContainerStyle={{

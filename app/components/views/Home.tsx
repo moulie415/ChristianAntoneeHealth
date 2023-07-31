@@ -17,7 +17,6 @@ import {
   useTourGuideController,
 } from 'rn-tourguide';
 import Header from '../commons/Header';
-import Drawer from 'react-native-drawer';
 import {CLIENT_PREMIUM} from '../../constants';
 import isTestFlight from '../../helpers/isTestFlight';
 
@@ -32,8 +31,7 @@ type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
-  drawerRef: MutableRefObject<Drawer | null>;
-}> = ({navigation, profile, drawerRef}) => {
+}> = ({navigation, profile}) => {
   const {eventEmitter} = useTourGuideController();
 
   const handleOnStepChange = useCallback(
@@ -55,7 +53,7 @@ const Home: React.FC<{
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
-        <Header drawerRef={drawerRef} />
+        <Header showDrawerMenuButton />
         <ScrollView contentContainerStyle={{paddingBottom: 60}}>
           <FastImage
             source={require('../../images/logo.png')}

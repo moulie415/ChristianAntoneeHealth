@@ -1,4 +1,4 @@
-import React, {useState, useEffect, MutableRefObject} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {StackParamList} from './App';
@@ -13,7 +13,6 @@ import Profile from './types/Profile';
 import Color from 'color';
 import {TourGuideZone} from 'rn-tourguide';
 import GoalSummaries from './components/commons/GoalSummaries';
-import Drawer from 'react-native-drawer';
 import PlanTabIcon from './PlanTabIcon';
 
 const Tab = createBottomTabNavigator<StackParamList>();
@@ -22,8 +21,7 @@ const color = new Color(colors.appWhite);
 
 const Tabs: React.FC<{
   profile: Profile;
-  drawerRef: MutableRefObject<Drawer | null>;
-}> = ({profile, drawerRef}) => {
+}> = ({profile}) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -43,7 +41,7 @@ const Tabs: React.FC<{
         }}
         name="Home"
         key="Home"
-        children={props => <Home {...props} drawerRef={drawerRef} />}
+        component={Home}
       />
 
       <Tab.Screen
@@ -61,7 +59,7 @@ const Tabs: React.FC<{
         }}
         name="Workout"
         key="Workout"
-        children={props => <WhatEquipment {...props} drawerRef={drawerRef} />}
+        component={WhatEquipment}
       />
       <Tab.Screen
         options={{
@@ -78,7 +76,7 @@ const Tabs: React.FC<{
         }}
         key="Fitness"
         name="Fitness"
-        children={props => <FitnessTesting {...props} drawerRef={drawerRef} />}
+        component={FitnessTesting}
       />
       <Tab.Screen
         options={{
@@ -95,7 +93,7 @@ const Tabs: React.FC<{
         }}
         key="Goals"
         name="Goals"
-        children={props => <GoalSummaries {...props} drawerRef={drawerRef} />}
+        component={GoalSummaries}
       />
       {(profile.admin || profile.client) && (
         <Tab.Screen
@@ -113,7 +111,7 @@ const Tabs: React.FC<{
           }}
           name="Plan"
           key="Plan"
-          children={props => <Plan {...props} drawerRef={drawerRef} />}
+          component={Plan}
         />
       )}
     </Tab.Navigator>

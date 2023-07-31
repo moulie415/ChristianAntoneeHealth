@@ -8,16 +8,14 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
-import Drawer from 'react-native-drawer';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
-  drawerRef: MutableRefObject<Drawer | null>;
-}> = ({navigation, drawerRef}) => {
+}> = ({navigation}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
-        <Header drawerRef={drawerRef} />
+        <Header showDrawerMenuButton />
 
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Text

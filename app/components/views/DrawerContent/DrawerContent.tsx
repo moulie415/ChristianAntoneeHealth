@@ -27,6 +27,7 @@ import FastImage from 'react-native-fast-image';
 import * as Sentry from '@sentry/react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import Profile from '../../../types/Profile';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
 
 export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
   return (
@@ -72,15 +73,14 @@ export interface ListItem {
   tourIndex?: number;
   tourText?: string;
 }
-interface Props {
+interface Props extends DrawerContentComponentProps {
   setLoggedInAction: (loggedIn: boolean) => void;
   profile: Profile;
-  close: () => void;
 }
 const DrawerContent: React.FC<Props> = ({
   setLoggedInAction,
   profile,
-  close,
+  navigation,
 }) => {
   const logOut = () => {
     Alert.alert('Are you sure?', '', [
@@ -89,7 +89,7 @@ const DrawerContent: React.FC<Props> = ({
         text: 'OK',
         onPress: async () => {
           try {
-            close();
+            navigation.closeDrawer();
             resetToWelcome();
             await messaging().deleteToken();
             await Purchases.logOut();
@@ -108,7 +108,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'user',
       onPress: () => {
         navigationRef.navigate('Profile');
-        close();
+        navigation.closeDrawer();
       },
     },
     {
@@ -116,7 +116,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'book-open',
       onPress: () => {
         navigationRef.navigate('Education');
-        close();
+        navigation.closeDrawer();
       },
     },
 
@@ -124,7 +124,7 @@ const DrawerContent: React.FC<Props> = ({
       title: 'Friends',
       icon: 'user-friends',
       onPress: () => {
-        close();
+        navigation.closeDrawer();
         if (profile.premium) {
           navigationRef.navigate('Connections');
         } else {
@@ -147,7 +147,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'trophy',
       onPress: () => {
         navigationRef.navigate('Premium', {});
-        close();
+        navigation.closeDrawer();
       },
     },
     {
@@ -155,14 +155,15 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'info-circle',
       onPress: () => {
         navigationRef.navigate('About');
-        close();
+        navigation.closeDrawer();
       },
     },
     {
       title: 'Settings',
       icon: 'cog',
       onPress: () => {
-        navigationRef.navigate('Settings'), close();
+        navigationRef.navigate('Settings');
+        navigation.closeDrawer();
       },
     },
     {
@@ -170,7 +171,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'question-circle',
       onPress: () => {
         navigationRef.navigate('Support');
-        close();
+        navigation.closeDrawer();
       },
     },
     {
@@ -188,7 +189,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'star',
       onPress: () => {
         navigationRef.navigate('Rating');
-        close();
+        navigation.closeDrawer();
       },
     },
     {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},

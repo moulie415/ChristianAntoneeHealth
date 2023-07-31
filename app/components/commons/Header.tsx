@@ -1,5 +1,5 @@
 import {TouchableOpacity, View} from 'react-native';
-import React, {MutableRefObject, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import BackButton from './BackButton';
 import {navigationRef} from '../../RootNavigation';
 
@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
-import Drawer from 'react-native-drawer';
+import {DrawerActions} from '@react-navigation/native';
 
 const Header: React.FC<{
   hasBack?: boolean;
@@ -19,7 +19,7 @@ const Header: React.FC<{
   absolute?: boolean;
   customBackPress?: () => void;
   profile: Profile;
-  drawerRef?: MutableRefObject<Drawer | null>;
+  showDrawerMenuButton?: boolean;
 }> = ({
   hasBack,
   title,
@@ -27,7 +27,7 @@ const Header: React.FC<{
   absolute,
   customBackPress,
   profile,
-  drawerRef,
+  showDrawerMenuButton,
 }) => {
   const insets = useSafeAreaInsets();
   const count = Object.keys(profile.unread || {}).reduce((acc, cur) => {
@@ -56,7 +56,8 @@ const Header: React.FC<{
           onPress={customBackPress || navigationRef?.goBack}
         />
       )}
-      {drawerRef?.current && (
+
+      {showDrawerMenuButton && (
         <TouchableOpacity
           hitSlop={{
             top: 10,
@@ -64,7 +65,7 @@ const Header: React.FC<{
             right: 10,
             left: 10,
           }}
-          onPress={() => drawerRef.current?.open()}
+          onPress={() => navigationRef.dispatch(DrawerActions.openDrawer())}
           style={{padding: 20}}>
           <Icon
             name="bars"

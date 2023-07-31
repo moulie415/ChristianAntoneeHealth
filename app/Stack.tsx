@@ -49,18 +49,33 @@ import WorkoutList from './components/views/Workout/WorkoutList';
 import WhatArea from './components/views/Workout/WhatArea';
 import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
 import PreWorkout from './components/views/Workout/PreWorkout';
-import DrawerContent from './components/views/DrawerContent/DrawerContent';
-
-import Drawer from 'react-native-drawer';
 import PlanNutrition from './components/views/Plan/PlanNutrition';
 import PlanSleep from './components/views/Plan/PlanSleep';
 import MonthlyDayView from './components/views/Plan/MonthlyDayView';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import DrawerContent from './components/views/DrawerContent/DrawerContent';
+import {Dimensions} from 'react-native';
+
+const Drawer = createDrawerNavigator();
+
+export const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      defaultStatus="closed"
+      screenOptions={{
+        headerShown: false,
+        drawerStyle: {width: Dimensions.get('screen').width - 100},
+        swipeEnabled: false,
+      }}
+      drawerContent={props => <DrawerContent {...props} />}>
+      <Drawer.Screen name="Stack" component={StackComponent} />
+    </Drawer.Navigator>
+  );
+};
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const StackComponent: React.FC<{
-  drawerRef: MutableRefObject<Drawer | null>;
-}> = ({drawerRef}) => {
+const StackComponent: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName="Loading"
@@ -74,10 +89,7 @@ const StackComponent: React.FC<{
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
         <Stack.Screen name="SignUpFlow" component={SignUpFlow} />
-        <Stack.Screen
-          name="Tabs"
-          children={props => <Tabs {...props} drawerRef={drawerRef} />}
-        />
+        <Stack.Screen name="Tabs" component={Tabs} />
         <Stack.Screen name="FitnessGoal" component={FitnessGoal} />
         <Stack.Screen name="Experience" component={Experience} />
         <Stack.Screen name="WarmUp" component={WarmUp} />

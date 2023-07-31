@@ -31,7 +31,6 @@ import Spinner from '../../commons/Spinner';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
-import Drawer from 'react-native-drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {setRead} from '../../../actions/profile';
 import {CLIENT_PREMIUM} from '../../../constants';
@@ -49,7 +48,6 @@ const Plan: React.FC<{
   loading: boolean;
   getPlan: () => void;
   plan?: PlanType;
-  drawerRef: MutableRefObject<Drawer | null>;
   setRead: (key: string) => void;
 }> = ({
   profile,
@@ -57,7 +55,6 @@ const Plan: React.FC<{
   loading,
   getPlan: getPlanAction,
   plan,
-  drawerRef,
   setRead: setReadAction,
 }) => {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
@@ -116,7 +113,7 @@ const Plan: React.FC<{
       {plan && hasClientPremium ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
-            <Header drawerRef={drawerRef} />
+            <Header showDrawerMenuButton />
             <TabView
               renderTabBar={props => {
                 return (
@@ -182,7 +179,7 @@ const Plan: React.FC<{
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
           <SafeAreaView style={{flex: 1}}>
-            <Header drawerRef={drawerRef} />
+            <Header />
             <View
               style={{
                 ...StyleSheet.absoluteFillObject,

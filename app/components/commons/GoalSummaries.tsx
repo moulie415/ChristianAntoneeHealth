@@ -16,7 +16,6 @@ import profileSaga from '../../sagas/profile';
 import Goals from '../../styles/views/Goals';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './Header';
-import Drawer from 'react-native-drawer';
 // @ts-ignore
 import Confetti from 'react-native-confetti';
 
@@ -124,14 +123,7 @@ const GoalSummaries: React.FC<{
   getWeeklyItemsAction: () => void;
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
-  drawerRef: MutableRefObject<Drawer | null>;
-}> = ({
-  profile,
-  getWeeklyItemsAction,
-  weeklyItems,
-  quickRoutinesObj,
-  drawerRef,
-}) => {
+}> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
   const pagerRef = useRef<PagerView>(null);
 
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
@@ -237,7 +229,7 @@ const GoalSummaries: React.FC<{
         backgroundColor: colors.appGrey,
         flex: 1,
       }}>
-      <Header drawerRef={drawerRef} />
+      <Header showDrawerMenuButton />
       <Text
         style={{
           color: colors.appWhite,
