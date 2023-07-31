@@ -11,6 +11,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 9,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   textShadow: {
     textShadowColor: '#000',

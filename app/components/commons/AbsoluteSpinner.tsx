@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import globalStyles from '../../styles/globalStyles';
 import Spinner from './Spinner';
 import Text from './Text';
+import colors from '../../constants/colors';
 
 const AbsoluteSpinner: React.FC<{loading: boolean; text?: string}> = ({
   loading,
@@ -12,7 +13,7 @@ const AbsoluteSpinner: React.FC<{loading: boolean; text?: string}> = ({
     return (
       <View style={globalStyles.spinner}>
         <Spinner />
-        {!!text && <Text>{text}</Text>}
+        {!!text && <Text style={{color: colors.appWhite}}>{text}</Text>}
       </View>
     );
   }

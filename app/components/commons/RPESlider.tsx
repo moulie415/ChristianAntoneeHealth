@@ -100,6 +100,7 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
           textAlign: 'center',
           fontSize: 25,
           marginBottom: 20,
+          marginHorizontal: 20,
         }}>
         Rate of perceived exertion{' '}
         <Text style={{fontWeight: 'bold'}}>(RPE)</Text>

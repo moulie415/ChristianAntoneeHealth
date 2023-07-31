@@ -66,7 +66,6 @@ export const refreshToken = async (
       fitbitTokenTimestamp,
     };
   } catch (e) {
-    console.log(e)
     Snackbar.show({text: 'Error authenticating with Fitbit'});
     logError(e);
   }
@@ -108,7 +107,6 @@ export const getHeartRateTimeSeriesByDate = async (
   } catch (e) {
     Snackbar.show({text: 'Error fetching Fitbit heart rate samples'});
     logError(e);
-    console.log(e);
     return {samples: [], data: []};
   }
 };

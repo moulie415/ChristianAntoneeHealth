@@ -18,6 +18,7 @@ import Profile from '../../../types/Profile';
 import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 
 const EndQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
@@ -145,6 +146,7 @@ const EndQuickRoutine: React.FC<{
           />
         </View>
       </SafeAreaView>
+      <AbsoluteSpinner loading={loading} text="Loading workout data" />
     </View>
   );
 };

@@ -36,12 +36,14 @@ export const getHeartRateSamples = async (
 ): Promise<Sample[]> => {
   try {
     const {data}: {data: PolarHeartRateResponse} = await axios.get(
-      'https://www.polaraccesslink.com/v3/users/continuous-heart-rate',
+      `https://www.polaraccesslink.com/v3/users/continuous-heart-rate/${moment(
+        from,
+      ).format('YYYY-MM-DD')}`,
       {
         headers: {Accept: 'application/json', Authorization: `Bearer ${token}`},
-        params: {
-          date: moment(from).format('YYYY-MM-DD'),
-        },
+        // params: {
+        //   date: moment(from).format('YYYY-MM-DD'),
+        // },
       },
     );
     return data.heart_rates.reduce((acc: Sample[], cur) => {
@@ -59,7 +61,10 @@ export const getHeartRateSamples = async (
       });
       return [...acc, ...samples];
     }, []);
-  } catch (e) {
+  } catch (e: any) {
+    if (e.message && e.message.includes('404')) {
+      return [];
+    }
     logError(e);
     Snackbar.show({text: 'Error fetching Polar heart rate samples'});
     return [];
