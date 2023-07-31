@@ -47,6 +47,7 @@ const ConnectedApps: React.FC<{
           flexDirection: 'row',
           alignItems: 'center',
           marginVertical: 10,
+          marginBottom: 20
         }}>
         <View style={{width: 55, alignItems: 'center'}}>
           <Icon
@@ -82,7 +83,7 @@ const ConnectedApps: React.FC<{
             colors={[colors.appBlueLight, colors.appBlueDark]}
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}>
-            <Icon name="plug" size={25} color={colors.appWhite} style={{}} />
+            <Icon name="cog" size={25} color={colors.appWhite} style={{}} />
           </LinearGradient>
         </TouchableOpacity>
       </TouchableOpacity>

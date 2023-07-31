@@ -55,7 +55,7 @@ const ConnectedAppsModal: React.FC<{
             fontWeight: 'bold',
             marginBottom: 20,
           }}>
-          Connect Apps
+          Manage connected apps
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableOpacity

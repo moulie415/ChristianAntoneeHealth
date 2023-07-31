@@ -32,6 +32,8 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     averageHeartRate,
     heartRateSamples,
     calories,
+    fitbitData,
+    garminData,
   } = useWorkoutData(seconds, profile, difficulty, endTime);
 
   useEffect(() => {
@@ -52,6 +54,8 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
       pauseEvents,
       startTime,
       endTime,
+      garminData,
+      fitbitData,
     });
   }, 3000);
 

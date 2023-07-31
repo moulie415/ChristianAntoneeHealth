@@ -40,7 +40,7 @@ export const getHeartRateTimeSeriesByDate = async (
   fitbitUserId: string,
   from: Date,
   to: Date,
-) => {
+): Promise<{samples: Sample[]; data: ActivitiesHeart[]}> => {
   try {
     const {data}: {data: FitbitHeartRateResponse} = await axios.get(
       `https://api.fitbit.com/1/user/${fitbitUserId}/activities/heart/date/today/1d.json`,
@@ -50,6 +50,7 @@ export const getHeartRateTimeSeriesByDate = async (
         },
       },
     );
+    const activities: ActivitiesHeart[] = [];
     const samples: Sample[] = [];
     data['activities-heart'].forEach(activity => {
       if (
@@ -57,6 +58,7 @@ export const getHeartRateTimeSeriesByDate = async (
         moment(activity.dateTime).isBefore(to)
       ) {
         activity.value.heartRateZones.forEach(zone => {
+          activities.push(activity);
           samples.push({
             value: zone.max,
             startDate: moment(activity.dateTime).toISOString(),
@@ -65,10 +67,10 @@ export const getHeartRateTimeSeriesByDate = async (
         });
       }
     });
-    return samples;
+    return {samples: [], data: activities};
   } catch (e) {
     Snackbar.show({text: 'Error fetching Fitbit heart rate samples'});
     logError(e);
-    return [];
+    return {samples: [], data: []};
   }
 };

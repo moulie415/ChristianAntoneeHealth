@@ -69,14 +69,14 @@ interface GarminActivityDetail {
   }[];
 }
 
-type GarminActivityDetailResponse = GarminActivityDetail[];
+export type GarminActivityDetailResponse = GarminActivityDetail[];
 
 export const getActivityDetails = async (
   token: string,
   tokenSecret: string,
   from: Date,
   to: Date,
-): Promise<Sample[]> => {
+): Promise<{samples: Sample[]; data: GarminActivityDetailResponse}> => {
   try {
     const {data}: {data: GarminActivityDetailResponse} = await axios.get(
       `${Config.ROOT_API_URL}garmin/activityDetails`,
@@ -90,7 +90,7 @@ export const getActivityDetails = async (
       },
     );
 
-    return data.reduce((acc: Sample[], cur) => {
+    const samples = data.reduce((acc: Sample[], cur) => {
       return [
         ...acc,
         ...cur.samples.map(sample => {
@@ -102,9 +102,10 @@ export const getActivityDetails = async (
         }),
       ];
     }, []);
+    return {samples, data};
   } catch (e) {
     logError(e);
     Snackbar.show({text: 'Error fetching Garmin heart rate samples'});
-    return [];
+    return {samples: [], data: []};
   }
 };

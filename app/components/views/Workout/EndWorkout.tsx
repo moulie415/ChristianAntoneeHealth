@@ -37,6 +37,8 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     averageHeartRate,
     heartRateSamples,
     calories,
+    garminData,
+    fitbitData,
   } = useWorkoutData(seconds, profile, difficulty, endTime);
 
   useEffect(() => {
@@ -58,6 +60,8 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
       pauseEvents,
       startTime,
       endTime,
+      garminData,
+      fitbitData,
     });
   }, 3000);
 

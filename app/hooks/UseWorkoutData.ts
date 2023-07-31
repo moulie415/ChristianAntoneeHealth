@@ -29,6 +29,11 @@ const useWorkoutData = (
     Sample[]
   >([]);
 
+  const [garminData, setGarminData] =
+    useState<garmin.GarminActivityDetailResponse>([]);
+
+  const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getSamples = async () => {
@@ -52,21 +57,24 @@ const useWorkoutData = (
           setPolarHeartRateSamples(pSamples);
         }
         if (profile.garminAccessToken && profile.garminAccessTokenSecret) {
-          const gSamples = await garmin.getActivityDetails(
+          const {samples: gSamples, data} = await garmin.getActivityDetails(
             profile.garminAccessToken,
             profile.garminAccessTokenSecret,
             moment(endDate).subtract(seconds, 'seconds').toDate(),
             endDate,
           );
           setGarminHeartRateSamples(gSamples);
+          setGarminData(data);
         }
         if (profile.fitbitToken && profile.fitbitUserId) {
-          const fSamples = await fitbit.getHeartRateTimeSeriesByDate(
-            profile.fitbitToken,
-            profile.fitbitUserId,
-            moment(endDate).subtract(seconds, 'seconds').toDate(),
-            endDate,
-          );
+          const {samples: fSamples, data} =
+            await fitbit.getHeartRateTimeSeriesByDate(
+              profile.fitbitToken,
+              profile.fitbitUserId,
+              moment(endDate).subtract(seconds, 'seconds').toDate(),
+              endDate,
+            );
+          setFitbitData(data);
           setFitbitHeartRateSamples(fSamples);
         }
       } catch (e) {
@@ -103,6 +111,8 @@ const useWorkoutData = (
     loading,
     heartRateSamples: validHeartRateSamples,
     averageHeartRate,
+    fitbitData,
+    garminData,
     calories:
       validHeartRateSamples &&
       validHeartRateSamples.length &&
