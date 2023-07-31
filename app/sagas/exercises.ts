@@ -282,6 +282,7 @@ export function* handleDeepLink(url: string) {
         fitbitRefreshToken,
         fitbitUserId,
         fitbitTokenExpiresIn,
+        fitbitTokenTimestamp,
       } = parsed.query;
       if (fitbitToken && fitbitRefreshToken) {
         yield put(
@@ -291,6 +292,7 @@ export function* handleDeepLink(url: string) {
             fitbitRefreshToken,
             fitbitUserId,
             fitbitTokenExpiresIn,
+            fitbitTokenTimestamp,
           }),
         );
         Snackbar.show({text: 'Fitbit authorization successful'});

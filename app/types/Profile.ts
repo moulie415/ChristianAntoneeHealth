@@ -48,5 +48,6 @@ export default interface Profile {
   fitbitToken?: string;
   fitbitRefreshToken?: string;
   fitbitUserId?: string;
-  fitbitTokenExpiresIn?: string;
+  fitbitTokenExpiresIn?: number;
+  fitbitTokenTimestamp?: number;
 };

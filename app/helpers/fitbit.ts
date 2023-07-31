@@ -35,6 +35,10 @@ export interface HeartRateZone {
   name: string;
 }
 
+export const refreshToken = async () => {
+  
+};
+
 export const getHeartRateTimeSeriesByDate = async (
   token: string,
   fitbitUserId: string,
@@ -71,6 +75,7 @@ export const getHeartRateTimeSeriesByDate = async (
   } catch (e) {
     Snackbar.show({text: 'Error fetching Fitbit heart rate samples'});
     logError(e);
+    console.log(e);
     return {samples: [], data: []};
   }
 };

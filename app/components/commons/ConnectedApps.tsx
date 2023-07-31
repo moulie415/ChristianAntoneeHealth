@@ -10,6 +10,8 @@ import colors from '../../constants/colors';
 import Text from './Text';
 import LinearGradient from 'react-native-linear-gradient';
 import {navigate} from '../../RootNavigation';
+import {getHeartRateTimeSeriesByDate} from '../../helpers/fitbit';
+import moment from 'moment';
 
 const ConnectedApps: React.FC<{
   profile: Profile;
@@ -39,6 +41,10 @@ const ConnectedApps: React.FC<{
       navigate('Premium', {});
     }
   };
+
+  useEffect(() => {
+    console.log();
+  }, [profile]);
   return (
     <>
       <TouchableOpacity
@@ -47,7 +53,7 @@ const ConnectedApps: React.FC<{
           flexDirection: 'row',
           alignItems: 'center',
           marginVertical: 10,
-          marginBottom: 20
+          marginBottom: 20,
         }}>
         <View style={{width: 55, alignItems: 'center'}}>
           <Icon
