@@ -60,9 +60,10 @@ const useWorkoutData = (
           );
           setGarminHeartRateSamples(gSamples);
         }
-        if (profile.fitbitToken) {
+        if (profile.fitbitToken && profile.fitbitUserId) {
           const fSamples = await fitbit.getHeartRateTimeSeriesByDate(
             profile.fitbitToken,
+            profile.fitbitUserId,
             moment(endDate).subtract(seconds, 'seconds').toDate(),
             endDate,
           );
