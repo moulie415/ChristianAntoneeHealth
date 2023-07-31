@@ -3,7 +3,6 @@ import {Alert, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import {saveWorkout} from '../../../helpers/biometrics';
-import EndQuickRoutineProps from '../../../types/views/EndQuickRoutine';
 import {saveQuickRoutine} from '../../../actions/quickRoutines';
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
@@ -12,13 +11,28 @@ import Header from '../../commons/Header';
 import RPESlider from '../../commons/RPESlider';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutData from '../../../hooks/UseWorkoutData';
+import {setProfile} from '../../../actions/profile';
+import {RouteProp} from '@react-navigation/native';
+import {StackParamList} from '../../../App';
+import Profile from '../../../types/Profile';
+import Exercise from '../../../types/Exercise';
+import {SavedQuickRoutine} from '../../../types/SavedItem';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
+const EndQuickRoutine: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
+  route: RouteProp<StackParamList, 'EndQuickRoutine'>;
+  profile: Profile;
+  workout: Exercise[];
+  saveQuickRoutine: (payload: SavedQuickRoutine) => void;
+  setProfile: (profile: Profile) => void;
+}> = ({
   route,
   navigation,
   profile,
   workout,
   saveQuickRoutine: saveQuickRoutineAction,
+  setProfile: setProfileAction,
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -34,7 +48,7 @@ const EndQuickRoutine: React.FC<EndQuickRoutineProps> = ({
     calories,
     fitbitData,
     garminData,
-  } = useWorkoutData(seconds, profile, difficulty, endTime);
+  } = useWorkoutData(seconds, profile, difficulty, endTime, setProfileAction);
 
   useEffect(() => {
     setLoading(isLoading);
@@ -142,6 +156,7 @@ const mapStateToProps = ({profile, exercises}: MyRootState) => ({
 
 const mapDispatchToProps = {
   saveQuickRoutine,
+  setProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EndQuickRoutine);

@@ -25,7 +25,7 @@ export const registerUser = async (uid: string, token: string) => {
     );
   } catch (e) {
     logError(e);
-    Snackbar.show({text: 'Error registering for Polar'});
+    Snackbar.show({text: 'Error registering with Polar'});
   }
 };
 

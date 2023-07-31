@@ -11,12 +11,14 @@ import {
 import * as polar from '../helpers/polar';
 import * as garmin from '../helpers/garmin';
 import * as fitbit from '../helpers/fitbit';
+import useInit from './UseInit';
 
 const useWorkoutData = (
   seconds: number,
   profile: Profile,
   difficulty: number,
   endDate: Date,
+  setProfileAction: (payload: Profile) => void,
 ) => {
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
   const [polarHeartRateSamples, setPolarHeartRateSamples] = useState<Sample[]>(
@@ -35,7 +37,7 @@ const useWorkoutData = (
   const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
 
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
+  useInit(() => {
     const getSamples = async () => {
       try {
         setLoading(true);
@@ -66,10 +68,30 @@ const useWorkoutData = (
           setGarminHeartRateSamples(gSamples);
           setGarminData(data);
         }
-        if (profile.fitbitToken && profile.fitbitUserId) {
+        if (
+          profile.fitbitToken &&
+          profile.fitbitUserId &&
+          profile.fitbitRefreshToken &&
+          profile.fitbitTokenTimestamp &&
+          profile.fitbitTokenExpiresIn
+        ) {
+          let token = profile.fitbitToken;
+          if (
+            profile.fitbitTokenTimestamp + profile.fitbitTokenExpiresIn <
+            moment().unix()
+          ) {
+            const data = await fitbit.refreshToken(
+              profile.uid,
+              profile.fitbitRefreshToken,
+            );
+            if (data) {
+              token = data.fitbitToken;
+              setProfileAction({...profile, ...data});
+            }
+          }
           const {samples: fSamples, data} =
             await fitbit.getHeartRateTimeSeriesByDate(
-              profile.fitbitToken,
+              token,
               profile.fitbitUserId,
               moment(endDate).subtract(seconds, 'seconds').toDate(),
               endDate,
@@ -83,7 +105,7 @@ const useWorkoutData = (
       setLoading(false);
     };
     getSamples();
-  }, [endDate, seconds, profile]);
+  });
 
   const getValidHeartRateSamples = () => {
     if (polarHeartRateSamples.length) {

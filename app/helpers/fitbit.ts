@@ -3,6 +3,7 @@ import {logError} from './error';
 import {Sample} from '../types/Shared';
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
+import Config from 'react-native-config';
 
 export interface FitbitHeartRateResponse {
   'activities-heart': ActivitiesHeart[];
@@ -35,8 +36,40 @@ export interface HeartRateZone {
   name: string;
 }
 
-export const refreshToken = async () => {
-  
+export const refreshToken = async (
+  uid: string,
+  rToken: string,
+): Promise<void | {
+  fitbitToken: string;
+  fitbitRefreshToken: string;
+  fitbitUserId: string;
+  fitbitTokenExpiresIn: number;
+  fitbitTokenTimestamp: number;
+}> => {
+  try {
+    const response = await axios.get(
+      `${Config.ROOT_API_URL}auth/fitbit/refresh`,
+      {params: {uid, fitbitRefreshToken: rToken}},
+    );
+    const {
+      fitbitToken,
+      fitbitRefreshToken,
+      fitbitUserId,
+      fitbitTokenExpiresIn,
+      fitbitTokenTimestamp,
+    } = response.data;
+    return {
+      fitbitToken,
+      fitbitRefreshToken,
+      fitbitUserId,
+      fitbitTokenExpiresIn,
+      fitbitTokenTimestamp,
+    };
+  } catch (e) {
+    console.log(e)
+    Snackbar.show({text: 'Error authenticating with Fitbit'});
+    logError(e);
+  }
 };
 
 export const getHeartRateTimeSeriesByDate = async (
@@ -71,7 +104,7 @@ export const getHeartRateTimeSeriesByDate = async (
         });
       }
     });
-    return {samples: [], data: activities};
+    return {samples, data: activities};
   } catch (e) {
     Snackbar.show({text: 'Error fetching Fitbit heart rate samples'});
     logError(e);

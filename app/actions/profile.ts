@@ -48,7 +48,7 @@ export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 
-interface setProfileAction {
+export interface SetProfileAction {
   type: typeof SET_PROFILE;
   profile: Profile;
 }
@@ -235,7 +235,7 @@ export interface SetHasViewedTourAction {
 }
 
 export type ProfileActionTypes =
-  | setProfileAction
+  | SetProfileAction
   | SetLoggedInAction
   | SignUpAction
   | SetWeightSamplesAction
@@ -269,7 +269,7 @@ export type ProfileActionTypes =
   | SetMuscleMassSamplesAction
   | SetHasViewedTourAction;
 
-export const setProfile = (profile: Profile): setProfileAction => ({
+export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
   profile,
 });

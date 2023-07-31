@@ -10,12 +10,12 @@ import colors from '../../constants/colors';
 import Text from './Text';
 import LinearGradient from 'react-native-linear-gradient';
 import {navigate} from '../../RootNavigation';
-import {getHeartRateTimeSeriesByDate} from '../../helpers/fitbit';
-import moment from 'moment';
+import {setProfile} from '../../actions/profile';
 
 const ConnectedApps: React.FC<{
   profile: Profile;
-}> = ({profile}) => {
+  setProfile: (profile: Profile) => void;
+}> = ({profile, setProfile: setProfileAction}) => {
   const [showModal, setShowModal] = useState(false);
   const connected: string[] = useMemo(() => {
     const arr = [];
@@ -42,9 +42,6 @@ const ConnectedApps: React.FC<{
     }
   };
 
-  useEffect(() => {
-    console.log();
-  }, [profile]);
   return (
     <>
       <TouchableOpacity
@@ -102,4 +99,8 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-export default connect(mapStateToProps)(ConnectedApps);
+const mapDispatchToProps = {
+  setProfile,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedApps);

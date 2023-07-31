@@ -1,5 +1,4 @@
 import React, {useMemo, useState, useEffect} from 'react';
-import EndWorkoutProps from '../../../types/views/EndWorkout';
 import {Alert, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -12,13 +11,28 @@ import colors from '../../../constants/colors';
 import RPESlider from '../../commons/RPESlider';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutData from '../../../hooks/UseWorkoutData';
+import {StackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Profile from '../../../types/Profile';
+import Exercise from '../../../types/Exercise';
+import {SavedWorkout} from '../../../types/SavedItem';
+import {setProfile} from '../../../actions/profile';
 
-const EndWorkout: React.FC<EndWorkoutProps> = ({
+const EndWorkout: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'EndWorkout'>;
+  route: RouteProp<StackParamList, 'EndWorkout'>;
+  profile: Profile;
+  workout: Exercise[];
+  saveWorkoutAction: (workout: SavedWorkout) => void;
+  setProfile: (profile: Profile) => void;
+}> = ({
   route,
   navigation,
   profile,
   workout,
   saveWorkoutAction: saveAction,
+  setProfile: setProfileAction,
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -39,7 +53,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
     calories,
     garminData,
     fitbitData,
-  } = useWorkoutData(seconds, profile, difficulty, endTime);
+  } = useWorkoutData(seconds, profile, difficulty, endTime, setProfileAction);
 
   useEffect(() => {
     setLoading(isLoading);
@@ -141,6 +155,7 @@ const EndWorkout: React.FC<EndWorkoutProps> = ({
 
 const mapDispatchToProps = {
   saveWorkoutAction,
+  setProfile,
 };
 
 const mapStateToProps = ({profile, exercises}: MyRootState) => ({
