@@ -56,16 +56,19 @@ const Daily: React.FC<{
   }, [plan]);
 
   useEffect(() => {
-    if (workouts?.length) {
-      const allExercises: string[] = workouts.reduce((acc: string[], cur) => {
-        return [...acc, ...cur.exercises.map(e => e.exercise)];
-      }, []);
+    if (plan?.workouts?.length) {
+      const allExercises: string[] = plan?.workouts.reduce(
+        (acc: string[], cur) => {
+          return [...acc, ...cur.exercises.map(e => e.exercise)];
+        },
+        [],
+      );
       const missingExerciseIds = allExercises.filter(id => !exercises[id]);
       if (missingExerciseIds.length) {
         getExercisesByIdAction(missingExerciseIds);
       }
     }
-  }, [exercises, workouts, getExercisesByIdAction]);
+  }, [exercises, plan?.workouts, getExercisesByIdAction]);
 
   useEffect(() => {
     if (plan?.tests) {
