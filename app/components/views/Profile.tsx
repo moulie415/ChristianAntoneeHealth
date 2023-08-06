@@ -1,28 +1,27 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, ScrollView, View, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import styles from '../../../styles/views/Profile';
-import ProfileProps from '../../../types/views/Profile';
+import styles from '../../styles/views/Profile';
 import {connect} from 'react-redux';
-import {MyRootState, Sample} from '../../../types/Shared';
-import colors from '../../../constants/colors';
-import Profile, {Gender, Unit} from '../../../types/Profile';
+import {MyRootState, Sample} from '../../types/Shared';
+import colors from '../../constants/colors';
+import Profile, {Gender, Unit} from '../../types/Profile';
 import * as _ from 'lodash';
 import {
   getSamples,
   updateProfile,
   UpdateProfilePayload,
-} from '../../../actions/profile';
+} from '../../actions/profile';
 import {
   BONE_DENSITIES,
   HEIGHTS,
   MUSCLE_MASSES,
   PERCENTAGES,
   WEIGHTS,
-} from '../../../constants';
+} from '../../constants';
 
-import Avatar from '../../commons/Avatar';
+import Avatar from '../commons/Avatar';
 import {
   launchCamera,
   launchImageLibrary,
@@ -31,20 +30,20 @@ import {
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
-import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import {logError} from '../../../helpers/error';
+import AbsoluteSpinner from '../commons/AbsoluteSpinner';
+import {logError} from '../../helpers/error';
 import storage from '@react-native-firebase/storage';
-import Text from '../../commons/Text';
-import Button from '../../commons/Button';
-import Header from '../../commons/Header';
+import Text from '../commons/Text';
+import Button from '../commons/Button';
+import Header from '../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import PickerModal from '../../commons/PickerModal';
-import ProfileCharts from '../../commons/ProfileCharts';
-import Divider from '../../commons/Divider';
-import Spinner from '../../commons/Spinner';
+import PickerModal from '../commons/PickerModal';
+import ProfileCharts from '../commons/ProfileCharts';
+import Divider from '../commons/Divider';
+import Spinner from '../commons/Spinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import {StackParamList} from '../../../App';
+import {StackParamList} from '../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const ProfileComponent: React.FC<{
@@ -76,7 +75,7 @@ const ProfileComponent: React.FC<{
   const [showBoneMassModal, setShowBoneMassModal] = useState(false);
   const [boneMass, setBoneMass] = useState(profile.boneMass);
 
-  const newProfile = {
+  const [newProfile, setNewProfile] = useState<Profile>({
     ...profile,
     gender,
     weight,
@@ -86,7 +85,7 @@ const ProfileComponent: React.FC<{
     ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
     ...(muscleMass !== undefined ? {muscleMass} : {}),
     ...(boneMass !== undefined ? {boneMass} : {}),
-  };
+  });
 
   const equal = _.isEqual(newProfile, profile);
 
@@ -103,6 +102,30 @@ const ProfileComponent: React.FC<{
     },
     [],
   );
+
+  useEffect(() => {
+    setNewProfile({
+      ...profile,
+      gender,
+      weight,
+      dob,
+      height,
+      ...(avatar !== undefined ? {avatar} : {}),
+      ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
+      ...(muscleMass !== undefined ? {muscleMass} : {}),
+      ...(boneMass !== undefined ? {boneMass} : {}),
+    });
+  }, [
+    profile,
+    gender,
+    weight,
+    dob,
+    height,
+    avatar,
+    bodyFatPercentage,
+    muscleMass,
+    boneMass,
+  ]);
 
   const onSave = async () => {
     try {
@@ -144,205 +167,185 @@ const ProfileComponent: React.FC<{
         keyboardShouldPersistTaps="always"
         style={styles.container}
         contentContainerStyle={{paddingBottom: 100}}>
-        <LinearGradient
-          colors={[colors.appBlueLight, colors.appBlueDark]}
-          style={{
-            height: 350,
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-          }}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}>
-          <SafeAreaView>
-            <Header
-              hasBack
-              title="Profile"
-              customBackPress={() => {
-                if (equal) {
-                  navigation.goBack();
-                } else {
-                  Alert.alert('Unsaved changes', 'Do you want to save?', [
-                    {text: 'Cancel'},
-                    {text: 'No', onPress: () => navigation.goBack()},
+        <SafeAreaView>
+          <Header
+            left={
+              <TouchableOpacity
+                disabled={equal}
+                onPress={() => {
+                  setAvatar(profile.avatar);
+                  setWeight(profile.weight || 0);
+                  setHeight(profile.height || 0);
+                  setBoneMass(profile.boneMass);
+                  setMuscleMass(profile.muscleMass);
+                  setBodyFatPercentage(profile.bodyFatPercentage);
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    opacity: equal ? 0.5 : 1,
+                  }}>
+                  UNDO
+                </Text>
+              </TouchableOpacity>
+            }
+            right={
+              <TouchableOpacity
+                disabled={saveDisabled}
+                onPress={() => {
+                  onSave();
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    opacity: saveDisabled ? 0.5 : 1,
+                  }}>
+                  SAVE
+                </Text>
+              </TouchableOpacity>
+            }
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              margin: 20,
+              marginBottom: 0,
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                if (profile.premium) {
+                  const MAX_SIZE = 500;
+                  const cameraOptions: CameraOptions = {
+                    mediaType: 'photo',
+                    maxHeight: MAX_SIZE,
+                    maxWidth: MAX_SIZE,
+                  };
+                  const imageLibraryOptions: ImageLibraryOptions = {
+                    mediaType: 'photo',
+                    maxHeight: MAX_SIZE,
+                    maxWidth: MAX_SIZE,
+                  };
+                  Alert.alert('Edit profile photo', '', [
                     {
-                      text: 'Yes',
-                      onPress: async () => {
-                        await onSave();
-                        navigation.goBack();
-                      },
+                      text: 'Upload from image library',
+                      onPress: () =>
+                        launchImageLibrary(cameraOptions, handlePickerCallback),
+                    },
+                    {
+                      text: 'Take photo',
+                      onPress: () =>
+                        launchCamera(imageLibraryOptions, handlePickerCallback),
+                    },
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
                     },
                   ]);
+                } else {
+                  navigation.navigate('Premium', {});
                 }
               }}
-              right={
-                <TouchableOpacity
-                  disabled={saveDisabled}
-                  onPress={() => {
-                    // navigation.navigate('SignUpFlow', {fromProfile: true});
-                    onSave();
-                  }}>
-                  <Text
-                    style={{
-                      color: colors.appWhite,
-                      fontWeight: 'bold',
-                      opacity: saveDisabled ? 0.5 : 1,
-                    }}>
-                    SAVE
-                  </Text>
-                  {/* <Icon
-                    name="edit"
-                    size={20}
-                    color={colors.appWhite}
-                  /> */}
-                </TouchableOpacity>
-              }
-            />
-            <View
               style={{
-                flexDirection: 'row',
-                margin: 20,
-                marginBottom: 0,
+                width: 90,
+                height: 90,
+                borderRadius: 45,
+                backgroundColor: colors.appWhite,
+                justifyContent: 'center',
                 alignItems: 'center',
+                marginRight: 10,
               }}>
-              <TouchableOpacity
-                onPress={() => {
-                  if (profile.premium) {
-                    const MAX_SIZE = 500;
-                    const cameraOptions: CameraOptions = {
-                      mediaType: 'photo',
-                      maxHeight: MAX_SIZE,
-                      maxWidth: MAX_SIZE,
-                    };
-                    const imageLibraryOptions: ImageLibraryOptions = {
-                      mediaType: 'photo',
-                      maxHeight: MAX_SIZE,
-                      maxWidth: MAX_SIZE,
-                    };
-                    Alert.alert('Edit profile photo', '', [
-                      {
-                        text: 'Upload from image library',
-                        onPress: () =>
-                          launchImageLibrary(
-                            cameraOptions,
-                            handlePickerCallback,
-                          ),
-                      },
-                      {
-                        text: 'Take photo',
-                        onPress: () =>
-                          launchCamera(
-                            imageLibraryOptions,
-                            handlePickerCallback,
-                          ),
-                      },
-                      {
-                        text: 'Cancel',
-                        style: 'cancel',
-                      },
-                    ]);
-                  } else {
-                    navigation.navigate('Premium', {});
-                  }
-                }}
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 45,
-                  backgroundColor: colors.appWhite,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginRight: 10,
-                }}>
-                <Avatar
-                  name={`${profile.name} ${profile.surname || ''}`}
-                  src={avatar}
-                  size={80}
-                  uid={profile.uid}
-                  hideCheck
-                />
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    backgroundColor: colors.appWhite,
-                    height: 30,
-                    width: 30,
-                    borderRadius: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Icon
-                    size={15}
-                    name={profile.premium ? 'pencil-alt' : 'lock'}
-                    color={colors.appBlue}
-                  />
-                </View>
-              </TouchableOpacity>
-              <View>
-                <Text
-                  style={{
-                    fontSize: 25,
-                    fontWeight: 'bold',
-                    color: colors.appWhite,
-                  }}>
-                  {`${profile.name} ${profile.surname || ''}`}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 19,
-                    color: colors.appWhite,
-                  }}>
-                  {moment(dob).format('DD MMM YYYY')}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                marginTop: 20,
-              }}>
-              <TouchableOpacity onPress={() => setShowWeightModal(true)}>
-                <Text
-                  style={{
-                    fontSize: 30,
-                    fontWeight: 'bold',
-                    color: colors.appWhite,
-                    textAlign: 'center',
-                  }}>
-                  {weight}
-                </Text>
-                <Text style={{fontSize: 17, color: colors.appWhite}}>
-                  Weight (kg)
-                </Text>
-              </TouchableOpacity>
+              <Avatar
+                name={`${profile.name} ${profile.surname || ''}`}
+                src={avatar}
+                size={80}
+                uid={profile.uid}
+                hideCheck
+              />
               <View
                 style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  backgroundColor: colors.appWhite,
                   height: 30,
-                  width: 5,
-                  backgroundColor: 'rgba(255,255,255,0.5)',
-                  borderRadius: 20,
-                  alignSelf: 'center',
-                }}
-              />
-              <TouchableOpacity onPress={() => setShowHeightModal(true)}>
-                <Text
-                  style={{
-                    fontSize: 30,
-                    fontWeight: 'bold',
-                    color: colors.appWhite,
-                    textAlign: 'center',
-                  }}>
-                  {height}
-                </Text>
-                <Text style={{fontSize: 17, color: colors.appWhite}}>
-                  Height (cm)
-                </Text>
-              </TouchableOpacity>
+                  width: 30,
+                  borderRadius: 15,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Icon
+                  size={15}
+                  name={profile.premium ? 'pencil-alt' : 'lock'}
+                  color={colors.appBlue}
+                />
+              </View>
+            </TouchableOpacity>
+            <View>
+              <Text
+                style={{
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                }}>
+                {`${profile.name} ${profile.surname || ''}`}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 19,
+                  color: colors.appWhite,
+                }}>
+                {moment(dob).format('DD MMM YYYY')}
+              </Text>
             </View>
-          </SafeAreaView>
-        </LinearGradient>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              marginTop: 20,
+            }}>
+            <TouchableOpacity onPress={() => setShowWeightModal(true)}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                }}>
+                {weight}
+              </Text>
+              <Text style={{fontSize: 17, color: colors.appWhite}}>
+                Weight (kg)
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                height: 30,
+                width: 5,
+                backgroundColor: 'rgba(255,255,255,0.5)',
+                borderRadius: 20,
+                alignSelf: 'center',
+              }}
+            />
+            <TouchableOpacity onPress={() => setShowHeightModal(true)}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                }}>
+                {height}
+              </Text>
+              <Text style={{fontSize: 17, color: colors.appWhite}}>
+                Height (cm)
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
 
         {/* <Animated.View entering={FadeIn.duration(1000)}> */}
         <ProfileCharts

@@ -237,7 +237,15 @@ const App: React.FC = () => {
             <DrawerNavigator />
           </NavigationContainer>
           {showSplash && (
-            <View style={{backgroundColor: colors.appWhite}}>
+            <View
+              style={{
+                backgroundColor: colors.appWhite,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}>
               {Platform.OS === 'ios' ? (
                 <Image
                   source={require('./images/splash.gif')}

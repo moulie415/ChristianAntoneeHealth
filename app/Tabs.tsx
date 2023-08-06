@@ -14,6 +14,8 @@ import Color from 'color';
 import {TourGuideZone} from 'rn-tourguide';
 import GoalSummaries from './components/commons/GoalSummaries';
 import PlanTabIcon from './PlanTabIcon';
+import Avatar from './components/commons/Avatar';
+import ProfileComponent from './components/views/Profile';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -80,20 +82,24 @@ const Tabs: React.FC<{
       />
       <Tab.Screen
         options={{
-          tabBarLabel: 'Goals',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
             <TourGuideZone
               zone={2}
-              text="View your weekly goals from here"
+              text="View your personal profile and weekly goals from here"
               borderRadius={16}>
-              <Icon color={color} size={size} name="bullseye" />
+              <Avatar
+                name={`${profile.name} ${profile.surname || ''}`}
+                src={profile.avatar}
+                uid={profile.uid}
+              />
             </TourGuideZone>
           ),
           headerShown: false,
         }}
-        key="Goals"
-        name="Goals"
-        component={GoalSummaries}
+        key="Profile"
+        name="Profile"
+        component={ProfileComponent}
       />
       {(profile.admin || profile.client) && (
         <Tab.Screen

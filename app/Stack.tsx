@@ -22,7 +22,6 @@ import TestResults from './components/views/Tests/TestResults';
 import Tabs from './Tabs';
 import Login from './components/views/Login';
 import SignUp from './components/views/SignUp';
-import Profile from './components/views/DrawerContent/Profile';
 import Notifications from './components/views/DrawerContent/Notifications';
 import Support from './components/views/DrawerContent/Support';
 import Terms from './components/views/DrawerContent/Terms';
@@ -58,13 +57,15 @@ import {Dimensions} from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
-export const DrawerNavigator = () => {
+export const DrawerNavigator: React.FC = () => {
   return (
     <Drawer.Navigator
       defaultStatus="closed"
       screenOptions={{
         headerShown: false,
-        drawerStyle: {width: Dimensions.get('screen').width - 100},
+        drawerStyle: {
+          width: Dimensions.get('screen').width - 100,
+        },
         swipeEnabled: false,
       }}
       drawerContent={props => <DrawerContent {...props} />}>
@@ -137,7 +138,6 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="WhatArea" component={WhatArea} />
         <Stack.Screen name="WorkoutList" component={WorkoutList} />
-        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Education" component={EducationTabs} />
         <Stack.Screen name="Connections" component={Connections} />
         <Stack.Screen name="Premium" component={Premium} />

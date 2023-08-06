@@ -178,15 +178,8 @@ const Plan: React.FC<{
         <FastImage
           style={{flex: 1}}
           source={require('../../../images/christian.webp')}>
-          <SafeAreaView style={{flex: 1}}>
-            <Header />
-            <View
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                backgroundColor: '#000',
-                opacity: 0.8,
-              }}
-            />
+          <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+            <Header showDrawerMenuButton />
             <Text
               style={{
                 textAlign: 'center',

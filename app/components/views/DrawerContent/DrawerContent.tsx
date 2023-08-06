@@ -104,14 +104,6 @@ const DrawerContent: React.FC<Props> = ({
   };
   const listItems: ListItem[] = [
     {
-      title: 'My profile',
-      icon: 'user',
-      onPress: () => {
-        navigationRef.navigate('Profile');
-        navigation.closeDrawer();
-      },
-    },
-    {
       title: 'Education',
       icon: 'book-open',
       onPress: () => {

@@ -60,7 +60,7 @@ const Avatar: React.FC<{
   );
 };
 
-const mapStateToProps = ({settings}: MyRootState) => ({
+const mapStateToProps = ({settings, profile}: MyRootState) => ({
   admins: settings.admins,
 });
 

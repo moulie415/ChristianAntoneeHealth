@@ -16,6 +16,7 @@ const Header: React.FC<{
   hasBack?: boolean;
   title?: string;
   right?: ReactNode;
+  left?: ReactNode;
   absolute?: boolean;
   customBackPress?: () => void;
   profile: Profile;
@@ -28,6 +29,7 @@ const Header: React.FC<{
   customBackPress,
   profile,
   showDrawerMenuButton,
+  left,
 }) => {
   const insets = useSafeAreaInsets();
   const count = Object.keys(profile.unread || {}).reduce((acc, cur) => {
@@ -55,6 +57,12 @@ const Header: React.FC<{
           style={{margin: 20}}
           onPress={customBackPress || navigationRef?.goBack}
         />
+      )}
+
+      {!!left && (
+        <View style={{flex: 1, alignItems: 'flex-start', margin: 20}}>
+          {left}
+        </View>
       )}
 
       {showDrawerMenuButton && (
