@@ -5,6 +5,7 @@ export default {
   appBlueLight: '#1C74BB',
   appBlueDark: '#2A3F94',
   appBlue: '#2A5DC2',
+  tile: '#363944',
   appBlueFaded: '#5A89DA',
   darkBlue: '#242b43',
   appBlack: '#040404',

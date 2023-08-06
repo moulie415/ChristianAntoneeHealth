@@ -8,7 +8,7 @@ import Button from './Button';
 const PickerModal: React.FC<{
   visible: boolean;
   onRequestClose: () => void;
-  selectedValue: string;
+  selectedValue: string | Date;
   pickerData: any;
   onValueChange: (val: string) => void;
 }> = ({visible, onRequestClose, selectedValue, pickerData, onValueChange}) => {

@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {TouchableOpacity, ScrollView, View, Alert} from 'react-native';
+import {
+  TouchableOpacity,
+  ScrollView,
+  View,
+  Alert,
+  Platform,
+} from 'react-native';
+import DatePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 import styles from '../../styles/views/Profile';
@@ -45,6 +52,8 @@ import Spinner from '../commons/Spinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
 import {StackParamList} from '../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Tile from '../commons/Tile';
+import Modal from '../commons/Modal';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -62,6 +71,7 @@ const ProfileComponent: React.FC<{
   const [loading, setLoading] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
+  const [showDobModal, setShowDobModal] = useState(false);
 
   const [showBodyFatPercentageModal, setShowBodyFatPercentageModal] =
     useState(false);
@@ -136,7 +146,6 @@ const ProfileComponent: React.FC<{
         await imageRef.putFile(avatar || '');
         newAvatar = await imageRef.getDownloadURL();
       }
-      navigation.goBack();
       updateProfileAction({
         gender,
         dob,
@@ -167,187 +176,201 @@ const ProfileComponent: React.FC<{
         keyboardShouldPersistTaps="always"
         style={styles.container}
         contentContainerStyle={{paddingBottom: 100}}>
-        <SafeAreaView>
-          <Header
-            left={
-              <TouchableOpacity
-                disabled={equal}
-                onPress={() => {
-                  setAvatar(profile.avatar);
-                  setWeight(profile.weight || 0);
-                  setHeight(profile.height || 0);
-                  setBoneMass(profile.boneMass);
-                  setMuscleMass(profile.muscleMass);
-                  setBodyFatPercentage(profile.bodyFatPercentage);
-                }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    opacity: equal ? 0.5 : 1,
-                  }}>
-                  UNDO
-                </Text>
-              </TouchableOpacity>
-            }
-            right={
-              <TouchableOpacity
-                disabled={saveDisabled}
-                onPress={() => {
-                  onSave();
-                }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontWeight: 'bold',
-                    opacity: saveDisabled ? 0.5 : 1,
-                  }}>
-                  SAVE
-                </Text>
-              </TouchableOpacity>
-            }
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              margin: 20,
-              marginBottom: 0,
-              alignItems: 'center',
-            }}>
+        <Header
+          left={
             <TouchableOpacity
+              disabled={equal}
               onPress={() => {
-                if (profile.premium) {
-                  const MAX_SIZE = 500;
-                  const cameraOptions: CameraOptions = {
-                    mediaType: 'photo',
-                    maxHeight: MAX_SIZE,
-                    maxWidth: MAX_SIZE,
-                  };
-                  const imageLibraryOptions: ImageLibraryOptions = {
-                    mediaType: 'photo',
-                    maxHeight: MAX_SIZE,
-                    maxWidth: MAX_SIZE,
-                  };
-                  Alert.alert('Edit profile photo', '', [
-                    {
-                      text: 'Upload from image library',
-                      onPress: () =>
-                        launchImageLibrary(cameraOptions, handlePickerCallback),
-                    },
-                    {
-                      text: 'Take photo',
-                      onPress: () =>
-                        launchCamera(imageLibraryOptions, handlePickerCallback),
-                    },
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                  ]);
-                } else {
-                  navigation.navigate('Premium', {});
-                }
-              }}
-              style={{
-                width: 90,
-                height: 90,
-                borderRadius: 45,
-                backgroundColor: colors.appWhite,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 10,
+                setAvatar(profile.avatar);
+                setWeight(profile.weight || 0);
+                setHeight(profile.height || 0);
+                setBoneMass(profile.boneMass);
+                setMuscleMass(profile.muscleMass);
+                setBodyFatPercentage(profile.bodyFatPercentage);
+                setDob(profile.dob);
               }}>
-              <Avatar
-                name={`${profile.name} ${profile.surname || ''}`}
-                src={avatar}
-                size={80}
-                uid={profile.uid}
-                hideCheck
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  backgroundColor: colors.appWhite,
-                  height: 30,
-                  width: 30,
-                  borderRadius: 15,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Icon
-                  size={15}
-                  name={profile.premium ? 'pencil-alt' : 'lock'}
-                  color={colors.appBlue}
-                />
-              </View>
-            </TouchableOpacity>
-            <View>
               <Text
                 style={{
-                  fontSize: 25,
+                  color: colors.appWhite,
                   fontWeight: 'bold',
-                  color: colors.appWhite,
+                  opacity: equal ? 0.5 : 1,
                 }}>
-                {`${profile.name} ${profile.surname || ''}`}
+                UNDO
               </Text>
+            </TouchableOpacity>
+          }
+          right={
+            <TouchableOpacity
+              disabled={saveDisabled}
+              onPress={() => {
+                onSave();
+              }}>
               <Text
                 style={{
-                  fontSize: 19,
                   color: colors.appWhite,
+                  fontWeight: 'bold',
+                  opacity: saveDisabled ? 0.5 : 1,
                 }}>
-                {moment(dob).format('DD MMM YYYY')}
+                SAVE
               </Text>
-            </View>
-          </View>
-          <View
+            </TouchableOpacity>
+          }
+        />
+        <View
+          style={{
+            marginBottom: 10,
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              if (profile.premium) {
+                const MAX_SIZE = 500;
+                const cameraOptions: CameraOptions = {
+                  mediaType: 'photo',
+                  maxHeight: MAX_SIZE,
+                  maxWidth: MAX_SIZE,
+                };
+                const imageLibraryOptions: ImageLibraryOptions = {
+                  mediaType: 'photo',
+                  maxHeight: MAX_SIZE,
+                  maxWidth: MAX_SIZE,
+                };
+                Alert.alert('Edit profile photo', '', [
+                  {
+                    text: 'Upload from image library',
+                    onPress: () =>
+                      launchImageLibrary(cameraOptions, handlePickerCallback),
+                  },
+                  {
+                    text: 'Take photo',
+                    onPress: () =>
+                      launchCamera(imageLibraryOptions, handlePickerCallback),
+                  },
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ]);
+              } else {
+                navigation.navigate('Premium', {});
+              }
+            }}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              marginTop: 20,
+              width: 95,
+              height: 95,
+              borderRadius: 48,
+              borderColor: colors.appWhite,
+              borderWidth: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 10,
             }}>
-            <TouchableOpacity onPress={() => setShowWeightModal(true)}>
-              <Text
-                style={{
-                  fontSize: 30,
-                  fontWeight: 'bold',
-                  color: colors.appWhite,
-                  textAlign: 'center',
-                }}>
-                {weight}
-              </Text>
-              <Text style={{fontSize: 17, color: colors.appWhite}}>
-                Weight (kg)
-              </Text>
-            </TouchableOpacity>
+            <Avatar
+              name={`${profile.name} ${profile.surname || ''}`}
+              src={avatar}
+              size={80}
+              uid={profile.uid}
+              hideCheck
+            />
             <View
               style={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                backgroundColor: colors.appWhite,
                 height: 30,
-                width: 5,
-                backgroundColor: 'rgba(255,255,255,0.5)',
-                borderRadius: 20,
-                alignSelf: 'center',
-              }}
-            />
-            <TouchableOpacity onPress={() => setShowHeightModal(true)}>
-              <Text
-                style={{
-                  fontSize: 30,
-                  fontWeight: 'bold',
-                  color: colors.appWhite,
-                  textAlign: 'center',
-                }}>
-                {height}
-              </Text>
-              <Text style={{fontSize: 17, color: colors.appWhite}}>
-                Height (cm)
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+                width: 30,
+                borderRadius: 15,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon
+                size={15}
+                name={profile.premium ? 'pencil-alt' : 'lock'}
+                color={colors.appBlue}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: colors.appWhite,
+              textAlign: 'center',
+            }}>
+            {`${profile.name} ${profile.surname || ''}`}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            margin: 20,
+          }}>
+          <Tile
+            style={{
+              width: 100,
+              height: 70,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => setShowWeightModal(true)}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: colors.appWhite,
+                textAlign: 'center',
+              }}>
+              {weight}
+              <Text style={{fontSize: 12}}> kg</Text>
+            </Text>
+            <Text style={{fontSize: 12, color: colors.appWhite}}>Weight</Text>
+          </Tile>
+          <Tile
+            style={{
+              width: 100,
+              height: 70,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => setShowHeightModal(true)}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: colors.appWhite,
+                textAlign: 'center',
+              }}>
+              {height}
+              <Text style={{fontSize: 12}}> cm</Text>
+            </Text>
+            <Text style={{fontSize: 12, color: colors.appWhite}}>Height</Text>
+          </Tile>
+          <Tile
+            style={{
+              width: 100,
+              height: 70,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => setShowDobModal(true)}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: colors.appWhite,
+                textAlign: 'center',
+              }}>
+              {moment().diff(dob, 'years')}
+              <Text style={{fontSize: 12}}> y.o</Text>
+            </Text>
+            <Text style={{fontSize: 12, color: colors.appWhite}}>Age</Text>
+          </Tile>
+        </View>
 
-        {/* <Animated.View entering={FadeIn.duration(1000)}> */}
         <ProfileCharts
           weight={weight}
           height={height}
@@ -360,18 +383,7 @@ const ProfileComponent: React.FC<{
           setShowHeightModal={setShowHeightModal}
           setShowWeightModal={setShowWeightModal}
         />
-        {/* </Animated.View> */}
-        {/* ) : (
-          <View
-            style={{
-              height: 280,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Spinner />
-          </View>
-        )} */}
-        <Divider style={{marginTop: 20, marginBottom: 10}} />
+
         <Button
           variant="danger"
           text=" Delete my account"
@@ -379,19 +391,7 @@ const ProfileComponent: React.FC<{
           onPress={() => navigation.navigate('DeleteAccount')}
         />
       </ScrollView>
-      {/* <Button
-        text="Save"
-        onPress={onSave}
-        disabled={saveDisabled}
-        style={{
-          margin: 10,
-          marginBottom: 20,
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-        }}
-      /> */}
+
       <PickerModal
         visible={showHeightModal}
         selectedValue={String(height)}
@@ -452,6 +452,50 @@ const ProfileComponent: React.FC<{
         onValueChange={val => setBoneMass(Number(val))}
         onRequestClose={() => setShowBoneMassModal(false)}
       />
+      <Modal
+        visible={showDobModal && Platform.OS === 'ios'}
+        onRequestClose={() => setShowDobModal(false)}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            width: '90%',
+            alignSelf: 'center',
+            borderRadius: 10,
+          }}>
+          <DatePicker
+            mode="date"
+            style={{}}
+            textColor={colors.appWhite}
+            maximumDate={new Date()}
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            value={moment(dob).toDate()}
+            onChange={(event, d: Date | undefined) => {
+              setShowDobModal(true);
+              setDob(d ? d.toISOString() : dob);
+            }}
+          />
+
+          <Button
+            text="Close"
+            style={{margin: 10}}
+            onPress={() => setShowDobModal(false)}
+          />
+        </View>
+      </Modal>
+      {showDobModal && Platform.OS === 'android' && (
+        <DatePicker
+          mode="date"
+          style={{}}
+          textColor={colors.appWhite}
+          maximumDate={new Date()}
+          display={'default'}
+          value={moment(dob).toDate()}
+          onChange={(event, d: Date | undefined) => {
+            setShowDobModal(false);
+            setDob(d ? d.toISOString() : dob);
+          }}
+        />
+      )}
       <AbsoluteSpinner loading={loading} />
     </View>
   );
