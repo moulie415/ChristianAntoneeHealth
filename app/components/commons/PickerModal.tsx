@@ -4,6 +4,8 @@ import Modal from './Modal';
 
 import {Picker} from 'react-native-wheel-pick';
 import Button from './Button';
+import colors from '../../constants/colors';
+import Text from './Text';
 
 const PickerModal: React.FC<{
   visible: boolean;
@@ -11,20 +13,43 @@ const PickerModal: React.FC<{
   selectedValue: string | Date;
   pickerData: any;
   onValueChange: (val: string) => void;
-}> = ({visible, onRequestClose, selectedValue, pickerData, onValueChange}) => {
+  title?: string;
+}> = ({
+  visible,
+  onRequestClose,
+  selectedValue,
+  pickerData,
+  onValueChange,
+  title,
+}) => {
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: colors.appGrey,
           width: '90%',
           alignSelf: 'center',
           borderRadius: 10,
         }}>
+        {!!title && (
+          <Text
+            style={{
+              color: colors.appWhite,
+              padding: 20,
+              paddingBottom: 10,
+              fontSize: 20,
+              textAlign: 'center',
+              fontWeight: 'bold',
+            }}>
+            {title}
+          </Text>
+        )}
+        {/*  @ts-ignore */}
         <Picker
           style={{height: 200, backgroundColor: 'transparent'}}
-          /* @ts-ignore */
           selectedValue={selectedValue}
+          textColor={colors.appWhite}
+          itemStyle={{color: colors.appWhite}}
           pickerData={pickerData}
           onValueChange={onValueChange}
         />

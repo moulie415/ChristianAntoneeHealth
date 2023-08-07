@@ -15,22 +15,24 @@ const MetricExplained: React.FC<{
   colors: string[];
   labels: string[];
   current?: number;
+  onPress?: () => void;
   title: string;
-}> = ({ranges, colors: colorsArr, title, labels, current, suffix}) => {
+}> = ({ranges, colors: colorsArr, title, labels, current, suffix, onPress}) => {
   if (!current) {
     return null;
   }
   return (
     <Tile
+      onPress={onPress}
       style={{
         width: Dimensions.get('window').width - 40,
         marginBottom: 20,
       }}>
       <Text
         style={{
-          textAlign: 'center',
+          textAlign: 'left',
           padding: 15,
-          fontSize: 25,
+          fontSize: 18,
           color: colors.appWhite,
           fontWeight: 'bold',
         }}>

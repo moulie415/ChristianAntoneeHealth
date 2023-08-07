@@ -393,6 +393,7 @@ const ProfileComponent: React.FC<{
       </ScrollView>
 
       <PickerModal
+        title="Select height"
         visible={showHeightModal}
         selectedValue={String(height)}
         pickerData={HEIGHTS.map(value => {
@@ -405,6 +406,7 @@ const ProfileComponent: React.FC<{
         onRequestClose={() => setShowHeightModal(false)}
       />
       <PickerModal
+        title="Select weight"
         visible={showWeightModal}
         selectedValue={String(weight)}
         pickerData={WEIGHTS.map(value => {
@@ -417,6 +419,7 @@ const ProfileComponent: React.FC<{
         onRequestClose={() => setShowWeightModal(false)}
       />
       <PickerModal
+        title="Select body fat percentage"
         visible={showBodyFatPercentageModal}
         selectedValue={String(bodyFatPercentage)}
         pickerData={PERCENTAGES.map(value => {
@@ -429,6 +432,7 @@ const ProfileComponent: React.FC<{
         onRequestClose={() => setShowBodyFatPercentageModal(false)}
       />
       <PickerModal
+        title="Select muscle mass"
         visible={showMuscleMassModal}
         selectedValue={String(muscleMass)}
         pickerData={MUSCLE_MASSES.map(value => {
@@ -441,6 +445,7 @@ const ProfileComponent: React.FC<{
         onRequestClose={() => setShowMuscleMassModal(false)}
       />
       <PickerModal
+        title="Select bone mass"
         visible={showBoneMassModal}
         selectedValue={String(boneMass)}
         pickerData={BONE_DENSITIES.map(value => {
@@ -457,11 +462,22 @@ const ProfileComponent: React.FC<{
         onRequestClose={() => setShowDobModal(false)}>
         <View
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: colors.appGrey,
             width: '90%',
             alignSelf: 'center',
             borderRadius: 10,
           }}>
+          <Text
+            style={{
+              color: colors.appWhite,
+              padding: 20,
+              paddingBottom: 10,
+              fontSize: 20,
+              textAlign: 'center',
+              fontWeight: 'bold',
+            }}>
+            Select date
+          </Text>
           <DatePicker
             mode="date"
             style={{}}

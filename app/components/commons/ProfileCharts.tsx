@@ -1,4 +1,4 @@
-import {View, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Dimensions, TouchableOpacity, Alert} from 'react-native';
 import React, {
   MutableRefObject,
   ReactNode,
@@ -14,46 +14,22 @@ import {connect} from 'react-redux';
 import {MyRootState, Sample} from '../../types/Shared';
 import {getSamples} from '../../actions/profile';
 import {getBMIItems, getSampleItems} from '../../helpers';
-import LinearGradient from 'react-native-linear-gradient';
-import Text from './Text';
 import Button from './Button';
-import Spinner from './Spinner';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {
-  VictoryArea,
-  VictoryChart,
-  VictoryTheme,
-  VictoryAxis,
-  VictoryLine,
-} from 'victory-native';
-import moment from 'moment';
 import MetricExplained from './MetricExplained';
 import Color from 'color';
-import PagerView from 'react-native-pager-view';
 
 const Chart: React.FC<{
-  data: {x: number; y: number}[];
   title: string;
-  lowest: number;
-  highest: number;
   current?: number;
   suffix?: string;
-  footer?: ReactNode;
   minY?: number;
   maxY?: number;
   ranges: number[];
   colors: string[];
   labels: string[];
-  filter: 6 | 30 | 365;
-  setFilter: (filter: 6 | 30 | 365) => void;
+  onPress?: () => void;
 }> = ({
-  data,
   title,
-  footer,
-  lowest,
-  highest,
-  setFilter,
-  filter,
   current,
   minY,
   maxY,
@@ -61,134 +37,23 @@ const Chart: React.FC<{
   ranges,
   colors: colorsArr,
   labels,
+  onPress,
 }) => {
   return (
     <View style={{alignItems: 'center'}}>
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          marginTop: 30,
-        }}>
-        <TouchableOpacity style={{}} onPress={() => setFilter(6)}>
-          <LinearGradient
-            colors={
-              filter === 6
-                ? [colors.appBlueLight, colors.appBlueDark]
-                : ['transparent', 'transparent']
-            }
-            style={{
-              height: 40,
-              paddingHorizontal: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 25,
-            }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#fff',
-                textAlign: 'center',
-              }}>
-              Weekly
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity style={{}} onPress={() => setFilter(30)}>
-          <LinearGradient
-            colors={
-              filter === 30
-                ? [colors.appBlueLight, colors.appBlueDark]
-                : ['transparent', 'transparent']
-            }
-            style={{
-              height: 40,
-              paddingHorizontal: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 25,
-            }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#fff',
-                textAlign: 'center',
-              }}>
-              Monthly
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity style={{}} onPress={() => setFilter(365)}>
-          <LinearGradient
-            colors={
-              filter === 365
-                ? [colors.appBlueLight, colors.appBlueDark]
-                : ['transparent', 'transparent']
-            }
-            style={{
-              height: 40,
-              paddingHorizontal: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 25,
-            }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#fff',
-                textAlign: 'center',
-              }}>
-              Yearly
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View> */}
-      {/* <View
-        style={{
-          marginTop: -20,
-          width: Dimensions.get('window').width * 0.9,
-          alignItems: 'center',
-        }}>
-        <VictoryChart
-          maxDomain={{
-            y: maxY !== undefined && maxY > highest + 5 ? maxY : highest + 5,
-          }}
-          minDomain={{y: minY !== undefined ? minY : lowest - 5}}
-          width={Dimensions.get('window').width * 0.9}
-          height={250}
-          theme={VictoryTheme.material}>
-          <VictoryArea style={{data: {fill: colors.appBlue}}} data={data} />
-
-          <VictoryAxis
-            offsetY={50}
-            tickFormat={x => {
-              if (filter === 6) {
-                return moment(x).format('dd');
-              }
-              if (filter === 30) {
-                return moment(x).format('Do');
-              }
-              if (filter === 365) {
-                return moment(x).format('MMM');
-              }
-            }}
-          />
-          <VictoryAxis dependentAxis tickFormat={x => `${x}${suffix || ''}`} />
-        </VictoryChart>
-      </View> */}
-      {minY !== undefined && !!maxY && !!ranges && (
-        <MetricExplained
-          suffix={suffix}
-          current={current}
-          ranges={[minY, ...ranges, maxY]}
-          title={title}
-          colors={colorsArr}
-          labels={labels}
-        />
-      )}
-
-      {footer}
+      <MetricExplained
+        onPress={onPress}
+        suffix={suffix}
+        current={current}
+        ranges={
+          minY !== undefined && !!maxY && !!ranges
+            ? [minY, ...ranges, maxY]
+            : []
+        }
+        title={title}
+        colors={colorsArr}
+        labels={labels}
+      />
     </View>
   );
 };
@@ -266,13 +131,8 @@ const ProfileCharts: React.FC<{
   return (
     <>
       <Chart
-        setFilter={setFilter}
         current={latestBMI}
-        filter={filter}
         title="BMI"
-        data={weightItems.data}
-        lowest={weightItems.lowest}
-        highest={weightItems.highest}
         minY={0}
         maxY={40}
         ranges={[18.5, 25.0, 30.0]}
@@ -283,18 +143,19 @@ const ProfileCharts: React.FC<{
           colors.appRed,
         ]}
         labels={['Underweight', 'Normal', 'Overweight', 'Obesity']}
+        onPress={() =>
+          Alert.alert(
+            'BMI',
+            'Update your weight and height to determine your new BMI',
+          )
+        }
       />
 
       <Chart
-        setFilter={setFilter}
         current={bodyFatPercentage}
-        filter={filter}
         title="Body fat percentage"
-        highest={bodyFatItems.highest}
-        lowest={bodyFatItems.lowest}
         minY={0}
         maxY={30}
-        data={bodyFatItems.data}
         ranges={[6.0, 13.0, 17.0, 25.0]}
         colors={[
           colors.appBlueDark,
@@ -311,27 +172,13 @@ const ProfileCharts: React.FC<{
           'Obesity',
         ]}
         suffix="%"
-        footer={
-          <Button
-            onPress={() => setShowBodyFatPercentageModal(true)}
-            text="Enter body fat percentage"
-            style={{
-              width: 300,
-              marginTop: 10,
-            }}
-          />
-        }
+        onPress={() => setShowBodyFatPercentageModal(true)}
       />
       <Chart
-        setFilter={setFilter}
         current={muscleMass}
-        filter={filter}
         minY={0}
         maxY={70}
-        highest={muscleMassItems.highest}
-        lowest={muscleMassItems.lowest}
         title="Muscle mass"
-        data={muscleMassItems.data}
         suffix="kg"
         ranges={[44.0, 52.4]}
         colors={[
@@ -339,28 +186,13 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           new Color(colors.appGreen).darken(0.4).toString(),
         ]}
+        onPress={() => setShowMuscleMassModal(true)}
         labels={['Low', 'Normal', 'High']}
-        footer={
-          <Button
-            onPress={() => setShowMuscleMassModal(true)}
-            text="Enter muscle mass"
-            style={{
-              width: 300,
-
-              marginTop: 10,
-            }}
-          />
-        }
       />
       <Chart
-        setFilter={setFilter}
         current={boneMass}
         title="Bone mass"
-        data={boneMassItems.data}
-        filter={filter}
         suffix="kg"
-        highest={boneMassItems.highest}
-        lowest={boneMassItems.lowest}
         minY={0}
         maxY={10}
         ranges={[2.09, 3.48]}
@@ -369,17 +201,8 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           new Color(colors.appGreen).darken(0.4).toString(),
         ]}
+        onPress={() => setShowBoneMassModal(true)}
         labels={['Below average', 'Average', 'Above average']}
-        footer={
-          <Button
-            onPress={() => setShowBoneMassModal(true)}
-            text="Enter bone mass"
-            style={{
-              width: 300,
-              marginTop: 10,
-            }}
-          />
-        }
       />
     </>
   );
