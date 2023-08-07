@@ -1,4 +1,4 @@
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Dimensions} from 'react-native';
 import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
 import PagerView from 'react-native-pager-view';
 
@@ -18,6 +18,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './Header';
 // @ts-ignore
 import Confetti from 'react-native-confetti';
+import Tile from './Tile';
+import {ScrollView} from 'react-native-gesture-handler';
 
 interface GoalSet {
   title: string;
@@ -28,38 +30,29 @@ interface GoalSet {
 }
 
 const GoalCircle: React.FC<{
-  isLast?: boolean;
-  pagerRef: MutableRefObject<PagerView | null>;
-  index: number;
   title: string;
   goal: number;
   score: number;
   icon: string;
-}> = ({isLast, pagerRef, index, title, goal, score, icon}) => {
+}> = ({title, goal, score, icon}) => {
   const [fill, setFill] = useState(0);
 
   useEffect(() => {
     setFill((100 / goal) * score);
   }, [setFill, goal, score]);
   return (
-    <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-      <Text
-        style={{
-          color: colors.appWhite,
-          fontWeight: 'bold',
-          fontSize: 25,
-          paddingHorizontal: 40,
-          textAlign: 'center',
-          alignSelf: 'center',
-          marginBottom: 30,
-        }}>
-        {title}
-      </Text>
+    <View
+      style={{
+        alignItems: 'center',
+        flex: 1,
+        flexBasis: '50%',
+        marginBottom: 10
+      }}>
       <AnimatedCircularProgress
         style={{alignSelf: 'center'}}
-        size={200}
-        width={20}
-        backgroundWidth={10}
+        size={60}
+        width={7}
+        backgroundWidth={5}
         fill={fill}
         tintColor={score >= goal ? colors.appGreen : colors.appBlue}
         // tintColorSecondary={colors.appBlueFaded}
@@ -67,53 +60,31 @@ const GoalCircle: React.FC<{
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
-        {fill => <Icon name={icon} size={50} color={colors.appWhite} />}
+        {fill => <Icon name={icon} size={20} color={colors.appWhite} />}
       </AnimatedCircularProgress>
       <Text
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: 27,
-          paddingHorizontal: 40,
+          fontSize: 14,
+
           textAlign: 'center',
           alignSelf: 'center',
         }}>
         {`${score}/${goal}`}
       </Text>
-      {index !== 0 && (
-        <TouchableOpacity
-          onPress={() => pagerRef.current?.setPage(index - 1)}
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: '50%',
-            padding: 10,
-          }}>
-          <Icon
-            style={{opacity: 0.8}}
-            name="chevron-left"
-            size={50}
-            color="#fff"
-          />
-        </TouchableOpacity>
-      )}
-      {!isLast && (
-        <TouchableOpacity
-          onPress={() => pagerRef.current?.setPage(index + 1)}
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: '50%',
-            padding: 10,
-          }}>
-          <Icon
-            style={{opacity: 0.8}}
-            name="chevron-right"
-            size={50}
-            color="#fff"
-          />
-        </TouchableOpacity>
-      )}
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontWeight: 'bold',
+          fontSize: 10,
+          marginHorizontal: 10,
+          textAlign: 'center',
+          alignSelf: 'center',
+          marginBottom: 5,
+        }}>
+        {title}
+      </Text>
     </View>
   );
 };
@@ -124,8 +95,6 @@ const GoalSummaries: React.FC<{
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
 }> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
-  const pagerRef = useRef<PagerView>(null);
-
   const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
   const minsGoal = profile.goal === Goal.WEIGHT_LOSS ? 180 : 150;
 
@@ -135,8 +104,6 @@ const GoalSummaries: React.FC<{
       : profile.goal === Goal.STRENGTH
       ? 'Intermediate/advanced'
       : 'Beginner/intermediate';
-
-  const confettiRef = useRef<Confetti>(null);
 
   useEffect(() => {
     getWeeklyItemsAction();
@@ -224,50 +191,37 @@ const GoalSummaries: React.FC<{
   }
 
   return (
-    <SafeAreaView
+    <Tile
       style={{
-        backgroundColor: colors.appGrey,
-        flex: 1,
+        width: Dimensions.get('window').width - 40,
+        marginBottom: 20,
+        alignSelf: 'center',
+        padding: 10,
       }}>
-      <Header showDrawerMenuButton />
       <Text
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: 30,
+          fontSize: 16,
           textAlign: 'center',
+          marginBottom: 10,
         }}>
         Weekly Goals
       </Text>
-      <PagerView
-        onPageSelected={e => {
-          const position = e.nativeEvent.position;
-          const {score, goal} = goals[position];
-          if (score >= goal) {
-            confettiRef.current?.startConfetti();
-          } else {
-            confettiRef.current?.stopConfetti();
-          }
-        }}
-        ref={pagerRef}
-        style={{flex: 1}}>
-        {goals.map(({goal, score, title, key, icon}, index) => {
+      <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
+        {goals.map(({goal, score, title, key, icon}) => {
           return (
             <GoalCircle
-              pagerRef={pagerRef}
               title={title}
               key={key}
               icon={icon}
               goal={goal}
               score={score}
-              index={index}
-              isLast={index === goals.length - 1}
             />
           );
         })}
-      </PagerView>
-      <Confetti ref={confettiRef} duration={3000} confettiCount={200} />
-    </SafeAreaView>
+      </View>
+    </Tile>
   );
 };
 

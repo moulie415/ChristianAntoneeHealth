@@ -12,7 +12,6 @@ import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
 import Color from 'color';
 import {TourGuideZone} from 'rn-tourguide';
-import GoalSummaries from './components/commons/GoalSummaries';
 import PlanTabIcon from './PlanTabIcon';
 import Avatar from './components/commons/Avatar';
 import ProfileComponent from './components/views/Profile';

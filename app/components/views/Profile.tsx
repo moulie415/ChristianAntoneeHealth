@@ -54,6 +54,7 @@ import {StackParamList} from '../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Tile from '../commons/Tile';
 import Modal from '../commons/Modal';
+import GoalSummaries from '../commons/GoalSummaries';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -370,6 +371,8 @@ const ProfileComponent: React.FC<{
               <Text style={{fontSize: 12, color: colors.appWhite}}>Age</Text>
             </Tile>
           </View>
+
+          <GoalSummaries />
 
           <ProfileCharts
             weight={weight}
