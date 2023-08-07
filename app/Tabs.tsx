@@ -92,6 +92,7 @@ const Tabs: React.FC<{
                 name={`${profile.name} ${profile.surname || ''}`}
                 src={profile.avatar}
                 uid={profile.uid}
+                size={28}
               />
             </TourGuideZone>
           ),

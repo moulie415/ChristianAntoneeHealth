@@ -171,7 +171,7 @@ const ProfileComponent: React.FC<{
   const saveDisabled = !dob || equal;
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
@@ -497,7 +497,7 @@ const ProfileComponent: React.FC<{
         />
       )}
       <AbsoluteSpinner loading={loading} />
-    </View>
+    </SafeAreaView>
   );
 };
 

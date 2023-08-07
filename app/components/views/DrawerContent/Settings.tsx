@@ -65,7 +65,7 @@ const Settings: React.FC<SettingsProps> = ({
     _.isEqual(testDate.toISOString(), testReminderTime);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appBlack}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
         <Header hasBack title="Settings" />
         <ScrollView
@@ -91,10 +91,10 @@ const Settings: React.FC<SettingsProps> = ({
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   margin: 10,
-                  backgroundColor: '#212121',
+                  backgroundColor: colors.tile,
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 5,
+                  borderRadius: 15,
                 }}>
                 <Text
                   style={{
@@ -119,7 +119,7 @@ const Settings: React.FC<SettingsProps> = ({
                   backgroundColor: '#212121',
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 5,
+                  borderRadius: 15,
                 }}>
                 <Text
                   style={{
@@ -143,10 +143,11 @@ const Settings: React.FC<SettingsProps> = ({
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   margin: 10,
-                  backgroundColor: '#212121',
+                  backgroundColor: colors.tile,
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 5,
+                  borderRadius: 15,
+                  overflow: 'hidden',
                 }}>
                 <Text
                   style={{
@@ -160,13 +161,14 @@ const Settings: React.FC<SettingsProps> = ({
                 {(showWorkoutDate || Platform.OS === 'ios') && (
                   <DateTimePicker
                     disabled={!workoutReminders}
-                    style={{width: 90}}
-                    testID="dateTimePicker"
+                    style={{width: 150}}
+                    testID="time"
                     value={new Date(workoutDate)}
+                    textColor={colors.appWhite}
                     // placeholderText="Select date"
                     mode="time"
                     // is24Hour={true}
-                    display={Platform.OS === 'ios' ? 'compact' : 'default'}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={(event, d: Date | undefined) => {
                       if (d) {
                         setWorkoutDate(d);
@@ -197,7 +199,7 @@ const Settings: React.FC<SettingsProps> = ({
                   backgroundColor: '#212121',
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 5,
+                  borderRadius: 15,
                 }}>
                 <Text
                   style={{
@@ -262,10 +264,10 @@ const Settings: React.FC<SettingsProps> = ({
               justifyContent: 'space-between',
               alignItems: 'center',
               margin: 10,
-              backgroundColor: '#212121',
+              backgroundColor: colors.tile,
               height: 60,
               paddingHorizontal: 10,
-              borderRadius: 5,
+              borderRadius: 15,
             }}>
             <Text
               style={{

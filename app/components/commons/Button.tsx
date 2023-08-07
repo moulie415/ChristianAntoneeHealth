@@ -45,7 +45,7 @@ const Button: React.FC<Props> = ({
       disabled={disabled}
       style={[
         {
-          borderRadius: 10,
+          borderRadius: 15,
           overflow: 'hidden',
         },
         props.style,
