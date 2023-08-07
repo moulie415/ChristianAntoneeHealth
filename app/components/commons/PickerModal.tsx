@@ -46,7 +46,11 @@ const PickerModal: React.FC<{
         )}
         {/*  @ts-ignore */}
         <Picker
-          style={{height: 200, backgroundColor: 'transparent'}}
+          style={{
+            height: 200,
+            paddingHorizontal: 20,
+            backgroundColor: 'transparent',
+          }}
           selectedValue={selectedValue}
           textColor={colors.appWhite}
           itemStyle={{color: colors.appWhite}}

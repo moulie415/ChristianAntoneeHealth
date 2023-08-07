@@ -21,7 +21,6 @@ const FitnessTesting: React.FC<{
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
         <Header showDrawerMenuButton />
-
         <ScrollView
           contentContainerStyle={{
             paddingBottom: 60,

@@ -171,11 +171,8 @@ const ProfileComponent: React.FC<{
   const saveDisabled = !dob || equal;
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <ScrollView
-        keyboardShouldPersistTaps="always"
-        style={styles.container}
-        contentContainerStyle={{paddingBottom: 100}}>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <SafeAreaView>
         <Header
           left={
             <TouchableOpacity
@@ -216,304 +213,309 @@ const ProfileComponent: React.FC<{
             </TouchableOpacity>
           }
         />
-        <View
-          style={{
-            marginBottom: 10,
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              if (profile.premium) {
-                const MAX_SIZE = 500;
-                const cameraOptions: CameraOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                const imageLibraryOptions: ImageLibraryOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                Alert.alert('Edit profile photo', '', [
-                  {
-                    text: 'Upload from image library',
-                    onPress: () =>
-                      launchImageLibrary(cameraOptions, handlePickerCallback),
-                  },
-                  {
-                    text: 'Take photo',
-                    onPress: () =>
-                      launchCamera(imageLibraryOptions, handlePickerCallback),
-                  },
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                ]);
-              } else {
-                navigation.navigate('Premium', {});
-              }
-            }}
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{paddingBottom: 100}}>
+          <View
             style={{
-              width: 95,
-              height: 95,
-              borderRadius: 48,
-              borderColor: colors.appWhite,
-              borderWidth: 1,
-              justifyContent: 'center',
+              marginBottom: 10,
               alignItems: 'center',
-              marginRight: 10,
             }}>
-            <Avatar
-              name={`${profile.name} ${profile.surname || ''}`}
-              src={avatar}
-              size={80}
-              uid={profile.uid}
-              hideCheck
-            />
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                if (profile.premium) {
+                  const MAX_SIZE = 500;
+                  const cameraOptions: CameraOptions = {
+                    mediaType: 'photo',
+                    maxHeight: MAX_SIZE,
+                    maxWidth: MAX_SIZE,
+                  };
+                  const imageLibraryOptions: ImageLibraryOptions = {
+                    mediaType: 'photo',
+                    maxHeight: MAX_SIZE,
+                    maxWidth: MAX_SIZE,
+                  };
+                  Alert.alert('Edit profile photo', '', [
+                    {
+                      text: 'Upload from image library',
+                      onPress: () =>
+                        launchImageLibrary(cameraOptions, handlePickerCallback),
+                    },
+                    {
+                      text: 'Take photo',
+                      onPress: () =>
+                        launchCamera(imageLibraryOptions, handlePickerCallback),
+                    },
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                  ]);
+                } else {
+                  navigation.navigate('Premium', {});
+                }
+              }}
               style={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                backgroundColor: colors.appWhite,
-                height: 30,
-                width: 30,
-                borderRadius: 15,
-                alignItems: 'center',
+                width: 95,
+                height: 95,
+                borderRadius: 48,
+                borderColor: colors.appWhite,
+                borderWidth: 1,
                 justifyContent: 'center',
+                alignItems: 'center',
+                marginRight: 10,
               }}>
-              <Icon
-                size={15}
-                name={profile.premium ? 'pencil-alt' : 'lock'}
-                color={colors.appBlue}
+              <Avatar
+                name={`${profile.name} ${profile.surname || ''}`}
+                src={avatar}
+                size={80}
+                uid={profile.uid}
+                hideCheck
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                  backgroundColor: colors.appWhite,
+                  height: 30,
+                  width: 30,
+                  borderRadius: 15,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Icon
+                  size={15}
+                  name={profile.premium ? 'pencil-alt' : 'lock'}
+                  color={colors.appBlue}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{alignItems: 'center'}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: colors.appWhite,
+                textAlign: 'center',
+              }}>
+              {`${profile.name} ${profile.surname || ''}`}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              margin: 20,
+            }}>
+            <Tile
+              style={{
+                width: 100,
+                height: 70,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => setShowWeightModal(true)}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                }}>
+                {weight}
+                <Text style={{fontSize: 12}}> kg</Text>
+              </Text>
+              <Text style={{fontSize: 12, color: colors.appWhite}}>Weight</Text>
+            </Tile>
+            <Tile
+              style={{
+                width: 100,
+                height: 70,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => setShowHeightModal(true)}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                }}>
+                {height}
+                <Text style={{fontSize: 12}}> cm</Text>
+              </Text>
+              <Text style={{fontSize: 12, color: colors.appWhite}}>Height</Text>
+            </Tile>
+            <Tile
+              style={{
+                width: 100,
+                height: 70,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => setShowDobModal(true)}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                  textAlign: 'center',
+                }}>
+                {moment().diff(dob, 'years')}
+                <Text style={{fontSize: 12}}> y.o</Text>
+              </Text>
+              <Text style={{fontSize: 12, color: colors.appWhite}}>Age</Text>
+            </Tile>
+          </View>
+
+          <ProfileCharts
+            weight={weight}
+            height={height}
+            bodyFatPercentage={bodyFatPercentage}
+            muscleMass={muscleMass}
+            boneMass={boneMass}
+            setShowBodyFatPercentageModal={setShowBodyFatPercentageModal}
+            setShowBoneMassModal={setShowBoneMassModal}
+            setShowMuscleMassModal={setShowMuscleMassModal}
+            setShowHeightModal={setShowHeightModal}
+            setShowWeightModal={setShowWeightModal}
+          />
+
+          <Button
+            variant="danger"
+            text=" Delete my account"
+            style={{margin: 20}}
+            onPress={() => navigation.navigate('DeleteAccount')}
+          />
+        </ScrollView>
+
+        <PickerModal
+          title="Select height"
+          visible={showHeightModal}
+          selectedValue={String(height)}
+          pickerData={HEIGHTS.map(value => {
+            return {
+              label: `${value.toString()} cm`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setHeight(Number(val))}
+          onRequestClose={() => setShowHeightModal(false)}
+        />
+        <PickerModal
+          title="Select weight"
+          visible={showWeightModal}
+          selectedValue={String(weight)}
+          pickerData={WEIGHTS.map(value => {
+            return {
+              label: `${value.toString()} kg`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setWeight(Number(val))}
+          onRequestClose={() => setShowWeightModal(false)}
+        />
+        <PickerModal
+          title="Select body fat percentage"
+          visible={showBodyFatPercentageModal}
+          selectedValue={String(bodyFatPercentage)}
+          pickerData={PERCENTAGES.map(value => {
+            return {
+              label: `${value.toString()} %`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setBodyFatPercentage(Number(val))}
+          onRequestClose={() => setShowBodyFatPercentageModal(false)}
+        />
+        <PickerModal
+          title="Select muscle mass"
+          visible={showMuscleMassModal}
+          selectedValue={String(muscleMass)}
+          pickerData={MUSCLE_MASSES.map(value => {
+            return {
+              label: `${value.toString()} kg`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setMuscleMass(Number(val))}
+          onRequestClose={() => setShowMuscleMassModal(false)}
+        />
+        <PickerModal
+          title="Select bone mass"
+          visible={showBoneMassModal}
+          selectedValue={String(boneMass)}
+          pickerData={BONE_DENSITIES.map(value => {
+            return {
+              label: `${value.toString()} kg`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setBoneMass(Number(val))}
+          onRequestClose={() => setShowBoneMassModal(false)}
+        />
+        <Modal
+          visible={showDobModal && Platform.OS === 'ios'}
+          onRequestClose={() => setShowDobModal(false)}>
+          <View
+            style={{
+              backgroundColor: colors.appGrey,
+              width: '90%',
+              alignSelf: 'center',
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                padding: 20,
+                paddingBottom: 10,
+                fontSize: 20,
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}>
+              Select date
+            </Text>
+            <View style={{paddingHorizontal: 20}}>
+              <DatePicker
+                mode="date"
+                textColor={colors.appWhite}
+                maximumDate={new Date()}
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                value={moment(dob).toDate()}
+                onChange={(event, d: Date | undefined) => {
+                  setShowDobModal(true);
+                  setDob(d ? d.toISOString() : dob);
+                }}
               />
             </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{alignItems: 'center'}}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: colors.appWhite,
-              textAlign: 'center',
-            }}>
-            {`${profile.name} ${profile.surname || ''}`}
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 20,
-          }}>
-          <Tile
-            style={{
-              width: 100,
-              height: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => setShowWeightModal(true)}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: colors.appWhite,
-                textAlign: 'center',
-              }}>
-              {weight}
-              <Text style={{fontSize: 12}}> kg</Text>
-            </Text>
-            <Text style={{fontSize: 12, color: colors.appWhite}}>Weight</Text>
-          </Tile>
-          <Tile
-            style={{
-              width: 100,
-              height: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => setShowHeightModal(true)}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: colors.appWhite,
-                textAlign: 'center',
-              }}>
-              {height}
-              <Text style={{fontSize: 12}}> cm</Text>
-            </Text>
-            <Text style={{fontSize: 12, color: colors.appWhite}}>Height</Text>
-          </Tile>
-          <Tile
-            style={{
-              width: 100,
-              height: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => setShowDobModal(true)}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: colors.appWhite,
-                textAlign: 'center',
-              }}>
-              {moment().diff(dob, 'years')}
-              <Text style={{fontSize: 12}}> y.o</Text>
-            </Text>
-            <Text style={{fontSize: 12, color: colors.appWhite}}>Age</Text>
-          </Tile>
-        </View>
 
-        <ProfileCharts
-          weight={weight}
-          height={height}
-          bodyFatPercentage={bodyFatPercentage}
-          muscleMass={muscleMass}
-          boneMass={boneMass}
-          setShowBodyFatPercentageModal={setShowBodyFatPercentageModal}
-          setShowBoneMassModal={setShowBoneMassModal}
-          setShowMuscleMassModal={setShowMuscleMassModal}
-          setShowHeightModal={setShowHeightModal}
-          setShowWeightModal={setShowWeightModal}
-        />
-
-        <Button
-          variant="danger"
-          text=" Delete my account"
-          style={{margin: 20}}
-          onPress={() => navigation.navigate('DeleteAccount')}
-        />
-      </ScrollView>
-
-      <PickerModal
-        title="Select height"
-        visible={showHeightModal}
-        selectedValue={String(height)}
-        pickerData={HEIGHTS.map(value => {
-          return {
-            label: `${value.toString()} cm`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setHeight(Number(val))}
-        onRequestClose={() => setShowHeightModal(false)}
-      />
-      <PickerModal
-        title="Select weight"
-        visible={showWeightModal}
-        selectedValue={String(weight)}
-        pickerData={WEIGHTS.map(value => {
-          return {
-            label: `${value.toString()} kg`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setWeight(Number(val))}
-        onRequestClose={() => setShowWeightModal(false)}
-      />
-      <PickerModal
-        title="Select body fat percentage"
-        visible={showBodyFatPercentageModal}
-        selectedValue={String(bodyFatPercentage)}
-        pickerData={PERCENTAGES.map(value => {
-          return {
-            label: `${value.toString()} %`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setBodyFatPercentage(Number(val))}
-        onRequestClose={() => setShowBodyFatPercentageModal(false)}
-      />
-      <PickerModal
-        title="Select muscle mass"
-        visible={showMuscleMassModal}
-        selectedValue={String(muscleMass)}
-        pickerData={MUSCLE_MASSES.map(value => {
-          return {
-            label: `${value.toString()} kg`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setMuscleMass(Number(val))}
-        onRequestClose={() => setShowMuscleMassModal(false)}
-      />
-      <PickerModal
-        title="Select bone mass"
-        visible={showBoneMassModal}
-        selectedValue={String(boneMass)}
-        pickerData={BONE_DENSITIES.map(value => {
-          return {
-            label: `${value.toString()} kg`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setBoneMass(Number(val))}
-        onRequestClose={() => setShowBoneMassModal(false)}
-      />
-      <Modal
-        visible={showDobModal && Platform.OS === 'ios'}
-        onRequestClose={() => setShowDobModal(false)}>
-        <View
-          style={{
-            backgroundColor: colors.appGrey,
-            width: '90%',
-            alignSelf: 'center',
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              color: colors.appWhite,
-              padding: 20,
-              paddingBottom: 10,
-              fontSize: 20,
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}>
-            Select date
-          </Text>
+            <Button
+              text="Close"
+              style={{margin: 10}}
+              onPress={() => setShowDobModal(false)}
+            />
+          </View>
+        </Modal>
+        {showDobModal && Platform.OS === 'android' && (
           <DatePicker
             mode="date"
             style={{}}
             textColor={colors.appWhite}
             maximumDate={new Date()}
-            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            display={'default'}
             value={moment(dob).toDate()}
             onChange={(event, d: Date | undefined) => {
-              setShowDobModal(true);
+              setShowDobModal(false);
               setDob(d ? d.toISOString() : dob);
             }}
           />
-
-          <Button
-            text="Close"
-            style={{margin: 10}}
-            onPress={() => setShowDobModal(false)}
-          />
-        </View>
-      </Modal>
-      {showDobModal && Platform.OS === 'android' && (
-        <DatePicker
-          mode="date"
-          style={{}}
-          textColor={colors.appWhite}
-          maximumDate={new Date()}
-          display={'default'}
-          value={moment(dob).toDate()}
-          onChange={(event, d: Date | undefined) => {
-            setShowDobModal(false);
-            setDob(d ? d.toISOString() : dob);
-          }}
-        />
-      )}
-      <AbsoluteSpinner loading={loading} />
-    </SafeAreaView>
+        )}
+        <AbsoluteSpinner loading={loading} />
+      </SafeAreaView>
+    </View>
   );
 };
 
