@@ -17,10 +17,15 @@ const MetricExplained: React.FC<{
   current?: number;
   onPress?: () => void;
   title: string;
-}> = ({ranges, colors: colorsArr, title, labels, current, suffix, onPress}) => {
-  if (!current) {
-    return null;
-  }
+}> = ({
+  ranges,
+  colors: colorsArr,
+  title,
+  labels,
+  current = 0,
+  suffix,
+  onPress,
+}) => {
   return (
     <Tile
       onPress={onPress}
@@ -75,7 +80,7 @@ const MetricExplained: React.FC<{
                     height: 7,
                     justifyContent: 'center',
                   }}>
-                  {isInRange && (
+                  {isInRange && !!current && (
                     <View
                       style={{
                         height: 15,

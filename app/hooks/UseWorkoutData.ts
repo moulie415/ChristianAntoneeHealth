@@ -9,7 +9,6 @@ import {
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
 import * as polar from '../helpers/polar';
-import * as garmin from '../helpers/garmin';
 import * as fitbit from '../helpers/fitbit';
 import useInit from './UseInit';
 
@@ -31,8 +30,7 @@ const useWorkoutData = (
     Sample[]
   >([]);
 
-  const [garminData, setGarminData] =
-    useState<garmin.GarminActivityDetailResponse>([]);
+  const [garminData, setGarminData] = useState([]);
 
   const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
 
@@ -57,16 +55,6 @@ const useWorkoutData = (
             endDate,
           );
           setPolarHeartRateSamples(pSamples);
-        }
-        if (profile.garminAccessToken && profile.garminAccessTokenSecret) {
-          const {samples: gSamples, data} = await garmin.getActivityDetails(
-            profile.garminAccessToken,
-            profile.garminAccessTokenSecret,
-            moment(endDate).subtract(seconds, 'seconds').toDate(),
-            endDate,
-          );
-          setGarminHeartRateSamples(gSamples);
-          setGarminData(data);
         }
         if (
           profile.fitbitToken &&
