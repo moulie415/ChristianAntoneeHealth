@@ -30,7 +30,6 @@ const useWorkoutData = (
     Sample[]
   >([]);
 
-  const [garminData, setGarminData] = useState([]);
 
   const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
 
@@ -122,7 +121,6 @@ const useWorkoutData = (
     heartRateSamples: validHeartRateSamples,
     averageHeartRate,
     fitbitData,
-    garminData,
     calories:
       validHeartRateSamples &&
       validHeartRateSamples.length &&

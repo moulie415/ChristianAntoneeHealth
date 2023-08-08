@@ -51,7 +51,6 @@ const EndWorkout: React.FC<{
     averageHeartRate,
     heartRateSamples,
     calories,
-    garminData,
     fitbitData,
   } = useWorkoutData(seconds, profile, difficulty, endTime, setProfileAction);
 
@@ -74,7 +73,6 @@ const EndWorkout: React.FC<{
       pauseEvents,
       startTime,
       endTime,
-      garminData,
       fitbitData,
     });
   }, 3000);

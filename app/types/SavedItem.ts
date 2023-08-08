@@ -1,5 +1,4 @@
 import {ActivitiesHeart} from '../helpers/fitbit';
-import {GarminActivityDetailResponse} from '../helpers/garmin';
 import {ExerciseEvent, PauseEvent, PlanWorkout, Sample} from './Shared';
 
 export interface SavedWorkout {
@@ -18,7 +17,6 @@ export interface SavedWorkout {
   startTime: Date;
   endTime: Date;
   fitbitData: ActivitiesHeart[];
-  garminData: GarminActivityDetailResponse;
 }
 
 export interface SavedTest {
@@ -45,5 +43,4 @@ export interface SavedQuickRoutine {
   startTime: Date;
   endTime: Date;
   fitbitData: ActivitiesHeart[];
-  garminData: GarminActivityDetailResponse;
 }
