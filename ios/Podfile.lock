@@ -1,4 +1,4 @@
-PODS:
+@sentry/react-native PODS:
   - abseil/algorithm (1.20220623.0):
     - abseil/algorithm/algorithm (= 1.20220623.0)
     - abseil/algorithm/container (= 1.20220623.0)
