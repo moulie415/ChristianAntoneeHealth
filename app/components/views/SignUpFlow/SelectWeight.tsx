@@ -60,7 +60,7 @@ const SelectWeight: React.FC<{
               value: String(value),
             };
           })}
-          onValueChange={val => setWeight(Number(val))}
+          onValueChange={(val: any) => setWeight(Number(val))}
         />
       )}
     </View>

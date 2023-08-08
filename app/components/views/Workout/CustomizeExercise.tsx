@@ -151,7 +151,7 @@ const CustomizeExercise: React.FC<{
                           value: String(value),
                         };
                       })}
-                      onValueChange={val => setReps(Number(val))}
+                      onValueChange={(val: any) => setReps(Number(val))}
                     />
                   </View>
                 )}
@@ -182,7 +182,7 @@ const CustomizeExercise: React.FC<{
                         value: String(value),
                       };
                     })}
-                    onValueChange={val => setSets(Number(val))}
+                    onValueChange={(val: any) => setSets(Number(val))}
                   />
                 </View>
               )}
@@ -212,7 +212,7 @@ const CustomizeExercise: React.FC<{
                         value: String(value),
                       };
                     })}
-                    onValueChange={val => setResistance(Number(val))}
+                    onValueChange={(val: any) => setResistance(Number(val))}
                   />
                 </View>
               )}

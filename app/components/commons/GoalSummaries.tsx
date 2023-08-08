@@ -78,6 +78,7 @@ const GoalCircle: React.FC<{
           color: colors.appWhite,
           fontWeight: 'bold',
           fontSize: 10,
+          width: 150,
           marginHorizontal: 10,
           textAlign: 'center',
           alignSelf: 'center',

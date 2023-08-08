@@ -5,7 +5,7 @@ import {Picker} from 'react-native-wheel-pick';
 
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import { HEIGHTS } from '../../../constants';
+import {HEIGHTS} from '../../../constants';
 
 const SelectHeight: React.FC<{
   height: number;
@@ -62,7 +62,7 @@ const SelectHeight: React.FC<{
               value: String(value),
             };
           })}
-          onValueChange={val => setHeight(Number(val))}
+          onValueChange={(val: any) => setHeight(Number(val))}
         />
       )}
     </View>
