@@ -1,9 +1,12 @@
 import {View, TouchableOpacity, Dimensions} from 'react-native';
-import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
-import PagerView from 'react-native-pager-view';
-
+import React, {
+  MutableRefObject,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from './Text';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Goal, Level, MyRootState} from '../../types/Shared';
@@ -20,21 +23,26 @@ import Header from './Header';
 import Confetti from 'react-native-confetti';
 import Tile from './Tile';
 import {ScrollView} from 'react-native-gesture-handler';
+import Dumbbell from '../../images/dumbbell.svg';
+import DumbbellRed from '../../images/dumbbell_red.svg';
+import Time from '../../images/time.svg';
+import Fire from '../../images/fire.svg';
+import {SvgProps} from 'react-native-svg';
 
 interface GoalSet {
   title: string;
   key: string;
   goal: number;
   score: number;
-  icon: string;
+  icon: React.FC<SvgProps>;
 }
 
 const GoalCircle: React.FC<{
   title: string;
   goal: number;
   score: number;
-  icon: string;
-}> = ({title, goal, score, icon}) => {
+  icon: React.FC<SvgProps>;
+}> = ({title, goal, score, icon: Icon}) => {
   const [fill, setFill] = useState(0);
 
   useEffect(() => {
@@ -60,7 +68,7 @@ const GoalCircle: React.FC<{
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
-        {fill => <Icon name={icon} size={30} color={colors.appWhite} />}
+        {fill => <Icon />}
       </AnimatedCircularProgress>
       <Text
         style={{
@@ -69,7 +77,7 @@ const GoalCircle: React.FC<{
           fontSize: 14,
           textAlign: 'center',
           alignSelf: 'center',
-          marginTop: -10
+          marginTop: -10,
         }}>
         {`${score}/${goal}`}
       </Text>
@@ -77,7 +85,7 @@ const GoalCircle: React.FC<{
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
-          fontSize: 10,
+          fontSize: 12,
           width: 150,
           marginHorizontal: 10,
           textAlign: 'center',
@@ -163,31 +171,31 @@ const GoalSummaries: React.FC<{
       key: 'workout',
       score: [...savedWorkouts, ...savedQuickRoutines].length,
       goal: workoutGoal,
-      icon: 'dumbbell',
+      icon: Dumbbell,
     },
     {
       title: 'Minutes spent training',
       key: 'mins',
       goal: minsGoal,
       score: mins,
-      icon: 'stopwatch',
+      icon: Time,
     },
     {
       title: `${workoutLevelTitleString} workouts completed`,
       key: 'workoutLevel',
-      icon: 'tachometer-alt',
+      icon: DumbbellRed,
       score: workoutLevelScore,
       goal: workoutGoal,
     },
   ];
 
-  if (profile.goal === Goal.WEIGHT_LOSS) {
+ if (profile.goal === Goal.WEIGHT_LOSS) {
     goals.push({
       title: 'Calories burned',
       key: 'calories',
       goal: 3500,
       score: calories,
-      icon: 'fire-alt',
+      icon: Fire,
     });
   }
 

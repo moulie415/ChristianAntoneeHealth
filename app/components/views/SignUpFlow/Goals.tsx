@@ -5,7 +5,12 @@ import colors from '../../../constants/colors';
 import {Goal} from '../../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from '../../commons/Text';
+import Dumbbell from '../../../images/dumbbell.svg';
+import DumbbellRed from '../../../images/dumbbell_red.svg';
+import Time from '../../../images/time.svg';
+import Fire from '../../../images/fire.svg';
 
+const ICON_SIZE = 100;
 const Goals: React.FC<{
   goal: Goal;
 }> = ({goal}) => {
@@ -34,14 +39,7 @@ const Goals: React.FC<{
         Here's a summary of your weekly goals...
       </Text>
       <View style={{alignItems: 'center'}}>
-        <Icon
-          name="dumbbell"
-          size={40}
-          color={colors.appWhite}
-          style={{
-            marginHorizontal: 15,
-          }}
-        />
+        <Dumbbell />
         <Text
           style={{
             color: colors.appWhite,
@@ -53,14 +51,7 @@ const Goals: React.FC<{
           <Text style={{fontWeight: 'bold'}}>{workoutGoal}</Text>
           {' workouts completed'}
         </Text>
-        <Icon
-          name="stopwatch"
-          size={50}
-          color={colors.appWhite}
-          style={{
-            marginHorizontal: 15,
-          }}
-        />
+        <Time />
         <Text
           style={{
             color: colors.appWhite,
@@ -73,14 +64,7 @@ const Goals: React.FC<{
           {' mins spent training'}
         </Text>
 
-        <Icon
-          name="tachometer-alt"
-          size={40}
-          color={colors.appWhite}
-          style={{
-            marginHorizontal: 15,
-          }}
-        />
+        <DumbbellRed />
         <Text
           style={{
             color: colors.appWhite,
@@ -97,14 +81,7 @@ const Goals: React.FC<{
         </Text>
         {goal === Goal.WEIGHT_LOSS && (
           <>
-            <Icon
-              name="fire-alt"
-              size={50}
-              color={colors.appWhite}
-              style={{
-                marginHorizontal: 15,
-              }}
-            />
+            <Fire />
 
             <Text
               style={{
