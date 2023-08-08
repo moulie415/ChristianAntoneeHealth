@@ -46,13 +46,13 @@ const GoalCircle: React.FC<{
         alignItems: 'center',
         flex: 1,
         flexBasis: '50%',
-        marginBottom: 10
+        marginBottom: 10,
       }}>
       <AnimatedCircularProgress
         style={{alignSelf: 'center'}}
-        size={60}
-        width={7}
-        backgroundWidth={5}
+        size={80}
+        width={9}
+        backgroundWidth={7}
         fill={fill}
         tintColor={score >= goal ? colors.appGreen : colors.appBlue}
         // tintColorSecondary={colors.appBlueFaded}
@@ -60,16 +60,16 @@ const GoalCircle: React.FC<{
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
-        {fill => <Icon name={icon} size={20} color={colors.appWhite} />}
+        {fill => <Icon name={icon} size={30} color={colors.appWhite} />}
       </AnimatedCircularProgress>
       <Text
         style={{
           color: colors.appWhite,
           fontWeight: 'bold',
           fontSize: 14,
-
           textAlign: 'center',
           alignSelf: 'center',
+          marginTop: -10
         }}>
         {`${score}/${goal}`}
       </Text>
@@ -205,7 +205,7 @@ const GoalSummaries: React.FC<{
           fontWeight: 'bold',
           fontSize: 16,
           textAlign: 'center',
-          marginBottom: 10,
+          marginVertical: 10,
         }}>
         Weekly Goals
       </Text>

@@ -39,7 +39,6 @@ const Chart: React.FC<{
   labels,
   onPress,
 }) => {
-  console.log(colorsArr);
   return (
     <View style={{alignItems: 'center'}}>
       <MetricExplained
