@@ -101,24 +101,39 @@ const MetricExplained: React.FC<{
                     justifyContent: 'center',
                   }}>
                   {isInRange && !!current && (
-                    <View
-                      style={{
-                        height: 15,
-                        width: 15,
-                        backgroundColor: colors.appWhite,
-                        borderRadius: 8,
-                        left: `${percentage}%`,
-                        marginLeft: -8,
-                        borderWidth: 2,
-                        borderColor: color,
-                      }}
-                    />
+                    <>
+                      <View
+                        style={{
+                          height: 15,
+                          width: 15,
+                          backgroundColor: colors.appWhite,
+                          borderRadius: 8,
+                          left: `${percentage}%`,
+                          marginLeft: -8,
+                          borderWidth: 2,
+                          borderColor: color,
+                        }}
+                      />
+                      <Text
+                        style={{
+                          position: 'absolute',
+                          left: `${percentage}%`,
+                          color: colors.appWhite,
+                          top: 14,
+                          marginLeft: current > 9 ? -7 : -4,
+                          fontSize: 10,
+                          textAlign: 'center',
+                          fontWeight: 'bold'
+                        }}>
+                        {current}
+                      </Text>
+                    </>
                   )}
                 </View>
                 <Text
                   style={{
                     fontSize: 9,
-                    marginTop: 10,
+                    marginTop: 25,
                     color: colors.appWhite,
                     textAlign: 'center',
                     fontWeight: 'bold',

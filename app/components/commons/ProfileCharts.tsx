@@ -1,9 +1,8 @@
-import {View, Dimensions, Alert} from 'react-native';
+import {View, Dimensions, Alert, TouchableOpacity} from 'react-native';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux';
 import {MyRootState, Sample} from '../../types/Shared';
-import {getSamples} from '../../actions/profile';
 import {getBMIItems, getSampleItems} from '../../helpers';
 import Button from './Button';
 import MetricExplained from './MetricExplained';
@@ -14,19 +13,27 @@ import {LineChart} from 'echarts/charts';
 import {GridComponent} from 'echarts/components';
 import {SVGRenderer, SkiaChart} from '@wuba/react-native-echarts';
 import moment from 'moment';
+import LinearGradient from 'react-native-linear-gradient';
+import Text from './Text';
 
 echarts.use([SVGRenderer, LineChart, GridComponent]);
 
 const Graph: React.FC<{
   setShowModal: (show: boolean) => void;
   data: {x: Date; y: number}[];
-}> = ({setShowModal, data}) => {
+  setFilter: (filter: 6 | 30 | 365) => void;
+  filter: 6 | 30 | 365;
+}> = ({setShowModal, data, setFilter, filter}) => {
   const skiaRef = useRef<any>(null);
   useEffect(() => {
     const option = {
       xAxis: {
         type: 'category',
-        data: data.map(({x}) => moment(x).format('dd')),
+        data: data.map(({x}) =>
+          moment(x).format(
+            filter === 6 ? 'dd' : filter === 30 ? 'DD/MM' : 'MMM',
+          ),
+        ),
       },
       yAxis: {
         type: 'value',
@@ -35,6 +42,8 @@ const Graph: React.FC<{
         {
           data: data.map(d => d.y),
           type: 'line',
+          lineStyle: {color: colors.appBlue},
+          itemStyle: {color: colors.appBlue}
         },
       ],
     };
@@ -48,7 +57,7 @@ const Graph: React.FC<{
       chart.setOption(option);
     }
     return () => chart?.dispose();
-  }, [data]);
+  }, [data, filter]);
   return (
     <View
       style={{
@@ -56,6 +65,86 @@ const Graph: React.FC<{
         backgroundColor: colors.appGrey,
         borderRadius: 15,
       }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+          marginTop: 20,
+        }}>
+        <TouchableOpacity style={{}} onPress={() => setFilter(6)}>
+          <LinearGradient
+            colors={
+              filter === 6
+                ? [colors.appBlueLight, colors.appBlueDark]
+                : ['transparent', 'transparent']
+            }
+            style={{
+              height: 40,
+              paddingHorizontal: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 25,
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textAlign: 'center',
+              }}>
+              1W
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity style={{}} onPress={() => setFilter(30)}>
+          <LinearGradient
+            colors={
+              filter === 30
+                ? [colors.appBlueLight, colors.appBlueDark]
+                : ['transparent', 'transparent']
+            }
+            style={{
+              height: 40,
+              paddingHorizontal: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 25,
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textAlign: 'center',
+              }}>
+              1M
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity style={{}} onPress={() => setFilter(365)}>
+          <LinearGradient
+            colors={
+              filter === 365
+                ? [colors.appBlueLight, colors.appBlueDark]
+                : ['transparent', 'transparent']
+            }
+            style={{
+              height: 40,
+              paddingHorizontal: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 25,
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#fff',
+                textAlign: 'center',
+              }}>
+              1Y
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
       <SkiaChart ref={skiaRef} />
       <View style={{padding: 20}}>
         <Button text="Close" onPress={() => setShowModal(false)} />
@@ -75,6 +164,8 @@ const Chart: React.FC<{
   labels: string[];
   data: {x: Date; y: number}[];
   onPress?: () => void;
+  setFilter: (filter: 6 | 30 | 365) => void;
+  filter: 6 | 30 | 365;
 }> = ({
   title,
   current,
@@ -86,6 +177,8 @@ const Chart: React.FC<{
   labels,
   onPress,
   data,
+  setFilter,
+  filter,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -108,7 +201,12 @@ const Chart: React.FC<{
         />
       </View>
       <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
-        <Graph data={data} setShowModal={setShowModal} />
+        <Graph
+          setFilter={setFilter}
+          filter={filter}
+          data={data}
+          setShowModal={setShowModal}
+        />
       </Modal>
     </>
   );
@@ -144,9 +242,6 @@ const ProfileCharts: React.FC<{
   bodyFatPercentage,
   muscleMass,
   boneMass,
-
-  setShowHeightModal,
-  setShowWeightModal,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
 
@@ -157,8 +252,6 @@ const ProfileCharts: React.FC<{
   } = useMemo(() => {
     return getBMIItems(weight, height, weightSamples, heightSamples, filter);
   }, [weightSamples, weight, height, heightSamples, filter]);
-
-  console.log(weightItems.lowest, weightItems.highest);
 
   const bodyFatItems: {
     data: {x: Date; y: number}[];
@@ -189,6 +282,8 @@ const ProfileCharts: React.FC<{
   return (
     <>
       <Chart
+        setFilter={setFilter}
+        filter={filter}
         current={latestBMI}
         title="BMI"
         data={weightItems.data}
@@ -211,6 +306,8 @@ const ProfileCharts: React.FC<{
       />
 
       <Chart
+        setFilter={setFilter}
+        filter={filter}
         current={bodyFatPercentage}
         data={bodyFatItems.data}
         title="Body fat percentage"
@@ -235,6 +332,8 @@ const ProfileCharts: React.FC<{
         onPress={() => setShowBodyFatPercentageModal(true)}
       />
       <Chart
+        setFilter={setFilter}
+        filter={filter}
         current={muscleMass}
         data={muscleMassItems.data}
         minY={0}
@@ -251,6 +350,8 @@ const ProfileCharts: React.FC<{
         labels={['Low', 'Normal', 'High']}
       />
       <Chart
+        setFilter={setFilter}
+        filter={filter}
         current={boneMass}
         data={boneMassItems.data}
         title="Bone mass"
