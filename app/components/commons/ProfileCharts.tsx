@@ -1,14 +1,5 @@
-import {View, Dimensions, TouchableOpacity, Alert} from 'react-native';
-import React, {
-  MutableRefObject,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-
-import {PERCENTAGES} from '../../constants';
+import {View, Dimensions, Alert} from 'react-native';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux';
 import {MyRootState, Sample} from '../../types/Shared';
@@ -17,16 +8,72 @@ import {getBMIItems, getSampleItems} from '../../helpers';
 import Button from './Button';
 import MetricExplained from './MetricExplained';
 import Color from 'color';
+import Modal from './Modal';
+import * as echarts from 'echarts/core';
+import {LineChart} from 'echarts/charts';
+import {GridComponent} from 'echarts/components';
+import {SVGRenderer, SkiaChart} from '@wuba/react-native-echarts';
+import moment from 'moment';
+
+echarts.use([SVGRenderer, LineChart, GridComponent]);
+
+const Graph: React.FC<{
+  setShowModal: (show: boolean) => void;
+  data: {x: Date; y: number}[];
+}> = ({setShowModal, data}) => {
+  const skiaRef = useRef<any>(null);
+  useEffect(() => {
+    const option = {
+      xAxis: {
+        type: 'category',
+        data: data.map(({x}) => moment(x).format('dd')),
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: data.map(d => d.y),
+          type: 'line',
+        },
+      ],
+    };
+    let chart: any;
+    if (skiaRef.current) {
+      chart = echarts.init(skiaRef.current, 'light', {
+        renderer: 'svg',
+        width: Dimensions.get('window').width * 0.9,
+        height: 300,
+      });
+      chart.setOption(option);
+    }
+    return () => chart?.dispose();
+  }, [data]);
+  return (
+    <View
+      style={{
+        width: '95%',
+        backgroundColor: colors.appGrey,
+        borderRadius: 15,
+      }}>
+      <SkiaChart ref={skiaRef} />
+      <View style={{padding: 20}}>
+        <Button text="Close" onPress={() => setShowModal(false)} />
+      </View>
+    </View>
+  );
+};
 
 const Chart: React.FC<{
   title: string;
   current?: number;
   suffix?: string;
-  minY?: number;
-  maxY?: number;
+  minY: number;
+  maxY: number;
   ranges: number[];
   colors: string[];
   labels: string[];
+  data: {x: Date; y: number}[];
   onPress?: () => void;
 }> = ({
   title,
@@ -38,23 +85,32 @@ const Chart: React.FC<{
   colors: colorsArr,
   labels,
   onPress,
+  data,
 }) => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    <View style={{alignItems: 'center'}}>
-      <MetricExplained
-        onPress={onPress}
-        suffix={suffix}
-        current={current}
-        ranges={
-          minY !== undefined && !!maxY && !!ranges
-            ? [minY, ...ranges, maxY]
-            : []
-        }
-        title={title}
-        colors={colorsArr}
-        labels={labels}
-      />
-    </View>
+    <>
+      <View style={{alignItems: 'center'}}>
+        <MetricExplained
+          onPressHistorical={() => setShowModal(true)}
+          onPress={onPress}
+          suffix={suffix}
+          current={current}
+          ranges={
+            minY !== undefined && !!maxY && !!ranges
+              ? [minY, ...ranges, maxY]
+              : []
+          }
+          title={title}
+          colors={colorsArr}
+          labels={labels}
+        />
+      </View>
+      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
+        <Graph data={data} setShowModal={setShowModal} />
+      </Modal>
+    </>
   );
 };
 
@@ -88,22 +144,24 @@ const ProfileCharts: React.FC<{
   bodyFatPercentage,
   muscleMass,
   boneMass,
+
   setShowHeightModal,
   setShowWeightModal,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
-  const [showCharts, setShowCharts] = useState(true);
 
   const weightItems: {
-    data: {x: number; y: number}[];
+    data: {x: Date; y: number}[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
     return getBMIItems(weight, height, weightSamples, heightSamples, filter);
   }, [weightSamples, weight, height, heightSamples, filter]);
 
+  console.log(weightItems.lowest, weightItems.highest);
+
   const bodyFatItems: {
-    data: {x: number; y: number}[];
+    data: {x: Date; y: number}[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
@@ -111,7 +169,7 @@ const ProfileCharts: React.FC<{
   }, [bodyFatPercentageSamples, filter, bodyFatPercentage]);
 
   const muscleMassItems: {
-    data: {x: number; y: number}[];
+    data: {x: Date; y: number}[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
@@ -119,7 +177,7 @@ const ProfileCharts: React.FC<{
   }, [muscleMassSamples, filter, muscleMass]);
 
   const boneMassItems: {
-    data: {x: number; y: number}[];
+    data: {x: Date; y: number}[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
@@ -133,6 +191,7 @@ const ProfileCharts: React.FC<{
       <Chart
         current={latestBMI}
         title="BMI"
+        data={weightItems.data}
         minY={0}
         maxY={40}
         ranges={[18.5, 25.0, 30.0]}
@@ -153,6 +212,7 @@ const ProfileCharts: React.FC<{
 
       <Chart
         current={bodyFatPercentage}
+        data={bodyFatItems.data}
         title="Body fat percentage"
         minY={0}
         maxY={30}
@@ -176,6 +236,7 @@ const ProfileCharts: React.FC<{
       />
       <Chart
         current={muscleMass}
+        data={muscleMassItems.data}
         minY={0}
         maxY={70}
         title="Muscle mass"
@@ -191,6 +252,7 @@ const ProfileCharts: React.FC<{
       />
       <Chart
         current={boneMass}
+        data={boneMassItems.data}
         title="Bone mass"
         suffix="kg"
         minY={0}

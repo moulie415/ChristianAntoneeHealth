@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Modal from './Modal';
 import Button from './Button';
@@ -16,6 +16,7 @@ const MetricExplained: React.FC<{
   labels: string[];
   current?: number;
   onPress?: () => void;
+  onPressHistorical: () => void;
   title: string;
 }> = ({
   ranges,
@@ -25,6 +26,7 @@ const MetricExplained: React.FC<{
   current = 0,
   suffix,
   onPress,
+  onPressHistorical,
 }) => {
   return (
     <Tile
@@ -33,16 +35,34 @@ const MetricExplained: React.FC<{
         width: Dimensions.get('window').width - 40,
         marginBottom: 20,
       }}>
-      <Text
-        style={{
-          textAlign: 'left',
-          padding: 15,
-          fontSize: 18,
-          color: colors.appWhite,
-          fontWeight: 'bold',
-        }}>
-        {title}
-      </Text>
+      <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+        <Text
+          style={{
+            textAlign: 'left',
+            padding: 15,
+            fontSize: 18,
+            color: colors.appWhite,
+            fontWeight: 'bold',
+          }}>
+          {title}
+        </Text>
+        <TouchableOpacity
+          onPress={onPressHistorical}
+          style={{
+            borderWidth: StyleSheet.hairlineWidth,
+            borderColor: colors.appWhite,
+            margin: 10,
+            paddingHorizontal: 10,
+            height: 30,
+            borderRadius: 5,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{color: colors.appWhite, fontSize: 14}}>
+            See historical
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View
         style={{
           flexDirection: 'row',

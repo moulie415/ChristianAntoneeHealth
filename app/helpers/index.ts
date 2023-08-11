@@ -61,7 +61,7 @@ export const getSampleItems = (
   samples: Sample[],
 ) => {
   if (profileVal === undefined || profileVal === null) {
-    return {data: [] as {x: number; y: number}[], highest: 0, lowest: 0};
+    return {data: [] as {x: Date; y: number}[], highest: 0, lowest: 0};
   }
   const data = [];
 
@@ -78,7 +78,7 @@ export const getSampleItems = (
       if (profileVal < lowest) {
         lowest = profileVal;
       }
-      data.push({y: profileVal, x: day.valueOf()});
+      data.push({y: profileVal, x: day.toDate()});
     } else if (
       i === filter ||
       filter === 6 ||
@@ -96,7 +96,7 @@ export const getSampleItems = (
       if (sample < lowest) {
         lowest = sample;
       }
-      data.push({y: sample, x: day.valueOf()});
+      data.push({y: sample, x: day.toDate()});
     }
   }
 
@@ -128,7 +128,7 @@ export const getBMIItems = (
       if (bmi < lowest) {
         lowest = bmi;
       }
-      data.push({y: bmi, x: day.valueOf()});
+      data.push({y: bmi, x: day.toDate()});
     } else if (
       i === filter ||
       filter === 6 ||
@@ -153,7 +153,7 @@ export const getBMIItems = (
       if (bmi < lowest) {
         lowest = bmi;
       }
-      data.push({y: bmi, x: day.valueOf()});
+      data.push({y: bmi, x: day.toDate()});
     }
   }
   return {data, lowest, highest};
