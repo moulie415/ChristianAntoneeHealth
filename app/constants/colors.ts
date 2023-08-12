@@ -9,7 +9,7 @@ export default {
   appBlueFaded: '#5A89DA',
   darkBlue: '#242b43',
   appBlack: '#040404',
-  appGrey: '#2a2a2a',
+  appGrey: '#22252F',
   appRed: '#d13f64',
   appGreen: '#6ee1b9',
   musclePrimary: '#1c7ad9',

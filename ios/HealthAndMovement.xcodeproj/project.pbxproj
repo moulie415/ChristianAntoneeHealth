@@ -33,12 +33,8 @@
 		13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* appdelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1FCB3D0E2E974C08A01C142D /* MontserratAlternates-Regular_bold_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D061EAE97E3849EB89C12E9E /* MontserratAlternates-Regular_bold_italic.ttf */; };
-		3B6A5EC74C744A0EA61D661B /* MontserratAlternates-Regular_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AD4BA247C049729EF0346E /* MontserratAlternates-Regular_bold.ttf */; };
-		5CD423F926804C13B09F3B3A /* MontserratAlternates-Regular_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E260AC1E4BB4057A457FDD1 /* MontserratAlternates-Regular_italic.ttf */; };
 		90FF22CB05814F73A1C21308 /* MrDafoe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0D8977476234F458E6EA17F /* MrDafoe-Regular.ttf */; };
 		D77CF5A2381EE02CEB35A995 /* Pods_HealthAndMovement_HealthAndMovementTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C21BA99ED7F38D5E207EF0BF /* Pods_HealthAndMovement_HealthAndMovementTests.framework */; };
-		DAF95037B7784E8C9CFCE5EC /* MontserratAlternates-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD9EB138C2534F24B6693B77 /* MontserratAlternates-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,13 +158,9 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HealthAndMovement/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HealthAndMovement/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HealthAndMovement/main.m; sourceTree = "<group>"; };
-		3E260AC1E4BB4057A457FDD1 /* MontserratAlternates-Regular_italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MontserratAlternates-Regular_italic.ttf"; path = "../assets/fonts/MontserratAlternates-Regular_italic.ttf"; sourceTree = "<group>"; };
 		6EB550957D1D8E7241BE8F2D /* Pods-HealthAndMovement-HealthAndMovementTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthAndMovement-HealthAndMovementTests.release.xcconfig"; path = "Target Support Files/Pods-HealthAndMovement-HealthAndMovementTests/Pods-HealthAndMovement-HealthAndMovementTests.release.xcconfig"; sourceTree = "<group>"; };
-		A1AD4BA247C049729EF0346E /* MontserratAlternates-Regular_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MontserratAlternates-Regular_bold.ttf"; path = "../assets/fonts/MontserratAlternates-Regular_bold.ttf"; sourceTree = "<group>"; };
 		B17746A6E3EDFFDC3E7EA6E0 /* Pods-HealthAndMovement-HealthAndMovementTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthAndMovement-HealthAndMovementTests.debug.xcconfig"; path = "Target Support Files/Pods-HealthAndMovement-HealthAndMovementTests/Pods-HealthAndMovement-HealthAndMovementTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BD9EB138C2534F24B6693B77 /* MontserratAlternates-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MontserratAlternates-Regular.ttf"; path = "../assets/fonts/MontserratAlternates-Regular.ttf"; sourceTree = "<group>"; };
 		C21BA99ED7F38D5E207EF0BF /* Pods_HealthAndMovement_HealthAndMovementTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthAndMovement_HealthAndMovementTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D061EAE97E3849EB89C12E9E /* MontserratAlternates-Regular_bold_italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MontserratAlternates-Regular_bold_italic.ttf"; path = "../assets/fonts/MontserratAlternates-Regular_bold_italic.ttf"; sourceTree = "<group>"; };
 		E670CA38C6E74B42A6E3CBE5 /* Pods-HealthAndMovement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthAndMovement.debug.xcconfig"; path = "Target Support Files/Pods-HealthAndMovement/Pods-HealthAndMovement.debug.xcconfig"; sourceTree = "<group>"; };
 		ECB439E87E38286B48A6A50B /* Pods_HealthAndMovement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthAndMovement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -327,10 +319,6 @@
 		2791497A85BD4F649C1337D7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D061EAE97E3849EB89C12E9E /* MontserratAlternates-Regular_bold_italic.ttf */,
-				A1AD4BA247C049729EF0346E /* MontserratAlternates-Regular_bold.ttf */,
-				3E260AC1E4BB4057A457FDD1 /* MontserratAlternates-Regular_italic.ttf */,
-				BD9EB138C2534F24B6693B77 /* MontserratAlternates-Regular.ttf */,
 				F0D8977476234F458E6EA17F /* MrDafoe-Regular.ttf */,
 			);
 			name = Resources;
@@ -576,10 +564,6 @@
 				0A33190427D39ADF00C74CD6 /* logo.png in Resources */,
 				0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */,
 				0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */,
-				1FCB3D0E2E974C08A01C142D /* MontserratAlternates-Regular_bold_italic.ttf in Resources */,
-				3B6A5EC74C744A0EA61D661B /* MontserratAlternates-Regular_bold.ttf in Resources */,
-				5CD423F926804C13B09F3B3A /* MontserratAlternates-Regular_italic.ttf in Resources */,
-				DAF95037B7784E8C9CFCE5EC /* MontserratAlternates-Regular.ttf in Resources */,
 				90FF22CB05814F73A1C21308 /* MrDafoe-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

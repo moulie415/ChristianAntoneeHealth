@@ -17,6 +17,7 @@ import colors from '../../constants/colors';
 import Text from './Text';
 import FastImage, {Source} from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {height, width} = Dimensions.get('window');
 
@@ -49,16 +50,24 @@ const HomeCard: React.FC<{
         source={image}
       />
 
-      <View
+      <LinearGradient
+        colors={[
+          'rgba(54, 57, 68,0)',
+          'rgba(54, 57, 68,0.8)',
+          'rgb(54, 57, 68)',
+        ]}
+        // start={{x: 0, y: 0}}
+        // end={{x: 1, y: 0}}
         style={{
           position: 'absolute',
           alignSelf: 'flex-end',
           right: 0,
-          top: 0,
+          left: 0,
           bottom: 0,
-          width: width / 2,
+          width: width,
           padding: 10,
-          backgroundColor: 'rgba(0,0,0,0.7)',
+          height: 100,
+          justifyContent: 'flex-end',
         }}>
         <Text
           style={{
@@ -86,7 +95,7 @@ const HomeCard: React.FC<{
             <Icon name="lock" size={20} color={colors.appWhite} />
           </View>
         )}
-      </View>
+      </LinearGradient>
     </TouchableOpacity>
   );
 };

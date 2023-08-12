@@ -8,6 +8,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
+import LinearGradient from 'react-native-linear-gradient';
 
 const WhatEquipment: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Workout'>;
@@ -45,16 +46,21 @@ const WhatEquipment: React.FC<{
                 borderRadius: 10,
               }}
               source={require('../../../images/bits-and-pieces.jpg')}>
-              <View
+              <LinearGradient
+                colors={[
+                  'rgba(54, 57, 68,0)',
+                  'rgba(54, 57, 68,0.8)',
+                  'rgb(54, 57, 68)',
+                ]}
                 style={{
                   padding: 20,
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 10,
-                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  height: 150,
+                  justifyContent: 'flex-end',
                 }}>
                 <Text
                   style={{
-                    textAlign: 'center',
                     color: colors.appWhite,
                     fontWeight: 'bold',
                     fontSize: 20,
@@ -65,12 +71,11 @@ const WhatEquipment: React.FC<{
                 <Text
                   style={{
                     color: colors.appWhite,
-                    textAlign: 'center',
-                    fontSize: 13,
+                    fontSize: 14,
                   }}>
                   (Dumbbells, exercise ball, exercise mat)
                 </Text>
-              </View>
+              </LinearGradient>
             </FastImage>
           </TouchableOpacity>
 
@@ -88,16 +93,21 @@ const WhatEquipment: React.FC<{
                 borderRadius: 10,
               }}
               source={require('../../../images/access-to-gym.jpg')}>
-              <View
+              <LinearGradient
+                colors={[
+                  'rgba(54, 57, 68,0)',
+                  'rgba(54, 57, 68,0.8)',
+                  'rgb(54, 57, 68)',
+                ]}
                 style={{
                   padding: 20,
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 10,
-                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  height: 150,
+                  justifyContent: 'flex-end',
                 }}>
                 <Text
                   style={{
-                    textAlign: 'center',
                     color: colors.appWhite,
                     fontWeight: 'bold',
                     fontSize: 20,
@@ -108,13 +118,12 @@ const WhatEquipment: React.FC<{
                 <Text
                   style={{
                     color: colors.appWhite,
-                    textAlign: 'center',
-                    fontSize: 13,
+                    fontSize: 14,
                   }}>
                   (Dumbbells, weighted bars, bosu ball, exercise ball, exercise
                   benches Kettlebell etc)
                 </Text>
-              </View>
+              </LinearGradient>
             </FastImage>
           </TouchableOpacity>
         </View>

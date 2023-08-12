@@ -37,7 +37,7 @@ const Button: React.FC<Props> = ({
     if (variant === 'danger') {
       return [colors.appRed, colors.appRed];
     }
-    return [colors.appBlueLight, colors.appBlueDark];
+    return [colors.appBlue, colors.appBlue];
   };
   return (
     <TouchableOpacity
@@ -45,7 +45,7 @@ const Button: React.FC<Props> = ({
       disabled={disabled}
       style={[
         {
-          borderRadius: 15,
+          borderRadius: 12,
           overflow: 'hidden',
         },
         props.style,
