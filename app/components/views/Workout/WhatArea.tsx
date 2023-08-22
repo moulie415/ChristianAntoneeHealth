@@ -10,6 +10,7 @@ import colors from '../../../constants/colors';
 
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
+import LinearGradient from 'react-native-linear-gradient';
 
 const WhatArea: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'WhatArea'>;
@@ -28,7 +29,7 @@ const WhatArea: React.FC<{
             fontSize: 22,
             fontWeight: 'bold',
           }}>
-           What area do you want to focus on?
+          What area do you want to focus on?
         </Text>
 
         <TouchableOpacity
@@ -48,23 +49,27 @@ const WhatArea: React.FC<{
               borderRadius: 10,
             }}
             source={require('../../../images/upper-body.jpg')}>
-            <View
+            <LinearGradient
+              colors={[
+                'rgba(54, 57, 68,0)',
+                'rgba(54, 57, 68,0.8)',
+                'rgb(54, 57, 68)',
+              ]}
               style={{
-                height: 120,
-                justifyContent: 'center',
+                height: 75,
+                justifyContent: 'flex-end',
                 borderRadius: 10,
-                backgroundColor: 'rgba(0,0,0,0.5)',
+                padding: 10,
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  marginLeft: 25,
                   fontSize: 22,
                 }}>
                 UPPER BODY
               </Text>
-            </View>
+            </LinearGradient>
           </FastImage>
         </TouchableOpacity>
         <TouchableOpacity
@@ -84,23 +89,27 @@ const WhatArea: React.FC<{
               borderRadius: 10,
             }}
             source={require('../../../images/lower-body.jpg')}>
-            <View
+            <LinearGradient
+              colors={[
+                'rgba(54, 57, 68,0)',
+                'rgba(54, 57, 68,0.8)',
+                'rgb(54, 57, 68)',
+              ]}
               style={{
-                height: 120,
-                justifyContent: 'center',
+                height: 75,
+                justifyContent: 'flex-end',
                 borderRadius: 10,
-                backgroundColor: 'rgba(0,0,0,0.5)',
+                padding: 10,
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  marginLeft: 25,
                   fontSize: 22,
                 }}>
                 LOWER BODY
               </Text>
-            </View>
+            </LinearGradient>
           </FastImage>
         </TouchableOpacity>
         <TouchableOpacity
@@ -120,23 +129,27 @@ const WhatArea: React.FC<{
               borderRadius: 10,
             }}
             source={require('../../../images/full-body.jpg')}>
-            <View
+            <LinearGradient
+              colors={[
+                'rgba(54, 57, 68,0)',
+                'rgba(54, 57, 68,0.8)',
+                'rgb(54, 57, 68)',
+              ]}
               style={{
-                height: 120,
-                justifyContent: 'center',
+                height: 75,
+                justifyContent: 'flex-end',
                 borderRadius: 10,
-                backgroundColor: 'rgba(0,0,0,0.5)',
+                padding: 10,
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  marginLeft: 25,
                   fontSize: 22,
                 }}>
                 FULL BODY
               </Text>
-            </View>
+            </LinearGradient>
           </FastImage>
         </TouchableOpacity>
       </SafeAreaView>
