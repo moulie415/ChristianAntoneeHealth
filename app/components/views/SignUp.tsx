@@ -56,131 +56,117 @@ const SignUp: React.FC<SignUpProps> = ({
   };
 
   return (
-    <FastImage
-      style={{flex: 1}}
-      blurRadius={2}
-      source={require('../../images/sign-up.jpeg')}>
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.7,
-        }}
-      />
-      <SafeAreaView>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
-          <Header title="Registration" hasBack />
+    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+        <Header title="Registration" hasBack />
+        <Text
+          style={{
+            color: colors.appWhite,
+            margin: 20,
+            marginTop: 0,
+          }}>
+          Please enter your personal details, then we will send you a
+          verification email (please remember to check your junk/spam folder).
+        </Text>
+        <Input
+          containerStyle={{
+            marginHorizontal: 20,
+          }}
+          placeholder="First Name"
+          onChangeText={setName}
+          value={name}
+          placeholderTextColor="#fff"
+          autoCorrect={false}
+        />
+        <Input
+          containerStyle={{
+            marginHorizontal: 20,
+            marginTop: 20,
+          }}
+          placeholder="Last Name"
+          onChangeText={setSurname}
+          value={surname}
+          placeholderTextColor="#fff"
+          autoCorrect={false}
+        />
+        <Input
+          containerStyle={{
+            marginHorizontal: 20,
+            marginTop: 20,
+          }}
+          placeholder="Email"
+          onChangeText={setEmail}
+          value={email}
+          placeholderTextColor="#fff"
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="email-address"
+        />
+        <Input
+          containerStyle={{
+            marginHorizontal: 20,
+            marginTop: 20,
+          }}
+          placeholder="Password"
+          secure
+          placeholderTextColor="#fff"
+          onChangeText={setPass}
+          value={pass}
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
+        <Input
+          containerStyle={{
+            marginHorizontal: 20,
+            marginTop: 20,
+          }}
+          placeholder="Confirm password"
+          secure
+          placeholderTextColor="#fff"
+          onChangeText={setConfirm}
+          value={confirm}
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
+        <Button
+          loading={loading}
+          disabled={loading || !pass || !name || !surname || !email || !confirm}
+          onPress={signUp}
+          text="Sign Up"
+          style={{
+            marginHorizontal: 20,
+            marginTop: 20,
+          }}
+        />
+
+        <TouchableOpacity
+          style={{marginTop: 10}}
+          onPress={() => navigation.navigate('Login')}
+          hitSlop={{
+            top: 10,
+            bottom: 10,
+            right: 10,
+            left: 10,
+          }}>
           <Text
             style={{
-              color: colors.appWhite,
-              margin: 20,
-              marginTop: 0,
+              color: '#fff',
+              marginHorizontal: 20,
+              textAlign: 'center',
             }}>
-            Please enter your personal details, then we will send you a
-            verification email (please remember to check your junk/spam folder).
-          </Text>
-          <Input
-            containerStyle={{
-              marginHorizontal: 20,
-            }}
-            placeholder="First Name"
-            onChangeText={setName}
-            value={name}
-            placeholderTextColor="#fff"
-            autoCorrect={false}
-          />
-          <Input
-            containerStyle={{
-              marginHorizontal: 20,
-              marginTop: 20,
-            }}
-            placeholder="Last Name"
-            onChangeText={setSurname}
-            value={surname}
-            placeholderTextColor="#fff"
-            autoCorrect={false}
-          />
-          <Input
-            containerStyle={{
-              marginHorizontal: 20,
-              marginTop: 20,
-            }}
-            placeholder="Email"
-            onChangeText={setEmail}
-            value={email}
-            placeholderTextColor="#fff"
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="email-address"
-          />
-          <Input
-            containerStyle={{
-              marginHorizontal: 20,
-              marginTop: 20,
-            }}
-            placeholder="Password"
-            secure
-            placeholderTextColor="#fff"
-            onChangeText={setPass}
-            value={pass}
-            autoCorrect={false}
-            autoCapitalize="none"
-          />
-          <Input
-            containerStyle={{
-              marginHorizontal: 20,
-              marginTop: 20,
-            }}
-            placeholder="Confirm password"
-            secure
-            placeholderTextColor="#fff"
-            onChangeText={setConfirm}
-            value={confirm}
-            autoCorrect={false}
-            autoCapitalize="none"
-          />
-          <Button
-            loading={loading}
-            disabled={
-              loading || !pass || !name || !surname || !email || !confirm
-            }
-            onPress={signUp}
-            text="Sign Up"
-            style={{
-              marginHorizontal: 20,
-              marginTop: 20,
-            }}
-          />
-
-          <TouchableOpacity
-            style={{marginTop: 10}}
-            onPress={() => navigation.navigate('Login')}
-            hitSlop={{
-              top: 10,
-              bottom: 10,
-              right: 10,
-              left: 10,
-            }}>
+            Already have an account or want to use {getAuthString()}
+            {'  '}
             <Text
               style={{
                 color: '#fff',
-                marginHorizontal: 20,
-                textAlign: 'center',
+                fontWeight: 'bold',
               }}>
-              Already have an account or want to use {getAuthString()}
-              {'  '}
-              <Text
-                style={{
-                  color: '#fff',
-                  fontWeight: 'bold',
-                }}>
-                Log in
-              </Text>
+              Log in
             </Text>
-          </TouchableOpacity>
-        </KeyboardAwareScrollView>
-      </SafeAreaView>
-    </FastImage>
+          </Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 };
 

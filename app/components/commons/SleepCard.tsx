@@ -7,6 +7,7 @@ import {PlanSleep} from '../../types/Shared';
 import Text from './Text';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import LinearGradient from 'react-native-linear-gradient';
 
 const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
   return (
@@ -19,13 +20,21 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
           borderRadius: 10,
         }}
         source={require('../../images/sleep.jpg')}>
-        <View
+        <LinearGradient
+          colors={[
+            'rgba(54, 57, 68,0)',
+            'rgba(54, 57, 68,0.8)',
+            'rgb(54, 57, 68)',
+          ]}
           style={{
-            height: 120,
-            justifyContent: 'center',
+            height: 100,
+            justifyContent: 'flex-end',
             padding: 10,
             borderRadius: 10,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
@@ -55,7 +64,7 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
               </Text>
             </View>
           </View>
-        </View>
+        </LinearGradient>
       </FastImage>
     </TouchableOpacity>
   );

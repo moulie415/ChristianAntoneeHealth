@@ -74,20 +74,14 @@ const ConnectedApps: React.FC<{
             marginRight: 15,
             position: 'absolute',
             right: 0,
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.appBlue,
           }}>
-          <LinearGradient
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            colors={[colors.appBlueLight, colors.appBlueDark]}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}>
-            <Icon name="cog" size={25} color={colors.appWhite} style={{}} />
-          </LinearGradient>
+          <Icon name="cog" size={25} color={colors.appWhite} style={{}} />
         </TouchableOpacity>
       </TouchableOpacity>
       <ConnectedAppsModal visible={showModal} setVisible={setShowModal} />

@@ -10,6 +10,7 @@ import Text from './Text';
 import Profile from '../../types/Profile';
 import FastImage from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const getImage = (level?: Level) => {
   if (level === Level.INTERMEDIATE) {
@@ -66,13 +67,21 @@ const WorkoutCard: React.FC<{
             ? {uri: item.thumbnail.src}
             : getImage('level' in item ? item.level : Level.ADVANCED)
         }>
-        <View
+        <LinearGradient
+          colors={[
+            'rgba(54, 57, 68,0)',
+            'rgba(54, 57, 68,0.8)',
+            'rgb(54, 57, 68)',
+          ]}
           style={{
-            height: 120,
-            justifyContent: 'center',
+            height: 100,
+            justifyContent: 'flex-end',
             padding: 10,
             borderRadius: 10,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
           }}>
           {plan ? (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -103,50 +112,9 @@ const WorkoutCard: React.FC<{
               </View>
             </View>
           ) : (
-            <>
-              {locked ? (
-                <View style={{}}>
-                  <Icon name="lock" color="#fff" size={40} />
-                </View>
-              ) : (
-                <View style={{marginBottom: 5}}>
-                  {'duration' in item ? (
-                    <>
-                      <Text
-                        style={{
-                          color: colors.appWhite,
-                          fontSize: 12,
-                        }}>
-                        Under
-                      </Text>
-                      <Text
-                        style={{
-                          color: colors.appWhite,
-                          fontSize: 12,
-                        }}>
-                        <Text style={{fontWeight: 'bold'}}>
-                          {item.duration}
-                        </Text>
-                        {' mins'}
-                      </Text>
-                    </>
-                  ) : (
-                    <View style={{flexDirection: 'row'}}>
-                      <Text
-                        style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                        {item.exercises.length + ' '}
-                      </Text>
-                      <Text style={{color: colors.appWhite}}>
-                        {item.exercises.length > 1 ? 'exercises' : 'exercise'}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              )}
-              <View
-                style={{
-                  width: 300,
-                }}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{}}>
                 <Text
                   style={{
                     color: colors.appWhite,
@@ -168,9 +136,46 @@ const WorkoutCard: React.FC<{
                   </Text>
                 )}
               </View>
-            </>
+              <View style={{justifyContent: 'flex-end'}}>
+                {'duration' in item ? (
+                  <>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        fontSize: 12,
+                        textAlign: 'center',
+                      }}>
+                      Under
+                    </Text>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        fontSize: 12,
+                      }}>
+                      <Text style={{fontWeight: 'bold'}}>{item.duration}</Text>
+                      {' mins'}
+                    </Text>
+                  </>
+                ) : (
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                      {item.exercises.length + ' '}
+                    </Text>
+                    <Text style={{color: colors.appWhite}}>
+                      {item.exercises.length > 1 ? 'exercises' : 'exercise'}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </View>
           )}
-        </View>
+        </LinearGradient>
+
+        {locked && (
+          <View style={{position: 'absolute', top: 15, right: 15}}>
+            <Icon name="lock" color="#fff" size={20} />
+          </View>
+        )}
       </FastImageAnimated>
     </TouchableOpacity>
   );

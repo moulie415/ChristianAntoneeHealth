@@ -95,6 +95,7 @@ const Daily: React.FC<{
       <Text
         style={{
           margin: 10,
+          marginBottom: 15,
           color: colors.appWhite,
           fontSize: 25,
           textAlign: 'center',

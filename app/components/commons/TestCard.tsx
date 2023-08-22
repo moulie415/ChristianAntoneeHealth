@@ -10,6 +10,7 @@ import Profile from '../../types/Profile';
 import Text from './Text';
 import FastImage from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
+import LinearGradient from 'react-native-linear-gradient';
 
 const TestCard: React.FC<{
   item: Test;
@@ -33,13 +34,22 @@ const TestCard: React.FC<{
           borderRadius: 10,
         }}
         source={{uri: item.thumbnail?.src}}>
-        <View
+        <LinearGradient
+          colors={[
+            'rgba(54, 57, 68,0)',
+            'rgba(54, 57, 68,0.8)',
+            'rgb(54, 57, 68)',
+          ]}
           style={{
-            height: 140,
-            justifyContent: 'center',
+            height: plan ? 100 : 75,
+            justifyContent: 'flex-end',
             padding: 10,
             borderRadius: 10,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            right: 0,
+            left: 0,
+            bottom: 0,
+            position: 'absolute',
+            alignSelf: 'flex-end',
           }}>
           {plan ? (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -70,38 +80,26 @@ const TestCard: React.FC<{
               </View>
             </View>
           ) : (
-            <>
-              {item.premium && !profile.premium && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    margin: 10,
-                  }}>
-                  <Icon name="lock" color="#fff" size={30} />
-                </View>
-              )}
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 20,
-                  width: 200,
-                  margin: 20,
-                }}>
-                <Text
-                  style={{
-                    color: colors.appWhite,
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                  }}>
-                  {item.name}
-                </Text>
-              </View>
-            </>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: 16,
+                fontWeight: 'bold',
+              }}>
+              {item.name}
+            </Text>
           )}
-        </View>
+        </LinearGradient>
+        {item.premium && !profile.premium && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 15,
+              right: 15,
+            }}>
+            <Icon name="lock" color="#fff" size={20} />
+          </View>
+        )}
       </FastImageAnimated>
     </TouchableOpacity>
   );

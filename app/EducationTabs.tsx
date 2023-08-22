@@ -45,21 +45,18 @@ const EducationTabs: React.FC<{
                   renderTabBarItem={props => {
                     return (
                       <TouchableOpacity key={props.key} onPress={props.onPress}>
-                        <LinearGradient
-                          colors={
-                            props.key === routes[index].key
-                              ? [colors.appBlueLight, colors.appBlueDark]
-                              : ['transparent', 'transparent']
-                          }
+                        <View
                           style={{
                             height: 45,
                             paddingHorizontal: 20,
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: 25,
-                          }}
-                          start={{x: 0, y: 0}}
-                          end={{x: 1, y: 0}}>
+                            backgroundColor:
+                              props.key === routes[index].key
+                                ? colors.appBlue
+                                : 'transparent',
+                          }}>
                           <Text
                             style={{
                               fontWeight: 'bold',
@@ -68,7 +65,7 @@ const EducationTabs: React.FC<{
                             }}>
                             {props.route?.title}
                           </Text>
-                        </LinearGradient>
+                        </View>
                       </TouchableOpacity>
                     );
                   }}

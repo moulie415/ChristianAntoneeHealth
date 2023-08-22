@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {height, width} = Dimensions.get('window');
 
@@ -30,20 +31,27 @@ const EducationCard: React.FC<{
       onPress={() => onPress(item)}>
       <FastImageAnimated
         style={{
-          position: 'absolute',
           height: 125,
           width: '100%',
         }}
         source={{uri: item.image.src}}
       />
       {plan ? (
-        <View
+        <LinearGradient
+          colors={[
+            'rgba(54, 57, 68,0)',
+            'rgba(54, 57, 68,0.8)',
+            'rgb(54, 57, 68)',
+          ]}
           style={{
-            height: 120,
-            justifyContent: 'center',
+            height: 100,
+            justifyContent: 'flex-end',
             padding: 10,
             borderRadius: 10,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
@@ -52,7 +60,7 @@ const EducationCard: React.FC<{
               size={30}
               style={{marginHorizontal: 10}}
             />
-            <View>
+            <View style={{flex: 1}}>
               <Text
                 style={{
                   color: colors.appWhite,
@@ -67,23 +75,28 @@ const EducationCard: React.FC<{
                   fontSize: 16,
                   marginTop: 5,
                   fontWeight: 'bold',
-                }}>
+              }}>
                 {item.title}
               </Text>
             </View>
           </View>
-        </View>
+        </LinearGradient>
       ) : (
-        <View
+        <LinearGradient
+          colors={[
+            'rgba(54, 57, 68,0)',
+            'rgba(54, 57, 68,0.8)',
+            'rgb(54, 57, 68)',
+          ]}
           style={{
             position: 'absolute',
             alignSelf: 'flex-end',
+            justifyContent: 'flex-end',
             right: 0,
-            top: 0,
             bottom: 0,
-            width: width / 1.5,
+            left: 0,
             padding: 10,
-            backgroundColor: 'rgba(0,0,0,0.7)',
+            height: 100,
           }}>
           <Text
             style={{
@@ -100,17 +113,17 @@ const EducationCard: React.FC<{
             }}>
             {item.title}
           </Text>
+        </LinearGradient>
+      )}
 
-          {item.premium && !profile.premium && (
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 15,
-                right: 15,
-              }}>
-              <Icon name="lock" size={20} color={colors.appWhite} />
-            </View>
-          )}
+      {item.premium && !profile.premium && !plan && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 15,
+            right: 15,
+          }}>
+          <Icon name="lock" size={20} color={colors.appWhite} />
         </View>
       )}
     </TouchableOpacity>

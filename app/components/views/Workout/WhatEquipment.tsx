@@ -53,7 +53,7 @@ const WhatEquipment: React.FC<{
                   'rgb(54, 57, 68)',
                 ]}
                 style={{
-                  padding: 20,
+                  padding: 15,
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 10,
                   height: 150,
@@ -100,7 +100,7 @@ const WhatEquipment: React.FC<{
                   'rgb(54, 57, 68)',
                 ]}
                 style={{
-                  padding: 20,
+                  padding: 15,
                   borderBottomLeftRadius: 10,
                   borderBottomRightRadius: 10,
                   height: 150,

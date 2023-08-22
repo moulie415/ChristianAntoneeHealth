@@ -6,8 +6,8 @@ const Toggle: React.FC<SwitchProps> = props => {
   return (
     <Switch
       {...props}
-      thumbColor={props.value ? colors.appBlack : colors.secondaryDark}
-      trackColor={{false: colors.appBlack, true: colors.secondaryDark}}
+      thumbColor={props.value ? colors.appGrey : colors.appBlue}
+      trackColor={{false: colors.appGrey, true: colors.appBlue}}
     />
   );
 };
