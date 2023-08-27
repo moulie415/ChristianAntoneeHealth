@@ -264,7 +264,7 @@ const Test: React.FC<TestProps> = ({
                       color: colors.appWhite,
                       marginTop: 10,
                       marginBottom: 20,
-                      fontWeight: 'bold'
+                      fontWeight: 'bold',
                     }}>
                     {`VO2 max = ${calculateVO2Max(
                       profile,

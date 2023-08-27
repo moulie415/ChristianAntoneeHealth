@@ -38,7 +38,7 @@ const Input: React.FC<Props> = props => {
             fontFamily: 'Helvetica',
             color: colors.appWhite,
             padding: 15,
-            paddingTop: props.multiline ? 10 : 15,
+            paddingTop: 15,
             backgroundColor: '#363944',
             paddingLeft: props.secure || props.icon ? 40 : 15,
           },
