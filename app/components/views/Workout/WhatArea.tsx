@@ -65,7 +65,7 @@ const WhatArea: React.FC<{
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  fontSize: 22,
+                  fontSize: 18,
                 }}>
                 UPPER BODY
               </Text>
@@ -105,7 +105,7 @@ const WhatArea: React.FC<{
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  fontSize: 22,
+                  fontSize: 18,
                 }}>
                 LOWER BODY
               </Text>
@@ -145,7 +145,7 @@ const WhatArea: React.FC<{
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  fontSize: 22,
+                  fontSize: 18,
                 }}>
                 FULL BODY
               </Text>

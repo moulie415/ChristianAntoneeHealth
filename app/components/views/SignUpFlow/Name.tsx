@@ -35,6 +35,7 @@ const Name: React.FC<{
         placeholder="First Name"
         onChangeText={setName}
         value={name}
+        icon="user"
         placeholderTextColor="#fff"
         autoCorrect={false}
       />
@@ -46,6 +47,7 @@ const Name: React.FC<{
         placeholder="Last Name"
         onChangeText={setSurname}
         value={surname}
+        icon="user"
         placeholderTextColor="#fff"
         autoCorrect={false}
       />

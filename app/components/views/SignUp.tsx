@@ -74,6 +74,7 @@ const SignUp: React.FC<SignUpProps> = ({
           }}
           placeholder="First Name"
           onChangeText={setName}
+          icon="user"
           value={name}
           placeholderTextColor="#fff"
           autoCorrect={false}
@@ -84,6 +85,7 @@ const SignUp: React.FC<SignUpProps> = ({
             marginTop: 20,
           }}
           placeholder="Last Name"
+          icon="user"
           onChangeText={setSurname}
           value={surname}
           placeholderTextColor="#fff"
@@ -97,6 +99,7 @@ const SignUp: React.FC<SignUpProps> = ({
           placeholder="Email"
           onChangeText={setEmail}
           value={email}
+          icon="envelope"
           placeholderTextColor="#fff"
           autoCapitalize="none"
           autoCorrect={false}

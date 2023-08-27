@@ -11,10 +11,14 @@ interface Props extends TextInputProps {
   disabled?: boolean;
   accessoryRight?: ReactNode;
   ref?: any;
+  icon?: string;
+  iconSize?: number;
 }
 
 const Input: React.FC<Props> = props => {
   const [secure, setSecure] = useState(props.secure);
+
+  const [focused, setFocused] = useState(false);
 
   return (
     <View style={props.containerStyle}>
@@ -22,26 +26,79 @@ const Input: React.FC<Props> = props => {
         {...props}
         secureTextEntry={secure}
         editable={!props.disabled}
-        placeholderTextColor={colors.appWhite}
+        placeholderTextColor={'rgba(255, 255, 255, 0.50)'}
+        onBlur={() => setFocused(false)}
+        onFocus={() => setFocused(true)}
         style={[
           {
-            borderColor: colors.appWhite,
-            height: 70,
-            borderWidth: 2,
-            borderRadius: 20,
+            borderColor: focused ? colors.appBlue : '#4C5060',
+            height: 50,
+            borderWidth: 1,
+            borderRadius: 12,
             fontFamily: 'Helvetica',
             color: colors.appWhite,
-            padding: 20,
-            paddingTop: props.multiline ? 10 : 20,
+            padding: 15,
+            paddingTop: props.multiline ? 10 : 15,
+            backgroundColor: '#363944',
+            paddingLeft: props.secure || props.icon ? 40 : 15,
           },
           props.style,
         ]}
       />
+      {props.icon && (
+        <View
+          style={{
+            position: 'absolute',
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            left: 0,
+            width: 30,
+          }}>
+          <TouchableOpacity
+            hitSlop={{
+              top: 10,
+              bottom: 10,
+              right: 10,
+              left: 10,
+            }}
+            onPress={() => setSecure(!secure)}>
+            <Icon
+              name={props.icon}
+              color={'#CECECE'}
+              solid
+              size={props.iconSize || 15}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       {props.secure !== undefined && (
         <View
           style={{
             position: 'absolute',
-            height: 70,
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            left: 0,
+            width: 30,
+          }}>
+          <TouchableOpacity
+            hitSlop={{
+              top: 10,
+              bottom: 10,
+              right: 10,
+              left: 10,
+            }}
+            onPress={() => setSecure(!secure)}>
+            <Icon name="lock" color={'#CECECE'} size={15} />
+          </TouchableOpacity>
+        </View>
+      )}
+      {props.secure !== undefined && (
+        <View
+          style={{
+            position: 'absolute',
+            height: 50,
             justifyContent: 'center',
             alignItems: 'flex-end',
             right: 20,
@@ -57,7 +114,7 @@ const Input: React.FC<Props> = props => {
             onPress={() => setSecure(!secure)}>
             <Icon
               name={secure ? 'eye' : 'eye-slash'}
-              color={colors.appWhite}
+              color={'#CECECE'}
               size={20}
             />
           </TouchableOpacity>
@@ -69,7 +126,7 @@ const Input: React.FC<Props> = props => {
             position: 'absolute',
             width: '100%',
 
-            height: 70,
+            height: 50,
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',

@@ -52,7 +52,7 @@ const Button: React.FC<Props> = ({
       ]}>
       <LinearGradient
         style={{
-          height: 60,
+          height: 50,
           justifyContent: 'center',
           padding: 10,
           opacity: disabled ? 0.5 : 1,
@@ -71,7 +71,9 @@ const Button: React.FC<Props> = ({
                 color:
                   variant === 'secondary' ? colors.appBlue : colors.appWhite,
                 textAlign: 'center',
-                fontSize: 20,
+                fontSize: 14,
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
               },
               textStyle,
             ]}>

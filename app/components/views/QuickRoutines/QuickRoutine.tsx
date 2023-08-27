@@ -178,7 +178,9 @@ const QuickRoutineView: React.FC<{
                       overflow: 'hidden',
                       backgroundColor: colors.appGrey,
                     }}>
-                    <ScrollView keyboardShouldPersistTaps="always">
+                    <ScrollView
+                      contentContainerStyle={{paddingBottom: 20}}
+                      keyboardShouldPersistTaps="always">
                       <Text
                         style={{
                           marginTop: 20,
@@ -231,7 +233,7 @@ const QuickRoutineView: React.FC<{
                             },
                           ]);
                         }}
-                        style={{margin: 10}}
+                        style={{margin: 10, marginHorizontal: 20}}
                       />
                     </ScrollView>
                   </View>

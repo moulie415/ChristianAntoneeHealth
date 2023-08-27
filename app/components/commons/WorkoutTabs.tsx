@@ -39,30 +39,26 @@ const WorkoutTabs: React.FC<{
               key={tab}
               style={{}}
               onPress={() => setTabIndex(index)}>
-              <LinearGradient
-                colors={
-                  tabIndex === index
-                    ? [colors.appBlueLight, colors.appBlueDark]
-                    : ['transparent', 'transparent']
-                }
+              <View
                 style={{
                   height: 40,
-                  width: 100,
+                  width: 125,
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 25,
                   backgroundColor:
-                    tabIndex === index ? colors.textGrey : colors.appGrey,
+                    tabIndex === index ? colors.appBlue : colors.appGrey,
                 }}>
                 <Text
                   style={{
                     fontWeight: 'bold',
                     color: colors.appWhite,
                     textAlign: 'center',
+                    textTransform: 'uppercase',
                   }}>
                   {tab}
                 </Text>
-              </LinearGradient>
+              </View>
             </TouchableOpacity>
           );
         })}

@@ -260,9 +260,11 @@ const Test: React.FC<TestProps> = ({
 
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: 18,
                       color: colors.appWhite,
                       marginTop: 10,
+                      marginBottom: 20,
+                      fontWeight: 'bold'
                     }}>
                     {`VO2 max = ${calculateVO2Max(
                       profile,
@@ -301,7 +303,7 @@ const Test: React.FC<TestProps> = ({
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: 16,
+                  fontSize: 14,
                   marginBottom: 10,
                 }}>
                 See how you rank against others in the same gender and age
@@ -335,8 +337,9 @@ const Test: React.FC<TestProps> = ({
 
               <Text
                 style={{
-                  margin: 10,
-                  marginTop: 20,
+                  margin: 20,
+                  marginTop: 30,
+                  marginBottom: 0,
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: colors.appWhite,
@@ -345,7 +348,7 @@ const Test: React.FC<TestProps> = ({
               </Text>
               <View
                 style={{
-                  marginBottom: 10,
+                  marginHorizontal: 10,
                 }}>
                 <ViewMore text={test.summary || ''} lines={7} />
               </View>
@@ -381,6 +384,7 @@ const Test: React.FC<TestProps> = ({
               }}
               style={{
                 margin: 10,
+                marginHorizontal: 20,
               }}
             />
           )}
@@ -396,12 +400,12 @@ const Test: React.FC<TestProps> = ({
               }}
               style={{
                 margin: 10,
+                marginHorizontal: 20,
               }}
             />
           )}
         </KeyboardAwareScrollView>
       </View>
-
     </View>
   );
 };

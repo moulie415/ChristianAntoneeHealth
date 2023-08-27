@@ -136,6 +136,7 @@ const Login: React.FC<LoginProps> = ({
               autoCorrect={false}
               keyboardType="email-address"
               placeholderTextColor={colors.appWhite}
+              icon="envelope"
             />
             <Input
               onChangeText={setPass}
