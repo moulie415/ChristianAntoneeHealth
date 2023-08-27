@@ -61,7 +61,7 @@ import Profile from '../types/Profile';
 import {MyRootState, Sample, StepSample} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
-import {Alert, Linking, Platform} from 'react-native';
+import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 import {
   getBodyFatPercentageSamples,
   getBoneMassSamples,
@@ -629,6 +629,13 @@ function* handleAuthWorker(action: HandleAuthAction) {
       yield put(setLoggedIn(true));
       yield put(getTests());
       yield fork(createChannels);
+      const version = Platform.Version as number;
+      if (Platform.OS === 'android' && version >= 33) {
+        yield call(
+          PermissionsAndroid.request,
+          'android.permission.POST_NOTIFICATIONS',
+        );
+      }
       messaging()
         .requestPermission()
         .then(async authStatus => {
