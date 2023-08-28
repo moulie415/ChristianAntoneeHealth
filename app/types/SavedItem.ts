@@ -17,6 +17,7 @@ export interface SavedWorkout {
   startTime: Date;
   endTime: Date;
   fitbitData: ActivitiesHeart[];
+  planId: string;
 }
 
 export interface SavedTest {

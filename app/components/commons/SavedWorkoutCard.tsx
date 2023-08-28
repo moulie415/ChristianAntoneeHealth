@@ -50,7 +50,10 @@ const SavedWorkoutCard: React.FC<{
               return exercises[id];
             }),
           );
-          navigation.navigate('PreWorkout', {planWorkout: item.planWorkout});
+          navigation.navigate('PreWorkout', {
+            planWorkout: item.planWorkout,
+            planId: item.planId,
+          });
         } else if (quickRoutine) {
           getExercisesByIdAction(quickRoutine.exerciseIds);
           navigation.navigate('PreQuickRoutine', {

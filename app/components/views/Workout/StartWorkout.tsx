@@ -67,6 +67,7 @@ const StartWorkout: React.FC<{
   const textInputRef = useRef<TextInput>();
   const planWorkout = route.params?.planWorkout;
   const startTime = route.params?.startTime;
+  const planId = route.params?.planId;
   const [fullscreen, setFullScreen] = useState(false);
   const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
 
@@ -230,6 +231,7 @@ const StartWorkout: React.FC<{
                                   exerciseEvents,
                                   pauseEvents,
                                   startTime,
+                                  planId,
                                 });
                               },
                             },

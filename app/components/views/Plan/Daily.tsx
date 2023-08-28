@@ -121,7 +121,12 @@ const Daily: React.FC<{
                       };
                     }),
                   );
-                  navigate('PreWorkout', {planWorkout: workout});
+                  if (plan) {
+                    navigate('PreWorkout', {
+                      planWorkout: workout,
+                      planId: plan.id,
+                    });
+                  }
                 }}
               />
             );

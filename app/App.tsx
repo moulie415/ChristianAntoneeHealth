@@ -101,8 +101,8 @@ export type StackParamList = {
   };
   CustomizeExercise: {exercise: ExerciseType};
   ReviewExercises: undefined;
-  PreWorkout: {planWorkout: PlanWorkout};
-  StartWorkout: {planWorkout: PlanWorkout; startTime: Date};
+  PreWorkout: {planWorkout: PlanWorkout; planId: string};
+  StartWorkout: {planWorkout: PlanWorkout; startTime: Date; planId: string};
   EndWorkout: {
     seconds: number;
     planWorkout: PlanWorkout;
@@ -110,6 +110,7 @@ export type StackParamList = {
     exerciseEvents: ExerciseEvent[];
     pauseEvents: PauseEvent[];
     startTime: Date;
+    planId: string;
   };
   WorkoutSummary: {
     seconds: number;
@@ -159,7 +160,7 @@ export type StackParamList = {
   Stack: undefined;
   Nutrition: {nutrition: PlanNutrition};
   Sleep: {sleep: PlanSleep};
-  MonthlyDayView: {workouts: PlanWorkout[]; date: string};
+  MonthlyDayView: {workouts: PlanWorkout[]; date: string; planId: string};
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

@@ -19,7 +19,7 @@ const MonthlyDayView: React.FC<{
   setWorkout: (workout: Exercise[]) => void;
   exercises: {[key: string]: Exercise};
 }> = ({navigation, route, setWorkout: setWorkoutAction, exercises}) => {
-  const {workouts, date} = route.params;
+  const {workouts, date, planId} = route.params;
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
@@ -40,7 +40,10 @@ const MonthlyDayView: React.FC<{
                       };
                     }),
                   );
-                  navigation.navigate('PreWorkout', {planWorkout: workout});
+                  navigation.navigate('PreWorkout', {
+                    planWorkout: workout,
+                    planId,
+                  });
                 }}
               />
             );

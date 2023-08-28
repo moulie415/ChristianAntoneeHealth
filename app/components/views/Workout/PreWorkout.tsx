@@ -22,7 +22,7 @@ const PreWorkout: React.FC<{
   route: RouteProp<StackParamList, 'PreWorkout'>;
   workout: Exercise[];
 }> = ({route, navigation, workout}) => {
-  const {planWorkout} = route.params;
+  const {planWorkout, planId} = route.params;
 
   const equipmentList = getEquipmentList(workout);
   const musclesList = getMusclesList(workout);
@@ -131,6 +131,7 @@ const PreWorkout: React.FC<{
             navigation.navigate('StartWorkout', {
               planWorkout,
               startTime: new Date(),
+              planId,
             })
           }
         />

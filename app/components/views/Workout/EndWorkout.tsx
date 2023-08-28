@@ -44,6 +44,7 @@ const EndWorkout: React.FC<{
     exerciseEvents,
     pauseEvents,
     startTime,
+    planId,
   } = route.params;
 
   const {
@@ -74,6 +75,7 @@ const EndWorkout: React.FC<{
       startTime,
       endTime,
       fitbitData,
+      planId,
     });
   }, 3000);
 

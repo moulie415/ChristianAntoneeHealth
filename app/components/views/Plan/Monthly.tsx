@@ -114,7 +114,13 @@ const Monthly: React.FC<{
             });
 
             if (workouts) {
-              navigate('MonthlyDayView', {workouts, date: dateString});
+              if (plan) {
+                navigate('MonthlyDayView', {
+                  workouts,
+                  date: dateString,
+                  planId: plan.id,
+                });
+              }
             }
           }
         }}

@@ -121,7 +121,12 @@ const Weekly: React.FC<{
                         };
                       }),
                     );
-                    navigate('PreWorkout', {planWorkout: item});
+                    if (plan) {
+                      navigate('PreWorkout', {
+                        planWorkout: item,
+                        planId: plan.id,
+                      });
+                    }
                   } else {
                     Alert.alert('Workout not due today', 'View early?', [
                       {text: 'Cancel'},
@@ -136,7 +141,12 @@ const Weekly: React.FC<{
                               };
                             }),
                           );
-                          navigate('PreWorkout', {planWorkout: item});
+                          if (plan) {
+                            navigate('PreWorkout', {
+                              planWorkout: item,
+                              planId: plan.id,
+                            });
+                          }
                         },
                       },
                     ]);
