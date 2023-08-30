@@ -94,8 +94,7 @@ const Daily: React.FC<{
     <ScrollView>
       <Text
         style={{
-          margin: 10,
-          marginBottom: 15,
+          marginVertical: 15,
           color: colors.appWhite,
           fontSize: 25,
           textAlign: 'center',

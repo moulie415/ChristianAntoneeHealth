@@ -51,11 +51,15 @@ const EducationTabs: React.FC<{
                             paddingHorizontal: 20,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderRadius: 25,
+                            borderRadius: 12,
                             backgroundColor:
                               props.key === routes[index].key
                                 ? colors.appBlue
                                 : 'transparent',
+                            borderWidth:
+                              props.key === routes[index].key ? 0 : 1,
+                            borderColor: colors.borderColor,
+                            marginHorizontal: 5,
                           }}>
                           <Text
                             style={{

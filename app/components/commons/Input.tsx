@@ -31,7 +31,7 @@ const Input: React.FC<Props> = props => {
         onFocus={() => setFocused(true)}
         style={[
           {
-            borderColor: focused ? colors.appBlue : '#4C5060',
+            borderColor: focused ? colors.appBlue : colors.borderColor,
             height: 50,
             borderWidth: 1,
             borderRadius: 12,

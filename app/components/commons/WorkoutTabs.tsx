@@ -45,16 +45,17 @@ const WorkoutTabs: React.FC<{
                   width: 125,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderRadius: 25,
+                  borderRadius: 12,
                   backgroundColor:
                     tabIndex === index ? colors.appBlue : colors.appGrey,
+                  borderWidth: tabIndex === index ? 0 : 1,
+                  borderColor: colors.borderColor,
                 }}>
                 <Text
                   style={{
                     fontWeight: 'bold',
                     color: colors.appWhite,
                     textAlign: 'center',
-                    textTransform: 'uppercase',
                   }}>
                   {tab}
                 </Text>

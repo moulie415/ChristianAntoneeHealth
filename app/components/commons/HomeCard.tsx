@@ -63,7 +63,7 @@ const HomeCard: React.FC<{
           alignSelf: 'flex-end',
           right: 0,
           left: 0,
-          bottom: 0,
+          bottom: -1,
           width: width,
           padding: 10,
           height: 100,

@@ -79,7 +79,7 @@ const WorkoutCard: React.FC<{
             padding: 10,
             borderRadius: 10,
             position: 'absolute',
-            bottom: 0,
+            bottom: -1,
             right: 0,
             left: 0,
           }}>

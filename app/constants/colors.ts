@@ -1,7 +1,7 @@
 export default {
   button: '#E5E5E5',
   textGrey: '#6E6E6E',
-  borderColor: '#414141',
+  borderColor: '#4C5060',
   appBlueLight: '#1C74BB',
   appBlueDark: '#2A3F94',
   appBlue: '#2A5DC2',
