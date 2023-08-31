@@ -94,7 +94,7 @@ const Settings: React.FC<SettingsProps> = ({
                   backgroundColor: colors.tile,
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 15,
+                  borderRadius: 12,
                 }}>
                 <Text
                   style={{
@@ -119,7 +119,7 @@ const Settings: React.FC<SettingsProps> = ({
                   backgroundColor: '#212121',
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 15,
+                  borderRadius: 12,
                 }}>
                 <Text
                   style={{
@@ -146,7 +146,7 @@ const Settings: React.FC<SettingsProps> = ({
                   backgroundColor: colors.tile,
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 15,
+                  borderRadius: 12,
                   overflow: 'hidden',
                 }}>
                 <Text
@@ -199,7 +199,7 @@ const Settings: React.FC<SettingsProps> = ({
                   backgroundColor: '#212121',
                   height: 60,
                   paddingHorizontal: 10,
-                  borderRadius: 15,
+                  borderRadius: 12,
                 }}>
                 <Text
                   style={{
@@ -267,7 +267,7 @@ const Settings: React.FC<SettingsProps> = ({
               backgroundColor: colors.tile,
               height: 60,
               paddingHorizontal: 10,
-              borderRadius: 15,
+              borderRadius: 12,
             }}>
             <Text
               style={{
