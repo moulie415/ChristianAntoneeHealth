@@ -4,7 +4,7 @@
 #import <Firebase.h>
 #import "RNSplashScreen.h"
 #import <RNGoogleSignin/RNGoogleSignin.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit-swift.h>
 #import <RNCPushNotificationIOS.h>
 #import <UserNotifications/UserNotifications.h>
 #import "RCTAppleHealthKit.h"
