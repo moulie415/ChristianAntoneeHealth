@@ -99,6 +99,7 @@ import {getQuickRoutinesById} from '../actions/quickRoutines';
 import _ from 'lodash';
 import {CLIENT_PREMIUM} from '../constants';
 import isTestFlight from '../helpers/isTestFlight';
+import {statusCodes} from '@react-native-google-signin/google-signin';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -661,7 +662,10 @@ function* handleAuthWorker(action: HandleAuthAction) {
       yield put(setLoggedIn(false));
       navigate('Login');
     }
-  } catch (e) {
+  } catch (e: any) {
+    if (e.code === statusCodes.SIGN_IN_CANCELLED) {
+      return;
+    }
     navigate('Login');
     logError(e);
     if (e instanceof Error) {

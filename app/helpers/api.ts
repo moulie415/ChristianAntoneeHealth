@@ -15,7 +15,7 @@ import {WeeklyItems} from '../reducers/profile';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin';
 import {Alert} from 'react-native';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
 
@@ -102,7 +102,7 @@ export const googleSignIn = async () => {
     return credentials;
   } catch (e) {
     // @ts-ignore
-    if (e.code !== '12501') {
+    if (e.code !== statusCodes.SIGN_IN_CANCELLED) {
       if (e instanceof Error) {
         Alert.alert('Error', e.message);
       }
