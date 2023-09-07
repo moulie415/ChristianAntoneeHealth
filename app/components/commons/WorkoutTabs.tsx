@@ -42,7 +42,7 @@ const WorkoutTabs: React.FC<{
               <View
                 style={{
                   height: 40,
-                  width: 125,
+                  width: 110,
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 12,

@@ -27,12 +27,12 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         What's your goal?
       </Text>
       <Button
-        text="Improve my strength and fitness"
+        text="Improve strength and fitness"
         style={{
           marginBottom: 20,
           marginHorizontal: 20,
         }}
-        textStyle={{fontSize: 15}}
+        textStyle={{fontSize: 13}}
         onPress={() => setGoal(Goal.STRENGTH)}
         variant={goal === Goal.STRENGTH ? 'primary' : 'secondary'}
       />
