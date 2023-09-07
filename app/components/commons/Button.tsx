@@ -50,16 +50,19 @@ const Button: React.FC<Props> = ({
         },
         props.style,
       ]}>
-      <LinearGradient
+      <View
         style={{
           height: 50,
           justifyContent: 'center',
           padding: 10,
           opacity: disabled ? 0.5 : 1,
-        }}
-        colors={gradient()}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
+          backgroundColor:
+            variant === 'secondary'
+              ? colors.appWhite
+              : variant === 'danger'
+              ? colors.appRed
+              : colors.appBlue,
+        }}>
         {loading ? (
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Spinner />
@@ -80,7 +83,7 @@ const Button: React.FC<Props> = ({
             {text}
           </Text>
         )}
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 };

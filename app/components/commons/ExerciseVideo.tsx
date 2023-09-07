@@ -171,14 +171,13 @@ const ExerciseVideo: React.FC<{
                 minimumTrackTintColor={colors.appBlue}
                 thumbTintColor={colors.appBlue}
                 renderThumbComponent={() => (
-                  <LinearGradient
+                  <View
                     style={{
                       width: 30,
                       height: 30,
                       borderRadius: 15,
                       backgroundColor: colors.appBlue,
                     }}
-                    colors={[colors.appBlueLight, colors.appBlueDark]}
                     hitSlop={{
                       top: 10,
                       bottom: 10,

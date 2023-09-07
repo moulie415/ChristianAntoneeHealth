@@ -43,7 +43,7 @@ const Graph: React.FC<{
           data: data.map(d => d.y),
           type: 'line',
           lineStyle: {color: colors.appBlue},
-          itemStyle: {color: colors.appBlue}
+          itemStyle: {color: colors.appBlue},
         },
       ],
     };
@@ -73,18 +73,16 @@ const Graph: React.FC<{
           marginTop: 20,
         }}>
         <TouchableOpacity style={{}} onPress={() => setFilter(6)}>
-          <LinearGradient
-            colors={
-              filter === 6
-                ? [colors.appBlueLight, colors.appBlueDark]
-                : ['transparent', 'transparent']
-            }
+          <View
             style={{
               height: 40,
               paddingHorizontal: 20,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 25,
+              borderRadius: 12,
+              backgroundColor: filter === 6 ? colors.appBlue : 'transparent',
+              borderWidth: filter === 6 ? 0 : 1,
+              borderColor: colors.borderColor,
             }}>
             <Text
               style={{
@@ -94,21 +92,19 @@ const Graph: React.FC<{
               }}>
               1W
             </Text>
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity style={{}} onPress={() => setFilter(30)}>
-          <LinearGradient
-            colors={
-              filter === 30
-                ? [colors.appBlueLight, colors.appBlueDark]
-                : ['transparent', 'transparent']
-            }
+          <View
             style={{
               height: 40,
               paddingHorizontal: 20,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 25,
+              borderRadius: 12,
+              backgroundColor: filter === 30 ? colors.appBlue : 'transparent',
+              borderWidth: filter === 30 ? 0 : 1,
+              borderColor: colors.borderColor,
             }}>
             <Text
               style={{
@@ -118,21 +114,19 @@ const Graph: React.FC<{
               }}>
               1M
             </Text>
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity style={{}} onPress={() => setFilter(365)}>
-          <LinearGradient
-            colors={
-              filter === 365
-                ? [colors.appBlueLight, colors.appBlueDark]
-                : ['transparent', 'transparent']
-            }
+          <View
             style={{
               height: 40,
               paddingHorizontal: 20,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 25,
+              borderRadius: 12,
+              backgroundColor: filter === 365 ? colors.appBlue : 'transparent',
+              borderWidth: filter === 365 ? 0 : 1,
+              borderColor: colors.borderColor,
             }}>
             <Text
               style={{
@@ -142,7 +136,7 @@ const Graph: React.FC<{
               }}>
               1Y
             </Text>
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
       </View>
       <SkiaChart ref={skiaRef} />

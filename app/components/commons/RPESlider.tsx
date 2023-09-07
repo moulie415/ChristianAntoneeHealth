@@ -155,14 +155,12 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <LinearGradient
-                colors={['#294195', '#121617']}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0.5}}
+              <View
                 style={{
                   height: 26,
                   width: 26,
                   borderRadius: 13,
+                  backgroundColor: colors.appBlue,
                 }}
               />
             </View>

@@ -15,7 +15,10 @@ import {WeeklyItems} from '../reducers/profile';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import {Alert} from 'react-native';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
 
