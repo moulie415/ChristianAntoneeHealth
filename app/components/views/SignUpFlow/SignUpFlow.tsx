@@ -30,7 +30,6 @@ import SelectGoal from './SelectGoal';
 import * as Progress from 'react-native-progress';
 import CompleteSignUp from './CompleteSignUp';
 import LetsBuild from './LetsBuild';
-import Swiper from 'react-native-swiper';
 import BackButton from '../../commons/BackButton';
 import ForwardButton from '../../commons/ForwardButton';
 import Header from '../../commons/Header';
@@ -43,6 +42,8 @@ import {RouteProp} from '@react-navigation/native';
 import SelectWeight from './SelectWeight';
 import SelectHeight from './SelectHeight';
 import SelectSex from './SelectSex';
+import PagerView from 'react-native-pager-view';
+import moment from 'moment';
 
 const {width} = Dimensions.get('window');
 
@@ -127,9 +128,10 @@ const SignUpFlow: React.FC<{
 
   const [index, setIndex] = useState(0);
 
-  const ref = useRef<Swiper>(null);
+  const ref = useRef<PagerView>(null);
 
-  const goNext = () => ref.current?.scrollTo(index + 1);
+  const goNext = () => ref.current?.setPage(index + 1);
+  const goBack = () => ref.current?.setPage(index - 1);
 
   const slides = [
     // 0
@@ -153,7 +155,7 @@ const SignUpFlow: React.FC<{
     },
     // 2
     {
-      showNext: !!dob,
+      showNext: !!dob && moment().diff(dob, 'years') >= 18,
       key: 'age',
       component: (
         <Age
@@ -257,27 +259,35 @@ const SignUpFlow: React.FC<{
           borderRadius={0}
         />
         {fromProfile && <Header hasBack />}
-        <Swiper
+        <PagerView
           ref={ref}
-          onIndexChanged={i => {
-            setIndex(i);
+          onPageSelected={e => {
+            setIndex(e.nativeEvent.position);
             Keyboard.dismiss();
           }}
-          loop={false}
           removeClippedSubviews={false}
-          showsPagination={false}
           scrollEnabled={false}
-          prevButton={<BackButton disabled />}
-          nextButton={<ForwardButton disabled />}
-          showsButtons={slides[index].showNext}>
-          {slides.map(slide => {
+          style={{flex: 1}}>
+          {slides.map((slide, i) => {
             return (
               <View style={{flex: 1}} key={slide.key}>
                 {slide.component}
+                {i !== 0 && (
+                  <BackButton
+                    style={{position: 'absolute', left: 10, top: '50%'}}
+                    onPress={goBack}
+                  />
+                )}
+                {slide.showNext && i < slides.length - 1 && (
+                  <ForwardButton
+                    style={{position: 'absolute', right: 10, top: '50%'}}
+                    onPress={goNext}
+                  />
+                )}
               </View>
             );
           })}
-        </Swiper>
+        </PagerView>
       </SafeAreaView>
     </FastImage>
   );
