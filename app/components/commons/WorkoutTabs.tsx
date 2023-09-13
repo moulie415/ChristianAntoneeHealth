@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
 import colors from '../../constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
@@ -29,9 +29,10 @@ const WorkoutTabs: React.FC<{
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-evenly',
+          justifyContent: 'center',
           alignItems: 'center',
           marginVertical: 10,
+          marginTop: 20,
         }}>
         {tabs.map((tab, index) => {
           return (
@@ -45,16 +46,23 @@ const WorkoutTabs: React.FC<{
                   width: 110,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderRadius: 12,
                   backgroundColor:
-                    tabIndex === index ? colors.appBlue : colors.appGrey,
-                  borderWidth: tabIndex === index ? 0 : 1,
-                  borderColor: colors.borderColor,
+                    tabIndex === index ? colors.borderColor : 'transparent',
+                  borderRadius: 12,
+                  borderTopRightRadius: index === 0 ? 0 : 12,
+                  borderBottomRightRadius: index === 0 ? 0 : 12,
+                  borderTopLeftRadius: index === tabs.length - 1 ? 0 : 12,
+                  borderBottomLeftRadius: index === tabs.length - 1 ? 0 : 12,
+                  borderWidth: 2,
+                  borderColor:
+                    tabIndex === index
+                      ? colors.borderColor
+                      : colors.borderColor,
                 }}>
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    color: colors.appWhite,
+                    color: tabIndex === index ? colors.appWhite : colors.button,
                     textAlign: 'center',
                   }}>
                   {tab}
@@ -64,7 +72,7 @@ const WorkoutTabs: React.FC<{
           );
         })}
       </View>
-      <View>
+      <View style={{marginHorizontal: 20, marginTop: 15}}>
         {tabIndex === 0 && hasSetsRepsTab && (
           <View
             style={{
@@ -122,7 +130,7 @@ const WorkoutTabs: React.FC<{
 
         {((tabIndex === 1 && hasSetsRepsTab) ||
           (tabIndex === 0 && !hasSetsRepsTab)) && (
-          <ViewMore text={exercise.description} lines={5} />
+          <ViewMore textAlign="justify" text={exercise.description} lines={5} />
         )}
 
         {((tabIndex === 2 && hasSetsRepsTab) ||

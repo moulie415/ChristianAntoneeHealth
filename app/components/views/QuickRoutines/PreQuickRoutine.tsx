@@ -225,7 +225,7 @@ const PreQuickRoutine: React.FC<{
             area,
           )} body`}</Text>
         </View>
-        <ConnectedApps />
+        {/* <ConnectedApps /> */}
         <Button
           style={{margin: 15}}
           text="Start workout"

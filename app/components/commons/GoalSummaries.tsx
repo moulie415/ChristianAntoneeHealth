@@ -111,8 +111,8 @@ const GoalSummaries: React.FC<{
     profile.goal === Goal.WEIGHT_LOSS
       ? 'Intermediate'
       : profile.goal === Goal.STRENGTH
-      ? 'Intermediate/advanced'
-      : 'Beginner/intermediate';
+      ? 'Intermediate'
+      : 'Beginner';
 
   useEffect(() => {
     getWeeklyItemsAction();

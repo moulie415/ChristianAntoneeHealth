@@ -4,7 +4,7 @@ export default {
   borderColor: '#4C5060',
   appBlueLight: '#1C74BB',
   appBlueDark: '#2A3F94',
-  appBlue: '#2A5DC2',
+  appBlue: '#1c7ad9',
   tile: '#363944',
   appBlueFaded: '#5A89DA',
   darkBlue: '#242b43',

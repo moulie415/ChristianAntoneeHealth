@@ -27,18 +27,6 @@ const Button: React.FC<Props> = ({
   disabled,
   ...props
 }) => {
-  const gradient = () => {
-    // if (disabled) {
-    //   return [colors.appGrey, colors.appGrey];
-    // }
-    if (variant === 'secondary') {
-      return [colors.appWhite, colors.appWhite];
-    }
-    if (variant === 'danger') {
-      return [colors.appRed, colors.appRed];
-    }
-    return [colors.appBlue, colors.appBlue];
-  };
   return (
     <TouchableOpacity
       {...props}
@@ -47,43 +35,40 @@ const Button: React.FC<Props> = ({
         {
           borderRadius: 12,
           overflow: 'hidden',
-        },
-        props.style,
-      ]}>
-      <View
-        style={{
           height: 50,
           justifyContent: 'center',
           padding: 10,
           opacity: disabled ? 0.5 : 1,
           backgroundColor:
             variant === 'secondary'
-              ? colors.appWhite
+              ? 'transparent'
               : variant === 'danger'
               ? colors.appRed
               : colors.appBlue,
-        }}>
-        {loading ? (
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Spinner />
-          </View>
-        ) : (
-          <Text
-            style={[
-              {
-                color:
-                  variant === 'secondary' ? colors.appBlue : colors.appWhite,
-                textAlign: 'center',
-                fontSize: 14,
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-              },
-              textStyle,
-            ]}>
-            {text}
-          </Text>
-        )}
-      </View>
+          borderWidth: variant === 'secondary' ? 2 : 0,
+          borderColor: colors.appBlue,
+        },
+        props.style,
+      ]}>
+      {loading ? (
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Spinner />
+        </View>
+      ) : (
+        <Text
+          style={[
+            {
+              color: variant === 'secondary' ? colors.appBlue : colors.appWhite,
+              textAlign: 'center',
+              fontSize: 14,
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+            },
+            textStyle,
+          ]}>
+          {text}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

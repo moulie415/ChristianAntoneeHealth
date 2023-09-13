@@ -22,6 +22,7 @@ import Orientation, {
   OrientationType,
   useOrientationChange,
 } from 'react-native-orientation-locker';
+import { StyleSheet } from 'react-native';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -112,7 +113,8 @@ const ExerciseVideo: React.FC<{
             height: 50,
             width: 50,
             borderRadius: 25,
-            backgroundColor: colors.appWhite,
+            borderWidth: 2,
+            borderColor: colors.appWhite,
             position: 'absolute',
             top: fullscreen ? Dimensions.get('window').height / 2 - 25 : '18%',
             left: Dimensions.get('window').width / 2 - 25,
@@ -121,13 +123,13 @@ const ExerciseVideo: React.FC<{
           }}>
           <Icon
             name={paused ? 'play' : 'pause'}
-            color={colors.appBlue}
+            color={colors.appWhite}
             size={20}
             style={{marginRight: paused ? -3 : 0}}
           />
         </TouchableOpacity>
       )}
-      {(showControls || fullscreen) && (
+      {/* {(showControls || fullscreen) && (
         <>
           <TouchableOpacity
             onPress={() => {
@@ -202,7 +204,7 @@ const ExerciseVideo: React.FC<{
             </View>
           )}
         </>
-      )}
+      )} */}
     </View>
   );
 };

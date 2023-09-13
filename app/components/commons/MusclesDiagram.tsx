@@ -44,7 +44,7 @@ const MusclesDiagram: React.FC<{primary?: Muscle[]; secondary?: Muscle[]}> = ({
 
   return (
     <View style={{}}>
-      <View style={{margin: 20, marginTop: 5}}>
+      <View style={{margin: 20, marginTop: 5, marginHorizontal: 0}}>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           <View style={{marginRight: 10}}>
             <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>

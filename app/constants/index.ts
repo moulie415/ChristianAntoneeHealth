@@ -51,3 +51,9 @@ export const TABLE_HEADER_KEYS = [
   'good',
   'excellent',
 ];
+
+export const FONTS_SIZES = {
+  SMALL: 12,
+  MEDIUM_LARGE: 18,
+  LARGE: 24,
+};

@@ -26,39 +26,36 @@ const WorkoutTabFooter: React.FC<{
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 10,
-        height: 60,
+        marginHorizontal: 20,
         borderRadius: 30,
       }}>
       <Text
         style={{
           fontWeight: 'bold',
           color: colors.appWhite,
-          fontSize: 20,
-          padding: 15,
+          fontSize: 16,
         }}>{`Exercise ${index + 1}/${workout.length}`}</Text>
 
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="stopwatch" size={20} color={colors.appWhite} />
         <Text
           style={{
             fontWeight: 'bold',
             color: colors.appWhite,
-            fontSize: 20,
+            fontSize: 16,
             paddingLeft: 5,
             padding: 15,
           }}>
           {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
         </Text>
         <TouchableOpacity
+          hitSlop={20}
           onPress={() => {
             onTimerPaused && onTimerPaused(!timerPaused);
             setTimerPaused(!timerPaused);
           }}>
           <Icon
             name={timerPaused ? 'play' : 'pause'}
-            size={30}
-            style={{marginRight: 10}}
+            size={20}
             color={colors.appWhite}
           />
         </TouchableOpacity>

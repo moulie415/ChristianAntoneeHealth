@@ -4,13 +4,19 @@ import colors from '../../constants/colors';
 
 import Text from './Text';
 
-const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
+const ViewMore = ({
+  text,
+  lines,
+  textAlign,
+}: {
+  text: string;
+  lines?: number;
+  textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify' | undefined;
+}) => {
   const renderViewMore = (onPress: () => void) => {
     return (
       <Text
         style={{
-          margin: 10,
-          marginTop: 0,
           color: colors.appBlue,
           fontWeight: 'bold',
         }}
@@ -24,8 +30,6 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
     return (
       <Text
         style={{
-          margin: 10,
-          marginTop: 0,
           color: colors.appBlue,
           fontWeight: 'bold',
         }}
@@ -40,11 +44,10 @@ const ViewMore = ({text, lines}: {text: string; lines?: number}) => {
       renderViewLess={renderViewLess}
       numberOfLines={lines || 3}
       textStyle={{
-        margin: 10,
-        marginBottom: 0,
         lineHeight: 25,
+        textAlign
       }}>
-      <Text style={{color: colors.appWhite}}>{text}</Text>
+      <Text style={{color: colors.appWhite, textAlign}}>{text}</Text>
     </ViewMoreText>
   );
 };

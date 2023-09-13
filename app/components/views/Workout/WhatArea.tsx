@@ -11,6 +11,9 @@ import colors from '../../../constants/colors';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import LinearGradient from 'react-native-linear-gradient';
+import {FONTS_SIZES} from '../../../constants';
+
+const TILE_HEIGHT = Dimensions.get('window').height / 5;
 
 const WhatArea: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'WhatArea'>;
@@ -26,12 +29,12 @@ const WhatArea: React.FC<{
           style={{
             color: colors.appWhite,
             margin: 20,
+            marginTop: 0,
             fontSize: 22,
             fontWeight: 'bold',
           }}>
           What area do you want to focus on?
         </Text>
-
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('WorkoutList', {equipment, area: 'upper'})
@@ -44,7 +47,7 @@ const WhatArea: React.FC<{
           }}>
           <FastImage
             style={{
-              height: 120,
+              height: TILE_HEIGHT,
               justifyContent: 'flex-end',
               borderRadius: 10,
             }}
@@ -60,14 +63,23 @@ const WhatArea: React.FC<{
                 justifyContent: 'flex-end',
                 borderRadius: 10,
                 padding: 10,
+                marginBottom: -1,
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  fontSize: 18,
+                  fontSize: FONTS_SIZES.MEDIUM_LARGE,
+                  marginBottom: 5,
                 }}>
-                UPPER BODY
+                Upper Body
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 12,
+                }}>
+                (Workouts for your chest, back, arms, shoulders and abs)
               </Text>
             </LinearGradient>
           </FastImage>
@@ -84,7 +96,7 @@ const WhatArea: React.FC<{
           }}>
           <FastImage
             style={{
-              height: 120,
+              height: TILE_HEIGHT,
               justifyContent: 'flex-end',
               borderRadius: 10,
             }}
@@ -105,9 +117,17 @@ const WhatArea: React.FC<{
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  fontSize: 18,
+                  fontSize: FONTS_SIZES.MEDIUM_LARGE,
+                  marginBottom: 5,
                 }}>
-                LOWER BODY
+                Lower Body
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 12,
+                }}>
+                (Train your glutes, quads, hamstrings and inner thigh)
               </Text>
             </LinearGradient>
           </FastImage>
@@ -124,7 +144,7 @@ const WhatArea: React.FC<{
           }}>
           <FastImage
             style={{
-              height: 120,
+              height: TILE_HEIGHT,
               justifyContent: 'flex-end',
               borderRadius: 10,
             }}
@@ -140,14 +160,23 @@ const WhatArea: React.FC<{
                 justifyContent: 'flex-end',
                 borderRadius: 10,
                 padding: 10,
+                marginBottom: -1,
               }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                  fontSize: 18,
+                  fontSize: FONTS_SIZES.MEDIUM_LARGE,
+                  marginBottom: 5,
                 }}>
-                FULL BODY
+                Full Body
+              </Text>
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 12,
+                }}>
+                (Comprehensive workouts targeting all major muscle groups)
               </Text>
             </LinearGradient>
           </FastImage>

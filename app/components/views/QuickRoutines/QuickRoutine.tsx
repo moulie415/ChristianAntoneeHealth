@@ -159,12 +159,12 @@ const QuickRoutineView: React.FC<{
                     <Spinner color={colors.appBlue} />
                   </View>
                 )}
-                <ExerciseArrows
+                {/* <ExerciseArrows
                   exercises={exercises}
                   index={i}
                   pagerRef={pagerRef}
                   fullscreen={fullscreen}
-                />
+                /> */}
                 {!fullscreen && (
                   <View
                     style={{
@@ -186,6 +186,7 @@ const QuickRoutineView: React.FC<{
                           marginTop: 20,
                           color: colors.appWhite,
                           fontSize: 20,
+                          marginHorizontal: 40,
                           fontWeight: 'bold',
                           textAlign: 'center',
                         }}>
@@ -213,28 +214,59 @@ const QuickRoutineView: React.FC<{
                         workout={exercises}
                         index={index}
                       />
-                      <Button
-                        text="End Workout"
-                        onPress={() => {
-                          Alert.alert('End workout', 'Are you sure?', [
-                            {text: 'No', style: 'cancel'},
-                            {
-                              text: 'Yes',
-                              onPress: () => {
-                                navigation.navigate('EndQuickRoutine', {
-                                  seconds,
-                                  routine,
-                                  endTime: new Date(),
-                                  exerciseEvents,
-                                  startTime,
-                                  pauseEvents,
-                                });
-                              },
-                            },
-                          ]);
-                        }}
-                        style={{margin: 10, marginHorizontal: 20}}
-                      />
+                      <View style={{flexDirection: 'row', flex: 1}}>
+                        {index !== 0 && (
+                          <Button
+                            text="Previous"
+                            variant="secondary"
+                            onPress={() => pagerRef.current?.setPage(index - 1)}
+                            style={{
+                              marginLeft: 20,
+                              marginHorizontal: 10,
+                              flex: 1,
+                            }}
+                          />
+                        )}
+                        {index !== exercises.length - 1 && (
+                          <Button
+                            text="Next"
+                            onPress={() => pagerRef.current?.setPage(index + 1)}
+                            style={{
+                              marginRight: 20,
+                              marginHorizontal: index === 0 ? 20 : 10,
+                              flex: 1,
+                            }}
+                          />
+                        )}
+                        {index === exercises.length - 1 && (
+                          <Button
+                            text="End Workout"
+                            onPress={() => {
+                              Alert.alert('End workout', 'Are you sure?', [
+                                {text: 'No', style: 'cancel'},
+                                {
+                                  text: 'Yes',
+                                  onPress: () => {
+                                    navigation.navigate('EndQuickRoutine', {
+                                      seconds,
+                                      routine,
+                                      endTime: new Date(),
+                                      exerciseEvents,
+                                      startTime,
+                                      pauseEvents,
+                                    });
+                                  },
+                                },
+                              ]);
+                            }}
+                            style={{
+                              marginRight: 20,
+                              marginHorizontal: 10,
+                              flex: 1,
+                            }}
+                          />
+                        )}
+                      </View>
                     </ScrollView>
                   </View>
                 )}

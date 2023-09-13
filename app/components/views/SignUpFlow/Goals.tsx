@@ -20,8 +20,8 @@ const Goals: React.FC<{
     goal === Goal.WEIGHT_LOSS
       ? 'Intermediate'
       : goal === Goal.STRENGTH
-      ? 'Intermediate/advanced'
-      : 'Beginner/intermediate';
+      ? 'Intermediate'
+      : 'Beginner';
   return (
     <View
       style={{
@@ -36,48 +36,51 @@ const Goals: React.FC<{
           textAlign: 'center',
           marginBottom: 20,
         }}>
-        Here's a summary of your weekly goals...
+        Here are your weekly goals...
       </Text>
       <View style={{alignItems: 'center'}}>
         <Dumbbell />
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: 20,
+            fontSize: 16,
             marginTop: 10,
             marginBottom: 20,
             textAlign: 'center',
           }}>
+          {'Complete '}
           <Text style={{fontWeight: 'bold'}}>{workoutGoal}</Text>
-          {' workouts completed'}
+          {' workouts'}
         </Text>
         <Time />
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: 20,
+            fontSize: 16,
             marginTop: 10,
             marginBottom: 20,
             textAlign: 'center',
           }}>
+          {'Spend '}
           <Text style={{fontWeight: 'bold'}}>{minsGoal}</Text>
-          {' mins spent training'}
+          {' minutes training'}
         </Text>
 
         <DumbbellRed />
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: 20,
+            fontSize: 16,
             marginTop: 10,
             marginBottom: 20,
             textAlign: 'center',
           }}>
+          {'Complete '}
           <Text
             style={{
               fontWeight: 'bold',
             }}>{`${workoutGoal} `}</Text>
-          {`${workoutLevelTitleString} workouts completed`}
+          {`${workoutLevelTitleString} workouts`}
         </Text>
         {goal === Goal.WEIGHT_LOSS && (
           <>
@@ -91,8 +94,9 @@ const Goals: React.FC<{
                 marginBottom: 20,
                 textAlign: 'center',
               }}>
+              {'Burn '}
               <Text style={{fontWeight: 'bold'}}>{3500}</Text>
-              {' calories burned'}
+              {' calories'}
             </Text>
           </>
         )}
