@@ -28,6 +28,7 @@ const WorkoutTabFooter: React.FC<{
         alignItems: 'center',
         marginHorizontal: 20,
         borderRadius: 30,
+        paddingVertical: 15,
       }}>
       <Text
         style={{

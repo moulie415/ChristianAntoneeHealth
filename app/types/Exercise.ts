@@ -41,7 +41,7 @@ export default interface Exercise {
   duration?: string;
   notes?: string;
   weight?: string;
-
+  time?: number;
 }
 
 export type Muscle =

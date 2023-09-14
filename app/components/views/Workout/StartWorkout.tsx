@@ -63,8 +63,7 @@ const StartWorkout: React.FC<{
   const pagerRef = useRef<PagerView>(null);
   const [showModal, setShowModal] = useState(false);
   const [showResistanceModal, setShowResistanceModal] = useState(false);
-  const [hasPressedPlay, setHasPressedPlay] = useState(false);
-  const textInputRef = useRef<TextInput>();
+  const [hasPressedPlay, setHasPressedPlay] = useState(true);
   const planWorkout = route.params?.planWorkout;
   const startTime = route.params?.startTime;
   const planId = route.params?.planId;
@@ -75,22 +74,10 @@ const StartWorkout: React.FC<{
   const {exerciseEvents} = useExerciseEvents(index);
 
   useEffect(() => {
-    if (tabIndex === 2) {
-      textInputRef.current?.focus();
-    }
-  }, [tabIndex]);
-
-  useEffect(() => {
     if (workout[index]) {
       navigation.setOptions({headerTitle: workout[index].name});
     }
   }, [index, navigation, workout]);
-
-  useEffect(() => {
-    if (planWorkout.steps) {
-      setShowModal(true);
-    }
-  }, [planWorkout.steps]);
 
   const loadingExercises = !workout || workout.some(e => e === undefined);
 
@@ -141,7 +128,6 @@ const StartWorkout: React.FC<{
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
-                    paused
                     path={exercise.video.src}
                     videoIndex={i}
                     currentIndex={index}
@@ -201,9 +187,11 @@ const StartWorkout: React.FC<{
                         i={i}
                         index={index}
                         setShowResistanceModal={setShowResistanceModal}
+                        workout={workout}
+                        pagerRef={pagerRef}
                       />
 
-                      <WorkoutTabFooter
+                      {/* <WorkoutTabFooter
                         onTimerPaused={paused =>
                           setPauseEvents([
                             ...pauseEvents,
@@ -215,7 +203,7 @@ const StartWorkout: React.FC<{
                         timerPaused={timerPaused}
                         workout={workout}
                         index={index}
-                      />
+                      /> */}
                       <Button
                         text="End Workout"
                         onPress={() => {
@@ -268,65 +256,6 @@ const StartWorkout: React.FC<{
             text="OK"
             onPress={() => setShowResistanceModal(false)}
             style={{margin: 10}}
-          />
-        </View>
-      </Modal>
-      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
-        <View
-          style={{
-            backgroundColor: colors.appGrey,
-            width: '95%',
-            alignSelf: 'center',
-            borderRadius: 10,
-          }}>
-          <Icon
-            style={{alignSelf: 'center', margin: 10}}
-            name="info-circle"
-            color={colors.appWhite}
-            size={30}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              padding: 15,
-              fontSize: 25,
-              paddingTop: 0,
-              color: colors.appWhite,
-              fontWeight: 'bold',
-            }}>
-            Instructions
-          </Text>
-          <View style={{marginBottom: 10}}>
-            {planWorkout?.steps &&
-              planWorkout?.steps.map(step => {
-                return (
-                  <View
-                    key={step}
-                    style={{
-                      flexDirection: 'row',
-                      margin: 10,
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: colors.appWhite,
-                        marginRight: 10,
-                      }}>
-                      ●
-                    </Text>
-                    <Text style={{color: colors.appWhite, flex: 1}}>
-                      {step}
-                    </Text>
-                  </View>
-                );
-              })}
-          </View>
-          <Button
-            text="OK"
-            onPress={() => setShowModal(false)}
-            style={{
-              margin: 10,
-            }}
           />
         </View>
       </Modal>

@@ -228,7 +228,7 @@ const PreQuickRoutine: React.FC<{
         {/* <ConnectedApps /> */}
         <Button
           style={{margin: 15}}
-          text="Start workout"
+          text="Let's go!"
           onPress={() =>
             navigation.navigate('QuickRoutine', {
               routine: route.params.routine,

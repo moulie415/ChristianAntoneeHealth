@@ -91,6 +91,7 @@ export interface PlanExercise {
   resistanceScale: string;
   restTime: string;
   additionalNotes: string;
+  time?: number;
 }
 
 export interface PlanWorkout {

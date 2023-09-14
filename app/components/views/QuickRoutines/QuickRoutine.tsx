@@ -30,6 +30,7 @@ import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import Countdown from '../../commons/Countdown';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -54,7 +55,7 @@ const QuickRoutineView: React.FC<{
   const pagerRef = useRef<PagerView>(null);
   const [routineStarted, setRoutineStarted] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [hasPressedPlay, setHasPressedPlay] = useState(false);
+  const [hasPressedPlay, setHasPressedPlay] = useState(true);
   const [fullscreen, setFullScreen] = useState(false);
   const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
 
@@ -66,7 +67,7 @@ const QuickRoutineView: React.FC<{
 
   useEffect(() => {
     if (routine.instructions || routine.steps) {
-      setShowModal(true);
+      //  setShowModal(true);
     }
   }, [routine.instructions, routine.steps]);
 
@@ -98,15 +99,15 @@ const QuickRoutineView: React.FC<{
       <Header
         hasBack
         absolute
-        right={
-          routine.steps ? (
-            <TouchableOpacity
-              style={{marginTop: 10}}
-              onPress={() => setShowModal(true)}>
-              <Icon name="info-circle" color={colors.appWhite} size={30} />
-            </TouchableOpacity>
-          ) : null
-        }
+        // right={
+        //   routine.steps ? (
+        //     <TouchableOpacity
+        //       style={{marginTop: 10}}
+        //       onPress={() => setShowModal(true)}>
+        //       <Icon name="info-circle" color={colors.appWhite} size={30} />
+        //     </TouchableOpacity>
+        //   ) : null
+        // }
         customBackPress={() => {
           Alert.alert('Exit workout', 'Are you sure?', [
             {
@@ -138,7 +139,6 @@ const QuickRoutineView: React.FC<{
               <View key={exercise.id}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
-                    paused
                     path={exercise.video.src}
                     videoIndex={i}
                     currentIndex={index}
@@ -199,9 +199,11 @@ const QuickRoutineView: React.FC<{
                         i={i}
                         index={index}
                         setShowResistanceModal={setShowResistanceModal}
+                        workout={exercises}
+                        pagerRef={pagerRef}
                       />
 
-                      <WorkoutTabFooter
+                      {/* <WorkoutTabFooter
                         onTimerPaused={paused =>
                           setPauseEvents([
                             ...pauseEvents,
@@ -213,7 +215,7 @@ const QuickRoutineView: React.FC<{
                         timerPaused={timerPaused}
                         workout={exercises}
                         index={index}
-                      />
+                      /> */}
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index !== 0 && (
                           <Button
@@ -275,7 +277,7 @@ const QuickRoutineView: React.FC<{
           })}
         </PagerView>
       )}
-      <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
+      {/* <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
         <View
           style={{
             backgroundColor: colors.appGrey,
@@ -342,7 +344,7 @@ const QuickRoutineView: React.FC<{
             }}
           />
         </View>
-      </Modal>
+      </Modal> */}
       <Modal
         visible={showResistanceModal}
         onRequestClose={() => setShowResistanceModal(false)}>
@@ -367,6 +369,13 @@ const QuickRoutineView: React.FC<{
           />
         </View>
       </Modal>
+      {/* {!loadingExercises && (
+        <Countdown
+          onComplete={() => {
+            setRoutineStarted(true);
+          }}
+        />
+      )} */}
       {/* <MusicButton /> */}
     </View>
   );
