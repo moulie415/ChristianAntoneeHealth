@@ -31,6 +31,10 @@ import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 import Countdown from '../../commons/Countdown';
+import {SetAutoPlayAction, setAutoPlay} from '../../../actions/profile';
+import Profile from '../../../types/Profile';
+import Toggle from '../../commons/Toggle';
+import {FONTS_SIZES} from '../../../constants';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -40,6 +44,8 @@ const QuickRoutineView: React.FC<{
   setExerciseNoteAction: (exercise: string, note: string) => void;
   exerciseNotes: {[key: string]: string};
   exercisesObj: {[key: string]: Exercise};
+  setAutoPlay: (autoPlay: boolean) => void;
+  autoPlay: boolean;
 }> = ({
   videos,
   loading,
@@ -48,6 +54,8 @@ const QuickRoutineView: React.FC<{
   exerciseNotes,
   setExerciseNoteAction,
   exercisesObj,
+  setAutoPlay: setAutoPlayAction,
+  autoPlay,
 }) => {
   const {routine, startTime} = route.params;
   const [tabIndex, setTabIndex] = useState(0);
@@ -136,7 +144,7 @@ const QuickRoutineView: React.FC<{
           {exercises.map((exercise, i) => {
             const next = exercises[index + 1];
             return (
-              <View key={exercise.id}>
+              <View key={`${exercise.id}${i}`}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
                     path={exercise.video.src}
@@ -217,6 +225,33 @@ const QuickRoutineView: React.FC<{
                         index={index}
                       /> */}
                       <View style={{flexDirection: 'row', flex: 1}}>
+                        {index === 0 && (
+                          <TouchableOpacity
+                            onPress={() => setAutoPlayAction(!autoPlay)}
+                            style={{
+                              flex: 1,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              backgroundColor: colors.tile,
+                              borderRadius: 12,
+                              marginLeft: 20,
+                              justifyContent: 'space-evenly',
+                              height: 50,
+                            }}>
+                            <Text
+                              style={{
+                                color: colors.appWhite,
+                                fontSize: FONTS_SIZES.SMALL,
+                                fontWeight: 'bold',
+                              }}>
+                              AUTO-PLAY
+                            </Text>
+                            <Toggle
+                              value={autoPlay}
+                              onValueChange={setAutoPlayAction}
+                            />
+                          </TouchableOpacity>
+                        )}
                         {index !== 0 && (
                           <Button
                             text="Previous"
@@ -229,6 +264,7 @@ const QuickRoutineView: React.FC<{
                             }}
                           />
                         )}
+
                         {index !== exercises.length - 1 && (
                           <Button
                             text="Next"
@@ -381,15 +417,17 @@ const QuickRoutineView: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   videos: exercises.videos,
   loading: exercises.videoLoading,
   exerciseNotes: exercises.exerciseNotes,
   exercisesObj: exercises.exercises,
+  autoPlay: profile.autoPlay,
 });
 
 const mapDispatchToProps = {
   setExerciseNoteAction: setExerciseNote,
+  setAutoPlay,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuickRoutineView);

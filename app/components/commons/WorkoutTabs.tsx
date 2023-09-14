@@ -11,6 +11,7 @@ import useInterval from '../../hooks/UseInterval';
 import moment from 'moment';
 import ExerciseTimer from './ExerciseTimer';
 import PagerView from 'react-native-pager-view';
+import { PlanWorkout } from '../../types/Shared';
 
 const WorkoutTabs: React.FC<{
   tabIndex: number;

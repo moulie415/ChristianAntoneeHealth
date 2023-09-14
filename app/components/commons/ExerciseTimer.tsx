@@ -6,6 +6,9 @@ import moment from 'moment';
 import Exercise from '../../types/Exercise';
 import useInterval from '../../hooks/UseInterval';
 import PagerView from 'react-native-pager-view';
+import {MyRootState, PlanWorkout} from '../../types/Shared';
+import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const PREP_TIME = 15;
 
@@ -15,7 +18,8 @@ const ExerciseTimer: React.FC<{
   exercise: Exercise;
   pagerRef: RefObject<PagerView>;
   tabIndex: number;
-}> = ({index, workout, exercise, pagerRef, tabIndex}) => {
+  autoPlay: boolean;
+}> = ({index, workout, exercise, pagerRef, tabIndex, autoPlay}) => {
   const [prepTime, setPrepTime] = useState(PREP_TIME);
 
   const [exerciseTime, setExerciseTime] = useState(exercise.time || 30);
@@ -28,7 +32,7 @@ const ExerciseTimer: React.FC<{
     } else if (exerciseTime > 0) {
       setExerciseTime(exerciseTime - 1);
     } else {
-      if (index < workout.length - 1) {
+      if (index < workout.length - 1 && autoPlay) {
         pagerRef.current?.setPage(index + 1);
       }
     }
@@ -71,6 +75,26 @@ const ExerciseTimer: React.FC<{
       lineCap="round">
       {fill => (
         <View style={{transform: [{scaleX: -1}]}}>
+          {!hideTimer && !finished && exercise.weight && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon color={colors.appWhite} size={15} name="dumbbell" />
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: colors.appWhite,
+                  fontSize: 16,
+                  textAlign: 'center',
+                  marginLeft: 5,
+                }}>
+                {exercise.weight}
+              </Text>
+            </View>
+          )}
           {!hideTimer && !finished && (
             <Text
               style={{
@@ -92,7 +116,7 @@ const ExerciseTimer: React.FC<{
               color: colors.appWhite,
               fontSize: hideTimer || finished ? 30 : 16,
               textAlign: 'center',
-              padding: 10,
+              paddingHorizontal: 10,
             }}>
             {isPrepping
               ? 'GET READY!'
@@ -106,4 +130,8 @@ const ExerciseTimer: React.FC<{
   );
 };
 
-export default ExerciseTimer;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  autoPlay: profile.autoPlay,
+});
+
+export default connect(mapStateToProps)(ExerciseTimer);

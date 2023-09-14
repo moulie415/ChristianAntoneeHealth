@@ -47,6 +47,7 @@ export const SET_VIEWED_PLAN = 'SET_VIEWED_PLAN';
 export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
+export const SET_AUTO_PLAY = 'SET_AUTO_PLAY';
 
 export interface SetProfileAction {
   type: typeof SET_PROFILE;
@@ -234,6 +235,11 @@ export interface SetHasViewedTourAction {
   type: typeof SET_HAS_VIEWED_TOUR;
 }
 
+export interface SetAutoPlayAction {
+  type: typeof SET_AUTO_PLAY;
+  payload: boolean;
+}
+
 export type ProfileActionTypes =
   | SetProfileAction
   | SetLoggedInAction
@@ -267,7 +273,8 @@ export type ProfileActionTypes =
   | SetBoneMassSamplesAction
   | SetBodyFatPercentageSamplesAction
   | SetMuscleMassSamplesAction
-  | SetHasViewedTourAction;
+  | SetHasViewedTourAction
+  | SetAutoPlayAction;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -485,4 +492,9 @@ export const setWeeklyItems = (payload: WeeklyItems): SetWeeklyItemsAction => ({
 
 export const setHasViewedTour = (): SetHasViewedTourAction => ({
   type: SET_HAS_VIEWED_TOUR,
+});
+
+export const setAutoPlay = (payload: boolean): SetAutoPlayAction => ({
+  type: SET_AUTO_PLAY,
+  payload,
 });

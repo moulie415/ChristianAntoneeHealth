@@ -32,6 +32,7 @@ import {
   SET_BONE_MASS_SAMPLES,
   SET_HAS_VIEWED_TOUR,
   SET_READ,
+  SET_AUTO_PLAY,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -71,6 +72,7 @@ export interface ProfileState {
   syncedPlanEvents: {[key: string]: string};
   calendarId?: string;
   syncPlanWithCalendar: boolean;
+  autoPlay: boolean;
 }
 
 const initialState: ProfileState = {
@@ -120,6 +122,7 @@ const initialState: ProfileState = {
   hasViewedTour: false,
   syncedPlanEvents: {},
   syncPlanWithCalendar: false,
+  autoPlay: true,
 };
 
 const reducer = (
@@ -283,6 +286,11 @@ const reducer = (
       return {
         ...state,
         syncPlanWithCalendar: action.payload.sync,
+      };
+    case SET_AUTO_PLAY:
+      return {
+        ...state,
+        autoPlay: action.payload,
       };
     default:
       return state;

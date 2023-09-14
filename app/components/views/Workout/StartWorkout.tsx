@@ -40,6 +40,9 @@ import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import Toggle from '../../commons/Toggle';
+import {setAutoPlay} from '../../../actions/profile';
+import { FONTS_SIZES } from '../../../constants';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -49,6 +52,8 @@ const StartWorkout: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
   profile: Profile;
+  setAutoPlay: (autoPlay: boolean) => void;
+  autoPlay: boolean;
 }> = ({
   workout,
   navigation,
@@ -57,6 +62,8 @@ const StartWorkout: React.FC<{
   loading,
   profile,
   route,
+  autoPlay,
+  setAutoPlay: setAutoPlayAction,
 }) => {
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
@@ -73,12 +80,6 @@ const StartWorkout: React.FC<{
   const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(1000);
   const {exerciseEvents} = useExerciseEvents(index);
 
-  useEffect(() => {
-    if (workout[index]) {
-      navigation.setOptions({headerTitle: workout[index].name});
-    }
-  }, [index, navigation, workout]);
-
   const loadingExercises = !workout || workout.some(e => e === undefined);
 
   return (
@@ -86,15 +87,15 @@ const StartWorkout: React.FC<{
       <Header
         hasBack
         absolute
-        right={
-          planWorkout.steps ? (
-            <TouchableOpacity
-              style={{marginTop: 10}}
-              onPress={() => setShowModal(true)}>
-              <Icon name="info-circle" color={colors.appWhite} size={30} />
-            </TouchableOpacity>
-          ) : null
-        }
+        // right={
+        //   planWorkout.steps ? (
+        //     <TouchableOpacity
+        //       style={{marginTop: 10}}
+        //       onPress={() => setShowModal(true)}>
+        //       <Icon name="info-circle" color={colors.appWhite} size={30} />
+        //     </TouchableOpacity>
+        //   ) : null
+        // }
         customBackPress={() => {
           Alert.alert('Exit workout', 'Are you sure?', [
             {
@@ -125,7 +126,7 @@ const StartWorkout: React.FC<{
             const next = workout[index + 1];
 
             return (
-              <View key={exercise.id}>
+              <View key={`${exercise.id}${i}`}>
                 {!loading && exercise.video ? (
                   <ExerciseVideo
                     path={exercise.video.src}
@@ -204,29 +205,84 @@ const StartWorkout: React.FC<{
                         workout={workout}
                         index={index}
                       /> */}
-                      <Button
-                        text="End Workout"
-                        onPress={() => {
-                          Alert.alert('End workout', 'Are you sure?', [
-                            {text: 'No', style: 'cancel'},
-                            {
-                              text: 'Yes',
-                              onPress: () => {
-                                navigation.navigate('EndWorkout', {
-                                  seconds,
-                                  planWorkout,
-                                  endTime: new Date(),
-                                  exerciseEvents,
-                                  pauseEvents,
-                                  startTime,
-                                  planId,
-                                });
-                              },
-                            },
-                          ]);
-                        }}
-                        style={{margin: 10, marginHorizontal: 20}}
-                      />
+                      <View style={{flexDirection: 'row', flex: 1}}>
+                        {index === 0 && (
+                          <TouchableOpacity
+                            onPress={() => setAutoPlayAction(!autoPlay)}
+                            style={{
+                              flex: 1,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              backgroundColor: colors.tile,
+                              borderRadius: 12,
+                              marginLeft: 20,
+                              justifyContent: 'space-evenly',
+                              height: 50,
+                            }}>
+                            <Text
+                              style={{
+                                color: colors.appWhite,
+                                fontSize: FONTS_SIZES.SMALL,
+                                fontWeight: 'bold',
+                              }}>
+                              AUTO-PLAY
+                            </Text>
+                            <Toggle
+                              value={autoPlay}
+                              onValueChange={setAutoPlayAction}
+                            />
+                          </TouchableOpacity>
+                        )}
+                        {index !== 0 && (
+                          <Button
+                            text="Previous"
+                            variant="secondary"
+                            onPress={() => pagerRef.current?.setPage(index - 1)}
+                            style={{
+                              marginLeft: 20,
+                              marginHorizontal: 10,
+                              flex: 1,
+                            }}
+                          />
+                        )}
+
+                        {index !== planWorkout?.exercises.length - 1 && (
+                          <Button
+                            text="Next"
+                            onPress={() => pagerRef.current?.setPage(index + 1)}
+                            style={{
+                              marginRight: 20,
+                              marginHorizontal: index === 0 ? 20 : 10,
+                              flex: 1,
+                            }}
+                          />
+                        )}
+                        {index === planWorkout?.exercises.length - 1 && (
+                          <Button
+                            text="End Workout"
+                            onPress={() => {
+                              Alert.alert('End workout', 'Are you sure?', [
+                                {text: 'No', style: 'cancel'},
+                                {
+                                  text: 'Yes',
+                                  onPress: () => {
+                                    navigation.navigate('EndWorkout', {
+                                      seconds,
+                                      planWorkout,
+                                      endTime: new Date(),
+                                      exerciseEvents,
+                                      pauseEvents,
+                                      startTime,
+                                      planId,
+                                    });
+                                  },
+                                },
+                              ]);
+                            }}
+                            style={{margin: 10, marginHorizontal: 20}}
+                          />
+                        )}
+                      </View>
                     </ScrollView>
                   </View>
                 )}
@@ -270,8 +326,11 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   videos: exercises.videos,
   loading: exercises.videoLoading,
   profile: profile.profile,
+  autoPlay: profile.autoPlay,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  setAutoPlay,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);

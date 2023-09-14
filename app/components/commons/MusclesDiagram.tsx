@@ -44,80 +44,6 @@ const MusclesDiagram: React.FC<{primary?: Muscle[]; secondary?: Muscle[]}> = ({
 
   return (
     <View style={{}}>
-      <View style={{margin: 20, marginTop: 5, marginHorizontal: 0}}>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          <View style={{marginRight: 10}}>
-            <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-              Primary muscles
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginVertical: 5,
-              }}>
-              {primary?.map(muscle => (
-                <View
-                  key={muscle}
-                  style={{
-                    backgroundColor: colors.appBlue,
-                    padding: 2,
-                    paddingHorizontal: 5,
-                    borderRadius: 10,
-                    marginVertical: 2,
-                    marginRight: 5,
-                  }}>
-                  <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 10,
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                    }}>
-                    {muscleReadableString(muscle).toUpperCase()}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </View>
-          {secondary && (
-            <View>
-              <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                Secondary muscles{' '}
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  marginTop: 5,
-                }}>
-                {secondary.map(muscle => (
-                  <View
-                    key={muscle}
-                    style={{
-                      backgroundColor: colors.muscleSecondary,
-                      padding: 2,
-                      paddingHorizontal: 5,
-                      borderRadius: 10,
-                      marginTop: 2,
-                      marginRight: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: colors.appBlue,
-                        fontSize: 10,
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                      }}>
-                      {muscleReadableString(muscle).toUpperCase()}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          )}
-        </View>
-      </View>
       <View
         style={{
           justifyContent: 'center',
@@ -126,7 +52,6 @@ const MusclesDiagram: React.FC<{primary?: Muscle[]; secondary?: Muscle[]}> = ({
           paddingVertical: 10,
           flexDirection: 'row',
           borderRadius: 10,
-          marginBottom: 10,
         }}>
         {hasFront && (
           <Svg width="50%" height={200} viewBox="0 0 12.62 47.06">
