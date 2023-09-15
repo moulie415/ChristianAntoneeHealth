@@ -279,7 +279,11 @@ const StartWorkout: React.FC<{
                                 },
                               ]);
                             }}
-                            style={{margin: 10, marginHorizontal: 20}}
+                            style={{
+                              marginRight: 20,
+                              marginHorizontal: 10,
+                              flex: 1,
+                            }}
                           />
                         )}
                       </View>

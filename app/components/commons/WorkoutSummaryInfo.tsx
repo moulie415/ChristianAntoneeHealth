@@ -6,32 +6,39 @@ import {getDifficultyEmoji} from '../../helpers/exercises';
 import moment from 'moment';
 import {rpeSliderScale} from './RPESlider';
 import Text from './Text';
+import Tile from './Tile';
+import Animated, {FadeIn} from 'react-native-reanimated';
+import Fire from '../../images/fire.svg';
+import Time from '../../images/time.svg';
+import {FONTS_SIZES} from '../../constants';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import Color from 'color';
 
 type Props = {
   children?: React.ReactNode;
+  delay?: number;
 };
 
 const TILE_SIZE = 130;
 
-const Tile: React.FC<Props> = ({children}) => {
+const SummaryTile: React.FC<Props> = ({children, delay = 500}) => {
   return (
-    <View>
-      <View
+    <Animated.View entering={FadeIn.duration(1000).delay(delay)}>
+      <Tile
         style={{
           height: TILE_SIZE,
-          width: TILE_SIZE,
-          borderRadius: 15,
-          overflow: 'hidden',
+          alignSelf: 'center',
+          marginBottom: 20,
+          width: 250,
+
           padding: 10,
-          backgroundColor: 'rgba(42, 93, 194, 0.6)',
+
           alignItems: 'center',
           justifyContent: 'center',
-          borderColor: colors.appWhite,
-          borderWidth: 2,
         }}>
         {children}
-      </View>
-    </View>
+      </Tile>
+    </Animated.View>
   );
 };
 
@@ -54,91 +61,131 @@ const WorkoutSummaryInfo: React.FC<{
         Workout Summary
       </Text>
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <Tile>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: 20,
-                  textAlign: 'center',
-                }}>
-                Calories burned
-              </Text>
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: 40,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                }}>
-                {Math.floor(calories || 0)}
-              </Text>
-            </View>
-          </Tile>
-          <Tile>
+        <SummaryTile>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Text
               style={{
-                color: colors.appWhite,
+                color: Color(colors.appWhite).darken(0.3).hex(),
                 fontSize: 20,
                 textAlign: 'center',
               }}>
-              Workout duration
+              Calories burned
             </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon
+                name="fire"
+                color={colors.appBlue}
+                style={{marginRight: 10}}
+                size={30}
+              />
+
+              <Text
+                style={{
+                  color: colors.appWhite,
+                  fontSize: 35,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                }}>
+                {`${Math.floor(calories || 0)} kcal`}
+              </Text>
+            </View>
+          </View>
+        </SummaryTile>
+        <SummaryTile delay={1000}>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: 'center',
+              color: Color(colors.appWhite).darken(0.3).hex(),
+            }}>
+            Workout duration
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Icon
+              name="clock"
+              color={colors.appBlue}
+              style={{marginRight: 10}}
+              size={30}
+            />
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: 30,
+                fontSize: 35,
                 fontWeight: 'bold',
                 textAlign: 'center',
               }}>
               {moment().utc().startOf('day').add({seconds}).format('mm:ss')}
             </Text>
-          </Tile>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            marginTop: 40,
-          }}>
-          <Tile>
-            <Text style={{color: colors.appWhite, fontSize: 20}}>RPE</Text>
+          </View>
+        </SummaryTile>
+
+        <SummaryTile delay={1500}>
+          <Text
+            style={{
+              color: Color(colors.appWhite).darken(0.3).hex(),
+              fontSize: 20,
+            }}>
+            Intensity
+          </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name="tint"
+              color={colors.appBlue}
+              style={{marginRight: 10}}
+              size={30}
+            />
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: 30,
+                fontSize: 35,
                 fontWeight: 'bold',
                 textAlign: 'center',
               }}>
-              {difficulty}
+              {`${difficulty}/10`}
             </Text>
-            <Text style={{fontSize: 30, color: colors.appWhite}}>
-              {getDifficultyEmoji(difficulty)}
+          </View>
+        </SummaryTile>
+        <SummaryTile delay={2000}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text
+              style={{
+                fontSize: 20,
+                textAlign: 'center',
+                color: Color(colors.appWhite).darken(0.3).hex(),
+              }}>
+              Average heart rate
             </Text>
-          </Tile>
-          <Tile>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name="heartbeat"
+                color={colors.appBlue}
+                style={{marginRight: 10}}
+                size={30}
+              />
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: 20,
-                  textAlign: 'center',
-                }}>
-                Average heart rate
-              </Text>
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: 40,
+                  fontSize: 35,
                   fontWeight: 'bold',
                   textAlign: 'center',
                 }}>
-                {averageHeartRate ? Math.floor(averageHeartRate || 0) : 'N/A'}
+                {averageHeartRate
+                  ? `${Math.floor(averageHeartRate || 0)} bpm`
+                  : 'N/A'}
               </Text>
             </View>
-          </Tile>
-        </View>
+          </View>
+        </SummaryTile>
       </View>
     </ScrollView>
   );

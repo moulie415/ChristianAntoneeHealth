@@ -19,6 +19,9 @@ import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Text from '../../commons/Text';
+import {FONTS_SIZES} from '../../../constants';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const EndQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
@@ -73,12 +76,21 @@ const EndQuickRoutine: React.FC<{
   }, 3000);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
-        <Header hasBack title="Workout Complete!" />
-        <View style={{flex: 1, marginTop: 40}}>
-          <RPESlider setRpe={setDifficulty} rpe={difficulty} />
-          {/* <Text style={{color: colors.appWhite, margin: 10}}>
+        <Text
+          style={{
+            color: colors.appWhite,
+            textAlign: 'center',
+            fontSize: FONTS_SIZES.LARGE,
+            marginBottom: 10,
+            marginTop: 20,
+            fontWeight: 'bold',
+          }}>
+          Workout complete!
+        </Text>
+        <RPESlider setRpe={setDifficulty} rpe={difficulty} />
+        {/* <Text style={{color: colors.appWhite, margin: 10}}>
           Workout note
         </Text>
         <Input
@@ -88,64 +100,63 @@ const EndQuickRoutine: React.FC<{
           value={note}
           onChangeText={setNote}
         /> */}
-          <Button
-            text="Save & Continue"
-            disabled={loading}
-            style={{margin: 10}}
-            onPress={async () => {
-              setLoading(true);
-              await saveWorkout(
+        <Button
+          text="Save & Continue"
+          disabled={loading}
+          style={{marginHorizontal: 20, marginBottom: 20}}
+          onPress={async () => {
+            setLoading(true);
+            await saveWorkout(
+              seconds,
+              'CA Health workout',
+              routine.name,
+              calories || 0,
+            );
+            const navigate = () => {
+              navigation.navigate('QuickRoutineSummary', {
+                calories,
                 seconds,
-                'CA Health workout',
-                routine.name,
-                calories || 0,
-              );
-              const navigate = () => {
-                navigation.navigate('QuickRoutineSummary', {
-                  calories,
-                  seconds,
-                  difficulty,
-                  routine,
-                  averageHeartRate,
-                });
-              };
+                difficulty,
+                routine,
+                averageHeartRate,
+              });
+            };
 
-              if (profile.premium) {
-                Alert.alert(
-                  'Save workout',
-                  'Do you wish to save this workout to view later?',
-                  [
-                    {
-                      style: 'cancel',
-                      text: 'Cancel',
-                      onPress: () => setLoading(false),
+            if (profile.premium) {
+              Alert.alert(
+                'Save workout',
+                'Do you wish to save this workout to view later?',
+                [
+                  {
+                    style: 'cancel',
+                    text: 'Cancel',
+                    onPress: () => setLoading(false),
+                  },
+                  {
+                    text: 'No',
+                    onPress: () => {
+                      save(false);
+                      navigate();
                     },
-                    {
-                      text: 'No',
-                      onPress: () => {
-                        save(false);
-                        navigate();
-                      },
+                  },
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      save(true);
+                      navigate();
                     },
-                    {
-                      text: 'Yes',
-                      onPress: () => {
-                        save(true);
-                        navigate();
-                      },
-                    },
-                  ],
-                );
-              } else {
-                save(false);
-                navigate();
-              }
-            }}
-          />
-        </View>
+                  },
+                ],
+              );
+            } else {
+              save(false);
+              navigate();
+            }
+          }}
+        />
       </SafeAreaView>
       <AbsoluteSpinner loading={loading} text="Loading workout data" />
-    </View>
+    </ScrollView>
   );
 };
 

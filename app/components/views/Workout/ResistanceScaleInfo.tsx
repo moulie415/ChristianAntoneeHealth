@@ -17,7 +17,7 @@ const items: {
     title: 'Max Effort Activity',
     description:
       'Feels almost impossible to keep going. Completely out of breath, unable to talk. Cannot maintain for more than a very short time.',
-    color: colors.appRed,
+    color: colors.appBlue,
     textColor: colors.appWhite,
   },
   {
@@ -25,7 +25,7 @@ const items: {
     title: 'Very Hard Activity',
     description:
       'Very difficult to maintain exercise intensity. Can barely breath and speak only a few words',
-    color: colors.secondaryDark,
+    color: Color(colors.appBlue).lighten(0.3).hex(),
     textColor: colors.appWhite,
   },
   {
@@ -33,39 +33,39 @@ const items: {
     title: 'Vigorous Activity',
     description:
       'Borderline uncomfortable. Short of breath, can speak a sentence.',
-    color: colors.secondaryLight,
-    textColor: colors.appWhite,
+    color: Color(colors.appBlue).lighten(0.4).hex(),
+    textColor: Color(colors.appWhite).darken(0.1).hex(),
   },
   {
     value: '4-6',
     title: 'Moderate Activity',
     description:
       'Breathing heavily, can hold short conversation. Still somewhat comfortable, but becoming noticeably more challenging.',
-    color: colors.appBlue,
-    textColor: colors.appWhite,
+    color: Color(colors.appBlue).lighten(0.6).hex(),
+    textColor: Color(colors.appWhite).darken(0.6).hex(),
   },
   {
     value: '2-3',
     title: 'Light Activity',
     description:
       'Feels like you can maintain for hours. Easy to breathe and carry a conversation',
-    color: colors.appBlueLight,
-    textColor: colors.appWhite,
+    color: Color(colors.appBlue).lighten(0.7).hex(),
+    textColor: Color(colors.tile).lighten(0.6).hex(),
   },
   {
     value: '1',
     title: 'Very light Activity',
     description:
       'Hardly any exertion, but more than sleeping, watching TV, etc',
-    color: colors.appGreen,
-    textColor: colors.appWhite,
+    color: Color(colors.appBlue).lighten(0.9).hex(),
+    textColor: Color(colors.tile).lighten(0.5).hex(),
   },
 ];
 
 const ResistanceScaleInfo = () => {
   return (
-    <View style={{width: 300}}>
-      {items.map(item => {
+    <View style={{margin: 20}}>
+      {items.map((item, index) => {
         return (
           <View
             key={item.value}
@@ -74,7 +74,11 @@ const ResistanceScaleInfo = () => {
               alignItems: 'center',
               backgroundColor: item.color,
               padding: 5,
-              paddingVertical: 10,
+              paddingVertical: 8,
+              borderTopLeftRadius: index === 0 ? 12 : 0,
+              borderTopRightRadius: index === 0 ? 12 : 0,
+              borderBottomLeftRadius: index === items.length - 1 ? 12 : 0,
+              borderBottomRightRadius: index === items.length - 1 ? 12 : 0,
             }}>
             <Text
               style={{

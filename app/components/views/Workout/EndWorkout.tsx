@@ -18,6 +18,9 @@ import Profile from '../../../types/Profile';
 import Exercise from '../../../types/Exercise';
 import {SavedWorkout} from '../../../types/SavedItem';
 import {setProfile} from '../../../actions/profile';
+import Text from '../../commons/Text';
+import { FONTS_SIZES } from '../../../constants';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const EndWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndWorkout'>;
@@ -80,10 +83,19 @@ const EndWorkout: React.FC<{
   }, 3000);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
-        <Header hasBack title="Workout Complete!" />
-
+        <Text
+          style={{
+            color: colors.appWhite,
+            textAlign: 'center',
+            fontSize: FONTS_SIZES.LARGE,
+            marginBottom: 10,
+            marginTop: 20,
+            fontWeight: 'bold',
+          }}>
+          Workout complete!
+        </Text>
         <RPESlider rpe={difficulty} setRpe={setDifficulty} />
         {/* <Text style={{color: colors.appWhite, margin: 10}}>
           Workout note
@@ -149,7 +161,7 @@ const EndWorkout: React.FC<{
           }}
         />
       </SafeAreaView>
-    </View>
+    </ScrollView>
   );
 };
 

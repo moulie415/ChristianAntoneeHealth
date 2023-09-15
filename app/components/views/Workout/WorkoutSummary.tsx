@@ -31,35 +31,24 @@ const WorkoutSummary: React.FC<{
   useBackHandler(() => true);
 
   return (
-    <FastImage
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
-      style={{flex: 1}}>
-      <View
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <WorkoutSummaryInfo
+        calories={calories}
+        difficulty={difficulty}
+        seconds={seconds}
+        averageHeartRate={averageHeartRate}
+      />
+
+      <Button
+        text="Return Home"
+        onPress={resetToTabs}
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.7,
+          margin: 10,
+          marginBottom: 20,
         }}
       />
-      <SafeAreaView style={{flex: 1}}>
-        <WorkoutSummaryInfo
-          calories={calories}
-          difficulty={difficulty}
-          seconds={seconds}
-          averageHeartRate={averageHeartRate}
-        />
 
-        <Button
-          text="Return Home"
-          onPress={resetToTabs}
-          style={{
-            margin: 10,
-            marginBottom: 20,
-          }}
-        />
-
-        {/* <Button
+      {/* <Button
           text="Share workout"
           onPress={() => setShareModalVisibleAction(true)}
           style={{
@@ -68,8 +57,7 @@ const WorkoutSummary: React.FC<{
           }}
         />
         <ShareModal title="Share workout" type="workout" workout={workout} /> */}
-      </SafeAreaView>
-    </FastImage>
+    </SafeAreaView>
   );
 };
 
