@@ -38,6 +38,7 @@ export const RESISTANCE = [...Array(301).keys()];
 export const PERCENTAGES = [...Array(100).keys()];
 export const MUSCLE_MASSES = [...Array(100).keys()];
 export const BONE_DENSITIES = [...Array(11).keys()];
+export const PREP_TIME_SECS = [...Array(61).keys()];
 
 export const CLIENT_PREMIUM = 'Client Premium';
 

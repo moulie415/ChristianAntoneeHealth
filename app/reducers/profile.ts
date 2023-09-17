@@ -33,6 +33,7 @@ import {
   SET_HAS_VIEWED_TOUR,
   SET_READ,
   SET_AUTO_PLAY,
+  SET_PREP_TIME,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -73,6 +74,7 @@ export interface ProfileState {
   calendarId?: string;
   syncPlanWithCalendar: boolean;
   autoPlay: boolean;
+  prepTime: number;
 }
 
 const initialState: ProfileState = {
@@ -123,6 +125,7 @@ const initialState: ProfileState = {
   syncedPlanEvents: {},
   syncPlanWithCalendar: false,
   autoPlay: true,
+  prepTime: 15,
 };
 
 const reducer = (
@@ -291,6 +294,11 @@ const reducer = (
       return {
         ...state,
         autoPlay: action.payload,
+      };
+    case SET_PREP_TIME:
+      return {
+        ...state,
+        prepTime: action.payload,
       };
     default:
       return state;

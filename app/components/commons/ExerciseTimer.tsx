@@ -10,8 +10,6 @@ import {MyRootState, PlanWorkout} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const PREP_TIME = 15;
-
 const ExerciseTimer: React.FC<{
   index: number;
   workout: Exercise[];
@@ -19,7 +17,16 @@ const ExerciseTimer: React.FC<{
   pagerRef: RefObject<PagerView>;
   tabIndex: number;
   autoPlay: boolean;
-}> = ({index, workout, exercise, pagerRef, tabIndex, autoPlay}) => {
+  prepTime: number;
+}> = ({
+  index,
+  workout,
+  exercise,
+  pagerRef,
+  tabIndex,
+  autoPlay,
+  prepTime: PREP_TIME,
+}) => {
   const [prepTime, setPrepTime] = useState(PREP_TIME);
 
   const [exerciseTime, setExerciseTime] = useState(exercise.time || 30);
@@ -132,6 +139,7 @@ const ExerciseTimer: React.FC<{
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   autoPlay: profile.autoPlay,
+  prepTime: profile.prepTime,
 });
 
 export default connect(mapStateToProps)(ExerciseTimer);

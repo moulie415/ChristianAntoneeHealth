@@ -2,34 +2,57 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform, ScrollView, Switch, View} from 'react-native';
-import SettingsProps from '../../../types/views/Settings';
 import {Goal, MyRootState} from '../../../types/Shared';
 import {
+  setAutoPlay,
+  setPrepTime,
   setTestReminders,
   setTestReminderTime,
   setWorkoutReminders,
   setWorkoutReminderTime,
   updateProfile,
+  UpdateProfilePayload,
 } from '../../../actions/profile';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
 import * as _ from 'lodash';
-
 import Text from '../../commons/Text';
 import Button from '../../commons/Button';
 import Divider from '../../commons/Divider';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import Toggle from '../../commons/Toggle';
-import {CLIENT_PREMIUM} from '../../../constants';
+import {CLIENT_PREMIUM, PREP_TIME_SECS} from '../../../constants';
 import isTestFlight from '../../../helpers/isTestFlight';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
+import Profile from '../../../types/Profile';
+import {SettingsState} from '../../../reducers/settings';
+import PickerModal from '../../commons/PickerModal';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
 
-const Settings: React.FC<SettingsProps> = ({
+const Settings: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'Settings'>;
+  workoutReminders: boolean;
+  workoutReminderTime: string;
+  testReminderTime: string;
+  setWorkoutRemindersAction: (disabled: boolean) => void;
+  setWorkoutReminderTimeAction: (date: Date) => void;
+  setTestReminderTimeAction: (date: Date) => void;
+  testReminders: boolean;
+  setTestRemindersAction: (enabled: boolean) => void;
+  profile: Profile;
+  updateProfileAction: (payload: UpdateProfilePayload) => void;
+  settings: SettingsState;
+  autoPlay: boolean;
+  setAutoPlay: (autoPlay: boolean) => void;
+  prepTime: number;
+  setPrepTime: (prepTime: number) => void;
+}> = ({
   workoutReminders,
   setWorkoutRemindersAction,
   workoutReminderTime,
@@ -42,6 +65,10 @@ const Settings: React.FC<SettingsProps> = ({
   testReminderTime,
   setTestReminderTimeAction,
   settings,
+  autoPlay,
+  setAutoPlay: setAutoPlayAction,
+  prepTime,
+  setPrepTime: setPrepTimeAction,
 }) => {
   const [showWorkoutDate, setShowWorkoutDate] = useState(false);
   const [showTestDate, setShowTestDate] = useState(false);
@@ -52,6 +79,7 @@ const Settings: React.FC<SettingsProps> = ({
   const [goal, setGoal] = useState<Goal>(
     profile.goal && isValidGoal(profile.goal) ? profile.goal : Goal.STRENGTH,
   );
+  const [showPrepTime, setShowPrepTime] = useState(false);
 
   const newProfile = {
     ...profile,
@@ -82,10 +110,67 @@ const Settings: React.FC<SettingsProps> = ({
                   color: colors.appWhite,
                   fontWeight: 'bold',
                 }}>
+                Workouts
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => setAutoPlayAction(!autoPlay)}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: 10,
+                  backgroundColor: colors.tile,
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 12,
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}>
+                  Auto-play
+                </Text>
+                <Toggle value={autoPlay} onValueChange={setAutoPlayAction} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setShowPrepTime(true)}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: 10,
+                  backgroundColor: colors.tile,
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 12,
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}>
+                  Exercise prepare time
+                </Text>
+                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  {`${prepTime} secs`}
+                </Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  margin: 10,
+                  fontSize: 22,
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                }}>
                 Notifications
               </Text>
 
-              <View
+              <TouchableOpacity
+                onPress={() => setWorkoutRemindersAction(!workoutReminders)}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -108,7 +193,7 @@ const Settings: React.FC<SettingsProps> = ({
                   value={workoutReminders}
                   onValueChange={setWorkoutRemindersAction}
                 />
-              </View>
+              </TouchableOpacity>
 
               {/* <View
                 style={{
@@ -136,7 +221,7 @@ const Settings: React.FC<SettingsProps> = ({
               </View> */}
 
               <TouchableOpacity
-                onPress={() => setShowTestDate(true)}
+                onPress={() => setShowWorkoutDate(true)}
                 disabled={Platform.OS === 'ios'}
                 style={{
                   flexDirection: 'row',
@@ -258,7 +343,8 @@ const Settings: React.FC<SettingsProps> = ({
             }}>
             Emails
           </Text>
-          <View
+          <TouchableOpacity
+            onPress={() => setMarketing(!marketing)}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -279,7 +365,7 @@ const Settings: React.FC<SettingsProps> = ({
               Receive offers and info on future updates
             </Text>
             <Toggle value={marketing} onValueChange={setMarketing} />
-          </View>
+          </TouchableOpacity>
         </ScrollView>
 
         <Button
@@ -302,6 +388,19 @@ const Settings: React.FC<SettingsProps> = ({
           }}
         />
       </SafeAreaView>
+      <PickerModal
+        title="Select prepare time"
+        visible={showPrepTime}
+        selectedValue={String(prepTime)}
+        pickerData={PREP_TIME_SECS.map(value => {
+          return {
+            label: `${value.toString()} secs`,
+            value: String(value),
+          };
+        })}
+        onValueChange={val => setPrepTimeAction(Number(val))}
+        onRequestClose={() => setShowPrepTime(false)}
+      />
     </View>
   );
 };
@@ -313,6 +412,8 @@ const mapStateToProps = ({profile, settings}: MyRootState) => ({
   testReminders: profile.testReminders,
   profile: profile.profile,
   settings,
+  autoPlay: profile.autoPlay,
+  prepTime: profile.prepTime,
 });
 
 const mapDispatchToProps = {
@@ -321,6 +422,8 @@ const mapDispatchToProps = {
   setTestReminderTimeAction: setTestReminderTime,
   setTestRemindersAction: setTestReminders,
   updateProfileAction: updateProfile,
+  setAutoPlay,
+  setPrepTime,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

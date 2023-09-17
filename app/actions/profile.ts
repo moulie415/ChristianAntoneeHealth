@@ -48,6 +48,7 @@ export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 export const SET_AUTO_PLAY = 'SET_AUTO_PLAY';
+export const SET_PREP_TIME = 'SET_PREP_TIME';
 
 export interface SetProfileAction {
   type: typeof SET_PROFILE;
@@ -240,6 +241,11 @@ export interface SetAutoPlayAction {
   payload: boolean;
 }
 
+export interface SetPrepTimeAction {
+  type: typeof SET_PREP_TIME;
+  payload: number;
+}
+
 export type ProfileActionTypes =
   | SetProfileAction
   | SetLoggedInAction
@@ -274,7 +280,8 @@ export type ProfileActionTypes =
   | SetBodyFatPercentageSamplesAction
   | SetMuscleMassSamplesAction
   | SetHasViewedTourAction
-  | SetAutoPlayAction;
+  | SetAutoPlayAction
+  | SetPrepTimeAction;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -496,5 +503,10 @@ export const setHasViewedTour = (): SetHasViewedTourAction => ({
 
 export const setAutoPlay = (payload: boolean): SetAutoPlayAction => ({
   type: SET_AUTO_PLAY,
+  payload,
+});
+
+export const setPrepTime = (payload: number): SetPrepTimeAction => ({
+  type: SET_PREP_TIME,
   payload,
 });
