@@ -48,7 +48,7 @@ const WhatEquipment: React.FC<{
                 justifyContent: 'flex-end',
                 borderRadius: 10,
               }}
-              source={require('../../../images/Quick_routine_training_focus.jpeg')}>
+              source={require('../../../images/Equipment-none.jpeg')}>
               <LinearGradient
                 colors={[
                   'rgba(54, 57, 68,0)',
@@ -98,7 +98,7 @@ const WhatEquipment: React.FC<{
                 justifyContent: 'flex-end',
                 borderRadius: 10,
               }}
-              source={require('../../../images/bits-and-pieces.jpg')}>
+              source={require('../../../images/Equipment-minimal.jpeg')}>
               <LinearGradient
                 colors={[
                   'rgba(54, 57, 68,0)',
@@ -145,7 +145,7 @@ const WhatEquipment: React.FC<{
                 justifyContent: 'flex-end',
                 borderRadius: 10,
               }}
-              source={require('../../../images/access-to-gym.jpg')}>
+              source={require('../../../images/Equipment-full.jpeg')}>
               <LinearGradient
                 colors={[
                   'rgba(54, 57, 68,0)',

@@ -239,7 +239,7 @@ const Workout: React.FC<WorkoutProps> = ({
             style={{width: '100%', flex: 1}}
             delay={800}
             resizeMode="cover"
-            source={require('../../../images/Homepage_activity_tracking.jpeg')}
+            source={require('../../../images/Rate_the_app.jpeg')}
             overlay
           />
           <View

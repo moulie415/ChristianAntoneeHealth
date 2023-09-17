@@ -348,9 +348,14 @@ const Test: React.FC<TestProps> = ({
               </Text>
               <View
                 style={{
-                  marginHorizontal: 10,
+                  marginHorizontal: 20,
+                  marginVertical: 10,
                 }}>
-                <ViewMore text={test.summary || ''} lines={7} />
+                <ViewMore
+                  textAlign="justify"
+                  text={test.summary || ''}
+                  lines={7}
+                />
               </View>
             </>
           )}

@@ -52,6 +52,7 @@ const EducationCard: React.FC<{
             bottom: 0,
             right: 0,
             left: 0,
+            marginBottom: -1,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
@@ -75,7 +76,7 @@ const EducationCard: React.FC<{
                   fontSize: 16,
                   marginTop: 5,
                   fontWeight: 'bold',
-              }}>
+                }}>
                 {item.title}
               </Text>
             </View>
@@ -97,6 +98,7 @@ const EducationCard: React.FC<{
             left: 0,
             padding: 10,
             height: 100,
+            marginBottom: -1
           }}>
           <Text
             style={{

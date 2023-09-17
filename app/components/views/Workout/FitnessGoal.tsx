@@ -28,7 +28,7 @@ const FitnessGoal: React.FC<{
     {
       title: 'Improve my strength',
       key: Goal.STRENGTH,
-      image: require('../../../images/Quick_routine_training_focus.jpeg'),
+      image: require('../../../images/Equipment-none.jpeg'),
       action: () => setFitnessGoalAction(Goal.STRENGTH),
     },
   ];

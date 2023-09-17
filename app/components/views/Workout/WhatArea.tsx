@@ -51,7 +51,7 @@ const WhatArea: React.FC<{
               justifyContent: 'flex-end',
               borderRadius: 10,
             }}
-            source={require('../../../images/upper-body.jpg')}>
+            source={require('../../../images/upper_body.jpeg')}>
             <LinearGradient
               colors={[
                 'rgba(54, 57, 68,0)',
@@ -100,7 +100,7 @@ const WhatArea: React.FC<{
               justifyContent: 'flex-end',
               borderRadius: 10,
             }}
-            source={require('../../../images/lower-body.jpg')}>
+            source={require('../../../images/lower_body.jpeg')}>
             <LinearGradient
               colors={[
                 'rgba(54, 57, 68,0)',
@@ -148,7 +148,7 @@ const WhatArea: React.FC<{
               justifyContent: 'flex-end',
               borderRadius: 10,
             }}
-            source={require('../../../images/full-body.jpg')}>
+            source={require('../../../images/full_body.jpeg')}>
             <LinearGradient
               colors={[
                 'rgba(54, 57, 68,0)',

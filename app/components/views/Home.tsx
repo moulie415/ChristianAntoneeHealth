@@ -89,26 +89,26 @@ const Home: React.FC<{
           <HomeCard
             title="New Workout"
             subtitle="Start a new workout now"
-            image={require('../../images/Homepage_new_workout.jpeg')}
+            image={require('../../images/new_workout.jpeg')}
             onPress={() => navigation.navigate('Workout')}
           />
           <HomeCard
             title="Fitness tests"
             subtitle="Track your fitness overtime"
-            image={require('../../images/Homepage_fitness_test.jpeg')}
+            image={require('../../images/fitness_testing.jpeg')}
             onPress={() => navigation.navigate('Fitness')}
           />
 
           <HomeCard
             title="Education"
             subtitle="Health and nutrition articles"
-            image={require('../../images/education.jpeg')}
+            image={require('../../images/Education.jpg')}
             onPress={() => navigation.navigate('Education')}
           />
           <HomeCard
             title="Saved workouts/tests"
             subtitle="View saved workouts, tests..."
-            image={require('../../images/Homepage_Saved_Workouts.jpeg')}
+            image={require('../../images/Saved_workouts.jpg')}
             premium
             onPress={() => {
               if (profile.premium) {
@@ -122,13 +122,13 @@ const Home: React.FC<{
           <HomeCard
             title="Premium"
             subtitle="Explore premium features"
-            image={require('../../images/Homepage_quick_routine.jpeg')}
+            image={require('../../images/Premium.jpeg')}
             onPress={() => navigation.navigate('Premium', {})}
           />
           <HomeCard
             title="Rate the app"
             subtitle="Let us know what you think"
-            image={require('../../images/Homepage_activity_tracking.jpeg')}
+            image={require('../../images/Rate_the_app.jpeg')}
             onPress={() => navigation.navigate('Rating')}
           />
         </ScrollView>
