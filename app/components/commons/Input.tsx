@@ -55,21 +55,12 @@ const Input: React.FC<Props> = props => {
             left: 0,
             width: 30,
           }}>
-          <TouchableOpacity
-            hitSlop={{
-              top: 10,
-              bottom: 10,
-              right: 10,
-              left: 10,
-            }}
-            onPress={() => setSecure(!secure)}>
-            <Icon
-              name={props.icon}
-              color={'#CECECE'}
-              solid
-              size={props.iconSize || 15}
-            />
-          </TouchableOpacity>
+          <Icon
+            name={props.icon}
+            color={'#CECECE'}
+            solid
+            size={props.iconSize || 15}
+          />
         </View>
       )}
       {props.secure !== undefined && (

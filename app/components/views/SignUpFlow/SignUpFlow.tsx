@@ -44,6 +44,8 @@ import SelectHeight from './SelectHeight';
 import SelectSex from './SelectSex';
 import PagerView from 'react-native-pager-view';
 import moment from 'moment';
+import PersonalDetails from './PersonalDetails';
+import Button from '../../commons/Button';
 
 const {width} = Dimensions.get('window');
 
@@ -67,6 +69,7 @@ const SignUpFlow: React.FC<{
   );
   const [goal, setGoal] = useState<Goal>((profile.goal as Goal) || null);
   const [loading, setLoading] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
 
   useInit(() => {
     const setup = async () => {
@@ -134,78 +137,44 @@ const SignUpFlow: React.FC<{
   const goBack = () => ref.current?.setPage(index - 1);
 
   const slides = [
-    // 0
-    // {
-    //   showNext: false,
-    //   key: 'letsBuild',
-    //   component: <LetsBuild goNext={goNext} />,
-    // },
     // 1
     {
-      showNext: !!name && !!surname,
+      showNext:
+        !!name &&
+        !!surname &&
+        !!dob &&
+        moment().diff(dob, 'years') >= 18 &&
+        !!height &&
+        !!weight &&
+        !!privacy,
       key: 'name',
       component: (
-        <Name
+        <PersonalDetails
           name={name}
           surname={surname}
           setName={setName}
           setSurname={setSurname}
+          setDob={setDob}
+          dob={dob}
+          height={height}
+          weight={weight}
+          setWeight={setWeight}
+          setHeight={setHeight}
+          privacy={privacy}
+          setPrivacy={setPrivacy}
+          marketing={marketing}
+          setMarketing={setMarketing}
+          gender={gender}
+          setGender={setGender}
         />
       ),
     },
     // 2
     {
-      showNext: !!dob && moment().diff(dob, 'years') >= 18,
-      key: 'age',
-      component: (
-        <Age
-          dob={dob}
-          setDob={setDob}
-          setShowDatePicker={setShowDatePicker}
-          showDatePicker={showDatePicker}
-        />
-      ),
-    },
-    // 3
-    {
       showNext: true,
       key: 'sex',
       component: <SelectSex gender={gender} setGender={setGender} />,
     },
-    // {
-    //   color: colors.appBlue,
-    //   showNext: !!unit,
-    //   tint: colors.appWhite,
-    //   component: <SelectUnit unit={unit} setUnit={setUnit} />,
-    // },
-    // 4
-    {
-      showNext: !!weight,
-      key: 'weight',
-      component: (
-        <SelectWeight
-          weight={weight}
-          setWeight={setWeight}
-          unit="metric"
-          gender={gender}
-          index={index}
-        />
-      ),
-    },
-    // 5
-    // {
-    //   key: 'height',
-    //   showNext: !!height,
-    //   component: (
-    //     <SelectHeight
-    //       height={height}
-    //       setHeight={setHeight}
-    //       unit="metric"
-    //       gender={gender}
-    //       index={index}
-    //     />
-    //   ),
-    // },
     // 6
     {
       key: 'goal',
@@ -236,60 +205,59 @@ const SignUpFlow: React.FC<{
   useBackHandler(() => true);
 
   return (
-    <FastImage
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
-      style={{
-        flex: 1,
-      }}>
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
-        }}
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <Progress.Bar
+        width={width}
+        progress={(index + 1) / slides.length}
+        color={colors.appBlue}
+        style={{zIndex: 9}}
+        borderWidth={0}
+        borderRadius={0}
       />
-      <SafeAreaView style={{flex: 1}}>
-        <Progress.Bar
-          width={width}
-          progress={(index + 1) / slides.length}
-          color={colors.appBlue}
-          style={{zIndex: 9}}
-          borderWidth={0}
-          borderRadius={0}
-        />
-        {fromProfile && <Header hasBack />}
-        <PagerView
-          ref={ref}
-          onPageSelected={e => {
-            setIndex(e.nativeEvent.position);
-            Keyboard.dismiss();
-          }}
-          removeClippedSubviews={false}
-          scrollEnabled={false}
-          style={{flex: 1}}>
-          {slides.map((slide, i) => {
-            return (
-              <View style={{flex: 1}} key={slide.key}>
-                {slide.component}
-                {i !== 0 && (
-                  <BackButton
-                    style={{position: 'absolute', left: 10, top: '50%'}}
-                    onPress={goBack}
-                  />
-                )}
-                {slide.showNext && i < slides.length - 1 && (
-                  <ForwardButton
-                    style={{position: 'absolute', right: 10, top: '50%'}}
-                    onPress={goNext}
-                  />
-                )}
-              </View>
-            );
-          })}
-        </PagerView>
-      </SafeAreaView>
-    </FastImage>
+      {fromProfile && <Header hasBack />}
+      <PagerView
+        ref={ref}
+        onPageSelected={e => {
+          setIndex(e.nativeEvent.position);
+          Keyboard.dismiss();
+        }}
+        removeClippedSubviews={false}
+        scrollEnabled={false}
+        style={{flex: 1}}>
+        {slides.map((slide, i) => {
+          return (
+            <View style={{flex: 1}} key={slide.key}>
+              {slide.component}
+              {i !== 0 && (
+                <Button
+                  style={{
+                    position: 'absolute',
+                    right: 20,
+                    left: 20,
+                    bottom: 90,
+                  }}
+                  onPress={goBack}
+                  text="Previous"
+                />
+              )}
+              {i < slides.length - 1 && (
+                <Button
+                  style={{
+                    position: 'absolute',
+                    right: 20,
+                    left: 20,
+                    bottom: 20,
+                  }}
+                  disabled={!slide.showNext}
+                  onPress={goNext}
+                  text="Next"
+                />
+              )}
+            </View>
+          );
+        })}
+      </PagerView>
+    </SafeAreaView>
   );
 };
 
