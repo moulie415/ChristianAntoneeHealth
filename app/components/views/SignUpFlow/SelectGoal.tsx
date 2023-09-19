@@ -5,6 +5,25 @@ import Text from '../../commons/Text';
 
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
+import SelectableButton from '../../commons/SelectableButton';
+
+const goalDetails: {goal: Goal; text: string; secondaryText: string}[] = [
+  {
+    goal: Goal.STRENGTH,
+    text: 'Improve strength & fitness',
+    secondaryText: 'Develop your muscular and cardiovascular health',
+  },
+  {
+    goal: Goal.WEIGHT_LOSS,
+    text: 'Weight loss',
+    secondaryText: 'Decrease your body fat and risk of disease',
+  },
+  {
+    goal: Goal.ACTIVE,
+    text: 'Become more active',
+    secondaryText: 'Feel better as part of a healthier active lifestyle',
+  },
+];
 
 const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
   goal,
@@ -14,19 +33,31 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        margin: 50,
+        marginHorizontal: 20,
+        marginTop: 20,
       }}>
       <Text
         style={{
-          textAlign: 'center',
-          marginVertical: 20,
-          fontSize: 20,
+          marginBottom: 20,
+          fontSize: 24,
           color: colors.appWhite,
+          fontWeight: 'bold',
         }}>
         What's your goal?
       </Text>
-      <Button
+      {goalDetails.map(({text, secondaryText, goal: g}) => {
+        return (
+          <SelectableButton
+            key={g}
+            text={text}
+            secondaryText={secondaryText}
+            selected={g === goal}
+            onPress={() => setGoal(g)}
+            style={{marginBottom: 15}}
+          />
+        );
+      })}
+      {/* <Button
         text="Improve strength and fitness"
         style={{
           marginBottom: 20,
@@ -55,7 +86,7 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         }}
         onPress={() => setGoal(Goal.ACTIVE)}
         variant={goal === Goal.ACTIVE ? 'primary' : 'secondary'}
-      />
+      /> */}
     </View>
   );
 };

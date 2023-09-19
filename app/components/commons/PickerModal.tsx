@@ -6,13 +6,14 @@ import {Picker} from 'react-native-wheel-pick';
 import Button from './Button';
 import colors from '../../constants/colors';
 import Text from './Text';
+import {Gender} from '../../types/Profile';
 
 const PickerModal: React.FC<{
   visible: boolean;
   onRequestClose: () => void;
-  selectedValue: string | Date;
+  selectedValue: string | Date | Gender;
   pickerData: any;
-  onValueChange: (val: string) => void;
+  onValueChange: (val: string | Gender) => void;
   title?: string;
 }> = ({
   visible,

@@ -136,13 +136,6 @@ const TestResults: React.FC<TestResultsProp> = ({
             )}
         </View>
 
-        {!noGender && test.source && (
-          <Hyperlink linkDefault linkStyle={{color: colors.appBlue}}>
-            <Text style={{margin: 10, color: colors.appWhite}}>
-              {test.source}
-            </Text>
-          </Hyperlink>
-        )}
 
         <Divider style={{marginBottom: 10}} />
 

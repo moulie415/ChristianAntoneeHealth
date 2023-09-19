@@ -5,7 +5,6 @@ import {
   Dimensions,
   SafeAreaView,
   View,
-  StyleSheet,
   Keyboard,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -14,7 +13,6 @@ import Profile, {Gender} from '../../../types/Profile';
 import {Goal, Level, MyRootState} from '../../../types/Shared';
 import {signUp, SignUpPayload} from '../../../actions/profile';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
-import Age from './Age';
 import {
   getDateOfBirth,
   getHeight,
@@ -27,25 +25,16 @@ import {
 import {logError} from '../../../helpers/error';
 import useInit from '../../../hooks/UseInit';
 import SelectGoal from './SelectGoal';
-import * as Progress from 'react-native-progress';
-import CompleteSignUp from './CompleteSignUp';
-import LetsBuild from './LetsBuild';
-import BackButton from '../../commons/BackButton';
-import ForwardButton from '../../commons/ForwardButton';
 import Header from '../../commons/Header';
-import FastImage from 'react-native-fast-image';
-import Name from './Name';
 import Goals from './Goals';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import SelectWeight from './SelectWeight';
-import SelectHeight from './SelectHeight';
-import SelectSex from './SelectSex';
 import PagerView from 'react-native-pager-view';
 import moment from 'moment';
 import PersonalDetails from './PersonalDetails';
 import Button from '../../commons/Button';
+import StepIndicator from 'react-native-step-indicator';
 
 const {width} = Dimensions.get('window');
 
@@ -58,7 +47,6 @@ const SignUpFlow: React.FC<{
   const fromProfile = route.params?.fromProfile;
   const [name, setName] = useState(profile.name || '');
   const [surname, setSurname] = useState(profile.surname || '');
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight || 0);
 
@@ -171,33 +159,15 @@ const SignUpFlow: React.FC<{
     },
     // 2
     {
-      showNext: true,
-      key: 'sex',
-      component: <SelectSex gender={gender} setGender={setGender} />,
-    },
-    // 6
-    {
       key: 'goal',
       showNext: !!goal,
       component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
-
+    // 3
     {
       key: 'goals',
-      showNext: true,
-      component: <Goals goal={goal} />,
-    },
-    // 18
-    {
-      key: 'complete',
-      showNext: true,
       component: (
-        <CompleteSignUp
-          completeSignUp={completeSignUp}
-          loading={loading}
-          marketing={marketing}
-          setMarketing={setMarketing}
-        />
+        <Goals loading={loading} completeSignUp={completeSignUp} goal={goal} />
       ),
     },
   ];
@@ -206,13 +176,16 @@ const SignUpFlow: React.FC<{
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <Progress.Bar
-        width={width}
-        progress={(index + 1) / slides.length}
-        color={colors.appBlue}
-        style={{zIndex: 9}}
-        borderWidth={0}
-        borderRadius={0}
+      <StepIndicator
+        stepCount={slides.length}
+        currentPosition={index}
+        customStyles={{
+          stepStrokeCurrentColor: colors.appBlue,
+          separatorUnFinishedColor: colors.borderColor,
+          separatorFinishedColor: colors.appBlue,
+          stepIndicatorUnFinishedColor: colors.borderColor,
+          stepIndicatorFinishedColor: colors.appBlue,
+        }}
       />
       {fromProfile && <Header hasBack />}
       <PagerView
@@ -228,31 +201,49 @@ const SignUpFlow: React.FC<{
           return (
             <View style={{flex: 1}} key={slide.key}>
               {slide.component}
-              {i !== 0 && (
-                <Button
-                  style={{
-                    position: 'absolute',
-                    right: 20,
-                    left: 20,
-                    bottom: 90,
-                  }}
-                  onPress={goBack}
-                  text="Previous"
-                />
-              )}
-              {i < slides.length - 1 && (
-                <Button
-                  style={{
-                    position: 'absolute',
-                    right: 20,
-                    left: 20,
-                    bottom: 20,
-                  }}
-                  disabled={!slide.showNext}
-                  onPress={goNext}
-                  text="Next"
-                />
-              )}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  position: 'absolute',
+                  right: 20,
+                  left: 20,
+                  bottom: 20,
+                }}>
+                {i !== 0 && (
+                  <Button
+                    variant="secondary"
+                    style={{
+                      flex: 1,
+                      marginRight: 10,
+                    }}
+                    onPress={goBack}
+                    text="Previous"
+                  />
+                )}
+                {i < slides.length - 1 && (
+                  <Button
+                    style={{
+                      flex: 1,
+                      marginLeft: index === 0 ? 0 : 10,
+                    }}
+                    disabled={!slide.showNext}
+                    onPress={goNext}
+                    text="Next"
+                  />
+                )}
+                {i === slides.length - 1 && (
+                  <Button
+                    text="complete"
+                    onPress={completeSignUp}
+                    disabled={loading}
+                    loading={loading}
+                    style={{
+                      flex: 1,
+                      marginLeft: 10,
+                    }}
+                  />
+                )}
+              </View>
             </View>
           );
         })}

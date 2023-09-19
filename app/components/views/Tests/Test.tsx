@@ -210,32 +210,9 @@ const Test: React.FC<TestProps> = ({
                 Test complete!
               </Text>
               {test.type !== 'countup' ? (
-                <Text style={{color: colors.appWhite}}>
-                  Enter result of test below
-                </Text>
+                <Text style={{color: colors.appWhite}}>Enter result</Text>
               ) : test.formula === 'vo2' ? (
                 <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: colors.appWhite,
-                        marginRight: 10,
-                      }}>
-                      {'Time spent walking (seconds)'}
-                    </Text>
-                    <Input
-                      value={seconds?.toString()}
-                      onChangeText={val =>
-                        setSeconds(Number(val.replace(/[^0-9]/g, '')))
-                      }
-                      keyboardType="numeric"
-                      style={{width: 100, marginVertical: 5}}
-                    />
-                  </View>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -300,17 +277,8 @@ const Test: React.FC<TestProps> = ({
                   style={{width: 100, marginVertical: 5}}
                 />
               )}
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  fontSize: 14,
-                  marginBottom: 10,
-                }}>
-                See how you rank against others in the same gender and age
-                category:
-              </Text>
               <Button
-                text="GO"
+                text="Compare your results"
                 onPress={() => {
                   if (test.formula === 'vo2') {
                     navigation.navigate('TestResults', {

@@ -112,6 +112,7 @@ const WhatArea: React.FC<{
                 justifyContent: 'flex-end',
                 borderRadius: 10,
                 padding: 10,
+                marginBottom: -1,
               }}>
               <Text
                 style={{

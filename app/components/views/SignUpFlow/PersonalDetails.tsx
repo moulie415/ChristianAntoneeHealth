@@ -14,7 +14,8 @@ import Button from '../../commons/Button';
 import PickerModal from '../../commons/PickerModal';
 import {HEIGHTS, WEIGHTS} from '../../../constants';
 import Checkbox from '../../commons/Checkbox';
-import { Gender } from '../../../types/Profile';
+import {Gender} from '../../../types/Profile';
+import {capitalizeFirstLetter} from '../../../helpers';
 
 const PersonalDetails: React.FC<{
   name: string;
@@ -49,11 +50,14 @@ const PersonalDetails: React.FC<{
   marketing,
   setMarketing,
   gender,
-  setGender
+  setGender,
 }) => {
   const [showDobModal, setShowDobModal] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
+  const [showSexModal, setShowSexModal] = useState(false);
+
+  const genderArr: Gender[] = [null, 'male', 'female'];
 
   const showDob = !!dob && moment().diff(dob, 'years') > 0;
   return (
@@ -74,7 +78,7 @@ const PersonalDetails: React.FC<{
         Personal Details
       </Text>
       <Input
-        placeholder="First Name"
+        placeholder="First Name*"
         onChangeText={setName}
         value={name}
         icon="user"
@@ -85,7 +89,7 @@ const PersonalDetails: React.FC<{
         containerStyle={{
           marginTop: 20,
         }}
-        placeholder="Last Name"
+        placeholder="Last Name*"
         onChangeText={setSurname}
         value={surname}
         icon="user"
@@ -120,11 +124,11 @@ const PersonalDetails: React.FC<{
           style={{
             color: showDob ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
           }}>
-          {showDob ? moment().format('DD-MM-YYYY') : 'Date of birth'}
+          {showDob ? moment(dob).format('DD-MM-YYYY') : 'Date of birth*'}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => {}}
+        onPress={() => setShowSexModal(true)}
         style={{
           borderColor: colors.borderColor,
           height: 50,
@@ -149,9 +153,9 @@ const PersonalDetails: React.FC<{
         </View>
         <Text
           style={{
-            color: !!gender ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
+            color: gender ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
           }}>
-          {gender ? moment().format('DD-MM-YYYY') : 'Sex'}
+          {gender ? capitalizeFirstLetter(gender) : 'Sex'}
         </Text>
       </TouchableOpacity>
       <View style={{flexDirection: 'row'}}>
@@ -185,7 +189,7 @@ const PersonalDetails: React.FC<{
             style={{
               color: weight ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
             }}>
-            {weight ? `${weight} kg` : 'Weight'}
+            {weight ? `${weight} kg` : 'Weight*'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -218,7 +222,7 @@ const PersonalDetails: React.FC<{
             style={{
               color: height ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
             }}>
-            {height ? `${height} cm` : 'Height'}
+            {height ? `${height} cm` : 'Height*'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -349,6 +353,22 @@ const PersonalDetails: React.FC<{
         })}
         onValueChange={val => setWeight(Number(val))}
         onRequestClose={() => setShowWeightModal(false)}
+      />
+      <PickerModal
+        title="Select sex"
+        visible={showSexModal}
+        selectedValue={gender}
+        pickerData={genderArr.map(value => {
+          return {
+            label:
+              value === null
+                ? 'Prefer not to say'
+                : capitalizeFirstLetter(value),
+            value,
+          };
+        })}
+        onValueChange={val => setGender(val as Gender)}
+        onRequestClose={() => setShowSexModal(false)}
       />
     </KeyboardAwareScrollView>
   );

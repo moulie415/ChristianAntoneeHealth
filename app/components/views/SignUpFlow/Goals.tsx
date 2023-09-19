@@ -9,11 +9,14 @@ import Dumbbell from '../../../images/dumbbell.svg';
 import DumbbellRed from '../../../images/dumbbell_red.svg';
 import Time from '../../../images/time.svg';
 import Fire from '../../../images/fire.svg';
+import Button from '../../commons/Button';
 
 const ICON_SIZE = 100;
 const Goals: React.FC<{
   goal: Goal;
-}> = ({goal}) => {
+  completeSignUp: () => void;
+  loading: boolean;
+}> = ({goal, completeSignUp, loading}) => {
   const workoutGoal = goal === Goal.STRENGTH ? 4 : 3;
   const minsGoal = goal === Goal.WEIGHT_LOSS ? 180 : 150;
   const workoutLevelTitleString =
@@ -101,6 +104,7 @@ const Goals: React.FC<{
           </>
         )}
       </View>
+
     </View>
   );
 };
