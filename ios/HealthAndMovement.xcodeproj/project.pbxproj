@@ -454,6 +454,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HealthAndMovement" */;
 			buildPhases = (
 				13FA9DAC513324E88A37A07F /* [CP] Check Pods Manifest.lock */,
+				0A0FAB9D283FDCEE00DF1236 /* Embed Watch Content */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -462,7 +463,6 @@
 				2478CCB5B849BF7DCD902FE1 /* [CP-User] [RNFB] Core Configuration */,
 				2AF9C38EB1203D4EF8B6057B /* [CP] Embed Pods Frameworks */,
 				AD05436B2F3E43999A228698 /* Upload Debug Symbols to Sentry */,
-				0A0FAB9D283FDCEE00DF1236 /* Embed Watch Content */,
 				8BE5E331C3F29E3CDD688150 /* [CP-User] [RNGoogleMobileAds] Configuration */,
 				6D80152563FEF40F9AC1117B /* [CP] Copy Pods Resources */,
 			);

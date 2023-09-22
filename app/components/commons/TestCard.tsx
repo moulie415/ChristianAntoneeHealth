@@ -1,7 +1,6 @@
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
 import Test from '../../types/Test';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux';
@@ -11,6 +10,8 @@ import Text from './Text';
 import FastImage from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
 import LinearGradient from 'react-native-linear-gradient';
+
+const {height} = Dimensions.get('window');
 
 const TestCard: React.FC<{
   item: Test;
@@ -28,7 +29,7 @@ const TestCard: React.FC<{
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
       <FastImageAnimated
         style={{
-          height: 120,
+          height: height / 5.5,
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,

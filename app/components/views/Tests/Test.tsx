@@ -1,33 +1,26 @@
-import Image from 'react-native-fast-image';
 import React, {useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../../types/Shared';
 import TestProps from '../../../types/views/Test';
 import colors from '../../../constants/colors';
-import Countdown from '../../commons/Countdown';
-import Table from '../../commons/Table';
-import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 import {getVideoHeight} from '../../../helpers';
-import PercentileTable from '../../commons/PercentileTable';
 import Button from '../../commons/Button';
-import {useInterstitialAd} from 'react-native-google-mobile-ads';
 import Text from '../../commons/Text';
 import Input from '../../commons/Input';
-import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ScrollView} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ViewMore from '../../commons/ViewMore';
 import FastImageAnimated from '../../commons/FastImageAnimated';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {calculateVO2Max} from '../../../helpers/tests';
-import Modal from '../../commons/Modal';
-import {TouchableOpacity} from 'react-native';
+import MyTabs from '../../commons/MyTabs';
+import TestTimer from '../../commons/TestTimer';
+import useInterval from '../../../hooks/UseInterval';
+
+export const PREP_TIME = 5;
 
 const Test: React.FC<TestProps> = ({
   route,
@@ -39,76 +32,30 @@ const Test: React.FC<TestProps> = ({
   const {id} = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
-  const [seconds, setSeconds] = useState(test.time || 0);
-  const [showCountdown, setShowCountdown] = useState(false);
   const [complete, setComplete] = useState(false);
   const [testResult, setTestResult] = useState<number>();
-  const [testNote, setTestNote] = useState('');
-  const [start, setStart] = useState(0);
   const [heartRate, setHeartRate] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
 
-  const insets = useSafeAreaInsets();
+  const [prepTime, setPrepTime] = useState(PREP_TIME);
 
-  const {load, show, isLoaded, isClosed} = useInterstitialAd(
-    UNIT_ID_INTERSTITIAL,
-    {
-      keywords: AD_KEYWORDS,
-    },
+  const [testTime, setTestTime] = useState(
+    test.type === 'countdown' ? test.time || 0 : 0,
   );
 
-  useEffect(() => {
-    if (settings.ads) {
-      load();
-    }
-  }, [settings.ads, load]);
-
-  useEffect(() => {
-    if (isClosed && settings.ads) {
-      load();
-    }
-  }, [isClosed, load, settings.ads]);
-
-  useEffect(() => {
-    if (isClosed) {
-      if (test.type === 'untimed') {
-        setTestStarted(true);
+  useInterval(() => {
+    if (testStarted && test.type !== 'untimed') {
+      if (prepTime > 0) {
+        setPrepTime(prepTime - 1);
       } else {
-        setShowCountdown(true);
+        if (test.type === 'countup') {
+          setTestTime(testTime + 1);
+        } else if (testTime > 0) {
+          setTestTime(testTime - 1);
+        }
       }
     }
-  }, [isClosed, navigation, test.type]);
-
-  useEffect(() => {
-    if (
-      testStarted &&
-      !complete &&
-      (test.type === 'countdown' || test.type === 'countup')
-    ) {
-      const startCountdown = moment().unix() + seconds;
-      const intervalID = setInterval(() => {
-        if (test.type === 'countup') {
-          setSeconds(moment().unix() - start);
-        } else {
-          if (seconds > 0) {
-            setSeconds(Math.floor(startCountdown - moment().unix()));
-          } else {
-            setComplete(true);
-          }
-        }
-      }, 1000);
-      return () => clearInterval(intervalID);
-    }
-  }, [testStarted, test.type, seconds, complete, start]);
-
-  const getTimeString = () => {
-    if (test.type === 'untimed') {
-      return 'not timed';
-    }
-    if (test.type === 'countdown' && !(seconds > 0)) {
-      return 'Times up!';
-    }
-    return moment().utc().startOf('day').add({seconds}).format('mm:ss');
-  };
+  }, 1000);
 
   const getButtonString = () => {
     if (test.type === 'untimed') {
@@ -121,17 +68,10 @@ const Test: React.FC<TestProps> = ({
     }
   };
 
+  const tabs = ['Test', 'Instructions'];
+
   return (
     <View style={{flex: 1}}>
-      {showCountdown && (
-        <Countdown
-          onComplete={() => {
-            setTestStarted(true);
-            setStart(moment().unix());
-          }}
-        />
-      )}
-
       {test.video?.src ? (
         <Video
           source={{uri: convertToProxyURL(test.video?.src)}}
@@ -156,34 +96,6 @@ const Test: React.FC<TestProps> = ({
         </FastImageAnimated>
       )}
       <Header hasBack absolute />
-      <View
-        style={{
-          flexDirection: 'row',
-          margin: 10,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          position: 'absolute',
-          top: 10 + insets.top,
-        }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-          }}>
-          <Icon name="stopwatch" size={30} color={colors.appWhite} />
-          <Text
-            style={{
-              marginLeft: 10,
-              color: colors.appWhite,
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}>
-            {getTimeString()}
-          </Text>
-        </View>
-      </View>
 
       <View
         style={{
@@ -245,7 +157,7 @@ const Test: React.FC<TestProps> = ({
                     }}>
                     {`VO2 max = ${calculateVO2Max(
                       profile,
-                      seconds,
+                      testTime,
                       heartRate,
                     )?.toFixed(2)}`}
                   </Text>
@@ -262,7 +174,7 @@ const Test: React.FC<TestProps> = ({
                     {moment()
                       .utc()
                       .startOf('day')
-                      .add({seconds})
+                      .add({seconds: testTime})
                       .format('mm:ss')}
                   </Text>
                 </Text>
@@ -284,14 +196,14 @@ const Test: React.FC<TestProps> = ({
                     navigation.navigate('TestResults', {
                       test,
                       testResult:
-                        calculateVO2Max(profile, seconds, heartRate) || 0,
-                      seconds,
+                        calculateVO2Max(profile, testTime, heartRate) || 0,
+                      seconds: testTime,
                     });
                   } else {
                     navigation.navigate('TestResults', {
                       test,
                       testResult,
-                      seconds,
+                      seconds: testTime,
                     });
                   }
                 }}
@@ -305,26 +217,40 @@ const Test: React.FC<TestProps> = ({
 
               <Text
                 style={{
-                  margin: 20,
-                  marginTop: 30,
-                  marginBottom: 0,
+                  marginTop: 20,
+                  color: colors.appWhite,
                   fontSize: 20,
                   fontWeight: 'bold',
-                  color: colors.appWhite,
+                  textAlign: 'center',
                 }}>
                 {test.name}
               </Text>
-              <View
-                style={{
-                  marginHorizontal: 20,
-                  marginVertical: 10,
-                }}>
-                <ViewMore
-                  textAlign="justify"
-                  text={test.summary || ''}
-                  lines={7}
-                />
-              </View>
+              <MyTabs
+                tabs={tabs}
+                tabIndex={tabIndex}
+                setTabIndex={setTabIndex}
+              />
+              <TestTimer
+                testStarted={testStarted}
+                tabIndex={tabIndex}
+                test={test}
+                prepTime={prepTime}
+                testTime={testTime}
+                complete={complete}
+              />
+              {tabIndex === 1 && (
+                <View
+                  style={{
+                    marginHorizontal: 20,
+                    marginVertical: 10,
+                  }}>
+                  <ViewMore
+                    textAlign="justify"
+                    text={test.summary || ''}
+                    lines={9}
+                  />
+                </View>
+              )}
             </>
           )}
           {!(testStarted && test.type === 'countdown') && !complete && (
@@ -343,15 +269,9 @@ const Test: React.FC<TestProps> = ({
                 if (testStarted) {
                   setComplete(true);
                 } else {
-                  if (isLoaded && !profile.premium && settings.ads) {
-                    show();
-                  } else {
-                    if (test.type === 'untimed') {
-                      setTestStarted(true);
-                      setComplete(true);
-                    } else {
-                      setShowCountdown(true);
-                    }
+                  setTestStarted(true);
+                  if (test.type === 'untimed') {
+                    setComplete(true);
                   }
                 }
               }}
@@ -366,9 +286,9 @@ const Test: React.FC<TestProps> = ({
               text="Restart"
               onPress={() => {
                 if (test.type === 'countup') {
-                  setSeconds(0);
+                  setTestTime(0);
                 } else {
-                  setSeconds(test.time as number);
+                  setTestTime(test.time as number);
                 }
               }}
               style={{
