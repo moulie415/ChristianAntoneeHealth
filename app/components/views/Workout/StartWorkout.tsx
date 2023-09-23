@@ -176,6 +176,7 @@ const StartWorkout: React.FC<{
                           marginTop: 20,
                           color: colors.appWhite,
                           fontSize: 20,
+                          marginHorizontal: 40,
                           fontWeight: 'bold',
                           textAlign: 'center',
                         }}>

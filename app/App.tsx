@@ -84,11 +84,6 @@ export type StackParamList = {
   Fitness: undefined;
   Goals: undefined;
   Test: {id: string};
-  TestResults: {
-    testResult?: number;
-    test: TestType;
-    seconds: number;
-  };
   FitnessGoal: undefined;
   Experience: undefined;
   WarmUp: undefined;

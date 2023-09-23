@@ -10,7 +10,6 @@ import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
 
-
 const TILE_HEIGHT = Dimensions.get('window').height / 5;
 
 const WhatEquipment: React.FC<{
@@ -61,6 +60,7 @@ const WhatEquipment: React.FC<{
                   borderBottomRightRadius: 10,
                   height: 150,
                   justifyContent: 'flex-end',
+                  marginBottom: -1,
                 }}>
                 <Text
                   style={{
@@ -111,6 +111,7 @@ const WhatEquipment: React.FC<{
                   borderBottomRightRadius: 10,
                   height: 150,
                   justifyContent: 'flex-end',
+                  marginBottom: -1,
                 }}>
                 <Text
                   style={{
@@ -158,6 +159,7 @@ const WhatEquipment: React.FC<{
                   borderBottomRightRadius: 10,
                   height: 150,
                   justifyContent: 'flex-end',
+                  marginBottom: -1,
                 }}>
                 <Text
                   style={{

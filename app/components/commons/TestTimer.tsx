@@ -5,6 +5,12 @@ import colors from '../../constants/colors';
 import moment from 'moment';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';
+import {calculateVO2Max} from '../../helpers/tests';
+import Input from './Input';
+import Button from './Button';
+import {MyRootState} from '../../types/Shared';
+import {connect} from 'react-redux';
+import Profile from '../../types/Profile';
 
 const TestTimer: React.FC<{
   test: Test;
@@ -13,7 +19,24 @@ const TestTimer: React.FC<{
   prepTime: number;
   testTime: number;
   complete: boolean;
-}> = ({tabIndex, test, testStarted, prepTime, testTime, complete}) => {
+  profile: Profile;
+  testResult?: number;
+  heartRate: number;
+  setTestResult: (result: number) => void;
+  setHeartRate: (heartRate: number) => void;
+}> = ({
+  tabIndex,
+  test,
+  testStarted,
+  prepTime,
+  testTime,
+  complete,
+  profile,
+  heartRate,
+  setHeartRate,
+  testResult,
+  setTestResult,
+}) => {
   const isPrepping = testStarted && prepTime > 0;
 
   const finished =
@@ -34,6 +57,8 @@ const TestTimer: React.FC<{
 
     return 0;
   };
+
+  const showTimer = !isPrepping && !finished && testStarted;
 
   return (
     <AnimatedCircularProgress
@@ -63,27 +88,7 @@ const TestTimer: React.FC<{
       lineCap="round">
       {fill => (
         <View style={{transform: [{scaleX: test.type === 'countup' ? 1 : -1}]}}>
-          {/* {!hideTimer && !finished && exercise.weight && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Icon color={colors.appWhite} size={15} name="dumbbell" />
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: colors.appWhite,
-                  fontSize: 16,
-                  textAlign: 'center',
-                  marginLeft: 5,
-                }}>
-                {exercise.weight}
-              </Text>
-            </View>
-          )} */}
-          {!isPrepping && !finished && testStarted && (
+          {showTimer && (
             <Text
               style={{
                 fontWeight: 'bold',
@@ -98,26 +103,102 @@ const TestTimer: React.FC<{
                 .format('mm:ss')}
             </Text>
           )}
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: colors.appWhite,
-              fontSize: isPrepping || finished ? 30 : 16,
-              textAlign: 'center',
-              paddingHorizontal: 10,
-            }}>
-            {isPrepping
-              ? 'GET READY!'
-              : finished
-              ? 'FINISHED!'
-              : test.type === 'untimed'
-              ? 'NOT TIMED'
-              : 'PRESS START TO BEGIN'}
-          </Text>
+          {!showTimer && (
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: colors.appWhite,
+                fontSize: isPrepping || finished ? 30 : 16,
+                textAlign: 'center',
+                paddingHorizontal: 10,
+              }}>
+              {isPrepping
+                ? 'GET READY!'
+                : finished
+                ? 'FINISHED!'
+                : test.type === 'untimed'
+                ? 'NOT TIMED'
+                : 'PRESS START TO BEGIN'}
+            </Text>
+          )}
+          {complete && (
+            <View style={{}}>
+              {test.type !== 'countup' ? (
+                <Text style={{color: colors.appWhite}}>Enter result</Text>
+              ) : test.formula === 'vo2' ? (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.appWhite,
+                        marginRight: 10,
+                      }}>
+                      {'Heart rate'}
+                    </Text>
+                    <Input
+                      value={heartRate?.toString()}
+                      onChangeText={val =>
+                        setHeartRate(Number(val.replace(/[^0-9]/g, '')))
+                      }
+                      keyboardType="numeric"
+                      style={{width: 100, marginVertical: 5}}
+                    />
+                  </View>
+
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: colors.appWhite,
+                      marginTop: 10,
+                      marginBottom: 20,
+                      fontWeight: 'bold',
+                    }}>
+                    {`VO2 max = ${calculateVO2Max(
+                      profile,
+                      testTime,
+                      heartRate,
+                    )?.toFixed(2)}`}
+                  </Text>
+                </View>
+              ) : (
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                    color: colors.appWhite,
+                    textAlign: 'center',
+                  }}>
+                  {moment()
+                    .utc()
+                    .startOf('day')
+                    .add({seconds: testTime})
+                    .format('mm:ss')}
+                </Text>
+              )}
+              {test.type !== 'countup' && (
+                <Input
+                  value={testResult?.toString()}
+                  onChangeText={val =>
+                    setTestResult(Number(val.replace(/[^0-9]/g, '')))
+                  }
+                  keyboardType="numeric"
+                  style={{width: 100, marginVertical: 5}}
+                />
+              )}
+            </View>
+          )}
         </View>
       )}
     </AnimatedCircularProgress>
   );
 };
 
-export default TestTimer;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(TestTimer);

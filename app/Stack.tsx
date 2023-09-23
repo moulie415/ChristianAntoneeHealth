@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  MutableRefObject,
-  useEffect,
-  useState,
-} from 'react';
+import React from 'react';
 import {StackParamList} from './App';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Premium from './components/views/DrawerContent/Premium';
@@ -18,7 +13,6 @@ import WorkoutSummary from './components/views/Workout/WorkoutSummary';
 import Policies from './components/views/DrawerContent/Policies';
 import Test from './components/views/Tests/Test';
 import QuickRoutineView from './components/views/QuickRoutines/QuickRoutine';
-import TestResults from './components/views/Tests/TestResults';
 import Tabs from './Tabs';
 import Login from './components/views/Login';
 import SignUp from './components/views/SignUp';
@@ -122,7 +116,6 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="EducationArticle" component={EducationArticle} />
         <Stack.Screen name="Policies" component={Policies} />
         <Stack.Screen name="Test" component={Test} />
-        <Stack.Screen name="TestResults" component={TestResults} />
         <Stack.Screen name="PreQuickRoutine" component={PreQuickRoutine} />
         <Stack.Screen name="QuickRoutine" component={QuickRoutineView} />
         <Stack.Screen name="EndQuickRoutine" component={EndQuickRoutine} />
