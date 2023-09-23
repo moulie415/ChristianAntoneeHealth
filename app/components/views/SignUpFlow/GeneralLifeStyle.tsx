@@ -11,6 +11,7 @@ const GeneralLifestyle: React.FC<{
 }> = ({lifestyle, setLifestyle}) => {
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',

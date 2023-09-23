@@ -111,29 +111,6 @@ const DrawerContent: React.FC<Props> = ({
         navigation.closeDrawer();
       },
     },
-
-    {
-      title: 'Friends',
-      icon: 'user-friends',
-      onPress: () => {
-        navigation.closeDrawer();
-        if (profile.premium) {
-          navigationRef.navigate('Connections');
-        } else {
-          navigationRef.navigate('Premium', {});
-        }
-      },
-      accessoryRight: profile.premium ? (
-        <UnreadRowCount />
-      ) : (
-        <Icon
-          name="lock"
-          size={20}
-          style={{marginRight: 10}}
-          color={colors.appWhite}
-        />
-      ),
-    },
     {
       title: 'Premium',
       icon: 'trophy',
@@ -192,6 +169,31 @@ const DrawerContent: React.FC<Props> = ({
       title: 'Force crash (admin)',
       icon: 'car-crash',
       onPress: () => Sentry.nativeCrash(),
+    });
+  }
+
+  if (profile.client) {
+    listItems.splice(1, 0, {
+      title: 'Friends',
+      icon: 'user-friends',
+      onPress: () => {
+        navigation.closeDrawer();
+        if (profile.premium) {
+          navigationRef.navigate('Connections');
+        } else {
+          navigationRef.navigate('Premium', {});
+        }
+      },
+      accessoryRight: profile.premium ? (
+        <UnreadRowCount />
+      ) : (
+        <Icon
+          name="lock"
+          size={20}
+          style={{marginRight: 10}}
+          color={colors.appWhite}
+        />
+      ),
     });
   }
 

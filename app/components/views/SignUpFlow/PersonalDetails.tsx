@@ -62,6 +62,7 @@ const PersonalDetails: React.FC<{
   const showDob = !!dob && moment().diff(dob, 'years') > 0;
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         marginHorizontal: 20,

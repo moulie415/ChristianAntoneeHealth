@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, Dimensions} from 'react-native';
+import {View, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import React from 'react';
 import Test from '../../types/Test';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -29,7 +29,7 @@ const TestCard: React.FC<{
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
       <FastImageAnimated
         style={{
-          height: height / 5.5,
+          height: Platform.OS === 'ios' ? height / 5.5 : height / 5,
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
@@ -51,6 +51,7 @@ const TestCard: React.FC<{
             bottom: 0,
             position: 'absolute',
             alignSelf: 'flex-end',
+            marginBottom: -1,
           }}>
           {plan ? (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>

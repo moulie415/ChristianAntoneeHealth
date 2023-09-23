@@ -11,6 +11,7 @@ const Occupation: React.FC<{
 }> = ({occupation, setOccupation}) => {
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',

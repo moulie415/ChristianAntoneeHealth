@@ -5,7 +5,6 @@ import colors from '../../constants/colors';
 import moment from 'moment';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';
-import {calculateVO2Max} from '../../helpers/tests';
 import Input from './Input';
 import Button from './Button';
 import {MyRootState} from '../../types/Shared';
@@ -37,7 +36,7 @@ const TestTimer: React.FC<{
   testResult,
   setTestResult,
 }) => {
-  const isPrepping = testStarted && prepTime > 0;
+  const isPrepping = testStarted && prepTime > 0 && test.type !== 'untimed';
 
   const finished =
     (test.type === 'countup' && complete) ||
@@ -58,17 +57,19 @@ const TestTimer: React.FC<{
     return 0;
   };
 
-  const showTimer = !isPrepping && !finished && testStarted;
+  const showTimer =
+    !isPrepping && !finished && testStarted && test.type !== 'untimed';
 
   return (
     <AnimatedCircularProgress
       style={{
+        zIndex: -1,
         display: tabIndex === 0 ? 'flex' : 'none',
         alignSelf: 'center',
         transform: [{scaleX: test.type === 'countup' ? 1 : -1}],
         backgroundColor: finished ? colors.appBlue : 'transparent',
         borderRadius: 100,
-        marginVertical: 20,
+        marginVertical: 10,
       }}
       size={200}
       width={12}
@@ -108,7 +109,7 @@ const TestTimer: React.FC<{
               style={{
                 fontWeight: 'bold',
                 color: colors.appWhite,
-                fontSize: isPrepping || finished ? 30 : 16,
+                fontSize: isPrepping ? 30 : 16,
                 textAlign: 'center',
                 paddingHorizontal: 10,
               }}>
@@ -124,20 +125,20 @@ const TestTimer: React.FC<{
           {complete && (
             <View style={{}}>
               {test.type !== 'countup' ? (
-                <Text style={{color: colors.appWhite}}>Enter result</Text>
+                <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+                  Enter result
+                </Text>
               ) : test.formula === 'vo2' ? (
                 <View>
                   <View
                     style={{
-                      flexDirection: 'row',
                       alignItems: 'center',
                     }}>
                     <Text
                       style={{
                         color: colors.appWhite,
-                        marginRight: 10,
                       }}>
-                      {'Heart rate'}
+                      Enter heart rate
                     </Text>
                     <Input
                       value={heartRate?.toString()}
@@ -148,21 +149,6 @@ const TestTimer: React.FC<{
                       style={{width: 100, marginVertical: 5}}
                     />
                   </View>
-
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: colors.appWhite,
-                      marginTop: 10,
-                      marginBottom: 20,
-                      fontWeight: 'bold',
-                    }}>
-                    {`VO2 max = ${calculateVO2Max(
-                      profile,
-                      testTime,
-                      heartRate,
-                    )?.toFixed(2)}`}
-                  </Text>
                 </View>
               ) : (
                 <Text

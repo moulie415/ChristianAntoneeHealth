@@ -12,6 +12,7 @@ const SelectEquipment: React.FC<{
 }> = ({setEquipment, equipment}) => {
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',

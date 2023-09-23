@@ -11,6 +11,7 @@ const PhysicalInjuries: React.FC<{
 }> = ({injuries, setInjuries}) => {
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',

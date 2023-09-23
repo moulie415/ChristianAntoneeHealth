@@ -12,6 +12,7 @@ const Medications: React.FC<{
 }> = ({medications, setMedications}) => {
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',

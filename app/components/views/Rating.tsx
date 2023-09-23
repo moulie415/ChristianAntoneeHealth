@@ -31,7 +31,9 @@ const Rating: React.FC<{
       source={require('../../images/login.jpeg')}
       style={{flex: 1}}
       blurRadius={5}>
-      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
+      <KeyboardAwareScrollView
+        enableOnAndroid
+        contentContainerStyle={{flex: 1}}>
         <SafeAreaView style={{flex: 1}}>
           <Header hasBack title="Rate us" />
         </SafeAreaView>

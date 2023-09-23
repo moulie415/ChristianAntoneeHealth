@@ -23,54 +23,42 @@ const ForgotPassword: React.FC<{
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   return (
-    <FastImage
-      source={require('../../images/login.jpeg')}
-      blurRadius={5}
-      style={{flex: 1}}>
-      <View
+    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+      <Header hasBack title="Forgot password" />
+      <Input
         style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: colors.appBlack,
-          opacity: 0.5,
+          margin: 20,
+          marginTop: 0,
         }}
+        placeholder="Email"
+        value={email}
+        onChangeText={e => setEmail(e)}
+        placeholderTextColor="#fff"
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="email-address"
       />
-      <SafeAreaView>
-        <Header hasBack title="Forgot password" />
-        <Input
-          style={{
-            margin: 20,
-            marginTop: 0,
-          }}
-          placeholder="Email"
-          value={email}
-          onChangeText={e => setEmail(e)}
-          placeholderTextColor="#fff"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-        />
-        <Button
-          onPress={async () => {
-            setLoading(true);
-            try {
-              await auth().sendPasswordResetEmail(email);
-              navigation.goBack();
-              Alert.alert('Success', 'Please check your email');
-            } catch (e) {
-              // @ts-ignore
-              Alert.alert('Error', e.message);
-            }
-            setLoading(false);
-          }}
-          loading={loading}
-          style={{
-            marginHorizontal: 20,
-          }}
-          text="Send password reset email"
-          disabled={!email || loading}
-        />
-      </SafeAreaView>
-    </FastImage>
+      <Button
+        onPress={async () => {
+          setLoading(true);
+          try {
+            await auth().sendPasswordResetEmail(email);
+            navigation.goBack();
+            Alert.alert('Success', 'Please check your email');
+          } catch (e) {
+            // @ts-ignore
+            Alert.alert('Error', e.message);
+          }
+          setLoading(false);
+        }}
+        loading={loading}
+        style={{
+          marginHorizontal: 20,
+        }}
+        text="Send password reset email"
+        disabled={!email || loading}
+      />
+    </SafeAreaView>
   );
 };
 

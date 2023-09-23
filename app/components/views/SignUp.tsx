@@ -57,7 +57,9 @@ const SignUp: React.FC<SignUpProps> = ({
 
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+      <KeyboardAwareScrollView
+        enableOnAndroid
+        keyboardShouldPersistTaps="always">
         <Header title="Registration" hasBack />
         <Text
           style={{

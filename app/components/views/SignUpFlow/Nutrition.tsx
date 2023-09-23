@@ -49,6 +49,7 @@ const Nutrition: React.FC<{
 
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',

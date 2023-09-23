@@ -22,11 +22,12 @@ import TestType from '../../../types/Test';
 import {StackParamList} from '../../../App';
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import Profile from '../../../types/Profile';
-import {resetToTabs} from '../../../RootNavigation';
+import {navigate, resetToTabs} from '../../../RootNavigation';
 import TestResultsModal from './TestResultsModal';
 import {saveTest} from '../../../actions/tests';
 import {SavedTest} from '../../../types/SavedItem';
 import useThrottle from '../../../hooks/UseThrottle';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
 
 export const PREP_TIME = 5;
 
@@ -36,7 +37,7 @@ const Test: React.FC<{
   navigation: NavigationProp<StackParamList, 'Test'>;
   profile: Profile;
   saveTestAction: (test: SavedTest) => void;
-}> = ({route, tests, profile, saveTestAction}) => {
+}> = ({route, tests, profile, saveTestAction, navigation}) => {
   const {id} = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
@@ -60,6 +61,8 @@ const Test: React.FC<{
           setTestTime(testTime + 1);
         } else if (testTime > 0) {
           setTestTime(testTime - 1);
+        } else if (test.type === 'countdown') {
+          setComplete(true);
         }
       }
     }
@@ -116,6 +119,20 @@ const Test: React.FC<{
     }
   };
 
+  const handleBackPress = () => {
+    if (
+      complete &&
+      (testResult ||
+        (test.type === 'countup' && (heartRate || test.formula !== 'vo2')))
+    ) {
+      save();
+    }
+    navigation.goBack();
+    return true;
+  };
+
+  useBackHandler(handleBackPress);
+
   return (
     <View style={{flex: 1}}>
       {test.video?.src ? (
@@ -141,7 +158,7 @@ const Test: React.FC<{
           />
         </FastImageAnimated>
       )}
-      <Header hasBack absolute />
+      <Header hasBack absolute customBackPress={handleBackPress} />
 
       <View
         style={{
@@ -151,51 +168,67 @@ const Test: React.FC<{
           backgroundColor: colors.appGrey,
           top: -30,
         }}>
+        {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
         <KeyboardAwareScrollView
-          // keyboardShouldPersistTaps="always"
-          extraScrollHeight={75}
+          enableOnAndroid
           contentContainerStyle={{paddingBottom: 220}}>
-          <>
-            {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
+          <Text
+            style={{
+              marginTop: 20,
+              color: colors.appWhite,
+              fontSize: 20,
+              marginHorizontal: 40,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}>
+            {test.name}
+          </Text>
+          <MyTabs tabs={tabs} tabIndex={tabIndex} setTabIndex={setTabIndex} />
 
-            <Text
-              style={{
-                marginTop: 20,
-                color: colors.appWhite,
-                fontSize: 20,
-                marginHorizontal: 40,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              {test.name}
-            </Text>
-            <MyTabs tabs={tabs} tabIndex={tabIndex} setTabIndex={setTabIndex} />
-            <TestTimer
-              testStarted={testStarted}
-              tabIndex={tabIndex}
-              test={test}
-              prepTime={prepTime}
-              testTime={testTime}
-              complete={complete}
-              testResult={testResult}
-              setHeartRate={setHeartRate}
-              setTestResult={setTestResult}
-              heartRate={heartRate}
-            />
-            {tabIndex === 1 && (
-              <View
+          <TestTimer
+            testStarted={testStarted}
+            tabIndex={tabIndex}
+            test={test}
+            prepTime={prepTime}
+            testTime={testTime}
+            complete={complete}
+            testResult={testResult}
+            setHeartRate={setHeartRate}
+            setTestResult={setTestResult}
+            heartRate={heartRate}
+          />
+          {complete &&
+            test.formula === 'vo2' &&
+            !!heartRate &&
+            tabIndex === 0 && (
+              <Text
                 style={{
-                  marginHorizontal: 20,
-                  marginVertical: 10,
+                  fontSize: 18,
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  marginBottom: 20,
                 }}>
-                <ViewMore
-                  textAlign="justify"
-                  text={test.summary || ''}
-                  lines={9}
-                />
-              </View>
+                {`VO2 max = ${calculateVO2Max(
+                  profile,
+                  testTime,
+                  heartRate,
+                )?.toFixed(2)}`}
+              </Text>
             )}
-          </>
+          {tabIndex === 1 && (
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginVertical: 10,
+              }}>
+              <ViewMore
+                textAlign="justify"
+                text={test.summary || ''}
+                lines={9}
+              />
+            </View>
+          )}
 
           <View style={{flexDirection: 'row'}}>
             {testStarted &&
@@ -203,7 +236,7 @@ const Test: React.FC<{
               !complete &&
               !isPrepping && (
                 <Button
-                  variant="secondary"
+                  variant={test.type === 'countdown' ? 'primary' : 'secondary'}
                   text="Restart"
                   onPress={() => {
                     if (test.type === 'countup') {
@@ -215,6 +248,7 @@ const Test: React.FC<{
                   style={{
                     margin: 10,
                     marginLeft: 20,
+                    marginRight: test.type === 'countdown' ? 20 : 10,
                     flex: 1,
                   }}
                 />
@@ -225,6 +259,7 @@ const Test: React.FC<{
                 <Button
                   text={getButtonString()}
                   onPress={() => {
+                    setTabIndex(0);
                     if (
                       test.formula === 'vo2' &&
                       (!profile.dob || !profile.weight || !profile.gender)
@@ -258,6 +293,9 @@ const Test: React.FC<{
                 text="Return Home"
                 variant="secondary"
                 onPress={() => {
+                  if (testResult || test.type === 'countup') {
+                    save();
+                  }
                   resetToTabs();
                 }}
                 style={{marginLeft: 15, marginRight: 8, flex: 1}}
@@ -266,7 +304,10 @@ const Test: React.FC<{
                 text="Compare result"
                 onPress={() => setModalVisible(true)}
                 style={{marginRight: 15, marginLeft: 8, flex: 1}}
-                disabled={!testResult && test.type !== 'countup'}
+                disabled={
+                  (!testResult && test.type !== 'countup') ||
+                  (test.formula === 'vo2' && !heartRate)
+                }
               />
             </View>
           )}
