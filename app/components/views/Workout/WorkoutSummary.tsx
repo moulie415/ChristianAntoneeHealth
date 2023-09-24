@@ -43,8 +43,8 @@ const WorkoutSummary: React.FC<{
         text="Return Home"
         onPress={resetToTabs}
         style={{
-          margin: 10,
-          marginBottom: 20,
+          margin: 20,
+          marginTop: 10,
         }}
       />
 

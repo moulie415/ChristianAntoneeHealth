@@ -31,6 +31,8 @@ import {useBackHandler} from '../../../hooks/UseBackHandler';
 
 export const PREP_TIME = 5;
 
+const INTERVAL = 100;
+
 const Test: React.FC<{
   tests: {[key: string]: TestType};
   route: RouteProp<StackParamList, 'Test'>;
@@ -55,18 +57,19 @@ const Test: React.FC<{
   useInterval(() => {
     if (testStarted && test.type !== 'untimed' && !complete) {
       if (prepTime > 0) {
-        setPrepTime(prepTime - 1);
+        const newPrepTime = prepTime - INTERVAL / 1000;
+        setPrepTime(newPrepTime < 0 ? 0 : newPrepTime);
       } else {
         if (test.type === 'countup') {
-          setTestTime(testTime + 1);
+          setTestTime(testTime + INTERVAL / 1000);
         } else if (testTime > 0) {
-          setTestTime(testTime - 1);
+          setTestTime(testTime - INTERVAL / 1000);
         } else if (test.type === 'countdown') {
           setComplete(true);
         }
       }
     }
-  }, 1000);
+  }, INTERVAL);
 
   const getButtonString = () => {
     if (test.type === 'untimed') {

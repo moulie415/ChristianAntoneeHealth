@@ -57,22 +57,22 @@ const TestTimer: React.FC<{
     return 0;
   };
 
-  const showTimer =
-    !isPrepping && !finished && testStarted && test.type !== 'untimed';
+  const showTimer = !finished && testStarted && test.type !== 'untimed';
 
+  const scaleX = test.type === 'countup' && !isPrepping ? 1 : -1;
   return (
     <AnimatedCircularProgress
       style={{
         zIndex: -1,
         display: tabIndex === 0 ? 'flex' : 'none',
         alignSelf: 'center',
-        transform: [{scaleX: test.type === 'countup' ? 1 : -1}],
+        transform: [{scaleX}],
         backgroundColor: finished ? colors.appBlue : 'transparent',
         borderRadius: 100,
         marginVertical: 10,
       }}
       size={200}
-      width={12}
+      width={8}
       backgroundWidth={8}
       fill={getFill()}
       tintColor={
@@ -88,7 +88,7 @@ const TestTimer: React.FC<{
       rotation={0}
       lineCap="round">
       {fill => (
-        <View style={{transform: [{scaleX: test.type === 'countup' ? 1 : -1}]}}>
+        <View style={{transform: [{scaleX}]}}>
           {showTimer && (
             <Text
               style={{
@@ -100,16 +100,16 @@ const TestTimer: React.FC<{
               {moment()
                 .utc()
                 .startOf('day')
-                .add({seconds: prepTime || testTime})
+                .add({seconds: Math.ceil(prepTime || testTime)})
                 .format('mm:ss')}
             </Text>
           )}
-          {!showTimer && (
+          {(!showTimer || isPrepping) && (
             <Text
               style={{
                 fontWeight: 'bold',
                 color: colors.appWhite,
-                fontSize: isPrepping ? 30 : 16,
+                fontSize: 16,
                 textAlign: 'center',
                 paddingHorizontal: 10,
               }}>

@@ -9,7 +9,9 @@ import PagerView from 'react-native-pager-view';
 import {MyRootState, PlanWorkout} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
+const INTERVAL = 100;
 const ExerciseTimer: React.FC<{
   index: number;
   workout: Exercise[];
@@ -35,15 +37,16 @@ const ExerciseTimer: React.FC<{
 
   useInterval(() => {
     if (prepTime > 0) {
-      setPrepTime(prepTime - 1);
+      const newPrepTime = prepTime - INTERVAL / 1000;
+      setPrepTime(newPrepTime < 0 ? 0 : newPrepTime);
     } else if (exerciseTime > 0) {
-      setExerciseTime(exerciseTime - 1);
+      setExerciseTime(exerciseTime - INTERVAL / 1000);
     } else {
       if (index < workout.length - 1 && autoPlay) {
         pagerRef.current?.setPage(index + 1);
       }
     }
-  }, 1000);
+  }, INTERVAL);
 
   const getFill = () => {
     if (finished) {
@@ -62,78 +65,80 @@ const ExerciseTimer: React.FC<{
   const finished = index === workout.length - 1 && exerciseTime <= 0;
 
   return (
-    <AnimatedCircularProgress
-      style={{
-        display: tabIndex === 0 ? 'flex' : 'none',
-        alignSelf: 'center',
-        transform: [{scaleX: -1}],
-        backgroundColor: finished ? colors.appBlue : 'transparent',
-        borderRadius: 100,
-      }}
-      size={200}
-      width={12}
-      backgroundWidth={8}
-      fill={getFill()}
-      tintColor={finished ? colors.muscleSecondary : colors.appBlue}
-      // tintColorSecondary={colors.appBlueFaded}
-      backgroundColor={colors.borderColor}
-      arcSweepAngle={360}
-      rotation={0}
-      lineCap="round">
-      {fill => (
-        <View style={{transform: [{scaleX: -1}]}}>
-          {!hideTimer && !finished && exercise.weight && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Icon color={colors.appWhite} size={15} name="dumbbell" />
+    <Animated.View entering={FadeIn}>
+      <AnimatedCircularProgress
+        style={{
+          display: tabIndex === 0 ? 'flex' : 'none',
+          alignSelf: 'center',
+          transform: [{scaleX: -1}],
+          backgroundColor: finished ? colors.appBlue : 'transparent',
+          borderRadius: 100,
+        }}
+        size={200}
+        width={8}
+        backgroundWidth={8}
+        fill={getFill()}
+        tintColor={finished ? colors.muscleSecondary : colors.appBlue}
+        // tintColorSecondary={colors.appBlueFaded}
+        backgroundColor={colors.borderColor}
+        arcSweepAngle={360}
+        rotation={0}
+        lineCap="round">
+        {fill => (
+          <View style={{transform: [{scaleX: -1}]}}>
+            {!hideTimer && !finished && exercise.weight && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Icon color={colors.appWhite} size={15} name="dumbbell" />
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    textAlign: 'center',
+                    marginLeft: 5,
+                  }}>
+                  {exercise.weight}
+                </Text>
+              </View>
+            )}
+            {!hideTimer && !finished && (
               <Text
                 style={{
                   fontWeight: 'bold',
                   color: colors.appWhite,
-                  fontSize: 16,
+                  fontSize: 40,
                   textAlign: 'center',
-                  marginLeft: 5,
                 }}>
-                {exercise.weight}
+                {moment()
+                  .utc()
+                  .startOf('day')
+                  .add({seconds: Math.ceil(prepTime || exerciseTime)})
+                  .format('mm:ss')}
               </Text>
-            </View>
-          )}
-          {!hideTimer && !finished && (
+            )}
             <Text
               style={{
                 fontWeight: 'bold',
                 color: colors.appWhite,
-                fontSize: 40,
+                fontSize: hideTimer || finished ? 30 : 16,
                 textAlign: 'center',
+                paddingHorizontal: 10,
               }}>
-              {moment()
-                .utc()
-                .startOf('day')
-                .add({seconds: prepTime || exerciseTime})
-                .format('mm:ss')}
+              {isPrepping
+                ? 'GET READY!'
+                : finished
+                ? 'FINISHED!'
+                : `${index + 1}/${workout.length}`}
             </Text>
-          )}
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: colors.appWhite,
-              fontSize: hideTimer || finished ? 30 : 16,
-              textAlign: 'center',
-              paddingHorizontal: 10,
-            }}>
-            {isPrepping
-              ? 'GET READY!'
-              : finished
-              ? 'FINISHED!'
-              : `${index + 1}/${workout.length}`}
-          </Text>
-        </View>
-      )}
-    </AnimatedCircularProgress>
+          </View>
+        )}
+      </AnimatedCircularProgress>
+    </Animated.View>
   );
 };
 

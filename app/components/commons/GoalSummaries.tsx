@@ -91,6 +91,7 @@ const GoalCircle: React.FC<{
           textAlign: 'center',
           alignSelf: 'center',
           marginBottom: 5,
+          marginTop: 5,
         }}>
         {title}
       </Text>
@@ -189,7 +190,7 @@ const GoalSummaries: React.FC<{
     },
   ];
 
- if (profile.goal === Goal.WEIGHT_LOSS) {
+  if (profile.goal === Goal.WEIGHT_LOSS) {
     goals.push({
       title: 'Calories burned',
       key: 'calories',

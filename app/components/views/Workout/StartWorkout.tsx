@@ -124,7 +124,7 @@ const StartWorkout: React.FC<{
           style={{flex: 1, paddingHorizontal: 0}}>
           {workout.map((exercise, i) => {
             const next = workout[index + 1];
-
+            console.log(exercise)
             return (
               <View key={`${exercise.id}${i}`}>
                 {!loading && exercise.video ? (
@@ -149,12 +149,12 @@ const StartWorkout: React.FC<{
                     <Spinner color={colors.appBlue} />
                   </View>
                 )}
-                <ExerciseArrows
+                {/* <ExerciseArrows
                   exercises={workout}
                   index={i}
                   pagerRef={pagerRef}
                   fullscreen={fullscreen}
-                />
+                /> */}
                 {!fullscreen && (
                   <View
                     style={{

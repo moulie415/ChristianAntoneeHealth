@@ -103,6 +103,7 @@ const EndQuickRoutine: React.FC<{
         <Button
           text="Save & Continue"
           disabled={loading}
+          loading={loading}
           style={{marginHorizontal: 20, marginBottom: 20}}
           onPress={async () => {
             setLoading(true);
@@ -155,7 +156,6 @@ const EndQuickRoutine: React.FC<{
           }}
         />
       </SafeAreaView>
-      <AbsoluteSpinner loading={loading} text="Loading workout data" />
     </ScrollView>
   );
 };

@@ -25,7 +25,7 @@ const WorkoutTabs: React.FC<{
   workout,
   pagerRef,
 }) => {
-  const tabs = ['Directions', 'Muscles'];
+  const tabs = ['Timer', 'Muscles'];
 
   return (
     <>
@@ -41,6 +41,7 @@ const WorkoutTabs: React.FC<{
             pagerRef={pagerRef}
           />
         )}
+        {i !== index && tabIndex === 0 && <View style={{height: 200}} />}
 
         {tabIndex === 1 && i === index && (
           <MusclesDiagram

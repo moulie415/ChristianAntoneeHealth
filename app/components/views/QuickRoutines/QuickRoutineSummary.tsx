@@ -5,7 +5,6 @@ import {
   getDifficultyText,
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
-
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import QuickRoutineSummaryProps from '../../../types/views/QuickRoutineSummary';
@@ -41,8 +40,8 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
         text="Return Home"
         onPress={resetToTabs}
         style={{
-          margin: 10,
-          marginBottom: 20,
+          margin: 20,
+          marginTop: 10,
         }}
       />
     </SafeAreaView>
