@@ -172,7 +172,7 @@ const DrawerContent: React.FC<Props> = ({
     });
   }
 
-  if (profile.client) {
+  if (profile.client || profile.admin) {
     listItems.splice(1, 0, {
       title: 'Friends',
       icon: 'user-friends',
