@@ -104,9 +104,7 @@ const Test: React.FC<{
         [
           {
             text: 'No',
-            onPress: () => {
-              saveThrottled(false);
-            },
+            onPress: () => {},
           },
           {
             text: 'Yes',
@@ -118,7 +116,6 @@ const Test: React.FC<{
         {cancelable: false},
       );
     } else {
-      saveThrottled(false);
     }
   };
 

@@ -481,7 +481,6 @@ export const saveWorkout = async (
               return;
             }
             resolve(res);
-            console.log(res);
             // workout successfully saved
           },
         );

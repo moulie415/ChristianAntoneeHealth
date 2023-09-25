@@ -283,6 +283,7 @@ export const getTableColumn = (table: Table, age: number) => {
       // @ts-ignore
       const values: Cell = table.age[c];
       if (
+        (values.higher || values.lower) &&
         (!values.higher || age <= Number(values.higher)) &&
         (!values.lower || age >= Number(values.lower))
       ) {
@@ -297,7 +298,6 @@ export const getTableCategory = (table: Table, col: string, score: number) => {
     if (key !== 'age' && TABLE_HEADER_KEYS.includes(key)) {
       // @ts-ignore
       const values: Cell = table[key][col];
-
       if (
         (values.higher || values.lower) &&
         (!values.higher || score <= Number(values.higher)) &&
