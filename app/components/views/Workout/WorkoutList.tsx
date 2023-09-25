@@ -118,7 +118,10 @@ const WorkoutList: React.FC<{
         <FlatList
           ListEmptyComponent={() => (
             <SafeAreaView style={{height: height - 50}}>
-              <AbsoluteSpinner loading />
+              <AbsoluteSpinner
+                loading
+                style={{backgroundColor: colors.appGrey}}
+              />
             </SafeAreaView>
           )}
           data={filtered}
