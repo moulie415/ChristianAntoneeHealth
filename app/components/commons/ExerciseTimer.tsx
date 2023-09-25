@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React, {RefObject, useState} from 'react';
+import React, {RefObject, useMemo, useState} from 'react';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import colors from '../../constants/colors';
 import moment from 'moment';
@@ -29,22 +29,23 @@ const ExerciseTimer: React.FC<{
   autoPlay,
   prepTime: PREP_TIME,
 }) => {
-  const [prepTime, setPrepTime] = useState(PREP_TIME);
+  const startTime = useMemo(() => moment().valueOf(), []);
 
-  const [exerciseTime, setExerciseTime] = useState(exercise.time || 30);
+  const [milliseconds, setMilliseconds] = useState(0);
+
+  const prepTime = PREP_TIME - milliseconds / 1000;
+
+  const exerciseTime = PREP_TIME + (exercise.time || 30) - milliseconds / 1000;
 
   const isPrepping = prepTime > 0;
 
   useInterval(() => {
-    if (prepTime > 0) {
-      const newPrepTime = prepTime - INTERVAL / 1000;
-      setPrepTime(newPrepTime < 0 ? 0 : newPrepTime);
-    } else if (exerciseTime > 0) {
-      setExerciseTime(exerciseTime - INTERVAL / 1000);
-    } else {
-      if (index < workout.length - 1 && autoPlay) {
-        pagerRef.current?.setPage(index + 1);
-      }
+    const diff = moment().valueOf() - startTime;
+
+    setMilliseconds(diff);
+
+    if (exerciseTime < 0 && index < workout.length - 1 && autoPlay) {
+      pagerRef.current?.setPage(index + 1);
     }
   }, INTERVAL);
 
@@ -117,7 +118,9 @@ const ExerciseTimer: React.FC<{
                 {moment()
                   .utc()
                   .startOf('day')
-                  .add({seconds: Math.ceil(prepTime || exerciseTime)})
+                  .add({
+                    seconds: prepTime && prepTime > 0 ? prepTime : exerciseTime,
+                  })
                   .format('mm:ss')}
               </Text>
             )}
