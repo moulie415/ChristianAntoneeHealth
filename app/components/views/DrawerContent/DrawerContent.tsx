@@ -113,7 +113,7 @@ const DrawerContent: React.FC<Props> = ({
     },
     {
       title: 'Premium',
-      icon: 'trophy',
+      icon: 'crown',
       onPress: () => {
         navigationRef.navigate('Premium', {});
         navigation.closeDrawer();
