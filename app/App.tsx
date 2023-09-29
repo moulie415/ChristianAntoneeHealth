@@ -161,6 +161,18 @@ export type StackParamList = {
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
 
+Sentry.init({
+  environment: __DEV__ ? 'development' : 'production',
+  dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
+  integrations: [
+    new Sentry.ReactNativeTracing({
+      // Pass instrumentation to be used as `routingInstrumentation`
+      routingInstrumentation,
+      // ...
+    }),
+  ],
+});
+
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
@@ -177,18 +189,7 @@ const App: React.FC = () => {
           ? (Config.REVENUE_CAT_IOS_KEY as string)
           : (Config.REVENUE_CAT_ANDROID_KEY as string),
     });
-    if (!__DEV__) {
-      Sentry.init({
-        dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
-        integrations: [
-          new Sentry.ReactNativeTracing({
-            // Pass instrumentation to be used as `routingInstrumentation`
-            routingInstrumentation,
-            // ...
-          }),
-        ],
-      });
-    }
+
     const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider();
     rnfbProvider.configure({
       android: {
