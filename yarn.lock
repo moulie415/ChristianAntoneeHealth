@@ -2693,6 +2693,11 @@
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.2.1.tgz#9403f51c17cae37edf870c6bc0c81c1ece5ccef8"
   integrity sha512-1dgmkh+3so0+LlBWRhGA33ua4MYr7tUOj+a9Si28vUi0IUFNbff1T3sgpeDJI/LaC75bBYnQ0A3wXjn0OrRNBA==
 
+"@revenuecat/purchases-typescript-internal@6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-6.1.2.tgz#7f7906c4beba9c06b74d10ea10ce57b2aab73814"
+  integrity sha512-Cl/mOHk1SiQ2Z5DzHfWKhFDnGenFeAcTF82OpaoTeftXtWdL/JKa74UK2pPIxaT6udP7DK0LpmRZshYKe9/wsA==
+
 "@sentry-internal/tracing@7.69.0":
   version "7.69.0"
   resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.69.0.tgz#8d8eb740b72967b6ba3fdc0a5173aa55331b7d35"
@@ -8817,10 +8822,12 @@ react-native-progress@^5.0.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-purchases@^5.16.0:
-  version "5.16.0"
-  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-5.16.0.tgz#b68318216aa03e73de5a10495febe38f58e340ad"
-  integrity sha512-Us1YNzjG4kICxgnUGQOejlTkLoXHiCRc7Qnrr1w64AaVZrMMnzkqn7fPlo9RDR9hCE48OGgrYTav5nL8cV6H8A==
+react-native-purchases@^6.6.5:
+  version "6.6.5"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-6.6.5.tgz#70f73ae28d8f8176ac7e9f3d56c8cd27ec5b00f7"
+  integrity sha512-HkelzQ8FDdsC8hRQS4tAGgqdiYSh70jjDF7K2iS9NPUvx16wmruJ7oGU0A+idf9v72uuWnI3mvkby0EKn/66lA==
+  dependencies:
+    "@revenuecat/purchases-typescript-internal" "6.1.2"
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"

@@ -19,8 +19,9 @@ import Exercise from '../../../types/Exercise';
 import {SavedWorkout} from '../../../types/SavedItem';
 import {setProfile} from '../../../actions/profile';
 import Text from '../../commons/Text';
-import { FONTS_SIZES } from '../../../constants';
-import { ScrollView } from 'react-native-gesture-handler';
+import {FONTS_SIZES} from '../../../constants';
+import {ScrollView} from 'react-native-gesture-handler';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
 
 const EndWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndWorkout'>;
@@ -81,6 +82,8 @@ const EndWorkout: React.FC<{
       planId,
     });
   }, 3000);
+
+  useBackHandler(() => true);
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>

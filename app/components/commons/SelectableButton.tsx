@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, ViewStyle} from 'react-native';
-import React from 'react';
+import React, {ReactNode} from 'react';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -9,7 +9,8 @@ const SelectableButton: React.FC<{
   text: string;
   secondaryText?: string;
   style?: ViewStyle;
-}> = ({selected, onPress, text, secondaryText, style}) => {
+  customRight?: ReactNode;
+}> = ({selected, onPress, text, secondaryText, style, customRight}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -41,7 +42,9 @@ const SelectableButton: React.FC<{
           </Text>
         )}
       </View>
-      {selected && <Icon size={20} color={colors.appBlue} name="check" />}
+      {customRight
+        ? customRight
+        : selected && <Icon size={20} color={colors.appBlue} name="check" />}
     </TouchableOpacity>
   );
 };

@@ -16,50 +16,16 @@ import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useTourGuideController} from 'rn-tourguide';
 import {ListItem, MoreItem} from './DrawerContent';
 import {navigate} from '../../../RootNavigation';
 
 const Support: React.FC<SupportProps> = () => {
-  const {
-    canStart, // a boolean indicate if you can start tour guide
-    start, // a function to start the tourguide
-    getCurrentStep,
-  } = useTourGuideController();
-
   const items: ListItem[] = [
     {
       title: 'Privacy Policy',
       icon: 'check-circle',
       onPress: () =>
         Linking.openURL('https://christianantonee.com/privacy-policy'),
-    },
-    {
-      title: 'Report a problem',
-      icon: 'bug',
-      onPress: () =>
-        Linking.openURL(
-          'mailto:info@christianantonee.com?subject=CA Health Bug Report',
-        ),
-    },
-    {
-      title: 'Contact us',
-      icon: 'envelope',
-      onPress: () => {
-        try {
-          Linking.openURL('mailto:info@christianantonee.com?subject=CA Health');
-        } catch (e) {
-          Linking.openURL('https://christianantonee.com/contact');
-        }
-      },
-    },
-    {
-      title: 'Restart tour',
-      icon: 'sign',
-      onPress: () => {
-        navigate('Home');
-        start();
-      },
     },
   ];
 

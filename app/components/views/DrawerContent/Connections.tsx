@@ -71,7 +71,7 @@ const Connections: React.FC<{
       <SafeAreaView style={{flex: 1}}>
         <Header
           hasBack
-          title="Friends"
+          title="Messaging"
           right={<AddConnectionButton navigation={navigation} />}
         />
         {Object.values(connections).length === 0 && (

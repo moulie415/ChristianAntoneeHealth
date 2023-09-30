@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -74,6 +74,7 @@ const Chat: React.FC<ChatProps> = ({
 }) => {
   const {uid} = route.params;
   const ref = useRef<GiftedChat>(null);
+  const [text, setText] = useState('');
 
   useEffect(() => {
     setReadAction(uid);
@@ -221,6 +222,8 @@ const Chat: React.FC<ChatProps> = ({
           messagesContainerStyle={{
             paddingTop: Platform.OS === 'ios' ? 0 : 50,
           }}
+          onInputTextChanged={setText}
+          text={text}
           loadEarlier={showLoadEarlier}
           isLoadingEarlier={loading}
           onLoadEarlier={loadEarlier}

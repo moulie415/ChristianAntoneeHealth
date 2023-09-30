@@ -17,6 +17,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../commons/Header';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import colors from '../../constants/colors';
 
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
@@ -27,16 +28,20 @@ const Rating: React.FC<{
   const [loading, setLoading] = useState(false);
 
   return (
-    <FastImage
-      source={require('../../images/login.jpeg')}
-      style={{flex: 1}}
-      blurRadius={5}>
-      <KeyboardAwareScrollView
-        enableOnAndroid
-        contentContainerStyle={{flex: 1}}>
-        <SafeAreaView style={{flex: 1}}>
-          <Header hasBack title="Rate us" />
-        </SafeAreaView>
+    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <FastImage
+        source={require('../../images/upper_body.jpeg')}
+        style={{
+          flex: 1,
+          position: 'absolute',
+          top: 0,
+          height: '50%',
+          left: 0,
+          right: 0,
+        }}
+      />
+      <Header hasBack absolute />
+      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <View
             style={{
@@ -44,7 +49,7 @@ const Rating: React.FC<{
               paddingTop: 40,
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
-              backgroundColor: 'rgba(0,0,0,0.8)',
+              backgroundColor: colors.appGrey,
               height: 450,
             }}>
             <StarRating
@@ -92,7 +97,7 @@ const Rating: React.FC<{
           </View>
         </View>
       </KeyboardAwareScrollView>
-    </FastImage>
+    </View>
   );
 };
 

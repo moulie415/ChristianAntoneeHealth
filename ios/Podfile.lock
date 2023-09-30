@@ -926,8 +926,8 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
-  - PurchasesHybridCommon (4.18.0):
-    - RevenueCat (= 4.21.0)
+  - PurchasesHybridCommon (6.1.2):
+    - RevenueCat (= 4.25.9)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -1391,7 +1391,7 @@ PODS:
   - ReactNativeART (1.2.0):
     - React
   - RecaptchaInterop (100.0.0)
-  - RevenueCat (4.21.0)
+  - RevenueCat (4.25.9)
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNAppleAuthentication (2.2.2):
@@ -1466,8 +1466,8 @@ PODS:
   - RNGoogleSignin (10.0.1):
     - GoogleSignIn (~> 7.0)
     - React-Core
-  - RNPurchases (5.16.0):
-    - PurchasesHybridCommon (= 4.18.0)
+  - RNPurchases (6.6.5):
+    - PurchasesHybridCommon (= 6.1.2)
     - React-Core
   - RNReanimated (3.5.4):
     - DoubleConversion
@@ -1916,7 +1916,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  PurchasesHybridCommon: 6b510d4965166df2137347a414d6a8e2906d5a5e
+  PurchasesHybridCommon: b7c4205b6d2479cdd8914084a2b536e5e5b1445f
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: a2faf4bad4e438ca37b2040cb8f7799baa065c18
   RCTTypeSafety: cb09f3e4747b6d18331a15eb05271de7441ca0b3
@@ -1965,7 +1965,7 @@ SPEC CHECKSUMS:
   ReactCommon: a73c183d3985351e4d85dfb23d95d533177e08e6
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RevenueCat: 465a9dc1fff60b09f29792082e5d5d5aeed01122
+  RevenueCat: 4160d04575059fc1edbb973981f541b705ddebef
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
@@ -1990,7 +1990,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 38aa38413896620338948fbb5c90579a7b1c3fde
   RNGoogleMobileAds: e87db4771693cc7774805cba5faeac9fbab0b723
   RNGoogleSignin: ccaa4a81582cf713eea562c5dd9dc1961a715fd0
-  RNPurchases: 6744af10718d9bd85b9daaa6c1b47196e295b6b4
+  RNPurchases: 536d66e63df8dd67f9323d9575eb23580843b4af
   RNReanimated: ab2e96c6d5591c3dfbb38a464f54c8d17fb34a87
   RNScreens: 85d3880b52d34db7b8eeebe2f1a0e807c05e69fa
   RNSentry: 11917f7bf3e28806aca4c2791c6ba7522d8f09fe

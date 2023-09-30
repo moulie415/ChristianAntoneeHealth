@@ -11,7 +11,6 @@ import {connect} from 'react-redux';
 import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
 import Color from 'color';
-import {TourGuideZone} from 'rn-tourguide';
 import PlanTabIcon from './PlanTabIcon';
 import Avatar from './components/commons/Avatar';
 import ProfileComponent from './components/views/Profile';
@@ -49,12 +48,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <TourGuideZone
-              zone={0}
-              text="Welcome to CA Health! You can start a workout from here"
-              borderRadius={16}>
-              <Icon color={color} size={size} name="dumbbell" />
-            </TourGuideZone>
+            <Icon color={color} size={size} name="dumbbell" />
           ),
           headerShown: false,
         }}
@@ -66,12 +60,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Test',
           tabBarIcon: ({color, size}) => (
-            <TourGuideZone
-              zone={1}
-              text="Test your fitness from our list of tests here"
-              borderRadius={16}>
-              <Icon color={color} size={size} name="heartbeat" />
-            </TourGuideZone>
+            <Icon color={color} size={size} name="heartbeat" />
           ),
           headerShown: false,
         }}
@@ -83,17 +72,12 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
-            <TourGuideZone
-              zone={2}
-              text="View your personal profile and weekly goals from here"
-              borderRadius={16}>
-              <Avatar
-                name={`${profile.name} ${profile.surname || ''}`}
-                src={profile.avatar}
-                uid={profile.uid}
-                size={28}
-              />
-            </TourGuideZone>
+            <Avatar
+              name={`${profile.name} ${profile.surname || ''}`}
+              src={profile.avatar}
+              uid={profile.uid}
+              size={28}
+            />
           ),
           headerShown: false,
         }}
@@ -106,12 +90,7 @@ const Tabs: React.FC<{
           options={{
             tabBarLabel: 'Plan',
             tabBarIcon: ({color, size}) => (
-              <TourGuideZone
-                zone={3}
-                text="Access your customized plans here"
-                borderRadius={16}>
-                <PlanTabIcon color={color} size={size} />
-              </TourGuideZone>
+              <PlanTabIcon color={color} size={size} />
             ),
             headerShown: false,
           }}

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {
   Alert,
   FlatList,
+  Linking,
   Platform,
   Share,
   StyleSheet,
@@ -112,6 +113,28 @@ const DrawerContent: React.FC<Props> = ({
       },
     },
     {
+      title: 'Messaging',
+      icon: 'comment',
+      onPress: () => {
+        navigation.closeDrawer();
+        if (profile.premium) {
+          navigationRef.navigate('Connections');
+        } else {
+          navigationRef.navigate('Premium', {});
+        }
+      },
+      accessoryRight: profile.premium ? (
+        <UnreadRowCount />
+      ) : (
+        <Icon
+          name="lock"
+          size={20}
+          style={{marginRight: 10}}
+          color={colors.appWhite}
+        />
+      ),
+    },
+    {
       title: 'Premium',
       icon: 'crown',
       onPress: () => {
@@ -136,13 +159,18 @@ const DrawerContent: React.FC<Props> = ({
       },
     },
     {
-      title: 'Support',
-      icon: 'question-circle',
+      title: 'Report a problem',
+      icon: 'bug',
       onPress: () => {
-        navigationRef.navigate('Support');
+        Linking.openURL(
+          encodeURI(
+            'mailto:info@christianantonee.com?subject=CA Health Bug Report',
+          ),
+        );
         navigation.closeDrawer();
       },
     },
+
     {
       title: 'Share the app',
       icon: 'share-alt',
@@ -154,7 +182,7 @@ const DrawerContent: React.FC<Props> = ({
         }),
     },
     {
-      title: 'Rate the app',
+      title: 'Give feedback',
       icon: 'star',
       onPress: () => {
         navigationRef.navigate('Rating');
@@ -169,31 +197,6 @@ const DrawerContent: React.FC<Props> = ({
       title: 'Force crash (admin)',
       icon: 'car-crash',
       onPress: () => Sentry.nativeCrash(),
-    });
-  }
-
-  if (profile.client || profile.admin) {
-    listItems.splice(1, 0, {
-      title: 'Friends',
-      icon: 'user-friends',
-      onPress: () => {
-        navigation.closeDrawer();
-        if (profile.premium) {
-          navigationRef.navigate('Connections');
-        } else {
-          navigationRef.navigate('Premium', {});
-        }
-      },
-      accessoryRight: profile.premium ? (
-        <UnreadRowCount />
-      ) : (
-        <Icon
-          name="lock"
-          size={20}
-          style={{marginRight: 10}}
-          color={colors.appWhite}
-        />
-      ),
     });
   }
 

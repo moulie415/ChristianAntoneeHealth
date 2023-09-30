@@ -20,7 +20,6 @@ import {
 import {setPremium} from '../../../actions/profile';
 import {connect} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
-
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {logError} from '../../../helpers/error';
@@ -37,6 +36,13 @@ import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import {CLIENT_PREMIUM} from '../../../constants';
 import Profile from '../../../types/Profile';
+import {navigationRef} from '../../../RootNavigation';
+import Button from '../../commons/Button';
+
+const isLockedPackage = (p: PurchasesPackage) => {
+  const list = ['client_yearly', 'client_monthly'];
+  return list.includes(p.product.identifier);
+};
 
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
@@ -47,6 +53,7 @@ const Premium: React.FC<{
   route: RouteProp<StackParamList, 'Premium'>;
   profile: Profile;
 }> = ({navigation, setPremiumAction, settings, route, profile}) => {
+  const [selected, setSelected] = useState('');
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
@@ -76,190 +83,216 @@ const Premium: React.FC<{
   }, []);
 
   useEffect(() => {
-    if (Platform.OS === 'ios') {
-      navigation.setOptions({
-        headerLeft: () => (
-          <TouchableOpacity
-            style={{padding: 10}}
-            onPress={() => navigation.goBack()}>
-            <Text style={{color: colors.appBlue}}>Cancel</Text>
-          </TouchableOpacity>
-        ),
-      });
+    if (packages && packages.length) {
+      const initialSelected = packages.find(
+        p =>
+          (profile.client && p.packageType === 'CUSTOM') ||
+          (!profile.client && p.packageType !== 'CUSTOM'),
+      )?.identifier;
+      if (initialSelected) {
+        setSelected(initialSelected);
+      }
     }
-  }, [navigation]);
+  }, [packages, profile.client]);
+
+  const onPurchase = async (p?: PurchasesPackage) => {
+    if (p) {
+      const locked = isLockedPackage(p) && !profile.client && !profile.admin;
+      try {
+        if (locked) {
+          Alert.alert(
+            'Product unavailable',
+            'Please get in contact with Christian if you think you should have access to this product',
+          );
+          return;
+        }
+        setLoading(true);
+        const {customerInfo, productIdentifier} =
+          await Purchases.purchasePackage(p);
+        if (
+          typeof customerInfo.entitlements.active.Premium !== 'undefined' ||
+          typeof customerInfo.entitlements.active[CLIENT_PREMIUM] !==
+            'undefined'
+        ) {
+          setLoading(false);
+          navigationRef.goBack();
+          setPremiumAction(customerInfo.entitlements.active);
+          Snackbar.show({text: 'Premium activated!'});
+          if (onActivated) {
+            onActivated();
+          }
+        }
+      } catch (e) {
+        setLoading(false);
+        // @ts-ignore
+        if (!e.userCancelled) {
+          logError(e);
+          // @ts-ignore
+          Alert.alert('Error', e.message);
+        }
+      }
+    }
+  };
 
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
   return (
-    <FastImage
-      source={require('../../../images/login.jpeg')}
-      blurRadius={5}
-      style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
-        <Header hasBack />
-        <View style={{flex: 1, justifyContent: 'center'}}>
+    <>
+      <FastImage
+        source={require('../../../images/Equipment-minimal.jpeg')}
+        style={{
+          flex: 1,
+          position: 'absolute',
+          top: 0,
+          height: '50%',
+          left: 0,
+          right: -200,
+        }}
+      />
+
+      <Header hasBack absolute />
+      <LinearGradient
+        colors={['rgba(54, 57, 68,0)', colors.appGrey]}
+        style={{
+          position: 'absolute',
+          right: 0,
+          bottom: '60%',
+          left: 0,
+          height: 200,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          left: 0,
+          height: '60%',
+          backgroundColor: colors.appGrey,
+        }}>
+        <ScrollView>
+          {/* <Text
+            style={{
+              marginHorizontal: 20,
+              marginBottom: 20,
+              fontSize: 22,
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}>
+            Commit to your health & fitness
+          </Text> */}
           <View
             style={{
-              marginHorizontal: 10,
-              borderRadius: 20,
-              marginBottom: 20,
-              backgroundColor: 'rgba(0,0,0,0.8)',
+              marginHorizontal: 20,
+              marginTop: 20,
             }}>
             <View
               style={{
-                margin: 20,
+                flexDirection: 'row',
+                marginBottom: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
+              <View style={{justifyContent: 'center'}}>
+                <Icon
+                  style={{marginRight: 20}}
+                  size={20}
+                  color={colors.appWhite}
+                  name="dumbbell"
+                />
+              </View>
               <Text
                 style={{
+                  fontSize: 14,
                   color: colors.appWhite,
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  fontSize: 25,
-                  marginBottom: 10,
                 }}>
-                PREMIUM
+                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> workouts
               </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 20,
-                }}>
-                <View style={{justifyContent: 'center'}}>
-                  <Icon
-                    style={{marginRight: 10}}
-                    size={20}
-                    color={colors.appWhite}
-                    name="dumbbell"
-                  />
-                </View>
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                      color: colors.appWhite,
-                    }}>
-                    Workouts
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.appWhite,
-                    }}>
-                    Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
-                    workouts to select workouts from any training style and
-                    target every body part
-                  </Text>
-                </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Icon
+                  style={{marginRight: 20}}
+                  size={20}
+                  color={colors.appWhite}
+                  name="book-open"
+                />
               </View>
 
-              <View
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  marginBottom: 20,
+                  fontSize: 14,
+                  color: colors.appWhite,
                 }}>
-                <View style={{justifyContent: 'center'}}>
-                  <Icon
-                    style={{marginRight: 10}}
-                    size={20}
-                    color={colors.appWhite}
-                    name="book-open"
-                  />
-                </View>
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                      color: colors.appWhite,
-                    }}>
-                    Educational Articles
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.appWhite,
-                    }}>
-                    Gain access to <Text style={{fontWeight: 'bold'}}>ALL</Text>{' '}
-                    educational content
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 20,
-                }}>
-                <View style={{justifyContent: 'center'}}>
-                  <Icon
-                    style={{marginRight: 10}}
-                    size={20}
-                    color={colors.appWhite}
-                    name="heartbeat"
-                  />
-                </View>
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                      color: colors.appWhite,
-                    }}>
-                    Fitness Testing
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.appWhite,
-                    }}>
-                    See how you rank against others by unlocking{' '}
-                    <Text style={{fontWeight: 'bold'}}>ALL</Text> fitness
-                    testing categories
-                  </Text>
-                </View>
+                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> educational
+                content
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Icon
+                  style={{marginRight: 20}}
+                  size={20}
+                  color={colors.appWhite}
+                  name="heartbeat"
+                />
               </View>
 
-              {settings.ads && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginBottom: 20,
-                  }}>
-                  <Icon
-                    style={{marginRight: 10}}
-                    size={20}
-                    color={colors.appWhite}
-                    name="comment-slash"
-                  />
-                  <View style={{flex: 1}}>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        color: colors.appWhite,
-                        fontSize: 18,
-                      }}>
-                      Remove Ads
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: colors.appWhite,
-                      }}>
-                      Enjoy the full content of the app Ad-free
-                    </Text>
-                  </View>
-                </View>
-              )}
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: colors.appWhite,
+                }}>
+                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> fitness
+                tests
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Icon
+                  style={{marginRight: 20}}
+                  size={20}
+                  color={colors.appWhite}
+                  name="comment"
+                  solid
+                />
+              </View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: colors.appWhite,
+                }}>
+                Contact <Text style={{fontWeight: 'bold'}}>Christian</Text>{' '}
+                directly
+              </Text>
             </View>
           </View>
           {packages.length ? (
             <>
-              {premiumActive && (
+              {premiumActive ? (
                 <View
                   style={{
                     alignItems: 'center',
-                    paddingBottom: 20,
+                    marginVertical: 40,
                   }}>
                   <Text
                     style={{
@@ -282,60 +315,9 @@ const Premium: React.FC<{
                     </Text>
                   </TouchableOpacity>
                 </View>
-              )}
-              <>
-                <FlatList
-                  data={packages}
-                  numColumns={2}
-                  contentContainerStyle={{minHeight: 200}}
-                  ListFooterComponent={
-                    <TouchableOpacity
-                      onPress={async () => {
-                        try {
-                          setLoading(true);
-                          const restore = await Purchases.restorePurchases();
-                          if (
-                            typeof restore.entitlements.active.Premium !==
-                              'undefined' ||
-                            typeof restore.entitlements.active[
-                              CLIENT_PREMIUM
-                            ] !== 'undefined'
-                          ) {
-                            setLoading(false);
-                            navigation.goBack();
-                            setPremiumAction(restore.entitlements.active);
-                            Snackbar.show({text: 'Premium re-activated'});
-                          } else {
-                            setLoading(false);
-                            Snackbar.show({
-                              text: 'No previous active subscription found',
-                            });
-                          }
-                        } catch (e) {
-                          logError(e);
-                          setLoading(false);
-                        }
-                      }}>
-                      <Text
-                        style={{
-                          textAlign: 'center',
-                          marginTop: 10,
-                          marginBottom: 20,
-                          padding: 10,
-                          color: colors.appWhite,
-                          fontWeight: 'bold',
-                          textDecorationLine: 'underline',
-                        }}>
-                        Restore purchases
-                      </Text>
-                    </TouchableOpacity>
-                  }
-                  columnWrapperStyle={{
-                    justifyContent: 'space-evenly',
-                    paddingTop: 25,
-                  }}
-                  keyExtractor={item => item.identifier}
-                  renderItem={({item, index}) => {
+              ) : (
+                <>
+                  {packages.map(item => {
                     if (
                       (profile.client && item.packageType === 'CUSTOM') ||
                       (!profile.client && item.packageType !== 'CUSTOM')
@@ -343,33 +325,73 @@ const Premium: React.FC<{
                       return (
                         <PremiumProduct
                           p={item}
-                          onActivated={onActivated}
-                          setLoading={setLoading}
-                          index={index}
-                          setPremiumAction={setPremiumAction}
+                          key={item.identifier}
+                          selected={selected === item.identifier}
+                          setSelected={setSelected}
                         />
                       );
                     }
                     return null;
-                  }}
-                />
+                  })}
 
-                {/* {!hasUsedTrial && (
-                  <Text
-                    style={{
-                      paddingBottom: 20,
-                      textAlign: 'center',
-                    }}>{`${pkg.product.price_string}/month after`}</Text>
-                )} */}
-              </>
+                  <Button
+                    text="subscribe"
+                    onPress={() =>
+                      onPurchase(packages.find(p => p.identifier === selected))
+                    }
+                    disabled={!selected}
+                    style={{margin: 20, marginBottom: 10}}
+                  />
+                </>
+              )}
+
+              <TouchableOpacity
+                onPress={async () => {
+                  try {
+                    setLoading(true);
+                    const restore = await Purchases.restorePurchases();
+                    if (
+                      typeof restore.entitlements.active.Premium !==
+                        'undefined' ||
+                      typeof restore.entitlements.active[CLIENT_PREMIUM] !==
+                        'undefined'
+                    ) {
+                      setLoading(false);
+                      navigation.goBack();
+                      setPremiumAction(restore.entitlements.active);
+                      Snackbar.show({text: 'Premium re-activated'});
+                    } else {
+                      setLoading(false);
+                      Snackbar.show({
+                        text: 'No previous active subscription found',
+                      });
+                    }
+                  } catch (e) {
+                    logError(e);
+                    setLoading(false);
+                  }
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    marginBottom: 20,
+                    padding: 10,
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    textDecorationLine: 'underline',
+                  }}>
+                  Restore purchases
+                </Text>
+              </TouchableOpacity>
             </>
           ) : (
             <ActivityIndicator />
           )}
-        </View>
-        <AbsoluteSpinner loading={loading} />
-      </SafeAreaView>
-    </FastImage>
+        </ScrollView>
+      </View>
+
+      <AbsoluteSpinner loading={loading} />
+    </>
   );
 };
 const mapStateToProps = ({settings, profile}: MyRootState) => ({

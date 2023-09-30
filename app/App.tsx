@@ -44,10 +44,6 @@ import {logError} from './helpers/error';
 import MobileAds from 'react-native-google-mobile-ads';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
-import {
-  TourGuideProvider, // Main provider
-  useTourGuideController,
-} from 'rn-tourguide';
 import CustomTooltip from './components/commons/CustomTooltip';
 import WelcomeModal from './WelcomeModal';
 
@@ -218,58 +214,52 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <TourGuideProvider
-          androidStatusBarVisible
-          backdropColor="rgba(0,0,0,0.8)"
-          tooltipComponent={CustomTooltip}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              sagaMiddleware.run(rootSaga);
-              SplashScreen.hide();
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            sagaMiddleware.run(rootSaga);
+            SplashScreen.hide();
 
-              // Register the navigation container with the instrumentation
-              routingInstrumentation.registerNavigationContainer(navigationRef);
+            // Register the navigation container with the instrumentation
+            routingInstrumentation.registerNavigationContainer(navigationRef);
+          }}>
+          <DrawerNavigator />
+        </NavigationContainer>
+        {showSplash && (
+          <View
+            style={{
+              backgroundColor: colors.appWhite,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
             }}>
-            <DrawerNavigator />
-          </NavigationContainer>
-          {showSplash && (
-            <View
-              style={{
-                backgroundColor: colors.appWhite,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              }}>
-              {Platform.OS === 'ios' ? (
-                <Image
-                  source={require('./images/splash.gif')}
-                  style={{
-                    height,
-                    width: '75%',
-                    backgroundColor: colors.appWhite,
-                    alignSelf: 'center',
-                  }}
-                  resizeMode="contain"
-                />
-              ) : (
-                <FastImage
-                  source={require('./images/splash.gif')}
-                  style={{
-                    height,
-                    width: '75%',
-                    backgroundColor: colors.appWhite,
-                    alignSelf: 'center',
-                  }}
-                  resizeMode="contain"
-                />
-              )}
-            </View>
-          )}
-          <WelcomeModal showSplash={showSplash} />
-        </TourGuideProvider>
+            {Platform.OS === 'ios' ? (
+              <Image
+                source={require('./images/splash.gif')}
+                style={{
+                  height,
+                  width: '75%',
+                  backgroundColor: colors.appWhite,
+                  alignSelf: 'center',
+                }}
+                resizeMode="contain"
+              />
+            ) : (
+              <FastImage
+                source={require('./images/splash.gif')}
+                style={{
+                  height,
+                  width: '75%',
+                  backgroundColor: colors.appWhite,
+                  alignSelf: 'center',
+                }}
+                resizeMode="contain"
+              />
+            )}
+          </View>
+        )}
       </Provider>
     </PersistGate>
   );

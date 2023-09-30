@@ -22,6 +22,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Text from '../../commons/Text';
 import {FONTS_SIZES} from '../../../constants';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
 
 const EndQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
@@ -74,6 +75,8 @@ const EndQuickRoutine: React.FC<{
       fitbitData,
     });
   }, 3000);
+
+  useBackHandler(() => true);
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>

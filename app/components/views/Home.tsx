@@ -11,11 +11,6 @@ import FastImage from 'react-native-fast-image';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../../types/Profile';
-import {
-  TourGuideZone,
-  TourGuideZoneByPosition,
-  useTourGuideController,
-} from 'rn-tourguide';
 import Header from '../commons/Header';
 import {CLIENT_PREMIUM} from '../../constants';
 import isTestFlight from '../../helpers/isTestFlight';
@@ -32,24 +27,8 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
 }> = ({navigation, profile}) => {
-  const {eventEmitter} = useTourGuideController();
 
-  const handleOnStepChange = useCallback(
-    (step: {order?: number}) => {
-      // if (step?.order === 3) {
-      // }
-    },
-    [navigation],
-  );
 
-  useEffect(() => {
-    eventEmitter?.on('stepChange', handleOnStepChange);
-
-    return () => {
-      eventEmitter?.off('stepChange', handleOnStepChange);
-    };
-  }, [eventEmitter, handleOnStepChange]);
-  const insets = useSafeAreaInsets();
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
@@ -133,22 +112,6 @@ const Home: React.FC<{
           />
         </ScrollView>
       </SafeAreaView>
-      <TourGuideZoneByPosition
-        shape="circle"
-        text="For everything else use this menu"
-        isTourGuide
-        top={18 + insets.top}
-        left={13}
-        width={30}
-        height={30}
-        zone={
-          profile.admin ||
-          (profile.premium && profile.premium[CLIENT_PREMIUM]) ||
-          isTestFlight()
-            ? 4
-            : 3
-        }
-      />
     </View>
   );
 };

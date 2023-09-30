@@ -136,9 +136,9 @@ const Plan: React.FC<{
                                 props.key === routes[index].key
                                   ? colors.appBlue
                                   : 'transparent',
-                                  borderWidth:
-                                  props.key === routes[index].key ? 0 : 1,
-                                borderColor: colors.borderColor,
+                              borderWidth:
+                                props.key === routes[index].key ? 0 : 1,
+                              borderColor: colors.borderColor,
                             }}>
                             <Text
                               style={{
@@ -176,49 +176,45 @@ const Plan: React.FC<{
           </SafeAreaView>
         </View>
       ) : (
-        <FastImage
-          style={{flex: 1}}
-          source={require('../../../images/christian.webp')}>
-          <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-            <Header showDrawerMenuButton />
-            <Text
-              style={{
-                textAlign: 'center',
-                margin: 20,
-                marginTop: 0,
-                fontSize: 25,
-                fontWeight: 'bold',
-                color: colors.appWhite,
-              }}>
-              My workout plan
-            </Text>
+        <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+          <Header showDrawerMenuButton />
+          <Text
+            style={{
+              textAlign: 'center',
+              margin: 20,
+              marginTop: 0,
+              fontSize: 25,
+              fontWeight: 'bold',
+              color: colors.appWhite,
+            }}>
+            My workout plan
+          </Text>
 
-            <View style={{margin: 20, marginTop: 0}}>
-              <Text style={{lineHeight: 25, color: '#fff'}}>
-                This is your the screen for your personal customized plan, when
-                Christian creates your plan it will appear here.{' '}
-                {hasClientPremium ? (
-                  <Text>
-                    You're are already subscribed to Client Premium so you just
-                    need to wait for Christian to create your plan.
-                  </Text>
-                ) : (
-                  <Text>
-                    To view your plan also make sure you're subscribed to Client
-                    Premium.
-                  </Text>
-                )}
-              </Text>
-              {!hasClientPremium && (
-                <Button
-                  style={{marginTop: 20}}
-                  text="Get Client Premium"
-                  onPress={() => navigation.navigate('Premium', {})}
-                />
+          <View style={{margin: 20, marginTop: 0}}>
+            <Text style={{lineHeight: 25, color: '#fff'}}>
+              This is your the screen for your personal customized plan, when
+              Christian creates your plan it will appear here.{' '}
+              {hasClientPremium ? (
+                <Text>
+                  You're are already subscribed to Client Premium so you just
+                  need to wait for Christian to create your plan.
+                </Text>
+              ) : (
+                <Text>
+                  To view your plan also make sure you're subscribed to Client
+                  Premium.
+                </Text>
               )}
-            </View>
-          </SafeAreaView>
-        </FastImage>
+            </Text>
+            {!hasClientPremium && (
+              <Button
+                style={{marginTop: 20}}
+                text="Get Client Premium"
+                onPress={() => navigation.navigate('Premium', {})}
+              />
+            )}
+          </View>
+        </SafeAreaView>
       )}
     </>
   );

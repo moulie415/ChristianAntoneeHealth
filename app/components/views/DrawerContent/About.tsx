@@ -20,7 +20,7 @@ const About: React.FC<AboutProps> = () => {
     <>
       <FastImage
         source={require('../../../images/christian-welcome.jpg')}
-        style={{height: 570}}>
+        style={{height: 640}}>
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -29,7 +29,7 @@ const About: React.FC<AboutProps> = () => {
           }}
         />
         <SafeAreaView>
-          <Header hasBack title="About us" />
+          <Header hasBack title="" />
         </SafeAreaView>
       </FastImage>
       <View
@@ -40,7 +40,7 @@ const About: React.FC<AboutProps> = () => {
           backgroundColor: colors.appGrey,
           marginTop: -300,
         }}>
-        <ScrollView contentContainerStyle={{flex: 1}}>
+        <ScrollView>
           <TouchableOpacity
             style={{
               flexDirection: 'row',
@@ -51,7 +51,7 @@ const About: React.FC<AboutProps> = () => {
             }}
             onPress={() => Linking.openURL('https://christianantonee.com')}>
             <View style={{width: 40}}>
-              <Icon name="mouse-pointer" size={20} color="#fff" />
+              <Icon name="globe" size={20} color="#fff" />
             </View>
             <Text
               style={{
@@ -98,12 +98,52 @@ const About: React.FC<AboutProps> = () => {
               color="#fff"
             />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              padding: 10,
+              paddingHorizontal: 20,
+            }}
+            onPress={async () => {
+              try {
+                await Linking.openURL(
+                  encodeURI(
+                    'mailto:info@christianantonee.com?subject=CA Health',
+                  ),
+                );
+              } catch (e) {
+                Linking.openURL('https://christianantonee.com/contact');
+              }
+            }}>
+            <View style={{width: 40}}>
+              <Icon name="envelope" size={20} color="#fff" />
+            </View>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                fontSize: 16,
+                flex: 1,
+              }}>
+              Contact us
+            </Text>
+            <Icon
+              style={{opacity: 0.8}}
+              name="chevron-right"
+              size={20}
+              color="#fff"
+            />
+          </TouchableOpacity>
           <Text
             style={{
               color: colors.appWhite,
 
-              lineHeight: 30,
+              lineHeight: 25,
               margin: 10,
+              marginHorizontal: 20,
+              fontSize: 13,
+              textAlign: 'justify',
             }}>
             My name is Christian Antonee and I work as a Personal Trainer and
             Osteopath in London, England. My brother-in-law Henry and I
