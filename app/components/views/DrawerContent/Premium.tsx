@@ -171,17 +171,17 @@ const Premium: React.FC<{
           backgroundColor: colors.appGrey,
         }}>
         <ScrollView>
-          {/* <Text
+          <Text
             style={{
               marginHorizontal: 20,
-              marginBottom: 20,
+
               fontSize: 22,
               color: colors.appWhite,
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
             Commit to your health & fitness
-          </Text> */}
+          </Text>
           <View
             style={{
               marginHorizontal: 20,
@@ -192,7 +192,6 @@ const Premium: React.FC<{
                 flexDirection: 'row',
                 marginBottom: 20,
                 alignItems: 'center',
-                justifyContent: 'center',
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
@@ -215,7 +214,6 @@ const Premium: React.FC<{
                 flexDirection: 'row',
                 marginBottom: 20,
                 alignItems: 'center',
-                justifyContent: 'center',
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
@@ -240,7 +238,6 @@ const Premium: React.FC<{
                 flexDirection: 'row',
                 marginBottom: 20,
                 alignItems: 'center',
-                justifyContent: 'center',
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
@@ -265,7 +262,6 @@ const Premium: React.FC<{
                 flexDirection: 'row',
                 marginBottom: 10,
                 alignItems: 'center',
-                justifyContent: 'center',
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon

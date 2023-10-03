@@ -34,6 +34,7 @@ import {
   SET_READ,
   SET_AUTO_PLAY,
   SET_PREP_TIME,
+  SET_CHAT_MESSAGE,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -66,6 +67,7 @@ export interface ProfileState {
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
   chats: {[key: string]: Chat};
+  chatMessages: {[key: string]: string};
   state: AppStateStatus;
   weeklyItems: WeeklyItems;
   plan?: Plan;
@@ -115,6 +117,7 @@ const initialState: ProfileState = {
   loading: false,
   messages: {},
   chats: {},
+  chatMessages: {},
   state: AppState.currentState,
   weeklyItems: {
     quickRoutines: {},
@@ -299,6 +302,14 @@ const reducer = (
       return {
         ...state,
         prepTime: action.payload,
+      };
+    case SET_CHAT_MESSAGE:
+      return {
+        ...state,
+        chatMessages: {
+          ...state.chatMessages,
+          [action.payload.uid]: action.payload.message,
+        },
       };
     default:
       return state;

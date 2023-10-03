@@ -1,9 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import Purchases, {
-  PurchasesEntitlementInfo,
-  PurchasesPackage,
-} from 'react-native-purchases';
+import {PurchasesPackage} from 'react-native-purchases';
 
 import colors from '../../constants/colors';
 import SelectableButton from './SelectableButton';
@@ -12,6 +9,8 @@ const monthlyPrice = (p: PurchasesPackage) => {
   switch (p.product.identifier) {
     case 'yearly':
     case 'client_yearly':
+    case 'yearly:p1y':
+    case 'client_yearly:p1y':
       return p.product.price / 12;
     default:
       return p.product.price;

@@ -11,6 +11,7 @@ import {
   BubbleProps,
   MessageTextProps,
   Bubble,
+  IMessage,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
@@ -19,6 +20,7 @@ import {connect} from 'react-redux';
 import {
   loadEarlierMessages,
   sendMessage,
+  setChatMessage,
   setMessages,
   setRead,
 } from '../../../actions/profile';
@@ -35,6 +37,8 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
+import useInit from '../../../hooks/UseInit';
+import _ from 'lodash';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -57,6 +61,8 @@ interface ChatProps {
     startAfter: number,
   ) => void;
   loading: boolean;
+  chatMessages: {[key: string]: string};
+  setChatMessage: (uid: string, message: string) => void;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -71,10 +77,27 @@ const Chat: React.FC<ChatProps> = ({
   exercisesLoading,
   loadEarlierMessages: loadEarlierMessagesAction,
   loading,
+  chatMessages,
+  setChatMessage: setChatMessageAction,
 }) => {
   const {uid} = route.params;
-  const ref = useRef<GiftedChat>(null);
   const [text, setText] = useState('');
+  const [initialized, setInitialized] = useState(false);
+
+  const persistChat = useMemo(
+    () =>
+      _.debounce(t => {
+        setChatMessageAction(uid, t);
+      }, 1000),
+    [setChatMessageAction, uid],
+  );
+
+  const onInputTextChanged = (t: string) => {
+    setText(t);
+    if (initialized) {
+      persistChat(t);
+    }
+  };
 
   useEffect(() => {
     setReadAction(uid);
@@ -82,6 +105,15 @@ const Chat: React.FC<ChatProps> = ({
       setReadAction(uid);
     };
   }, [uid, setReadAction]);
+
+  useInit(() => {
+    setTimeout(() => {
+      setInitialized(true);
+      if (chatMessages[uid]) {
+        setText(chatMessages[uid]);
+      }
+    }, 500);
+  });
 
   const sortMessages = useCallback(() => {
     const messages = Object.values(messagesObj || {});
@@ -109,12 +141,6 @@ const Chat: React.FC<ChatProps> = ({
   }, [sortMessages]);
 
   const insets = useSafeAreaInsets();
-
-  useEffect(() => {
-    setTimeout(() => {
-      ref.current?.scrollToBottom();
-    }, 2000);
-  }, []);
 
   const renderCustomView = (props: BubbleProps<Message>) => {
     switch (props.currentMessage?.type) {
@@ -172,7 +198,7 @@ const Chat: React.FC<ChatProps> = ({
     }
   };
 
-  const renderAvatar = (props: AvatarProps<Message>) => {
+  const renderAvatar = (props: AvatarProps<IMessage>) => {
     return (
       <GiftedAvatar
         {...props}
@@ -197,7 +223,7 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header
         title={connection.name}
         hasBack
@@ -211,64 +237,60 @@ const Chat: React.FC<ChatProps> = ({
           </TouchableOpacity>
         }
       />
-      <Animated.View
-        entering={FadeIn.duration(1000).delay(500)}
-        style={{flex: 1}}>
-        <GiftedChat
-          wrapInSafeArea={false}
-          bottomOffset={insets.bottom}
-          renderCustomView={renderCustomView}
-          ref={ref}
-          messagesContainerStyle={{
-            paddingTop: Platform.OS === 'ios' ? 0 : 50,
-          }}
-          onInputTextChanged={setText}
-          text={text}
-          loadEarlier={showLoadEarlier}
-          isLoadingEarlier={loading}
-          onLoadEarlier={loadEarlier}
-          renderMessageText={renderMessageText}
-          messages={sortMessages()}
-          renderBubble={props => {
-            return (
-              <Bubble
-                {...props}
-                textStyle={{
-                  right: {
-                    fontFamily: 'Helvetica',
-                  },
-                  left: {
-                    fontFamily: 'Helvetica',
-                  },
-                }}
-                wrapperStyle={{
-                  left: {},
-                  right: {
-                    backgroundColor: colors.appBlue,
-                  },
-                }}
-              />
-            );
-          }}
-          user={{
-            _id: profile.uid,
-            name: profile.name,
-            avatar: profile.avatar,
-          }}
-          inverted={false}
-          renderAvatar={renderAvatar}
-          onSend={msgs => {
-            const message: Message = {
-              ...msgs[0],
-              type: 'text',
-              pending: true,
-              createdAt: moment().valueOf(),
-            };
-            sendMessageAction(message, chatId, uid);
-          }}
-        />
-        <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
-      </Animated.View>
+      <GiftedChat
+        renderCustomView={renderCustomView}
+        loadEarlier={showLoadEarlier}
+        isLoadingEarlier={loading}
+        onLoadEarlier={loadEarlier}
+        keyboardShouldPersistTaps="never"
+        renderMessageText={renderMessageText}
+        bottomOffset={insets.bottom - 10}
+        messages={sortMessages()}
+        messagesContainerStyle={{marginBottom: 10}}
+        textInputProps={{lineHeight: null}}
+        renderBubble={props => {
+          return (
+            <Bubble
+              {...props}
+              textStyle={{
+                right: {
+                  // fontFamily: 'Helvetica',
+                },
+                left: {
+                  // fontFamily: 'Helvetica',
+                },
+              }}
+              wrapperStyle={{
+                left: {},
+                right: {
+                  backgroundColor: colors.appBlue,
+                },
+              }}
+            />
+          );
+        }}
+        user={{
+          _id: profile.uid,
+          name: profile.name,
+          avatar: profile.avatar,
+        }}
+        scrollToBottom
+        renderAvatar={renderAvatar}
+        onSend={msgs => {
+          const message: Message = {
+            ...msgs[0],
+            type: 'text',
+            pending: true,
+            createdAt: moment().valueOf(),
+          };
+          sendMessageAction(message, chatId, uid);
+        }}
+        inverted={false}
+        onInputTextChanged={onInputTextChanged}
+        text={text}
+      />
+
+      <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
     </SafeAreaView>
   );
 };
@@ -278,6 +300,7 @@ const mapStateToProps = (
   props: ChatProps,
 ) => ({
   profile: profile.profile,
+  chatMessages: profile.chatMessages,
   messagesObj: profile.messages[props.route.params.uid],
   connection: profile.connections[props.route.params.uid],
   chatId: profile.chats[props.route.params.uid].id,
@@ -291,6 +314,7 @@ const mapDispatchToProps = {
   setReadAction: setRead,
   viewWorkoutAction: viewWorkout,
   loadEarlierMessages,
+  setChatMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

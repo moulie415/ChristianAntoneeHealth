@@ -49,6 +49,7 @@ export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 export const SET_AUTO_PLAY = 'SET_AUTO_PLAY';
 export const SET_PREP_TIME = 'SET_PREP_TIME';
+export const SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE';
 
 export interface SetProfileAction {
   type: typeof SET_PROFILE;
@@ -246,6 +247,11 @@ export interface SetPrepTimeAction {
   payload: number;
 }
 
+export interface SetChatMessageAction {
+  type: typeof SET_CHAT_MESSAGE;
+  payload: {uid: string; message: string};
+}
+
 export type ProfileActionTypes =
   | SetProfileAction
   | SetLoggedInAction
@@ -281,7 +287,8 @@ export type ProfileActionTypes =
   | SetMuscleMassSamplesAction
   | SetHasViewedTourAction
   | SetAutoPlayAction
-  | SetPrepTimeAction;
+  | SetPrepTimeAction
+  | SetChatMessageAction;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -509,4 +516,12 @@ export const setAutoPlay = (payload: boolean): SetAutoPlayAction => ({
 export const setPrepTime = (payload: number): SetPrepTimeAction => ({
   type: SET_PREP_TIME,
   payload,
+});
+
+export const setChatMessage = (
+  uid: string,
+  message: string,
+): SetChatMessageAction => ({
+  type: SET_CHAT_MESSAGE,
+  payload: {uid, message},
 });
