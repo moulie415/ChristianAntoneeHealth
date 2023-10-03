@@ -11,6 +11,7 @@ import Text from '../../commons/Text';
 import Header from '../../commons/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
+import {AnimatedScrollView} from '@kanelloc/react-native-animated-header-scroll-view';
 
 const EducationArticle: React.FC<{
   route: RouteProp<StackParamList, 'EducationArticle'>;
@@ -18,52 +19,83 @@ const EducationArticle: React.FC<{
   const {education} = route.params;
   const {width} = useWindowDimensions();
   return (
-    <View>
-      <ScrollView bounces={false} contentContainerStyle={{}}>
-        <Image
+    <AnimatedScrollView
+      HeaderNavbarComponent={<Header hasBack absolute />}
+      topBarHeight={0}
+      TopNavBarComponent={null}
+      headerImage={{uri: education.image.src}}>
+      <View
+        style={{
+          padding: 20,
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          marginTop: -35,
+          backgroundColor: colors.appWhite,
+        }}>
+        <Text
           style={{
-            height: 350,
+            fontSize: 25,
+            fontWeight: 'bold',
             marginBottom: 10,
-          }}
-          source={{uri: education.image.src}}>
-          <View
-            style={{
-              ...StyleSheet.absoluteFillObject,
-              backgroundColor: '#000',
-              opacity: 0.4,
-            }}
-          />
-        </Image>
-
-        <Header hasBack absolute />
-
-        <View
-          style={{
-            padding: 20,
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            marginTop: -35,
-            backgroundColor: colors.appWhite,
+            fontFamily: 'Helvetica',
           }}>
-          <Text
-            style={{
-              fontSize: 25,
-              fontWeight: 'bold',
-              marginBottom: 10,
-              fontFamily: 'Helvetica',
-            }}>
-            {education.title}
-          </Text>
-          <Text style={{fontSize: 12, fontFamily: 'Helvetica'}}>{`${moment(
-            education.createdate,
-          ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
-            education.category,
-          )}`}</Text>
+          {education.title}
+        </Text>
+        <Text style={{fontSize: 12, fontFamily: 'Helvetica'}}>{`${moment(
+          education.createdate,
+        ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
+          education.category,
+        )}`}</Text>
 
-          <RenderHtml contentWidth={width} source={{html: education.body}} />
-        </View>
-      </ScrollView>
-    </View>
+        <RenderHtml contentWidth={width} source={{html: education.body}} />
+      </View>
+    </AnimatedScrollView>
+    // <View>
+    //   <ScrollView bounces={false} contentContainerStyle={{}}>
+    //     <Image
+    //       style={{
+    //         height: 350,
+    //         marginBottom: 10,
+    //       }}
+    //       source={{uri: education.image.src}}>
+    //       <View
+    //         style={{
+    //           ...StyleSheet.absoluteFillObject,
+    //           backgroundColor: '#000',
+    //           opacity: 0.4,
+    //         }}
+    //       />
+    //     </Image>
+
+    //     <Header hasBack absolute />
+
+    //     <View
+    //       style={{
+    //         padding: 20,
+    //         borderTopLeftRadius: 30,
+    //         borderTopRightRadius: 30,
+    //         marginTop: -35,
+    //         backgroundColor: colors.appWhite,
+    //       }}>
+    //       <Text
+    //         style={{
+    //           fontSize: 25,
+    //           fontWeight: 'bold',
+    //           marginBottom: 10,
+    //           fontFamily: 'Helvetica',
+    //         }}>
+    //         {education.title}
+    //       </Text>
+    //       <Text style={{fontSize: 12, fontFamily: 'Helvetica'}}>{`${moment(
+    //         education.createdate,
+    //       ).format('DD MMMM YYYY')}   |   ${getEducationCategoryString(
+    //         education.category,
+    //       )}`}</Text>
+
+    //       <RenderHtml contentWidth={width} source={{html: education.body}} />
+    //     </View>
+    //   </ScrollView>
+    // </View>
   );
 };
 

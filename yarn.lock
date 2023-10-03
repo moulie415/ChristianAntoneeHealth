@@ -2171,6 +2171,11 @@
   resolved "https://registry.yarnpkg.com/@jsamr/react-native-li/-/react-native-li-2.3.1.tgz#12a5b5f6e3971cec77b96bee58104eed0ae9314a"
   integrity sha512-Qbo4NEj48SQ4k8FZJHFE2fgZDKTWaUGmVxcIQh3msg5JezLdTMMHuRRDYctfdHI6L0FZGObmEv3haWbIvmol8w==
 
+"@kanelloc/react-native-animated-header-scroll-view@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@kanelloc/react-native-animated-header-scroll-view/-/react-native-animated-header-scroll-view-1.0.0.tgz#56cf672be3c7cdd73799d7e13b89ae03e6c0c6d4"
+  integrity sha512-2006ZeIOowcPQY4IYiUWa/gA4CxEJJSD/gAdVs5nxpBOtrSeVY4HbaDcfw2/wxXzDhYLERswHAynaSPTbsKQLQ==
+
 "@miblanchard/react-native-slider@^2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@miblanchard/react-native-slider/-/react-native-slider-2.3.1.tgz#79e0f1f9b1ce43ef25ee51ee9256c012e5dfa412"

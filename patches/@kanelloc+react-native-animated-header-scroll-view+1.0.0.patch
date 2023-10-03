@@ -1,0 +1,22 @@
+diff --git a/node_modules/@kanelloc/react-native-animated-header-scroll-view/src/components/AnimatedNavbar.tsx b/node_modules/@kanelloc/react-native-animated-header-scroll-view/src/components/AnimatedNavbar.tsx
+index 31c373d..202345a 100644
+--- a/node_modules/@kanelloc/react-native-animated-header-scroll-view/src/components/AnimatedNavbar.tsx
++++ b/node_modules/@kanelloc/react-native-animated-header-scroll-view/src/components/AnimatedNavbar.tsx
+@@ -19,7 +19,7 @@ const AnimatedNavbar = ({
+ 
+   return (
+     <>
+-      <Animated.View
++      {!!TopNavbarComponent && <Animated.View
+         style={[
+           styles.container,
+           {
+@@ -31,7 +31,7 @@ const AnimatedNavbar = ({
+         ]}
+       >
+         {TopNavbarComponent}
+-      </Animated.View>
++      </Animated.View>}
+       <Animated.View
+         style={[
+           styles.container,

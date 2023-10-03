@@ -17,6 +17,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@gorhom/bottom-sheet": "^4.4.7",
     "@invertase/react-native-apple-authentication": "^2.2.2",
+    "@kanelloc/react-native-animated-header-scroll-view": "^1.0.0",
     "@miblanchard/react-native-slider": "^2.3.1",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-clipboard/clipboard": "^1.11.2",
