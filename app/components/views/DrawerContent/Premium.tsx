@@ -156,7 +156,7 @@ const Premium: React.FC<{
         style={{
           position: 'absolute',
           right: 0,
-          bottom: '60%',
+          bottom: '65%',
           left: 0,
           height: 200,
         }}
@@ -167,20 +167,20 @@ const Premium: React.FC<{
           bottom: 0,
           right: 0,
           left: 0,
-          height: '60%',
+          height: '65%',
           backgroundColor: colors.appGrey,
         }}>
         <ScrollView>
           <Text
             style={{
               marginHorizontal: 20,
-
-              fontSize: 22,
+              marginVertical: 10,
+              fontSize: 30,
               color: colors.appWhite,
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
-            Commit to your health & fitness
+            FIT FOR LIFE!
           </Text>
           <View
             style={{
