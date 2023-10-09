@@ -1,9 +1,8 @@
-import React, {MutableRefObject, useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import HomeCard from '../commons/HomeCard';
-
 import colors from '../../constants/colors';
 import Avatar from '../commons/Avatar';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -27,8 +26,6 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   profile: Profile;
 }> = ({navigation, profile}) => {
-
-
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>

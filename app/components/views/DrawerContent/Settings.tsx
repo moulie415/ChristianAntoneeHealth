@@ -21,7 +21,7 @@ import * as _ from 'lodash';
 import Text from '../../commons/Text';
 import Button from '../../commons/Button';
 import Divider from '../../commons/Divider';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import Toggle from '../../commons/Toggle';
 import {CLIENT_PREMIUM, PREP_TIME_SECS} from '../../../constants';
@@ -31,6 +31,8 @@ import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
 import {SettingsState} from '../../../reducers/settings';
 import PickerModal from '../../commons/PickerModal';
+import Clipboard from '@react-native-clipboard/clipboard';
+import Snackbar from 'react-native-snackbar';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
@@ -98,7 +100,7 @@ const Settings: React.FC<{
         <Header hasBack title="Settings" />
         <ScrollView
           keyboardShouldPersistTaps="always"
-          contentContainerStyle={{paddingBottom: 100}}>
+          contentContainerStyle={{paddingBottom: 200}}>
           {((profile.premium && profile.premium[CLIENT_PREMIUM]) ||
             profile.admin ||
             isTestFlight()) && (
@@ -366,28 +368,78 @@ const Settings: React.FC<{
             </Text>
             <Toggle value={marketing} onValueChange={setMarketing} />
           </TouchableOpacity>
+          <Text
+            style={{
+              margin: 10,
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              fontSize: 22,
+            }}>
+            Account
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(profile.uid);
+              Snackbar.show({text: 'User ID copied to clipboard'});
+            }}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              margin: 10,
+              backgroundColor: colors.tile,
+              height: 60,
+              paddingHorizontal: 10,
+              borderRadius: 12,
+            }}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: 16,
+                fontWeight: 'bold',
+                flex: 1,
+              }}>
+              User ID
+            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: colors.appWhite, fontSize: 12}}>
+                {profile.uid}
+              </Text>
+              <Icon
+                name="copy"
+                style={{marginLeft: 10}}
+                color={colors.appBlue}
+                size={18}
+                solid
+              />
+            </View>
+          </TouchableOpacity>
+          <Button
+            variant="danger"
+            text=" Delete my account"
+            style={{margin: 10}}
+            onPress={() => navigation.navigate('DeleteAccount')}
+          />
         </ScrollView>
-
-        <Button
-          onPress={() => {
-            setLoading(true);
-            navigation.goBack();
-            setTestReminderTimeAction(testDate);
-            setWorkoutReminderTimeAction(workoutDate);
-            updateProfileAction(newProfile);
-          }}
-          text="Save"
-          disabled={equal || loading}
-          style={{
-            margin: 10,
-            marginBottom: 20,
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-          }}
-        />
       </SafeAreaView>
+      <Button
+        onPress={() => {
+          setLoading(true);
+          navigation.goBack();
+          setTestReminderTimeAction(testDate);
+          setWorkoutReminderTimeAction(workoutDate);
+          updateProfileAction(newProfile);
+        }}
+        text="Save"
+        disabled={equal || loading}
+        style={{
+          marginHorizontal: 10,
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 30,
+        }}
+      />
       <PickerModal
         title="Select prepare time"
         visible={showPrepTime}
