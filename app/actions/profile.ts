@@ -50,6 +50,7 @@ export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 export const SET_AUTO_PLAY = 'SET_AUTO_PLAY';
 export const SET_PREP_TIME = 'SET_PREP_TIME';
 export const SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE';
+export const SET_WORKOUT_MUSIC = 'SET_WORKOUT_MUSIC';
 
 export interface SetProfileAction {
   type: typeof SET_PROFILE;
@@ -252,6 +253,11 @@ export interface SetChatMessageAction {
   payload: {uid: string; message: string};
 }
 
+export interface SetWorkoutMusicAction {
+  type: typeof SET_WORKOUT_MUSIC;
+  payload: boolean;
+}
+
 export type ProfileActionTypes =
   | SetProfileAction
   | SetLoggedInAction
@@ -288,7 +294,8 @@ export type ProfileActionTypes =
   | SetHasViewedTourAction
   | SetAutoPlayAction
   | SetPrepTimeAction
-  | SetChatMessageAction;
+  | SetChatMessageAction
+  | SetWorkoutMusicAction;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -524,4 +531,9 @@ export const setChatMessage = (
 ): SetChatMessageAction => ({
   type: SET_CHAT_MESSAGE,
   payload: {uid, message},
+});
+
+export const setWorkoutMusic = (payload: boolean): SetWorkoutMusicAction => ({
+  type: SET_WORKOUT_MUSIC,
+  payload,
 });

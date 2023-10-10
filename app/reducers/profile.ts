@@ -35,6 +35,7 @@ import {
   SET_AUTO_PLAY,
   SET_PREP_TIME,
   SET_CHAT_MESSAGE,
+  SET_WORKOUT_MUSIC,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -77,6 +78,7 @@ export interface ProfileState {
   syncPlanWithCalendar: boolean;
   autoPlay: boolean;
   prepTime: number;
+  workoutMusic: boolean;
 }
 
 const initialState: ProfileState = {
@@ -129,6 +131,7 @@ const initialState: ProfileState = {
   syncPlanWithCalendar: false,
   autoPlay: true,
   prepTime: 15,
+  workoutMusic: true,
 };
 
 const reducer = (
@@ -310,6 +313,11 @@ const reducer = (
           ...state.chatMessages,
           [action.payload.uid]: action.payload.message,
         },
+      };
+    case SET_WORKOUT_MUSIC:
+      return {
+        ...state,
+        workoutMusic: action.payload,
       };
     default:
       return state;

@@ -8,6 +8,7 @@ import {
   setPrepTime,
   setTestReminders,
   setTestReminderTime,
+  setWorkoutMusic,
   setWorkoutReminders,
   setWorkoutReminderTime,
   updateProfile,
@@ -54,6 +55,8 @@ const Settings: React.FC<{
   setAutoPlay: (autoPlay: boolean) => void;
   prepTime: number;
   setPrepTime: (prepTime: number) => void;
+  workoutMusic: boolean;
+  setWorkoutMusic: (play: boolean) => void;
 }> = ({
   workoutReminders,
   setWorkoutRemindersAction,
@@ -71,6 +74,8 @@ const Settings: React.FC<{
   setAutoPlay: setAutoPlayAction,
   prepTime,
   setPrepTime: setPrepTimeAction,
+  workoutMusic,
+  setWorkoutMusic: setWorkoutMusicAction,
 }) => {
   const [showWorkoutDate, setShowWorkoutDate] = useState(false);
   const [showTestDate, setShowTestDate] = useState(false);
@@ -160,6 +165,31 @@ const Settings: React.FC<{
                 <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
                   {`${prepTime} secs`}
                 </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setWorkoutMusicAction(!workoutMusic)}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: 10,
+                  backgroundColor: colors.tile,
+                  height: 60,
+                  paddingHorizontal: 10,
+                  borderRadius: 12,
+                }}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}>
+                  Workout music
+                </Text>
+                <Toggle
+                  value={workoutMusic}
+                  onValueChange={setWorkoutMusicAction}
+                />
               </TouchableOpacity>
               <Text
                 style={{
@@ -466,6 +496,7 @@ const mapStateToProps = ({profile, settings}: MyRootState) => ({
   settings,
   autoPlay: profile.autoPlay,
   prepTime: profile.prepTime,
+  workoutMusic: profile.workoutMusic,
 });
 
 const mapDispatchToProps = {
@@ -476,6 +507,7 @@ const mapDispatchToProps = {
   updateProfileAction: updateProfile,
   setAutoPlay,
   setPrepTime,
+  setWorkoutMusic,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

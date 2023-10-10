@@ -10,7 +10,6 @@
 #import "RCTAppleHealthKit.h"
 #import <React/RCTLinkingManager.h>
 #import "AVFoundation/AVFoundation.h"
-#import "Orientation.h"
 #import "RNFBAppCheckModule.h" 
 
 @implementation AppDelegate
@@ -94,10 +93,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
  return [RCTLinkingManager application:application
                   continueUserActivity:userActivity
                     restorationHandler:restorationHandler];
-}
-
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-  return [Orientation getOrientation];
 }
 
 @end

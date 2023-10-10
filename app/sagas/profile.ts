@@ -107,6 +107,18 @@ const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   }
 });
 
+export const workoutSong = new Sound(
+  'workout_song.mp3',
+  Sound.MAIN_BUNDLE,
+  error => {
+    if (error) {
+      console.log('failed to load the sound', error);
+    }
+  },
+);
+
+workoutSong.setNumberOfLoops(-1);
+
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 

@@ -5,7 +5,6 @@ import {RouteProp, useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
 import Header from '../../commons/Header';
-
 import Button from '../../commons/Button';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -21,12 +20,22 @@ import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import Spinner from '../../commons/Spinner';
 import ConnectedApps from '../../commons/ConnectedApps';
+import Toggle from '../../commons/Toggle';
+import {setWorkoutMusic} from '../../../actions/profile';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
   route: RouteProp<StackParamList, 'PreQuickRoutine'>;
   exercisesObj: {[key: string]: Exercise};
-}> = ({route, navigation, exercisesObj}) => {
+  workoutMusic: boolean;
+  setWorkoutMusic: (play: boolean) => void;
+}> = ({
+  route,
+  navigation,
+  exercisesObj,
+  workoutMusic,
+  setWorkoutMusic: setWorkoutMusicAction,
+}) => {
   const [loading, setLoading] = useState(false);
   const {
     routine: {
@@ -226,6 +235,30 @@ const PreQuickRoutine: React.FC<{
           )} body`}</Text>
         </View>
         {/* <ConnectedApps /> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 10,
+          }}>
+          <View style={{width: 55, alignItems: 'center'}}>
+            <Icon
+              name="music"
+              size={25}
+              color={colors.appWhite}
+              style={{
+                marginHorizontal: 15,
+              }}
+            />
+          </View>
+          <Text style={{color: colors.appWhite, flex: 1}}>Workout music</Text>
+          <Toggle
+            style={{marginRight: 20}}
+            value={workoutMusic}
+            onValueChange={setWorkoutMusicAction}
+          />
+        </View>
+
         <Button
           style={{margin: 15}}
           text="Let's go!"
@@ -241,8 +274,13 @@ const PreQuickRoutine: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   exercisesObj: exercises.exercises,
+  workoutMusic: profile.workoutMusic,
 });
 
-export default connect(mapStateToProps)(PreQuickRoutine);
+const mapDispatchToProps = {
+  setWorkoutMusic,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PreQuickRoutine);

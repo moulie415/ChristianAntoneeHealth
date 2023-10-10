@@ -18,8 +18,6 @@ import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import Orientation from 'react-native-orientation-locker';
-import ExerciseArrows from '../../commons/ExerciseArrows';
 import useInterval from '../../../hooks/UseInterval';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -35,6 +33,7 @@ import {SetAutoPlayAction, setAutoPlay} from '../../../actions/profile';
 import Profile from '../../../types/Profile';
 import Toggle from '../../commons/Toggle';
 import {FONTS_SIZES} from '../../../constants';
+import {workoutSong} from '../../../sagas/profile';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -46,6 +45,7 @@ const QuickRoutineView: React.FC<{
   exercisesObj: {[key: string]: Exercise};
   setAutoPlay: (autoPlay: boolean) => void;
   autoPlay: boolean;
+  workoutMusic: boolean;
 }> = ({
   videos,
   loading,
@@ -56,6 +56,7 @@ const QuickRoutineView: React.FC<{
   exercisesObj,
   setAutoPlay: setAutoPlayAction,
   autoPlay,
+  workoutMusic,
 }) => {
   const {routine, startTime} = route.params;
   const [tabIndex, setTabIndex] = useState(0);
@@ -74,10 +75,10 @@ const QuickRoutineView: React.FC<{
   }, [exercisesObj, routine.exerciseIds]);
 
   useEffect(() => {
-    if (routine.instructions || routine.steps) {
-      //  setShowModal(true);
+    if (workoutMusic) {
+      workoutSong.play();
     }
-  }, [routine.instructions, routine.steps]);
+  }, [workoutMusic]);
 
   const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(
     1000,
@@ -125,7 +126,9 @@ const QuickRoutineView: React.FC<{
               text: 'Yes',
               onPress: () => {
                 navigation.goBack();
-                Orientation.lockToPortrait();
+                if (workoutSong.isPlaying()) {
+                  workoutSong.stop();
+                }
               },
             },
           ]);
@@ -167,12 +170,6 @@ const QuickRoutineView: React.FC<{
                     <Spinner color={colors.appBlue} />
                   </View>
                 )}
-                {/* <ExerciseArrows
-                  exercises={exercises}
-                  index={i}
-                  pagerRef={pagerRef}
-                  fullscreen={fullscreen}
-                /> */}
                 {!fullscreen && (
                   <View
                     style={{
@@ -293,6 +290,9 @@ const QuickRoutineView: React.FC<{
                                       startTime,
                                       pauseEvents,
                                     });
+                                    if (workoutSong.isPlaying()) {
+                                      workoutSong.stop();
+                                    }
                                   },
                                 },
                               ]);
@@ -423,6 +423,7 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   exerciseNotes: exercises.exerciseNotes,
   exercisesObj: exercises.exercises,
   autoPlay: profile.autoPlay,
+  workoutMusic: profile.workoutMusic,
 });
 
 const mapDispatchToProps = {

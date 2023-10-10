@@ -27,6 +27,7 @@
 		0A8219072844F8B600C94F96 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8219062844F8B600C94F96 /* Singleton.swift */; };
 		0AB82E48278E202400DBEE1A /* notif.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AB82E47278E202400DBEE1A /* notif.wav */; };
 		0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABF7D9925FCF2D0008BB70F /* File.swift */; };
+		0AC506482AD5B2920061CBD5 /* workout_song.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AC506472AD5B2920061CBD5 /* workout_song.mp3 */; };
 		0AC669642851598000AB9B29 /* RNiTunes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC669632851598000AB9B29 /* RNiTunes.m */; };
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
@@ -147,6 +148,7 @@
 		0AB82E47278E202400DBEE1A /* notif.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = notif.wav; path = ../app/audio/notif.wav; sourceTree = "<group>"; };
 		0ABF7D9825FCF2D0008BB70F /* HealthAndMovement-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HealthAndMovement-Bridging-Header.h"; sourceTree = "<group>"; };
 		0ABF7D9925FCF2D0008BB70F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		0AC506472AD5B2920061CBD5 /* workout_song.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = workout_song.mp3; path = ../app/audio/workout_song.mp3; sourceTree = "<group>"; };
 		0AC669632851598000AB9B29 /* RNiTunes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNiTunes.m; sourceTree = "<group>"; };
 		0AC66965285159AB00AB9B29 /* RNiTunes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNiTunes.h; sourceTree = "<group>"; };
 		0AC9281126BEBEE20027F8AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -347,6 +349,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0AC506472AD5B2920061CBD5 /* workout_song.mp3 */,
 				0AB82E47278E202400DBEE1A /* notif.wav */,
 				0A24E31326DCFE050030CD7E /* countdown.wav */,
 				0A701BC526BF232800EB809A /* StoreKitTestCertificate.cer */,
@@ -565,6 +568,7 @@
 				0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */,
 				0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */,
 				90FF22CB05814F73A1C21308 /* MrDafoe-Regular.ttf in Resources */,
+				0AC506482AD5B2920061CBD5 /* workout_song.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

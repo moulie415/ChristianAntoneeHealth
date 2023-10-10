@@ -10,19 +10,9 @@ import Video, {OnProgressData} from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getVideoHeight} from '../../helpers';
 
-import {logError} from '../../helpers/error';
 import colors from '../../constants/colors';
 import moment from 'moment';
 import convertToProxyURL from 'react-native-video-cache';
-import {Slider} from '@miblanchard/react-native-slider';
-import LinearGradient from 'react-native-linear-gradient';
-import Orientation, {
-  LANDSCAPE_LEFT,
-  LANDSCAPE_RIGHT,
-  OrientationType,
-  useOrientationChange,
-} from 'react-native-orientation-locker';
-import { StyleSheet } from 'react-native';
 
 const ExerciseVideo: React.FC<{
   path: string;
@@ -47,8 +37,6 @@ const ExerciseVideo: React.FC<{
   const [hideTime, setHideTime] = useState(moment().unix());
   const ref = useRef<Video>(null);
   const showControls = paused || moment().unix() < hideTime + 3;
-  const [progressData, setProgressData] = useState<OnProgressData>();
-  const [orientation, setOrientation] = useState<OrientationType>();
 
   useEffect(() => {
     if (hasPressedPlay && currentIndex === videoIndex) {
@@ -57,16 +45,6 @@ const ExerciseVideo: React.FC<{
       setPaused(true);
     }
   }, [currentIndex, videoIndex, hasPressedPlay]);
-
-  useEffect(() => {
-    fullscreen
-      ? Orientation.unlockAllOrientations()
-      : Orientation.lockToPortrait();
-  }, [fullscreen]);
-
-  useOrientationChange(o => {
-    setOrientation(o);
-  });
 
   return (
     <View
@@ -82,15 +60,9 @@ const ExerciseVideo: React.FC<{
       <Video
         source={{uri: convertToProxyURL(path)}}
         style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
-        resizeMode={
-          orientation === OrientationType['LANDSCAPE-LEFT'] ||
-          orientation === OrientationType['LANDSCAPE-RIGHT']
-            ? 'cover'
-            : 'none'
-        }
+        resizeMode={'none'}
         ref={ref}
         onError={e => console.error(e)}
-        onProgress={setProgressData}
         repeat
         // onEnd={() => {
         //   ref.current?.seek(0);

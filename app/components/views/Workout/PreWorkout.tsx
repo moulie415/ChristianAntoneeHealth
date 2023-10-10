@@ -16,12 +16,22 @@ import {connect} from 'react-redux';
 import Exercise from '../../../types/Exercise';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
 import ConnectedApps from '../../commons/ConnectedApps';
+import Toggle from '../../commons/Toggle';
+import {setWorkoutMusic} from '../../../actions/profile';
 
 const PreWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreWorkout'>;
   route: RouteProp<StackParamList, 'PreWorkout'>;
   workout: Exercise[];
-}> = ({route, navigation, workout}) => {
+  workoutMusic: boolean;
+  setWorkoutMusic: (play: boolean) => void;
+}> = ({
+  route,
+  navigation,
+  workout,
+  setWorkoutMusic: setWorkoutMusicAction,
+  workoutMusic,
+}) => {
   const {planWorkout, planId} = route.params;
 
   const equipmentList = getEquipmentList(workout);
@@ -124,6 +134,29 @@ const PreWorkout: React.FC<{
           </Text>
         </View>
         <ConnectedApps />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 10,
+          }}>
+          <View style={{width: 55, alignItems: 'center'}}>
+            <Icon
+              name="music"
+              size={25}
+              color={colors.appWhite}
+              style={{
+                marginHorizontal: 15,
+              }}
+            />
+          </View>
+          <Text style={{color: colors.appWhite, flex: 1}}>Workout music</Text>
+          <Toggle
+            style={{marginRight: 20}}
+            value={workoutMusic}
+            onValueChange={setWorkoutMusicAction}
+          />
+        </View>
         <Button
           style={{margin: 15}}
           text="Start workout"
@@ -140,8 +173,13 @@ const PreWorkout: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   workout: exercises.workout,
+  workoutMusic: profile.workoutMusic,
 });
 
-export default connect(mapStateToProps)(PreWorkout);
+const mapDispatchToProps = {
+  setWorkoutMusic,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PreWorkout);
