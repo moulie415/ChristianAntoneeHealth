@@ -225,7 +225,7 @@ export const alertPremiumFeature = () => {
 
 export const getEquipmentList = (exercises: Exercise[]) => {
   const equipment = exercises.reduce((acc: Equipment[], cur) => {
-    if (cur.equipment) {
+    if (cur?.equipment) {
       return [...acc, ...cur.equipment];
     }
     return acc;

@@ -133,7 +133,7 @@ const PreWorkout: React.FC<{
             {musclesList && musclesList.length ? musclesList.join(', ') : ''}
           </Text>
         </View>
-        <ConnectedApps />
+        {/* <ConnectedApps /> */}
         <View
           style={{
             flexDirection: 'row',
