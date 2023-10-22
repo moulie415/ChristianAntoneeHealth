@@ -34,6 +34,7 @@ import Profile from '../../../types/Profile';
 import Toggle from '../../commons/Toggle';
 import {FONTS_SIZES} from '../../../constants';
 import {workoutSong} from '../../../sagas/profile';
+import playWorkoutSong from '../../../helpers/playWorkoutSong';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -76,7 +77,7 @@ const QuickRoutineView: React.FC<{
 
   useEffect(() => {
     if (workoutMusic) {
-      workoutSong.play();
+      playWorkoutSong();
     }
   }, [workoutMusic]);
 

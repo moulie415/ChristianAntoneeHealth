@@ -42,6 +42,7 @@ import Toggle from '../../commons/Toggle';
 import {setAutoPlay} from '../../../actions/profile';
 import {FONTS_SIZES} from '../../../constants';
 import {workoutSong} from '../../../sagas/profile';
+import playWorkoutSong from '../../../helpers/playWorkoutSong';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -85,7 +86,7 @@ const StartWorkout: React.FC<{
 
   useEffect(() => {
     if (workoutMusic) {
-      workoutSong.play();
+      playWorkoutSong();
     }
   }, [workoutMusic]);
 
