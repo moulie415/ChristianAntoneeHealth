@@ -3,7 +3,7 @@ import React from 'react';
 import {SavedQuickRoutine, SavedWorkout} from '../../types/SavedItem';
 import FastImage from 'react-native-fast-image';
 
-import {getEquipmentString, getImage, getLevelString} from './WorkoutCard';
+import {getEquipmentString, getLevelString} from './WorkoutCard';
 import {connect} from 'react-redux';
 import {Level, MyRootState} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
