@@ -12,16 +12,6 @@ import FastImage from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
 import LinearGradient from 'react-native-linear-gradient';
 
-export const getImage = (level?: Level) => {
-  if (level === Level.INTERMEDIATE) {
-    return require('../../images/intermediate.jpg');
-  }
-  if (level === Level.ADVANCED) {
-    return require('../../images/advanced.jpg');
-  }
-  return require('../../images/beginner.jpg');
-};
-
 export const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
     return 'Full Equipment';
@@ -65,7 +55,7 @@ const WorkoutCard: React.FC<{
         source={
           'thumbnail' in item && item.thumbnail
             ? {uri: item.thumbnail.src}
-            : getImage('level' in item ? item.level : Level.ADVANCED)
+            : require('../../images/upper_body.jpeg')
         }>
         <LinearGradient
           colors={[

@@ -39,7 +39,7 @@ const PreWorkout: React.FC<{
   return (
     <>
       <FastImage
-        source={require('../../../images/beginner.jpg')}
+        source={require('../../../images/new_workout.jpeg')}
         style={{height: getVideoHeight()}}>
         <View
           style={{

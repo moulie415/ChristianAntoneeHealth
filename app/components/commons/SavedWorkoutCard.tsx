@@ -72,7 +72,7 @@ const SavedWorkoutCard: React.FC<{
         source={
           quickRoutine
             ? {uri: quickRoutine.thumbnail?.src}
-            : getImage(Level.ADVANCED)
+            : require('../../images/upper_body.jpeg')
         }>
         <View
           style={{
