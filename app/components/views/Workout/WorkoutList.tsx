@@ -117,7 +117,7 @@ const WorkoutList: React.FC<{
         <Header hasBack />
         <FlatList
           ListEmptyComponent={() => (
-            <SafeAreaView style={{height: height - 50}}>
+            <SafeAreaView style={{height: height / 2}}>
               <AbsoluteSpinner
                 loading
                 style={{backgroundColor: colors.appGrey}}
@@ -146,7 +146,6 @@ const WorkoutList: React.FC<{
             );
           }}
         />
-        <AbsoluteSpinner loading={loading} />
       </SafeAreaView>
     </View>
   );

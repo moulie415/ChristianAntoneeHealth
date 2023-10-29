@@ -257,30 +257,32 @@ const Premium: React.FC<{
                 tests
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: 10,
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center'}}>
-                <Icon
-                  style={{marginRight: 20}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="comment"
-                  solid
-                />
-              </View>
-              <Text
+            {!profile.client && (
+              <View
                 style={{
-                  fontSize: 14,
-                  color: colors.appWhite,
+                  flexDirection: 'row',
+                  marginBottom: 10,
+                  alignItems: 'center',
                 }}>
-                Contact <Text style={{fontWeight: 'bold'}}>Christian</Text>{' '}
-                directly
-              </Text>
-            </View>
+                <View style={{justifyContent: 'center'}}>
+                  <Icon
+                    style={{marginRight: 20}}
+                    size={20}
+                    color={colors.appWhite}
+                    name="comment"
+                    solid
+                  />
+                </View>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: colors.appWhite,
+                  }}>
+                  Contact <Text style={{fontWeight: 'bold'}}>Christian</Text>{' '}
+                  directly
+                </Text>
+              </View>
+            )}
           </View>
           {packages.length ? (
             <>

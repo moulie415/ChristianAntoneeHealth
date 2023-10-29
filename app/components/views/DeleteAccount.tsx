@@ -68,6 +68,7 @@ const DeleteAccount: React.FC<{
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"
+            icon="envelope"
           />
         </View>
         {requiresPassword && (

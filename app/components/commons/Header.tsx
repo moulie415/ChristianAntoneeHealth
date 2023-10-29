@@ -111,7 +111,7 @@ const Header: React.FC<{
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: 22,
+            fontSize: 25,
             fontWeight: 'bold',
           }}>
           {title}

@@ -1,12 +1,10 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-
 import colors from '../../../constants/colors';
 import {Goal} from '../../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from '../../commons/Text';
 import Dumbbell from '../../../images/dumbbell.svg';
-import DumbbellRed from '../../../images/dumbbell_red.svg';
 import Time from '../../../images/time.svg';
 import Fire from '../../../images/fire.svg';
 import Button from '../../commons/Button';
@@ -69,7 +67,14 @@ const Goals: React.FC<{
           {' minutes training'}
         </Text>
 
-        <DumbbellRed />
+        <Icon
+          name="tachometer-alt"
+          size={25}
+          color={colors.button}
+          style={{
+            marginHorizontal: 15,
+          }}
+        />
         <Text
           style={{
             color: colors.appWhite,
@@ -104,7 +109,6 @@ const Goals: React.FC<{
           </>
         )}
       </View>
-
     </View>
   );
 };

@@ -10,21 +10,15 @@ import colors from '../../constants/colors';
 import Text from './Text';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Goal, Level, MyRootState} from '../../types/Shared';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import {getWeeklyItems} from '../../actions/profile';
 import {WeeklyItems} from '../../reducers/profile';
 import QuickRoutine from '../../types/QuickRoutines';
-import profileSaga from '../../sagas/profile';
-import Goals from '../../styles/views/Goals';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from './Header';
-// @ts-ignore
-import Confetti from 'react-native-confetti';
 import Tile from './Tile';
 import {ScrollView} from 'react-native-gesture-handler';
 import Dumbbell from '../../images/dumbbell.svg';
-import DumbbellRed from '../../images/dumbbell_red.svg';
 import Time from '../../images/time.svg';
 import Fire from '../../images/fire.svg';
 import {SvgProps} from 'react-native-svg';
@@ -32,7 +26,7 @@ import {SvgProps} from 'react-native-svg';
 interface GoalSet {
   title: string;
   key: string;
-  goal: number;
+  goal: number | ReactNode;
   score: number;
   icon: React.FC<SvgProps>;
 }
@@ -41,7 +35,7 @@ const GoalCircle: React.FC<{
   title: string;
   goal: number;
   score: number;
-  icon: React.FC<SvgProps>;
+  icon: React.FC<SvgProps> | ReactNode;
 }> = ({title, goal, score, icon: Icon}) => {
   const [fill, setFill] = useState(0);
 
@@ -184,7 +178,16 @@ const GoalSummaries: React.FC<{
     {
       title: `${workoutLevelTitleString} workouts completed`,
       key: 'workoutLevel',
-      icon: DumbbellRed,
+      icon: () => (
+        <Icon
+          name="tachometer-alt"
+          size={25}
+          color={colors.button}
+          style={{
+            marginHorizontal: 15,
+          }}
+        />
+      ),
       score: workoutLevelScore,
       goal: workoutGoal,
     },

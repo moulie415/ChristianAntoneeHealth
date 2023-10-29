@@ -72,7 +72,7 @@ const Connections: React.FC<{
         <Header
           hasBack
           title="Messaging"
-          right={<AddConnectionButton navigation={navigation} />}
+          // right={<AddConnectionButton navigation={navigation} />}
         />
         {Object.values(connections).length === 0 && (
           <Text

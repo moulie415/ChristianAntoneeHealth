@@ -11,8 +11,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Profile from '../../types/Profile';
 import Header from '../commons/Header';
-import {CLIENT_PREMIUM} from '../../constants';
-import isTestFlight from '../../helpers/isTestFlight';
 
 const {height, width} = Dimensions.get('window');
 
