@@ -26,7 +26,7 @@ import {SvgProps} from 'react-native-svg';
 interface GoalSet {
   title: string;
   key: string;
-  goal: number | ReactNode;
+  goal: number;
   score: number;
   icon: React.FC<SvgProps>;
 }
@@ -35,7 +35,7 @@ const GoalCircle: React.FC<{
   title: string;
   goal: number;
   score: number;
-  icon: React.FC<SvgProps> | ReactNode;
+  icon: React.FC<SvgProps>;
 }> = ({title, goal, score, icon: Icon}) => {
   const [fill, setFill] = useState(0);
 
