@@ -82,12 +82,12 @@ const Connections: React.FC<{
               color: colors.appWhite,
               fontSize: 20,
             }}>
-            No friends yet, press the invite button in the top right to send a
-            link.
+            No friends yet, you should not be seeing this please contact support
+            for help.
           </Text>
         )}
         <FlatList
-          contentContainerStyle={{flex: 1}}
+          keyExtractor={item => item.uid}
           data={Object.values(connections)}
           renderItem={({item}) => {
             const {lastMessage, createdAt, italicize} = getLastMessage(
@@ -100,7 +100,6 @@ const Connections: React.FC<{
                 style={{
                   padding: 10,
                   flexDirection: 'row',
-                  backgroundColor: colors.borderColor,
                 }}>
                 <View
                   style={{
@@ -136,7 +135,6 @@ const Connections: React.FC<{
                       fontSize: 10,
                       color: colors.appWhite,
                       marginBottom: 5,
-                      fontStyle: 'italic',
                     }}>
                     {getSimplifiedTime(createdAt || 0)}
                   </Text>
