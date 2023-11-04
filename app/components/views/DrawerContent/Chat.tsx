@@ -204,7 +204,7 @@ const Chat: React.FC<ChatProps> = ({
         {...props}
         containerStyle={{
           left: {
-            marginRight: Platform.OS === 'ios' ? 10 : 0,
+            // marginRight: Platform.OS === 'ios' ? 10 : 0,
           },
           right: {},
         }}
@@ -214,7 +214,7 @@ const Chat: React.FC<ChatProps> = ({
               uid={connection.uid}
               name={`${connection.name} ${connection.surname || ''}`}
               src={connection.avatar}
-              size={30}
+              size={28}
             />
           ) : null
         }
