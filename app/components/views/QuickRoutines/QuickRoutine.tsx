@@ -28,7 +28,6 @@ import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
-import Countdown from '../../commons/Countdown';
 import {SetAutoPlayAction, setAutoPlay} from '../../../actions/profile';
 import Profile from '../../../types/Profile';
 import Toggle from '../../commons/Toggle';
@@ -204,9 +203,16 @@ const QuickRoutineView: React.FC<{
                         exercise={exercise}
                         i={i}
                         index={index}
-                        setShowResistanceModal={setShowResistanceModal}
                         workout={exercises}
                         pagerRef={pagerRef}
+                        timerPaused={timerPaused}
+                        onTimerPaused={paused => {
+                          setTimerPaused(paused);
+                          setPauseEvents([
+                            ...pauseEvents,
+                            {time: new Date(), paused},
+                          ]);
+                        }}
                       />
 
                       {/* <WorkoutTabFooter
@@ -406,13 +412,6 @@ const QuickRoutineView: React.FC<{
           />
         </View>
       </Modal>
-      {/* {!loadingExercises && (
-        <Countdown
-          onComplete={() => {
-            setRoutineStarted(true);
-          }}
-        />
-      )} */}
       {/* <MusicButton /> */}
     </View>
   );

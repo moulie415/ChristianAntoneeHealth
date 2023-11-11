@@ -191,9 +191,16 @@ const StartWorkout: React.FC<{
                         exercise={exercise}
                         i={i}
                         index={index}
-                        setShowResistanceModal={setShowResistanceModal}
                         workout={workout}
                         pagerRef={pagerRef}
+                        timerPaused={timerPaused}
+                        onTimerPaused={paused => {
+                          setTimerPaused(paused);
+                          setPauseEvents([
+                            ...pauseEvents,
+                            {time: new Date(), paused},
+                          ]);
+                        }}
                       />
 
                       {/* <WorkoutTabFooter

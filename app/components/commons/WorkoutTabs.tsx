@@ -12,18 +12,20 @@ const WorkoutTabs: React.FC<{
   exercise: Exercise;
   i: number;
   index: number;
-  setShowResistanceModal: (show: boolean) => void;
   workout: Exercise[];
   pagerRef: RefObject<PagerView>;
+  timerPaused: boolean;
+  onTimerPaused: (paused: boolean) => void;
 }> = ({
   tabIndex,
   setTabIndex,
   exercise,
-  setShowResistanceModal,
   i,
   index,
   workout,
   pagerRef,
+  timerPaused,
+  onTimerPaused,
 }) => {
   const tabs = ['Timer', 'Muscles'];
 
@@ -39,6 +41,8 @@ const WorkoutTabs: React.FC<{
             exercise={exercise}
             workout={workout}
             pagerRef={pagerRef}
+            timerPaused={timerPaused}
+            onTimerPaused={onTimerPaused}
           />
         )}
         {i !== index && tabIndex === 0 && <View style={{height: 200}} />}

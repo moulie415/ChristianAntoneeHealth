@@ -30,7 +30,7 @@
     "selection.background": "#AB47BC40"
   },
   "materialTheme.accent": "Purple",
-  "workbench.colorTheme": "Community Material Theme Palenight High Contrast",
+  "workbench.colorTheme": "Catppuccin Macchiato",
   "files.autoSave": "afterDelay",
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative",

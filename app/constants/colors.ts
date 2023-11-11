@@ -1,4 +1,6 @@
-export default {
+import {ColorHex} from 'react-native-countdown-circle-timer';
+
+const colors: {[key: string]: ColorHex} = {
   button: '#E5E5E5',
   textGrey: '#6E6E6E',
   borderColor: '#4C5060',
@@ -19,3 +21,5 @@ export default {
   secondaryLight: '#FFA841',
   secondaryDark: '#E9632A',
 };
+
+export default colors;
