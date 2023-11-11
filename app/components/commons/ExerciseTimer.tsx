@@ -57,14 +57,19 @@ const ExerciseTimer: React.FC<{
       onPress={onPress}
       disabled={finished}
       entering={FadeIn}
-      style={{alignSelf: 'center', display: tabIndex === 0 ? 'flex' : 'none'}}>
+      style={{
+        alignSelf: 'center',
+        display: tabIndex === 0 ? 'flex' : 'none',
+        backgroundColor: finished ? colors.appBlue : 'transparent',
+        borderRadius: 100,
+      }}>
       <CountdownCircleTimer
         key={key}
         isPlaying={!timerPaused}
         strokeWidth={8}
         size={200}
         onComplete={onComplete}
-        trailColor={finished ? colors.appBlue : colors.borderColor}
+        trailColor={finished ? colors.muscleSecondary : colors.borderColor}
         duration={key === 'prep' ? PREP_TIME : exercise.time || 30}
         colors={[colors.appBlue, colors.appBlue, colors.appBlue, colors.appRed]}
         colorsTime={[7, 5, 2, 0]}>
@@ -78,7 +83,7 @@ const ExerciseTimer: React.FC<{
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginBottom: 5
+                    marginBottom: 5,
                   }}>
                   <Icon color={colors.appWhite} size={15} name="dumbbell" />
                   <Text
