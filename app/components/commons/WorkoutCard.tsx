@@ -114,7 +114,7 @@ const WorkoutCard: React.FC<{
                   }}>
                   {item.name}
                 </Text>
-                {'level' in item && (
+                {'level' in item && 'equipment' in item && (
                   <Text
                     style={{
                       color: colors.appWhite,

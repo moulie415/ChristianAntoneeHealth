@@ -100,6 +100,7 @@ export interface PlanWorkout {
   dates: string[];
   exercises: PlanExercise[];
   today?: boolean;
+  level: Level;
 }
 
 export interface PlanNutrition {

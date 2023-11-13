@@ -22,6 +22,7 @@ import Dumbbell from '../../images/dumbbell.svg';
 import Time from '../../images/time.svg';
 import Fire from '../../images/fire.svg';
 import {SvgProps} from 'react-native-svg';
+import {getGoalsData, getWorkoutLevelTitleString} from '../../helpers/goals';
 
 interface GoalSet {
   title: string;
@@ -99,72 +100,26 @@ const GoalSummaries: React.FC<{
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
 }> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
-  const workoutGoal = profile.goal === Goal.STRENGTH ? 4 : 3;
-  const minsGoal = profile.goal === Goal.WEIGHT_LOSS ? 180 : 150;
-
-  const workoutLevelTitleString =
-    profile.goal === Goal.WEIGHT_LOSS
-      ? 'Intermediate'
-      : profile.goal === Goal.STRENGTH
-      ? 'Intermediate'
-      : 'Beginner';
+  const workoutLevelTitleString = getWorkoutLevelTitleString(profile);
 
   useEffect(() => {
     getWeeklyItemsAction();
   }, [getWeeklyItemsAction]);
 
-  const savedWorkouts = weeklyItems?.workouts
-    ? Object.values(weeklyItems.workouts)
-    : [];
-
-  const savedQuickRoutines = weeklyItems?.quickRoutines
-    ? Object.values(weeklyItems.quickRoutines)
-    : [];
-
-  const quickRoutines =
-    savedQuickRoutines &&
-    savedQuickRoutines
-      .map(({quickRoutineId}) => {
-        return quickRoutinesObj[quickRoutineId];
-      })
-      .filter(x => x);
-
-  const workoutLevelScore = quickRoutines
-    ? quickRoutines.filter(routine => {
-        if (profile.goal === Goal.WEIGHT_LOSS) {
-          return routine.level === Level.INTERMEDIATE;
-        }
-        if (profile.goal === Goal.STRENGTH) {
-          return (
-            routine.level === Level.INTERMEDIATE ||
-            routine.level === Level.ADVANCED
-          );
-        }
-        return (
-          routine.level === Level.BEGINNER ||
-          routine.level === Level.INTERMEDIATE
-        );
-      }).length
-    : 0;
-
-  const mins = Math.round(
-    [...savedWorkouts, ...savedQuickRoutines].reduce((acc, cur) => {
-      return acc + cur.seconds / 60;
-    }, 0),
-  );
-
-  const calories = [...savedWorkouts, ...savedQuickRoutines].reduce(
-    (acc, cur) => {
-      return acc + (cur.calories || 0);
-    },
-    0,
-  );
+  const {
+    calories,
+    mins,
+    workoutLevelScore,
+    workoutGoal,
+    minsGoal,
+    workoutsCompleted,
+  } = getGoalsData(profile, weeklyItems, quickRoutinesObj);
 
   const goals: GoalSet[] = [
     {
       title: 'Workouts completed',
       key: 'workout',
-      score: [...savedWorkouts, ...savedQuickRoutines].length,
+      score: workoutsCompleted,
       goal: workoutGoal,
       icon: Dumbbell,
     },

@@ -108,6 +108,7 @@ const Plan: React.FC<{
     profile.admin ||
     isTestFlight();
 
+
   return (
     <>
       {plan && hasClientPremium ? (
