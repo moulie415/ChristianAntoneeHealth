@@ -22,7 +22,8 @@ import Dumbbell from '../../images/dumbbell.svg';
 import Time from '../../images/time.svg';
 import Fire from '../../images/fire.svg';
 import {SvgProps} from 'react-native-svg';
-import {getGoalsData, getWorkoutLevelTitleString} from '../../helpers/goals';
+import {getGoalsData} from '../../helpers/goals';
+import {SettingsState} from '../../reducers/settings';
 
 interface GoalSet {
   title: string;
@@ -99,9 +100,14 @@ const GoalSummaries: React.FC<{
   getWeeklyItemsAction: () => void;
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
-}> = ({profile, getWeeklyItemsAction, weeklyItems, quickRoutinesObj}) => {
-  const workoutLevelTitleString = getWorkoutLevelTitleString(profile);
-
+  settings: SettingsState;
+}> = ({
+  profile,
+  getWeeklyItemsAction,
+  weeklyItems,
+  quickRoutinesObj,
+  settings,
+}) => {
   useEffect(() => {
     getWeeklyItemsAction();
   }, [getWeeklyItemsAction]);
@@ -112,17 +118,15 @@ const GoalSummaries: React.FC<{
     workoutLevelScore,
     workoutGoal,
     minsGoal,
-    workoutsCompleted,
-  } = getGoalsData(profile, weeklyItems, quickRoutinesObj);
+    workoutLevelTitleString,
+  } = getGoalsData(
+    profile.goal || Goal.ACTIVE,
+    weeklyItems,
+    quickRoutinesObj,
+    settings,
+  );
 
   const goals: GoalSet[] = [
-    {
-      title: 'Workouts completed',
-      key: 'workout',
-      score: workoutsCompleted,
-      goal: workoutGoal,
-      icon: Dumbbell,
-    },
     {
       title: 'Minutes spent training',
       key: 'mins',
@@ -174,7 +178,7 @@ const GoalSummaries: React.FC<{
           textAlign: 'center',
           marginVertical: 10,
         }}>
-        Weekly Goals
+        Weekly Targets
       </Text>
       <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
         {goals.map(({goal, score, title, key, icon}) => {
@@ -193,10 +197,11 @@ const GoalSummaries: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, quickRoutines}: MyRootState) => ({
+const mapStateToProps = ({profile, quickRoutines, settings}: MyRootState) => ({
   profile: profile.profile,
   weeklyItems: profile.weeklyItems,
   quickRoutinesObj: quickRoutines.quickRoutines,
+  settings,
 });
 
 const mapDispatchToProps = {

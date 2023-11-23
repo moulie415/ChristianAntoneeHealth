@@ -23,6 +23,10 @@ import Snackbar from 'react-native-snackbar';
 import {SavedQuickRoutine} from '../types/SavedItem';
 import {setLoading} from '../actions/exercises';
 import {logError} from '../helpers/error';
+import {ProfileState} from '../reducers/profile';
+import {QuickRoutinesState} from '../reducers/quickRoutines';
+import {SettingsState} from '../reducers/settings';
+import { sendGoalTargetNotification } from '../helpers/goals';
 
 export function* getQuickRoutines() {
   try {
@@ -37,10 +41,29 @@ export function* getQuickRoutines() {
 
 function* saveQuickRoutine(action: SaveQuickRoutineAction) {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    yield call(api.saveQuickRoutine, action.payload, uid);
+    const {profile, weeklyItems}: ProfileState = yield select(
+      (state: MyRootState) => state.profile,
+    );
+    yield call(api.saveQuickRoutine, action.payload, profile.uid);
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Workout saved '});
+    }
+    if (profile.goal) {
+      const {quickRoutines}: QuickRoutinesState = yield select(
+        (state: MyRootState) => state.quickRoutines,
+      );
+
+      const settings: SettingsState = yield select(
+        (state: MyRootState) => state.settings,
+      );
+
+      sendGoalTargetNotification(
+        action.payload,
+        profile.goal,
+        weeklyItems,
+        quickRoutines,
+        settings,
+      );
     }
   } catch (e) {
     logError(e);

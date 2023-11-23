@@ -51,6 +51,14 @@ import {logError} from '../helpers/error';
 import * as _ from 'lodash';
 import {setProfile} from '../actions/profile';
 import * as polar from '../helpers/polar';
+import {QuickRoutinesState} from '../reducers/quickRoutines';
+import {
+  contributesToScore,
+  getGoalsData,
+  sendGoalTargetNotification,
+} from '../helpers/goals';
+import {ProfileState} from '../reducers/profile';
+import {SettingsState} from '../reducers/settings';
 
 export function* getExercises(action: GetExercisesAction) {
   const {level, goal, warmUp, coolDown} = action.payload;
@@ -98,10 +106,31 @@ export function* updateExercise(action: UpdateExerciseAction) {
 
 export function* saveWorkout(action: SaveWorkoutAction) {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    yield call(api.saveWorkout, action.payload, uid);
+    const {profile, weeklyItems}: ProfileState = yield select(
+      (state: MyRootState) => state.profile,
+    );
+
+    yield call(api.saveWorkout, action.payload, profile.uid);
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Workout saved'});
+    }
+
+    if (profile.goal) {
+      const {quickRoutines}: QuickRoutinesState = yield select(
+        (state: MyRootState) => state.quickRoutines,
+      );
+
+      const settings: SettingsState = yield select(
+        (state: MyRootState) => state.settings,
+      );
+
+      sendGoalTargetNotification(
+        action.payload,
+        profile.goal,
+        weeklyItems,
+        quickRoutines,
+        settings,
+      );
     }
   } catch (e) {
     logError(e);

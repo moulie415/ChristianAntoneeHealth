@@ -1,28 +1,29 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
 import colors from '../../../constants/colors';
-import {Goal} from '../../../types/Shared';
+import {Goal, MyRootState} from '../../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Text from '../../commons/Text';
 import Dumbbell from '../../../images/dumbbell.svg';
 import Time from '../../../images/time.svg';
 import Fire from '../../../images/fire.svg';
 import Button from '../../commons/Button';
+import {connect} from 'react-redux';
+import {SettingsState} from '../../../reducers/settings';
+import {capitalizeFirstLetter} from '../../../helpers';
 
 const ICON_SIZE = 100;
 const Goals: React.FC<{
   goal: Goal;
-  completeSignUp: () => void;
-  loading: boolean;
-}> = ({goal, completeSignUp, loading}) => {
-  const workoutGoal = goal === Goal.STRENGTH ? 4 : 3;
-  const minsGoal = goal === Goal.WEIGHT_LOSS ? 180 : 150;
-  const workoutLevelTitleString =
-    goal === Goal.WEIGHT_LOSS
-      ? 'Intermediate'
-      : goal === Goal.STRENGTH
-      ? 'Intermediate'
-      : 'Beginner';
+  settings: SettingsState;
+}> = ({goal, settings}) => {
+  const goalData = settings.workoutGoals[goal];
+  const workoutGoal = goalData?.workouts.number;
+  const minsGoal = goalData?.mins;
+  const workoutLevelTitleString = capitalizeFirstLetter(
+    goalData?.workouts.level || '',
+  );
+  const caloriesGoal = goalData?.calories || 0;
   return (
     <View
       style={{
@@ -37,22 +38,9 @@ const Goals: React.FC<{
           textAlign: 'center',
           marginBottom: 20,
         }}>
-        Here are your weekly goals...
+        Here are your weekly targets...
       </Text>
       <View style={{alignItems: 'center'}}>
-        <Dumbbell />
-        <Text
-          style={{
-            color: colors.appWhite,
-            fontSize: 16,
-            marginTop: 10,
-            marginBottom: 20,
-            textAlign: 'center',
-          }}>
-          {'Complete '}
-          <Text style={{fontWeight: 'bold'}}>{workoutGoal}</Text>
-          {' workouts'}
-        </Text>
         <Time />
         <Text
           style={{
@@ -90,27 +78,26 @@ const Goals: React.FC<{
             }}>{`${workoutGoal} `}</Text>
           {`${workoutLevelTitleString} workouts`}
         </Text>
-        {goal === Goal.WEIGHT_LOSS && (
-          <>
-            <Fire />
-
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontSize: 20,
-                marginTop: 10,
-                marginBottom: 20,
-                textAlign: 'center',
-              }}>
-              {'Burn '}
-              <Text style={{fontWeight: 'bold'}}>{3500}</Text>
-              {' calories'}
-            </Text>
-          </>
-        )}
+        <Fire />
+        <Text
+          style={{
+            color: colors.appWhite,
+            fontSize: 20,
+            marginTop: 10,
+            marginBottom: 20,
+            textAlign: 'center',
+          }}>
+          {'Burn '}
+          <Text style={{fontWeight: 'bold'}}>{caloriesGoal}</Text>
+          {' calories'}
+        </Text>
       </View>
     </View>
   );
 };
 
-export default Goals;
+const mapStateToProps = ({settings}: MyRootState) => ({
+  settings,
+});
+
+export default connect(mapStateToProps)(Goals);

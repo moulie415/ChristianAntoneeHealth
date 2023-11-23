@@ -294,6 +294,12 @@ function* signUp(action: SignUpAction) {
     if (fromProfile) {
       goBack();
     } else {
+      PushNotification.localNotification({
+        title: 'Great start you’ve set your goal!',
+        message:
+          'Well done for setting your first goal! Make sure you stay on track to hit your weekly targets by checking your profile tab!',
+        channelId: GOALS_CHANNEL_ID,
+      });
       resetToTabs();
     }
 
@@ -321,6 +327,7 @@ export const TEST_REMINDERS_CHANNEL_ID = 'TEST_REMINDERS_CHANNEL_ID';
 export const CONNECTION_ID = 'CONNECTION_ID';
 export const MESSAGE_CHANNEL_ID = 'MESSAGE_CHANNEL_ID';
 export const PLAN_CHANNEL_ID = 'PLAN_CHANNEL_ID';
+export const GOALS_CHANNEL_ID = 'GOALS_CHANNEL_ID';
 
 const channels: {
   channelId: string;
@@ -351,6 +358,11 @@ const channels: {
     channelId: PLAN_CHANNEL_ID,
     channelName: 'Plan updates',
     channelDescription: 'Channel for get notified about your plan updates',
+  },
+  {
+    channelId: GOALS_CHANNEL_ID,
+    channelName: 'Goal notifications',
+    channelDescription: 'Channel for goal related notifications',
   },
 ];
 

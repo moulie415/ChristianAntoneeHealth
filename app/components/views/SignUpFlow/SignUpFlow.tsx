@@ -166,9 +166,7 @@ const SignUpFlow: React.FC<{
     // 3
     {
       key: 'goals',
-      component: (
-        <Goals loading={loading} completeSignUp={completeSignUp} goal={goal} />
-      ),
+      component: <Goals goal={goal} />,
     },
   ];
 
