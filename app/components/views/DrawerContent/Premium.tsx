@@ -34,15 +34,10 @@ import {SettingsState} from '../../../reducers/settings';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import {CLIENT_PREMIUM} from '../../../constants';
 import Profile from '../../../types/Profile';
 import {navigationRef} from '../../../RootNavigation';
 import Button from '../../commons/Button';
 
-const isLockedPackage = (p: PurchasesPackage) => {
-  const list = ['client_yearly', 'client_monthly'];
-  return list.includes(p.product.identifier);
-};
 
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
@@ -84,36 +79,20 @@ const Premium: React.FC<{
 
   useEffect(() => {
     if (packages && packages.length) {
-      const initialSelected = packages.find(
-        p =>
-          (profile.client && p.packageType === 'CUSTOM') ||
-          (!profile.client && p.packageType !== 'CUSTOM'),
-      )?.identifier;
+      const initialSelected = packages[0]?.identifier;
       if (initialSelected) {
         setSelected(initialSelected);
       }
     }
-  }, [packages, profile.client]);
+  }, [packages]);
 
   const onPurchase = async (p?: PurchasesPackage) => {
     if (p) {
-      const locked = isLockedPackage(p) && !profile.client && !profile.admin;
       try {
-        if (locked) {
-          Alert.alert(
-            'Product unavailable',
-            'Please get in contact with Christian if you think you should have access to this product',
-          );
-          return;
-        }
         setLoading(true);
         const {customerInfo, productIdentifier} =
           await Purchases.purchasePackage(p);
-        if (
-          typeof customerInfo.entitlements.active.Premium !== 'undefined' ||
-          typeof customerInfo.entitlements.active[CLIENT_PREMIUM] !==
-            'undefined'
-        ) {
+        if (typeof customerInfo.entitlements.active.Premium !== 'undefined') {
           setLoading(false);
           navigationRef.goBack();
           setPremiumAction(customerInfo.entitlements.active);
@@ -257,32 +236,31 @@ const Premium: React.FC<{
                 tests
               </Text>
             </View>
-            {!profile.client && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 10,
-                  alignItems: 'center',
-                }}>
-                <View style={{justifyContent: 'center'}}>
-                  <Icon
-                    style={{marginRight: 20}}
-                    size={20}
-                    color={colors.appWhite}
-                    name="comment"
-                    solid
-                  />
-                </View>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: colors.appWhite,
-                  }}>
-                  Contact <Text style={{fontWeight: 'bold'}}>Christian</Text>{' '}
-                  directly
-                </Text>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: 10,
+                alignItems: 'center',
+              }}>
+              <View style={{justifyContent: 'center'}}>
+                <Icon
+                  style={{marginRight: 20}}
+                  size={20}
+                  color={colors.appWhite}
+                  name="comment"
+                  solid
+                />
               </View>
-            )}
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: colors.appWhite,
+                }}>
+                Contact <Text style={{fontWeight: 'bold'}}>Christian</Text>{' '}
+                directly
+              </Text>
+            </View>
           </View>
           {packages.length ? (
             <>
@@ -316,20 +294,14 @@ const Premium: React.FC<{
               ) : (
                 <>
                   {packages.map(item => {
-                    if (
-                      (profile.client && item.packageType === 'CUSTOM') ||
-                      (!profile.client && item.packageType !== 'CUSTOM')
-                    ) {
-                      return (
-                        <PremiumProduct
-                          p={item}
-                          key={item.identifier}
-                          selected={selected === item.identifier}
-                          setSelected={setSelected}
-                        />
-                      );
-                    }
-                    return null;
+                    return (
+                      <PremiumProduct
+                        p={item}
+                        key={item.identifier}
+                        selected={selected === item.identifier}
+                        setSelected={setSelected}
+                      />
+                    );
                   })}
 
                   <Button
@@ -349,10 +321,7 @@ const Premium: React.FC<{
                     setLoading(true);
                     const restore = await Purchases.restorePurchases();
                     if (
-                      typeof restore.entitlements.active.Premium !==
-                        'undefined' ||
-                      typeof restore.entitlements.active[CLIENT_PREMIUM] !==
-                        'undefined'
+                      typeof restore.entitlements.active.Premium !== 'undefined'
                     ) {
                       setLoading(false);
                       navigation.goBack();

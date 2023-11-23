@@ -35,7 +35,6 @@ export default interface Profile {
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;
-  client?: boolean;
   premium?: false | {[key: string]: PurchasesEntitlementInfo};
   unread?: {[key: string]: number};
 

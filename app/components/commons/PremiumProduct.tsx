@@ -8,9 +8,7 @@ import SelectableButton from './SelectableButton';
 const monthlyPrice = (p: PurchasesPackage) => {
   switch (p.product.identifier) {
     case 'yearly':
-    case 'client_yearly':
     case 'yearly:p1y':
-    case 'client_yearly:p1y':
       return p.product.price / 12;
     default:
       return p.product.price;
@@ -25,12 +23,6 @@ const getPackageStrings = (p: PurchasesPackage) => {
     case 'yearly':
     case 'yearly:p1y':
       return {title: 'yearly', alt: 'year'};
-    case 'client_monthly':
-    case 'client_monthly:p1m':
-      return {title: 'client monthly', alt: 'month'};
-    case 'client_yearly':
-    case 'client_yearly:p1y':
-      return {title: 'client yearly', alt: 'year'};
   }
 };
 

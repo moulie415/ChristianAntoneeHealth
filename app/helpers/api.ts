@@ -694,9 +694,3 @@ export const sendFeedback = async (
 ) => {
   return db().collection('feedback').doc(uid).set({feedback, rating});
 };
-
-export const getClientList = async () => {
-  return (await db().collection('clientList').get()).docs[0]
-    ?.data()
-    ?.emails?.map((email: string) => email.trim().toLowerCase());
-};

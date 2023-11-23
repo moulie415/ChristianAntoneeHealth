@@ -85,20 +85,18 @@ const Tabs: React.FC<{
         name="Profile"
         component={ProfileComponent}
       />
-      {(profile.admin || profile.client) && (
-        <Tab.Screen
-          options={{
-            tabBarLabel: 'Plan',
-            tabBarIcon: ({color, size}) => (
-              <PlanTabIcon color={color} size={size} />
-            ),
-            headerShown: false,
-          }}
-          name="Plan"
-          key="Plan"
-          component={Plan}
-        />
-      )}
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Plan',
+          tabBarIcon: ({color, size}) => (
+            <PlanTabIcon color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+        name="Plan"
+        key="Plan"
+        component={Plan}
+      />
     </Tab.Navigator>
   );
 };

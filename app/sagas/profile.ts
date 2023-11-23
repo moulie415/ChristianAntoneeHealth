@@ -97,7 +97,6 @@ import Message from '../types/Message';
 import {WeeklyItems} from '../reducers/profile';
 import {getQuickRoutinesById} from '../actions/quickRoutines';
 import _ from 'lodash';
-import {CLIENT_PREMIUM} from '../constants';
 import isTestFlight from '../helpers/isTestFlight';
 import {statusCodes} from '@react-native-google-signin/google-signin';
 
@@ -271,8 +270,6 @@ function* signUp(action: SignUpAction) {
     }
 
     const {profile} = yield select((state: MyRootState) => state.profile);
-    const clientList: string[] = yield call(api.getClientList);
-    const client = !!(clientList && clientList.includes(profile.email));
     yield call(
       api.updateUser,
       {
@@ -280,7 +277,6 @@ function* signUp(action: SignUpAction) {
         signedUp: true,
         ...action.payload,
         signUpDate: moment().unix(),
-        client,
       },
       profile.uid,
     );
@@ -288,7 +284,6 @@ function* signUp(action: SignUpAction) {
       setProfile({
         ...profile,
         ...action.payload,
-        client,
       }),
     );
     if (fromProfile) {
@@ -594,7 +589,6 @@ function* handleAuthWorker(action: HandleAuthAction) {
       yield put(setAdmin(isAdmin));
       if (
         customerInfo.entitlements.active.Premium ||
-        customerInfo.entitlements.active[CLIENT_PREMIUM] ||
         isAdmin ||
         isTestFlight()
       ) {

@@ -33,7 +33,6 @@ import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
 import {useFocusEffect} from '@react-navigation/native';
 import {setRead} from '../../../actions/profile';
-import {CLIENT_PREMIUM} from '../../../constants';
 import isTestFlight from '../../../helpers/isTestFlight';
 
 const renderScene = SceneMap({
@@ -103,15 +102,11 @@ const Plan: React.FC<{
     }
   });
 
-  const hasClientPremium =
-    (profile.premium && profile.premium[CLIENT_PREMIUM]) ||
-    profile.admin ||
-    isTestFlight();
-
+  const hasPremium = profile.premium || profile.admin || isTestFlight();
 
   return (
     <>
-      {plan && hasClientPremium ? (
+      {plan && hasPremium ? (
         <View style={{flex: 1, backgroundColor: colors.appGrey}}>
           <SafeAreaView style={{flex: 1}}>
             <Header showDrawerMenuButton />
@@ -195,22 +190,22 @@ const Plan: React.FC<{
             <Text style={{lineHeight: 25, color: '#fff'}}>
               This is your the screen for your personal customized plan, when
               Christian creates your plan it will appear here.{' '}
-              {hasClientPremium ? (
+              {hasPremium ? (
                 <Text>
-                  You're are already subscribed to Client Premium so you just
+                  You're are already subscribed to Premium so you just
                   need to wait for Christian to create your plan.
                 </Text>
               ) : (
                 <Text>
-                  To view your plan also make sure you're subscribed to Client
+                  To view your plan also make sure you're subscribed to
                   Premium.
                 </Text>
               )}
             </Text>
-            {!hasClientPremium && (
+            {!hasPremium && (
               <Button
                 style={{marginTop: 20}}
-                text="Get Client Premium"
+                text="Get Premium"
                 onPress={() => navigation.navigate('Premium', {})}
               />
             )}

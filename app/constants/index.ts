@@ -40,8 +40,6 @@ export const MUSCLE_MASSES = [...Array(100).keys()];
 export const BONE_DENSITIES = [...Array(11).keys()];
 export const PREP_TIME_SECS = [...Array(61).keys()];
 
-export const CLIENT_PREMIUM = 'Client Premium';
-
 export const TABLE_HEADER_KEYS = [
   'age',
   'veryPoor',

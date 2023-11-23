@@ -218,92 +218,88 @@ const Settings: React.FC<{
             }
           />
 
-          {(profile.client || profile.admin) && (
-            <>
-              <SettingsItem
+          <SettingsItem
+            disabled={!plan}
+            onPress={() => toggle(!syncWithCalendar)}
+            text="Sync custom plans with native calendar"
+            right={
+              <Toggle
                 disabled={!plan}
-                onPress={() => toggle(!syncWithCalendar)}
-                text="Sync custom plans with native calendar"
-                right={
-                  <Toggle
-                    disabled={!plan}
-                    value={syncWithCalendar}
-                    onValueChange={toggle}
+                value={syncWithCalendar}
+                onValueChange={toggle}
+              />
+            }
+          />
+          <Text
+            style={{
+              margin: 10,
+              marginTop: 35,
+              fontSize: 18,
+              color: colors.appWhite,
+              fontWeight: 'bold',
+            }}>
+            Notifications
+          </Text>
+
+          <SettingsItem
+            onPress={() => setWorkoutRemindersAction(!workoutReminders)}
+            text="Workout reminders"
+            right={
+              <Toggle
+                value={workoutReminders}
+                onValueChange={setWorkoutRemindersAction}
+              />
+            }
+          />
+
+          <SettingsItem
+            onPress={() => setShowWorkoutDate(true)}
+            disabled={Platform.OS === 'ios'}
+            text="Time of workout reminder"
+            right={
+              <>
+                {(showWorkoutDate || Platform.OS === 'ios') && (
+                  <DateTimePicker
+                    disabled={!workoutReminders}
+                    style={{width: 150}}
+                    testID="time"
+                    value={new Date(workoutDate)}
+                    textColor={colors.appWhite}
+                    // placeholderText="Select date"
+                    mode="time"
+                    // is24Hour={true}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    onChange={(event, d: Date | undefined) => {
+                      if (d) {
+                        setWorkoutDate(d);
+                      }
+                      setShowWorkoutDate(Platform.OS === 'ios');
+                    }}
                   />
-                }
-              />
-              <Text
-                style={{
-                  margin: 10,
-                  marginTop: 35,
-                  fontSize: 18,
-                  color: colors.appWhite,
-                  fontWeight: 'bold',
-                }}>
-                Notifications
-              </Text>
+                )}
+                {Platform.OS === 'android' && (
+                  <TouchableOpacity
+                    disabled={!workoutReminders}
+                    onPress={() => setShowWorkoutDate(true)}>
+                    <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                      {moment(workoutDate).format('HH:mm')}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </>
+            }
+          />
 
-              <SettingsItem
-                onPress={() => setWorkoutRemindersAction(!workoutReminders)}
-                text="Workout reminders"
-                right={
-                  <Toggle
-                    value={workoutReminders}
-                    onValueChange={setWorkoutRemindersAction}
-                  />
-                }
-              />
+          <Text
+            style={{
+              fontStyle: 'italic',
+              fontSize: 12,
+              color: colors.appWhite,
+              marginLeft: 10,
+            }}>
+            Please note these reminders are for custom plans only
+          </Text>
 
-              <SettingsItem
-                onPress={() => setShowWorkoutDate(true)}
-                disabled={Platform.OS === 'ios'}
-                text="Time of workout reminder"
-                right={
-                  <>
-                    {(showWorkoutDate || Platform.OS === 'ios') && (
-                      <DateTimePicker
-                        disabled={!workoutReminders}
-                        style={{width: 150}}
-                        testID="time"
-                        value={new Date(workoutDate)}
-                        textColor={colors.appWhite}
-                        // placeholderText="Select date"
-                        mode="time"
-                        // is24Hour={true}
-                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                        onChange={(event, d: Date | undefined) => {
-                          if (d) {
-                            setWorkoutDate(d);
-                          }
-                          setShowWorkoutDate(Platform.OS === 'ios');
-                        }}
-                      />
-                    )}
-                    {Platform.OS === 'android' && (
-                      <TouchableOpacity
-                        disabled={!workoutReminders}
-                        onPress={() => setShowWorkoutDate(true)}>
-                        <Text
-                          style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                          {moment(workoutDate).format('HH:mm')}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </>
-                }
-              />
-
-              <Text
-                style={{
-                  fontStyle: 'italic',
-                  fontSize: 12,
-                  color: colors.appWhite,
-                  marginLeft: 10,
-                }}>
-                Please note these reminders are for custom plans only
-              </Text>
-            </>
-          )}
           <Text
             style={{
               margin: 10,
