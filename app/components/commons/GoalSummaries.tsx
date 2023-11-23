@@ -116,6 +116,7 @@ const GoalSummaries: React.FC<{
     calories,
     mins,
     workoutLevelScore,
+    caloriesGoal,
     workoutGoal,
     minsGoal,
     workoutLevelTitleString,
@@ -150,17 +151,15 @@ const GoalSummaries: React.FC<{
       score: workoutLevelScore,
       goal: workoutGoal,
     },
-  ];
-
-  if (profile.goal === Goal.WEIGHT_LOSS) {
-    goals.push({
+    {
       title: 'Calories burned',
       key: 'calories',
-      goal: 3500,
+      goal: caloriesGoal,
       score: calories,
       icon: Fire,
-    });
-  }
+    }
+  ];
+
 
   return (
     <Tile
