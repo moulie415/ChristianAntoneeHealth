@@ -1,3 +1,4 @@
+import PushNotification from 'react-native-push-notification';
 import {capitalizeFirstLetter} from '.';
 import {SaveWorkoutAction} from '../actions/exercises';
 import {SaveQuickRoutineAction} from '../actions/quickRoutines';
@@ -7,6 +8,7 @@ import Profile from '../types/Profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
 import {Goal, Level, PlanWorkout} from '../types/Shared';
+import {GOALS_CHANNEL_ID} from '../sagas/profile';
 
 interface GenericWorkout {
   level: Level;
@@ -139,13 +141,19 @@ export const sendGoalTargetNotification = (
       mins < minsGoal ||
       workoutLevelScore < workoutGoal
     ) {
+      let completed = 0;
       // check if they've now met all the targets
       if (
         newWorkoutLevelScore >= workoutGoal &&
         newCalories >= caloriesGoal &&
         newMins >= minsGoal
       ) {
-        // well done you've met all your targets for this week!
+        PushNotification.localNotification({
+          title: 'Weekly targets complete!',
+          message:
+            'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
+          channelId: GOALS_CHANNEL_ID,
+        });
         return;
       }
       // Otherwise check individual targets
@@ -153,14 +161,23 @@ export const sendGoalTargetNotification = (
         workoutLevelScore < workoutGoal &&
         newWorkoutLevelScore >= workoutGoal
       ) {
-        return;
+        completed += 1;
       }
 
       if (calories < caloriesGoal && newCalories >= caloriesGoal) {
-        return;
+        completed += 1;
       }
       if (mins < minsGoal && newMins >= caloriesGoal) {
-        return;
+        completed += 1;
+      }
+      if (completed > 0) {
+        PushNotification.localNotification({
+          title: 'Well done!',
+          message: `you’ve completed ${completed} of your weekly targets! Only ${
+            3 - completed
+          } more to go!`,
+          channelId: GOALS_CHANNEL_ID,
+        });
       }
     }
   }
