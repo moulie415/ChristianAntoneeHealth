@@ -117,15 +117,6 @@ const SavedWorkoutCard: React.FC<{
                 </Text>
               </Text>
             </View>
-            {'difficulty' in item && (
-              <Text
-                style={{
-                  fontSize: 30,
-                  marginHorizontal: 5,
-                }}>
-                {getDifficultyEmoji(item.difficulty)}
-              </Text>
-            )}
           </View>
 
           <View

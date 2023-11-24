@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Animated, {FadeIn} from 'react-native-reanimated';
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {workoutSong} from '../../sagas/profile';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -48,7 +49,14 @@ const ExerciseTimer: React.FC<{
     }
   };
 
-  const onPress = () => onTimerPaused(!timerPaused);
+  const onPress = () => {
+    onTimerPaused(!timerPaused);
+    if (timerPaused) {
+      workoutSong.play();
+    } else {
+      workoutSong.pause();
+    }
+  };
 
   const isPrepping = key === 'prep';
 

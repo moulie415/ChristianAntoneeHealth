@@ -38,7 +38,6 @@ import Profile from '../../../types/Profile';
 import {navigationRef} from '../../../RootNavigation';
 import Button from '../../commons/Button';
 
-
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
   setPremiumAction: (
@@ -115,6 +114,7 @@ const Premium: React.FC<{
 
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
+
   return (
     <>
       <FastImage
@@ -174,7 +174,7 @@ const Premium: React.FC<{
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
-                  style={{marginRight: 20}}
+                  style={{width: 40}}
                   size={20}
                   color={colors.appWhite}
                   name="dumbbell"
@@ -185,7 +185,8 @@ const Premium: React.FC<{
                   fontSize: 14,
                   color: colors.appWhite,
                 }}>
-                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> workouts
+                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> on-demand
+                workouts & fitness tests
               </Text>
             </View>
             <View
@@ -196,7 +197,7 @@ const Premium: React.FC<{
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
-                  style={{marginRight: 20}}
+                  style={{width: 40}}
                   size={20}
                   color={colors.appWhite}
                   name="book-open"
@@ -220,10 +221,10 @@ const Premium: React.FC<{
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
-                  style={{marginRight: 20}}
+                  style={{width: 40}}
                   size={20}
                   color={colors.appWhite}
-                  name="heartbeat"
+                  name="calendar-alt"
                 />
               </View>
 
@@ -232,8 +233,7 @@ const Premium: React.FC<{
                   fontSize: 14,
                   color: colors.appWhite,
                 }}>
-                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> fitness
-                tests
+                Request custom workouts from Christian
               </Text>
             </View>
 
@@ -245,7 +245,7 @@ const Premium: React.FC<{
               }}>
               <View style={{justifyContent: 'center'}}>
                 <Icon
-                  style={{marginRight: 20}}
+                  style={{width: 40}}
                   size={20}
                   color={colors.appWhite}
                   name="comment"
@@ -257,8 +257,7 @@ const Premium: React.FC<{
                   fontSize: 14,
                   color: colors.appWhite,
                 }}>
-                Contact <Text style={{fontWeight: 'bold'}}>Christian</Text>{' '}
-                directly
+                In-app real time trainer-to-client messaging
               </Text>
             </View>
           </View>
