@@ -24,6 +24,7 @@ const ExerciseTimer: React.FC<{
   prepTime: number;
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
+  workoutMusic: boolean;
 }> = ({
   index,
   workout,
@@ -34,6 +35,7 @@ const ExerciseTimer: React.FC<{
   tabIndex,
   timerPaused,
   onTimerPaused,
+  workoutMusic,
 }) => {
   const [key, setKey] = useState<'prep' | 'exercise'>('prep');
 
@@ -51,10 +53,12 @@ const ExerciseTimer: React.FC<{
 
   const onPress = () => {
     onTimerPaused(!timerPaused);
-    if (timerPaused) {
-      workoutSong.play();
-    } else {
-      workoutSong.pause();
+    if (workoutMusic) {
+      if (timerPaused) {
+        workoutSong.play();
+      } else {
+        workoutSong.pause();
+      }
     }
   };
 
@@ -162,6 +166,7 @@ const ExerciseTimer: React.FC<{
 const mapStateToProps = ({profile}: MyRootState) => ({
   autoPlay: profile.autoPlay,
   prepTime: profile.prepTime,
+  workoutMusic: profile.workoutMusic,
 });
 
 export default connect(mapStateToProps)(ExerciseTimer);
