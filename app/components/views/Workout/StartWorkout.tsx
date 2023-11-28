@@ -39,7 +39,7 @@ import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 import Toggle from '../../commons/Toggle';
-import {setAutoPlay} from '../../../actions/profile';
+import {UpdateProfilePayload, updateProfile} from '../../../actions/profile';
 import {FONTS_SIZES} from '../../../constants';
 import {workoutSong} from '../../../sagas/profile';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
@@ -52,20 +52,14 @@ const StartWorkout: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
   loading: boolean;
   profile: Profile;
-  setAutoPlay: (autoPlay: boolean) => void;
-  autoPlay: boolean;
-  workoutMusic: boolean;
+  updateProfile: (payload: UpdateProfilePayload) => void;
 }> = ({
   workout,
   navigation,
-  exerciseNotes,
-  videos,
   loading,
   profile,
   route,
-  autoPlay,
-  setAutoPlay: setAutoPlayAction,
-  workoutMusic,
+  updateProfile: updateProfileAction,
 }) => {
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
@@ -84,11 +78,13 @@ const StartWorkout: React.FC<{
 
   const loadingExercises = !workout || workout.some(e => e === undefined);
 
+  const setAutoPlay = (autoPlay: boolean) => updateProfileAction({autoPlay});
+
   useEffect(() => {
-    if (workoutMusic) {
+    if (profile.workoutMusic) {
       playWorkoutSong();
     }
-  }, [workoutMusic]);
+  }, [profile.workoutMusic]);
 
   return (
     <View style={{flex: 1}}>
@@ -219,7 +215,7 @@ const StartWorkout: React.FC<{
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index === 0 && (
                           <TouchableOpacity
-                            onPress={() => setAutoPlayAction(!autoPlay)}
+                            onPress={() => setAutoPlay(!profile.autoPlay)}
                             style={{
                               flex: 1,
                               flexDirection: 'row',
@@ -239,8 +235,8 @@ const StartWorkout: React.FC<{
                               AUTO-PLAY
                             </Text>
                             <Toggle
-                              value={autoPlay}
-                              onValueChange={setAutoPlayAction}
+                              value={profile.autoPlay}
+                              onValueChange={setAutoPlay}
                             />
                           </TouchableOpacity>
                         )}
@@ -344,12 +340,10 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   videos: exercises.videos,
   loading: exercises.videoLoading,
   profile: profile.profile,
-  autoPlay: profile.autoPlay,
-  workoutMusic: profile.workoutMusic,
 });
 
 const mapDispatchToProps = {
-  setAutoPlay,
+  updateProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);

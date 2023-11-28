@@ -18,11 +18,6 @@ import {
   syncPlanWithCalendar,
   SyncPlanWithCalendarAction,
 } from '../actions/plan';
-import {
-  SET_TEST_REMINDERS,
-  SET_WORKOUT_REMINDERS,
-  SET_WORKOUT_REMINDER_TIME,
-} from '../actions/profile';
 import {logError} from '../helpers/error';
 import Profile from '../types/Profile';
 import {MyRootState, Plan} from '../types/Shared';
@@ -37,6 +32,8 @@ import moment from 'moment';
 import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
+import {ProfileState} from '../reducers/profile';
+import { UPDATE_PROFILE } from '../actions/profile';
 
 function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
   try {
@@ -53,7 +50,7 @@ function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
 
       const keys: string[] = [];
 
-      const {syncedPlanEvents, reminderTime} = yield select(
+      const {syncedPlanEvents, profile}: ProfileState = yield select(
         (state: MyRootState) => state.profile,
       );
 
@@ -70,12 +67,12 @@ function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
             details: {
               ...(currentId ? {id: currentId} : {}),
               startDate: moment(date)
-                .set('hours', moment(reminderTime).hours())
-                .set('minutes', moment(reminderTime).minutes())
+                .set('hours', moment(profile.workoutReminderTime).hours())
+                .set('minutes', moment(profile.workoutReminderTime).minutes())
                 .toISOString(),
               endDate: moment(date)
-                .set('hours', moment(reminderTime).hours())
-                .set('minutes', moment(reminderTime).minutes())
+                .set('hours', moment(profile.workoutReminderTime).hours())
+                .set('minutes', moment(profile.workoutReminderTime).minutes())
                 .add(1, 'hour')
                 .toISOString(),
               calendarId,
@@ -117,21 +114,16 @@ export function* schedulePlanReminders() {
   const plan: Plan | undefined = yield select(
     (state: MyRootState) => state.profile.plan,
   );
-  const {
-    testReminders,
-    workoutReminders,
-    reminderTime,
-    testReminderTime,
-    syncPlanWithCalendar: sync,
-    calendarId,
-  } = yield select((state: MyRootState) => state.profile);
+  const {calendarId, profile}: ProfileState = yield select(
+    (state: MyRootState) => state.profile,
+  );
   if (plan) {
-    if (plan.workouts && workoutReminders) {
+    if (plan.workouts && profile.workoutReminders) {
       plan.workouts.forEach(workout => {
         workout.dates.forEach(d => {
           const date = moment(d)
-            .set('hours', moment(reminderTime).hours())
-            .set('minutes', moment(reminderTime).minutes());
+            .set('hours', moment(profile.workoutReminderTime).hours())
+            .set('minutes', moment(profile.workoutReminderTime).minutes());
           if (date.isAfter(moment())) {
             scheduleLocalNotification(
               'Reminder to do your workout for today',
@@ -143,8 +135,10 @@ export function* schedulePlanReminders() {
       });
     }
 
-    if (sync && calendarId) {
-      yield put(syncPlanWithCalendar(plan as Plan, sync));
+    if (profile.syncPlanWithCalendar && calendarId) {
+      yield put(
+        syncPlanWithCalendar(plan as Plan, profile.syncPlanWithCalendar),
+      );
     }
     // if (plan.tests && testReminders) {
     //   plan.tests.forEach(test => {
@@ -293,10 +287,7 @@ function* getPlanWorker() {
 export default function* planSaga() {
   yield all([
     takeLatest(GET_PLAN, getPlanWorker),
-    takeLatest(SET_WORKOUT_REMINDERS, schedulePlanReminders),
-    takeLatest(SET_WORKOUT_REMINDER_TIME, schedulePlanReminders),
-    takeLatest(SET_TEST_REMINDERS, schedulePlanReminders),
-    takeLatest(SET_TEST_REMINDERS, schedulePlanReminders),
+    takeLatest(UPDATE_PROFILE, schedulePlanReminders),
     takeLatest(SYNC_PLAN_WITH_CALENDAR, syncPlanWithCalendarWorker),
   ]);
 }

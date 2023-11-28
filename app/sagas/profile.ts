@@ -696,7 +696,7 @@ export default function* profileSaga() {
   yield all([
     takeLatest(SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
-    takeLatest(UPDATE_PROFILE, updateProfile),
+    debounce(3000, UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
     throttle(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),

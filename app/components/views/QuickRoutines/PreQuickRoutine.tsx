@@ -21,20 +21,20 @@ import convertToProxyURL from 'react-native-video-cache';
 import Spinner from '../../commons/Spinner';
 import ConnectedApps from '../../commons/ConnectedApps';
 import Toggle from '../../commons/Toggle';
-import {setWorkoutMusic} from '../../../actions/profile';
+import {UpdateProfilePayload, updateProfile} from '../../../actions/profile';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
   route: RouteProp<StackParamList, 'PreQuickRoutine'>;
   exercisesObj: {[key: string]: Exercise};
-  workoutMusic: boolean;
-  setWorkoutMusic: (play: boolean) => void;
+  workoutMusic?: boolean;
+  updateProfile: (payload: UpdateProfilePayload) => void;
 }> = ({
   route,
   navigation,
   exercisesObj,
   workoutMusic,
-  setWorkoutMusic: setWorkoutMusicAction,
+  updateProfile: updateProfileAction,
 }) => {
   const [loading, setLoading] = useState(false);
   const {
@@ -60,6 +60,9 @@ const PreQuickRoutine: React.FC<{
 
   const [paused, setPaused] = useState(false);
   const focused = useIsFocused();
+
+  const setWorkoutMusic = (wm: boolean) =>
+    updateProfileAction({workoutMusic: wm});
 
   useEffect(() => {
     if (focused) {
@@ -255,7 +258,7 @@ const PreQuickRoutine: React.FC<{
           <Toggle
             style={{marginRight: 20}}
             value={workoutMusic}
-            onValueChange={setWorkoutMusicAction}
+            onValueChange={setWorkoutMusic}
           />
         </View>
 
@@ -276,11 +279,11 @@ const PreQuickRoutine: React.FC<{
 
 const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   exercisesObj: exercises.exercises,
-  workoutMusic: profile.workoutMusic,
+  workoutMusic: profile.profile.workoutMusic,
 });
 
 const mapDispatchToProps = {
-  setWorkoutMusic,
+  updateProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreQuickRoutine);

@@ -23,10 +23,6 @@ export const SET_BONE_MASS_SAMPLES = 'SET_BONE_MASS_SAMPLES';
 export const SET_STEP_SAMPLES = 'SET_STEP_SAMPLES';
 export const SET_WEEKLY_STEPS = 'SET_WEEKLY_STEPS';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
-export const SET_WORKOUT_REMINDERS = 'SET_WORKOUT_REMINDERS';
-export const SET_WORKOUT_REMINDER_TIME = 'SET_WORKOUT_REMINDER_TIME';
-export const SET_TEST_REMINDER_TIME = 'SET_TEST_REMINDER_TIME';
-export const SET_TEST_REMINDERS = 'SET_TEST_REMINDERS';
 export const HANDLE_AUTH = 'HANDLE_AUTH';
 export const SET_PREMIUM = 'SET_PREMIUM';
 export const SET_ADMIN = 'SET_ADMIN';
@@ -47,10 +43,7 @@ export const SET_VIEWED_PLAN = 'SET_VIEWED_PLAN';
 export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
-export const SET_AUTO_PLAY = 'SET_AUTO_PLAY';
-export const SET_PREP_TIME = 'SET_PREP_TIME';
 export const SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE';
-export const SET_WORKOUT_MUSIC = 'SET_WORKOUT_MUSIC';
 
 export interface SetProfileAction {
   type: typeof SET_PROFILE;
@@ -85,6 +78,14 @@ export interface UpdateProfilePayload {
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;
+  workoutReminders?: boolean;
+  workoutReminderTime?: string;
+  testReminderTime?: string;
+  testReminders?: boolean;
+  autoPlay?: boolean;
+  prepTime?: number;
+  workoutMusic?: boolean;
+  syncPlanWithCalendar?: boolean;
 }
 
 export interface SignUpAction {
@@ -134,26 +135,6 @@ export interface SetStepSamplesAction {
 export interface SetWeeklyStepsAction {
   type: typeof SET_WEEKLY_STEPS;
   payload: StepSample[];
-}
-
-export interface SetWorkoutRemindersAction {
-  type: typeof SET_WORKOUT_REMINDERS;
-  payload: boolean;
-}
-
-export interface SetWorkoutReminderTimeAction {
-  type: typeof SET_WORKOUT_REMINDER_TIME;
-  payload: Date;
-}
-
-export interface SetTestReminderTimeAction {
-  type: typeof SET_TEST_REMINDER_TIME;
-  payload: Date;
-}
-
-export interface SetTestRemindersAction {
-  type: typeof SET_TEST_REMINDERS;
-  payload: boolean;
 }
 
 export interface HandleAuthAction {
@@ -238,24 +219,9 @@ export interface SetHasViewedTourAction {
   type: typeof SET_HAS_VIEWED_TOUR;
 }
 
-export interface SetAutoPlayAction {
-  type: typeof SET_AUTO_PLAY;
-  payload: boolean;
-}
-
-export interface SetPrepTimeAction {
-  type: typeof SET_PREP_TIME;
-  payload: number;
-}
-
 export interface SetChatMessageAction {
   type: typeof SET_CHAT_MESSAGE;
   payload: {uid: string; message: string};
-}
-
-export interface SetWorkoutMusicAction {
-  type: typeof SET_WORKOUT_MUSIC;
-  payload: boolean;
 }
 
 export type ProfileActionTypes =
@@ -267,10 +233,6 @@ export type ProfileActionTypes =
   | SetStepSamplesAction
   | SetWeeklyStepsAction
   | UpdateProfileAction
-  | SetWorkoutRemindersAction
-  | SetWorkoutReminderTimeAction
-  | SetTestReminderTimeAction
-  | SetTestRemindersAction
   | HandleAuthAction
   | SetPremiumAction
   | SetAdminAction
@@ -292,10 +254,7 @@ export type ProfileActionTypes =
   | SetBodyFatPercentageSamplesAction
   | SetMuscleMassSamplesAction
   | SetHasViewedTourAction
-  | SetAutoPlayAction
-  | SetPrepTimeAction
-  | SetChatMessageAction
-  | SetWorkoutMusicAction;
+  | SetChatMessageAction;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -368,32 +327,6 @@ export const setStepSamples = (
 export const setWeeklySteps = (steps: StepSample[]): SetWeeklyStepsAction => ({
   type: SET_WEEKLY_STEPS,
   payload: steps,
-});
-
-export const setWorkoutReminders = (
-  payload: boolean,
-): SetWorkoutRemindersAction => ({
-  type: SET_WORKOUT_REMINDERS,
-  payload,
-});
-
-export const setWorkoutReminderTime = (
-  payload: Date,
-): SetWorkoutReminderTimeAction => ({
-  type: SET_WORKOUT_REMINDER_TIME,
-  payload,
-});
-
-export const setTestReminderTime = (
-  payload: Date,
-): SetTestReminderTimeAction => ({
-  type: SET_TEST_REMINDER_TIME,
-  payload,
-});
-
-export const setTestReminders = (payload: boolean): SetTestRemindersAction => ({
-  type: SET_TEST_REMINDERS,
-  payload,
 });
 
 export const handleAuth = (user: FirebaseAuthTypes.User) => ({
@@ -515,25 +448,10 @@ export const setHasViewedTour = (): SetHasViewedTourAction => ({
   type: SET_HAS_VIEWED_TOUR,
 });
 
-export const setAutoPlay = (payload: boolean): SetAutoPlayAction => ({
-  type: SET_AUTO_PLAY,
-  payload,
-});
-
-export const setPrepTime = (payload: number): SetPrepTimeAction => ({
-  type: SET_PREP_TIME,
-  payload,
-});
-
 export const setChatMessage = (
   uid: string,
   message: string,
 ): SetChatMessageAction => ({
   type: SET_CHAT_MESSAGE,
   payload: {uid, message},
-});
-
-export const setWorkoutMusic = (payload: boolean): SetWorkoutMusicAction => ({
-  type: SET_WORKOUT_MUSIC,
-  payload,
 });

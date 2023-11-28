@@ -9,7 +9,6 @@ import ExerciseVideo from '../../commons/ExerciseVideo';
 import colors from '../../../constants/colors';
 import {setExerciseNote} from '../../../actions/exercises';
 import PagerView from 'react-native-pager-view';
-import MusclesDiagram from '../../commons/MusclesDiagram';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ViewMore from '../../commons/ViewMore';
 import Modal from '../../commons/Modal';
@@ -17,18 +16,15 @@ import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import Spinner from '../../commons/Spinner';
 import Header from '../../commons/Header';
-import LinearGradient from 'react-native-linear-gradient';
-import useInterval from '../../../hooks/UseInterval';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/core';
 import Exercise from '../../../types/Exercise';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
-import {SetAutoPlayAction, setAutoPlay} from '../../../actions/profile';
+import {UpdateProfilePayload, updateProfile} from '../../../actions/profile';
 import Profile from '../../../types/Profile';
 import Toggle from '../../commons/Toggle';
 import {FONTS_SIZES} from '../../../constants';
@@ -43,20 +39,17 @@ const QuickRoutineView: React.FC<{
   setExerciseNoteAction: (exercise: string, note: string) => void;
   exerciseNotes: {[key: string]: string};
   exercisesObj: {[key: string]: Exercise};
-  setAutoPlay: (autoPlay: boolean) => void;
-  autoPlay: boolean;
-  workoutMusic: boolean;
+  autoPlay?: boolean;
+  workoutMusic?: boolean;
+  updateProfile: (payload: UpdateProfilePayload) => void;
 }> = ({
-  videos,
   loading,
   route,
   navigation,
-  exerciseNotes,
-  setExerciseNoteAction,
   exercisesObj,
-  setAutoPlay: setAutoPlayAction,
   autoPlay,
   workoutMusic,
+  updateProfile: updateProfileAction,
 }) => {
   const {routine, startTime} = route.params;
   const [tabIndex, setTabIndex] = useState(0);
@@ -102,6 +95,8 @@ const QuickRoutineView: React.FC<{
   }, [exercises, index, navigation]);
 
   const [showResistanceModal, setShowResistanceModal] = useState(false);
+
+  const setAutoPlay = (ap: boolean) => updateProfileAction({autoPlay: ap});
 
   return (
     <View style={{flex: 1}}>
@@ -231,7 +226,7 @@ const QuickRoutineView: React.FC<{
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index === 0 && (
                           <TouchableOpacity
-                            onPress={() => setAutoPlayAction(!autoPlay)}
+                            onPress={() => setAutoPlay(!autoPlay)}
                             style={{
                               flex: 1,
                               flexDirection: 'row',
@@ -252,7 +247,7 @@ const QuickRoutineView: React.FC<{
                             </Text>
                             <Toggle
                               value={autoPlay}
-                              onValueChange={setAutoPlayAction}
+                              onValueChange={setAutoPlay}
                             />
                           </TouchableOpacity>
                         )}
@@ -422,13 +417,13 @@ const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   loading: exercises.videoLoading,
   exerciseNotes: exercises.exerciseNotes,
   exercisesObj: exercises.exercises,
-  autoPlay: profile.autoPlay,
-  workoutMusic: profile.workoutMusic,
+  autoPlay: profile.profile.autoPlay,
+  workoutMusic: profile.profile.workoutMusic,
 });
 
 const mapDispatchToProps = {
   setExerciseNoteAction: setExerciseNote,
-  setAutoPlay,
+  updateProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuickRoutineView);

@@ -4,7 +4,6 @@ import {
   SET_CALENDAR_ID,
   SET_PLAN,
   SET_SYNCED_PLAN_EVENT,
-  SYNC_PLAN_WITH_CALENDAR,
 } from '../actions/plan';
 import {
   SET_PROFILE,
@@ -13,9 +12,6 @@ import {
   SET_WEIGHT_SAMPLES,
   SET_STEP_SAMPLES,
   SET_WEEKLY_STEPS,
-  SET_WORKOUT_REMINDERS,
-  SET_WORKOUT_REMINDER_TIME,
-  SET_TEST_REMINDERS,
   SET_PREMIUM,
   SET_ADMIN,
   SET_CONNECTIONS,
@@ -32,10 +28,7 @@ import {
   SET_BONE_MASS_SAMPLES,
   SET_HAS_VIEWED_TOUR,
   SET_READ,
-  SET_AUTO_PLAY,
-  SET_PREP_TIME,
   SET_CHAT_MESSAGE,
-  SET_WORKOUT_MUSIC,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -60,10 +53,6 @@ export interface ProfileState {
   boneMassSamples: Sample[];
   stepSamples: StepSample[];
   weeklySteps: StepSample[];
-  workoutReminders: boolean;
-  reminderTime: string;
-  testReminderTime: string;
-  testReminders: boolean;
   connections: {[key: string]: Profile};
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
@@ -75,10 +64,6 @@ export interface ProfileState {
   hasViewedTour: boolean;
   syncedPlanEvents: {[key: string]: string};
   calendarId?: string;
-  syncPlanWithCalendar: boolean;
-  autoPlay: boolean;
-  prepTime: number;
-  workoutMusic: boolean;
 }
 
 const initialState: ProfileState = {
@@ -88,6 +73,28 @@ const initialState: ProfileState = {
     uid: '',
     unread: {},
     premium: false,
+    workoutReminders: true,
+    workoutReminderTime: new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate() + 1,
+      9,
+      0,
+      0,
+    ).toISOString(),
+    testReminderTime: new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate() + 1,
+      9,
+      0,
+      0,
+    ).toISOString(),
+    testReminders: true,
+    syncPlanWithCalendar: false,
+    autoPlay: true,
+    prepTime: 15,
+    workoutMusic: true,
   },
   loggedIn: false,
   weightSamples: [],
@@ -97,24 +104,6 @@ const initialState: ProfileState = {
   boneMassSamples: [],
   stepSamples: [],
   weeklySteps: [],
-  workoutReminders: true,
-  reminderTime: new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate() + 1,
-    9,
-    0,
-    0,
-  ).toISOString(),
-  testReminderTime: new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate() + 1,
-    9,
-    0,
-    0,
-  ).toISOString(),
-  testReminders: true,
   connections: {},
   loading: false,
   messages: {},
@@ -128,10 +117,6 @@ const initialState: ProfileState = {
   },
   hasViewedTour: false,
   syncedPlanEvents: {},
-  syncPlanWithCalendar: false,
-  autoPlay: true,
-  prepTime: 15,
-  workoutMusic: true,
 };
 
 const reducer = (
@@ -185,21 +170,6 @@ const reducer = (
       return {
         ...state,
         weeklySteps: action.payload,
-      };
-    case SET_WORKOUT_REMINDERS:
-      return {
-        ...state,
-        workoutReminders: action.payload,
-      };
-    case SET_WORKOUT_REMINDER_TIME:
-      return {
-        ...state,
-        reminderTime: action.payload.toISOString(),
-      };
-    case SET_TEST_REMINDERS:
-      return {
-        ...state,
-        testReminders: action.payload,
       };
     case SET_PREMIUM:
       return {
@@ -291,21 +261,6 @@ const reducer = (
         ...state,
         calendarId: action.payload,
       };
-    case SYNC_PLAN_WITH_CALENDAR:
-      return {
-        ...state,
-        syncPlanWithCalendar: action.payload.sync,
-      };
-    case SET_AUTO_PLAY:
-      return {
-        ...state,
-        autoPlay: action.payload,
-      };
-    case SET_PREP_TIME:
-      return {
-        ...state,
-        prepTime: action.payload,
-      };
     case SET_CHAT_MESSAGE:
       return {
         ...state,
@@ -313,11 +268,6 @@ const reducer = (
           ...state.chatMessages,
           [action.payload.uid]: action.payload.message,
         },
-      };
-    case SET_WORKOUT_MUSIC:
-      return {
-        ...state,
-        workoutMusic: action.payload,
       };
     default:
       return state;

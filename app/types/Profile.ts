@@ -49,4 +49,12 @@ export default interface Profile {
   fitbitUserId?: string;
   fitbitTokenExpiresIn?: number;
   fitbitTokenTimestamp?: number;
+  workoutReminders?: boolean;
+  workoutReminderTime?: string;
+  testReminderTime?: string;
+  testReminders?: boolean;
+  autoPlay?: boolean;
+  prepTime?: number;
+  workoutMusic?: boolean;
+  syncPlanWithCalendar?: boolean;
 };

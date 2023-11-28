@@ -11,6 +11,7 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {workoutSong} from '../../sagas/profile';
+import Profile from '../../types/Profile';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -19,30 +20,26 @@ const ExerciseTimer: React.FC<{
   workout: Exercise[];
   exercise: Exercise;
   pagerRef: RefObject<PagerView>;
-  autoPlay: boolean;
   tabIndex: number;
-  prepTime: number;
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
-  workoutMusic: boolean;
+  profile: Profile;
 }> = ({
   index,
   workout,
   exercise,
   pagerRef,
-  autoPlay,
-  prepTime: PREP_TIME,
   tabIndex,
   timerPaused,
   onTimerPaused,
-  workoutMusic,
+  profile,
 }) => {
   const [key, setKey] = useState<'prep' | 'exercise'>('prep');
 
   const [finished, setFinished] = useState(false);
 
   const onComplete = () => {
-    if (key === 'exercise' && index < workout.length - 1 && autoPlay) {
+    if (key === 'exercise' && index < workout.length - 1 && profile.autoPlay) {
       pagerRef.current?.setPage(index + 1);
     } else if (index === workout.length - 1 && key === 'exercise') {
       setFinished(true);
@@ -53,7 +50,7 @@ const ExerciseTimer: React.FC<{
 
   const onPress = () => {
     onTimerPaused(!timerPaused);
-    if (workoutMusic) {
+    if (profile.workoutMusic) {
       if (timerPaused) {
         workoutSong.play();
       } else {
@@ -82,7 +79,7 @@ const ExerciseTimer: React.FC<{
         size={200}
         onComplete={onComplete}
         trailColor={finished ? colors.muscleSecondary : colors.borderColor}
-        duration={key === 'prep' ? PREP_TIME : exercise.time || 30}
+        duration={key === 'prep' ? profile.prepTime || 15 : exercise.time || 30}
         colors={[colors.appBlue, colors.appBlue, colors.appBlue, colors.appRed]}
         colorsTime={[7, 5, 2, 0]}>
         {({remainingTime}) => {
@@ -164,9 +161,7 @@ const ExerciseTimer: React.FC<{
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
-  autoPlay: profile.autoPlay,
-  prepTime: profile.prepTime,
-  workoutMusic: profile.workoutMusic,
+  profile: profile.profile,
 });
 
 export default connect(mapStateToProps)(ExerciseTimer);

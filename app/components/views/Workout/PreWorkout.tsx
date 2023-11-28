@@ -17,25 +17,29 @@ import Exercise from '../../../types/Exercise';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
 import ConnectedApps from '../../commons/ConnectedApps';
 import Toggle from '../../commons/Toggle';
-import {setWorkoutMusic} from '../../../actions/profile';
+import {UpdateProfilePayload, updateProfile} from '../../../actions/profile';
 
 const PreWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreWorkout'>;
   route: RouteProp<StackParamList, 'PreWorkout'>;
   workout: Exercise[];
-  workoutMusic: boolean;
-  setWorkoutMusic: (play: boolean) => void;
+  workoutMusic?: boolean;
+  updateProfile: (payload: UpdateProfilePayload) => void;
 }> = ({
   route,
   navigation,
   workout,
-  setWorkoutMusic: setWorkoutMusicAction,
   workoutMusic,
+  updateProfile: updateProfileAction,
 }) => {
   const {planWorkout, planId} = route.params;
 
   const equipmentList = getEquipmentList(workout);
   const musclesList = getMusclesList(workout);
+
+  const setWorkoutMusic = (music: boolean) =>
+    updateProfileAction({workoutMusic: music});
+
   return (
     <>
       <FastImage
@@ -154,7 +158,7 @@ const PreWorkout: React.FC<{
           <Toggle
             style={{marginRight: 20}}
             value={workoutMusic}
-            onValueChange={setWorkoutMusicAction}
+            onValueChange={setWorkoutMusic}
           />
         </View>
         <Button
@@ -175,11 +179,11 @@ const PreWorkout: React.FC<{
 
 const mapStateToProps = ({exercises, profile}: MyRootState) => ({
   workout: exercises.workout,
-  workoutMusic: profile.workoutMusic,
+  workoutMusic: profile.profile.workoutMusic,
 });
 
 const mapDispatchToProps = {
-  setWorkoutMusic,
+  updateProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreWorkout);

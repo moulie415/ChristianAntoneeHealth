@@ -3,17 +3,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform, ScrollView, StyleSheet, Switch, View} from 'react-native';
 import {CalendarType, Goal, MyRootState, Plan} from '../../../types/Shared';
-import {
-  setAutoPlay,
-  setPrepTime,
-  setTestReminders,
-  setTestReminderTime,
-  setWorkoutMusic,
-  setWorkoutReminders,
-  setWorkoutReminderTime,
-  updateProfile,
-  UpdateProfilePayload,
-} from '../../../actions/profile';
+import {updateProfile, UpdateProfilePayload} from '../../../actions/profile';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {TouchableOpacity} from 'react-native';
@@ -81,49 +71,24 @@ const SettingsItem: React.FC<{
 
 const Settings: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Settings'>;
-  workoutReminders: boolean;
-  workoutReminderTime: string;
-  testReminderTime: string;
-  setWorkoutRemindersAction: (disabled: boolean) => void;
-  setWorkoutReminderTimeAction: (date: Date) => void;
-  setTestReminderTimeAction: (date: Date) => void;
   profile: Profile;
   updateProfileAction: (payload: UpdateProfilePayload) => void;
-  autoPlay: boolean;
-  setAutoPlay: (autoPlay: boolean) => void;
-  prepTime: number;
-  setPrepTime: (prepTime: number) => void;
-  workoutMusic: boolean;
-  setWorkoutMusic: (play: boolean) => void;
   plan?: Plan;
-  syncPlanWithCalendar: boolean;
   syncPlanWithCalendarAction: (plan: Plan, sync: boolean) => void;
   setCalendarId: (id: string) => void;
 }> = ({
-  workoutReminders,
-  setWorkoutRemindersAction,
-  workoutReminderTime,
-  setWorkoutReminderTimeAction,
   profile,
   navigation,
   updateProfileAction,
-  testReminderTime,
-  setTestReminderTimeAction,
-  autoPlay,
-  setAutoPlay: setAutoPlayAction,
-  prepTime,
-  setPrepTime: setPrepTimeAction,
-  workoutMusic,
-  setWorkoutMusic: setWorkoutMusicAction,
   plan,
-  syncPlanWithCalendar: syncWithCalendar,
   syncPlanWithCalendarAction,
   setCalendarId: setCalendarIdAction,
 }) => {
   const [showWorkoutDate, setShowWorkoutDate] = useState(false);
-  const [showTestDate, setShowTestDate] = useState(false);
-  const [workoutDate, setWorkoutDate] = useState(new Date(workoutReminderTime));
-  const [testDate, setTestDate] = useState(new Date(testReminderTime));
+  const [workoutReminderTime, setWorkoutReminderTime] = useState(
+    profile.workoutReminderTime,
+  );
+
   const [marketing, setMarketing] = useState(profile.marketing);
   const [loading, setLoading] = useState(false);
   const [goal, setGoal] = useState<Goal>(
@@ -132,17 +97,24 @@ const Settings: React.FC<{
   const [showPrepTime, setShowPrepTime] = useState(false);
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(profile.autoPlay);
+  const [prepTime, setPrepTime] = useState(profile.prepTime);
+  const [workoutMusic, setWorkoutMusic] = useState(profile.workoutMusic);
+  const [workoutReminders, setWorkoutReminders] = useState(
+    profile.workoutReminders,
+  );
 
   const newProfile = {
     ...profile,
     goal,
     marketing,
+    autoPlay,
+    prepTime,
+    workoutMusic,
+    workoutReminderTime,
   };
 
-  const equal =
-    _.isEqual(newProfile, profile) &&
-    _.isEqual(workoutDate.toISOString(), workoutReminderTime) &&
-    _.isEqual(testDate.toISOString(), testReminderTime);
+  const equal = _.isEqual(newProfile, profile);
 
   const toggle = async (sync: boolean) => {
     try {
@@ -187,11 +159,9 @@ const Settings: React.FC<{
             Workouts
           </Text>
           <SettingsItem
-            onPress={() => setAutoPlayAction(!autoPlay)}
+            onPress={() => setAutoPlay(!autoPlay)}
             text="Auto-play"
-            right={
-              <Toggle value={autoPlay} onValueChange={setAutoPlayAction} />
-            }
+            right={<Toggle value={autoPlay} onValueChange={setAutoPlay} />}
           />
           <SettingsItem
             onPress={() => setShowPrepTime(true)}
@@ -203,29 +173,29 @@ const Settings: React.FC<{
                   color: colors.appWhite,
                   fontWeight: 'bold',
                 }}>
-                {`${prepTime} secs`}
+                {`${profile.prepTime} secs`}
               </Text>
             }
           />
           <SettingsItem
-            onPress={() => setWorkoutMusicAction(!workoutMusic)}
+            onPress={() => setWorkoutMusic(!profile.workoutMusic)}
             text="Workout music"
             right={
               <Toggle
-                value={workoutMusic}
-                onValueChange={setWorkoutMusicAction}
+                value={profile.workoutMusic}
+                onValueChange={setWorkoutMusic}
               />
             }
           />
 
           <SettingsItem
             disabled={!plan}
-            onPress={() => toggle(!syncWithCalendar)}
+            onPress={() => toggle(!profile.syncPlanWithCalendar)}
             text="Sync custom plans with native calendar"
             right={
               <Toggle
                 disabled={!plan}
-                value={syncWithCalendar}
+                value={profile.syncPlanWithCalendar}
                 onValueChange={toggle}
               />
             }
@@ -242,12 +212,12 @@ const Settings: React.FC<{
           </Text>
 
           <SettingsItem
-            onPress={() => setWorkoutRemindersAction(!workoutReminders)}
+            onPress={() => setWorkoutReminders(!profile.workoutReminders)}
             text="Workout reminders"
             right={
               <Toggle
-                value={workoutReminders}
-                onValueChange={setWorkoutRemindersAction}
+                value={profile.workoutReminders}
+                onValueChange={setWorkoutReminders}
               />
             }
           />
@@ -263,7 +233,7 @@ const Settings: React.FC<{
                     disabled={!workoutReminders}
                     style={{width: 150}}
                     testID="time"
-                    value={new Date(workoutDate)}
+                    value={new Date(workoutReminderTime || '')}
                     textColor={colors.appWhite}
                     // placeholderText="Select date"
                     mode="time"
@@ -271,7 +241,7 @@ const Settings: React.FC<{
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={(event, d: Date | undefined) => {
                       if (d) {
-                        setWorkoutDate(d);
+                        setWorkoutReminderTime(d.toISOString());
                       }
                       setShowWorkoutDate(Platform.OS === 'ios');
                     }}
@@ -282,7 +252,7 @@ const Settings: React.FC<{
                     disabled={!workoutReminders}
                     onPress={() => setShowWorkoutDate(true)}>
                     <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                      {moment(workoutDate).format('HH:mm')}
+                      {moment(workoutReminderTime).format('HH:mm')}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -361,8 +331,6 @@ const Settings: React.FC<{
         onPress={() => {
           setLoading(true);
           navigation.goBack();
-          setTestReminderTimeAction(testDate);
-          setWorkoutReminderTimeAction(workoutDate);
           updateProfileAction(newProfile);
         }}
         text="Save"
@@ -385,7 +353,7 @@ const Settings: React.FC<{
             value: String(value),
           };
         })}
-        onValueChange={val => setPrepTimeAction(Number(val))}
+        onValueChange={val => setPrepTime(Number(val))}
         onRequestClose={() => setShowPrepTime(false)}
       />
       <Modal
@@ -449,28 +417,13 @@ const Settings: React.FC<{
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
-  workoutReminders: profile.workoutReminders,
-  workoutReminderTime: profile.reminderTime,
-  testReminderTime: profile.testReminderTime,
-  testReminders: profile.testReminders,
   profile: profile.profile,
-  autoPlay: profile.autoPlay,
-  prepTime: profile.prepTime,
-  workoutMusic: profile.workoutMusic,
   syncedPlanEvents: profile.syncedPlanEvents,
-  syncPlanWithCalendar: profile.syncPlanWithCalendar,
   plan: profile.plan,
 });
 
 const mapDispatchToProps = {
-  setWorkoutRemindersAction: setWorkoutReminders,
-  setWorkoutReminderTimeAction: setWorkoutReminderTime,
-  setTestReminderTimeAction: setTestReminderTime,
-  setTestRemindersAction: setTestReminders,
   updateProfileAction: updateProfile,
-  setAutoPlay,
-  setPrepTime,
-  setWorkoutMusic,
   setCalendarId,
   syncPlanWithCalendarAction: syncPlanWithCalendar,
 };
