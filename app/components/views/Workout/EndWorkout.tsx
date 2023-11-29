@@ -79,7 +79,7 @@ const EndWorkout: React.FC<{
       startTime,
       endTime,
       fitbitData,
-      planId,
+      planId: planId || '',
     });
   }, 3000);
 

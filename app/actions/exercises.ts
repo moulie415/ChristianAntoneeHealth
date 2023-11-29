@@ -199,8 +199,6 @@ export const setExerciseNote = (
   payload: {exercise, note},
 });
 
-
-
 export const setVideo = (
   id: string,
   src: string,

@@ -155,11 +155,10 @@ const GoalSummaries: React.FC<{
       title: 'Calories burned',
       key: 'calories',
       goal: caloriesGoal,
-      score: calories,
+      score: Math.round(calories),
       icon: Fire,
-    }
+    },
   ];
-
 
   return (
     <Tile

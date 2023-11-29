@@ -11,6 +11,7 @@ import Button from '../../commons/Button';
 import {connect} from 'react-redux';
 import {SettingsState} from '../../../reducers/settings';
 import {capitalizeFirstLetter} from '../../../helpers';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 const ICON_SIZE = 100;
 const Goals: React.FC<{
@@ -40,21 +41,20 @@ const Goals: React.FC<{
         }}>
         Here are your weekly targets...
       </Text>
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', marginVertical: 20}}>
         <Time />
         <Text
           style={{
             color: colors.appWhite,
             fontSize: 16,
             marginTop: 10,
-            marginBottom: 20,
+            marginBottom: 40,
             textAlign: 'center',
           }}>
           {'Spend '}
           <Text style={{fontWeight: 'bold'}}>{minsGoal}</Text>
           {' minutes training'}
         </Text>
-
         <Icon
           name="tachometer-alt"
           size={25}
@@ -68,7 +68,7 @@ const Goals: React.FC<{
             color: colors.appWhite,
             fontSize: 16,
             marginTop: 10,
-            marginBottom: 20,
+            marginBottom: 40,
             textAlign: 'center',
           }}>
           {'Complete '}
@@ -82,9 +82,9 @@ const Goals: React.FC<{
         <Text
           style={{
             color: colors.appWhite,
-            fontSize: 20,
+            fontSize: 16,
             marginTop: 10,
-            marginBottom: 20,
+            marginBottom: 40,
             textAlign: 'center',
           }}>
           {'Burn '}

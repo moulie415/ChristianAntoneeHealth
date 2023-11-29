@@ -52,6 +52,15 @@ function* getSavedTests() {
       uid,
     );
     yield put(setSavedTests(savedTests));
+    const tests: {[key: string]: Test} = yield select(
+      (state: MyRootState) => state.tests.tests,
+    );
+    const missingTests = Object.values(savedTests)
+      .filter(test => !tests[test.testId])
+      .map(test => test.testId);
+    if (missingTests.length) {
+      yield call(getTestsById, {payload: missingTests, type: GET_TESTS_BY_ID});
+    }
     yield put(setLoading(false));
   } catch (e) {
     logError(e);

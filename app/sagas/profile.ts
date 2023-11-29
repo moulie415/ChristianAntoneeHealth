@@ -711,7 +711,7 @@ function* handleAuthWorker(action: HandleAuthAction) {
 
 export default function* profileSaga() {
   yield all([
-    takeLatest(SIGN_UP, signUp),
+    throttle(3000, SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
     debounce(3000, UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),

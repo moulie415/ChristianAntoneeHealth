@@ -35,6 +35,7 @@ import moment from 'moment';
 import PersonalDetails from './PersonalDetails';
 import Button from '../../commons/Button';
 import StepIndicator from 'react-native-step-indicator';
+import useThrottle from '../../../hooks/UseThrottle';
 
 const {width} = Dimensions.get('window');
 
@@ -53,7 +54,7 @@ const SignUpFlow: React.FC<{
   const [marketing, setMarketing] = useState(profile.marketing || false);
   const [height, setHeight] = useState<number>((profile.height as number) || 0);
   const [gender, setGender] = useState<Gender>(
-    (profile.gender as Gender) || null,
+    (profile.gender as Gender) || 'none',
   );
   const [goal, setGoal] = useState<Goal>((profile.goal as Goal) || null);
   const [loading, setLoading] = useState(false);
@@ -102,7 +103,7 @@ const SignUpFlow: React.FC<{
     setup();
   });
 
-  const completeSignUp = () => {
+  const completeSignUp = useThrottle(() => {
     setLoading(true);
     signUpAction({
       name,
@@ -115,7 +116,7 @@ const SignUpFlow: React.FC<{
       marketing,
       fromProfile: !!fromProfile,
     });
-  };
+  }, 3000);
 
   const [index, setIndex] = useState(0);
 
@@ -174,17 +175,19 @@ const SignUpFlow: React.FC<{
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <StepIndicator
-        stepCount={slides.length}
-        currentPosition={index}
-        customStyles={{
-          stepStrokeCurrentColor: colors.appBlue,
-          separatorUnFinishedColor: colors.borderColor,
-          separatorFinishedColor: colors.appBlue,
-          stepIndicatorUnFinishedColor: colors.borderColor,
-          stepIndicatorFinishedColor: colors.appBlue,
-        }}
-      />
+      <View style={{marginTop: 10}}>
+        <StepIndicator
+          stepCount={slides.length}
+          currentPosition={index}
+          customStyles={{
+            stepStrokeCurrentColor: colors.appBlue,
+            separatorUnFinishedColor: colors.borderColor,
+            separatorFinishedColor: colors.appBlue,
+            stepIndicatorUnFinishedColor: colors.borderColor,
+            stepIndicatorFinishedColor: colors.appBlue,
+          }}
+        />
+      </View>
       {fromProfile && <Header hasBack />}
       <PagerView
         ref={ref}

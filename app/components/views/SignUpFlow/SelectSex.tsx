@@ -47,7 +47,7 @@ const SelectSex: React.FC<{
       <Button
         text="Prefer not to say"
         style={{marginHorizontal: 20}}
-        onPress={() => setGender(null)}
+        onPress={() => setGender('none')}
         variant={gender === null ? 'primary' : 'secondary'}
       />
     </View>

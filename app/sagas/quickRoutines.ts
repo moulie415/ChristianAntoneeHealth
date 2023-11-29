@@ -1,11 +1,4 @@
-import {
-  call,
-  debounce,
-  put,
-  select,
-  takeLatest,
-  throttle,
-} from 'redux-saga/effects';
+import {call, put, select, throttle} from 'redux-saga/effects';
 import {
   GetQuickRoutinesByIdAction,
   GET_QUICK_ROUTINES,
@@ -26,7 +19,7 @@ import {logError} from '../helpers/error';
 import {ProfileState} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import {SettingsState} from '../reducers/settings';
-import { sendGoalTargetNotification } from '../helpers/goals';
+import {sendGoalTargetNotification} from '../helpers/goals';
 
 export function* getQuickRoutines() {
   try {
@@ -80,6 +73,19 @@ export function* getSavedQuickRoutines() {
       uid,
     );
     yield put(setSavedQuickRoutine(savedQuickRoutines));
+    const quickRoutines: {[key: string]: QuickRoutine} = yield select(
+      (state: MyRootState) => state.quickRoutines.quickRoutines,
+    );
+    const missingRoutines = Object.values(savedQuickRoutines)
+      .filter(routine => !quickRoutines[routine.quickRoutineId])
+      .map(routine => routine.quickRoutineId);
+
+    if (missingRoutines.length) {
+      yield call(getQuickRoutinesById, {
+        payload: missingRoutines,
+        type: GET_QUICK_ROUTINES_BY_ID,
+      });
+    }
     yield put(setLoading(false));
   } catch (e) {
     logError(e);

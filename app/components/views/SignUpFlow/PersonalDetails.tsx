@@ -32,8 +32,8 @@ const PersonalDetails: React.FC<{
   setPrivacy: (privacy: boolean) => void;
   marketing: boolean;
   setMarketing: (marketing: boolean) => void;
-  gender: Gender | null;
-  setGender: (gender: Gender | null) => void;
+  gender: Gender;
+  setGender: (gender: Gender) => void;
 }> = ({
   name,
   setName,
@@ -57,9 +57,11 @@ const PersonalDetails: React.FC<{
   const [showWeightModal, setShowWeightModal] = useState(false);
   const [showSexModal, setShowSexModal] = useState(false);
 
-  const genderArr: Gender[] = [null, 'male', 'female'];
+  const genderArr: Gender[] = ['none', 'male', 'female'];
 
   const showDob = !!dob && moment().diff(dob, 'years') > 0;
+
+  console.log(gender);
   return (
     <KeyboardAwareScrollView
       enableOnAndroid
@@ -154,9 +156,10 @@ const PersonalDetails: React.FC<{
         </View>
         <Text
           style={{
-            color: gender ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
+            color:
+              gender !== 'none' ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
           }}>
-          {gender ? capitalizeFirstLetter(gender) : 'Sex'}
+          {gender !== 'none' ? capitalizeFirstLetter(gender) : 'Sex'}
         </Text>
       </TouchableOpacity>
       <View style={{flexDirection: 'row'}}>
@@ -362,13 +365,16 @@ const PersonalDetails: React.FC<{
         pickerData={genderArr.map(value => {
           return {
             label:
-              value === null
+              value === 'none'
                 ? 'Prefer not to say'
                 : capitalizeFirstLetter(value),
             value,
           };
         })}
-        onValueChange={val => setGender(val as Gender)}
+        onValueChange={val => {
+          console.log(val);
+          setGender(val as Gender);
+        }}
         onRequestClose={() => setShowSexModal(false)}
       />
     </KeyboardAwareScrollView>

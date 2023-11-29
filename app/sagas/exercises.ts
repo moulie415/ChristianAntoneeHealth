@@ -109,7 +109,7 @@ export function* saveWorkout(action: SaveWorkoutAction) {
     const {profile, weeklyItems}: ProfileState = yield select(
       (state: MyRootState) => state.profile,
     );
-
+    
     yield call(api.saveWorkout, action.payload, profile.uid);
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Workout saved'});
@@ -147,6 +147,24 @@ function* getSavedWorkouts() {
       uid,
     );
     yield put(setSavedWorkouts(workouts));
+    const exercises: {[key: string]: Exercise} = yield select(
+      (state: MyRootState) => state.exercises.exercises,
+    );
+    const missingExercises = Object.values(workouts).reduce(
+      (acc: string[], cur) => {
+        const missing = cur.workout.filter(exercise => !exercises[exercise]);
+        return [...acc, ...missing];
+      },
+      [],
+    );
+
+    if (missingExercises.length) {
+      yield call(getExercisesById, {
+        payload: missingExercises,
+        type: GET_EXERCISES_BY_ID,
+      });
+    }
+
     yield put(setLoading(false));
   } catch (e) {
     logError(e);

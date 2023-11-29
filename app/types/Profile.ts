@@ -1,7 +1,7 @@
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {Goal, Level} from './Shared';
 
-export type Gender = 'male' | 'female' | null;
+export type Gender = 'male' | 'female' | 'none';
 
 export type Unit = 'metric' | 'imperial';
 
