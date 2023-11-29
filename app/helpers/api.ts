@@ -164,10 +164,31 @@ export const createUser = async (
   extraData: object,
 ) => {
   const {user} = await auth().createUserWithEmailAndPassword(email, password);
+  const reminderTime = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate() + 1,
+    9,
+    0,
+    0,
+  ).toISOString();
   await db()
     .collection('users')
     .doc(user.uid)
-    .set({uid: user.uid, email: user.email, ...extraData});
+    .set({
+      uid: user.uid,
+      email: user.email,
+      workoutReminders: true,
+      workoutReminderTime: reminderTime,
+      testReminderTime: reminderTime,
+      testReminders: true,
+      syncPlanWithCalendar: false,
+      autoPlay: true,
+      prepTime: 15,
+      workoutMusic: true,
+      goalReminders: true,
+      ...extraData,
+    });
   if (!user.emailVerified) {
     await user.sendEmailVerification();
   }

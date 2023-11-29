@@ -61,7 +61,6 @@ const PersonalDetails: React.FC<{
 
   const showDob = !!dob && moment().diff(dob, 'years') > 0;
 
-  console.log(gender);
   return (
     <KeyboardAwareScrollView
       enableOnAndroid
@@ -371,10 +370,7 @@ const PersonalDetails: React.FC<{
             value,
           };
         })}
-        onValueChange={val => {
-          console.log(val);
-          setGender(val as Gender);
-        }}
+        onValueChange={val => setGender(val as Gender)}
         onRequestClose={() => setShowSexModal(false)}
       />
     </KeyboardAwareScrollView>
