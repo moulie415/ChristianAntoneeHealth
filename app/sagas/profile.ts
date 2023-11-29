@@ -569,12 +569,29 @@ function* handleAuthWorker(action: HandleAuthAction) {
         yield put(setProfile(doc.data() as Profile));
       } else {
         const avatar = getProfileImage(user);
+        const reminderTime = new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate() + 1,
+          9,
+          0,
+          0,
+        ).toISOString();
         const userObj = {
           uid: user.uid,
           email: user.email || '',
           avatar: avatar || '',
           name: user.displayName || '',
           providerId: user.providerData[0].providerId || '',
+          workoutReminders: true,
+          workoutReminderTime: reminderTime,
+          testReminderTime: reminderTime,
+          testReminders: true,
+          syncPlanWithCalendar: false,
+          autoPlay: true,
+          prepTime: 15,
+          workoutMusic: true,
+          goalReminders: true,
         };
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);

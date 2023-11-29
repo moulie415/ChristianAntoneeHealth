@@ -86,6 +86,7 @@ export interface UpdateProfilePayload {
   prepTime?: number;
   workoutMusic?: boolean;
   syncPlanWithCalendar?: boolean;
+  goalReminders?: boolean;
 }
 
 export interface SignUpAction {

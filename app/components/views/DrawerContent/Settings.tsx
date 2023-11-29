@@ -104,6 +104,11 @@ const Settings: React.FC<{
     profile.workoutReminders,
   );
 
+  const [goalReminders, setGoalReminders] = useState(profile.goalReminders);
+  const [syncPlan, setSyncPlanWithCalendar] = useState(
+    profile.syncPlanWithCalendar,
+  );
+
   const newProfile = {
     ...profile,
     goal,
@@ -112,6 +117,7 @@ const Settings: React.FC<{
     prepTime,
     workoutMusic,
     workoutReminderTime,
+    goalReminders,
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -130,10 +136,12 @@ const Settings: React.FC<{
             } else {
               setCalendarIdAction(list[0].id);
               syncPlanWithCalendarAction(plan, sync);
+              setSyncPlanWithCalendar(sync);
             }
           }
         } else {
           syncPlanWithCalendarAction(plan, sync);
+          setSyncPlanWithCalendar(sync);
         }
       }
     } catch (e) {
@@ -173,29 +181,26 @@ const Settings: React.FC<{
                   color: colors.appWhite,
                   fontWeight: 'bold',
                 }}>
-                {`${profile.prepTime} secs`}
+                {`${prepTime} secs`}
               </Text>
             }
           />
           <SettingsItem
-            onPress={() => setWorkoutMusic(!profile.workoutMusic)}
+            onPress={() => setWorkoutMusic(!workoutMusic)}
             text="Workout music"
             right={
-              <Toggle
-                value={profile.workoutMusic}
-                onValueChange={setWorkoutMusic}
-              />
+              <Toggle value={workoutMusic} onValueChange={setWorkoutMusic} />
             }
           />
 
           <SettingsItem
             disabled={!plan}
-            onPress={() => toggle(!profile.syncPlanWithCalendar)}
+            onPress={() => toggle(!syncPlan)}
             text="Sync custom plans with native calendar"
             right={
               <Toggle
                 disabled={!plan}
-                value={profile.syncPlanWithCalendar}
+                value={syncPlan}
                 onValueChange={toggle}
               />
             }
@@ -212,11 +217,11 @@ const Settings: React.FC<{
           </Text>
 
           <SettingsItem
-            onPress={() => setWorkoutReminders(!profile.workoutReminders)}
+            onPress={() => setWorkoutReminders(!workoutReminders)}
             text="Workout reminders"
             right={
               <Toggle
-                value={profile.workoutReminders}
+                value={workoutReminders}
                 onValueChange={setWorkoutReminders}
               />
             }
@@ -267,8 +272,16 @@ const Settings: React.FC<{
               color: colors.appWhite,
               marginLeft: 10,
             }}>
-            Please note these reminders are for custom plans only
+            Please note the above reminders are for custom plans only
           </Text>
+
+          <SettingsItem
+            onPress={() => setGoalReminders(!goalReminders)}
+            text="Goal reminders"
+            right={
+              <Toggle value={goalReminders} onValueChange={setGoalReminders} />
+            }
+          />
 
           <Text
             style={{

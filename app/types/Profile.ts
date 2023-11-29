@@ -57,4 +57,5 @@ export default interface Profile {
   prepTime?: number;
   workoutMusic?: boolean;
   syncPlanWithCalendar?: boolean;
+  goalReminders?: boolean;
 };

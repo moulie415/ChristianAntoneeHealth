@@ -33,7 +33,7 @@ import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
 import {ProfileState} from '../reducers/profile';
-import { UPDATE_PROFILE } from '../actions/profile';
+import {UPDATE_PROFILE, updateProfile} from '../actions/profile';
 
 function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
   try {
@@ -106,6 +106,7 @@ function* syncPlanWithCalendarWorker(action: SyncPlanWithCalendarAction) {
   } catch (e) {
     logError(e);
     Snackbar.show({text: 'Error syncing calendar'});
+    yield put(updateProfile({syncPlanWithCalendar: false}));
   }
 }
 
