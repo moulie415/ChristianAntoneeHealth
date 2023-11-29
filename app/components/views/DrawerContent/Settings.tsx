@@ -118,6 +118,8 @@ const Settings: React.FC<{
     workoutMusic,
     workoutReminderTime,
     goalReminders,
+    workoutReminders,
+    syncPlanWithCalendar: syncPlan,
   };
 
   const equal = _.isEqual(newProfile, profile);
