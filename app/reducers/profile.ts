@@ -29,6 +29,8 @@ import {
   SET_HAS_VIEWED_TOUR,
   SET_READ,
   SET_CHAT_MESSAGE,
+  SET_LOGIN_EMAIL,
+  SET_LOGIN_PASSWORD,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -64,6 +66,8 @@ export interface ProfileState {
   hasViewedTour: boolean;
   syncedPlanEvents: {[key: string]: string};
   calendarId?: string;
+  loginEmail: string;
+  loginPassword: string;
 }
 
 const initialState: ProfileState = {
@@ -117,6 +121,8 @@ const initialState: ProfileState = {
   },
   hasViewedTour: false,
   syncedPlanEvents: {},
+  loginEmail: '',
+  loginPassword: '',
 };
 
 const reducer = (
@@ -135,7 +141,12 @@ const reducer = (
             ...state,
             loggedIn: action.payload,
           }
-        : {...initialState, loggedIn: action.payload};
+        : {
+            ...initialState,
+            loginEmail: state.loginEmail,
+            loginPassword: state.loginPassword,
+            loggedIn: action.payload,
+          };
     case SET_WEIGHT_SAMPLES:
       return {
         ...state,
@@ -268,6 +279,16 @@ const reducer = (
           ...state.chatMessages,
           [action.payload.uid]: action.payload.message,
         },
+      };
+    case SET_LOGIN_EMAIL:
+      return {
+        ...state,
+        loginEmail: action.payload,
+      };
+    case SET_LOGIN_PASSWORD:
+      return {
+        ...state,
+        loginPassword: action.payload,
       };
     default:
       return state;

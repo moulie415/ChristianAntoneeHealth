@@ -1,17 +1,11 @@
-import React, {useState} from 'react';
-import {
-  Alert,
-  ImageBackground,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, Platform, SafeAreaView, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
-import SignUpProps from '../../types/views/SignUp';
-import {handleAuth} from '../../actions/profile';
-
+import {
+  handleAuth,
+  setLoginEmail,
+  setLoginPassword,
+} from '../../actions/profile';
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
 import Input from '../commons/Input';
@@ -19,27 +13,44 @@ import Button from '../commons/Button';
 import {createUser} from '../../helpers/api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Header from '../commons/Header';
-import FastImage from 'react-native-fast-image';
+import {MyRootState} from '../../types/Shared';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../App';
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
-const SignUp: React.FC<SignUpProps> = ({
+const SignUp: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'SignUp'>;
+  handleAuth: (user: FirebaseAuthTypes.User) => void;
+  email: string;
+  password: string;
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+}> = ({
   navigation,
   handleAuth: handleAuthAction,
+  email,
+  password,
+  setEmail,
+  setPassword,
 }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
   const [confirm, setConfirm] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, [setEmail, setPassword]);
+
   const signUp = async () => {
     try {
-      if (pass !== confirm) {
+      if (password !== confirm) {
         Alert.alert('Error', 'Passwords do not match');
         return;
       }
       setLoading(true);
-      const user = await createUser(email, pass, {name, surname});
+      const user = await createUser(email, password, {name, surname});
       handleAuthAction(user);
     } catch (e) {
       setLoading(false);
@@ -115,8 +126,8 @@ const SignUp: React.FC<SignUpProps> = ({
           placeholder="Password"
           secure
           placeholderTextColor="#fff"
-          onChangeText={setPass}
-          value={pass}
+          onChangeText={setPassword}
+          value={password}
           autoCorrect={false}
           autoCapitalize="none"
         />
@@ -135,7 +146,9 @@ const SignUp: React.FC<SignUpProps> = ({
         />
         <Button
           loading={loading}
-          disabled={loading || !pass || !name || !surname || !email || !confirm}
+          disabled={
+            loading || !password || !name || !surname || !email || !confirm
+          }
           onPress={signUp}
           text="Sign Up"
           style={{
@@ -175,8 +188,15 @@ const SignUp: React.FC<SignUpProps> = ({
   );
 };
 
+const mapStateToProps = ({profile}: MyRootState) => ({
+  email: profile.loginEmail,
+  password: profile.loginPassword,
+});
+
 const mapDispatchToProps = {
   handleAuth,
+  setEmail: setLoginEmail,
+  setPassword: setLoginPassword,
 };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

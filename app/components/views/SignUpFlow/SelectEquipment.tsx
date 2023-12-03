@@ -1,47 +1,66 @@
-import {ImageBackground, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-
-import colors from '../../../constants/colors';
+import {View} from 'react-native';
+import React from 'react';
 import Text from '../../commons/Text';
-import Input from '../../commons/Input';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import colors from '../../../constants/colors';
+import SelectableButton from '../../commons/SelectableButton';
+import {Equipment} from '../../../types/QuickRoutines';
+
+const equipmentDetails: {
+  equipment: Equipment;
+  text: string;
+  secondaryText: string;
+}[] = [
+  {
+    equipment: 'none',
+    text: 'I’ve got no equipment',
+    secondaryText: 'No access to any equipment or a gym',
+  },
+  {
+    equipment: 'minimal',
+    text: 'I’ve got a few bits and pieces',
+    secondaryText: 'Dumbbells, exercise ball, exercise mat',
+  },
+  {
+    equipment: 'full',
+    text: 'I’ve got access to a gym',
+    secondaryText:
+      'Dumbbells, weighted bars, bosu ball, exercise ball, exercise benches Kettlebell etc',
+  },
+];
 
 const SelectEquipment: React.FC<{
-  equipment: string;
-  setEquipment: (equipment: string) => void;
-}> = ({setEquipment, equipment}) => {
+  equipment: Equipment;
+  setEquipment: (equipment: Equipment) => void;
+}> = ({equipment, setEquipment}) => {
   return (
-    <KeyboardAwareScrollView
-      enableOnAndroid
-      contentContainerStyle={{
+    <View
+      style={{
         flex: 1,
-        justifyContent: 'center',
-        margin: 50,
+        marginHorizontal: 20,
+        marginTop: 20,
       }}>
       <Text
         style={{
-          textAlign: 'center',
-          marginVertical: 20,
-
-          fontSize: 20,
+          marginBottom: 20,
+          fontSize: 24,
           color: colors.appWhite,
+          fontWeight: 'bold',
         }}>
         What equipment do you have?
       </Text>
-
-      <Input
-        placeholder="e.g. dumbbells, barbells, squat rack..."
-        style={{
-          height: 100,
-          textAlignVertical: 'top',
-          marginHorizontal: 10,
-        }}
-        multiline
-        onChangeText={setEquipment}
-        defaultValue={equipment}
-        placeholderTextColor={colors.appWhite}
-      />
-    </KeyboardAwareScrollView>
+      {equipmentDetails.map(({text, secondaryText, equipment: e}) => {
+        return (
+          <SelectableButton
+            key={e}
+            text={text}
+            secondaryText={secondaryText}
+            selected={e === equipment}
+            onPress={() => setEquipment(e)}
+            style={{marginBottom: 15}}
+          />
+        );
+      })}
+    </View>
   );
 };
 

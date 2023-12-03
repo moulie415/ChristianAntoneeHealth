@@ -7,7 +7,7 @@ import {WeeklyItems} from '../reducers/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
-import {Equipment} from '../types/QuickRoutines';
+import {Area, Equipment} from '../types/QuickRoutines';
 import {Goal, Level, Sample, StepSample} from '../types/Shared';
 
 export const SET_PROFILE = 'SET_PROFILE';
@@ -44,6 +44,8 @@ export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 export const SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE';
+export const SET_LOGIN_EMAIL = 'SET_LOGIN_EMAIL';
+export const SET_LOGIN_PASSWORD = 'SET_LOGIN_PASSWORD';
 
 export interface SetProfileAction {
   type: typeof SET_PROFILE;
@@ -64,6 +66,9 @@ export interface SignUpPayload {
   gender: Gender;
   marketing: boolean;
   goal: Goal;
+  area: Area;
+  equipment: Equipment;
+  experience: Level;
   fromProfile?: boolean;
 }
 
@@ -225,6 +230,16 @@ export interface SetChatMessageAction {
   payload: {uid: string; message: string};
 }
 
+export interface SetLoginEmailAction {
+  type: typeof SET_LOGIN_EMAIL;
+  payload: string;
+}
+
+export interface SetLoginPasswordAction {
+  type: typeof SET_LOGIN_PASSWORD;
+  payload: string;
+}
+
 export type ProfileActionTypes =
   | SetProfileAction
   | SetLoggedInAction
@@ -255,7 +270,9 @@ export type ProfileActionTypes =
   | SetBodyFatPercentageSamplesAction
   | SetMuscleMassSamplesAction
   | SetHasViewedTourAction
-  | SetChatMessageAction;
+  | SetChatMessageAction
+  | SetLoginEmailAction
+  | SetLoginPasswordAction;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -455,4 +472,14 @@ export const setChatMessage = (
 ): SetChatMessageAction => ({
   type: SET_CHAT_MESSAGE,
   payload: {uid, message},
+});
+
+export const setLoginEmail = (email: string): SetLoginEmailAction => ({
+  type: SET_LOGIN_EMAIL,
+  payload: email,
+});
+
+export const setLoginPassword = (password: string): SetLoginPasswordAction => ({
+  type: SET_LOGIN_PASSWORD,
+  payload: password,
 });

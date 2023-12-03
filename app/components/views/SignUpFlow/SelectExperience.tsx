@@ -1,15 +1,31 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {Level} from '../../../types/Shared';
 import Text from '../../commons/Text';
-
 import colors from '../../../constants/colors';
-import Button from '../../commons/Button';
+import SelectableButton from '../../commons/SelectableButton';
+
+const experienceDetails: {
+  experience: Level;
+  text: string;
+  secondaryText: string;
+}[] = [
+  {
+    experience: Level.BEGINNER,
+    text: 'Beginner',
+    secondaryText: 'Just starting out on my health and fitness journey',
+  },
+  {
+    experience: Level.INTERMEDIATE,
+    text: 'Intermediate',
+    secondaryText: 'I have some experience in the gym with weights',
+  },
+  {
+    experience: Level.ADVANCED,
+    text: 'Advanced',
+    secondaryText: 'Im a seasoned veteran and want a challenge',
+  },
+];
 
 const SelectExperience: React.FC<{
   experience: Level;
@@ -19,48 +35,30 @@ const SelectExperience: React.FC<{
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        margin: 50,
+        marginHorizontal: 20,
+        marginTop: 20,
       }}>
       <Text
         style={{
-          textAlign: 'center',
-          marginVertical: 20,
+          marginBottom: 20,
+          fontSize: 24,
           color: colors.appWhite,
-          fontSize: 20,
+          fontWeight: 'bold',
         }}>
-        What's your experience level?
+        What's your level of experience?
       </Text>
-      <Button
-        text="No clue what I'm doing"
-        style={{
-          marginBottom: 20,
-          marginHorizontal: 20,
-        }}
-        onPress={() => setExperience(Level.BEGINNER)}
-        textStyle={{fontSize: 15}}
-        variant={experience === Level.BEGINNER ? 'primary' : 'secondary'}
-      />
-      <Button
-        text="I workout every now and again"
-        style={{
-          marginBottom: 20,
-          marginHorizontal: 20,
-        }}
-        onPress={() => setExperience(Level.INTERMEDIATE)}
-        textStyle={{fontSize: 15}}
-        variant={experience === Level.INTERMEDIATE ? 'primary' : 'secondary'}
-      />
-      <Button
-        text="I’m a seasoned veteran"
-        style={{
-          marginBottom: 20,
-          marginHorizontal: 20,
-        }}
-        onPress={() => setExperience(Level.ADVANCED)}
-        textStyle={{fontSize: 15}}
-        variant={experience === Level.ADVANCED ? 'primary' : 'secondary'}
-      />
+      {experienceDetails.map(({text, secondaryText, experience: e}) => {
+        return (
+          <SelectableButton
+            key={e}
+            text={text}
+            secondaryText={secondaryText}
+            selected={e === experience}
+            onPress={() => setExperience(e)}
+            style={{marginBottom: 15}}
+          />
+        );
+      })}
     </View>
   );
 };

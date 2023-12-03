@@ -26,9 +26,13 @@ const SelectableButton: React.FC<{
         },
         style,
       ]}>
-      <View>
+      <View style={{flex: 1}}>
         <Text
-          style={{color: colors.appWhite, fontSize: 14, fontWeight: 'bold'}}>
+          style={{
+            color: colors.appWhite,
+            fontSize: 14,
+            fontWeight: 'bold',
+          }}>
           {text}
         </Text>
         {!!secondaryText && (
@@ -44,7 +48,11 @@ const SelectableButton: React.FC<{
       </View>
       {customRight
         ? customRight
-        : selected && <Icon size={20} color={colors.appBlue} name="check" />}
+        : selected && (
+            <View style={{width: 30, alignItems: 'center'}}>
+              <Icon size={20} color={colors.appBlue} name="check" />
+            </View>
+          )}
     </TouchableOpacity>
   );
 };

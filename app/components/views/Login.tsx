@@ -4,17 +4,18 @@ import {
   Image,
   Platform,
   View,
-  ImageBackground,
   StyleSheet,
-  KeyboardAvoidingView,
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
-import LoginProps from '../../types/views/Login';
 import {MyRootState} from '../../types/Shared';
-
-import {handleAuth, signUp} from '../../actions/profile';
+import {
+  handleAuth,
+  setLoginEmail,
+  setLoginPassword,
+  signUp,
+} from '../../actions/profile';
 import colors from '../../constants/colors';
 import Text from '../commons/Text';
 import {
@@ -30,17 +31,29 @@ import GoogleLogo from '../../images/google.svg';
 import Spinner from '../commons/Spinner';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../App';
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
-const Login: React.FC<LoginProps> = ({
+const Login: React.FC<{
+  navigation: NativeStackNavigationProp<StackParamList, 'Login'>;
+  handleAuth: (user: FirebaseAuthTypes.User) => void;
+  email: string;
+  password: string;
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+}> = ({
   navigation,
   handleAuth: handleAuthAction,
+  email,
+  password,
+  setEmail,
+  setPassword,
 }) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
 
   const signInApple = async () => {
     try {
@@ -72,7 +85,7 @@ const Login: React.FC<LoginProps> = ({
   const signInEmail = async () => {
     try {
       setLoading(true);
-      await signIn(email, pass, handleAuthAction);
+      await signIn(email, password, handleAuthAction);
     } catch (e) {
       setLoading(false);
     }
@@ -141,8 +154,8 @@ const Login: React.FC<LoginProps> = ({
               icon="envelope"
             />
             <Input
-              onChangeText={setPass}
-              value={pass}
+              onChangeText={setPassword}
+              value={password}
               containerStyle={{
                 marginHorizontal: 20,
                 marginTop: 20,
@@ -273,11 +286,15 @@ const Login: React.FC<LoginProps> = ({
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   loggedIn: profile.loggedIn,
+  email: profile.loginEmail,
+  password: profile.loginPassword,
 });
 
 const mapDispatchToProps = {
   signUp,
   handleAuth,
+  setEmail: setLoginEmail,
+  setPassword: setLoginPassword,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -195,64 +195,73 @@ function* updateProfile(action: UpdateProfileAction) {
     muscleMass,
     boneMass,
   } = action.payload;
+  yield put(setLoading(true));
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
-    const enabled: boolean = yield call(isEnabled);
-    if (enabled) {
-      if (weight) {
-        yield call(saveWeight, weight, 'metric');
+    try {
+      const {uid} = yield select((state: MyRootState) => state.profile.profile);
+      const enabled: boolean = yield call(isEnabled);
+      if (enabled) {
+        if (weight) {
+          yield call(saveWeight, weight, 'metric');
+        }
+        if (height) {
+          yield call(saveHeight, height, 'metric');
+        }
+        if (bodyFatPercentage !== undefined) {
+          yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
+        }
+        if (muscleMass !== undefined) {
+          yield call(saveMuscleMass, muscleMass, uid);
+        }
+        if (boneMass !== undefined) {
+          yield call(saveBoneMass, boneMass, uid);
+        }
       }
-      if (height) {
-        yield call(saveHeight, height, 'metric');
-      }
-      if (bodyFatPercentage !== undefined) {
-        yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
-      }
-      if (muscleMass !== undefined) {
-        yield call(saveMuscleMass, muscleMass, uid);
-      }
-      if (boneMass !== undefined) {
-        yield call(saveBoneMass, boneMass, uid);
-      }
-    }
-  } catch (e) {
-    Alert.alert(
-      'Error saving body measurement',
-      "Please make sure you've given CA Health sufficient permissions",
-      [
-        {text: 'Cancel'},
-        {
-          text: `Open ${Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'}`,
-          onPress: () => {
-            if (Platform.OS === 'ios') {
-              Linking.openURL('health://');
-            } else {
-              googleFit.openFit();
-            }
+    } catch (e) {
+      Alert.alert(
+        'Error saving body measurement',
+        "Please make sure you've given CA Health sufficient permissions",
+        [
+          {text: 'Cancel'},
+          {
+            text: `Open ${
+              Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+            }`,
+            onPress: () => {
+              if (Platform.OS === 'ios') {
+                Linking.openURL('health://');
+              } else {
+                googleFit.openFit();
+              }
+            },
           },
-        },
-      ],
-    );
+        ],
+      );
 
+      logError(e);
+    }
+    const {profile} = yield select((state: MyRootState) => state.profile);
+    const updateObj = {
+      ...profile,
+      ...action.payload,
+    };
+    yield call(api.updateUser, updateObj, profile.uid);
+    yield put(setProfile(updateObj));
+    yield call(Snackbar.show, {text: 'Profile updated'});
+    setUserAttributes({
+      birthday: dob || '',
+      weight: weight?.toString() || '',
+      height: height?.toString() || '',
+      unit: 'metric',
+      gender: gender || '',
+      goal: goal || '',
+      uid: profile.uid || '',
+    });
+  } catch (e) {
+    yield call(Snackbar.show, {text: 'Error updating profile'});
     logError(e);
   }
-  const {profile} = yield select((state: MyRootState) => state.profile);
-  const updateObj = {
-    ...profile,
-    ...action.payload,
-  };
-  yield call(api.updateUser, updateObj, profile.uid);
-  yield put(setProfile(updateObj));
-  yield call(Snackbar.show, {text: 'Profile updated'});
-  setUserAttributes({
-    birthday: dob || '',
-    weight: weight?.toString() || '',
-    height: height?.toString() || '',
-    unit: 'metric',
-    gender: gender || '',
-    goal: goal || '',
-    uid: profile.uid || '',
-  });
+  yield put(setLoading(false));
 }
 
 function* signUp(action: SignUpAction) {
@@ -713,7 +722,7 @@ export default function* profileSaga() {
   yield all([
     throttle(3000, SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
-    debounce(3000, UPDATE_PROFILE, updateProfile),
+    throttle(3000, UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
     throttle(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),

@@ -255,6 +255,7 @@ const PersonalDetails: React.FC<{
               }}>
               Privacy Policy
             </Text>
+            *
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

@@ -33,9 +33,13 @@ import {RouteProp} from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
 import moment from 'moment';
 import PersonalDetails from './PersonalDetails';
+import SelectArea from './SelectArea';
 import Button from '../../commons/Button';
 import StepIndicator from 'react-native-step-indicator';
 import useThrottle from '../../../hooks/UseThrottle';
+import {Area, Equipment} from '../../../types/QuickRoutines';
+import SelectEquipment from './SelectEquipment';
+import SelectExperience from './SelectExperience';
 
 const {width} = Dimensions.get('window');
 
@@ -57,6 +61,13 @@ const SignUpFlow: React.FC<{
     (profile.gender as Gender) || 'none',
   );
   const [goal, setGoal] = useState<Goal>((profile.goal as Goal) || null);
+  const [area, setArea] = useState<Area>((profile.area as Area) || null);
+  const [equipment, setEquipment] = useState<Equipment>(
+    (profile.equipment as Equipment) || null,
+  );
+  const [experience, setExperience] = useState<Level>(
+    (profile.experience as Level) || null,
+  );
   const [loading, setLoading] = useState(false);
   const [privacy, setPrivacy] = useState(false);
 
@@ -114,6 +125,9 @@ const SignUpFlow: React.FC<{
       gender,
       goal,
       marketing,
+      area,
+      experience,
+      equipment,
       fromProfile: !!fromProfile,
     });
   }, 3000);
@@ -126,7 +140,6 @@ const SignUpFlow: React.FC<{
   const goBack = () => ref.current?.setPage(index - 1);
 
   const slides = [
-    // 1
     {
       showNext:
         !!name &&
@@ -158,13 +171,33 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-    // 2
     {
       key: 'goal',
       showNext: !!goal,
       component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
-    // 3
+    {
+      key: 'area',
+      showNext: !!area,
+      component: <SelectArea area={area} setArea={setArea} />,
+    },
+    {
+      key: 'equipment',
+      showNext: !!equipment,
+      component: (
+        <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
+      ),
+    },
+    {
+      key: 'experience',
+      showNext: !!equipment,
+      component: (
+        <SelectExperience
+          experience={experience}
+          setExperience={setExperience}
+        />
+      ),
+    },
     {
       key: 'goals',
       component: <Goals goal={goal} />,

@@ -4,7 +4,6 @@ import React from 'react';
 import {Dimensions, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 

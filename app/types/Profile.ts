@@ -1,5 +1,6 @@
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {Goal, Level} from './Shared';
+import { Area, Equipment } from './QuickRoutines';
 
 export type Gender = 'male' | 'female' | 'none';
 
@@ -58,4 +59,8 @@ export default interface Profile {
   workoutMusic?: boolean;
   syncPlanWithCalendar?: boolean;
   goalReminders?: boolean;
+  area?: Area;
+  equipment?: Equipment;
+  experience?: Level;
+
 };

@@ -9,11 +9,10 @@ import {
 import DatePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
-import styles from '../../styles/views/Profile';
 import {connect} from 'react-redux';
-import {MyRootState, Sample} from '../../types/Shared';
+import {MyRootState} from '../../types/Shared';
 import colors from '../../constants/colors';
-import Profile, {Gender, Unit} from '../../types/Profile';
+import Profile, {Gender} from '../../types/Profile';
 import * as _ from 'lodash';
 import {
   getSamples,
@@ -43,25 +42,31 @@ import storage from '@react-native-firebase/storage';
 import Text from '../commons/Text';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
-import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import PickerModal from '../commons/PickerModal';
 import ProfileCharts from '../commons/ProfileCharts';
-import Divider from '../commons/Divider';
-import Spinner from '../commons/Spinner';
-import Animated, {FadeIn} from 'react-native-reanimated';
 import {StackParamList} from '../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Tile from '../commons/Tile';
 import Modal from '../commons/Modal';
 import GoalSummaries from '../commons/GoalSummaries';
+import {AlertButton} from 'react-native';
+import ImageView from 'react-native-image-viewing';
+import {ImageSource} from 'react-native-image-viewing/dist/@types';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
   profile: Profile;
   updateProfileAction: (payload: UpdateProfilePayload) => void;
   getSamplesAction: () => void;
-}> = ({profile, navigation, updateProfileAction, getSamplesAction}) => {
+  loading: boolean;
+}> = ({
+  profile,
+  navigation,
+  updateProfileAction,
+  getSamplesAction,
+  loading: pLoading,
+}) => {
   const [gender, setGender] = useState<Gender>(
     (profile.gender as Gender) || null,
   );
@@ -69,10 +74,10 @@ const ProfileComponent: React.FC<{
   const [dob, setDob] = useState(profile.dob);
   const [height, setHeight] = useState<number>(profile.height || 0);
   const [avatar, setAvatar] = useState(profile.avatar);
-  const [loading, setLoading] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
   const [showDobModal, setShowDobModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [showBodyFatPercentageModal, setShowBodyFatPercentageModal] =
     useState(false);
@@ -85,6 +90,9 @@ const ProfileComponent: React.FC<{
 
   const [showBoneMassModal, setShowBoneMassModal] = useState(false);
   const [boneMass, setBoneMass] = useState(profile.boneMass);
+
+  const [images, setImages] = useState<ImageSource[]>([]);
+  const [photoVisible, setPhotoVisible] = useState(false);
 
   const [newProfile, setNewProfile] = useState<Profile>({
     ...profile,
@@ -147,6 +155,7 @@ const ProfileComponent: React.FC<{
         await imageRef.putFile(avatar || '');
         newAvatar = await imageRef.getDownloadURL();
       }
+      setAvatar(newAvatar);
       updateProfileAction({
         gender,
         dob,
@@ -157,19 +166,24 @@ const ProfileComponent: React.FC<{
         ...(muscleMass !== undefined ? {muscleMass} : {}),
         ...(boneMass !== undefined ? {boneMass} : {}),
       });
-      setLoading(false);
     } catch (e) {
-      setLoading(false);
       logError(e);
       Snackbar.show({text: 'Error updating profile'});
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     getSamplesAction();
   }, [getSamplesAction]);
 
-  const saveDisabled = !dob || equal;
+  useEffect(() => {
+    if (profile.avatar) {
+      setImages([{uri: profile.avatar}]);
+    }
+  }, [profile.avatar]);
+
+  const saveDisabled = !dob || equal || pLoading || loading;
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -177,7 +191,7 @@ const ProfileComponent: React.FC<{
         <Header
           left={
             <TouchableOpacity
-              disabled={equal}
+              disabled={equal || loading || pLoading}
               onPress={() => {
                 setAvatar(profile.avatar);
                 setWeight(profile.weight || 0);
@@ -224,7 +238,7 @@ const ProfileComponent: React.FC<{
             }}>
             <TouchableOpacity
               onPress={() => {
-                if (profile.premium) {
+                if (!profile.premium) {
                   const MAX_SIZE = 500;
                   const cameraOptions: CameraOptions = {
                     mediaType: 'photo',
@@ -236,7 +250,7 @@ const ProfileComponent: React.FC<{
                     maxHeight: MAX_SIZE,
                     maxWidth: MAX_SIZE,
                   };
-                  Alert.alert('Edit profile photo', '', [
+                  const options: AlertButton[] = [
                     {
                       text: 'Upload from image library',
                       onPress: () =>
@@ -251,7 +265,14 @@ const ProfileComponent: React.FC<{
                       text: 'Cancel',
                       style: 'cancel',
                     },
-                  ]);
+                  ];
+                  if (profile.avatar) {
+                    options.splice(2, 0, {
+                      text: 'View photo',
+                      onPress: () => setPhotoVisible(true),
+                    });
+                  }
+                  Alert.alert('Profile photo', '', options);
                 } else {
                   navigation.navigate('Premium', {});
                 }
@@ -516,14 +537,21 @@ const ProfileComponent: React.FC<{
             }}
           />
         )}
-        <AbsoluteSpinner loading={loading} />
+        <AbsoluteSpinner loading={pLoading} />
       </SafeAreaView>
+      <ImageView
+        images={images}
+        imageIndex={0}
+        visible={photoVisible}
+        onRequestClose={() => setPhotoVisible(false)}
+      />
     </View>
   );
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   profile: profile.profile,
+  loading: profile.loading,
 });
 
 const mapDispatchToProps = {

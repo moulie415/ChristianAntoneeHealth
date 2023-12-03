@@ -49,7 +49,7 @@ const GoalCircle: React.FC<{
       style={{
         alignItems: 'center',
         flex: 1,
-        flexBasis: '50%',
+        flexBasis: '33%',
         marginBottom: 10,
       }}>
       <AnimatedCircularProgress
@@ -82,7 +82,7 @@ const GoalCircle: React.FC<{
           color: colors.appWhite,
           fontWeight: 'bold',
           fontSize: 12,
-          width: 150,
+          width: 100,
           marginHorizontal: 10,
           textAlign: 'center',
           alignSelf: 'center',
@@ -129,14 +129,14 @@ const GoalSummaries: React.FC<{
 
   const goals: GoalSet[] = [
     {
-      title: 'Minutes spent training',
+      title: 'Active minutes',
       key: 'mins',
       goal: minsGoal,
       score: mins,
       icon: Time,
     },
     {
-      title: `${workoutLevelTitleString} workouts completed`,
+      title: `${workoutLevelTitleString} workouts`,
       key: 'workoutLevel',
       icon: () => (
         <Icon
