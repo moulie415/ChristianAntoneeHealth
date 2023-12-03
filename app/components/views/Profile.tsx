@@ -238,7 +238,7 @@ const ProfileComponent: React.FC<{
             }}>
             <TouchableOpacity
               onPress={() => {
-                if (!profile.premium) {
+                if (profile.premium) {
                   const MAX_SIZE = 500;
                   const cameraOptions: CameraOptions = {
                     mediaType: 'photo',
