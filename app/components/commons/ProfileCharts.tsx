@@ -13,7 +13,6 @@ import {LineChart} from 'echarts/charts';
 import {GridComponent} from 'echarts/components';
 import {SVGRenderer, SkiaChart} from '@wuba/react-native-echarts';
 import moment from 'moment';
-import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
 
 echarts.use([SVGRenderer, LineChart, GridComponent]);
@@ -212,11 +211,11 @@ const ProfileCharts: React.FC<{
   bodyFatPercentageSamples: Sample[];
   muscleMassSamples: Sample[];
   boneMassSamples: Sample[];
-  setShowBodyFatPercentageModal: (show: boolean) => void;
-  setShowMuscleMassModal: (show: boolean) => void;
-  setShowBoneMassModal: (show: boolean) => void;
-  setShowWeightModal: (show: boolean) => void;
-  setShowHeightModal: (show: boolean) => void;
+  setShowBodyFatPercentageModal?: (show: boolean) => void;
+  setShowMuscleMassModal?: (show: boolean) => void;
+  setShowBoneMassModal?: (show: boolean) => void;
+  setShowWeightModal?: (show: boolean) => void;
+  setShowHeightModal?: (show: boolean) => void;
   weight: number;
   height: number;
   bodyFatPercentage?: number;
@@ -323,7 +322,9 @@ const ProfileCharts: React.FC<{
           'Obesity',
         ]}
         suffix="%"
-        onPress={() => setShowBodyFatPercentageModal(true)}
+        onPress={() =>
+          setShowBodyFatPercentageModal && setShowBodyFatPercentageModal(true)
+        }
       />
       <Chart
         setFilter={setFilter}
@@ -340,7 +341,7 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           new Color(colors.appGreen).darken(0.4).toString(),
         ]}
-        onPress={() => setShowMuscleMassModal(true)}
+        onPress={() => setShowMuscleMassModal && setShowMuscleMassModal(true)}
         labels={['Low', 'Normal', 'High']}
       />
       <Chart
@@ -358,7 +359,7 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           new Color(colors.appGreen).darken(0.4).toString(),
         ]}
-        onPress={() => setShowBoneMassModal(true)}
+        onPress={() => setShowBoneMassModal && setShowBoneMassModal(true)}
         labels={['Below average', 'Average', 'Above average']}
       />
     </>

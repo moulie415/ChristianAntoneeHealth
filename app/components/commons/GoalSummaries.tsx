@@ -1,11 +1,5 @@
 import {View, TouchableOpacity, Dimensions} from 'react-native';
-import React, {
-  MutableRefObject,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import colors from '../../constants/colors';
 import Text from './Text';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
@@ -17,8 +11,6 @@ import {getWeeklyItems} from '../../actions/profile';
 import {WeeklyItems} from '../../reducers/profile';
 import QuickRoutine from '../../types/QuickRoutines';
 import Tile from './Tile';
-import {ScrollView} from 'react-native-gesture-handler';
-import Dumbbell from '../../images/dumbbell.svg';
 import Time from '../../images/time.svg';
 import Fire from '../../images/fire.svg';
 import {SvgProps} from 'react-native-svg';
@@ -101,17 +93,19 @@ const GoalSummaries: React.FC<{
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
   settings: SettingsState;
+  connection?: Profile;
 }> = ({
-  profile,
+  profile: defaultProfile,
   getWeeklyItemsAction,
   weeklyItems,
   quickRoutinesObj,
   settings,
+  connection,
 }) => {
   useEffect(() => {
     getWeeklyItemsAction();
   }, [getWeeklyItemsAction]);
-
+  const profile = connection || defaultProfile;
   const {
     calories,
     mins,
