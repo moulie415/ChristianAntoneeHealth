@@ -31,6 +31,8 @@ import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
 import {logError} from '../../../helpers/error';
+import SelectGoalModal from './SelectGoalModal';
+import {getGoalReadableString} from '../../../helpers/goals';
 
 const isValidGoal = (goal: Goal) =>
   goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
@@ -108,6 +110,7 @@ const Settings: React.FC<{
   const [syncPlan, setSyncPlanWithCalendar] = useState(
     profile.syncPlanWithCalendar,
   );
+  const [goalModalVisible, setGoalModalVisible] = useState(false);
 
   const newProfile = {
     ...profile,
@@ -205,6 +208,21 @@ const Settings: React.FC<{
                 value={syncPlan}
                 onValueChange={toggle}
               />
+            }
+          />
+
+          <SettingsItem
+            onPress={() => setGoalModalVisible(true)}
+            text="Goal"
+            right={
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                }}>
+                {getGoalReadableString(goal)}
+              </Text>
             }
           />
           <Text
@@ -427,6 +445,12 @@ const Settings: React.FC<{
           )}
         </View>
       </Modal>
+      <SelectGoalModal
+        goalModalVisible={goalModalVisible}
+        setGoalModalVisible={setGoalModalVisible}
+        goal={goal}
+        setGoal={setGoal}
+      />
     </View>
   );
 };

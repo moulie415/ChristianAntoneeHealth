@@ -46,6 +46,7 @@ import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
 import CustomTooltip from './components/commons/CustomTooltip';
 import WelcomeModal from './WelcomeModal';
+import Profile from './types/Profile';
 
 const {height, width} = Dimensions.get('window');
 
@@ -152,6 +153,7 @@ export type StackParamList = {
   Nutrition: {nutrition: PlanNutrition};
   Sleep: {sleep: PlanSleep};
   MonthlyDayView: {workouts: PlanWorkout[]; date: string; planId: string};
+  ViewProfile: {connection: Profile};
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

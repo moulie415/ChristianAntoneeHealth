@@ -1,10 +1,7 @@
 import PushNotification from 'react-native-push-notification';
 import {capitalizeFirstLetter} from '.';
-import {SaveWorkoutAction} from '../actions/exercises';
-import {SaveQuickRoutineAction} from '../actions/quickRoutines';
 import {WeeklyItems} from '../reducers/profile';
 import {SettingsState} from '../reducers/settings';
-import Profile from '../types/Profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
 import {Goal, Level, PlanWorkout} from '../types/Shared';
@@ -180,5 +177,18 @@ export const sendGoalTargetNotification = (
         });
       }
     }
+  }
+};
+
+export const getGoalReadableString = (goal: Goal) => {
+  switch (goal) {
+    case Goal.STRENGTH:
+      return 'Improve strength & fitness';
+    case Goal.ACTIVE:
+      return 'Become more active';
+    case Goal.WEIGHT_LOSS:
+      return 'Weight loss';
+    default:
+      return '';
   }
 };

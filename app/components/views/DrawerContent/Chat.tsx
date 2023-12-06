@@ -79,6 +79,7 @@ const Chat: React.FC<ChatProps> = ({
   loading,
   chatMessages,
   setChatMessage: setChatMessageAction,
+  navigation,
 }) => {
   const {uid} = route.params;
   const [text, setText] = useState('');
@@ -228,7 +229,8 @@ const Chat: React.FC<ChatProps> = ({
         title={connection.name}
         hasBack
         right={
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ViewProfile', {connection})}>
             <Avatar
               src={connection.avatar}
               name={`${connection.name} ${connection.surname || ''}`}
@@ -297,7 +299,9 @@ const Chat: React.FC<ChatProps> = ({
 
 const mapStateToProps = (
   {profile, exercises}: MyRootState,
-  props: ChatProps,
+  props: {
+    route: RouteProp<StackParamList, 'Chat'>;
+  },
 ) => ({
   profile: profile.profile,
   chatMessages: profile.chatMessages,

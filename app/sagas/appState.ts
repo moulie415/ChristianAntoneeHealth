@@ -9,7 +9,6 @@ function onAppStateChanged() {
       emitter(nextAppState);
     });
     return () => {
-      // @ts-ignore
       subscriber.remove();
     };
   });

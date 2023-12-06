@@ -48,6 +48,7 @@ import MonthlyDayView from './components/views/Plan/MonthlyDayView';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
 import {Dimensions} from 'react-native';
+import ViewProfile from './components/views/ViewProfile';
 
 const Drawer = createDrawerNavigator();
 
@@ -127,7 +128,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="SavedItems" component={SavedItemsTabs} />
         <Stack.Screen name="AddConnection" component={AddConnection} />
 
-        {/* @ts-ignore */}
+        
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="WhatArea" component={WhatArea} />
         <Stack.Screen name="WorkoutList" component={WorkoutList} />
@@ -141,6 +142,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="Nutrition" component={PlanNutrition} />
         <Stack.Screen name="Sleep" component={PlanSleep} />
         <Stack.Screen name="MonthlyDayView" component={MonthlyDayView} />
+        <Stack.Screen name="ViewProfile" component={ViewProfile} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}

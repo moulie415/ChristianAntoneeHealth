@@ -6,24 +6,26 @@ import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
 import SelectableButton from '../../commons/SelectableButton';
+import {getGoalReadableString} from '../../../helpers/goals';
 
-const goalDetails: {goal: Goal; text: string; secondaryText: string}[] = [
-  {
-    goal: Goal.STRENGTH,
-    text: 'Improve strength & fitness',
-    secondaryText: 'Develop your muscular and cardiovascular health',
-  },
-  {
-    goal: Goal.WEIGHT_LOSS,
-    text: 'Weight loss',
-    secondaryText: 'Decrease your body fat and risk of disease',
-  },
-  {
-    goal: Goal.ACTIVE,
-    text: 'Become more active',
-    secondaryText: 'Feel better as part of a healthier active lifestyle',
-  },
-];
+export const goalDetails: {goal: Goal; text: string; secondaryText: string}[] =
+  [
+    {
+      goal: Goal.STRENGTH,
+      text: getGoalReadableString(Goal.STRENGTH),
+      secondaryText: 'Develop your muscular and cardiovascular health',
+    },
+    {
+      goal: Goal.WEIGHT_LOSS,
+      text: getGoalReadableString(Goal.WEIGHT_LOSS),
+      secondaryText: 'Decrease your body fat and risk of disease',
+    },
+    {
+      goal: Goal.ACTIVE,
+      text: getGoalReadableString(Goal.ACTIVE),
+      secondaryText: 'Feel better as part of a healthier active lifestyle',
+    },
+  ];
 
 const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
   goal,
