@@ -42,6 +42,10 @@ export const LOAD_EARLIER_MESSAGES = 'LOAD_EARLIER_MESSAGES';
 export const SET_VIEWED_PLAN = 'SET_VIEWED_PLAN';
 export const GET_WEEKLY_ITEMS = 'GET_WEEKLY_ITEMS';
 export const SET_WEEKLY_ITEMS = 'SET_WEEKLY_ITEMS';
+export const GET_WEEKLY_ITEMS_FOR_CONNECTION =
+  'GET_WEEKLY_ITEMS_FOR_CONNECTION';
+export const SET_WEEKLY_ITEMS_FOR_CONNECTION =
+  'SET_WEEKLY_ITEMS_FOR_CONNECTION';
 export const SET_HAS_VIEWED_TOUR = 'SET_HAS_VIEWED_TOUR';
 export const SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE';
 export const SET_LOGIN_EMAIL = 'SET_LOGIN_EMAIL';
@@ -221,6 +225,16 @@ export interface SetWeeklyItemsAction {
   payload: WeeklyItems;
 }
 
+export interface GetWeeklyItemsForConnection {
+  type: typeof GET_WEEKLY_ITEMS_FOR_CONNECTION;
+  payload: string;
+}
+
+export interface SetWeeklyItemsForConnection {
+  type: typeof SET_WEEKLY_ITEMS_FOR_CONNECTION;
+  payload: {uid: string; items: WeeklyItems};
+}
+
 export interface SetHasViewedTourAction {
   type: typeof SET_HAS_VIEWED_TOUR;
 }
@@ -272,7 +286,9 @@ export type ProfileActionTypes =
   | SetHasViewedTourAction
   | SetChatMessageAction
   | SetLoginEmailAction
-  | SetLoginPasswordAction;
+  | SetLoginPasswordAction
+  | GetWeeklyItemsForConnection
+  | SetWeeklyItemsForConnection;
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
@@ -460,6 +476,21 @@ export const getWeeklyItems = (): GetWeeklyItemsAction => ({
 export const setWeeklyItems = (payload: WeeklyItems): SetWeeklyItemsAction => ({
   type: SET_WEEKLY_ITEMS,
   payload,
+});
+
+export const getWeeklyItemsForConnection = (
+  uid: string,
+): GetWeeklyItemsForConnection => ({
+  type: GET_WEEKLY_ITEMS_FOR_CONNECTION,
+  payload: uid,
+});
+
+export const setWeeklyItemsForConnection = (
+  uid: string,
+  items: WeeklyItems,
+): SetWeeklyItemsForConnection => ({
+  type: SET_WEEKLY_ITEMS_FOR_CONNECTION,
+  payload: {uid, items},
 });
 
 export const setHasViewedTour = (): SetHasViewedTourAction => ({

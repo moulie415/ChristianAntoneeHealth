@@ -31,6 +31,7 @@ import {
   SET_CHAT_MESSAGE,
   SET_LOGIN_EMAIL,
   SET_LOGIN_PASSWORD,
+  SET_WEEKLY_ITEMS_FOR_CONNECTION,
 } from '../actions/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
@@ -56,6 +57,7 @@ export interface ProfileState {
   stepSamples: StepSample[];
   weeklySteps: StepSample[];
   connections: {[key: string]: Profile};
+  connectionWeeklyItems: {[key: string]: WeeklyItems};
   loading: boolean;
   messages: {[key: string]: {[key: string]: Message}};
   chats: {[key: string]: Chat};
@@ -109,6 +111,7 @@ const initialState: ProfileState = {
   stepSamples: [],
   weeklySteps: [],
   connections: {},
+  connectionWeeklyItems: {},
   loading: false,
   messages: {},
   chats: {},
@@ -251,6 +254,14 @@ const reducer = (
       return {
         ...state,
         weeklyItems: action.payload,
+      };
+    case SET_WEEKLY_ITEMS_FOR_CONNECTION:
+      return {
+        ...state,
+        connectionWeeklyItems: {
+          ...state.connectionWeeklyItems,
+          [action.payload.uid]: action.payload.items,
+        },
       };
     case SET_PLAN:
       return {

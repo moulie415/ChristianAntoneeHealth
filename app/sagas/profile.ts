@@ -3,8 +3,6 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import PushNotification from 'react-native-push-notification';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
-import RNFetchBlob, {FetchBlobResponse} from 'rn-fetch-blob';
-import analytics from '@react-native-firebase/analytics';
 import moment from 'moment';
 import {
   take,
@@ -54,6 +52,9 @@ import {
   setBodyFatPercentageSamples,
   setMuscleMassSamples,
   setBoneMassSamples,
+  GET_WEEKLY_ITEMS_FOR_CONNECTION,
+  GetWeeklyItemsForConnection,
+  setWeeklyItemsForConnection,
 } from '../actions/profile';
 import {getTests} from '../actions/tests';
 import {getProfileImage} from '../helpers/images';
@@ -404,6 +405,27 @@ function* getWeeklyItems() {
   }
 }
 
+function* getWeeklyItemsForConnection(action: GetWeeklyItemsForConnection) {
+  try {
+    yield put(setLoading(true));
+    const uid = action.payload;
+    const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
+    const {quickRoutines} = yield select(
+      (state: MyRootState) => state.quickRoutines,
+    );
+    const missingRoutines = Object.values(weeklyItems.quickRoutines)
+      .filter(item => !quickRoutines[item.quickRoutineId])
+      .map(routine => routine.quickRoutineId);
+    yield put(getQuickRoutinesById(missingRoutines));
+    yield put(setWeeklyItemsForConnection(uid, weeklyItems));
+    yield put(setLoading(false));
+  } catch (e) {
+    yield put(setLoading(false));
+    logError(e);
+    Snackbar.show({text: 'Error fetching weekly data'});
+  }
+}
+
 function* getConnections() {
   try {
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
@@ -729,7 +751,12 @@ export default function* profileSaga() {
     debounce(1000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
-    takeLatest(GET_WEEKLY_ITEMS, getWeeklyItems),
+    throttle(3000, GET_WEEKLY_ITEMS, getWeeklyItems),
+    throttle(
+      3000,
+      GET_WEEKLY_ITEMS_FOR_CONNECTION,
+      getWeeklyItemsForConnection,
+    ),
     debounce(3000, SET_PREMIUM, premiumUpdatedWorker),
   ]);
 

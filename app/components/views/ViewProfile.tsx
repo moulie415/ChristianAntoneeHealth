@@ -27,7 +27,6 @@ const ViewProfile: React.FC<{
     }
   }, [connection.avatar]);
 
-  console.log(photoVisible, images);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
@@ -139,15 +138,16 @@ const ViewProfile: React.FC<{
             </Tile>
           </View>
 
-          {/* <GoalSummaries connection={connection} /> */}
+          <GoalSummaries connection={connection} />
 
-          {/* <ProfileCharts
+          <ProfileCharts
             weight={connection.weight || 0}
             height={connection.height || 0}
             bodyFatPercentage={connection.bodyFatPercentage}
             muscleMass={connection.muscleMass}
             boneMass={connection.boneMass}
-          /> */}
+            connection
+          />
         </ScrollView>
       </SafeAreaView>
       <ImageView

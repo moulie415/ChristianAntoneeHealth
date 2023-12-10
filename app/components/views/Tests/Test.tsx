@@ -28,6 +28,7 @@ import {saveTest} from '../../../actions/tests';
 import {SavedTest} from '../../../types/SavedItem';
 import useThrottle from '../../../hooks/UseThrottle';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
+import HistoricalTestsModal from './HistoricalTestsModal';
 
 export const PREP_TIME = 5;
 
@@ -49,6 +50,7 @@ const Test: React.FC<{
   const [heartRate, setHeartRate] = useState(0);
   const [prepTime, setPrepTime] = useState(PREP_TIME);
   const [modalVisible, setModalVisible] = useState(false);
+  const [viewHistorical, setViewHistorical] = useState(false);
 
   const [testTime, setTestTime] = useState(
     test.type === 'countdown' ? test.time || 0 : 0,
@@ -256,35 +258,48 @@ const Test: React.FC<{
             {!(testStarted && test.type === 'countdown') &&
               !complete &&
               !isPrepping && (
-                <Button
-                  text={getButtonString()}
-                  onPress={() => {
-                    setTabIndex(0);
-                    if (
-                      test.formula === 'vo2' &&
-                      (!profile.dob || !profile.weight || !profile.gender)
-                    ) {
-                      return Alert.alert(
-                        'Sorry',
-                        "To calculate your VO2 max, you need to make sure you've set your age, weight and sex",
-                      );
-                    }
-                    if (testStarted) {
-                      setComplete(true);
-                    } else {
-                      setTestStarted(true);
-                      if (test.type === 'untimed') {
-                        setComplete(true);
+                <>
+                  <Button
+                    variant="secondary"
+                    style={{
+                      flex: 1,
+                      marginRight: 10,
+                      marginLeft: 20,
+                      margin: 10,
+                    }}
+                    onPress={() => setViewHistorical(true)}
+                    text="Historical"
+                  />
+                  <Button
+                    text={getButtonString()}
+                    onPress={() => {
+                      setTabIndex(0);
+                      if (
+                        test.formula === 'vo2' &&
+                        (!profile.dob || !profile.weight || !profile.gender)
+                      ) {
+                        return Alert.alert(
+                          'Sorry',
+                          "To calculate your VO2 max, you need to make sure you've set your age, weight and sex",
+                        );
                       }
-                    }
-                  }}
-                  style={{
-                    margin: 10,
-                    marginRight: 20,
-                    marginLeft: test.type === 'untimed' ? 20 : 10,
-                    flex: 1,
-                  }}
-                />
+                      if (testStarted) {
+                        setComplete(true);
+                      } else {
+                        setTestStarted(true);
+                        if (test.type === 'untimed') {
+                          setComplete(true);
+                        }
+                      }
+                    }}
+                    style={{
+                      margin: 10,
+                      marginRight: 20,
+                      marginLeft: test.type === 'untimed' ? 20 : 10,
+                      flex: 1,
+                    }}
+                  />
+                </>
               )}
           </View>
           {complete && (
@@ -323,6 +338,11 @@ const Test: React.FC<{
         }
         seconds={testTime}
         test={test}
+      />
+      <HistoricalTestsModal
+        visible={viewHistorical}
+        test={test}
+        onRequestClose={() => setViewHistorical(false)}
       />
     </View>
   );

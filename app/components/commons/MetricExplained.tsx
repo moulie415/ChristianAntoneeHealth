@@ -1,8 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import Modal from './Modal';
-import Button from './Button';
-
 import colors from '../../constants/colors';
 import Text from './Text';
 import * as _ from 'lodash';
@@ -18,6 +15,7 @@ const MetricExplained: React.FC<{
   onPress?: () => void;
   onPressHistorical: () => void;
   title: string;
+  connection?: boolean;
 }> = ({
   ranges,
   colors: colorsArr,
@@ -27,6 +25,7 @@ const MetricExplained: React.FC<{
   suffix,
   onPress,
   onPressHistorical,
+  connection,
 }) => {
   return (
     <Tile
@@ -46,22 +45,24 @@ const MetricExplained: React.FC<{
           }}>
           {title}
         </Text>
-        <TouchableOpacity
-          onPress={onPressHistorical}
-          style={{
-            borderWidth: StyleSheet.hairlineWidth,
-            borderColor: colors.appWhite,
-            margin: 10,
-            paddingHorizontal: 10,
-            height: 30,
-            borderRadius: 5,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{color: colors.appWhite, fontSize: 14}}>
-            See historical
-          </Text>
-        </TouchableOpacity>
+        {!connection && (
+          <TouchableOpacity
+            onPress={onPressHistorical}
+            style={{
+              borderWidth: StyleSheet.hairlineWidth,
+              borderColor: colors.appWhite,
+              margin: 10,
+              paddingHorizontal: 10,
+              height: 30,
+              borderRadius: 5,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{color: colors.appWhite, fontSize: 14}}>
+              See historical
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
       <View
         style={{
@@ -123,7 +124,7 @@ const MetricExplained: React.FC<{
                           marginLeft: current > 9 ? -7 : -4,
                           fontSize: 10,
                           textAlign: 'center',
-                          fontWeight: 'bold'
+                          fontWeight: 'bold',
                         }}>
                         {current}
                       </Text>

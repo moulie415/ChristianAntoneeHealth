@@ -505,57 +505,14 @@ export const getSavedQuickRoutines = async (uid: string) => {
 };
 
 export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
-  const startOfWeek = moment().startOf('isoWeek').toDate();
-  const quickRoutinesQuery = await db()
-    .collection('users')
-    .doc(uid)
-    .collection('savedQuickRoutines')
-    .where('createdate', '>=', startOfWeek)
-    .limit(200)
-    .get();
-  const quickRoutines = quickRoutinesQuery.docs.reduce(
-    (acc: {[id: string]: SavedQuickRoutine}, cur) => {
-      const routine: any = cur.data();
-      acc[cur.id] = {...routine, id: cur.id};
-      return acc;
-    },
-    {},
-  );
-
-  const workoutsQuery = await db()
-    .collection('users')
-    .doc(uid)
-    .collection('savedWorkouts')
-    .where('createdate', '>=', startOfWeek)
-    .limit(200)
-    .get();
-
-  const workouts = workoutsQuery.docs.reduce(
-    (acc: {[id: string]: SavedWorkout}, cur) => {
-      const workout: any = cur.data();
-      acc[cur.id] = {...workout, id: cur.id};
-      return acc;
-    },
-    {},
-  );
-
-  const testsQuery = await db()
-    .collection('users')
-    .doc(uid)
-    .collection('savedTests')
-    .where('createdate', '>=', startOfWeek)
-    .limit(200)
-    .get();
-  const tests = testsQuery.docs.reduce(
-    (acc: {[id: string]: SavedTest}, cur) => {
-      const test: any = cur.data();
-      acc[cur.id] = {...test, id: cur.id};
-      return acc;
-    },
-    {},
-  );
-
-  return {quickRoutines, tests, workouts};
+  try {
+    const response = await functions().httpsCallable('getWeeklyItems')({uid});
+    const {quickRoutines, tests, workouts} = response.data;
+    return {quickRoutines, tests, workouts};
+  } catch (e) {
+    Snackbar.show({text: 'Error fetching weekly items'});
+    return {quickRoutines: {}, tests: {}, workouts: {}};
+  }
 };
 
 export const getEducation = async () => {

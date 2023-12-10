@@ -7,7 +7,10 @@ import {Goal, Level, MyRootState} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
-import {getWeeklyItems} from '../../actions/profile';
+import {
+  getWeeklyItems,
+  getWeeklyItemsForConnection,
+} from '../../actions/profile';
 import {WeeklyItems} from '../../reducers/profile';
 import QuickRoutine from '../../types/QuickRoutines';
 import Tile from './Tile';
@@ -90,21 +93,30 @@ const GoalCircle: React.FC<{
 const GoalSummaries: React.FC<{
   profile: Profile;
   getWeeklyItemsAction: () => void;
+  getWeeklyItemsForConnectionAction: (uid: string) => void;
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
   settings: SettingsState;
   connection?: Profile;
+  connectionWeeklyItems: {[key: string]: WeeklyItems};
 }> = ({
   profile: defaultProfile,
   getWeeklyItemsAction,
+  getWeeklyItemsForConnectionAction,
   weeklyItems,
   quickRoutinesObj,
   settings,
   connection,
+  connectionWeeklyItems,
 }) => {
   useEffect(() => {
-    getWeeklyItemsAction();
-  }, [getWeeklyItemsAction]);
+    if (connection) {
+      getWeeklyItemsForConnectionAction(connection.uid);
+    } else {
+      getWeeklyItemsAction();
+    }
+  }, [getWeeklyItemsAction, getWeeklyItemsForConnectionAction, connection]);
+
   const profile = connection || defaultProfile;
   const {
     calories,
@@ -115,8 +127,8 @@ const GoalSummaries: React.FC<{
     minsGoal,
     workoutLevelTitleString,
   } = getGoalsData(
-    profile.goal || Goal.ACTIVE,
-    weeklyItems,
+    (connection ? connection.goal : profile.goal) || Goal.ACTIVE,
+    connection ? connectionWeeklyItems[connection.uid] : weeklyItems,
     quickRoutinesObj,
     settings,
   );
@@ -192,12 +204,14 @@ const GoalSummaries: React.FC<{
 const mapStateToProps = ({profile, quickRoutines, settings}: MyRootState) => ({
   profile: profile.profile,
   weeklyItems: profile.weeklyItems,
+  connectionWeeklyItems: profile.connectionWeeklyItems,
   quickRoutinesObj: quickRoutines.quickRoutines,
   settings,
 });
 
 const mapDispatchToProps = {
   getWeeklyItemsAction: getWeeklyItems,
+  getWeeklyItemsForConnectionAction: getWeeklyItemsForConnection,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoalSummaries);

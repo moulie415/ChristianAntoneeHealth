@@ -159,6 +159,7 @@ const Chart: React.FC<{
   onPress?: () => void;
   setFilter: (filter: 6 | 30 | 365) => void;
   filter: 6 | 30 | 365;
+  connection?: boolean;
 }> = ({
   title,
   current,
@@ -172,6 +173,7 @@ const Chart: React.FC<{
   data,
   setFilter,
   filter,
+  connection,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -179,6 +181,7 @@ const Chart: React.FC<{
     <>
       <View style={{alignItems: 'center'}}>
         <MetricExplained
+          connection={connection}
           onPressHistorical={() => setShowModal(true)}
           onPress={onPress}
           suffix={suffix}
@@ -221,6 +224,7 @@ const ProfileCharts: React.FC<{
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;
+  connection?: boolean;
 }> = ({
   weightSamples,
   heightSamples,
@@ -235,6 +239,7 @@ const ProfileCharts: React.FC<{
   bodyFatPercentage,
   muscleMass,
   boneMass,
+  connection,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
 
@@ -291,11 +296,13 @@ const ProfileCharts: React.FC<{
         ]}
         labels={['Underweight', 'Normal', 'Overweight', 'Obesity']}
         onPress={() =>
+          !connection &&
           Alert.alert(
             'BMI',
             'Update your weight and height to determine your new BMI',
           )
         }
+        connection={connection}
       />
 
       <Chart
@@ -325,6 +332,7 @@ const ProfileCharts: React.FC<{
         onPress={() =>
           setShowBodyFatPercentageModal && setShowBodyFatPercentageModal(true)
         }
+        connection={connection}
       />
       <Chart
         setFilter={setFilter}
@@ -343,6 +351,7 @@ const ProfileCharts: React.FC<{
         ]}
         onPress={() => setShowMuscleMassModal && setShowMuscleMassModal(true)}
         labels={['Low', 'Normal', 'High']}
+        connection={connection}
       />
       <Chart
         setFilter={setFilter}
@@ -361,6 +370,7 @@ const ProfileCharts: React.FC<{
         ]}
         onPress={() => setShowBoneMassModal && setShowBoneMassModal(true)}
         labels={['Below average', 'Average', 'Above average']}
+        connection={connection}
       />
     </>
   );
