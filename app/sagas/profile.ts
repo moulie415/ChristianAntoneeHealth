@@ -100,6 +100,8 @@ import {getQuickRoutinesById} from '../actions/quickRoutines';
 import _ from 'lodash';
 import isTestFlight from '../helpers/isTestFlight';
 import {statusCodes} from '@react-native-google-signin/google-signin';
+import {getGoalsData} from '../helpers/goals';
+import {scheduleLocalNotification} from '../helpers';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -398,10 +400,46 @@ function* getWeeklyItems() {
     yield put(getQuickRoutinesById(missingRoutines));
     yield put(setWeeklyItems(weeklyItems));
     yield put(setLoading(false));
+    yield call(scheduleGoalReminderNotification);
   } catch (e) {
     yield put(setLoading(false));
     logError(e);
     Snackbar.show({text: 'Error fetching weekly data'});
+  }
+}
+
+export function* scheduleGoalReminderNotification() {
+  const {profile, weeklyItems}: {profile: Profile; weeklyItems: WeeklyItems} =
+    yield select((state: MyRootState) => state.profile);
+  const {quickRoutines} = yield select(
+    (state: MyRootState) => state.quickRoutines,
+  );
+  const settings: SettingsState = yield select(
+    (state: MyRootState) => state.settings,
+  );
+  if (profile.goal) {
+    const {completed} = getGoalsData(
+      profile.goal,
+      weeklyItems,
+      quickRoutines,
+      settings,
+    );
+    const date = moment().set('day', 5).set('hours', 9).set('minutes', 0);
+    const goalReminderKey = 'goalReminder';
+    if (date.isAfter(moment())) {
+      if (completed) {
+        PushNotification.cancelLocalNotification(goalReminderKey);
+      } else {
+        scheduleLocalNotification(
+          'You’ve got just two days to hit your weekly targets',
+          date.toDate(),
+          GOALS_CHANNEL_ID,
+          'You’re almost there!',
+          goalReminderKey,
+          'week',
+        );
+      }
+    }
   }
 }
 

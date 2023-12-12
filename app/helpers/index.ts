@@ -2,7 +2,6 @@ import PushNotification from 'react-native-push-notification';
 import moment, {Moment} from 'moment';
 import {Dimensions} from 'react-native';
 import analytics from '@react-native-firebase/analytics';
-import Profile from '../types/Profile';
 import {Sample} from '../types/Shared';
 import colors from '../constants/colors';
 import {PercentileTable, Table} from '../types/Test';
@@ -24,12 +23,18 @@ export const scheduleLocalNotification = (
   message: string,
   date: Date,
   channel: string,
+  title?: string,
+  id?: string,
+  repeatType?: 'week' | 'day' | 'hour' | 'minute' | 'time',
 ) => {
   try {
     PushNotification.localNotificationSchedule({
       message,
       date,
       channelId: channel,
+      id,
+      repeatType,
+      title,
     });
   } catch (e) {
     logError(e);

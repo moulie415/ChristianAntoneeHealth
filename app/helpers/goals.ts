@@ -91,6 +91,10 @@ export const getGoalsData = (
     },
     0,
   );
+  const completed =
+    calories >= caloriesGoal &&
+    mins >= minsGoal &&
+    workoutLevelScore >= workoutGoal;
   return {
     calories,
     mins,
@@ -100,6 +104,7 @@ export const getGoalsData = (
     workoutLevelTitleString,
     caloriesGoal,
     workoutLevel: goalData?.workouts.level,
+    completed,
   };
 };
 

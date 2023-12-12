@@ -25,6 +25,7 @@ import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import PushNotification from 'react-native-push-notification';
 import {scheduleLocalNotification} from '../helpers';
 import {
+  scheduleGoalReminderNotification,
   TEST_REMINDERS_CHANNEL_ID,
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './profile';
@@ -141,6 +142,7 @@ export function* schedulePlanReminders() {
         syncPlanWithCalendar(plan as Plan, profile.syncPlanWithCalendar),
       );
     }
+
     // if (plan.tests && testReminders) {
     //   plan.tests.forEach(test => {
     //     test.dates.forEach(d => {
@@ -158,6 +160,7 @@ export function* schedulePlanReminders() {
     //   });
     // }
   }
+  yield call(scheduleGoalReminderNotification);
 }
 
 function onPlanChanged(uid: string) {
