@@ -197,6 +197,7 @@ function* updateProfile(action: UpdateProfileAction) {
     bodyFatPercentage,
     muscleMass,
     boneMass,
+    goalReminders,
   } = action.payload;
   yield put(setLoading(true));
   try {
@@ -260,6 +261,9 @@ function* updateProfile(action: UpdateProfileAction) {
       goal: goal || '',
       uid: profile.uid || '',
     });
+    if (!goalReminders) {
+      PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+    }
   } catch (e) {
     yield call(Snackbar.show, {text: 'Error updating profile'});
     logError(e);
@@ -408,6 +412,8 @@ function* getWeeklyItems() {
   }
 }
 
+export const GOAL_REMINDER_KEY = 'goalReminder';
+
 export function* scheduleGoalReminderNotification() {
   const {profile, weeklyItems}: {profile: Profile; weeklyItems: WeeklyItems} =
     yield select((state: MyRootState) => state.profile);
@@ -425,17 +431,17 @@ export function* scheduleGoalReminderNotification() {
       settings,
     );
     const date = moment().set('day', 5).set('hours', 9).set('minutes', 0);
-    const goalReminderKey = 'goalReminder';
+
     if (date.isAfter(moment())) {
       if (completed) {
-        PushNotification.cancelLocalNotification(goalReminderKey);
-      } else {
+        PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+      } else if (profile.goalReminders) {
         scheduleLocalNotification(
           'You’ve got just two days to hit your weekly targets',
           date.toDate(),
           GOALS_CHANNEL_ID,
           'You’re almost there!',
-          goalReminderKey,
+          GOAL_REMINDER_KEY,
           'week',
         );
       }
