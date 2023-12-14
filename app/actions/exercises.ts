@@ -7,9 +7,6 @@ import {SetLoggedInAction} from './profile';
 export const GET_EXERCISES = 'GET_EXERCISES';
 export const GET_EXERCISES_BY_ID = 'GET_EXERCISES_BY_ID';
 export const SET_EXERCISES = 'SET_EXERCISES';
-export const ADD_EXERCISE = 'ADD_EXERCISE';
-export const DELETE_EXERCISE = 'DELETE_EXERCISE';
-export const UPDATE_EXERCISE = 'UPDATE_EXERCISE';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_WORKOUT = 'SET_WORKOUT';
 export const SET_EXERCISE_NOTE = 'SET_EXERCISE_NOTE';
@@ -41,21 +38,6 @@ export interface GetExercisesAction {
 export interface GetExercisesByIdAction {
   type: typeof GET_EXERCISES_BY_ID;
   payload: string[];
-}
-
-export interface AddExerciseAction {
-  type: typeof ADD_EXERCISE;
-  payload: Exercise;
-}
-
-export interface DeleteExerciseAction {
-  type: typeof DELETE_EXERCISE;
-  payload: string;
-}
-
-export interface UpdateExerciseAction {
-  type: typeof UPDATE_EXERCISE;
-  payload: Exercise;
 }
 export interface SetExercisesAction {
   type: typeof SET_EXERCISES;
@@ -161,18 +143,6 @@ export const getExercisesById = (ids: string[]): GetExercisesByIdAction => ({
   payload: ids,
 });
 
-export const addExercise = (exercise: Exercise): AddExerciseAction => ({
-  type: ADD_EXERCISE,
-  payload: exercise,
-});
-export const deleteExercise = (id: string): DeleteExerciseAction => ({
-  type: DELETE_EXERCISE,
-  payload: id,
-});
-export const updateExercise = (exercise: Exercise): UpdateExerciseAction => ({
-  type: UPDATE_EXERCISE,
-  payload: exercise,
-});
 
 export const setExercises = (exercises: {
   [key: string]: Exercise;

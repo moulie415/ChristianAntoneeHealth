@@ -13,10 +13,6 @@ import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
 import Snackbar from 'react-native-snackbar';
 import {
-  AddExerciseAction,
-  ADD_EXERCISE,
-  DeleteExerciseAction,
-  DELETE_EXERCISE,
   GetExercisesAction,
   GetExercisesByIdAction,
   GET_EXERCISES,
@@ -28,8 +24,6 @@ import {
   setLoading,
   setSavedWorkouts,
   setWorkout,
-  UpdateExerciseAction,
-  UPDATE_EXERCISE,
   viewWorkout,
   ViewWorkoutAction,
   VIEW_WORKOUT,
@@ -74,42 +68,12 @@ export function* getExercises(action: GetExercisesAction) {
   yield put(setLoading(false));
 }
 
-export function* deleteExercise(action: DeleteExerciseAction) {
-  const id = action.payload;
-  yield call(api.deleteExercise, id);
-  const {exercises} = yield select((state: MyRootState) => state.exercises);
-  delete exercises[id];
-  yield put(setExercises(exercises));
-  Snackbar.show({text: 'Exercise deleted'});
-}
-
-export function* addExercise(action: AddExerciseAction) {
-  const exercise = action.payload;
-  const ref: FirebaseFirestoreTypes.DocumentReference = yield call(
-    api.addExercise,
-    exercise,
-  );
-  const {id} = ref;
-  const {exercises} = yield select((state: MyRootState) => state.exercises);
-
-  yield put(setExercises({...exercises, [id]: exercise}));
-  Snackbar.show({text: 'Exercise added'});
-}
-
-export function* updateExercise(action: UpdateExerciseAction) {
-  const exercise = action.payload;
-  yield call(api.updateExercise, exercise);
-  // const exercises = { ...getState().exercises.exercises, [exercise.id]: exercise };
-  // dispatch(setExercises(exercises));
-  Snackbar.show({text: 'Exercise updated'});
-}
-
 export function* saveWorkout(action: SaveWorkoutAction) {
   try {
     const {profile, weeklyItems}: ProfileState = yield select(
       (state: MyRootState) => state.profile,
     );
-    
+
     yield call(api.saveWorkout, action.payload, profile.uid);
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Workout saved'});
@@ -364,9 +328,6 @@ function onDynamicLink() {
 export default function* exercisesSaga() {
   yield all([
     throttle(5000, GET_EXERCISES, getExercises),
-    takeLatest(ADD_EXERCISE, addExercise),
-    takeLatest(DELETE_EXERCISE, deleteExercise),
-    takeLatest(UPDATE_EXERCISE, updateExercise),
     throttle(5000, SAVE_WORKOUT, saveWorkout),
     throttle(5000, GET_SAVED_WORKOUTS, getSavedWorkouts),
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),

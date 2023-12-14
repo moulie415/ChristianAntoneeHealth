@@ -308,17 +308,6 @@ export const getExercisesById = async (ids: string[]) => {
   }
 };
 
-export const deleteExercise = (id: string) => {
-  return db().collection('exercises').doc(id).delete();
-};
-
-export const addExercise = (exercise: Exercise) => {
-  return db().collection('exercises').add(exercise);
-};
-
-export const updateExercise = (exercise: Exercise) => {
-  return db().collection('exercises').doc(exercise.id).update(exercise);
-};
 
 export const getTests = async () => {
   const snapshot = await db().collection('tests').get();
