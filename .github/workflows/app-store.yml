@@ -105,7 +105,7 @@ jobs:
           #   ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA_DEV }}
           #   ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA}}
           #   ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV }}
-          code-signing-identity: iOS Distribution
+          code-signing-identity: Apple Development
           team-id: ${{ secrets.TEAM_ID }}
           workspace-path: ios/HealthAndMovement.xcworkspace # optional
           export-method: "app-store"
