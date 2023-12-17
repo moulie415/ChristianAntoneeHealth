@@ -119,7 +119,10 @@ jobs:
         env:
           APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
           APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
+          PRODUCT_NAME: ${{ env.PRODUCT_NAME }}
         run: |
+          ls ios
+          echo $PRODUCT_NAME
           xcrun altool --upload-app -t ios -f "ios/$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
       - name: Setup Sentry CLI
         uses: mathieu-bour/setup-sentry-cli@v1
