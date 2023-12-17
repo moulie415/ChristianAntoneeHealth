@@ -114,14 +114,10 @@ jobs:
           project-path: ios/HealthAndMovement.xcodeproj
           p12-base64: |
             ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
-            ${{ secrets.SIGNING_CERTIFICATE_P12_DATA_DEV }}
           mobileprovision-base64: |
             ${{ secrets.PROVISIONING_PROFILE_DATA }}
-            ${{ secrets.PROVISIONING_PROFILE_DATA_DEV }}
             ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
-            ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA_DEV }}
             ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA}}
-            ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV }}
           code-signing-identity: iOS Distribution
           team-id: ${{ secrets.TEAM_ID }}
           workspace-path: ios/HealthAndMovement.xcworkspace # optional
