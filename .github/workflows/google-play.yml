@@ -18,6 +18,10 @@ jobs:
         with:
           path: node_modules
           key: ${{ hashFiles('yarn.lock') }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
       - name: Install npm dependencies
         run: |
           yarn
