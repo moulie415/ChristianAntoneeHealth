@@ -112,7 +112,7 @@ jobs:
         uses: yukiarrr/ios-build-action@v1.11.1
         with:
           project-path: ios/HealthAndMovement.xcodeproj
-          p12-cer-base64: |
+          p12-base64: |
             ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
             ${{ secrets.SIGNING_CERTIFICATE_P12_DATA_DEV }}
           mobileprovision-base64: |
