@@ -56,45 +56,45 @@ jobs:
       - name: Run tests
         run: |
           yarn test
-      - name: Install the Apple certificate and provisioning profile
-        env:
-          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
-          PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.PROVISIONING_PROFILE_DATA_DEV }}
-          WATCH_APP_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
-          WATCH_APP_PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA_DEV }}
-          WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA }}
-          WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV }}
-          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
-          SIGNING_CERTIFICATE_P12_DATA_DEV: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA_DEV }}
-        run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          CERTIFICATE_PATH_DEV=$RUNNER_TEMP/build_certificate_dev.p12
+      # - name: Install the Apple certificate and provisioning profile
+      #   env:
+      #     PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+      #     PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.PROVISIONING_PROFILE_DATA_DEV }}
+      #     WATCH_APP_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
+      #     WATCH_APP_PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA_DEV }}
+      #     WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA: ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA }}
+      #     WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV: ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV }}
+      #     SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+      #     SIGNING_CERTIFICATE_P12_DATA_DEV: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA_DEV }}
+      #   run: |
+      #     # create variables
+      #     CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+      #     CERTIFICATE_PATH_DEV=$RUNNER_TEMP/build_certificate_dev.p12
 
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+      #     KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
-          # import certificate and provisioning profile from secrets
-          echo -n "$SIGNING_CERTIFICATE_P12_DATA" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$SIGNING_CERTIFICATE_P12_DATA_DEV" | base64 --decode -o $CERTIFICATE_PATH_DEV
+      #     # import certificate and provisioning profile from secrets
+      #     echo -n "$SIGNING_CERTIFICATE_P12_DATA" | base64 --decode -o $CERTIFICATE_PATH
+      #     echo -n "$SIGNING_CERTIFICATE_P12_DATA_DEV" | base64 --decode -o $CERTIFICATE_PATH_DEV
 
-          # create temporary keychain
-          security create-keychain -p "" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "" $KEYCHAIN_PATH
+      #     # create temporary keychain
+      #     security create-keychain -p "" $KEYCHAIN_PATH
+      #     security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+      #     security unlock-keychain -p "" $KEYCHAIN_PATH
 
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security import $CERTIFICATE_PATH_DEV -P "" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
+      #     # import certificate to keychain
+      #     security import $CERTIFICATE_PATH -P "" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+      #     security import $CERTIFICATE_PATH_DEV -P "" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+      #     security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # apply provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "$WATCH_APP_PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatch.mobileprovision
-          echo "$WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatchExtension.mobileprovision
-          echo "$WATCH_APP_PROVISIONING_PROFILE_DATA_DEV" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatchDev.mobileprovision
-          echo "$WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatchExtensionDev.mobileprovision
-          echo "$PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
-          echo "$PROVISIONING_PROFILE_DATA_DEV" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileDev.mobileprovision
+      #     # apply provisioning profile
+      #     mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+      #     echo "$WATCH_APP_PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatch.mobileprovision
+      #     echo "$WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatchExtension.mobileprovision
+      #     echo "$WATCH_APP_PROVISIONING_PROFILE_DATA_DEV" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatchDev.mobileprovision
+      #     echo "$WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileWatchExtensionDev.mobileprovision
+      #     echo "$PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+      #     echo "$PROVISIONING_PROFILE_DATA_DEV" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profileDev.mobileprovision
       - name: Set up prod environment
         env:
           GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
@@ -109,21 +109,38 @@ jobs:
           cd ios
           pod install
       - name: Build app
-        run: |
-          cd ios
-          xcodebuild clean -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
-          xcodebuild build -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
-          xcodebuild archive -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -archivePath archive.xcarchive
-          xcodebuild -exportArchive -archivePath archive.xcarchive -exportPath . -exportOptionsPlist exportOptions.plist
+        uses: yukiarrr/ios-build-action@v1.11.1
+        with:
+          project-path: ios/HealthAndMovement.xcodeproj
+          p12-cer-base64: |
+            ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+            ${{ secrets.SIGNING_CERTIFICATE_P12_DATA_DEV }}
+          mobileprovision-base64: |
+            ${{ secrets.PROVISIONING_PROFILE_DATA }}
+            ${{ secrets.PROVISIONING_PROFILE_DATA_DEV }}
+            ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA }}
+            ${{ secrets.WATCH_APP_PROVISIONING_PROFILE_DATA_DEV }}
+            ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA}}
+            ${{ secrets.WATCH_APP_EXTENSION_PROVISIONING_PROFILE_DATA_DEV }}
+          code-signing-identity: iOS Distribution
+          team-id: ${{ secrets.TEAM_ID }}
+          workspace-path: ios/HealthAndMovement.xcworkspace # optional
+          export-method: "app-store"
+          export-options: ios/exportOptions.plist
+      #   run: |
+      #     cd ios
+      #     xcodebuild clean -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
+      #     xcodebuild build -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
+      #     xcodebuild archive -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -archivePath archive.xcarchive
+      #     xcodebuild -exportArchive -archivePath archive.xcarchive -exportPath . -exportOptionsPlist exportOptions.plist
       - name: Upload app to App Store Connect
         env:
           APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
           APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
-          PRODUCT_NAME: ${{ env.PRODUCT_NAME }}
         run: |
+          ls
           ls ios
-          echo $PRODUCT_NAME
-          xcrun altool --upload-app -t ios -f "ios/$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
+          xcrun altool --upload-app -t ios -f "ios/output.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
       - name: Setup Sentry CLI
         uses: mathieu-bour/setup-sentry-cli@v1
         with:
