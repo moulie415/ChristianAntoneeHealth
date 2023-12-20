@@ -1,9 +1,4 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {AppStateStatus} from 'react-native';
-import {PurchasesEntitlementInfo} from 'react-native-purchases';
-import PushNotification from 'react-native-push-notification';
-import {WeeklyItems} from '../reducers/profile';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile, {Gender, Unit} from '../types/Profile';
@@ -51,16 +46,6 @@ export const SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE';
 export const SET_LOGIN_EMAIL = 'SET_LOGIN_EMAIL';
 export const SET_LOGIN_PASSWORD = 'SET_LOGIN_PASSWORD';
 
-export interface SetProfileAction {
-  type: typeof SET_PROFILE;
-  profile: Profile;
-}
-
-export interface SetLoggedInAction {
-  type: typeof SET_LOGGED_IN;
-  payload: boolean;
-}
-
 export interface SignUpPayload {
   name: string;
   surname: string;
@@ -98,6 +83,11 @@ export interface UpdateProfilePayload {
   goalReminders?: boolean;
 }
 
+export interface SendMessageAction {
+  type: typeof SEND_MESSAGE;
+  payload: {message: Message; chatId: string; uid: string; mute?: boolean};
+}
+
 export interface SignUpAction {
   type: typeof SIGN_UP;
   payload: SignUpPayload;
@@ -112,103 +102,13 @@ export interface GetSamplesAction {
   type: typeof GET_SAMPLES;
 }
 
-export interface SetWeightSamplesAction {
-  type: typeof SET_WEIGHT_SAMPLES;
-  payload: {samples: Sample[]};
-}
-
-export interface SetHeightSamplesAction {
-  type: typeof SET_HEIGHT_SAMPLES;
-  payload: {samples: Sample[]};
-}
-
-export interface SetBodyFatPercentageSamplesAction {
-  type: typeof SET_BODY_FAT_PERCENTAGE_SAMPLES;
-  payload: {samples: Sample[]};
-}
-
-export interface SetMuscleMassSamplesAction {
-  type: typeof SET_MUSCLE_MASS_SAMPLES;
-  payload: {samples: Sample[]};
-}
-
-export interface SetBoneMassSamplesAction {
-  type: typeof SET_BONE_MASS_SAMPLES;
-  payload: {samples: Sample[]};
-}
-
-export interface SetStepSamplesAction {
-  type: typeof SET_STEP_SAMPLES;
-  payload: {samples: StepSample[]};
-}
-
-export interface SetWeeklyStepsAction {
-  type: typeof SET_WEEKLY_STEPS;
-  payload: StepSample[];
-}
-
 export interface HandleAuthAction {
   type: typeof HANDLE_AUTH;
   payload: FirebaseAuthTypes.User;
 }
 
-export interface SetPremiumAction {
-  type: typeof SET_PREMIUM;
-  payload: false | {[key: string]: PurchasesEntitlementInfo};
-}
-
-export interface SetAdminAction {
-  type: typeof SET_ADMIN;
-  payload: boolean;
-}
-
 export interface GetConnectionsAction {
   type: typeof GET_CONNECTIONS;
-}
-
-export interface SetConnectionsAction {
-  type: typeof SET_CONNECTIONS;
-  payload: {[key: string]: Profile};
-}
-
-export interface SetLoading {
-  type: typeof SET_LOADING;
-  payload: boolean;
-}
-
-export interface SetMessagesAction {
-  type: typeof SET_MESSAGES;
-  payload: {uid: string; messages: {[key: string]: Message}};
-}
-
-export interface SetChatsAction {
-  type: typeof SET_CHATS;
-  payload: {[key: string]: Chat};
-}
-
-export interface SendMessageAction {
-  type: typeof SEND_MESSAGE;
-  payload: {message: Message; chatId: string; uid: string; mute?: boolean};
-}
-
-export interface SetMessageAction {
-  type: typeof SET_MESSAGE;
-  payload: {message: Message; uid: string};
-}
-
-export interface SetReadAction {
-  type: typeof SET_READ;
-  payload: string;
-}
-
-export interface SetUnreadAction {
-  type: typeof SET_UNREAD;
-  payload: {[key: string]: number};
-}
-
-export interface SetAppStateAction {
-  type: typeof SET_APP_STATE;
-  payload: AppStateStatus;
 }
 
 export interface LoadEarlierMessagesAction {
@@ -220,91 +120,26 @@ export interface GetWeeklyItemsAction {
   type: typeof GET_WEEKLY_ITEMS;
 }
 
-export interface SetWeeklyItemsAction {
-  type: typeof SET_WEEKLY_ITEMS;
-  payload: WeeklyItems;
-}
-
 export interface GetWeeklyItemsForConnection {
   type: typeof GET_WEEKLY_ITEMS_FOR_CONNECTION;
   payload: string;
 }
 
-export interface SetWeeklyItemsForConnection {
-  type: typeof SET_WEEKLY_ITEMS_FOR_CONNECTION;
-  payload: {uid: string; items: WeeklyItems};
-}
-
-export interface SetHasViewedTourAction {
-  type: typeof SET_HAS_VIEWED_TOUR;
-}
-
-export interface SetChatMessageAction {
-  type: typeof SET_CHAT_MESSAGE;
-  payload: {uid: string; message: string};
-}
-
-export interface SetLoginEmailAction {
-  type: typeof SET_LOGIN_EMAIL;
-  payload: string;
-}
-
-export interface SetLoginPasswordAction {
-  type: typeof SET_LOGIN_PASSWORD;
-  payload: string;
-}
-
 export type ProfileActionTypes =
-  | SetProfileAction
-  | SetLoggedInAction
   | SignUpAction
-  | SetWeightSamplesAction
   | GetSamplesAction
-  | SetStepSamplesAction
-  | SetWeeklyStepsAction
   | UpdateProfileAction
   | HandleAuthAction
-  | SetPremiumAction
-  | SetAdminAction
   | GetConnectionsAction
-  | SetConnectionsAction
-  | SetLoading
-  | SetMessagesAction
-  | SetChatsAction
-  | SendMessageAction
-  | SetMessageAction
-  | SetReadAction
-  | SetUnreadAction
-  | SetAppStateAction
   | LoadEarlierMessagesAction
   | GetWeeklyItemsAction
-  | SetWeeklyItemsAction
-  | SetHeightSamplesAction
-  | SetBoneMassSamplesAction
-  | SetBodyFatPercentageSamplesAction
-  | SetMuscleMassSamplesAction
-  | SetHasViewedTourAction
-  | SetChatMessageAction
-  | SetLoginEmailAction
-  | SetLoginPasswordAction
-  | GetWeeklyItemsForConnection
-  | SetWeeklyItemsForConnection;
-
-export const setProfile = (profile: Profile): SetProfileAction => ({
-  type: SET_PROFILE,
-  profile,
-});
+  | GetWeeklyItemsForConnection;
 
 export const updateProfile = (
   payload: UpdateProfilePayload,
 ): UpdateProfileAction => ({
   type: UPDATE_PROFILE,
   payload,
-});
-
-export const setLoggedIn = (loggedIn: boolean): SetLoggedInAction => ({
-  type: SET_LOGGED_IN,
-  payload: loggedIn,
 });
 
 export const signUp = (payload: SignUpPayload): SignUpAction => ({
@@ -316,107 +151,13 @@ export const getSamples = (): GetSamplesAction => ({
   type: GET_SAMPLES,
 });
 
-export const setWeightSamples = (
-  samples: Sample[],
-): SetWeightSamplesAction => ({
-  type: SET_WEIGHT_SAMPLES,
-  payload: {samples},
-});
-
-export const setHeightSamples = (
-  samples: Sample[],
-): SetHeightSamplesAction => ({
-  type: SET_HEIGHT_SAMPLES,
-  payload: {samples},
-});
-
-export const setBodyFatPercentageSamples = (
-  samples: Sample[],
-): SetBodyFatPercentageSamplesAction => ({
-  type: SET_BODY_FAT_PERCENTAGE_SAMPLES,
-  payload: {samples},
-});
-
-export const setMuscleMassSamples = (
-  samples: Sample[],
-): SetMuscleMassSamplesAction => ({
-  type: SET_MUSCLE_MASS_SAMPLES,
-  payload: {samples},
-});
-
-export const setBoneMassSamples = (
-  samples: Sample[],
-): SetBoneMassSamplesAction => ({
-  type: SET_BONE_MASS_SAMPLES,
-  payload: {samples},
-});
-
-export const setStepSamples = (
-  samples: StepSample[],
-): SetStepSamplesAction => ({
-  type: SET_STEP_SAMPLES,
-  payload: {samples},
-});
-
-export const setWeeklySteps = (steps: StepSample[]): SetWeeklyStepsAction => ({
-  type: SET_WEEKLY_STEPS,
-  payload: steps,
-});
-
 export const handleAuth = (user: FirebaseAuthTypes.User) => ({
   type: HANDLE_AUTH,
   payload: user,
 });
 
-export const setPremium = (
-  premium: false | {[key: string]: PurchasesEntitlementInfo},
-): SetPremiumAction => ({
-  type: SET_PREMIUM,
-  payload: premium,
-});
-
-export const setAdmin = (payload: boolean): SetAdminAction => ({
-  type: SET_ADMIN,
-  payload,
-});
-
 export const getConnections = (): GetConnectionsAction => ({
   type: GET_CONNECTIONS,
-});
-
-export const setConnections = (connections: {
-  [key: string]: Profile;
-}): SetConnectionsAction => ({
-  type: SET_CONNECTIONS,
-  payload: connections,
-});
-
-export const setLoading = (loading: boolean): SetLoading => ({
-  type: SET_LOADING,
-  payload: loading,
-});
-
-export const setMessages = (
-  uid: string,
-  snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>,
-): SetMessagesAction => {
-  const messages = snapshot.docs.reduce((acc: {[id: string]: Message}, cur) => {
-    const message: any = cur.data();
-    acc[message ? message._id : cur.id] = {...message, id: cur.id};
-    return acc;
-  }, {});
-  return {
-    type: SET_MESSAGES,
-    payload: {uid, messages},
-  };
-};
-
-export const setMessagesObj = (
-  uid: string,
-  messages: {[key: string]: Message},
-): SetMessagesAction => ({
-  type: SET_MESSAGES,
-  payload: {uid, messages},
 });
 
 export const setChats = (chats: {[key: string]: Chat}): SetChatsAction => ({
@@ -433,33 +174,6 @@ export const sendMessage = (
   payload: {message, chatId, uid},
 });
 
-export const setMessage = (
-  uid: string,
-  message: Message,
-): SetMessageAction => ({
-  type: SET_MESSAGE,
-  payload: {uid, message},
-});
-
-export const setRead = (uid: string): SetReadAction => ({
-  type: SET_READ,
-  payload: uid,
-});
-
-export const setUnread = (unread: {[key: string]: number}): SetUnreadAction => {
-  const count = Object.values(unread).reduce((acc, cur) => acc + cur, 0);
-  PushNotification.setApplicationIconBadgeNumber(count);
-  return {
-    type: SET_UNREAD,
-    payload: unread,
-  };
-};
-
-export const setAppState = (appState: AppStateStatus): SetAppStateAction => ({
-  type: SET_APP_STATE,
-  payload: appState,
-});
-
 export const loadEarlierMessages = (
   chatId: string,
   uid: string,
@@ -473,44 +187,9 @@ export const getWeeklyItems = (): GetWeeklyItemsAction => ({
   type: GET_WEEKLY_ITEMS,
 });
 
-export const setWeeklyItems = (payload: WeeklyItems): SetWeeklyItemsAction => ({
-  type: SET_WEEKLY_ITEMS,
-  payload,
-});
-
 export const getWeeklyItemsForConnection = (
   uid: string,
 ): GetWeeklyItemsForConnection => ({
   type: GET_WEEKLY_ITEMS_FOR_CONNECTION,
   payload: uid,
-});
-
-export const setWeeklyItemsForConnection = (
-  uid: string,
-  items: WeeklyItems,
-): SetWeeklyItemsForConnection => ({
-  type: SET_WEEKLY_ITEMS_FOR_CONNECTION,
-  payload: {uid, items},
-});
-
-export const setHasViewedTour = (): SetHasViewedTourAction => ({
-  type: SET_HAS_VIEWED_TOUR,
-});
-
-export const setChatMessage = (
-  uid: string,
-  message: string,
-): SetChatMessageAction => ({
-  type: SET_CHAT_MESSAGE,
-  payload: {uid, message},
-});
-
-export const setLoginEmail = (email: string): SetLoginEmailAction => ({
-  type: SET_LOGIN_EMAIL,
-  payload: email,
-});
-
-export const setLoginPassword = (password: string): SetLoginPasswordAction => ({
-  type: SET_LOGIN_PASSWORD,
-  payload: password,
 });

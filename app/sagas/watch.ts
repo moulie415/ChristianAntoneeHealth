@@ -8,17 +8,14 @@ import {
 import {eventChannel, EventChannel} from 'redux-saga';
 import {all, call, put, select, take, takeLatest} from 'redux-saga/effects';
 import {SetLoggedInAction, SET_LOGGED_IN} from '../actions/profile';
-import {
-  setQuickRoutines,
-  SetSavedQuickRoutinesAction,
-  SET_QUICK_ROUTINES,
-  StartQuickRoutineAction,
-  START_QUICK_ROUTINE,
-} from '../actions/quickRoutines';
 import {MyRootState} from '../types/Shared';
 import * as api from '../helpers/api';
 import QuickRoutine from '../types/QuickRoutines';
 import Exercise from '../types/Exercise';
+import {
+  SET_QUICK_ROUTINES,
+  START_QUICK_ROUTINE,
+} from '../reducers/quickRoutines';
 
 function* loggedInWorker(action: SetLoggedInAction) {
   const reachable: boolean = yield call(getReachability);
