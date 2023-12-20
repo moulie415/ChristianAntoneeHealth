@@ -51,7 +51,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer,
-  middleware: () => [sagaMiddleware],
+  middleware: [sagaMiddleware],
 });
 
 export const persistor = persistStore(store);

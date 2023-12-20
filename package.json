@@ -40,7 +40,7 @@
     "@react-navigation/material-top-tabs": "^6.6.4",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
-    "@reduxjs/toolkit": "^2.0.1",
+    "@reduxjs/toolkit": "1.9.7",
     "@sentry/react-native": "^5.10.0",
     "@shopify/react-native-skia": "^0.1.229",
     "@types/react-native-wheel-pick": "^1.1.2",
