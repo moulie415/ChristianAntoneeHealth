@@ -63,7 +63,7 @@ export const settingSlice = createSlice({
       state: SettingsState,
       {payload}: PayloadAction<SettingsState>,
     ) => {
-      state = payload;
+      return payload;
     },
   },
 });

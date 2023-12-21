@@ -249,10 +249,7 @@ const profileSlice = createSlice({
       } else {
         const loginEmail = state.loginEmail;
         const loginPassword = state.loginPassword;
-        state = initialState;
-        state.loginEmail = loginEmail;
-        state.loginPassword = loginPassword;
-        state.loggedIn = payload;
+        return {...initialState, loginEmail, loginPassword};
       }
     },
     setWeightSamples: (
@@ -524,7 +521,7 @@ export const {
   loadEarlierMessages,
   updateProfile,
   setMessagesObj,
-  setRead
+  setRead,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

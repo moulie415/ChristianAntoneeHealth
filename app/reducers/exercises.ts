@@ -178,7 +178,7 @@ const exerciseSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {
       if (!action.payload) {
-        state = initialState;
+        return initialState;
       }
     });
   },

@@ -49,6 +49,7 @@ import {AlertButton} from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
 import {getSamples, updateProfile} from '../../reducers/profile';
+import {SettingsState} from '../../reducers/settings';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -56,12 +57,14 @@ const ProfileComponent: React.FC<{
   updateProfileAction: (payload: UpdateProfilePayload) => void;
   getSamplesAction: () => void;
   loading: boolean;
+  settings: SettingsState;
 }> = ({
   profile,
   navigation,
   updateProfileAction,
   getSamplesAction,
   loading: pLoading,
+  settings,
 }) => {
   const [gender, setGender] = useState<Gender>(
     (profile.gender as Gender) || null,
@@ -533,7 +536,6 @@ const ProfileComponent: React.FC<{
             }}
           />
         )}
-        <AbsoluteSpinner loading={pLoading} />
       </SafeAreaView>
       <ImageView
         images={images}
@@ -545,9 +547,10 @@ const ProfileComponent: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: MyRootState) => ({
   profile: profile.profile,
   loading: profile.loading,
+  settings,
 });
 
 const mapDispatchToProps = {
