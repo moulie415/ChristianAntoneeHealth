@@ -1,6 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
+import {setLoggedIn} from './profile';
 
 export interface QuickRoutinesState {
   quickRoutines: {[key: string]: QuickRoutine};
@@ -67,10 +68,14 @@ const quickRoutineSlice = createSlice({
     ) => {},
     getQuickRoutines: () => {},
   },
+  extraReducers: builder => {
+    builder.addCase(setLoggedIn, (state, action) => {
+      if (!action.payload) {
+        state = initialState;
+      }
+    });
+  },
 });
-
-// case SET_LOGGED_IN:
-//   return action.payload ? state : initialState;
 
 export const {
   setQuickRoutines,

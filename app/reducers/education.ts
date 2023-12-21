@@ -1,5 +1,6 @@
 import Education from '../types/Education';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {setLoggedIn} from './profile';
 
 export interface EducationState {
   education: {[key: string]: Education};
@@ -43,6 +44,13 @@ const educationSlice = createSlice({
     ) => {
       state.loading = payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(setLoggedIn, (state, action) => {
+      if (!action.payload) {
+        state = initialState;
+      }
+    });
   },
 });
 

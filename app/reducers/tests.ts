@@ -1,6 +1,7 @@
 import Test from '../types/Test';
 import {SavedTest} from '../types/SavedItem';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {setLoggedIn} from './profile';
 
 export interface TestsState {
   tests: {[key: string]: Test};
@@ -51,11 +52,19 @@ const testSlice = createSlice({
     ) => {
       state.savedTests = {...state.savedTests, ...payload};
     },
+    getTests: () => {},
+    getTestsById: (state: TestsState, {payload}: PayloadAction<string[]>) => {},
+    getSavedTests: () => {},
+  },
+  extraReducers: builder => {
+    builder.addCase(setLoggedIn, (state, action) => {
+      if (!action.payload) {
+        state = initialState;
+      }
+    });
   },
 });
 
-// case SET_LOGGED_IN:
-//   return action.payload ? state : initialState;
-
-export const {setTests, setSavedTests} = testSlice.actions;
+export const {setTests, setSavedTests, getTests, getTestsById} =
+  testSlice.actions;
 export default testSlice.reducer;

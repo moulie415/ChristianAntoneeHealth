@@ -15,51 +15,16 @@ import {
   debounce,
   throttle,
 } from 'redux-saga/effects';
-import {
-  setLoggedIn,
-  setProfile,
-  SIGN_UP,
-  SignUpAction,
-  setWeightSamples,
-  GET_SAMPLES,
-  UPDATE_PROFILE,
-  UpdateProfileAction,
-  HandleAuthAction,
-  HANDLE_AUTH,
-  handleAuth,
-  setPremium,
-  setAdmin,
-  GET_CONNECTIONS,
-  setConnections,
-  setLoading,
-  setChats,
-  SEND_MESSAGE,
-  SendMessageAction,
-  setMessage,
-  SET_READ,
-  SetReadAction,
-  setUnread,
-  SET_CHATS,
-  SetChatsAction,
-  setMessages,
-  LOAD_EARLIER_MESSAGES,
-  LoadEarlierMessagesAction,
-  setMessagesObj,
-  GET_WEEKLY_ITEMS,
-  setWeeklyItems,
-  setHeightSamples,
-  SET_PREMIUM,
-  setBodyFatPercentageSamples,
-  setMuscleMassSamples,
-  setBoneMassSamples,
-  GET_WEEKLY_ITEMS_FOR_CONNECTION,
-  GetWeeklyItemsForConnection,
-  setWeeklyItemsForConnection,
-} from '../actions/profile';
-import {getTests} from '../actions/tests';
+
 import {getProfileImage} from '../helpers/images';
 import Profile from '../types/Profile';
-import {MyRootState, Sample, StepSample} from '../types/Shared';
+import {
+  MyRootState,
+  Sample,
+  SignUpPayload,
+  StepSample,
+  UpdateProfilePayload,
+} from '../types/Shared';
 import * as api from '../helpers/api';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
@@ -95,13 +60,47 @@ import {getSettings} from './settings';
 import {SettingsState} from '../reducers/settings';
 import {logError} from '../helpers/error';
 import Message from '../types/Message';
-import {WeeklyItems} from '../reducers/profile';
-import {getQuickRoutinesById} from '../actions/quickRoutines';
+import {
+  GET_CONNECTIONS,
+  GET_SAMPLES,
+  GET_WEEKLY_ITEMS,
+  GET_WEEKLY_ITEMS_FOR_CONNECTION,
+  HANDLE_AUTH,
+  LOAD_EARLIER_MESSAGES,
+  SEND_MESSAGE,
+  SET_CHATS,
+  SET_PREMIUM,
+  SET_READ,
+  SIGN_UP,
+  UPDATE_PROFILE,
+  WeeklyItems,
+  handleAuth,
+  setAdmin,
+  setBodyFatPercentageSamples,
+  setBoneMassSamples,
+  setChats,
+  setConnections,
+  setHeightSamples,
+  setLoading,
+  setLoggedIn,
+  setMessage,
+  setMessages,
+  setMuscleMassSamples,
+  setPremium,
+  setProfile,
+  setUnread,
+  setWeeklyItems,
+  setWeeklyItemsForConnection,
+  setWeightSamples,
+} from '../reducers/profile';
 import _ from 'lodash';
 import isTestFlight from '../helpers/isTestFlight';
 import {statusCodes} from '@react-native-google-signin/google-signin';
 import {getGoalsData} from '../helpers/goals';
 import {scheduleLocalNotification} from '../helpers';
+import {getTests} from '../reducers/tests';
+import {PayloadAction} from '@reduxjs/toolkit';
+import {getQuickRoutinesById} from '../reducers/quickRoutines';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -186,7 +185,7 @@ function onAuthStateChanged() {
   });
 }
 
-function* updateProfile(action: UpdateProfileAction) {
+function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
   const {
     weight,
     height,
@@ -271,7 +270,7 @@ function* updateProfile(action: UpdateProfileAction) {
   yield put(setLoading(false));
 }
 
-function* signUp(action: SignUpAction) {
+function* signUp(action: PayloadAction<SignUpPayload>) {
   const {name, surname, dob, weight, height, gender, goal, fromProfile} =
     action.payload;
   try {
@@ -449,7 +448,7 @@ export function* scheduleGoalReminderNotification() {
   }
 }
 
-function* getWeeklyItemsForConnection(action: GetWeeklyItemsForConnection) {
+function* getWeeklyItemsForConnection(action: PayloadAction<string>) {
   try {
     yield put(setLoading(true));
     const uid = action.payload;
@@ -461,7 +460,7 @@ function* getWeeklyItemsForConnection(action: GetWeeklyItemsForConnection) {
       .filter(item => !quickRoutines[item.quickRoutineId])
       .map(routine => routine.quickRoutineId);
     yield put(getQuickRoutinesById(missingRoutines));
-    yield put(setWeeklyItemsForConnection(uid, weeklyItems));
+    yield put(setWeeklyItemsForConnection({uid, items: weeklyItems}));
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
@@ -535,7 +534,7 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
   );
   while (true) {
     const snapshot: Snapshot = yield take(channel);
-    yield put(setMessages(uid, snapshot));
+    yield put(setMessages({uid, snapshot}));
     if (navigationRef.current) {
       const route: any = navigationRef.current.getCurrentRoute();
       const {state} = yield select((state: MyRootState) => state.profile);
@@ -550,7 +549,7 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
   }
 }
 
-function* chatsWatcher(action: SetChatsAction) {
+function* chatsWatcher(action: PayloadAction<{[key: string]: Chat}>) {
   const chatsObj = action.payload;
   const uids = Object.keys(chatsObj);
   for (const uid of uids) {
@@ -558,22 +557,26 @@ function* chatsWatcher(action: SetChatsAction) {
   }
 }
 
-function* sendMessage(action: SendMessageAction) {
+function* sendMessage(
+  action: PayloadAction<{chatId: string; message: Message; uid: string}>,
+) {
   const {chatId, message, uid} = action.payload;
   try {
-    yield put(setMessage(uid, message));
+    yield put(setMessage({uid, message}));
     yield call(api.sendMessage, message, chatId, uid);
     notif.play();
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({text: e.message});
     }
-    yield put(setMessage(uid, {...message, sent: false, pending: false}));
+    yield put(
+      setMessage({uid, message: {...message, sent: false, pending: false}}),
+    );
     logError(e);
   }
 }
 
-function* setRead(action: SetReadAction) {
+function* setRead(action: PayloadAction<string>) {
   try {
     const otherUid = action.payload;
     const {uid} = yield select((state: MyRootState) => state.profile.profile);
@@ -591,7 +594,9 @@ function* setRead(action: SetReadAction) {
   }
 }
 
-function* loadEarlierMessages(action: LoadEarlierMessagesAction) {
+function* loadEarlierMessages(
+  action: PayloadAction<{chatId: string; uid: string; startAfter: number}>,
+) {
   try {
     const {chatId, uid, startAfter} = action.payload;
     const {messages} = yield select((state: MyRootState) => state.profile);
@@ -626,7 +631,7 @@ function* premiumUpdatedWorker() {
   }
 }
 
-function* handleAuthWorker(action: HandleAuthAction) {
+function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
   const user = action.payload;
   try {
     if (

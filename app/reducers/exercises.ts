@@ -4,6 +4,7 @@ import Exercise from '../types/Exercise';
 import {Area} from '../types/QuickRoutines';
 import {SavedWorkout} from '../types/SavedItem';
 import {CoolDown, Equipment, Goal, Level, WarmUp} from '../types/Shared';
+import {setLoggedIn} from './profile';
 
 export interface ExercisesState {
   exercises: {[key: string]: Exercise};
@@ -154,11 +155,30 @@ const exerciseSlice = createSlice({
       state: ExercisesState,
       {payload}: PayloadAction<string[]>,
     ) => {},
+    getExercises: (
+      state: ExercisesState,
+      {
+        payload,
+      }: PayloadAction<{
+        level: Level;
+        goal: Goal;
+        warmUp: WarmUp[];
+        coolDown: CoolDown[];
+      }>,
+    ) => {},
+    getExercisesById: (
+      state: ExercisesState,
+      {payload}: PayloadAction<string[]>,
+    ) => {},
+  },
+  extraReducers: builder => {
+    builder.addCase(setLoggedIn, (state, action) => {
+      if (!action.payload) {
+        state = initialState;
+      }
+    });
   },
 });
-
-// case SET_LOGGED_IN:
-//   return action.payload ? state : initialState;
 
 export const {
   setEquipment,

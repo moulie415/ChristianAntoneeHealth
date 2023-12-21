@@ -3,10 +3,17 @@ import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile from '../types/Profile';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
-import {Plan, Sample, StepSample} from '../types/Shared';
+import {
+  Plan,
+  Sample,
+  SignUpPayload,
+  StepSample,
+  UpdateProfilePayload,
+} from '../types/Shared';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 export interface WeeklyItems {
   quickRoutines: {[key: string]: SavedQuickRoutine};
@@ -217,8 +224,14 @@ export type SET_LOGIN_PASSWORD = typeof SET_LOGIN_PASSWORD;
 export const SET_CALENDAR_ID = `${PROFILE}/setCalendarId`;
 export type SET_CALENDAR_ID = typeof SET_CALENDAR_ID;
 
+export const GET_PLAN = `${PROFILE}/getPlan`;
+export type GET_PLAN = typeof GET_PLAN;
+
 export const SET_PLAN = `${PROFILE}/setPlan`;
 export type SET_PLAN = typeof SET_PLAN;
+
+export const SYNC_PLAN_WITH_CALENDAR = `${PROFILE}/syncPlanWithCalendar`;
+export type SYNC_PLAN_WITH_CALENDAR = typeof SYNC_PLAN_WITH_CALENDAR;
 
 export const SET_SYNCED_PLAN_EVENT = `${PROFILE}/setSyncedPlanEvent`;
 export type SET_SYNCED_PLAN_EVENT = typeof SET_SYNCED_PLAN_EVENT;
@@ -375,7 +388,10 @@ const profileSlice = createSlice({
         [payload.uid]: payload.items,
       };
     },
-    setPlan: (state: ProfileState, {payload}: PayloadAction<Plan>) => {
+    setPlan: (
+      state: ProfileState,
+      {payload}: PayloadAction<Plan | undefined>,
+    ) => {
       state.plan = payload;
     },
     setHasViewedTour: (
@@ -414,6 +430,40 @@ const profileSlice = createSlice({
     ) => {
       state.loginPassword = payload;
     },
+    getWeeklyItems: () => {},
+    getWeeklyItemsForConnection: (
+      state: ProfileState,
+      {payload}: PayloadAction<string>,
+    ) => {},
+    loadEarlierMessages: (
+      state: ProfileState,
+      {
+        payload,
+      }: PayloadAction<{chatId: string; uid: string; startAfter: number}>,
+    ) => {},
+    sendMessage: (
+      state: ProfileState,
+      {payload}: PayloadAction<{chatId: string; uid: string; message: Message}>,
+    ) => {},
+    getConnections: () => {},
+    handleAuth: (
+      state: ProfileState,
+      {payload}: PayloadAction<FirebaseAuthTypes.User>,
+    ) => {},
+    getSamples: () => {},
+    signUp: (
+      state: ProfileState,
+      {payload}: PayloadAction<SignUpPayload>,
+    ) => {},
+    updateProfile: (
+      state: ProfileState,
+      {payload}: PayloadAction<UpdateProfilePayload>,
+    ) => {},
+    getPlan: () => {},
+    syncPlanWithCalendar: (
+      state: ProfileState,
+      {payload}: PayloadAction<{plan: Plan; sync: boolean}>,
+    ) => {},
   },
 });
 
@@ -445,6 +495,17 @@ export const {
   setWeeklyItemsForConnection,
   setWeeklySteps,
   setWeightSamples,
+  getConnections,
+  getPlan,
+  getSamples,
+  getWeeklyItems,
+  getWeeklyItemsForConnection,
+  handleAuth,
+  sendMessage,
+  signUp,
+  syncPlanWithCalendar,
+  loadEarlierMessages,
+  updateProfile,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
