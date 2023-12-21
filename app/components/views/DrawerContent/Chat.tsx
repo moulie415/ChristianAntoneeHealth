@@ -18,7 +18,7 @@ import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
 import Message from '../../../types/Message';
-import {ImageBackground, Platform, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../commons/Avatar';
 import Text from '../../commons/Text';
@@ -234,6 +234,8 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
+  const ref = useRef<FlatList>(null);
+
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header
@@ -251,6 +253,7 @@ const Chat: React.FC<ChatProps> = ({
         }
       />
       <GiftedChat
+        messageContainerRef={ref}
         renderCustomView={renderCustomView}
         loadEarlier={showLoadEarlier}
         isLoadingEarlier={loading}
@@ -297,6 +300,7 @@ const Chat: React.FC<ChatProps> = ({
             createdAt: moment().valueOf(),
           };
           sendMessageAction({message, chatId, uid});
+          ref.current?.scrollToEnd();
         }}
         inverted={false}
         onInputTextChanged={onInputTextChanged}
