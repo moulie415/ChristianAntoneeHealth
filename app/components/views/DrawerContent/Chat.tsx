@@ -135,13 +135,10 @@ const Chat: React.FC<ChatProps> = ({
     return messages
       .sort((a, b) => (a.createdAt as number) - (b.createdAt as number))
       .map(message => {
-        if (message.user) {
-          return {
-            ...message,
-            user: {...message.user, avatar: message.user.avatar || undefined},
-          };
-        }
-        return message;
+        return {
+          ...message,
+          user: {...message.user, avatar: message.user?.avatar || undefined},
+        };
       });
   }, [messagesObj]);
 
