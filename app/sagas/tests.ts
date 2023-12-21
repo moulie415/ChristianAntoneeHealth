@@ -7,7 +7,6 @@ import {
   select,
   throttle,
 } from 'redux-saga/effects';
-import {setLoading} from '../actions/exercises';
 import * as api from '../helpers/api';
 import {SavedTest} from '../types/SavedItem';
 import {MyRootState} from '../types/Shared';
@@ -22,6 +21,7 @@ import {
   setTests,
 } from '../reducers/tests';
 import {PayloadAction} from '@reduxjs/toolkit';
+import {setLoading} from '../reducers/exercises';
 
 export function* getTests() {
   const tests: {[key: string]: Test} = yield call(api.getTests);

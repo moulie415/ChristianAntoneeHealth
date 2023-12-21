@@ -1,21 +1,10 @@
-import {
-  call,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-  take,
-  all,
-  fork,
-  throttle,
-} from 'redux-saga/effects';
+import {call, put, select, take, all, throttle} from 'redux-saga/effects';
 import {eventChannel} from '@redux-saga/core';
 import {EventChannel} from '@redux-saga/core';
 import Snackbar from 'react-native-snackbar';
 import Exercise from '../types/Exercise';
 import * as api from '../helpers/api';
 import {CoolDown, Goal, Level, MyRootState, WarmUp} from '../types/Shared';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {SavedWorkout} from '../types/SavedItem';
 import queryString from 'query-string';
 import {Alert} from 'react-native';
@@ -29,11 +18,7 @@ import {logError} from '../helpers/error';
 import * as _ from 'lodash';
 import * as polar from '../helpers/polar';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
-import {
-  contributesToScore,
-  getGoalsData,
-  sendGoalTargetNotification,
-} from '../helpers/goals';
+import {sendGoalTargetNotification} from '../helpers/goals';
 import {ProfileState, setProfile} from '../reducers/profile';
 import {SettingsState} from '../reducers/settings';
 import {

@@ -342,6 +342,20 @@ const profileSlice = createSlice({
         },
       };
     },
+    setMessagesObj: (
+      state: ProfileState,
+      {
+        payload,
+      }: PayloadAction<{uid: string; messages: {[key: string]: Message}}>,
+    ) => {
+      state.messages = {
+        ...state.messages,
+        [payload.uid]: {
+          ...state.messages[payload.uid],
+          ...payload.messages,
+        },
+      };
+    },
     setChats: (
       state: ProfileState,
       {payload}: PayloadAction<{[key: string]: Chat}>,
@@ -506,6 +520,7 @@ export const {
   syncPlanWithCalendar,
   loadEarlierMessages,
   updateProfile,
+  setMessagesObj
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

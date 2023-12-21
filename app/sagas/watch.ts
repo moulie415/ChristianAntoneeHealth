@@ -7,7 +7,6 @@ import {
 } from 'react-native-watch-connectivity';
 import {eventChannel, EventChannel} from 'redux-saga';
 import {all, call, put, select, take, takeLatest} from 'redux-saga/effects';
-import {SetLoggedInAction, SET_LOGGED_IN} from '../actions/profile';
 import {MyRootState} from '../types/Shared';
 import * as api from '../helpers/api';
 import QuickRoutine from '../types/QuickRoutines';
@@ -16,8 +15,10 @@ import {
   SET_QUICK_ROUTINES,
   START_QUICK_ROUTINE,
 } from '../reducers/quickRoutines';
+import {SET_LOGGED_IN} from '../reducers/profile';
+import {PayloadAction} from '@reduxjs/toolkit';
 
-function* loggedInWorker(action: SetLoggedInAction) {
+function* loggedInWorker(action: PayloadAction<boolean>) {
   const reachable: boolean = yield call(getReachability);
   if (reachable) {
     const loggedIn = action.payload;
@@ -36,7 +37,9 @@ function* loggedInWorker(action: SetLoggedInAction) {
   }
 }
 
-function* setQuickRoutinesWorker(action: SetSavedQuickRoutinesAction) {
+function* setQuickRoutinesWorker(
+  action: PayloadAction<{[key: string]: QuickRoutine}>,
+) {
   const routines = action.payload;
   const reachable: boolean = yield call(getReachability);
   if (reachable) {
@@ -48,7 +51,9 @@ function* setQuickRoutinesWorker(action: SetSavedQuickRoutinesAction) {
   }
 }
 
-function* startQuickRoutineWorker(action: StartQuickRoutineAction) {
+function* startQuickRoutineWorker(
+  action: PayloadAction<{id: string; exerciseIds: string[]}>,
+) {
   const reachable: boolean = yield call(getReachability);
   const {id, exerciseIds} = action.payload;
   const {exercises} = yield select((state: MyRootState) => state.exercises);

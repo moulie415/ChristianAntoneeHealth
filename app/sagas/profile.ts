@@ -85,6 +85,7 @@ import {
   setLoggedIn,
   setMessage,
   setMessages,
+  setMessagesObj,
   setMuscleMassSamples,
   setPremium,
   setProfile,
@@ -607,7 +608,7 @@ function* loadEarlierMessages(
       chatId,
       startAfter,
     );
-    yield put(setMessagesObj(uid, {...current, ...earlier}));
+    yield put(setMessagesObj({uid, messages: {...current, ...earlier}}));
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
