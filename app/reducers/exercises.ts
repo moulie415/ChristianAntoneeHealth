@@ -193,6 +193,8 @@ export const {
   setWarmUp,
   setWorkout,
   viewWorkout,
+  getExercises,
+  getExercisesById,
 } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

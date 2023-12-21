@@ -17,13 +17,6 @@ import {StackParamList} from '../../../App';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import {
-  loadEarlierMessages,
-  sendMessage,
-  setChatMessage,
-  setMessages,
-  setRead,
-} from '../../../actions/profile';
 import Message from '../../../types/Message';
 import {ImageBackground, Platform, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
@@ -31,7 +24,6 @@ import Avatar from '../../commons/Avatar';
 
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import {viewWorkout} from '../../../actions/exercises';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -39,6 +31,8 @@ import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
 import useInit from '../../../hooks/UseInit';
 import _ from 'lodash';
+import { loadEarlierMessages, sendMessage, setChatMessage, setMessages } from '../../../reducers/profile';
+import { viewWorkout } from '../../../reducers/exercises';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;

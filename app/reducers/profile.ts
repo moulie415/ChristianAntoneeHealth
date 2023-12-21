@@ -408,11 +408,8 @@ const profileSlice = createSlice({
     ) => {
       state.plan = payload;
     },
-    setHasViewedTour: (
-      state: ProfileState,
-      {payload}: PayloadAction<boolean>,
-    ) => {
-      state.hasViewedTour = payload;
+    setHasViewedTour: (state: ProfileState) => {
+      state.hasViewedTour = true;
     },
     setSyncedPlanEvent: (
       state: ProfileState,
@@ -520,7 +517,7 @@ export const {
   syncPlanWithCalendar,
   loadEarlierMessages,
   updateProfile,
-  setMessagesObj
+  setMessagesObj,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

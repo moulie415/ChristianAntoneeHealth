@@ -15,11 +15,6 @@ import colors from '../../constants/colors';
 import Profile, {Gender} from '../../types/Profile';
 import * as _ from 'lodash';
 import {
-  getSamples,
-  updateProfile,
-  UpdateProfilePayload,
-} from '../../actions/profile';
-import {
   BONE_DENSITIES,
   HEIGHTS,
   MUSCLE_MASSES,
@@ -53,6 +48,7 @@ import GoalSummaries from '../commons/GoalSummaries';
 import {AlertButton} from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
+import { getSamples, updateProfile } from '../../reducers/profile';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
