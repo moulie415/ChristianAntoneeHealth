@@ -5,7 +5,7 @@ import {QuickRoutinesState} from '../reducers/quickRoutines';
 import {SettingsState} from '../reducers/settings';
 import {TestsState} from '../reducers/tests';
 import {Gender} from './Profile';
-import {Area} from './QuickRoutines';
+import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
 
 export type MyRootState = {
   exercises: ExercisesState;
@@ -154,7 +154,7 @@ export interface SignUpPayload {
   marketing: boolean;
   goal: Goal;
   area: Area;
-  equipment: Equipment;
+  equipment: EquipmentLevel;
   experience: Level;
   fromProfile?: boolean;
 }

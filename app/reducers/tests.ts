@@ -52,6 +52,7 @@ const testSlice = createSlice({
     ) => {
       state.savedTests = {...state.savedTests, ...payload};
     },
+    saveTest: (state: TestsState, {payload}: PayloadAction<SavedTest>) => {},
     getTests: () => {},
     getTestsById: (state: TestsState, {payload}: PayloadAction<string[]>) => {},
     getSavedTests: () => {},
@@ -65,6 +66,12 @@ const testSlice = createSlice({
   },
 });
 
-export const {setTests, setSavedTests, getTests, getTestsById} =
-  testSlice.actions;
+export const {
+  setTests,
+  setSavedTests,
+  getTests,
+  getTestsById,
+  getSavedTests,
+  saveTest,
+} = testSlice.actions;
 export default testSlice.reducer;

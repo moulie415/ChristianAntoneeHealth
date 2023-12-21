@@ -44,6 +44,11 @@ const educationSlice = createSlice({
     ) => {
       state.loading = payload;
     },
+    getEducation: () => {},
+    getEducationById: (
+      state: EducationState,
+      {payload}: PayloadAction<string[]>,
+    ) => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {
@@ -54,9 +59,12 @@ const educationSlice = createSlice({
   },
 });
 
-// case SET_LOGGED_IN:
-//   return action.payload ? state : initialState;
 
-export const {setEducationLoading, setEducation} = educationSlice.actions;
+export const {
+  setEducationLoading,
+  setEducation,
+  getEducation,
+  getEducationById,
+} = educationSlice.actions;
 
 export default educationSlice.reducer;

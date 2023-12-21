@@ -381,6 +381,12 @@ const profileSlice = createSlice({
     ) => {
       state.profile = {...state.profile, unread: payload};
     },
+    setRead: (state: ProfileState, {payload}: PayloadAction<string>) => {
+      state.profile = {
+        ...state.profile,
+        unread: {...state.profile.unread, [payload]: 0},
+      };
+    },
     setAppState: (
       state: ProfileState,
       {payload}: PayloadAction<AppStateStatus>,
@@ -518,6 +524,7 @@ export const {
   loadEarlierMessages,
   updateProfile,
   setMessagesObj,
+  setRead
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

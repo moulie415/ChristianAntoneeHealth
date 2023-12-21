@@ -10,7 +10,7 @@ import DatePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
+import {MyRootState, UpdateProfilePayload} from '../../types/Shared';
 import colors from '../../constants/colors';
 import Profile, {Gender} from '../../types/Profile';
 import * as _ from 'lodash';
@@ -48,7 +48,7 @@ import GoalSummaries from '../commons/GoalSummaries';
 import {AlertButton} from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
-import { getSamples, updateProfile } from '../../reducers/profile';
+import {getSamples, updateProfile} from '../../reducers/profile';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;

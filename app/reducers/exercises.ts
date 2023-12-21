@@ -1,5 +1,4 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {SET_LOGGED_IN} from '../actions/profile';
 import Exercise from '../types/Exercise';
 import {Area} from '../types/QuickRoutines';
 import {SavedWorkout} from '../types/SavedItem';
@@ -170,6 +169,11 @@ const exerciseSlice = createSlice({
       state: ExercisesState,
       {payload}: PayloadAction<string[]>,
     ) => {},
+    saveWorkout: (
+      state: ExercisesState,
+      {payload}: PayloadAction<SavedWorkout>,
+    ) => {},
+    getSavedWorkouts: () => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {
@@ -195,6 +199,8 @@ export const {
   viewWorkout,
   getExercises,
   getExercisesById,
+  getSavedWorkouts,
+  saveWorkout,
 } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;
