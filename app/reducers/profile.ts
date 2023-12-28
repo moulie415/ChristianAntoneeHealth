@@ -14,6 +14,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import PushNotification from 'react-native-push-notification';
 
 export interface WeeklyItems {
   quickRoutines: {[key: string]: SavedQuickRoutine};
@@ -376,6 +377,8 @@ const profileSlice = createSlice({
       state: ProfileState,
       {payload}: PayloadAction<{[key: string]: number}>,
     ) => {
+      const count = Object.values(payload).reduce((acc, cur) => acc + cur, 0);
+      PushNotification.setApplicationIconBadgeNumber(count);
       state.profile = {...state.profile, unread: payload};
     },
     setRead: (state: ProfileState, {payload}: PayloadAction<string>) => {
