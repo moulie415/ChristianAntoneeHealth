@@ -267,7 +267,9 @@ const Chat: React.FC<ChatProps> = ({
           messagesContainerStyle={{marginBottom: 10}}
           textInputProps={{lineHeight: null}}
           listViewProps={{marginBottom: 10}}
-          renderInputToolbar={CustomInputToolbar}
+          renderInputToolbar={props => (
+            <CustomInputToolbar {...props} text={text} />
+          )}
           renderBubble={props => {
             return (
               <Bubble
@@ -309,6 +311,7 @@ const Chat: React.FC<ChatProps> = ({
           inverted={false}
           onInputTextChanged={onInputTextChanged}
           text={text}
+          alwaysShowSend
         />
 
         <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />

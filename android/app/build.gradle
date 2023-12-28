@@ -7,9 +7,9 @@ apply plugin: 'com.google.gms.google-services'
 project.ext.vectoricons = [
     iconFontNames: [ 
         'FontAwesome.ttf',
-        'FontAwesome5_Solid.ttf',
-        'FontAwesome5_Regular.ttf',
-        'FontAwesome5_Brands.ttf',
+        'FontAwesome6_Solid.ttf',
+        'FontAwesome6_Regular.ttf',
+        'FontAwesome6_Brands.ttf',
         'Feather.ttf'
     ] // Name of the font files you want to copy
 ]
