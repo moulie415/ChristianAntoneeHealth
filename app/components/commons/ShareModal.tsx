@@ -21,8 +21,8 @@ import uuid from 'react-native-uuid';
 import Modal from './Modal';
 import Divider from './Divider';
 import ListItem from './ListItem';
-import { setShareModalVisible } from '../../reducers/exercises';
-import { getConnections } from '../../reducers/profile';
+import {setShareModalVisible} from '../../reducers/exercises';
+import {getConnections} from '../../reducers/profile';
 
 const ShareModal: React.FC<{
   visible: boolean;

@@ -17,8 +17,14 @@ import {StackParamList} from '../../../../App';
 import Profile from '../../../../types/Profile';
 import {MyRootState} from '../../../../types/Shared';
 import {connect} from 'react-redux';
-import Message from '../../../../types/Message';
-import {FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
+import Message, {MessageType} from '../../../../types/Message';
+import {
+  Alert,
+  FlatList,
+  Platform,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import moment from 'moment';
 import Avatar from '../../../commons/Avatar';
 import Text from '../../../commons/Text';
@@ -40,6 +46,18 @@ import {
 import {viewWorkout} from '../../../../reducers/exercises';
 import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
+import CustomActions from './CustomActions';
+import {
+  CameraOptions,
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
+import {logError} from '../../../../helpers/error';
+import Snackbar from 'react-native-snackbar';
+import uuid from 'react-native-uuid';
+
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -79,6 +97,7 @@ interface ChatProps {
   loading: boolean;
   chatMessages: {[key: string]: string};
   setChatMessage: ({uid, message}: {uid: string; message: string}) => void;
+  maxFileSize: number;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -96,6 +115,7 @@ const Chat: React.FC<ChatProps> = ({
   chatMessages,
   setChatMessage: setChatMessageAction,
   navigation,
+  maxFileSize,
 }) => {
   const {uid} = route.params;
   const [text, setText] = useState('');
@@ -236,6 +256,76 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
+  const handleResponse = async (response: ImagePickerResponse) => {
+    if (response.assets) {
+      const asset = response.assets[0];
+      // file size comes back in bytes so need to divide by 1000000 to get mb
+      if (asset.fileSize && asset.fileSize / 1000000 < maxFileSize) {
+        try {
+          let type: MessageType;
+          if (asset.type?.includes('image/')) {
+            type = 'image';
+          } else if (asset.type?.includes('video/')) {
+            type = 'video';
+          } else {
+            throw new Error('Unsupported mime type');
+          }
+          const message: Message = {
+            user: {
+              _id: profile.uid,
+              name: profile.name,
+              avatar: profile.avatar,
+            },
+            _id: uuid.v4() as string,
+            ...(type === 'image' ? {image: asset.uri} : {}),
+            ...(type === 'video' ? {video: asset.uri} : {}),
+            text: '',
+            type,
+            pending: true,
+            createdAt: moment().valueOf(),
+          };
+          sendMessageAction({message, chatId, uid});
+        } catch (e) {
+          logError(e);
+          Snackbar.show({text: 'Error sending message'});
+        }
+      }
+    }
+  };
+
+  const MAX_SIZE = 2000;
+
+  const onPressAttachment = async () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'mixed',
+      quality: 0.8,
+      formatAsMp4: true,
+      maxHeight: MAX_SIZE,
+      maxWidth: MAX_SIZE,
+    };
+    if (Platform.OS === 'ios') {
+      const result = await launchImageLibrary(options);
+      handleResponse(result);
+    }
+  };
+
+  const onPressVoiceNote = () => {};
+
+  const onPressCamera = async () => {
+    const options: CameraOptions = {
+      mediaType: 'mixed',
+      quality: 0.8,
+      formatAsMp4: true,
+      durationLimit: 120,
+      maxHeight: MAX_SIZE,
+      maxWidth: MAX_SIZE,
+    };
+    if (Platform.OS === 'ios') {
+      const result = await launchCamera(options);
+      handleResponse(result);
+    }
+  };
+
   const ref = useRef<FlatList>(null);
 
   return (
@@ -268,6 +358,7 @@ const Chat: React.FC<ChatProps> = ({
           messagesContainerStyle={{marginBottom: 10}}
           textInputProps={{lineHeight: null}}
           listViewProps={{marginBottom: 10}}
+          renderActions={() => <CustomActions onPressCamera={onPressCamera} />}
           renderInputToolbar={props => (
             <CustomInputToolbar {...props} text={text} />
           )}
@@ -312,7 +403,13 @@ const Chat: React.FC<ChatProps> = ({
           inverted={false}
           onInputTextChanged={onInputTextChanged}
           text={text}
-          renderSend={CustomSend}
+          renderSend={props => (
+            <CustomSend
+              {...props}
+              onPressAttachment={onPressAttachment}
+              onPressVoiceNotes={onPressVoiceNote}
+            />
+          )}
           alwaysShowSend
         />
 
@@ -324,7 +421,7 @@ const Chat: React.FC<ChatProps> = ({
 };
 
 const mapStateToProps = (
-  {profile, exercises}: MyRootState,
+  {profile, exercises, settings}: MyRootState,
   props: {
     route: RouteProp<StackParamList, 'Chat'>;
   },
@@ -336,6 +433,7 @@ const mapStateToProps = (
   chatId: profile.chats[props.route.params.uid].id,
   exercisesLoading: exercises.loading,
   loading: profile.loading,
+  maxFileSize: settings.chatMaxFileSizeMb,
 });
 
 const mapDispatchToProps = {

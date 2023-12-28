@@ -14,6 +14,9 @@ export interface SettingsState {
   ads: boolean;
   admins: string[];
   workoutGoals: {[key in Goal]?: SettingsWorkoutGoal};
+  attachmentsDisabled: boolean;
+  voiceNotesDisabled: boolean;
+  chatMaxFileSizeMb: number;
 }
 
 const initialState: SettingsState = {
@@ -45,6 +48,9 @@ const initialState: SettingsState = {
       },
     },
   },
+  voiceNotesDisabled: false,
+  attachmentsDisabled: false,
+  chatMaxFileSizeMb: 10,
 };
 
 export const SETTINGS = 'settings';
