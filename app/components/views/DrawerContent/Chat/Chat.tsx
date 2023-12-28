@@ -39,6 +39,7 @@ import {
 } from '../../../../reducers/profile';
 import {viewWorkout} from '../../../../reducers/exercises';
 import CustomInputToolbar from './CustomInputToolbar';
+import CustomSend from './CustomSend';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -311,6 +312,7 @@ const Chat: React.FC<ChatProps> = ({
           inverted={false}
           onInputTextChanged={onInputTextChanged}
           text={text}
+          renderSend={CustomSend}
           alwaysShowSend
         />
 

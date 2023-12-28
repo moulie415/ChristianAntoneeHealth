@@ -8,7 +8,10 @@ import {MyRootState, PlanWorkout} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
+import {
+  ColorFormat,
+  CountdownCircleTimer,
+} from 'react-native-countdown-circle-timer';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {workoutSong} from '../../sagas/profile';
 import Profile from '../../types/Profile';
@@ -78,9 +81,18 @@ const ExerciseTimer: React.FC<{
         strokeWidth={8}
         size={200}
         onComplete={onComplete}
-        trailColor={finished ? colors.muscleSecondary : colors.borderColor}
+        trailColor={
+          finished
+            ? (colors.muscleSecondary as ColorFormat)
+            : (colors.borderColor as ColorFormat)
+        }
         duration={key === 'prep' ? profile.prepTime || 15 : exercise.time || 30}
-        colors={[colors.appBlue, colors.appBlue, colors.appBlue, colors.appRed]}
+        colors={[
+          colors.appBlue as `#${string}`,
+          colors.appBlue as `#${string}`,
+          colors.appBlue as `#${string}`,
+          colors.appRed as `#${string}`,
+        ]}
         colorsTime={[7, 5, 2, 0]}>
         {({remainingTime}) => {
           const hideTimer = isPrepping && remainingTime >= 10 && index === 0;
