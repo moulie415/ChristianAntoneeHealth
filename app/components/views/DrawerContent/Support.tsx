@@ -15,7 +15,7 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {ListItem, MoreItem} from './DrawerContent';
 import {navigate} from '../../../RootNavigation';
 

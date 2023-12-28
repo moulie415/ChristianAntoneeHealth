@@ -1,7 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 

@@ -14,7 +14,7 @@ import {getPercentile} from '../../../helpers';
 import {PercentileTable} from '../../../types/Test';
 import {Table} from '../../../types/Test';
 import colors from '../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {keyHasValue} from '../../../helpers/table';
 import moment from 'moment';
@@ -95,7 +95,7 @@ const TestResultText: React.FC<{
             marginHorizontal: 10,
             color: colors.appWhite,
           }}
-          name="tachometer-alt"
+          name="gauge-high"
         />
         <Text
           style={{

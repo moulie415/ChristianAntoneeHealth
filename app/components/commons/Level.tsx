@@ -1,4 +1,4 @@
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import React from 'react';
 import {View} from 'react-native';
 import {Level} from '../../types/Shared';

@@ -4,7 +4,7 @@ import colors from '../../constants/colors';
 import Text from './Text';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Goal, Level, MyRootState} from '../../types/Shared';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import {
@@ -146,7 +146,7 @@ const GoalSummaries: React.FC<{
       key: 'workoutLevel',
       icon: () => (
         <Icon
-          name="tachometer-alt"
+          name="gauge-high"
           size={25}
           color={colors.button}
           style={{

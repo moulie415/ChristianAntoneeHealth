@@ -1,5 +1,5 @@
 import React, {ReactNode, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
 import {Platform, ScrollView, StyleSheet, Switch, View} from 'react-native';
 import {

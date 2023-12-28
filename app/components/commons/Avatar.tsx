@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 
 import {MyRootState} from '../../types/Shared';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
   return (

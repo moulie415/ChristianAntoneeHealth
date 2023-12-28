@@ -2,7 +2,7 @@ import React from 'react';
 import {ImageBackground, Linking, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 
 import Header from '../../commons/Header';

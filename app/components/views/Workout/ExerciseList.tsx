@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {connect} from 'react-redux';

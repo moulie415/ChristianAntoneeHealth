@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Exercise from '../../types/Exercise';
 import moment from 'moment';
 

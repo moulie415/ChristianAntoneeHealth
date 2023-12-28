@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {Level, MyRootState} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
 import Profile from '../../types/Profile';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import moment from 'moment';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';

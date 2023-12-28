@@ -3,7 +3,7 @@ import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {TextInputProps} from 'react-native';
 import colors from '../../constants/colors';
 
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 interface Props extends TextInputProps {
   secure?: boolean;

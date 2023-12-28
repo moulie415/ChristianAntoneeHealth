@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import Video, {OnProgressData} from 'react-native-video';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {getVideoHeight} from '../../helpers';
 
 import colors from '../../constants/colors';

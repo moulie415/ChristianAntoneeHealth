@@ -1,6 +1,6 @@
 import {TouchableOpacity, ViewStyle} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 
 const Checkbox: React.FC<{

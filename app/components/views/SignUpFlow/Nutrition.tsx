@@ -3,7 +3,7 @@ import Text from '../../commons/Text';
 
 import colors from '../../../constants/colors';
 import Collapsible from 'react-native-collapsible';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import _ from 'lodash';
 import {FlatList} from 'react-native-gesture-handler';
 import Divider from '../../commons/Divider';

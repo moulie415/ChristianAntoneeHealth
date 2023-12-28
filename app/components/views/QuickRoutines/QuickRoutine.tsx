@@ -3,7 +3,7 @@ import {ScrollView, TouchableOpacity, Alert, View} from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {getVideoHeight} from '../../../helpers';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {
   MyRootState,
   PauseEvent,

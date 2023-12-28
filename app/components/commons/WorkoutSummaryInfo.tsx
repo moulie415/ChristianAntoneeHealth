@@ -10,7 +10,7 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
 import {FONTS_SIZES} from '../../constants';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Color from 'color';
 import {navigationRef} from '../../RootNavigation';
 

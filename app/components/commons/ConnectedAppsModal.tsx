@@ -9,7 +9,7 @@ import Modal from './Modal';
 import colors from '../../constants/colors';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const ConnectedIcon: React.FC = () => {
   return (

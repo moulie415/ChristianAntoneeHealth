@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {Level, MyRootState} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import Text from '../../commons/Text';

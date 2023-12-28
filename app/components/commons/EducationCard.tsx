@@ -5,7 +5,7 @@ import colors from '../../constants/colors';
 import Education from '../../types/Education';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Profile from '../../types/Profile';

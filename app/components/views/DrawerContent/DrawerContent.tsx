@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 import {navigationRef, resetToWelcome} from '../../../RootNavigation';
 import {MyRootState} from '../../../types/Shared';
@@ -144,7 +144,7 @@ const DrawerContent: React.FC<Props> = ({
     },
     {
       title: 'About',
-      icon: 'info-circle',
+      icon: 'circle-info',
       onPress: () => {
         navigationRef.navigate('About');
         navigation.closeDrawer();
@@ -152,7 +152,7 @@ const DrawerContent: React.FC<Props> = ({
     },
     {
       title: 'Settings',
-      icon: 'cog',
+      icon: 'gear',
       onPress: () => {
         navigationRef.navigate('Settings');
         navigation.closeDrawer();
@@ -173,7 +173,7 @@ const DrawerContent: React.FC<Props> = ({
 
     {
       title: 'Share the app',
-      icon: 'share-alt',
+      icon: 'share-nodes',
       onPress: () =>
         Share.share({
           title: 'CA Health',
@@ -189,13 +189,13 @@ const DrawerContent: React.FC<Props> = ({
         navigation.closeDrawer();
       },
     },
-    {title: 'Log out', icon: 'sign-out-alt', onPress: logOut},
+    {title: 'Log out', icon: 'right-from-bracket', onPress: logOut},
   ];
 
   if (profile.admin) {
     listItems.push({
       title: 'Force crash (admin)',
-      icon: 'car-crash',
+      icon: 'car-burst',
       onPress: () => Sentry.nativeCrash(),
     });
   }

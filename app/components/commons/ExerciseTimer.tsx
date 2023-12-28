@@ -6,7 +6,7 @@ import Exercise from '../../types/Exercise';
 import PagerView from 'react-native-pager-view';
 import {MyRootState, PlanWorkout} from '../../types/Shared';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Animated, {FadeIn} from 'react-native-reanimated';
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 import {TouchableOpacity} from 'react-native-gesture-handler';

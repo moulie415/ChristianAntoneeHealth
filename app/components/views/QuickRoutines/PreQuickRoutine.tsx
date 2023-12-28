@@ -10,7 +10,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {MyRootState, UpdateProfilePayload} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -160,7 +160,7 @@ const PreQuickRoutine: React.FC<{
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
             <Icon
-              name="running"
+              name="person-running"
               size={25}
               color={colors.appWhite}
               style={{
@@ -180,7 +180,7 @@ const PreQuickRoutine: React.FC<{
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
             <Icon
-              name="tachometer-alt"
+              name="gauge-high"
               size={22}
               color={colors.appWhite}
               style={{

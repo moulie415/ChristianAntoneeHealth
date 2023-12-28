@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import DatePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {MyRootState, UpdateProfilePayload} from '../../types/Shared';
@@ -307,7 +307,7 @@ const ProfileComponent: React.FC<{
                 }}>
                 <Icon
                   size={15}
-                  name={profile.premium ? 'pencil-alt' : 'lock'}
+                  name={profile.premium ? 'pencil' : 'lock'}
                   color={colors.appBlue}
                 />
               </View>

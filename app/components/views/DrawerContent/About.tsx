@@ -13,7 +13,7 @@ import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const About: React.FC<AboutProps> = () => {
   return (

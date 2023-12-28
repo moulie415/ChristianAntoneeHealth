@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {MyRootState} from './types/Shared';
 import Profile from './types/Profile';
@@ -15,7 +15,7 @@ const PlanTabIcon: React.FC<{
   const count = profile.unread?.plan || 0;
   return (
     <View>
-      <Icon color={color} size={size} name="calendar-alt" />
+      <Icon color={color} size={size} name="calendar-days" solid />
       {profile.premium && count > 0 && (
         <View
           style={{

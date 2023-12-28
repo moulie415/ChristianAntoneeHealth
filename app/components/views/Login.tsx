@@ -7,7 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
 import colors from '../../constants/colors';

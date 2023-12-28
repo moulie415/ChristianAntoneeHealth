@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
 

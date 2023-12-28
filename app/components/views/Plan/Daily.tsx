@@ -8,7 +8,7 @@ import colors from '../../../constants/colors';
 import Exercise from '../../../types/Exercise';
 import Test from '../../../types/Test';
 import {navigate} from '../../../RootNavigation';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import * as _ from 'lodash';
 import Education from '../../../types/Education';
 import WorkoutCard from '../../commons/WorkoutCard';

@@ -36,7 +36,7 @@ import WarmUp from './components/views/Workout/WarmUp';
 import Connections from './components/views/DrawerContent/Connections';
 import AddConnection from './components/views/DrawerContent/AddConnection';
 import AddConnectionButton from './components/commons/AddConnectionButton';
-import Chat from './components/views/DrawerContent/Chat';
+import Chat from './components/views/DrawerContent/Chat/Chat';
 import Rating from './components/views/Rating';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WhatArea from './components/views/Workout/WhatArea';

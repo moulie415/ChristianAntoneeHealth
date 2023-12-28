@@ -9,7 +9,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Button from '../../commons/Button';
 import {MyRootState, UpdateProfilePayload} from '../../../types/Shared';
 import {connect} from 'react-redux';
@@ -83,7 +83,7 @@ const PreWorkout: React.FC<{
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
             <Icon
-              name="running"
+              name="person-running"
               size={25}
               color={colors.appWhite}
               style={{

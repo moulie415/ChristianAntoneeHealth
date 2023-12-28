@@ -6,7 +6,7 @@ import {navigationRef} from '../../RootNavigation';
 import {PlanSleep} from '../../types/Shared';
 import Text from './Text';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import LinearGradient from 'react-native-linear-gradient';
 
 const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {

@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const SelectableButton: React.FC<{
   selected: boolean;

@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {TouchableOpacity, SafeAreaView, View, Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
@@ -15,7 +15,7 @@ import globalStyles from '../../../styles/globalStyles';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import Divider from '../../commons/Divider';
-import { setEquipment, setWorkout } from '../../../reducers/exercises';
+import {setEquipment, setWorkout} from '../../../reducers/exercises';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,

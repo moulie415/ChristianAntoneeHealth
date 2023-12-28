@@ -1,7 +1,7 @@
 import {View, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import React from 'react';
 import Test from '../../types/Test';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux';
 import {MyRootState} from '../../types/Shared';
@@ -56,7 +56,7 @@ const TestCard: React.FC<{
           {plan ? (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Icon
-                name="heartbeat"
+                name="heart-pulse"
                 color={colors.appWhite}
                 size={30}
                 style={{marginHorizontal: 10}}

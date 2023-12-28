@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Profile from '../../types/Profile';
 import ConnectedAppsModal from './ConnectedAppsModal';
 import Button from './Button';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import Text from './Text';
 import LinearGradient from 'react-native-linear-gradient';
@@ -81,7 +81,7 @@ const ConnectedApps: React.FC<{
             alignItems: 'center',
             backgroundColor: colors.appBlue,
           }}>
-          <Icon name="cog" size={25} color={colors.appWhite} style={{}} />
+          <Icon name="gear" size={25} color={colors.appWhite} style={{}} />
         </TouchableOpacity>
       </TouchableOpacity>
       <ConnectedAppsModal visible={showModal} setVisible={setShowModal} />

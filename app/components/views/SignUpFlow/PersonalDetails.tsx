@@ -5,7 +5,7 @@ import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Linking, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from '@react-native-community/datetimepicker';
 import Modal from '../../commons/Modal';
 import {Platform} from 'react-native';

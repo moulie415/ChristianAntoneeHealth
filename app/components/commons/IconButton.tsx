@@ -1,6 +1,6 @@
 import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 
 interface Props extends TouchableOpacityProps {

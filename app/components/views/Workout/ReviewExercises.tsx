@@ -11,7 +11,7 @@ import ReviewExercisesProps from '../../../types/views/ReviewExercises';
 import {truncate} from '../../../helpers';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 import ShareModal from '../../commons/ShareModal';
 import Button from '../../commons/Button';

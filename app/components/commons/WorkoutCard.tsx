@@ -5,7 +5,7 @@ import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
 import {Goal, Level, MyRootState, PlanWorkout} from '../../types/Shared';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Text from './Text';
 import Profile from '../../types/Profile';
 import FastImage from 'react-native-fast-image';

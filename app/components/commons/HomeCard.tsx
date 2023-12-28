@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import Text from './Text';
 import FastImage, {Source} from 'react-native-fast-image';

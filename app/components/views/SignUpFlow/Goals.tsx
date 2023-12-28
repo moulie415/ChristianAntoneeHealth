@@ -2,7 +2,7 @@ import {View} from 'react-native';
 import React, {useState} from 'react';
 import colors from '../../../constants/colors';
 import {Goal, MyRootState} from '../../../types/Shared';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Text from '../../commons/Text';
 import Dumbbell from '../../../images/dumbbell.svg';
 import Time from '../../../images/time.svg';
@@ -56,7 +56,7 @@ const Goals: React.FC<{
           {' minutes training'}
         </Text>
         <Icon
-          name="tachometer-alt"
+          name="gauge-high"
           size={25}
           color={colors.button}
           style={{

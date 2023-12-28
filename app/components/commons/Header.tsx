@@ -6,7 +6,7 @@ import {navigationRef} from '../../RootNavigation';
 import Text from './Text';
 import colors from '../../constants/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';

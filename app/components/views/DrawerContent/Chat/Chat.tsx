@@ -1,7 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   GiftedChat,
@@ -13,22 +13,22 @@ import {
   Bubble,
   IMessage,
 } from 'react-native-gifted-chat';
-import {StackParamList} from '../../../App';
-import Profile from '../../../types/Profile';
-import {MyRootState} from '../../../types/Shared';
+import {StackParamList} from '../../../../App';
+import Profile from '../../../../types/Profile';
+import {MyRootState} from '../../../../types/Shared';
 import {connect} from 'react-redux';
-import Message from '../../../types/Message';
-import {FlatList, TouchableOpacity} from 'react-native';
+import Message from '../../../../types/Message';
+import {FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
 import moment from 'moment';
-import Avatar from '../../commons/Avatar';
-import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
-import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Avatar from '../../../commons/Avatar';
+import Text from '../../../commons/Text';
+import colors from '../../../../constants/colors';
+import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import Header from '../../commons/Header';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Header from '../../../commons/Header';
 import FastImage from 'react-native-fast-image';
-import useInit from '../../../hooks/UseInit';
+import useInit from '../../../../hooks/UseInit';
 import _ from 'lodash';
 import {
   loadEarlierMessages,
@@ -36,8 +36,9 @@ import {
   setChatMessage,
   setMessages,
   setRead,
-} from '../../../reducers/profile';
-import {viewWorkout} from '../../../reducers/exercises';
+} from '../../../../reducers/profile';
+import {viewWorkout} from '../../../../reducers/exercises';
+import CustomInputToolbar from './CustomInputToolbar';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -237,79 +238,83 @@ const Chat: React.FC<ChatProps> = ({
   const ref = useRef<FlatList>(null);
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
-      <Header
-        title={connection.name}
-        hasBack
-        right={
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ViewProfile', {connection})}>
-            <Avatar
-              src={connection.avatar}
-              name={`${connection.name} ${connection.surname || ''}`}
-              uid={connection.uid}
-            />
-          </TouchableOpacity>
-        }
-      />
-      <GiftedChat
-        messageContainerRef={ref}
-        renderCustomView={renderCustomView}
-        loadEarlier={showLoadEarlier}
-        isLoadingEarlier={loading}
-        onLoadEarlier={loadEarlier}
-        keyboardShouldPersistTaps="never"
-        renderMessageText={renderMessageText}
-        bottomOffset={insets.bottom - 10}
-        messages={sortMessages()}
-        messagesContainerStyle={{marginBottom: 10}}
-        textInputProps={{lineHeight: null}}
-        listViewProps={{marginBottom: 10}}
-        renderBubble={props => {
-          return (
-            <Bubble
-              {...props}
-              textStyle={{
-                right: {
-                  // fontFamily: 'Helvetica',
-                },
-                left: {
-                  // fontFamily: 'Helvetica',
-                },
-              }}
-              wrapperStyle={{
-                left: {},
-                right: {
-                  backgroundColor: colors.appBlue,
-                },
-              }}
-            />
-          );
-        }}
-        user={{
-          _id: profile.uid,
-          name: profile.name,
-          avatar: profile.avatar,
-        }}
-        scrollToBottom
-        renderAvatar={renderAvatar}
-        onSend={msgs => {
-          const message: Message = {
-            ...msgs[0],
-            type: 'text',
-            pending: true,
-            createdAt: moment().valueOf(),
-          };
-          sendMessageAction({message, chatId, uid});
-          ref.current?.scrollToEnd();
-        }}
-        inverted={false}
-        onInputTextChanged={onInputTextChanged}
-        text={text}
-      />
+    <>
+      <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+        <Header
+          title={connection.name}
+          hasBack
+          right={
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ViewProfile', {connection})}>
+              <Avatar
+                src={connection.avatar}
+                name={`${connection.name} ${connection.surname || ''}`}
+                uid={connection.uid}
+              />
+            </TouchableOpacity>
+          }
+        />
+        <GiftedChat
+          messageContainerRef={ref}
+          renderCustomView={renderCustomView}
+          loadEarlier={showLoadEarlier}
+          isLoadingEarlier={loading}
+          onLoadEarlier={loadEarlier}
+          keyboardShouldPersistTaps="never"
+          renderMessageText={renderMessageText}
+          bottomOffset={insets.bottom - 10}
+          messages={sortMessages()}
+          messagesContainerStyle={{marginBottom: 10}}
+          textInputProps={{lineHeight: null}}
+          listViewProps={{marginBottom: 10}}
+          renderInputToolbar={CustomInputToolbar}
+          renderBubble={props => {
+            return (
+              <Bubble
+                {...props}
+                textStyle={{
+                  right: {
+                    // fontFamily: 'Helvetica',
+                  },
+                  left: {
+                    // fontFamily: 'Helvetica',
+                  },
+                }}
+                wrapperStyle={{
+                  left: {},
+                  right: {
+                    backgroundColor: colors.appBlue,
+                  },
+                }}
+              />
+            );
+          }}
+          user={{
+            _id: profile.uid,
+            name: profile.name,
+            avatar: profile.avatar,
+          }}
+          scrollToBottom
+          renderAvatar={renderAvatar}
+          onSend={msgs => {
+            const message: Message = {
+              ...msgs[0],
+              type: 'text',
+              pending: true,
+              createdAt: moment().valueOf(),
+            };
+            sendMessageAction({message, chatId, uid});
+            ref.current?.scrollToEnd();
+          }}
+          inverted={false}
+          onInputTextChanged={onInputTextChanged}
+          text={text}
+        />
 
-      <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
-    </SafeAreaView>
+        <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
+      </SafeAreaView>
+      <SafeAreaView style={{flex: 0, backgroundColor: colors.appGrey}} />
+    </>
   );
 };
 

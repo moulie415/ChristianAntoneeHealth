@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ImageBackground} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Purchases, {
   PACKAGE_TYPE,
   CustomerInfo,

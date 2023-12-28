@@ -7,7 +7,7 @@ import Test from '../../types/Test';
 
 import Profile from '../../types/Profile';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Text from './Text';

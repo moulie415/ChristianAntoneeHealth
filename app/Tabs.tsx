@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from './App';
 import colors from './constants/colors';
 import Home from './components/views/Home';
@@ -35,7 +35,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="home" />
+            <Icon color={color} size={size} name="house" />
           ),
           headerShown: false,
         }}
@@ -60,7 +60,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Test',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="heartbeat" />
+            <Icon color={color} size={size} name="heart-pulse" />
           ),
           headerShown: false,
         }}

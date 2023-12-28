@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {generateLink} from '../../../helpers/api';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import Button from '../../commons/Button';

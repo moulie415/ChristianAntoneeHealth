@@ -10,7 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Text from './Text';
 
 import Spinner from './Spinner';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 interface Props extends TouchableOpacityProps {
   text: string;

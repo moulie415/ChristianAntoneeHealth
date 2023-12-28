@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 
 import {equipmentItemReadableString} from '../../../helpers/exercises';

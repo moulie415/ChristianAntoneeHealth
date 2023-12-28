@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Image from 'react-native-fast-image';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
