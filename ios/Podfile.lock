@@ -2020,8 +2020,6 @@ PODS:
     - React-perflogger (= 0.73.0)
   - RecaptchaInterop (100.0.0)
   - RevenueCat (4.31.2)
-  - rn-fetch-blob (0.12.0):
-    - React-Core
   - RNAppleAuthentication (2.2.2):
     - React-Core
   - RNAppleHealthKit (1.7.0):
@@ -2084,6 +2082,8 @@ PODS:
     - Firebase/Storage (= 10.15.0)
     - React-Core
     - RNFBApp
+  - RNFS (2.20.0):
+    - React-Core
   - RNGestureHandler (2.14.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -2203,7 +2203,6 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - RNAppleHealthKit (from `../node_modules/react-native-health`)
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
@@ -2224,6 +2223,7 @@ DEPENDENCIES:
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNPurchases (from `../node_modules/react-native-purchases`)
@@ -2419,8 +2419,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  rn-fetch-blob:
-    :path: "../node_modules/rn-fetch-blob"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNAppleHealthKit:
@@ -2461,6 +2459,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -2598,7 +2598,6 @@ SPEC CHECKSUMS:
   ReactCommon: e7a02fe39df0e289729a6d1638f00b2550fedacb
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RevenueCat: 63f6f4ae6916095561b90b2e1de86a492af67493
-  rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
@@ -2619,6 +2618,7 @@ SPEC CHECKSUMS:
   RNFBFunctions: e224b9c0165ae4fd275ab65f49b827372cbf91fd
   RNFBMessaging: b167065ee2fcc7fe43a32b35d79d5eb23bceb4ad
   RNFBStorage: aa0d6ac695aff1841f2b87285bb90ed6271d37d9
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: a426f2b9134a10ac56ff78593fb068541e68f0e7
   RNGoogleSignin: ccaa4a81582cf713eea562c5dd9dc1961a715fd0
   RNPurchases: 6460a884756442e75b2d25a1d7e58cd39ebbffe6
