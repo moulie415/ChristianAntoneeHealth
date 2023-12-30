@@ -25,34 +25,6 @@ import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
 import {getConnections} from '../../../reducers/profile';
 
-const getLastMessage = (
-  messages: {[key: string]: {[key: string]: Message}},
-  uid: string,
-): {lastMessage: string; italicize?: boolean; createdAt?: number} => {
-  const userMessages = messages[uid];
-  if (userMessages) {
-    const messagesArr = Object.values(userMessages);
-    let message: Message = {
-      text: '',
-      createdAt: 0,
-      type: 'text',
-      _id: '',
-      user: {_id: ''},
-    };
-    messagesArr.forEach(msg => {
-      if (msg.createdAt > message.createdAt) {
-        message = msg;
-      }
-    });
-    return {
-      lastMessage: message.text,
-      italicize: message.system,
-      createdAt: message.createdAt as number,
-    };
-  }
-  return {lastMessage: 'Beginning of chat', italicize: true};
-};
-
 const Connections: React.FC<{
   profile: Profile;
   connections: {[key: string]: Profile};
@@ -60,10 +32,62 @@ const Connections: React.FC<{
   loading: boolean;
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
   messages: {[key: string]: {[key: string]: Message}};
-}> = ({connections, getConnectionsAction, loading, navigation, messages}) => {
+}> = ({
+  connections,
+  getConnectionsAction,
+  loading,
+  navigation,
+  messages,
+  profile,
+}) => {
   useEffect(() => {
     getConnectionsAction();
   }, [getConnectionsAction]);
+
+  const getLastMessage = (
+    uid: string,
+  ): {preview: string; italicize?: boolean; createdAt?: number} => {
+    const userMessages = messages[uid];
+    if (userMessages) {
+      const messagesArr = Object.values(userMessages);
+      let message: Message = {
+        text: '',
+        createdAt: 0,
+        type: 'text',
+        _id: '',
+        user: {_id: ''},
+      };
+      messagesArr.forEach(msg => {
+        if (msg.createdAt > message.createdAt) {
+          message = msg;
+        }
+      });
+      let preview = '';
+
+      const sender =
+        message.user._id === profile.uid ? 'You' : `${connections[uid].name}`;
+
+      if (message.type === 'audio') {
+        preview = `${sender} sent a voice note`;
+      } else if (message.type === 'video') {
+        preview = `${sender} sent a video`;
+      } else if (message.type === 'image') {
+        preview = `${sender} sent an image`;
+      } else {
+        preview = message.text;
+      }
+      return {
+        preview: truncate(preview, 35),
+        italicize:
+          message.system ||
+          message.type === 'audio' ||
+          message.type === 'video' ||
+          message.type === 'image',
+        createdAt: message.createdAt as number,
+      };
+    }
+    return {preview: 'Beginning of chat', italicize: true};
+  };
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
@@ -88,10 +112,7 @@ const Connections: React.FC<{
           keyExtractor={item => item.uid}
           data={Object.values(connections)}
           renderItem={({item}) => {
-            const {lastMessage, createdAt, italicize} = getLastMessage(
-              messages,
-              item.uid,
-            );
+            const {preview, createdAt, italicize} = getLastMessage(item.uid);
             return (
               <TouchableOpacity
                 onPress={() => navigation.navigate('Chat', {uid: item.uid})}
@@ -119,8 +140,9 @@ const Connections: React.FC<{
                     style={{
                       color: colors.appWhite,
                       fontSize: 12,
+                      fontStyle: italicize ? 'italic' : 'normal',
                     }}>
-                    {truncate(lastMessage, 35)}
+                    {preview}
                   </Text>
                 </View>
                 <View
