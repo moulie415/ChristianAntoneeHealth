@@ -2,7 +2,14 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -12,6 +19,7 @@ import {
   MessageTextProps,
   Bubble,
   IMessage,
+  MessageVideoProps,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../../App';
 import Profile from '../../../../types/Profile';
@@ -24,6 +32,7 @@ import {
   Platform,
   SafeAreaView,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import moment from 'moment';
 import Avatar from '../../../commons/Avatar';
@@ -57,6 +66,8 @@ import {
 import {logError} from '../../../../helpers/error';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
+import Video from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -253,6 +264,37 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
+
+
+  const renderMessageVideo = (props: MessageVideoProps<IMessage>) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          // videoRefs.current[
+          //   props.currentMessage?._id || ''
+          // ]?.presentFullscreenPlayer();
+        }}
+        style={{position: 'relative', height: 150, width: 250, margin: 3}}>
+        <Video
+          ref={ref => {}}
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            height: 150,
+            width: 250,
+            borderRadius: 15,
+          }}
+          resizeMode="cover"
+          muted={true}
+          paused
+          source={{uri: convertToProxyURL(props.currentMessage?.video || '')}}
+          allowsExternalPlayback={false}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   const handleResponse = async (response: ImagePickerResponse) => {
     try {
       if (response.assets) {
@@ -391,6 +433,7 @@ const Chat: React.FC<ChatProps> = ({
           inverted={false}
           onInputTextChanged={onInputTextChanged}
           text={text}
+          renderMessageVideo={renderMessageVideo}
           renderSend={props => (
             <CustomSend
               {...props}
