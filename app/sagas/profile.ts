@@ -102,6 +102,9 @@ import {scheduleLocalNotification} from '../helpers';
 import {getTests} from '../reducers/tests';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {getQuickRoutinesById} from '../reducers/quickRoutines';
+import storage from '@react-native-firebase/storage';
+import {Audio, Video, Image} from 'react-native-compressor';
+import RNFS from 'react-native-fs';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -561,9 +564,46 @@ function* chatsWatcher(action: PayloadAction<{[key: string]: Chat}>) {
 function* sendMessage(
   action: PayloadAction<{chatId: string; message: Message; uid: string}>,
 ) {
-  const {chatId, message, uid} = action.payload;
+  const {chatId, uid} = action.payload;
+  let message = action.payload.message;
   try {
     yield put(setMessage({uid, message}));
+    if (
+      message.type === 'audio' ||
+      message.type === 'image' ||
+      message.type === 'video'
+    ) {
+      let compressedUri = '';
+      if (message.type === 'image') {
+        compressedUri = yield call(Image.compress, message.image || '');
+      } else if (message.type === 'video') {
+        compressedUri = yield call(Video.compress, message.video || '');
+      } else if (message.type === 'audio') {
+        compressedUri = yield call(Audio.compress, message.audio || '');
+      } else {
+        throw new Error('Unsupported mime type');
+      }
+      const read: RNFS.StatResult = yield call(RNFS.stat, compressedUri);
+
+      const maxFileSize: number = yield select(
+        (state: MyRootState) => state.settings.chatMaxFileSizeMb,
+      );
+
+      // file size comes back in bytes so need to divide by 1000000 to get mb
+      if (read.size && read.size / 1000000 < maxFileSize) {
+        const imageRef = storage()
+          .ref(`chats/${chatId}`)
+          .child(message._id as string);
+        yield call(imageRef.putFile, compressedUri);
+        const url = imageRef.getDownloadURL();
+        message = {
+          ...message,
+          [message.type]: url,
+        };
+      } else {
+        throw new Error('File size exceeded limit');
+      }
+    }
     yield call(api.sendMessage, message, chatId, uid);
     notif.play();
   } catch (e) {
