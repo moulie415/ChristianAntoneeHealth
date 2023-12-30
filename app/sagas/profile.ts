@@ -592,10 +592,22 @@ function* sendMessage(
       // file size comes back in bytes so need to divide by 1000000 to get mb
       if (read.size && read.size / 1000000 < maxFileSize) {
         const imageRef = storage()
-          .ref(`chats/${chatId}`)
+          .ref(`chats/${uid}`)
           .child(message._id as string);
-        yield call(imageRef.putFile, compressedUri);
-        const url = imageRef.getDownloadURL();
+        // yield call(imageRef.putFile, compressUri) doesn't work for some reason so we have to do this
+        const putFile = async () => {
+          await imageRef.putFile(compressedUri);
+        };
+        yield call(putFile);
+
+        // same issue as above
+        const getDownloadUrl = async () => {
+          const url = await imageRef.getDownloadURL();
+          return url;
+        };
+
+        const url: string = yield call(getDownloadUrl);
+
         message = {
           ...message,
           [message.type]: url,

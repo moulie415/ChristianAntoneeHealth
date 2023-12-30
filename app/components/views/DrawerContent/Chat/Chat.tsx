@@ -282,6 +282,7 @@ const Chat: React.FC<ChatProps> = ({
           createdAt: moment().valueOf(),
         };
         sendMessageAction({message, chatId, uid});
+        ref.current?.scrollToEnd();
       }
     } catch (e) {
       logError(e);
