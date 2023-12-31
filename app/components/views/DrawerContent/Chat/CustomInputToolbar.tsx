@@ -1,19 +1,21 @@
 import React from 'react';
-import {Dimensions, View} from 'react-native';
 import {
   IMessage,
   InputToolbar,
   InputToolbarProps,
 } from 'react-native-gifted-chat';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import CustomSend from './CustomSend';
 import * as _ from 'lodash';
+import VoiceNoteRecorder from './VoiceNoteRecorder';
 
 interface Props extends InputToolbarProps<IMessage> {
   text: string;
+  showRecorder: boolean;
 }
 
 const CustomInputToolbar: React.FC<Props> = props => {
+  if (props.showRecorder) {
+    return <VoiceNoteRecorder />;
+  }
   return (
     <InputToolbar
       {...props}
@@ -24,7 +26,6 @@ const CustomInputToolbar: React.FC<Props> = props => {
           borderRadius: 30,
         },
       ]}
-      
     />
   );
 };

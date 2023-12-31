@@ -129,6 +129,8 @@ const Chat: React.FC<ChatProps> = ({
   const [text, setText] = useState('');
   const [initialized, setInitialized] = useState(false);
 
+  const [showRecorder, setShowRecorder] = useState(false);
+
   const persistChat = useMemo(
     () =>
       _.debounce(t => {
@@ -352,7 +354,9 @@ const Chat: React.FC<ChatProps> = ({
     }
   };
 
-  const onPressVoiceNote = () => {};
+  const onPressVoiceNote = () => {
+    setShowRecorder(true);
+  };
 
   const onPressCamera = async () => {
     const options: CameraOptions = {
@@ -399,7 +403,11 @@ const Chat: React.FC<ChatProps> = ({
           listViewProps={{marginBottom: 10}}
           renderActions={() => <CustomActions onPressCamera={onPressCamera} />}
           renderInputToolbar={props => (
-            <CustomInputToolbar {...props} text={text} />
+            <CustomInputToolbar
+              {...props}
+              text={text}
+              showRecorder={showRecorder}
+            />
           )}
           renderBubble={props => {
             return (
@@ -447,7 +455,7 @@ const Chat: React.FC<ChatProps> = ({
             <CustomSend
               {...props}
               onPressAttachment={onPressAttachment}
-              onPressVoiceNotes={onPressVoiceNote}
+              onPressVoiceNote={onPressVoiceNote}
             />
           )}
           alwaysShowSend
