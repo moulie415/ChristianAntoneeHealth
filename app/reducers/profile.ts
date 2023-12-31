@@ -373,6 +373,12 @@ const profileSlice = createSlice({
         },
       };
     },
+    deleteMessage: (
+      state: ProfileState,
+      {payload}: PayloadAction<{uid: string; message: Message}>,
+    ) => {
+      delete state.messages[payload.uid][payload.message._id];
+    },
     setUnread: (
       state: ProfileState,
       {payload}: PayloadAction<{[key: string]: number}>,
@@ -525,6 +531,7 @@ export const {
   updateProfile,
   setMessagesObj,
   setRead,
+  deleteMessage,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

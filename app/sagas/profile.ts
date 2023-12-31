@@ -74,6 +74,7 @@ import {
   SIGN_UP,
   UPDATE_PROFILE,
   WeeklyItems,
+  deleteMessage,
   handleAuth,
   setAdmin,
   setBodyFatPercentageSamples,
@@ -566,6 +567,7 @@ function* sendMessage(
 ) {
   const {chatId, uid} = action.payload;
   let message = action.payload.message;
+  const fileSizeExceededMessage = 'File size limit exceeded';
   try {
     yield put(setMessage({uid, message}));
     if (
@@ -591,8 +593,9 @@ function* sendMessage(
 
       // file size comes back in bytes so need to divide by 1000000 to get mb
       if (read.size && read.size / 1000000 < maxFileSize) {
+        const {profile} = yield select((state: MyRootState) => state.profile);
         const imageRef = storage()
-          .ref(`chats/${uid}`)
+          .ref(`chats/${profile.uid}`)
           .child(message._id as string);
         // yield call(imageRef.putFile, compressUri) doesn't work for some reason so we have to do this
         const putFile = async () => {
@@ -613,7 +616,7 @@ function* sendMessage(
           [message.type]: url,
         };
       } else {
-        throw new Error('File size exceeded limit');
+        throw new Error(fileSizeExceededMessage);
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
@@ -622,9 +625,13 @@ function* sendMessage(
     if (e instanceof Error) {
       Snackbar.show({text: e.message});
     }
-    yield put(
-      setMessage({uid, message: {...message, sent: false, pending: false}}),
-    );
+    if (e instanceof Error && e.message === fileSizeExceededMessage) {
+      yield put(deleteMessage({uid, message}));
+    } else {
+      yield put(
+        setMessage({uid, message: {...message, sent: false, pending: false}}),
+      );
+    }
     logError(e);
   }
 }
