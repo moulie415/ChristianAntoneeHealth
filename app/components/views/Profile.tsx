@@ -50,6 +50,8 @@ import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
 import {getSamples, updateProfile} from '../../reducers/profile';
 import {SettingsState} from '../../reducers/settings';
+import RNFS from 'react-native-fs';
+import {Image} from 'react-native-compressor';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -150,9 +152,19 @@ const ProfileComponent: React.FC<{
       setLoading(true);
       let newAvatar = profile.avatar;
       if (avatar !== profile.avatar) {
-        const imageRef = storage().ref(`images/${profile.uid}`).child('avatar');
-        await imageRef.putFile(avatar || '');
-        newAvatar = await imageRef.getDownloadURL();
+        const compressed = await Image.compress(avatar || '');
+        const read = await RNFS.stat(compressed);
+
+        // file size comes back in bytes so need to divide by 1000000 to get mb
+        if (read.size && read.size / 1000000 < settings.chatMaxFileSizeMb) {
+          const imageRef = storage()
+            .ref(`images/${profile.uid}`)
+            .child('avatar');
+          await imageRef.putFile(avatar || '');
+          newAvatar = await imageRef.getDownloadURL();
+        } else {
+          throw new Error('File size limit exceeded');
+        }
       }
       setAvatar(newAvatar);
       updateProfileAction({

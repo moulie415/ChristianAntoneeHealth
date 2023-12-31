@@ -295,6 +295,7 @@ const Chat: React.FC<ChatProps> = ({
               bottom: 0,
               alignItems: 'center',
               justifyContent: 'center',
+              zIndex: 9,
             }}>
             <Icon name="play" color={colors.appWhite} size={40} />
           </View>
