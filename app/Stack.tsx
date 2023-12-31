@@ -49,6 +49,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import DrawerContent from './components/views/DrawerContent/DrawerContent';
 import {Dimensions} from 'react-native';
 import ViewProfile from './components/views/ViewProfile';
+import VideoView from './components/views/DrawerContent/Chat/VideoView';
 
 const Drawer = createDrawerNavigator();
 
@@ -128,8 +129,8 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="SavedItems" component={SavedItemsTabs} />
         <Stack.Screen name="AddConnection" component={AddConnection} />
 
-        
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="VideoView" component={VideoView} />
         <Stack.Screen name="WhatArea" component={WhatArea} />
         <Stack.Screen name="WorkoutList" component={WorkoutList} />
         <Stack.Screen name="Education" component={EducationTabs} />

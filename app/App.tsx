@@ -43,6 +43,7 @@ import Config from 'react-native-config';
 import colors from './constants/colors';
 import FastImage from 'react-native-fast-image';
 import Profile from './types/Profile';
+import {IMessage} from 'react-native-gifted-chat';
 
 const {height, width} = Dimensions.get('window');
 
@@ -131,6 +132,7 @@ export type StackParamList = {
   Connections: undefined;
   AddConnection: undefined;
   Chat: {uid: string};
+  VideoView: {message: IMessage};
   Plan: undefined;
   WhatArea: {equipment: Equipment};
   WorkoutList: {area: Area; equipment: Equipment};

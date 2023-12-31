@@ -264,19 +264,16 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
-
-
   const renderMessageVideo = (props: MessageVideoProps<IMessage>) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          // videoRefs.current[
-          //   props.currentMessage?._id || ''
-          // ]?.presentFullscreenPlayer();
+          if (props.currentMessage) {
+            navigation.navigate('VideoView', {message: props.currentMessage});
+          }
         }}
         style={{position: 'relative', height: 150, width: 250, margin: 3}}>
         <Video
-          ref={ref => {}}
           style={{
             position: 'absolute',
             left: 0,
@@ -286,11 +283,22 @@ const Chat: React.FC<ChatProps> = ({
             borderRadius: 15,
           }}
           resizeMode="cover"
-          muted={true}
+          muted
           paused
-          source={{uri: convertToProxyURL(props.currentMessage?.video || '')}}
-          allowsExternalPlayback={false}
-        />
+          source={{uri: convertToProxyURL(props.currentMessage?.video || '')}}>
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon name="play" color={colors.appWhite} size={40} />
+          </View>
+        </Video>
       </TouchableOpacity>
     );
   };
