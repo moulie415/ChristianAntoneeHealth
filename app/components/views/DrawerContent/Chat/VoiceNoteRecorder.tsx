@@ -24,6 +24,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import Text from '../../../commons/Text';
 import Spinner from 'react-native-spinkit';
 import RecordingIcon from './RecordingIcon';
+import RecordingIndicator from './RecordingIndicator';
 
 function pad(num: number) {
   return ('0' + num).slice(-2);
@@ -41,6 +42,7 @@ interface State {
   playTime: string;
   duration: string;
   result?: string;
+  metering?: number;
 }
 
 const screenWidth = Dimensions.get('screen').width;
@@ -92,6 +94,8 @@ class VoiceNoteRecorder extends Component<Props, State> {
       playWidth = 0;
     }
 
+    console.log(this.state.metering)
+
     return (
       <View
         style={{
@@ -121,6 +125,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
             <RecordingIcon animate={this.state.recordSecs > 0} />
           )}
           <Text>{mmss(Math.floor(this.state.recordSecs))}</Text>
+          <RecordingIndicator metering={this.state.metering} />
         </View>
         <TouchableOpacity
           style={{alignSelf: 'flex-end', padding: 10}}
@@ -199,12 +204,14 @@ class VoiceNoteRecorder extends Component<Props, State> {
     const uri = await this.audioRecorderPlayer.startRecorder(
       this.path,
       audioSet,
+      true,
     );
 
     this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
       // console.log('record-back', e);
       this.setState({
         recordSecs: e.currentPosition / 1000,
+        metering: e.currentMetering,
       });
     });
     console.log(`uri: ${uri}`);
