@@ -407,6 +407,7 @@ const Chat: React.FC<ChatProps> = ({
               {...props}
               text={text}
               showRecorder={showRecorder}
+              onCloseRecorder={() => setShowRecorder(false)}
             />
           )}
           renderBubble={props => {

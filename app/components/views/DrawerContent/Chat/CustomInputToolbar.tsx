@@ -10,11 +10,12 @@ import VoiceNoteRecorder from './VoiceNoteRecorder';
 interface Props extends InputToolbarProps<IMessage> {
   text: string;
   showRecorder: boolean;
+  onCloseRecorder: () => void;
 }
 
 const CustomInputToolbar: React.FC<Props> = props => {
   if (props.showRecorder) {
-    return <VoiceNoteRecorder />;
+    return <VoiceNoteRecorder onClose={props.onCloseRecorder} />;
   }
   return (
     <InputToolbar

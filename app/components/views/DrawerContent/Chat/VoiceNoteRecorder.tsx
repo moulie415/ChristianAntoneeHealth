@@ -10,7 +10,13 @@ import type {
   PlayBackType,
   RecordBackType,
 } from 'react-native-audio-recorder-player';
-import {Dimensions, PermissionsAndroid, Platform, View} from 'react-native';
+import {
+  Dimensions,
+  PermissionsAndroid,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {Component} from 'react';
 import type {ReactElement} from 'react';
 import colors from '../../../../constants/colors';
@@ -29,17 +35,21 @@ function mmss(secs: number) {
 }
 
 interface State {
-  isLoggingIn: boolean;
   recordSecs: number;
   currentPositionSec: number;
   currentDurationSec: number;
   playTime: string;
   duration: string;
+  result?: string;
 }
 
 const screenWidth = Dimensions.get('screen').width;
 
-class VoiceNoteRecorder extends Component<any, State> {
+interface Props {
+  onClose: () => void;
+}
+
+class VoiceNoteRecorder extends Component<Props, State> {
   private path = Platform.select({
     ios: undefined,
     android: undefined,
@@ -53,10 +63,11 @@ class VoiceNoteRecorder extends Component<any, State> {
 
   private audioRecorderPlayer: AudioRecorderPlayer;
 
+  private stopped = false;
+
   constructor(props: any) {
     super(props);
     this.state = {
-      isLoggingIn: false,
       recordSecs: 0,
       currentPositionSec: 0,
       currentDurationSec: 0,
@@ -94,11 +105,28 @@ class VoiceNoteRecorder extends Component<any, State> {
           height: 45,
           flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <RecordingIcon animate={this.state.recordSecs > 0} />
+          {this.state.result ? (
+            <TouchableOpacity onPress={() => this.props.onClose()}>
+              <Icon
+                name="trash"
+                style={{padding: 10}}
+                size={20}
+                color={colors.appRed}
+              />
+            </TouchableOpacity>
+          ) : (
+            <RecordingIcon animate={this.state.recordSecs > 0} />
+          )}
           <Text>{mmss(Math.floor(this.state.recordSecs))}</Text>
         </View>
+        <TouchableOpacity
+          style={{alignSelf: 'flex-end', padding: 10}}
+          onPress={() => this.onStopRecord()}>
+          <Icon name="circle-stop" size={25} color={colors.appRed} />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -183,10 +211,15 @@ class VoiceNoteRecorder extends Component<any, State> {
   };
 
   private onStopRecord = async (): Promise<void> => {
+    if (this.stopped) {
+      return;
+    }
+    this.stopped = true;
     const result = await this.audioRecorderPlayer.stopRecorder();
     this.audioRecorderPlayer.removeRecordBackListener();
     this.setState({
       recordSecs: 0,
+      result,
     });
     console.log(result);
   };
