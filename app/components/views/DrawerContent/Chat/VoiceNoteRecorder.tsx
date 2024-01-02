@@ -127,7 +127,12 @@ class VoiceNoteRecorder extends Component<Props, State> {
           {this.state.result && (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
-                style={{alignSelf: 'flex-end', padding: 10}}
+                style={{
+                  alignSelf: 'flex-end',
+                  padding: 10,
+                  width: 40,
+                  alignItems: 'center',
+                }}
                 onPress={() => {
                   if (this.state.playing) {
                     this.onPausePlay();

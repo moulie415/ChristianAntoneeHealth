@@ -336,7 +336,6 @@ const Chat: React.FC<ChatProps> = ({
           createdAt: moment().valueOf(),
         };
         sendMessageAction({message, chatId, uid});
-        ref.current?.scrollToEnd();
       }
     } catch (e) {
       logError(e);
@@ -385,7 +384,6 @@ const Chat: React.FC<ChatProps> = ({
       createdAt: moment().valueOf(),
     };
     sendMessageAction({message, chatId, uid});
-    ref.current?.scrollToEnd();
   };
 
   const ref = useRef<FlatList>(null);
@@ -466,9 +464,7 @@ const Chat: React.FC<ChatProps> = ({
               createdAt: moment().valueOf(),
             };
             sendMessageAction({message, chatId, uid});
-            ref.current?.scrollToEnd();
           }}
-          // inverted={false}
           onInputTextChanged={onInputTextChanged}
           text={text}
           renderMessageVideo={renderMessageVideo}
