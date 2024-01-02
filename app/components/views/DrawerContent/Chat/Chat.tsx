@@ -165,7 +165,7 @@ const Chat: React.FC<ChatProps> = ({
   const sortMessages = useCallback(() => {
     const messages = Object.values(messagesObj || {});
     return messages
-      .sort((a, b) => (a.createdAt as number) - (b.createdAt as number))
+      .sort((a, b) => (b.createdAt as number) - (a.createdAt as number))
       .map(message => {
         return {
           ...message,
@@ -176,7 +176,7 @@ const Chat: React.FC<ChatProps> = ({
 
   const loadEarlier = useCallback(async () => {
     const sorted = sortMessages();
-    const startAfter = sorted[0].createdAt;
+    const startAfter = sorted[sorted.length - 1].createdAt;
     loadEarlierMessagesAction({chatId, uid, startAfter: Number(startAfter)});
   }, [sortMessages, chatId, uid, loadEarlierMessagesAction]);
 
@@ -185,6 +185,8 @@ const Chat: React.FC<ChatProps> = ({
   }, [sortMessages]);
 
   const insets = useSafeAreaInsets();
+
+  console.log(sortMessages().length);
 
   const renderCustomView = (props: BubbleProps<Message>) => {
     switch (props.currentMessage?.type) {
@@ -448,7 +450,7 @@ const Chat: React.FC<ChatProps> = ({
             sendMessageAction({message, chatId, uid});
             ref.current?.scrollToEnd();
           }}
-          inverted={false}
+          // inverted={false}
           onInputTextChanged={onInputTextChanged}
           text={text}
           renderMessageVideo={renderMessageVideo}
