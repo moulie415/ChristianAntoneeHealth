@@ -30,7 +30,6 @@ const Wave: React.FC<{metering: number | undefined}> = ({metering}) => {
       backgroundColor: colors.appBlue,
     };
   });
-  console.log(height.value);
   return <Animated.View style={style} />;
 };
 

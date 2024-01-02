@@ -2020,7 +2020,7 @@ PODS:
     - React-perflogger (= 0.73.0)
   - RecaptchaInterop (100.0.0)
   - RevenueCat (4.31.2)
-  - RNAppleAuthentication (2.2.2):
+  - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNAppleHealthKit (1.7.0):
     - React
@@ -2090,7 +2090,7 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNGoogleSignin (10.0.1):
+  - RNGoogleSignin (11.0.0):
     - GoogleSignIn (~> 7.0)
     - React-Core
   - RNPurchases (7.5.1):
@@ -2603,7 +2603,7 @@ SPEC CHECKSUMS:
   ReactCommon: e7a02fe39df0e289729a6d1638f00b2550fedacb
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RevenueCat: 63f6f4ae6916095561b90b2e1de86a492af67493
-  RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
+  RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNAudioRecorderPlayer: ba0aca62cd47c6f878313fdadb0edb23ef9dbf90
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
@@ -2626,7 +2626,7 @@ SPEC CHECKSUMS:
   RNFBStorage: aa0d6ac695aff1841f2b87285bb90ed6271d37d9
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: a426f2b9134a10ac56ff78593fb068541e68f0e7
-  RNGoogleSignin: ccaa4a81582cf713eea562c5dd9dc1961a715fd0
+  RNGoogleSignin: fc408799f1990a12497a32f64280c0fe353ffcc1
   RNPurchases: 6460a884756442e75b2d25a1d7e58cd39ebbffe6
   RNReanimated: 9fc2b08ed365d7dc451bc451605d89c01f2c935b
   RNScreens: 2b73f5eb2ac5d94fbd61fa4be0bfebd345716825

@@ -186,8 +186,6 @@ const Chat: React.FC<ChatProps> = ({
 
   const insets = useSafeAreaInsets();
 
-  console.log(sortMessages().length);
-
   const renderCustomView = (props: BubbleProps<Message>) => {
     switch (props.currentMessage?.type) {
       case 'workout':
@@ -289,21 +287,22 @@ const Chat: React.FC<ChatProps> = ({
           resizeMode="cover"
           muted
           paused
-          source={{uri: convertToProxyURL(props.currentMessage?.video || '')}}>
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 9,
-            }}>
-            <Icon name="play" color={colors.appWhite} size={40} />
-          </View>
-        </Video>
+          source={{
+            uri: convertToProxyURL(props.currentMessage?.video || ''),
+          }}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Icon name="play" color={colors.appWhite} size={40} />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -371,6 +370,24 @@ const Chat: React.FC<ChatProps> = ({
     }
   };
 
+  const onSendVoiceNote = (result: string) => {
+    const message: Message = {
+      user: {
+        _id: profile.uid,
+        name: profile.name,
+        avatar: profile.avatar,
+      },
+      _id: uuid.v4() as string,
+      audio: result,
+      text: '',
+      type: 'audio',
+      pending: true,
+      createdAt: moment().valueOf(),
+    };
+    sendMessageAction({message, chatId, uid});
+    ref.current?.scrollToEnd();
+  };
+
   const ref = useRef<FlatList>(null);
 
   return (
@@ -410,6 +427,7 @@ const Chat: React.FC<ChatProps> = ({
               text={text}
               showRecorder={showRecorder}
               onCloseRecorder={() => setShowRecorder(false)}
+              onSendVoiceNote={onSendVoiceNote}
             />
           )}
           renderBubble={props => {

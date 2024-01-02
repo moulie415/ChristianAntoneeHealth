@@ -25,6 +25,9 @@ import Text from '../../../commons/Text';
 import Spinner from 'react-native-spinkit';
 import RecordingIcon from './RecordingIcon';
 import RecordingIndicator from './RecordingIndicator';
+import RNFS from 'react-native-fs';
+import uuid from 'react-native-uuid';
+import {Slider} from '@miblanchard/react-native-slider';
 
 function pad(num: number) {
   return ('0' + num).slice(-2);
@@ -39,33 +42,29 @@ interface State {
   recordSecs: number;
   currentPositionSec: number;
   currentDurationSec: number;
-  playTime: string;
-  duration: string;
   result?: string;
   metering?: number;
+  playing: boolean;
 }
-
-const screenWidth = Dimensions.get('screen').width;
 
 interface Props {
   onClose: () => void;
+  onSend: (result: string) => void;
 }
 
 class VoiceNoteRecorder extends Component<Props, State> {
   private path = Platform.select({
-    ios: undefined,
-    android: undefined,
-
     // Discussion: https://github.com/hyochan/react-native-audio-recorder-player/discussions/479
     // ios: 'https://firebasestorage.googleapis.com/v0/b/cooni-ebee8.appspot.com/o/test-audio.mp3?alt=media&token=d05a2150-2e52-4a2e-9c8c-d906450be20b',
     // ios: 'https://staging.media.ensembl.fr/original/uploads/26403543-c7d0-4d44-82c2-eb8364c614d0',
-    // ios: 'hello.m4a',
-    // android: `${this.dirs.CacheDir}/hello.mp3`,
+    ios: `${uuid.v4()}.m4a`,
+    android: `${RNFS.CachesDirectoryPath}/${uuid.v4()}.mp3`,
   });
 
   private audioRecorderPlayer: AudioRecorderPlayer;
 
   private stopped = false;
+  private sending = false;
 
   constructor(props: any) {
     super(props);
@@ -73,8 +72,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
       recordSecs: 0,
       currentPositionSec: 0,
       currentDurationSec: 0,
-      playTime: '00:00:00',
-      duration: '00:00:00',
+      playing: false,
     };
 
     this.audioRecorderPlayer = new AudioRecorderPlayer();
@@ -86,16 +84,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
   }
 
   public render(): ReactElement {
-    let playWidth =
-      (this.state.currentPositionSec / this.state.currentDurationSec) *
-      (screenWidth - 56);
-
-    if (!playWidth) {
-      playWidth = 0;
-    }
-
-    console.log(this.state.metering)
-
     return (
       <View
         style={{
@@ -124,39 +112,112 @@ class VoiceNoteRecorder extends Component<Props, State> {
           ) : (
             <RecordingIcon animate={this.state.recordSecs > 0} />
           )}
-          <Text>{mmss(Math.floor(this.state.recordSecs))}</Text>
-          <RecordingIndicator metering={this.state.metering} />
+          <Text>
+            {mmss(
+              Math.floor(
+                this.state.result
+                  ? this.state.currentPositionSec / 1000
+                  : this.state.recordSecs,
+              ),
+            )}
+          </Text>
+          {!this.state.result && (
+            <RecordingIndicator metering={this.state.metering} />
+          )}
+          {this.state.result && (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity
+                style={{alignSelf: 'flex-end', padding: 10}}
+                onPress={() => {
+                  if (this.state.playing) {
+                    this.onPausePlay();
+                  } else {
+                    if (
+                      this.state.currentPositionSec > 0 &&
+                      this.state.currentPositionSec <
+                        this.state.currentDurationSec
+                    ) {
+                      this.onResumePlay();
+                    } else {
+                      this.onStartPlay();
+                    }
+                  }
+                }}>
+                <Icon
+                  name={this.state.playing ? 'pause' : 'play'}
+                  size={25}
+                  color={colors.appBlue}
+                />
+              </TouchableOpacity>
+              <Slider
+                value={
+                  this.state.currentPositionSec / this.state.currentDurationSec
+                }
+                trackStyle={{width: 150}}
+                onSlidingComplete={val => {
+                  this.audioRecorderPlayer.seekToPlayer(
+                    this.state.currentDurationSec * val[0],
+                  );
+                }}
+                renderThumbComponent={() => {
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: colors.appWhite,
+                        height: 20,
+                        width: 20,
+                        borderRadius: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <View
+                        style={{
+                          height: 18,
+                          width: 18,
+                          borderRadius: 9,
+                          backgroundColor: colors.appBlue,
+                        }}
+                      />
+                    </View>
+                  );
+                }}
+                minimumTrackTintColor={colors.appBlueFaded}
+                maximumTrackTintColor={colors.appBlue}
+              />
+            </View>
+          )}
         </View>
-        <TouchableOpacity
-          style={{alignSelf: 'flex-end', padding: 10}}
-          onPress={() => this.onStopRecord()}>
-          <Icon name="circle-stop" size={25} color={colors.appRed} />
-        </TouchableOpacity>
+        {!this.state.result && (
+          <TouchableOpacity
+            style={{alignSelf: 'flex-end', padding: 10}}
+            onPress={() => this.onStopRecord()}>
+            <Icon name="circle-stop" size={25} color={colors.appRed} />
+          </TouchableOpacity>
+        )}
+        {this.state.result && (
+          <TouchableOpacity
+            onPress={() => {
+              if (this.sending) {
+                return false;
+              }
+              this.sending = true;
+              this.props.onSend(this.state.result || '');
+              this.props.onClose();
+            }}>
+            <Text
+              style={{
+                color: colors.appBlue,
+                padding: 10,
+                fontWeight: 'bold',
+                fontSize: 17,
+              }}>
+              Send
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
-
-  private onStatusPress = (e: any): void => {
-    const touchX = e.nativeEvent.locationX;
-    console.log(`touchX: ${touchX}`);
-
-    const playWidth =
-      (this.state.currentPositionSec / this.state.currentDurationSec) *
-      (screenWidth - 56);
-    console.log(`currentPlayWidth: ${playWidth}`);
-
-    const currentPosition = Math.round(this.state.currentPositionSec);
-
-    if (playWidth && playWidth < touchX) {
-      const addSecs = Math.round(currentPosition + 1000);
-      this.audioRecorderPlayer.seekToPlayer(addSecs);
-      console.log(`addSecs: ${addSecs}`);
-    } else {
-      const subSecs = Math.round(currentPosition - 1000);
-      this.audioRecorderPlayer.seekToPlayer(subSecs);
-      console.log(`subSecs: ${subSecs}`);
-    }
-  };
 
   private onStartRecord = async (): Promise<void> => {
     if (Platform.OS === 'android') {
@@ -199,8 +260,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
       OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
     };
 
-    console.log('audioSet', audioSet);
-
     const uri = await this.audioRecorderPlayer.startRecorder(
       this.path,
       audioSet,
@@ -214,7 +273,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
         metering: e.currentMetering,
       });
     });
-    console.log(`uri: ${uri}`);
   };
 
   private onStopRecord = async (): Promise<void> => {
@@ -228,31 +286,26 @@ class VoiceNoteRecorder extends Component<Props, State> {
       recordSecs: 0,
       result,
     });
-    console.log(result);
   };
 
   private onStartPlay = async (): Promise<void> => {
-    console.log('onStartPlay', this.path);
-
     try {
       const msg = await this.audioRecorderPlayer.startPlayer(this.path);
 
       //? Default path
       // const msg = await this.audioRecorderPlayer.startPlayer();
       const volume = await this.audioRecorderPlayer.setVolume(1.0);
-      console.log(`path: ${msg}`, `volume: ${volume}`);
 
       this.audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
-        console.log('playBackListener', e);
         this.setState({
           currentPositionSec: e.currentPosition,
           currentDurationSec: e.duration,
-          playTime: this.audioRecorderPlayer.mmss(
-            Math.floor(e.currentPosition),
-          ),
-          duration: this.audioRecorderPlayer.mmss(Math.floor(e.duration)),
         });
+        if (e.currentPosition === e.duration) {
+          this.setState({playing: false});
+        }
       });
+      this.setState({playing: true});
     } catch (err) {
       console.log('startPlayer error', err);
     }
@@ -260,10 +313,12 @@ class VoiceNoteRecorder extends Component<Props, State> {
 
   private onPausePlay = async (): Promise<void> => {
     await this.audioRecorderPlayer.pausePlayer();
+    this.setState({playing: false});
   };
 
   private onResumePlay = async (): Promise<void> => {
     await this.audioRecorderPlayer.resumePlayer();
+    this.setState({playing: true});
   };
 
   private onStopPlay = async (): Promise<void> => {
