@@ -20,6 +20,7 @@ import {
   Bubble,
   IMessage,
   MessageVideoProps,
+  MessageAudioProps,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../../App';
 import Profile from '../../../../types/Profile';
@@ -68,6 +69,7 @@ import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
+import VoiceNotePlayer from './VoiceNotePlayer';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -307,6 +309,13 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
+  const renderMessageAudio = (props: MessageAudioProps<IMessage>) => {
+    if (props.currentMessage) {
+      return <VoiceNotePlayer message={props.currentMessage} />;
+    }
+    return null;
+  };
+
   const handleResponse = async (response: ImagePickerResponse) => {
     try {
       if (response.assets) {
@@ -468,6 +477,7 @@ const Chat: React.FC<ChatProps> = ({
           onInputTextChanged={onInputTextChanged}
           text={text}
           renderMessageVideo={renderMessageVideo}
+          renderMessageAudio={renderMessageAudio}
           renderSend={props => (
             <CustomSend
               {...props}

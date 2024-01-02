@@ -22,21 +22,12 @@ import type {ReactElement} from 'react';
 import colors from '../../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Text from '../../../commons/Text';
-import Spinner from 'react-native-spinkit';
 import RecordingIcon from './RecordingIcon';
 import RecordingIndicator from './RecordingIndicator';
 import RNFS from 'react-native-fs';
 import uuid from 'react-native-uuid';
 import {Slider} from '@miblanchard/react-native-slider';
-
-function pad(num: number) {
-  return ('0' + num).slice(-2);
-}
-function mmss(secs: number) {
-  var minutes = Math.floor(secs / 60);
-  secs = secs % 60;
-  return `${pad(minutes)}:${pad(secs)}`;
-}
+import mmss from '../../../../helpers/mmss';
 
 interface State {
   recordSecs: number;
