@@ -172,6 +172,9 @@ export type SET_CHATS = typeof SET_CHATS;
 export const SEND_MESSAGE = `${PROFILE}/sendMessage`;
 export type SEND_MESSAGE = typeof SEND_MESSAGE;
 
+export const REQUEST_MESSAGE_DELETION = `${PROFILE}/requestMessageDeletion`;
+export type REQUEST_MESSAGE_DELETION = typeof REQUEST_MESSAGE_DELETION;
+
 export const SET_MESSAGE = `${PROFILE}/setMessage`;
 export type SET_MESSAGE = typeof SET_MESSAGE;
 
@@ -379,6 +382,17 @@ const profileSlice = createSlice({
     ) => {
       delete state.messages[payload.uid][payload.message._id];
     },
+    requestMessageDeletion: (
+      state: ProfileState,
+      {
+        payload,
+      }: PayloadAction<{
+        chatId: string;
+        messageId: string;
+        message: Message;
+        uid: string;
+      }>,
+    ) => {},
     setUnread: (
       state: ProfileState,
       {payload}: PayloadAction<{[key: string]: number}>,
@@ -532,6 +546,7 @@ export const {
   setMessagesObj,
   setRead,
   deleteMessage,
+  requestMessageDeletion,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

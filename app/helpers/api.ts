@@ -308,7 +308,6 @@ export const getExercisesById = async (ids: string[]) => {
   }
 };
 
-
 export const getTests = async () => {
   const snapshot = await db().collection('tests').get();
   return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
@@ -643,6 +642,18 @@ export const sendMessage = (
   userId: string,
 ) => {
   return functions().httpsCallable('sendMessage')({message, chatId, userId});
+};
+
+export const deleteMessage = (
+  message: Message,
+  chatId: string,
+  messageId: string,
+) => {
+  return functions().httpsCallable('deleteMessage')({
+    message,
+    chatId,
+    messageId,
+  });
 };
 
 export const setUnread = (uid: string, unread: {[key: string]: number}) => {

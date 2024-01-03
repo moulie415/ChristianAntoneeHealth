@@ -11,7 +11,6 @@ import type {
   RecordBackType,
 } from 'react-native-audio-recorder-player';
 import {
-  Dimensions,
   PermissionsAndroid,
   Platform,
   TouchableOpacity,
@@ -28,6 +27,8 @@ import RNFS from 'react-native-fs';
 import uuid from 'react-native-uuid';
 import {Slider} from '@miblanchard/react-native-slider';
 import mmss from '../../../../helpers/mmss';
+import {logError} from '../../../../helpers/error';
+import Snackbar from 'react-native-snackbar';
 
 interface State {
   recordSecs: number;
@@ -194,7 +195,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
           <TouchableOpacity
             onPress={() => {
               if (this.sending) {
-                return false;
+                return;
               }
               this.sending = true;
               this.props.onSend(this.state.result || '');
@@ -224,8 +225,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
           PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
         ]);
 
-        console.log('write external stroage', grants);
-
         if (
           grants['android.permission.WRITE_EXTERNAL_STORAGE'] ===
             PermissionsAndroid.RESULTS.GRANTED &&
@@ -234,15 +233,13 @@ class VoiceNoteRecorder extends Component<Props, State> {
           grants['android.permission.RECORD_AUDIO'] ===
             PermissionsAndroid.RESULTS.GRANTED
         ) {
-          console.log('permissions granted');
         } else {
-          console.log('All required permissions not granted');
-
+          this.props.onClose();
           return;
         }
       } catch (err) {
-        console.warn(err);
-
+        this.props.onClose();
+        logError(err);
         return;
       }
     }
@@ -263,7 +260,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
     );
 
     this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
-      // console.log('record-back', e);
       this.setState({
         recordSecs: e.currentPosition / 1000,
         metering: e.currentMetering,
@@ -303,7 +299,9 @@ class VoiceNoteRecorder extends Component<Props, State> {
       });
       this.setState({playing: true});
     } catch (err) {
-      console.log('startPlayer error', err);
+      this.props.onClose();
+      Snackbar.show({text: 'Error starting player'});
+      logError(err);
     }
   };
 
@@ -318,7 +316,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
   };
 
   private onStopPlay = async (): Promise<void> => {
-    console.log('onStopPlay');
     this.audioRecorderPlayer.stopPlayer();
     this.audioRecorderPlayer.removePlayBackListener();
   };

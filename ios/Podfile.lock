@@ -2117,6 +2117,8 @@ PODS:
     - RNSound/Core (= 0.11.2)
   - RNSound/Core (0.11.2):
     - React-Core
+  - RNSoundPlayer (0.13.2):
+    - React-Core
   - RNSVG (14.1.0):
     - React-Core
   - RNTestFlight (1.1.0):
@@ -2235,6 +2237,7 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSound (from `../node_modules/react-native-sound`)
+  - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNTestFlight (from `../node_modules/react-native-test-flight`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -2482,6 +2485,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-snackbar"
   RNSound:
     :path: "../node_modules/react-native-sound"
+  RNSoundPlayer:
+    :path: "../node_modules/react-native-sound-player"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNTestFlight:
@@ -2633,6 +2638,7 @@ SPEC CHECKSUMS:
   RNSentry: b7f4f53bb7076f119558f8898fca901b48213f12
   RNSnackbar: 3727b42bf6c4314a53c18185b5203e915a4ab020
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
+  RNSoundPlayer: 369105c565b8fe6ea0a43fc882dc81eba444e842
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNTestFlight: 3419178faa8527ecfe803607fd338a3803f1fb0d
   RNVectorIcons: ee070291bc6c7b4c880181b214534d4657ea1905

@@ -92,6 +92,7 @@
     "react-native-snackbar": "^2.6.2",
     "react-native-snap-carousel": "^4.0.0-beta.6",
     "react-native-sound": "^0.11.2",
+    "react-native-sound-player": "^0.13.2",
     "react-native-spinkit": "^1.5.1",
     "react-native-splash-screen": "^3.3.0",
     "react-native-star-rating": "^1.1.0",

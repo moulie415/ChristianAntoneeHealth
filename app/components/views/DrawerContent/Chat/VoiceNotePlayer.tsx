@@ -1,40 +1,52 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IMessage} from 'react-native-gifted-chat';
 import mmss from '../../../../helpers/mmss';
 import {Slider} from '@miblanchard/react-native-slider';
 import colors from '../../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import Sound from 'react-native-sound';
+import SoundPlayer from 'react-native-sound-player';
+import useInterval from '../../../../hooks/UseInterval';
+import Spinner from 'react-native-spinkit';
 
 const VoiceNotePlayer: React.FC<{message: IMessage}> = ({message}) => {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState<boolean>();
   const [currentPositionSec, setCurrentPositionSec] = useState(0);
   const [currentDurationSec, setCurrentDurationSec] = useState(0);
-  const voiceNote = useRef(
-    new Sound(message.audio, null, error => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-    }),
-  );
 
-  console.log(message.audio);
+  const audio = message.audio || '';
 
   const onPlay = async () => {
-    voiceNote.current?.play(success => {
-      console.log(success);
-    });
+    if (playing === undefined) {
+      SoundPlayer.playUrl(audio);
+    } else {
+      SoundPlayer.resume();
+    }
     setPlaying(true);
   };
 
   const onPause = async () => {
-    voiceNote.current?.pause();
+    SoundPlayer.pause();
     setPlaying(false);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const sub = SoundPlayer.addEventListener('FinishedPlaying', () => {
+      SoundPlayer.seek(0);
+      setPlaying(false);
+    });
+    return () => {
+      sub.remove();
+    };
+  }, []);
+
+  useInterval(async () => {
+    if (playing) {
+      const {currentTime, duration} = await SoundPlayer.getInfo();
+      setCurrentDurationSec(duration);
+      setCurrentPositionSec(currentTime);
+    }
+  }, 100);
   return (
     <View
       style={{
@@ -46,11 +58,12 @@ const VoiceNotePlayer: React.FC<{message: IMessage}> = ({message}) => {
       }}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Text style={{width: 40, marginLeft: 10}}>
-          {mmss(currentPositionSec / 1000)}
+          {mmss(Math.floor(currentPositionSec))}
         </Text>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity
+            disabled={message.pending}
             style={{
               alignSelf: 'flex-end',
               padding: 10,
@@ -64,17 +77,24 @@ const VoiceNotePlayer: React.FC<{message: IMessage}> = ({message}) => {
                 onPlay();
               }
             }}>
-            <Icon
-              name={playing ? 'pause' : 'play'}
-              size={25}
-              color={colors.appBlue}
-            />
+            {message.pending ? (
+              <Spinner type="Circle" size={20} color={colors.appBlue} />
+            ) : (
+              <Icon
+                name={playing ? 'pause' : 'play'}
+                size={25}
+                color={colors.appBlue}
+              />
+            )}
           </TouchableOpacity>
           <Slider
+            disabled={message.pending}
             value={currentPositionSec / currentDurationSec}
             trackStyle={{width: 150}}
             onSlidingComplete={val => {
-              voiceNote.current?.setCurrentTime(currentDurationSec * val[0]);
+              if (playing !== undefined) {
+                SoundPlayer.seek(currentDurationSec * val[0]);
+              }
             }}
             renderThumbComponent={() => {
               return (

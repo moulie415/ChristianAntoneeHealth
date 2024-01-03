@@ -67,6 +67,7 @@ import {
   GET_WEEKLY_ITEMS_FOR_CONNECTION,
   HANDLE_AUTH,
   LOAD_EARLIER_MESSAGES,
+  REQUEST_MESSAGE_DELETION,
   SEND_MESSAGE,
   SET_CHATS,
   SET_PREMIUM,
@@ -528,6 +529,7 @@ function onChatMessage(id: string) {
           console.warn(error);
         },
       );
+
     return subscriber;
   });
 }
@@ -540,6 +542,12 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
   while (true) {
     const snapshot: Snapshot = yield take(channel);
     yield put(setMessages({uid, snapshot}));
+    for (const change of snapshot.docChanges()) {
+      if (change.type === 'removed') {
+        yield put(deleteMessage({message: change.doc.data() as Message, uid}));
+      }
+    }
+
     if (navigationRef.current) {
       const route: any = navigationRef.current.getCurrentRoute();
       const {state} = yield select((state: MyRootState) => state.profile);
@@ -632,6 +640,24 @@ function* sendMessage(
         setMessage({uid, message: {...message, sent: false, pending: false}}),
       );
     }
+    logError(e);
+  }
+}
+
+function* requestMessageDeletionWorker(
+  action: PayloadAction<{
+    chatId: string;
+    messageId: string;
+    message: Message;
+    uid: string;
+  }>,
+) {
+  const {chatId, messageId, message, uid} = action.payload;
+  try {
+    yield call(api.deleteMessage, message, chatId, messageId);
+    yield put(deleteMessage({message, uid}));
+  } catch (e) {
+    Snackbar.show({text: 'Error deleting message'});
     logError(e);
   }
 }
@@ -857,6 +883,7 @@ export default function* profileSaga() {
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
     throttle(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),
+    throttle(3000, REQUEST_MESSAGE_DELETION, requestMessageDeletionWorker),
     debounce(1000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),

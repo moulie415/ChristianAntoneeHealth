@@ -21,6 +21,7 @@ import {
   IMessage,
   MessageVideoProps,
   MessageAudioProps,
+  MessageImageProps,
 } from 'react-native-gifted-chat';
 import {StackParamList} from '../../../../App';
 import Profile from '../../../../types/Profile';
@@ -48,6 +49,7 @@ import useInit from '../../../../hooks/UseInit';
 import _ from 'lodash';
 import {
   loadEarlierMessages,
+  requestMessageDeletion,
   sendMessage,
   setChatMessage,
   setMessages,
@@ -70,6 +72,9 @@ import uuid from 'react-native-uuid';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import VoiceNotePlayer from './VoiceNotePlayer';
+import Clipboard from '@react-native-clipboard/clipboard';
+import ImageView from 'react-native-image-viewing';
+import {ImageSource} from 'react-native-image-viewing/dist/@types';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -109,6 +114,17 @@ interface ChatProps {
   loading: boolean;
   chatMessages: {[key: string]: string};
   setChatMessage: ({uid, message}: {uid: string; message: string}) => void;
+  requestMessageDeletion: ({
+    chatId,
+    messageId,
+    message,
+    uid,
+  }: {
+    chatId: string;
+    messageId: string;
+    message: Message;
+    uid: string;
+  }) => void;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -126,6 +142,7 @@ const Chat: React.FC<ChatProps> = ({
   chatMessages,
   setChatMessage: setChatMessageAction,
   navigation,
+  requestMessageDeletion,
 }) => {
   const {uid} = route.params;
   const [text, setText] = useState('');
@@ -164,7 +181,7 @@ const Chat: React.FC<ChatProps> = ({
     }, 500);
   });
 
-  const sortMessages = useCallback(() => {
+  const sorted = useMemo(() => {
     const messages = Object.values(messagesObj || {});
     return messages
       .sort((a, b) => (b.createdAt as number) - (a.createdAt as number))
@@ -176,15 +193,22 @@ const Chat: React.FC<ChatProps> = ({
       });
   }, [messagesObj]);
 
+  const images: {uri: string}[] = sorted
+    .filter(msg => msg.image)
+    .map(msg => ({uri: msg.image || ''}))
+    .reverse();
+
+  const [imageIndex, setImageIndex] = useState(0);
+  const [imagesVisible, setImagesVisible] = useState(false);
+
   const loadEarlier = useCallback(async () => {
-    const sorted = sortMessages();
     const startAfter = sorted[sorted.length - 1].createdAt;
     loadEarlierMessagesAction({chatId, uid, startAfter: Number(startAfter)});
-  }, [sortMessages, chatId, uid, loadEarlierMessagesAction]);
+  }, [sorted, chatId, uid, loadEarlierMessagesAction]);
 
   const showLoadEarlier = useMemo(() => {
-    return !sortMessages().some(m => m.text === 'Beginning of chat');
-  }, [sortMessages]);
+    return !sorted.some(m => m.text === 'Beginning of chat');
+  }, [sorted]);
 
   const insets = useSafeAreaInsets();
 
@@ -271,6 +295,7 @@ const Chat: React.FC<ChatProps> = ({
   const renderMessageVideo = (props: MessageVideoProps<IMessage>) => {
     return (
       <TouchableOpacity
+        disabled={props.currentMessage?.pending}
         onPress={() => {
           if (props.currentMessage) {
             navigation.navigate('VideoView', {message: props.currentMessage});
@@ -314,6 +339,30 @@ const Chat: React.FC<ChatProps> = ({
       return <VoiceNotePlayer message={props.currentMessage} />;
     }
     return null;
+  };
+
+  const renderMessageImage = (props: MessageImageProps<IMessage>) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          setImageIndex(
+            images.findIndex(img => img.uri === props.currentMessage?.image),
+          );
+          setImagesVisible(true);
+        }}
+        disabled={props.currentMessage?.pending}>
+        <FastImage
+          style={{
+            position: 'relative',
+            height: 150,
+            width: 250,
+            margin: 3,
+            borderRadius: 15,
+          }}
+          source={{uri: props.currentMessage?.image}}
+        />
+      </TouchableOpacity>
+    );
   };
 
   const handleResponse = async (response: ImagePickerResponse) => {
@@ -360,6 +409,29 @@ const Chat: React.FC<ChatProps> = ({
     if (Platform.OS === 'ios') {
       const result = await launchImageLibrary(options);
       handleResponse(result);
+    } else {
+      Alert.alert('Send image/video', '', [
+        {
+          text: 'Send image',
+          onPress: async () => {
+            const result = await launchImageLibrary({
+              ...options,
+              mediaType: 'photo',
+            });
+            handleResponse(result);
+          },
+        },
+        {
+          text: 'Send video',
+          onPress: async () => {
+            const result = await launchImageLibrary({
+              ...options,
+              mediaType: 'video',
+            });
+            handleResponse(result);
+          },
+        },
+      ]);
     }
   };
 
@@ -375,6 +447,29 @@ const Chat: React.FC<ChatProps> = ({
     if (Platform.OS === 'ios') {
       const result = await launchCamera(options);
       handleResponse(result);
+    } else {
+      Alert.alert('Take photo/video', '', [
+        {
+          text: 'Take photo',
+          onPress: async () => {
+            const result = await launchCamera({
+              ...options,
+              mediaType: 'photo',
+            });
+            handleResponse(result);
+          },
+        },
+        {
+          text: 'Shoot video',
+          onPress: async () => {
+            const result = await launchCamera({
+              ...options,
+              mediaType: 'video',
+            });
+            handleResponse(result);
+          },
+        },
+      ]);
     }
   };
 
@@ -393,6 +488,56 @@ const Chat: React.FC<ChatProps> = ({
       createdAt: moment().valueOf(),
     };
     sendMessageAction({message, chatId, uid});
+  };
+
+  const onLongPress = (context: any, message: IMessage) => {
+    const id = Object.keys(messagesObj).find(key => {
+      const msg: Message = messagesObj[key];
+      return msg._id === message._id;
+    });
+
+    const msg: Message = messagesObj[id || ''];
+    const messageId = msg.id;
+    if (message.text) {
+      const options = ['Copy Text', 'Delete message', 'Cancel'];
+      const cancelButtonIndex = options.length - 1;
+      context.actionSheet().showActionSheetWithOptions(
+        {
+          options,
+          cancelButtonIndex,
+        },
+        (buttonIndex: number) => {
+          switch (buttonIndex) {
+            case 0:
+              Clipboard.setString(message.text);
+              break;
+            case 1:
+              if (msg && messageId) {
+                requestMessageDeletion({chatId, message: msg, uid, messageId});
+              }
+              break;
+          }
+        },
+      );
+    } else {
+      const options = ['Delete message', 'Cancel'];
+      const cancelButtonIndex = options.length - 1;
+      context.actionSheet().showActionSheetWithOptions(
+        {
+          options,
+          cancelButtonIndex,
+        },
+        (buttonIndex: number) => {
+          switch (buttonIndex) {
+            case 0:
+              if (msg && messageId) {
+                requestMessageDeletion({chatId, message: msg, uid, messageId});
+              }
+              break;
+          }
+        },
+      );
+    }
   };
 
   const ref = useRef<FlatList>(null);
@@ -423,7 +568,7 @@ const Chat: React.FC<ChatProps> = ({
           keyboardShouldPersistTaps="never"
           renderMessageText={renderMessageText}
           bottomOffset={insets.bottom - 10}
-          messages={sortMessages()}
+          messages={sorted}
           messagesContainerStyle={{marginBottom: 10}}
           textInputProps={{lineHeight: null}}
           listViewProps={{marginBottom: 10}}
@@ -476,8 +621,10 @@ const Chat: React.FC<ChatProps> = ({
           }}
           onInputTextChanged={onInputTextChanged}
           text={text}
+          onLongPress={onLongPress}
           renderMessageVideo={renderMessageVideo}
           renderMessageAudio={renderMessageAudio}
+          renderMessageImage={renderMessageImage}
           renderSend={props => (
             <CustomSend
               {...props}
@@ -491,6 +638,12 @@ const Chat: React.FC<ChatProps> = ({
         <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
       </SafeAreaView>
       <SafeAreaView style={{flex: 0, backgroundColor: colors.appGrey}} />
+      <ImageView
+        images={images}
+        imageIndex={imageIndex}
+        visible={imagesVisible}
+        onRequestClose={() => setImagesVisible(false)}
+      />
     </>
   );
 };
@@ -517,6 +670,7 @@ const mapDispatchToProps = {
   viewWorkoutAction: viewWorkout,
   loadEarlierMessages,
   setChatMessage,
+  requestMessageDeletion,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
