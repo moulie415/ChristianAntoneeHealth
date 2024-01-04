@@ -488,46 +488,33 @@ const Chat: React.FC<ChatProps> = ({
 
     const msg: Message = messagesObj[id || ''];
     const messageId = msg.id;
-    if (message.text) {
-      const options = ['Copy Text', 'Delete message', 'Cancel'];
-      const cancelButtonIndex = options.length - 1;
-      context.actionSheet().showActionSheetWithOptions(
-        {
-          options,
-          cancelButtonIndex,
-        },
-        (buttonIndex: number) => {
-          switch (buttonIndex) {
-            case 0:
-              Clipboard.setString(message.text);
-              break;
-            case 1:
-              if (msg && messageId) {
-                requestMessageDeletion({chatId, message: msg, uid, messageId});
-              }
-              break;
-          }
-        },
-      );
-    } else {
-      const options = ['Delete message', 'Cancel'];
-      const cancelButtonIndex = options.length - 1;
-      context.actionSheet().showActionSheetWithOptions(
-        {
-          options,
-          cancelButtonIndex,
-        },
-        (buttonIndex: number) => {
-          switch (buttonIndex) {
-            case 0:
-              if (msg && messageId) {
-                requestMessageDeletion({chatId, message: msg, uid, messageId});
-              }
-              break;
-          }
-        },
-      );
+    const options = ['Cancel'];
+
+    const copyText = 'Copy Text';
+    const deleteMessage = 'Delete message';
+    if (message.user._id === profile.uid) {
+      options.unshift(deleteMessage);
     }
+
+    if (message.text) {
+      options.unshift(copyText);
+    }
+
+    const cancelButtonIndex = options.length - 1;
+    context.actionSheet().showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex,
+      },
+      (buttonIndex: number) => {
+        if (options[buttonIndex] === copyText) {
+          Clipboard.setString(message.text);
+          Snackbar.show({text: 'Text copied to clipboard'});
+        } else if (options[buttonIndex] === deleteMessage && msg && messageId) {
+          requestMessageDeletion({chatId, message: msg, uid, messageId});
+        }
+      },
+    );
   };
 
   const ref = useRef<FlatList>(null);
