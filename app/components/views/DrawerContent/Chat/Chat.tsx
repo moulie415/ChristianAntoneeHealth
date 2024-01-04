@@ -2,14 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import React, {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   GiftedChat,
   Avatar as GiftedAvatar,
@@ -41,7 +34,6 @@ import Avatar from '../../../commons/Avatar';
 import Text from '../../../commons/Text';
 import colors from '../../../../constants/colors';
 import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
-import Animated, {FadeIn} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '../../../commons/Header';
 import FastImage from 'react-native-fast-image';
@@ -58,7 +50,6 @@ import {
 import {viewWorkout} from '../../../../reducers/exercises';
 import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
-import CustomActions from './CustomActions';
 import {
   CameraOptions,
   ImageLibraryOptions,
@@ -74,7 +65,6 @@ import convertToProxyURL from 'react-native-video-cache';
 import VoiceNotePlayer from './VoiceNotePlayer';
 import Clipboard from '@react-native-clipboard/clipboard';
 import ImageView from 'react-native-image-viewing';
-import {ImageSource} from 'react-native-image-viewing/dist/@types';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -572,7 +562,6 @@ const Chat: React.FC<ChatProps> = ({
           messagesContainerStyle={{marginBottom: 10}}
           textInputProps={{lineHeight: null}}
           listViewProps={{marginBottom: 10}}
-          renderActions={() => <CustomActions onPressCamera={onPressCamera} />}
           renderInputToolbar={props => (
             <CustomInputToolbar
               {...props}
@@ -630,6 +619,7 @@ const Chat: React.FC<ChatProps> = ({
               {...props}
               onPressAttachment={onPressAttachment}
               onPressVoiceNote={onPressVoiceNote}
+              onPressCamera={onPressCamera}
             />
           )}
           alwaysShowSend

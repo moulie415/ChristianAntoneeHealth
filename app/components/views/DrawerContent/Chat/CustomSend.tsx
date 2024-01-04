@@ -10,6 +10,7 @@ import {MyRootState} from '../../../../types/Shared';
 interface Props extends SendProps<IMessage> {
   onPressAttachment: () => void;
   onPressVoiceNote: () => void;
+  onPressCamera: () => void;
   attachmentsDisabled: boolean;
   voiceNotesDisabled: boolean;
 }
@@ -35,9 +36,19 @@ const CustomSend: React.FC<Props> = props => {
       style={{flexDirection: 'row', justifyContent: 'center', height: '100%'}}>
       {!props.attachmentsDisabled && (
         <TouchableOpacity
+          onPress={props.onPressCamera}
+          style={{
+            padding: 10,
+            paddingRight: 5,
+          }}>
+          <Icon name="camera" size={25} color={colors.appBlue} />
+        </TouchableOpacity>
+      )}
+      {!props.attachmentsDisabled && (
+        <TouchableOpacity
           onPress={props.onPressAttachment}
           hitSlop={10}
-          style={{padding: 10, alignSelf: 'center'}}>
+          style={{padding: 10, paddingRight: 5, alignSelf: 'center'}}>
           <Icon name="paperclip" size={25} color={colors.appBlue} />
         </TouchableOpacity>
       )}
