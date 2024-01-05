@@ -18,17 +18,11 @@ interface Props extends SendProps<IMessage> {
 const CustomSend: React.FC<Props> = props => {
   if (props.text) {
     return (
-      <View
-        style={{
-          height: '100%',
-          justifyContent: 'center',
-        }}>
-        <Send
-          {...props}
-          containerStyle={{marginHorizontal: 10}}
-          textStyle={[props.textStyle, {color: colors.appBlue}]}
-        />
-      </View>
+      <Send
+        {...props}
+        containerStyle={{marginHorizontal: 10, alignSelf: 'center'}}
+        textStyle={[props.textStyle, {color: colors.appBlue}]}
+      />
     );
   }
   return (
@@ -38,6 +32,7 @@ const CustomSend: React.FC<Props> = props => {
         <TouchableOpacity
           onPress={props.onPressCamera}
           style={{
+            paddingVertical: 8,
             padding: 10,
             paddingRight: 5,
           }}>
@@ -48,7 +43,12 @@ const CustomSend: React.FC<Props> = props => {
         <TouchableOpacity
           onPress={props.onPressAttachment}
           hitSlop={10}
-          style={{padding: 10, paddingRight: 5, alignSelf: 'center'}}>
+          style={{
+            paddingVertical: 8,
+            padding: 10,
+            paddingRight: 5,
+            alignSelf: 'center',
+          }}>
           <Icon name="paperclip" size={25} color={colors.appBlue} />
         </TouchableOpacity>
       )}
@@ -56,7 +56,12 @@ const CustomSend: React.FC<Props> = props => {
         <TouchableOpacity
           onPress={props.onPressVoiceNote}
           hitSlop={10}
-          style={{padding: 10, paddingRight: 15, alignSelf: 'center'}}>
+          style={{
+            paddingVertical: 8,
+            padding: 10,
+            paddingRight: 15,
+            alignSelf: 'center',
+          }}>
           <Icon name="microphone" size={25} color={colors.appBlue} />
         </TouchableOpacity>
       )}
