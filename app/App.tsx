@@ -1,49 +1,41 @@
-import React, {useRef, useState} from 'react';
-import reducer from './reducers';
-import {Provider} from 'react-redux';
-import Purchases, {LOG_LEVEL} from 'react-native-purchases';
-import {PersistGate} from 'redux-persist/lib/integration/react';
-import {persistStore} from 'redux-persist';
-import {applyMiddleware, configureStore} from '@reduxjs/toolkit';
-import createSagaMiddleware from '@redux-saga/core';
+import appCheck from '@react-native-firebase/app-check';
 import {NavigationContainer} from '@react-navigation/native';
-import 'react-native-gesture-handler';
-import rootSaga from './sagas';
-import {navigationRef} from './RootNavigation';
-import SplashScreen from 'react-native-splash-screen';
+import createSagaMiddleware from '@redux-saga/core';
+import {configureStore} from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, Image, Platform, View} from 'react-native';
+import Config from 'react-native-config';
+import FastImage from 'react-native-fast-image';
+import 'react-native-gesture-handler';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import {IMessage} from 'react-native-gifted-chat';
+import Purchases, {LOG_LEVEL} from 'react-native-purchases';
+import SplashScreen from 'react-native-splash-screen';
+import {Provider} from 'react-redux';
+import {persistStore} from 'redux-persist';
+import {PersistGate} from 'redux-persist/lib/integration/react';
+import {navigationRef} from './RootNavigation';
+import {DrawerNavigator} from './Stack';
+import colors from './constants/colors';
+import reducer from './reducers';
+import rootSaga from './sagas';
+import Education from './types/Education';
+import ExerciseType from './types/Exercise';
+import Profile from './types/Profile';
+import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import {
+  CoolDown,
+  Equipment as EquipmentItem,
+  ExerciseEvent,
   Goal,
   Level,
-  Equipment as EquipmentItem,
-  WarmUp,
-  CoolDown,
+  PauseEvent,
   PlanNutrition,
   PlanSleep,
   PlanWorkout,
-  ExerciseEvent,
-  PauseEvent,
+  WarmUp,
 } from './types/Shared';
-import ExerciseType from './types/Exercise';
-import {useEffect} from 'react';
-import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
-import TestType from './types/Test';
-import StackComponent, {DrawerNavigator} from './Stack';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import appCheck from '@react-native-firebase/app-check';
-import Education from './types/Education';
-import {
-  Dimensions,
-  Platform,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import Config from 'react-native-config';
-import colors from './constants/colors';
-import FastImage from 'react-native-fast-image';
-import Profile from './types/Profile';
-import {IMessage} from 'react-native-gifted-chat';
 
 const {height, width} = Dimensions.get('window');
 

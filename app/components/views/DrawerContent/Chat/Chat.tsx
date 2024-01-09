@@ -1,26 +1,10 @@
+import Clipboard from '@react-native-clipboard/clipboard';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import _ from 'lodash';
+import moment from 'moment';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {
-  GiftedChat,
-  Avatar as GiftedAvatar,
-  AvatarProps,
-  MessageText,
-  BubbleProps,
-  MessageTextProps,
-  Bubble,
-  IMessage,
-  MessageVideoProps,
-  MessageAudioProps,
-  MessageImageProps,
-} from 'react-native-gifted-chat';
-import {StackParamList} from '../../../../App';
-import Profile from '../../../../types/Profile';
-import {MyRootState} from '../../../../types/Shared';
-import {connect} from 'react-redux';
-import Message, {MessageType} from '../../../../types/Message';
 import {
   Alert,
   FlatList,
@@ -29,16 +13,41 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import moment from 'moment';
-import Avatar from '../../../commons/Avatar';
-import Text from '../../../commons/Text';
-import colors from '../../../../constants/colors';
-import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Header from '../../../commons/Header';
+import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
+import {
+  AvatarProps,
+  Bubble,
+  BubbleProps,
+  Avatar as GiftedAvatar,
+  GiftedChat,
+  IMessage,
+  MessageAudioProps,
+  MessageImageProps,
+  MessageText,
+  MessageTextProps,
+  MessageVideoProps,
+} from 'react-native-gifted-chat';
+import {
+  CameraOptions,
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
+import ImageView from 'react-native-image-viewing';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Snackbar from 'react-native-snackbar';
+import uuid from 'react-native-uuid';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import Video from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../../App';
+import colors from '../../../../constants/colors';
+import {logError} from '../../../../helpers/error';
 import useInit from '../../../../hooks/UseInit';
-import _ from 'lodash';
+import {viewWorkout} from '../../../../reducers/exercises';
 import {
   loadEarlierMessages,
   requestMessageDeletion,
@@ -47,24 +56,18 @@ import {
   setMessages,
   setRead,
 } from '../../../../reducers/profile';
-import {viewWorkout} from '../../../../reducers/exercises';
+import {SettingsState} from '../../../../reducers/settings';
+import Message, {MessageType} from '../../../../types/Message';
+import Profile from '../../../../types/Profile';
+import {MyRootState} from '../../../../types/Shared';
+import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
+import Avatar from '../../../commons/Avatar';
+import Header from '../../../commons/Header';
+import Text from '../../../commons/Text';
+import ChatActions from './ChatActions';
 import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
-import {logError} from '../../../../helpers/error';
-import Snackbar from 'react-native-snackbar';
-import uuid from 'react-native-uuid';
-import Video from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import VoiceNotePlayer from './VoiceNotePlayer';
-import Clipboard from '@react-native-clipboard/clipboard';
-import ImageView from 'react-native-image-viewing';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -115,6 +118,7 @@ interface ChatProps {
     message: Message;
     uid: string;
   }) => void;
+  settings: SettingsState;
 }
 
 const Chat: React.FC<ChatProps> = ({
@@ -133,6 +137,7 @@ const Chat: React.FC<ChatProps> = ({
   setChatMessage: setChatMessageAction,
   navigation,
   requestMessageDeletion,
+  settings,
 }) => {
   const {uid} = route.params;
   const [text, setText] = useState('');
@@ -391,6 +396,8 @@ const Chat: React.FC<ChatProps> = ({
     }
   };
 
+  const ref = useRef<FlatList>(null);
+
   const onPressAttachment = async () => {
     const options: ImageLibraryOptions = {
       mediaType: 'mixed',
@@ -480,6 +487,30 @@ const Chat: React.FC<ChatProps> = ({
     sendMessageAction({message, chatId, uid});
   };
 
+  const onPressDocument = async () => {
+    try {
+      const result = await DocumentPicker.pickSingle();
+      const message: Message = {
+        user: {
+          _id: profile.uid,
+          name: profile.name,
+          avatar: profile.avatar,
+        },
+        _id: uuid.v4() as string,
+        document: result.uri,
+        text: '',
+        type: 'document',
+        pending: true,
+        createdAt: moment().valueOf(),
+      };
+      sendMessageAction({message, chatId, uid});
+    } catch (e: any) {
+      if (e?.code !== 'DOCUMENT_PICKER_CANCELED') {
+        logError(e);
+      }
+    }
+  };
+
   const onLongPress = (context: any, message: IMessage) => {
     const id = Object.keys(messagesObj).find(key => {
       const msg: Message = messagesObj[key];
@@ -516,8 +547,6 @@ const Chat: React.FC<ChatProps> = ({
       },
     );
   };
-
-  const ref = useRef<FlatList>(null);
 
   return (
     <>
@@ -601,12 +630,19 @@ const Chat: React.FC<ChatProps> = ({
           renderMessageVideo={renderMessageVideo}
           renderMessageAudio={renderMessageAudio}
           renderMessageImage={renderMessageImage}
+          renderActions={props => (
+            <ChatActions
+              {...props}
+              onPressCamera={onPressCamera}
+              disabled={settings.attachmentsDisabled}
+            />
+          )}
           renderSend={props => (
             <CustomSend
               {...props}
               onPressAttachment={onPressAttachment}
               onPressVoiceNote={onPressVoiceNote}
-              onPressCamera={onPressCamera}
+              onPressDocument={onPressDocument}
             />
           )}
           alwaysShowSend
@@ -638,6 +674,7 @@ const mapStateToProps = (
   chatId: profile.chats[props.route.params.uid].id,
   exercisesLoading: exercises.loading,
   loading: profile.loading,
+  settings,
 });
 
 const mapDispatchToProps = {

@@ -4,7 +4,6 @@ import {
   InputToolbar,
   InputToolbarProps,
 } from 'react-native-gifted-chat';
-import * as _ from 'lodash';
 import VoiceNoteRecorder from './VoiceNoteRecorder';
 
 interface Props extends InputToolbarProps<IMessage> {

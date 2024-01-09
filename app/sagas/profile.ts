@@ -581,7 +581,8 @@ function* sendMessage(
     if (
       message.type === 'audio' ||
       message.type === 'image' ||
-      message.type === 'video'
+      message.type === 'video' ||
+      message.type === 'document'
     ) {
       let compressedUri = '';
       if (message.type === 'image') {
@@ -590,6 +591,9 @@ function* sendMessage(
         compressedUri = yield call(Video.compress, message.video || '');
       } else if (message.type === 'audio') {
         compressedUri = yield call(Audio.compress, message.audio || '');
+      } else if (message.type === 'document') {
+        // Not sure if document compression is a thing so we'll leave it for now
+        compressedUri = message.document || '';
       } else {
         throw new Error('Unsupported mime type');
       }

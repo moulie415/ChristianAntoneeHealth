@@ -3,14 +3,14 @@ import {View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {IMessage, Send, SendProps} from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import colors from '../../../../constants/colors';
 import {connect} from 'react-redux';
+import colors from '../../../../constants/colors';
 import {MyRootState} from '../../../../types/Shared';
 
 interface Props extends SendProps<IMessage> {
   onPressAttachment: () => void;
   onPressVoiceNote: () => void;
-  onPressCamera: () => void;
+  onPressDocument: () => void;
   attachmentsDisabled: boolean;
   voiceNotesDisabled: boolean;
 }
@@ -30,13 +30,13 @@ const CustomSend: React.FC<Props> = props => {
       style={{flexDirection: 'row', justifyContent: 'center', height: '100%'}}>
       {!props.attachmentsDisabled && (
         <TouchableOpacity
-          onPress={props.onPressCamera}
+          onPress={props.onPressDocument}
           style={{
             paddingVertical: 8,
-            padding: 10,
-            paddingRight: 5,
+            paddingTop: 10,
+            paddingRight: 15,
           }}>
-          <Icon name="camera" size={25} color={colors.appBlue} />
+          <Icon name="file" solid size={22} color={colors.appBlue} />
         </TouchableOpacity>
       )}
       {!props.attachmentsDisabled && (
@@ -45,11 +45,10 @@ const CustomSend: React.FC<Props> = props => {
           hitSlop={10}
           style={{
             paddingVertical: 8,
-            padding: 10,
-            paddingRight: 5,
+            paddingRight: 13,
             alignSelf: 'center',
           }}>
-          <Icon name="paperclip" size={25} color={colors.appBlue} />
+          <Icon name="image" solid size={25} color={colors.appBlue} />
         </TouchableOpacity>
       )}
       {!props.voiceNotesDisabled && (
@@ -58,7 +57,6 @@ const CustomSend: React.FC<Props> = props => {
           hitSlop={10}
           style={{
             paddingVertical: 8,
-            padding: 10,
             paddingRight: 15,
             alignSelf: 'center',
           }}>

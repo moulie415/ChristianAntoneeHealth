@@ -1,29 +1,21 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {MyRootState} from '../../../types/Shared';
-import Profile from '../../../types/Profile';
-import Avatar from '../../commons/Avatar';
-import {
-  FlatList,
-  ImageBackground,
-  RefreshControl,
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect} from 'react';
+import {FlatList, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
+import Profile from '../../../types/Profile';
+import {MyRootState} from '../../../types/Shared';
+import Avatar from '../../commons/Avatar';
 import Text from '../../commons/Text';
 
-import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
-import Message from '../../../types/Message';
-import {getSimplifiedTime} from '../../../helpers/profile';
 import colors from '../../../constants/colors';
 import {truncate} from '../../../helpers';
-import ListItem from '../../commons/ListItem';
+import {getSimplifiedTime} from '../../../helpers/profile';
+import {getConnections} from '../../../reducers/profile';
+import Message from '../../../types/Message';
 import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
-import {getConnections} from '../../../reducers/profile';
+import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
 
 const Connections: React.FC<{
   profile: Profile;
