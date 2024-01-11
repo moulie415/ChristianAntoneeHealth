@@ -1,24 +1,24 @@
-import {View, TouchableOpacity, Dimensions} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import colors from '../../constants/colors';
-import Text from './Text';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {Goal, Level, MyRootState} from '../../types/Shared';
+import {SvgProps} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
+import colors from '../../constants/colors';
+import {getGoalsData} from '../../helpers/goals';
+import Fire from '../../images/fire.svg';
+import Time from '../../images/time.svg';
 import {
   WeeklyItems,
   getWeeklyItems,
   getWeeklyItemsForConnection,
 } from '../../reducers/profile';
-import QuickRoutine from '../../types/QuickRoutines';
-import Tile from './Tile';
-import Time from '../../images/time.svg';
-import Fire from '../../images/fire.svg';
-import {SvgProps} from 'react-native-svg';
-import {getGoalsData} from '../../helpers/goals';
 import {SettingsState} from '../../reducers/settings';
+import Profile from '../../types/Profile';
+import QuickRoutine from '../../types/QuickRoutines';
+import {Goal, MyRootState} from '../../types/Shared';
+import Text from './Text';
+import Tile from './Tile';
 
 interface GoalSet {
   title: string;

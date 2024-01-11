@@ -1,15 +1,14 @@
-import {View, Text} from 'react-native';
-import React, {RefObject, useState} from 'react';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import colors from '../../constants/colors';
 import moment from 'moment';
+import React from 'react';
+import {Text, View} from 'react-native';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {connect} from 'react-redux';
+import colors from '../../constants/colors';
+import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';
 import Input from './Input';
-import Button from './Button';
-import {MyRootState} from '../../types/Shared';
-import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
 
 const TestTimer: React.FC<{
   test: Test;

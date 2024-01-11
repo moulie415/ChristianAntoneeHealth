@@ -1,4 +1,9 @@
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {AppState, AppStateStatus} from 'react-native';
+import {PurchasesEntitlementInfo} from 'react-native-purchases';
+import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import Profile from '../types/Profile';
@@ -10,11 +15,6 @@ import {
   StepSample,
   UpdateProfilePayload,
 } from '../types/Shared';
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {PurchasesEntitlementInfo} from 'react-native-purchases';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import PushNotification from 'react-native-push-notification';
 
 export interface WeeklyItems {
   quickRoutines: {[key: string]: SavedQuickRoutine};
@@ -47,6 +47,7 @@ export interface ProfileState {
   calendarId?: string;
   loginEmail: string;
   loginPassword: string;
+  downloadedDocuments: {[key: string]: string};
 }
 
 const initialState: ProfileState = {
@@ -103,6 +104,7 @@ const initialState: ProfileState = {
   syncedPlanEvents: {},
   loginEmail: '',
   loginPassword: '',
+  downloadedDocuments: {},
 };
 
 export const PROFILE = 'profile';
@@ -501,6 +503,15 @@ const profileSlice = createSlice({
       state: ProfileState,
       {payload}: PayloadAction<{plan: Plan; sync: boolean}>,
     ) => {},
+    setDownloadedDocument: (
+      state: ProfileState,
+      {payload}: PayloadAction<{id: string; path: string}>,
+    ) => {
+      state.downloadedDocuments = {
+        ...state.downloadedDocuments,
+        [payload.id]: payload.path,
+      };
+    },
   },
 });
 
@@ -547,6 +558,7 @@ export const {
   setRead,
   deleteMessage,
   requestMessageDeletion,
+  setDownloadedDocument,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -65,6 +65,8 @@ const Connections: React.FC<{
         preview = `${sender} sent a video`;
       } else if (message.type === 'image') {
         preview = `${sender} sent an image`;
+      } else if (message.type === 'document') {
+        preview = `${sender} sent a document`;
       } else {
         preview = message.text;
       }
@@ -74,6 +76,7 @@ const Connections: React.FC<{
           message.system ||
           message.type === 'audio' ||
           message.type === 'video' ||
+          message.type === 'document' ||
           message.type === 'image',
         createdAt: message.createdAt as number,
       };

@@ -117,7 +117,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'comment',
       onPress: () => {
         navigation.closeDrawer();
-        if (profile.premium) {
+        if (profile.premium || __DEV__) {
           navigationRef.navigate('Connections');
         } else {
           navigationRef.navigate('Premium', {});

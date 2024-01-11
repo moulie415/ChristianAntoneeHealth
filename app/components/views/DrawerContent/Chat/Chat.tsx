@@ -63,10 +63,10 @@ import {MyRootState} from '../../../../types/Shared';
 import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
 import Avatar from '../../../commons/Avatar';
 import Header from '../../../commons/Header';
-import Text from '../../../commons/Text';
 import ChatActions from './ChatActions';
 import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
+import DocumentMessage from './DocumentMessage';
 import VoiceNotePlayer from './VoiceNotePlayer';
 
 interface ChatProps {
@@ -209,29 +209,8 @@ const Chat: React.FC<ChatProps> = ({
 
   const renderCustomView = (props: BubbleProps<Message>) => {
     switch (props.currentMessage?.type) {
-      case 'workout':
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              if (props.currentMessage?.workout) {
-                viewWorkoutAction(props.currentMessage?.workout);
-              }
-            }}
-            style={{
-              padding: 10,
-              margin: 10,
-              borderRadius: 5,
-              backgroundColor: '#fff',
-              justifyContent: 'space-evenly',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Icon size={30} name="dumbbell" style={{color: colors.appBlue}} />
-            <Text style={{fontWeight: 'bold', color: colors.appBlue}}>
-              Press to view workout
-            </Text>
-          </TouchableOpacity>
-        );
+      case 'document':
+        return <DocumentMessage {...props.currentMessage} />;
       default:
         return null;
     }
@@ -387,6 +366,7 @@ const Chat: React.FC<ChatProps> = ({
           type,
           pending: true,
           createdAt: moment().valueOf(),
+          mimeType: asset.type,
         };
         sendMessageAction({message, chatId, uid});
       }
@@ -502,6 +482,8 @@ const Chat: React.FC<ChatProps> = ({
         type: 'document',
         pending: true,
         createdAt: moment().valueOf(),
+        mimeType: result.type || '',
+        filename: result.name || '',
       };
       sendMessageAction({message, chatId, uid});
     } catch (e: any) {

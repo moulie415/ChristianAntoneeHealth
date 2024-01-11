@@ -13,4 +13,6 @@ export default interface Message extends IMessage {
   workout?: string[];
   id?: string;
   document?: string;
+  mimeType?: string;
+  filename?: string;
 };
