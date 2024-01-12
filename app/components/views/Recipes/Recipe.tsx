@@ -14,7 +14,7 @@ import Spinner from '../../commons/Spinner';
 
 const Recipe: React.FC<{
   route: RouteProp<StackParamList, 'Recipe'>;
-  favourites: string[];
+  favourites?: string[];
   favouriteRecipe: (recipe: string) => void;
 }> = ({route, favourites, favouriteRecipe: favouriteRecipeAction}) => {
   const {recipe} = route.params;
