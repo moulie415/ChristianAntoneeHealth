@@ -1,16 +1,16 @@
-import {TouchableOpacity, View} from 'react-native';
 import React, {ReactNode} from 'react';
-import BackButton from './BackButton';
+import {TouchableOpacity, View} from 'react-native';
 import {navigationRef} from '../../RootNavigation';
+import BackButton from './BackButton';
 
-import Text from './Text';
-import colors from '../../constants/colors';
+import {DrawerActions} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import colors from '../../constants/colors';
 import Profile from '../../types/Profile';
 import {MyRootState} from '../../types/Shared';
-import {connect} from 'react-redux';
-import {DrawerActions} from '@react-navigation/native';
+import Text from './Text';
 
 const Header: React.FC<{
   hasBack?: boolean;
@@ -110,18 +110,18 @@ const Header: React.FC<{
 
       {!!title && (
         <Text
+          numberOfLines={1}
           style={{
             color: colors.appWhite,
             fontSize: 25,
             fontWeight: 'bold',
+            flex: 1,
           }}>
           {title}
         </Text>
       )}
       {!!right && (
-        <View style={{flex: 1, alignItems: 'flex-end', margin: 20}}>
-          {right}
-        </View>
+        <View style={{alignItems: 'flex-end', margin: 20}}>{right}</View>
       )}
     </View>
   );

@@ -2,6 +2,7 @@ import {EducationState} from '../reducers/education';
 import {ExercisesState} from '../reducers/exercises';
 import {ProfileState} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
+import {RecipesState} from '../reducers/recipes';
 import {SettingsState} from '../reducers/settings';
 import {TestsState} from '../reducers/tests';
 import {Gender} from './Profile';
@@ -14,6 +15,7 @@ export type MyRootState = {
   quickRoutines: QuickRoutinesState;
   education: EducationState;
   settings: SettingsState;
+  recipes: RecipesState;
 };
 
 export enum Level {
@@ -179,4 +181,24 @@ export interface UpdateProfilePayload {
   workoutMusic?: boolean;
   syncPlanWithCalendar?: boolean;
   goalReminders?: boolean;
+  favouriteRecipes?: string[];
+}
+
+export interface Recipe {
+  id: string;
+  name: string;
+  category: RecipeCategory;
+  image: {title: string; src: string};
+  recipe: {title: string; src: string};
+  premium: boolean;
+}
+
+export enum RecipeCategory {
+  HIGH_PROTEIN = 'highProtein',
+  VEGETARIAN = 'vegetarian',
+  VEGAN = 'vegan',
+  LOW_CARB = 'lowCarb',
+  SMOOTHIE = 'smoothie',
+  FIVE_INGREDIENT = 'fiveIngredient',
+  GLUTEN_FREE = 'glutenFree',
 }

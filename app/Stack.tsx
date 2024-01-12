@@ -1,57 +1,66 @@
-import React from 'react';
-import {StackParamList} from './App';
+import {
+  DrawerContentComponentProps,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Premium from './components/views/DrawerContent/Premium';
-import Loading from './components/views/Loading';
-import ExerciseList from './components/views/Workout/ExerciseList';
-import CustomizeExercise from './components/views/Workout/CustomizeExercise';
-import ExerciseListHeaderRight from './components/commons/ExerciseListHeaderRight';
-import ReviewExercises from './components/views/Workout/ReviewExercises';
-import StartWorkout from './components/views/Workout/StartWorkout';
-import EndWorkout from './components/views/Workout/EndWorkout';
-import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import Policies from './components/views/DrawerContent/Policies';
-import Test from './components/views/Tests/Test';
-import QuickRoutineView from './components/views/QuickRoutines/QuickRoutine';
+import React from 'react';
+import {Dimensions} from 'react-native';
+import {StackParamList} from './App';
+import EducationTabs from './EducationTabs';
+import SavedItemsTabs from './SavedItemsTabs';
 import Tabs from './Tabs';
-import Login from './components/views/Login';
-import SignUp from './components/views/SignUp';
+import ExerciseListHeaderRight from './components/commons/ExerciseListHeaderRight';
+import HeaderShareButton from './components/commons/HeaderShareButton';
+import DeleteAccount from './components/views/DeleteAccount';
+import About from './components/views/DrawerContent/About';
+import AddConnection from './components/views/DrawerContent/AddConnection';
+import Chat from './components/views/DrawerContent/Chat/Chat';
+import VideoView from './components/views/DrawerContent/Chat/VideoView';
+import Connections from './components/views/DrawerContent/Connections';
+import DrawerContent from './components/views/DrawerContent/DrawerContent';
 import Notifications from './components/views/DrawerContent/Notifications';
+import Policies from './components/views/DrawerContent/Policies';
+import Premium from './components/views/DrawerContent/Premium';
+import Settings from './components/views/DrawerContent/Settings';
 import Support from './components/views/DrawerContent/Support';
 import Terms from './components/views/DrawerContent/Terms';
-import Settings from './components/views/DrawerContent/Settings';
-import About from './components/views/DrawerContent/About';
-import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
-import SavedItemsTabs from './SavedItemsTabs';
-import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
-import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';
-import HeaderShareButton from './components/commons/HeaderShareButton';
-import ForgotPassword from './components/views/ForgotPassword';
-import DeleteAccount from './components/views/DeleteAccount';
-import EducationTabs from './EducationTabs';
 import EducationArticle from './components/views/Education/EducationArticle';
-import FitnessGoal from './components/views/Workout/FitnessGoal';
-import Experience from './components/views/Workout/Experience';
-import WarmUp from './components/views/Workout/WarmUp';
-import Connections from './components/views/DrawerContent/Connections';
-import AddConnection from './components/views/DrawerContent/AddConnection';
-import AddConnectionButton from './components/commons/AddConnectionButton';
-import Chat from './components/views/DrawerContent/Chat/Chat';
-import Rating from './components/views/Rating';
-import WorkoutList from './components/views/Workout/WorkoutList';
-import WhatArea from './components/views/Workout/WhatArea';
-import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
-import PreWorkout from './components/views/Workout/PreWorkout';
+import ForgotPassword from './components/views/ForgotPassword';
+import Loading from './components/views/Loading';
+import Login from './components/views/Login';
+import MonthlyDayView from './components/views/Plan/MonthlyDayView';
 import PlanNutrition from './components/views/Plan/PlanNutrition';
 import PlanSleep from './components/views/Plan/PlanSleep';
-import MonthlyDayView from './components/views/Plan/MonthlyDayView';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import DrawerContent from './components/views/DrawerContent/DrawerContent';
-import {Dimensions} from 'react-native';
+import EndQuickRoutine from './components/views/QuickRoutines/EndQuickRoutine';
+import PreQuickRoutine from './components/views/QuickRoutines/PreQuickRoutine';
+import QuickRoutineView from './components/views/QuickRoutines/QuickRoutine';
+import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';
+import Rating from './components/views/Rating';
+import Recipe from './components/views/Recipes/Recipe';
+import Recipes from './components/views/Recipes/Recipes';
+import SignUp from './components/views/SignUp';
+import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
+import Test from './components/views/Tests/Test';
 import ViewProfile from './components/views/ViewProfile';
-import VideoView from './components/views/DrawerContent/Chat/VideoView';
+import CustomizeExercise from './components/views/Workout/CustomizeExercise';
+import EndWorkout from './components/views/Workout/EndWorkout';
+import ExerciseList from './components/views/Workout/ExerciseList';
+import Experience from './components/views/Workout/Experience';
+import FitnessGoal from './components/views/Workout/FitnessGoal';
+import PreWorkout from './components/views/Workout/PreWorkout';
+import ReviewExercises from './components/views/Workout/ReviewExercises';
+import StartWorkout from './components/views/Workout/StartWorkout';
+import WarmUp from './components/views/Workout/WarmUp';
+import WhatArea from './components/views/Workout/WhatArea';
+import WorkoutList from './components/views/Workout/WorkoutList';
+import WorkoutSummary from './components/views/Workout/WorkoutSummary';
+import RecipeCategories from './components/views/Recipes/RecipeCategories';
 
 const Drawer = createDrawerNavigator();
+
+const DContent = (props: DrawerContentComponentProps) => (
+  <DrawerContent {...props} />
+);
 
 export const DrawerNavigator: React.FC = () => {
   return (
@@ -64,7 +73,7 @@ export const DrawerNavigator: React.FC = () => {
         },
         swipeEnabled: false,
       }}
-      drawerContent={props => <DrawerContent {...props} />}>
+      drawerContent={DContent}>
       <Drawer.Screen name="Stack" component={StackComponent} />
     </Drawer.Navigator>
   );
@@ -144,6 +153,9 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="Sleep" component={PlanSleep} />
         <Stack.Screen name="MonthlyDayView" component={MonthlyDayView} />
         <Stack.Screen name="ViewProfile" component={ViewProfile} />
+        <Stack.Screen name="Recipes" component={Recipes} />
+        <Stack.Screen name="RecipeCategories" component={RecipeCategories} />
+        <Stack.Screen name="Recipe" component={Recipe} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}

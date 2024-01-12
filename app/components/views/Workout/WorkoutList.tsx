@@ -1,26 +1,24 @@
-import {Dimensions, FlatList, ImageBackground, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import {connect} from 'react-redux';
-import {MyRootState} from '../../../types/Shared';
-import QuickRoutine from '../../../types/QuickRoutines';
-import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
-import Profile from '../../../types/Profile';
-import {SettingsState} from '../../../reducers/settings';
-import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Exercise from '../../../types/Exercise';
-import Header from '../../commons/Header';
-import WorkoutCard from '../../commons/WorkoutCard';
-import FastImage from 'react-native-fast-image';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
+import {getExercisesById} from '../../../reducers/exercises';
 import {
   getQuickRoutines,
   startQuickRoutine,
 } from '../../../reducers/quickRoutines';
-import {getExercisesById} from '../../../reducers/exercises';
+import {SettingsState} from '../../../reducers/settings';
+import Exercise from '../../../types/Exercise';
+import Profile from '../../../types/Profile';
+import QuickRoutine from '../../../types/QuickRoutines';
+import {MyRootState} from '../../../types/Shared';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Header from '../../commons/Header';
+import WorkoutCard from '../../commons/WorkoutCard';
 
 const {height} = Dimensions.get('screen');
 

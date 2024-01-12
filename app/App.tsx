@@ -34,6 +34,8 @@ import {
   PlanNutrition,
   PlanSleep,
   PlanWorkout,
+  Recipe,
+  RecipeCategory,
   WarmUp,
 } from './types/Shared';
 
@@ -134,6 +136,9 @@ export type StackParamList = {
   Sleep: {sleep: PlanSleep};
   MonthlyDayView: {workouts: PlanWorkout[]; date: string; planId: string};
   ViewProfile: {connection: Profile};
+  Recipes: {category: RecipeCategory};
+  Recipe: {recipe: Recipe};
+  RecipeCategories: undefined;
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

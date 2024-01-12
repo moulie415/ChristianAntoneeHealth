@@ -31,6 +31,7 @@ const DocumentMessage: React.FC<Props> = ({
   downloadedDocuments,
 }) => {
   const [progress, setProgress] = useState(0);
+  const [downloading, setDownloading] = useState(false);
   const downloadFile = async () => {
     try {
       const ext = mimeType?.split('/')[1];
@@ -56,20 +57,24 @@ const DocumentMessage: React.FC<Props> = ({
   const file = downloadedDocuments[id || ''];
 
   const openFile = async () => {
+    setDownloading(true);
     if (file) {
       try {
         await FileViewer.open(file);
       } catch (e) {
+        setDownloadedDocumentAction({id: id || '', path: ''});
         await downloadFile();
       }
     } else {
       downloadFile();
     }
+    setDownloading(false);
   };
 
   const isYou = user._id === profile.uid;
   return (
     <TouchableOpacity
+      disabled={downloading}
       onPress={openFile}
       style={{
         padding: 10,

@@ -1,11 +1,12 @@
 import {all, fork} from 'redux-saga/effects';
-import profileSaga from './profile';
-import exercisesSaga from './exercises';
-import testsSaga from './tests';
-import quickRoutinesSaga from './quickRoutines';
-import educationSaga from './education';
 import appStateSaga from './appState';
+import educationSaga from './education';
+import exercisesSaga from './exercises';
 import planSaga from './plan';
+import profileSaga from './profile';
+import quickRoutinesSaga from './quickRoutines';
+import recipesSaga from './recipes';
+import testsSaga from './tests';
 import watchSaga from './watch';
 
 export default function* rootSaga() {
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(appStateSaga),
     fork(planSaga),
     fork(watchSaga),
+    fork(recipesSaga),
   ]);
 }

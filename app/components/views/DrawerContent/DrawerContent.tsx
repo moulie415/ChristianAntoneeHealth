@@ -1,34 +1,30 @@
-import React, {ReactNode} from 'react';
 import auth from '@react-native-firebase/auth';
-import {connect} from 'react-redux';
+import messaging from '@react-native-firebase/messaging';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import * as Sentry from '@sentry/react-native';
+import React, {ReactNode} from 'react';
 import {
   Alert,
   FlatList,
   Linking,
-  Platform,
   Share,
-  StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import colors from '../../../constants/colors';
-import {navigationRef, resetToWelcome} from '../../../RootNavigation';
-import {MyRootState} from '../../../types/Shared';
-import Purchases from 'react-native-purchases';
-import {STORE_LINK} from '../../../constants';
-
-import messaging from '@react-native-firebase/messaging';
-import UnreadRowCount from '../../commons/unread/UnreadRowCount';
-import {logError} from '../../../helpers/error';
-import Text from '../../commons/Text';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import FastImage from 'react-native-fast-image';
-import * as Sentry from '@sentry/react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
-import Profile from '../../../types/Profile';
-import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import Purchases from 'react-native-purchases';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {navigationRef, resetToWelcome} from '../../../RootNavigation';
+import {STORE_LINK} from '../../../constants';
+import colors from '../../../constants/colors';
+import {logError} from '../../../helpers/error';
 import {setLoggedIn} from '../../../reducers/profile';
+import Profile from '../../../types/Profile';
+import {MyRootState} from '../../../types/Shared';
+import Text from '../../commons/Text';
+import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 
 export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
   return (
@@ -117,7 +113,7 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'comment',
       onPress: () => {
         navigation.closeDrawer();
-        if (profile.premium || __DEV__) {
+        if (profile.premium) {
           navigationRef.navigate('Connections');
         } else {
           navigationRef.navigate('Premium', {});
@@ -133,6 +129,14 @@ const DrawerContent: React.FC<Props> = ({
           color={colors.appWhite}
         />
       ),
+    },
+    {
+      title: 'Recipes',
+      icon: 'utensils',
+      onPress: () => {
+        navigationRef.navigate('RecipeCategories');
+        navigation.closeDrawer();
+      },
     },
     {
       title: 'Premium',

@@ -1,16 +1,15 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
-import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
-import HomeCard from '../commons/HomeCard';
-import colors from '../../constants/colors';
-import Avatar from '../commons/Avatar';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
+import colors from '../../constants/colors';
 import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
 import Header from '../commons/Header';
+import HomeCard from '../commons/HomeCard';
 
 const {height, width} = Dimensions.get('window');
 
@@ -71,6 +70,13 @@ const Home: React.FC<{
             subtitle="Track your fitness overtime"
             image={require('../../images/fitness_testing.jpeg')}
             onPress={() => navigation.navigate('Fitness')}
+          />
+
+          <HomeCard
+            title="Recipes"
+            subtitle="Browse a list of recipes"
+            image={require('../../images/recipes.jpg')}
+            onPress={() => navigation.navigate('RecipeCategories')}
           />
 
           <HomeCard

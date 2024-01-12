@@ -1,6 +1,6 @@
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
+import {Area, Equipment} from './QuickRoutines';
 import {Goal, Level} from './Shared';
-import { Area, Equipment } from './QuickRoutines';
 
 export type Gender = 'male' | 'female' | 'none';
 
@@ -62,5 +62,5 @@ export default interface Profile {
   area?: Area;
   equipment?: Equipment;
   experience?: Level;
-
+  favouriteRecipes?: string[];
 };

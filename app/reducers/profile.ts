@@ -79,6 +79,7 @@ const initialState: ProfileState = {
     autoPlay: true,
     prepTime: 15,
     workoutMusic: true,
+    favouriteRecipes: [],
   },
   loggedIn: false,
   weightSamples: [],
@@ -241,6 +242,9 @@ export type SYNC_PLAN_WITH_CALENDAR = typeof SYNC_PLAN_WITH_CALENDAR;
 
 export const SET_SYNCED_PLAN_EVENT = `${PROFILE}/setSyncedPlanEvent`;
 export type SET_SYNCED_PLAN_EVENT = typeof SET_SYNCED_PLAN_EVENT;
+
+export const FAVOURITE_RECIPE = `${PROFILE}/favouriteRecipe`;
+export type FAVOURITE_RECIPE = typeof FAVOURITE_RECIPE;
 
 const profileSlice = createSlice({
   name: PROFILE,
@@ -512,6 +516,21 @@ const profileSlice = createSlice({
         [payload.id]: payload.path,
       };
     },
+    favouriteRecipe: (
+      state: ProfileState,
+      {payload}: PayloadAction<string>,
+    ) => {
+      if (state.profile.favouriteRecipes?.some(recipe => recipe === payload)) {
+        state.profile.favouriteRecipes = state.profile.favouriteRecipes.filter(
+          r => r !== payload,
+        );
+      } else {
+        state.profile.favouriteRecipes = [
+          ...(state.profile.favouriteRecipes || []),
+          payload,
+        ];
+      }
+    },
   },
 });
 
@@ -559,6 +578,7 @@ export const {
   deleteMessage,
   requestMessageDeletion,
   setDownloadedDocument,
+  favouriteRecipe,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

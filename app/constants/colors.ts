@@ -1,5 +1,3 @@
-import {ColorHex} from 'react-native-countdown-circle-timer';
-
 const colors = {
   button: '#E5E5E5',
   textGrey: '#6E6E6E',

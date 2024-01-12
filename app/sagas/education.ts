@@ -1,15 +1,15 @@
+import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, put, select, takeLatest, throttle} from 'redux-saga/effects';
+import {call, put, select, throttle} from 'redux-saga/effects';
 import * as api from '../helpers/api';
-import Education from '../types/Education';
-import {MyRootState} from '../types/Shared';
 import {
   GET_EDUCATION,
   GET_EDUCATION_BY_ID,
   setEducation,
   setEducationLoading,
 } from '../reducers/education';
-import {PayloadAction} from '@reduxjs/toolkit';
+import Education from '../types/Education';
+import {MyRootState} from '../types/Shared';
 
 function* getEducation() {
   try {

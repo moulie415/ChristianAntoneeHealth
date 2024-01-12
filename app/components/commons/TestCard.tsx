@@ -1,15 +1,14 @@
-import {View, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import React from 'react';
-import Test from '../../types/Test';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import colors from '../../constants/colors';
-import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
-import Profile from '../../types/Profile';
-import Text from './Text';
-import FastImage from 'react-native-fast-image';
-import FastImageAnimated from './FastImageAnimated';
+import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import colors from '../../constants/colors';
+import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
+import Test from '../../types/Test';
+import FastImageAnimated from './FastImageAnimated';
+import Text from './Text';
 
 const {height} = Dimensions.get('window');
 

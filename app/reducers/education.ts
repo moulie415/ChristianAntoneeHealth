@@ -1,5 +1,5 @@
-import Education from '../types/Education';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import Education from '../types/Education';
 import {setLoggedIn} from './profile';
 
 export interface EducationState {

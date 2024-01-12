@@ -1,25 +1,25 @@
+import appleAuth from '@invertase/react-native-apple-authentication';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
-import Exercise from '../types/Exercise';
-import Profile from '../types/Profile';
-import Test from '../types/Test';
-import {CoolDown, Goal, Level, WarmUp} from '../types/Shared';
-import QuickRoutine from '../types/QuickRoutines';
-import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
-import Education from '../types/Education';
-import Snackbar from 'react-native-snackbar';
-import Chat from '../types/Chat';
-import Message from '../types/Message';
-import moment from 'moment';
-import {WeeklyItems} from '../reducers/profile';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import appleAuth from '@invertase/react-native-apple-authentication';
-import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import moment from 'moment';
 import {Alert} from 'react-native';
+import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import Snackbar from 'react-native-snackbar';
+import {WeeklyItems} from '../reducers/profile';
+import Chat from '../types/Chat';
+import Education from '../types/Education';
+import Exercise from '../types/Exercise';
+import Message from '../types/Message';
+import Profile from '../types/Profile';
+import QuickRoutine from '../types/QuickRoutines';
+import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
+import {CoolDown, Goal, Level, Recipe, WarmUp} from '../types/Shared';
+import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
 
 GoogleSignin.configure({
@@ -538,6 +538,54 @@ export const getEducationById = async (ids: string[]) => {
     return snapshot.docs.reduce((acc: {[id: string]: Education}, cur) => {
       const test: any = cur.data();
       acc[cur.id] = {...test, id: cur.id, createdate: test.createdate.toDate()};
+      return acc;
+    }, {});
+  }
+};
+
+export const getRecipes = async () => {
+  const recipes = await db().collection('recipes').get();
+  return recipes.docs.reduce((acc: {[id: string]: Recipe}, cur) => {
+    const recipe: any = cur.data();
+    acc[cur.id] = {
+      ...recipe,
+      id: cur.id,
+      createdate: recipe.createdate.toDate(),
+    };
+    return acc;
+  }, {});
+};
+
+export const getRecipesById = async (ids: string[]) => {
+  if (!ids?.length) {
+    return [];
+  }
+  const validIds = ids.filter(id => id);
+  if (validIds.length > 10) {
+    const snapshot = await db().collection('recipes').get();
+    return snapshot.docs
+      .filter(doc => ids.includes(doc.id))
+      .reduce((acc: {[id: string]: Recipe}, cur) => {
+        const recipe: any = cur.data();
+        acc[cur.id] = {
+          ...recipe,
+          id: cur.id,
+          createdate: recipe.createdate.toDate(),
+        };
+        return acc;
+      }, {});
+  } else {
+    const snapshot = await db()
+      .collection('recipes')
+      .where(db.FieldPath.documentId(), 'in', validIds)
+      .get();
+    return snapshot.docs.reduce((acc: {[id: string]: Recipe}, cur) => {
+      const recipe: any = cur.data();
+      acc[cur.id] = {
+        ...recipe,
+        id: cur.id,
+        createdate: recipe.createdate.toDate(),
+      };
       return acc;
     }, {});
   }

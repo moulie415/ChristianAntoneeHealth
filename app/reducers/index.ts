@@ -1,12 +1,13 @@
-import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import profile from './profile';
-import exercises from './exercises';
-import tests from './tests';
-import quickRoutines from './quickRoutines';
-import education from './education';
-import settings from './settings';
 import {combineReducers} from 'redux';
+import {persistReducer} from 'redux-persist';
+import education from './education';
+import exercises from './exercises';
+import profile from './profile';
+import quickRoutines from './quickRoutines';
+import recipes from './recipes';
+import settings from './settings';
+import tests from './tests';
 
 const config = {
   key: 'root',
@@ -32,6 +33,12 @@ const educationPersistConfig = {
   blacklist: ['loading'],
 };
 
+const recipesPersistConfig = {
+  key: 'recipes',
+  storage: AsyncStorage,
+  blacklist: ['loading'],
+};
+
 const rootReducer = combineReducers({
   profile: persistReducer(profilePersistConfig, profile),
   exercises: persistReducer(exercisesPersistConfig, exercises),
@@ -39,6 +46,7 @@ const rootReducer = combineReducers({
   quickRoutines,
   education: persistReducer(educationPersistConfig, education),
   settings,
+  recipes: persistReducer(recipesPersistConfig, recipes),
 });
 
 export default persistReducer(config, rootReducer);
