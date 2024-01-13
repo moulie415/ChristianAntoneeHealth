@@ -87,10 +87,12 @@ interface ChatProps {
     message,
     chatId,
     uid,
+    size,
   }: {
     message: Message;
     chatId: string;
     uid: string;
+    size?: number | null;
   }) => void;
   setReadAction: (uid: string) => void;
   viewWorkoutAction: (workout: string[]) => void;
@@ -491,6 +493,7 @@ const Chat: React.FC<ChatProps> = ({
   const onPressDocument = async () => {
     try {
       const result = await DocumentPicker.pickSingle({
+        copyTo: 'cachesDirectory',
         ...(Platform.OS === 'android'
           ? {type: ['text/*', 'application/*']}
           : {}),
@@ -502,7 +505,8 @@ const Chat: React.FC<ChatProps> = ({
           avatar: profile.avatar,
         },
         _id: uuid.v4() as string,
-        document: result.uri,
+        document:
+          Platform.OS === 'ios' ? result.uri : result.fileCopyUri || result.uri,
         text: '',
         type: 'document',
         pending: true,
@@ -510,7 +514,8 @@ const Chat: React.FC<ChatProps> = ({
         mimeType: result.type || '',
         filename: result.name || '',
       };
-      sendMessageAction({message, chatId, uid});
+
+      sendMessageAction({message, chatId, uid, size: result.size});
     } catch (e: any) {
       if (e?.code !== 'DOCUMENT_PICKER_CANCELED') {
         logError(e);

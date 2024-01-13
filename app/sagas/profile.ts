@@ -567,7 +567,12 @@ function* chatsWatcher(action: PayloadAction<{[key: string]: Chat}>) {
 }
 
 function* sendMessage(
-  action: PayloadAction<{chatId: string; message: Message; uid: string}>,
+  action: PayloadAction<{
+    chatId: string;
+    message: Message;
+    uid: string;
+    size?: number | null;
+  }>,
 ) {
   const {chatId, uid} = action.payload;
   let message = action.payload.message;
@@ -593,14 +598,25 @@ function* sendMessage(
       } else {
         throw new Error('Unsupported mime type');
       }
-      const read: RNFS.StatResult = yield call(RNFS.stat, compressedUri);
+
+      let size = action.payload.size;
+      try {
+        if (message.type !== 'document') {
+          const read: RNFS.StatResult = yield call(RNFS.stat, compressedUri);
+          size = read.size;
+        }
+      } catch (e) {
+        logError(e);
+      }
 
       const maxFileSize: number = yield select(
         (state: MyRootState) => state.settings.chatMaxFileSizeMb,
       );
 
+      console.log(size);
+
       // file size comes back in bytes so need to divide by 1000000 to get mb
-      if (read.size && read.size / 1000000 < maxFileSize) {
+      if (size && size / 1000000 < maxFileSize) {
         const {profile} = yield select((state: MyRootState) => state.profile);
         const imageRef = storage()
           .ref(`chats/${profile.uid}`)
@@ -633,13 +649,8 @@ function* sendMessage(
     if (e instanceof Error) {
       Snackbar.show({text: e.message});
     }
-    if (e instanceof Error && e.message === fileSizeExceededMessage) {
-      yield put(deleteMessage({uid, message}));
-    } else {
-      yield put(
-        setMessage({uid, message: {...message, sent: false, pending: false}}),
-      );
-    }
+    yield put(deleteMessage({uid, message}));
+
     logError(e);
   }
 }

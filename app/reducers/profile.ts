@@ -486,7 +486,14 @@ const profileSlice = createSlice({
     ) => {},
     sendMessage: (
       state: ProfileState,
-      {payload}: PayloadAction<{chatId: string; uid: string; message: Message}>,
+      {
+        payload,
+      }: PayloadAction<{
+        chatId: string;
+        uid: string;
+        message: Message;
+        size?: number | null;
+      }>,
     ) => {},
     getConnections: () => {},
     handleAuth: (
