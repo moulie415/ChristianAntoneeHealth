@@ -1,0 +1,68 @@
+diff --git a/node_modules/react-native-gifted-chat/lib/Bubble.d.ts b/node_modules/react-native-gifted-chat/lib/Bubble.d.ts
+index e174a4d..000463f 100644
+--- a/node_modules/react-native-gifted-chat/lib/Bubble.d.ts
++++ b/node_modules/react-native-gifted-chat/lib/Bubble.d.ts
+@@ -34,11 +34,11 @@ export interface BubbleProps<TMessage extends IMessage> {
+     onPress?(context?: any, message?: any): void;
+     onLongPress?(context?: any, message?: any): void;
+     onQuickReply?(replies: Reply[]): void;
+-    renderMessageImage?(props: RenderMessageImageProps<TMessage>): React.ReactNode;
+-    renderMessageVideo?(props: RenderMessageVideoProps<TMessage>): React.ReactNode;
++    renderMessageImage?(props: RenderMessageImageProps<TMessage>, context: any): React.ReactNode;
++    renderMessageVideo?(props: RenderMessageVideoProps<TMessage>, context: any): React.ReactNode;
+     renderMessageAudio?(props: RenderMessageAudioProps<TMessage>): React.ReactNode;
+     renderMessageText?(props: RenderMessageTextProps<TMessage>): React.ReactNode;
+-    renderCustomView?(bubbleProps: BubbleProps<TMessage>): React.ReactNode;
++    renderCustomView?(bubbleProps: BubbleProps<TMessage>, context: any): React.ReactNode;
+     renderTime?(timeProps: TimeProps<TMessage>): React.ReactNode;
+     renderTicks?(currentMessage: TMessage): React.ReactNode;
+     renderUsername?(user?: TMessage['user']): React.ReactNode;
+diff --git a/node_modules/react-native-gifted-chat/lib/Bubble.js b/node_modules/react-native-gifted-chat/lib/Bubble.js
+index 70b74ae..75550a8 100644
+--- a/node_modules/react-native-gifted-chat/lib/Bubble.js
++++ b/node_modules/react-native-gifted-chat/lib/Bubble.js
+@@ -168,7 +168,7 @@ export default class Bubble extends React.Component {
+         if (this.props.currentMessage && this.props.currentMessage.image) {
+             const { containerStyle, wrapperStyle, ...messageImageProps } = this.props;
+             if (this.props.renderMessageImage) {
+-                return this.props.renderMessageImage(messageImageProps);
++                return this.props.renderMessageImage(messageImageProps, this.context);
+             }
+             return <MessageImage {...messageImageProps}/>;
+         }
+@@ -178,7 +178,7 @@ export default class Bubble extends React.Component {
+         if (this.props.currentMessage && this.props.currentMessage.video) {
+             const { containerStyle, wrapperStyle, ...messageVideoProps } = this.props;
+             if (this.props.renderMessageVideo) {
+-                return this.props.renderMessageVideo(messageVideoProps);
++                return this.props.renderMessageVideo(messageVideoProps, this.context);
+             }
+             return <MessageVideo {...messageVideoProps}/>;
+         }
+@@ -244,7 +244,7 @@ export default class Bubble extends React.Component {
+     }
+     renderCustomView() {
+         if (this.props.renderCustomView) {
+-            return this.props.renderCustomView(this.props);
++            return this.props.renderCustomView(this.props, this.context);
+         }
+         return null;
+     }
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedChat.d.ts b/node_modules/react-native-gifted-chat/lib/GiftedChat.d.ts
+index 0444a70..b047901 100644
+--- a/node_modules/react-native-gifted-chat/lib/GiftedChat.d.ts
++++ b/node_modules/react-native-gifted-chat/lib/GiftedChat.d.ts
+@@ -86,10 +86,10 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
+     renderUsername?(user: User): React.ReactNode;
+     renderMessage?(message: Message<TMessage>['props']): React.ReactNode;
+     renderMessageText?(messageText: MessageTextProps<TMessage>): React.ReactNode;
+-    renderMessageImage?(props: MessageImageProps<TMessage>): React.ReactNode;
+-    renderMessageVideo?(props: MessageVideoProps<TMessage>): React.ReactNode;
++    renderMessageImage?(props: MessageImageProps<TMessage>, context: any): React.ReactNode;
++    renderMessageVideo?(props: MessageVideoProps<TMessage>, context: any): React.ReactNode;
+     renderMessageAudio?(props: MessageAudioProps<TMessage>): React.ReactNode;
+-    renderCustomView?(props: Bubble<TMessage>['props']): React.ReactNode;
++    renderCustomView?(props: Bubble<TMessage>['props'], context: any): React.ReactNode;
+     renderDay?(props: DayProps<TMessage>): React.ReactNode;
+     renderTime?(props: TimeProps<TMessage>): React.ReactNode;
+     renderFooter?(): React.ReactNode;
