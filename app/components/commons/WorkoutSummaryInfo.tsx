@@ -139,7 +139,7 @@ const WorkoutSummaryInfo: React.FC<{
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon
-            name="tint"
+            name="droplet"
             color={colors.appBlue}
             style={{marginRight: 10}}
             size={30}
@@ -168,7 +168,7 @@ const WorkoutSummaryInfo: React.FC<{
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
-              name="heartbeat"
+              name="heart-pulse"
               color={colors.appBlue}
               style={{marginRight: 10}}
               size={30}
