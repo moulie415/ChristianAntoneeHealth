@@ -657,6 +657,9 @@ const Chat: React.FC<ChatProps> = ({
               onPressDocument={onPressDocument}
             />
           )}
+          scrollToBottomComponent={() => (
+            <Icon name="chevron-down" size={20} color={colors.textGrey} />
+          )}
           alwaysShowSend
         />
 

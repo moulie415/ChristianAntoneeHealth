@@ -1,6 +1,5 @@
 import {RouteProp} from '@react-navigation/native';
 import React, {useCallback, useEffect} from 'react';
-import {Platform} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import RNFS from 'react-native-fs';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -59,18 +58,10 @@ const Recipe: React.FC<{
   ]);
 
   useEffect(() => {
-    if (Platform.OS === 'android' && !downloadedDocuments[recipe.id]) {
-      downloadFile();
-    }
-  }, [downloadFile, downloadedDocuments, recipe.id]);
+    downloadFile();
+  }, [downloadFile]);
 
-  const source =
-    Platform.OS === 'ios'
-      ? {
-          uri: recipe.recipe.src,
-          cache: true,
-        }
-      : {uri: downloadedDocuments[recipe.id]};
+  const source = {uri: downloadedDocuments[recipe.id]};
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header
