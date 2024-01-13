@@ -1,22 +1,32 @@
-import React, {MutableRefObject} from 'react';
-import {ScrollView, ImageBackground, View} from 'react-native';
-import {MyRootState} from '../../../types/Shared';
-import {connect} from 'react-redux';
-
-import {SafeAreaView} from 'react-native-safe-area-context';
-import TestCard from '../../commons/TestCard';
-import colors from '../../../constants/colors';
-import Header from '../../commons/Header';
-import {StackParamList} from '../../../App';
+import {useFocusEffect} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Test from '../../../types/Test';
+import React, {useState} from 'react';
+import {ScrollView, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
+import {getTests} from '../../../reducers/tests';
 import Profile from '../../../types/Profile';
+import {MyRootState} from '../../../types/Shared';
+import Test from '../../../types/Test';
+import Header from '../../commons/Header';
+import TestCard from '../../commons/TestCard';
 
 const FitnessTesting: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Fitness'>;
   tests: {[key: string]: Test};
   profile: Profile;
-}> = ({navigation, tests, profile}) => {
+  getTests: () => void;
+}> = ({navigation, tests, profile, getTests: getTestsAction}) => {
+  const [hasFetched, setHasFetched] = useState(false);
+  useFocusEffect(() => {
+    if (!hasFetched) {
+      setHasFetched(true);
+    }
+    getTestsAction();
+  });
+
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
@@ -53,4 +63,8 @@ const mapStateToProps = ({tests, profile}: MyRootState) => ({
   profile: profile.profile,
 });
 
-export default connect(mapStateToProps)(FitnessTesting);
+const mapDispatchToProps = {
+  getTests,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FitnessTesting);

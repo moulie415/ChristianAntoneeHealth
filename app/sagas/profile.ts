@@ -1,33 +1,39 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import PushNotification from 'react-native-push-notification';
-import {eventChannel} from '@redux-saga/core';
-import {EventChannel} from '@redux-saga/core';
+import {EventChannel, eventChannel} from '@redux-saga/core';
 import moment from 'moment';
+import PushNotification from 'react-native-push-notification';
 import {
-  take,
-  call,
-  select,
-  put,
   all,
-  takeLatest,
-  fork,
+  call,
   debounce,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
   throttle,
 } from 'redux-saga/effects';
 
-import {getProfileImage} from '../helpers/images';
-import Profile from '../types/Profile';
-import {
-  MyRootState,
-  Sample,
-  SignUpPayload,
-  StepSample,
-  UpdateProfilePayload,
-} from '../types/Shared';
-import * as api from '../helpers/api';
-import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
+import dynamicLinks, {
+  FirebaseDynamicLinksTypes,
+} from '@react-native-firebase/dynamic-links';
+import db from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
+import storage from '@react-native-firebase/storage';
+import {statusCodes} from '@react-native-google-signin/google-signin';
+import {PayloadAction} from '@reduxjs/toolkit';
+import _ from 'lodash';
 import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
+import {Audio, Image, Video} from 'react-native-compressor';
+import RNFS from 'react-native-fs';
+import googleFit from 'react-native-google-fit';
+import Purchases from 'react-native-purchases';
+import Snackbar from 'react-native-snackbar';
+import Sound from 'react-native-sound';
+import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
+import {scheduleLocalNotification} from '../helpers';
+import * as api from '../helpers/api';
 import {
   getBodyFatPercentageSamples,
   getBoneMassSamples,
@@ -43,23 +49,11 @@ import {
   saveMuscleMass,
   saveWeight,
 } from '../helpers/biometrics';
-import Snackbar from 'react-native-snackbar';
-import googleFit, {ActivitySampleResponse} from 'react-native-google-fit';
-import Exercise from '../types/Exercise';
-import Purchases, {PurchasesOfferings} from 'react-native-purchases';
-import {setUserAttributes} from '../helpers/profile';
-import {handleDeepLink} from './exercises';
-import dynamicLinks, {
-  FirebaseDynamicLinksTypes,
-} from '@react-native-firebase/dynamic-links';
-import messaging from '@react-native-firebase/messaging';
-import Chat from '../types/Chat';
-import db from '@react-native-firebase/firestore';
-import Sound from 'react-native-sound';
-import {getSettings} from './settings';
-import {SettingsState} from '../reducers/settings';
 import {logError} from '../helpers/error';
-import Message from '../types/Message';
+import {getGoalsData} from '../helpers/goals';
+import {getProfileImage} from '../helpers/images';
+import isTestFlight from '../helpers/isTestFlight';
+import {setUserAttributes} from '../helpers/profile';
 import {
   GET_CONNECTIONS,
   GET_SAMPLES,
@@ -96,17 +90,19 @@ import {
   setWeeklyItemsForConnection,
   setWeightSamples,
 } from '../reducers/profile';
-import _ from 'lodash';
-import isTestFlight from '../helpers/isTestFlight';
-import {statusCodes} from '@react-native-google-signin/google-signin';
-import {getGoalsData} from '../helpers/goals';
-import {scheduleLocalNotification} from '../helpers';
-import {getTests} from '../reducers/tests';
-import {PayloadAction} from '@reduxjs/toolkit';
 import {getQuickRoutinesById} from '../reducers/quickRoutines';
-import storage from '@react-native-firebase/storage';
-import {Audio, Video, Image} from 'react-native-compressor';
-import RNFS from 'react-native-fs';
+import {SettingsState} from '../reducers/settings';
+import Chat from '../types/Chat';
+import Message from '../types/Message';
+import Profile from '../types/Profile';
+import {
+  MyRootState,
+  Sample,
+  SignUpPayload,
+  UpdateProfilePayload,
+} from '../types/Shared';
+import {handleDeepLink} from './exercises';
+import {getSettings} from './settings';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -794,6 +790,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         name: doc.exists ? doc.data()?.name || '' : '',
         surname: doc.exists ? doc.data()?.surname || '' : '',
       });
+
       if (doc.exists && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
         if (available) {
@@ -833,7 +830,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         navigate('SignUpFlow');
       }
       yield put(setLoggedIn(true));
-      yield put(getTests());
+
       yield fork(createChannels);
       const version = Platform.Version as number;
       if (Platform.OS === 'android' && version >= 33) {

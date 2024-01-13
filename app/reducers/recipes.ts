@@ -25,6 +25,9 @@ export type SET_RECIPES_LOADING = typeof SET_RECIPES_LOADING;
 export const GET_RECIPES = `${RECIPES}/getRecipes`;
 export type GET_RECIPES = typeof GET_RECIPES;
 
+export const GET_SAVED_RECIPES = `${RECIPES}/getSavedRecipes`;
+export type GET_SAVED_RECIPES = typeof GET_SAVED_RECIPES;
+
 export const GET_RECIPES_BY_ID = `${RECIPES}/getRecipesById`;
 export type GET_RECIPES_BY_ID = typeof GET_RECIPES_BY_ID;
 
@@ -45,6 +48,7 @@ const recipesSlice = createSlice({
       state.loading = payload;
     },
     getRecipes: () => {},
+    getSavedRecipes: () => {},
     getRecipesById: (
       state: RecipesState,
       {payload}: PayloadAction<string[]>,
@@ -59,7 +63,12 @@ const recipesSlice = createSlice({
   },
 });
 
-export const {setRecipesLoading, setRecipes, getRecipes, getRecipesById} =
-  recipesSlice.actions;
+export const {
+  setRecipesLoading,
+  setRecipes,
+  getRecipes,
+  getRecipesById,
+  getSavedRecipes,
+} = recipesSlice.actions;
 
 export default recipesSlice.reducer;

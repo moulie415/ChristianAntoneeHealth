@@ -1,26 +1,19 @@
-import {call, put, select, take, all, throttle} from 'redux-saga/effects';
-import {eventChannel} from '@redux-saga/core';
-import {EventChannel} from '@redux-saga/core';
-import Snackbar from 'react-native-snackbar';
-import Exercise from '../types/Exercise';
-import * as api from '../helpers/api';
-import {CoolDown, Goal, Level, MyRootState, WarmUp} from '../types/Shared';
-import {SavedWorkout} from '../types/SavedItem';
-import queryString from 'query-string';
-import {Alert} from 'react-native';
-import {navigate, resetToTabs} from '../RootNavigation';
 import dynamicLinks, {
   FirebaseDynamicLinksTypes,
 } from '@react-native-firebase/dynamic-links';
-import Profile from '../types/Profile';
-import {alertPremiumFeature} from '../helpers/exercises';
-import {logError} from '../helpers/error';
+import {EventChannel, eventChannel} from '@redux-saga/core';
+import {PayloadAction} from '@reduxjs/toolkit';
 import * as _ from 'lodash';
-import * as polar from '../helpers/polar';
-import {QuickRoutinesState} from '../reducers/quickRoutines';
+import queryString from 'query-string';
+import {Alert} from 'react-native';
+import Snackbar from 'react-native-snackbar';
+import {all, call, put, select, take, throttle} from 'redux-saga/effects';
+import {navigate, resetToTabs} from '../RootNavigation';
+import * as api from '../helpers/api';
+import {logError} from '../helpers/error';
+import {alertPremiumFeature} from '../helpers/exercises';
 import {sendGoalTargetNotification} from '../helpers/goals';
-import {ProfileState, setProfile} from '../reducers/profile';
-import {SettingsState} from '../reducers/settings';
+import * as polar from '../helpers/polar';
 import {
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
@@ -33,7 +26,13 @@ import {
   setWorkout,
   viewWorkout,
 } from '../reducers/exercises';
-import {PayloadAction} from '@reduxjs/toolkit';
+import {ProfileState, setProfile} from '../reducers/profile';
+import {QuickRoutinesState} from '../reducers/quickRoutines';
+import {SettingsState} from '../reducers/settings';
+import Exercise from '../types/Exercise';
+import Profile from '../types/Profile';
+import {SavedWorkout} from '../types/SavedItem';
+import {CoolDown, Goal, Level, MyRootState, WarmUp} from '../types/Shared';
 
 export function* getExercises(
   action: PayloadAction<{
@@ -92,8 +91,8 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
 
 function* getSavedWorkouts() {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
     yield put(setLoading(true));
+    const {uid} = yield select((state: MyRootState) => state.profile.profile);
     const workouts: {[key: string]: SavedWorkout} = yield call(
       api.getSavedWorkouts,
       uid,

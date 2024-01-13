@@ -1,17 +1,9 @@
+import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {
-  takeEvery,
-  call,
-  put,
-  takeLatest,
-  select,
-  throttle,
-} from 'redux-saga/effects';
+import {call, put, select, throttle} from 'redux-saga/effects';
 import * as api from '../helpers/api';
-import {SavedTest} from '../types/SavedItem';
-import {MyRootState} from '../types/Shared';
-import Test from '../types/Test';
 import {logError} from '../helpers/error';
+import {setLoading} from '../reducers/exercises';
 import {
   GET_SAVED_TESTS,
   GET_TESTS,
@@ -20,8 +12,9 @@ import {
   setSavedTests,
   setTests,
 } from '../reducers/tests';
-import {PayloadAction} from '@reduxjs/toolkit';
-import {setLoading} from '../reducers/exercises';
+import {SavedTest} from '../types/SavedItem';
+import {MyRootState} from '../types/Shared';
+import Test from '../types/Test';
 
 export function* getTests() {
   const tests: {[key: string]: Test} = yield call(api.getTests);
@@ -71,8 +64,8 @@ function* getSavedTests() {
 function* getTestsById(action: PayloadAction<string[]>) {
   try {
     const ids = action.payload;
-    yield put(setLoading(true));
     if (ids.length) {
+      yield put(setLoading(true));
       const tests: {[key: string]: Test} = yield call(api.getTestsById, ids);
       yield put(setTests(tests));
     }

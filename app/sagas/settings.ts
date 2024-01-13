@@ -1,6 +1,6 @@
 import {call, put} from 'redux-saga/effects';
-import {SettingsState, setSettings} from '../reducers/settings';
 import * as api from '../helpers/api';
+import {SettingsState, setSettings} from '../reducers/settings';
 
 export function* getSettings() {
   try {

@@ -1,10 +1,10 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
 import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
 import Education, {Category} from '../../../types/Education';
 import {MyRootState} from '../../../types/Shared';
 import ArticleList from './ArticleList';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
 
 const Nutritional: React.FC<{
   education: {[key: string]: Education};

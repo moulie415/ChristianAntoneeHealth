@@ -1,22 +1,22 @@
+import {PayloadAction} from '@reduxjs/toolkit';
 import {Platform} from 'react-native';
 import {
-  sendMessage,
-  watchEvents,
   WatchPayload,
   getReachability,
+  sendMessage,
+  watchEvents,
 } from 'react-native-watch-connectivity';
-import {eventChannel, EventChannel} from 'redux-saga';
-import {all, call, put, select, take, takeLatest} from 'redux-saga/effects';
-import {MyRootState} from '../types/Shared';
+import {EventChannel, eventChannel} from 'redux-saga';
+import {all, call, select, take, takeLatest} from 'redux-saga/effects';
 import * as api from '../helpers/api';
-import QuickRoutine from '../types/QuickRoutines';
-import Exercise from '../types/Exercise';
+import {SET_LOGGED_IN} from '../reducers/profile';
 import {
   SET_QUICK_ROUTINES,
   START_QUICK_ROUTINE,
 } from '../reducers/quickRoutines';
-import {SET_LOGGED_IN} from '../reducers/profile';
-import {PayloadAction} from '@reduxjs/toolkit';
+import Exercise from '../types/Exercise';
+import QuickRoutine from '../types/QuickRoutines';
+import {MyRootState} from '../types/Shared';
 
 function* loggedInWorker(action: PayloadAction<boolean>) {
   const reachable: boolean = yield call(getReachability);

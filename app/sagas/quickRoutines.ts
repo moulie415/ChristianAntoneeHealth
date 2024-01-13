@@ -1,10 +1,10 @@
+import {PayloadAction} from '@reduxjs/toolkit';
+import Snackbar from 'react-native-snackbar';
 import {call, put, select, throttle} from 'redux-saga/effects';
 import * as api from '../helpers/api';
-import QuickRoutine from '../types/QuickRoutines';
-import {MyRootState} from '../types/Shared';
-import Snackbar from 'react-native-snackbar';
-import {SavedQuickRoutine} from '../types/SavedItem';
 import {logError} from '../helpers/error';
+import {sendGoalTargetNotification} from '../helpers/goals';
+import {setLoading} from '../reducers/exercises';
 import {ProfileState} from '../reducers/profile';
 import {
   GET_QUICK_ROUTINES,
@@ -16,9 +16,9 @@ import {
   setSavedQuickRoutines,
 } from '../reducers/quickRoutines';
 import {SettingsState} from '../reducers/settings';
-import {sendGoalTargetNotification} from '../helpers/goals';
-import {setLoading} from '../reducers/exercises';
-import {PayloadAction} from '@reduxjs/toolkit';
+import QuickRoutine from '../types/QuickRoutines';
+import {SavedQuickRoutine} from '../types/SavedItem';
+import {MyRootState} from '../types/Shared';
 
 export function* getQuickRoutines() {
   try {

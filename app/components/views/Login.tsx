@@ -1,39 +1,39 @@
+import appleAuth from '@invertase/react-native-apple-authentication';
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
-  TouchableOpacity,
   Image,
   Platform,
-  View,
-  StyleSheet,
   SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
+import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import Text from '../commons/Text';
 import {
   appleSignIn,
   facebookSignIn,
   googleSignIn,
   signIn,
 } from '../../helpers/api';
-import appleAuth from '@invertase/react-native-apple-authentication';
-import Input from '../commons/Input';
-import Button from '../commons/Button';
 import GoogleLogo from '../../images/google.svg';
-import Spinner from '../commons/Spinner';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import FastImage from 'react-native-fast-image';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../App';
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {
   handleAuth,
   setLoginEmail,
   setLoginPassword,
   signUp,
 } from '../../reducers/profile';
+import {MyRootState} from '../../types/Shared';
+import Button from '../commons/Button';
+import Input from '../commons/Input';
+import Spinner from '../commons/Spinner';
+import Text from '../commons/Text';
 
 const Login: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Login'>;

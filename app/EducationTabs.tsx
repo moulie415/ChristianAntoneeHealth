@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
-import General from './components/views/Education/General';
-import Exercise from './components/views/Education/Exercise';
-import Nutritional from './components/views/Education/Nutritional';
-import {TouchableOpacity, useWindowDimensions, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from './components/commons/Header';
-import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import colors from './constants/colors';
-import LinearGradient from 'react-native-linear-gradient';
-
-import Text from './components/commons/Text';
-import {ScrollView} from 'react-native-gesture-handler';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {TouchableOpacity, useWindowDimensions, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {StackParamList} from './App';
-import FastImage from 'react-native-fast-image';
+import Header from './components/commons/Header';
+import Text from './components/commons/Text';
+import Exercise from './components/views/Education/Exercise';
+import General from './components/views/Education/General';
+import Nutritional from './components/views/Education/Nutritional';
+import colors from './constants/colors';
 
 const EducationTabs: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;

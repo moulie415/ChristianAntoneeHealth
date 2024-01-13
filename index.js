@@ -1,10 +1,13 @@
 //import './wdyr';
-import {AppRegistry, Linking, Platform} from 'react-native';
-import App, {store} from './app/App';
-import {name as appName} from './app.json';
-import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import messaging from '@react-native-firebase/messaging';
+import {AppRegistry, Linking, Platform} from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import {name as appName} from './app.json';
+import App, {store} from './app/App';
 import {navigate, navigationRef} from './app/RootNavigation';
+import {alertPremiumFeature} from './app/helpers/exercises';
+import {setUnread} from './app/reducers/profile';
 import {
   CONNECTION_ID,
   MESSAGE_CHANNEL_ID,
@@ -12,9 +15,6 @@ import {
   PLAN_CHANNEL_ID,
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './app/sagas/profile';
-import {alertPremiumFeature} from './app/helpers/exercises';
-import messaging from '@react-native-firebase/messaging';
-import { setUnread } from './app/reducers/profile';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)

@@ -1,12 +1,13 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, put, select, throttle} from 'redux-saga/effects';
+import {call, debounce, put, select, throttle} from 'redux-saga/effects';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
-import {FAVOURITE_RECIPE, updateProfile} from '../reducers/profile';
+import {FAVOURITE_RECIPE} from '../reducers/profile';
 import {
   GET_RECIPES,
   GET_RECIPES_BY_ID,
+  GET_SAVED_RECIPES,
   setRecipes,
   setRecipesLoading,
 } from '../reducers/recipes';
@@ -26,8 +27,8 @@ function* getRecipes() {
 function* getRecipesById(action: PayloadAction<string[]>) {
   try {
     const ids = action.payload;
-    yield put(setRecipesLoading(true));
     if (ids.length) {
+      yield put(setRecipesLoading(true));
       const recipes: {[key: string]: Recipe} = yield call(
         api.getRecipesById,
         ids,
@@ -60,8 +61,37 @@ function* favouriteRecipe(action: PayloadAction<string>) {
   }
 }
 
+function* getSavedRecipes() {
+  try {
+    yield put(setRecipesLoading(true));
+    const {favouriteRecipes} = yield select(
+      (state: MyRootState) => state.profile.profile,
+    );
+    if (favouriteRecipes) {
+      const recipes: {[key: string]: Recipe} = yield select(
+        (state: MyRootState) => state.recipes.recipes,
+      );
+      const missingRecipes = favouriteRecipes.filter(
+        (r: string) => !recipes[r],
+      );
+      if (missingRecipes.length) {
+        yield call(getRecipesById, {
+          payload: missingRecipes,
+          type: GET_RECIPES_BY_ID,
+        });
+      }
+    }
+    yield put(setRecipesLoading(false));
+  } catch (e) {
+    logError(e);
+    yield put(setRecipesLoading(false));
+    Snackbar.show({text: 'Error getting saved recipes'});
+  }
+}
+
 export default function* eductionSaga() {
   yield throttle(5000, GET_RECIPES, getRecipes);
   yield throttle(5000, GET_RECIPES_BY_ID, getRecipesById);
-  yield throttle(2000, FAVOURITE_RECIPE, favouriteRecipe);
+  yield debounce(3000, FAVOURITE_RECIPE, favouriteRecipe);
+  yield throttle(5000, GET_SAVED_RECIPES, getSavedRecipes);
 }

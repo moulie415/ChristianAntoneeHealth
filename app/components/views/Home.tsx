@@ -65,12 +65,6 @@ const Home: React.FC<{
             image={require('../../images/new_workout.jpeg')}
             onPress={() => navigation.navigate('Workout')}
           />
-          <HomeCard
-            title="Fitness tests"
-            subtitle="Track your fitness overtime"
-            image={require('../../images/fitness_testing.jpeg')}
-            onPress={() => navigation.navigate('Fitness')}
-          />
 
           <HomeCard
             title="Recipes"
@@ -86,17 +80,17 @@ const Home: React.FC<{
             onPress={() => navigation.navigate('Education')}
           />
           <HomeCard
-            title="Saved workouts/tests"
-            subtitle="View saved workouts, tests..."
+            title="Saved workouts, tests, recipes"
+            subtitle="View your saved workouts, tests and recipes"
             image={require('../../images/Saved_workouts.jpg')}
             premium
-            onPress={() => {
-              if (profile.premium) {
-                navigation.navigate('SavedItems');
-              } else {
-                navigation.navigate('Premium', {});
-              }
-            }}
+            onPress={() => navigation.navigate('SavedItems')}
+          />
+          <HomeCard
+            title="Fitness tests"
+            subtitle="Track your fitness overtime"
+            image={require('../../images/fitness_testing.jpeg')}
+            onPress={() => navigation.navigate('Fitness')}
           />
 
           <HomeCard

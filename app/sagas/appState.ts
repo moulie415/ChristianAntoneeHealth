@@ -1,5 +1,5 @@
 import {AppState, AppStateStatus} from 'react-native';
-import {eventChannel, EventChannel} from 'redux-saga';
+import {EventChannel, eventChannel} from 'redux-saga';
 import {call, put, take} from 'redux-saga/effects';
 import {setAppState} from '../reducers/profile';
 
