@@ -18,6 +18,7 @@ interface Props extends Message {
   profile: Profile;
   setDownloadedDocument: (payload: {id: string; path: string}) => void;
   downloadedDocuments: {[key: string]: string};
+  onLongPress: () => void;
 }
 
 const DocumentMessage: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const DocumentMessage: React.FC<Props> = ({
   filename,
   setDownloadedDocument: setDownloadedDocumentAction,
   downloadedDocuments,
+  onLongPress
 }) => {
   const [progress, setProgress] = useState(0);
   const [downloading, setDownloading] = useState(false);
@@ -75,6 +77,7 @@ const DocumentMessage: React.FC<Props> = ({
   return (
     <TouchableOpacity
       disabled={downloading}
+      onLongPress={onLongPress}
       onPress={openFile}
       style={{
         padding: 10,

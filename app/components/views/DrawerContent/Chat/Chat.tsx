@@ -207,10 +207,17 @@ const Chat: React.FC<ChatProps> = ({
 
   const insets = useSafeAreaInsets();
 
-  const renderCustomView = (props: BubbleProps<Message>) => {
+  const renderCustomView = (props: BubbleProps<Message>, context: any) => {
     switch (props.currentMessage?.type) {
       case 'document':
-        return <DocumentMessage {...props.currentMessage} />;
+        return (
+          <DocumentMessage
+            {...props.currentMessage}
+            onLongPress={() =>
+              props.currentMessage && onLongPress(context, props.currentMessage)
+            }
+          />
+        );
       default:
         return null;
     }
@@ -266,9 +273,15 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
-  const renderMessageVideo = (props: MessageVideoProps<IMessage>) => {
+  const renderMessageVideo = (
+    props: MessageVideoProps<IMessage>,
+    context: any,
+  ) => {
     return (
       <TouchableOpacity
+        onLongPress={() =>
+          props.currentMessage && onLongPress(context, props.currentMessage)
+        }
         disabled={props.currentMessage?.pending}
         onPress={() => {
           if (props.currentMessage) {
@@ -315,9 +328,15 @@ const Chat: React.FC<ChatProps> = ({
     return null;
   };
 
-  const renderMessageImage = (props: MessageImageProps<IMessage>) => {
+  const renderMessageImage = (
+    props: MessageImageProps<IMessage>,
+    context: any,
+  ) => {
     return (
       <TouchableOpacity
+        onLongPress={() =>
+          props.currentMessage && onLongPress(context, props.currentMessage)
+        }
         onPress={() => {
           setImageIndex(
             images.findIndex(img => img.uri === props.currentMessage?.image),
@@ -387,9 +406,9 @@ const Chat: React.FC<ChatProps> = ({
       const result = await launchImageLibrary(options);
       handleResponse(result);
     } else {
-      Alert.alert('Send image/video', '', [
+      Alert.alert('Select image/video', '', [
         {
-          text: 'Send image',
+          text: 'Select image',
           onPress: async () => {
             const result = await launchImageLibrary({
               ...options,
@@ -399,7 +418,7 @@ const Chat: React.FC<ChatProps> = ({
           },
         },
         {
-          text: 'Send video',
+          text: 'Select video',
           onPress: async () => {
             const result = await launchImageLibrary({
               ...options,
@@ -408,6 +427,7 @@ const Chat: React.FC<ChatProps> = ({
             handleResponse(result);
           },
         },
+        {text: 'Cancel', style: 'cancel'},
       ]);
     }
   };
@@ -446,6 +466,7 @@ const Chat: React.FC<ChatProps> = ({
             handleResponse(result);
           },
         },
+        {text: 'Cancel', style: 'cancel'},
       ]);
     }
   };
@@ -469,7 +490,11 @@ const Chat: React.FC<ChatProps> = ({
 
   const onPressDocument = async () => {
     try {
-      const result = await DocumentPicker.pickSingle();
+      const result = await DocumentPicker.pickSingle({
+        ...(Platform.OS === 'android'
+          ? {type: ['text/*', 'application/*']}
+          : {}),
+      });
       const message: Message = {
         user: {
           _id: profile.uid,
