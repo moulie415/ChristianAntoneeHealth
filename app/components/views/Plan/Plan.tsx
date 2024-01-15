@@ -1,35 +1,32 @@
+import {useFocusEffect} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
-  ImageBackground,
   SafeAreaView,
-  StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native';
-import React, {MutableRefObject, useEffect, useMemo, useState} from 'react';
-import {MyRootState, Plan as PlanType} from '../../../types/Shared';
-import {connect} from 'react-redux';
-import Profile from '../../../types/Profile';
-import Button from '../../commons/Button';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
-import Text from '../../commons/Text';
-import moment from 'moment';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import Daily from './Daily';
-import Weekly from './Weekly';
-import Monthly from './Monthly';
-import colors from '../../../constants/colors';
 import Purchases, {
   CustomerInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
-import Header from '../../commons/Header';
-import {useFocusEffect} from '@react-navigation/native';
 import isTestFlight from '../../../helpers/isTestFlight';
 import {getPlan, setRead} from '../../../reducers/profile';
+import Profile from '../../../types/Profile';
+import {MyRootState, Plan as PlanType} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import Header from '../../commons/Header';
+import Text from '../../commons/Text';
+import Daily from './Daily';
+import Monthly from './Monthly';
+import Weekly from './Weekly';
 
 const renderScene = SceneMap({
   daily: Daily,
@@ -75,8 +72,9 @@ const Plan: React.FC<{
           );
         }
       } catch (e) {
-        // @ts-ignore
-        Alert.alert('Error fetching Premium offerings', e.message);
+        if (e instanceof Error) {
+          Alert.alert('Error fetching Premium offerings', e.message);
+        }
         logError(e);
       }
     };

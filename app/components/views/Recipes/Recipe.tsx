@@ -59,10 +59,11 @@ const Recipe: React.FC<{
   ]);
 
   useEffect(() => {
-    downloadFile();
+    if (Platform.OS === 'android') {
+      downloadFile();
+    }
   }, [downloadFile]);
 
-  const source = {uri: downloadedDocuments[recipe.id]};
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header

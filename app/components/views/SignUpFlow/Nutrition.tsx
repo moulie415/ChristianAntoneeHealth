@@ -1,15 +1,14 @@
-import React, {useMemo, useState} from 'react';
-import Text from '../../commons/Text';
-
-import colors from '../../../constants/colors';
-import Collapsible from 'react-native-collapsible';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import _ from 'lodash';
+import React, {useMemo, useState} from 'react';
+import Collapsible from 'react-native-collapsible';
 import {FlatList} from 'react-native-gesture-handler';
-import Divider from '../../commons/Divider';
-import ListItem from '../../commons/ListItem';
-import Input from '../../commons/Input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import colors from '../../../constants/colors';
+import Divider from '../../commons/Divider';
+import Input from '../../commons/Input';
+import ListItem from '../../commons/ListItem';
+import Text from '../../commons/Text';
 
 const Nutrition: React.FC<{
   nutrition: string[];

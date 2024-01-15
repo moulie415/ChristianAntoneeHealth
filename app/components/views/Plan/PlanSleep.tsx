@@ -34,7 +34,7 @@ const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
           padding: 20,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          marginTop: -35,
+          marginTop: -100,
           backgroundColor: colors.appGrey,
         }}>
         {!!sleep.general && (

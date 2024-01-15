@@ -109,8 +109,11 @@ export interface PlanWorkout {
 
 export interface PlanNutrition {
   preWorkout: string;
+  preWorkoutRecipes: string[];
   postWorkout: string;
+  postWorkoutRecipes: string[];
   general: string;
+  generalRecipes: string[];
 }
 
 export interface PlanSleep {

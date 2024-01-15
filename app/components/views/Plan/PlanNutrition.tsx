@@ -1,15 +1,72 @@
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import React from 'react';
-import colors from '../../../constants/colors';
-import Header from '../../commons/Header';
-import FastImage from 'react-native-fast-image';
 import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as _ from 'lodash';
+import React, {useEffect, useMemo} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
+import {getRecipesById} from '../../../reducers/recipes';
+import {MyRootState, Recipe} from '../../../types/Shared';
+import Header from '../../commons/Header';
+import RecipeCard from '../Recipes/RecipeCard';
 
 const PlanNutrition: React.FC<{
   route: RouteProp<StackParamList, 'Nutrition'>;
-}> = ({route}) => {
+  navigation: NativeStackNavigationProp<StackParamList, 'Nutrition'>;
+  getRecipesById: (ids: string[]) => void;
+  recipes: {[key: string]: Recipe};
+}> = ({route, recipes, getRecipesById: getRecipesByIdAction, navigation}) => {
   const {nutrition} = route.params;
+
+  useEffect(() => {
+    const getMissingRecipes = () => {
+      if (nutrition) {
+        const {postWorkoutRecipes, preWorkoutRecipes, generalRecipes} =
+          nutrition;
+        if (
+          postWorkoutRecipes?.length ||
+          preWorkoutRecipes?.length ||
+          generalRecipes?.length
+        ) {
+          const ids = _.uniq(
+            [
+              ...postWorkoutRecipes,
+              ...preWorkoutRecipes,
+              ...generalRecipes,
+            ].map(r => r),
+          ).filter(r => !recipes[r]);
+          getRecipesByIdAction(ids);
+        }
+      }
+    };
+    getMissingRecipes();
+  }, [nutrition, recipes, getRecipesByIdAction]);
+
+  const generalRecipes = useMemo(() => {
+    return (
+      nutrition?.generalRecipes?.filter(r => recipes[r]).map(r => recipes[r]) ||
+      []
+    );
+  }, [nutrition?.generalRecipes, recipes]);
+
+  const postWorkoutRecipes = useMemo(() => {
+    return (
+      nutrition?.postWorkoutRecipes
+        ?.filter(r => recipes[r])
+        .map(r => recipes[r]) || []
+    );
+  }, [nutrition?.postWorkoutRecipes, recipes]);
+
+  const preWorkoutRecipes = useMemo(() => {
+    return (
+      nutrition?.preWorkoutRecipes
+        ?.filter(r => recipes[r])
+        .map(r => recipes[r]) || []
+    );
+  }, [nutrition?.preWorkoutRecipes, recipes]);
+
   return (
     <ScrollView bounces={false} style={{backgroundColor: colors.appGrey}}>
       <FastImage
@@ -31,10 +88,10 @@ const PlanNutrition: React.FC<{
 
       <View
         style={{
-          padding: 20,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          marginTop: -35,
+          marginTop: -100,
+          paddingBottom: 40,
           backgroundColor: colors.appGrey,
         }}>
         {!!nutrition.general && (
@@ -43,7 +100,8 @@ const PlanNutrition: React.FC<{
               style={{
                 fontSize: 25,
                 fontWeight: 'bold',
-
+                padding: 20,
+                paddingBottom: 0,
                 fontFamily: 'Helvetica',
                 color: colors.appWhite,
               }}>
@@ -52,11 +110,20 @@ const PlanNutrition: React.FC<{
             <Text
               style={{
                 color: colors.appWhite,
-
-                lineHeight: 30,
+                padding: 20,
+                paddingVertical: 10,
               }}>
               {nutrition.general}
             </Text>
+            {generalRecipes.map(r => {
+              return (
+                <RecipeCard
+                  name={r.name}
+                  image={r.image.src}
+                  onPress={() => navigation.navigate('Recipe', {recipe: r})}
+                />
+              );
+            })}
           </>
         )}
         {!!nutrition.preWorkout && (
@@ -65,7 +132,8 @@ const PlanNutrition: React.FC<{
               style={{
                 fontSize: 25,
                 fontWeight: 'bold',
-
+                paddingHorizontal: 20,
+                paddingTop: 10,
                 fontFamily: 'Helvetica',
                 color: colors.appWhite,
               }}>
@@ -74,11 +142,20 @@ const PlanNutrition: React.FC<{
             <Text
               style={{
                 color: colors.appWhite,
-
-                lineHeight: 30,
+                padding: 20,
+                paddingVertical: 10,
               }}>
               {nutrition.preWorkout}
             </Text>
+            {preWorkoutRecipes.map(r => {
+              return (
+                <RecipeCard
+                  name={r.name}
+                  image={r.image.src}
+                  onPress={() => navigation.navigate('Recipe', {recipe: r})}
+                />
+              );
+            })}
           </>
         )}
         {!!nutrition.postWorkout && (
@@ -87,7 +164,8 @@ const PlanNutrition: React.FC<{
               style={{
                 fontSize: 25,
                 fontWeight: 'bold',
-
+                paddingHorizontal: 20,
+                paddingTop: 10,
                 fontFamily: 'Helvetica',
                 color: colors.appWhite,
               }}>
@@ -96,11 +174,20 @@ const PlanNutrition: React.FC<{
             <Text
               style={{
                 color: colors.appWhite,
-
-                lineHeight: 30,
+                padding: 20,
+                paddingVertical: 10,
               }}>
               {nutrition.postWorkout}
             </Text>
+            {postWorkoutRecipes.map(r => {
+              return (
+                <RecipeCard
+                  name={r.name}
+                  image={r.image.src}
+                  onPress={() => navigation.navigate('Recipe', {recipe: r})}
+                />
+              );
+            })}
           </>
         )}
       </View>
@@ -108,4 +195,12 @@ const PlanNutrition: React.FC<{
   );
 };
 
-export default PlanNutrition;
+const mapStateToProps = ({recipes}: MyRootState) => ({
+  recipes: recipes.recipes,
+});
+
+const mapDispatchToProps = {
+  getRecipesById,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlanNutrition);
