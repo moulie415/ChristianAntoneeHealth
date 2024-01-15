@@ -613,8 +613,6 @@ function* sendMessage(
         (state: MyRootState) => state.settings.chatMaxFileSizeMb,
       );
 
-      console.log(size);
-
       // file size comes back in bytes so need to divide by 1000000 to get mb
       if (size && size / 1000000 < maxFileSize) {
         const {profile} = yield select((state: MyRootState) => state.profile);

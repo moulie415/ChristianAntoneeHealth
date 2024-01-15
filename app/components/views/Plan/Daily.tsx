@@ -1,26 +1,23 @@
-import {ScrollView, SectionList, View} from 'react-native';
-import React, {useEffect, useMemo} from 'react';
-import {MyRootState, Plan} from '../../../types/Shared';
-import {connect} from 'react-redux';
 import moment from 'moment';
-import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
-import Exercise from '../../../types/Exercise';
-import Test from '../../../types/Test';
+import React, {useEffect, useMemo} from 'react';
+import {ScrollView, View} from 'react-native';
+import {connect} from 'react-redux';
 import {navigate} from '../../../RootNavigation';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import * as _ from 'lodash';
-import Education from '../../../types/Education';
-import WorkoutCard from '../../commons/WorkoutCard';
-import TestCard from '../../commons/TestCard';
-
+import colors from '../../../constants/colors';
 import {objectHasNonEmptyValues} from '../../../helpers';
+import {getEducationById} from '../../../reducers/education';
+import {getExercisesById, setWorkout} from '../../../reducers/exercises';
+import {getTestsById} from '../../../reducers/tests';
+import Education from '../../../types/Education';
+import Exercise from '../../../types/Exercise';
+import {MyRootState, Plan} from '../../../types/Shared';
+import Test from '../../../types/Test';
+import EducationCard from '../../commons/EducationCard';
 import NutritionCard from '../../commons/NutritionCard';
 import SleepCard from '../../commons/SleepCard';
-import EducationCard from '../../commons/EducationCard';
-import { getExercisesById, setWorkout } from '../../../reducers/exercises';
-import { getTestsById } from '../../../reducers/tests';
-import { getEducationById } from '../../../reducers/education';
+import TestCard from '../../commons/TestCard';
+import Text from '../../commons/Text';
+import WorkoutCard from '../../commons/WorkoutCard';
 
 const Daily: React.FC<{
   plan?: Plan;
@@ -72,7 +69,7 @@ const Daily: React.FC<{
 
   useEffect(() => {
     if (plan?.tests) {
-      if (Object.values(testsObj).length) {
+      if (testsObj) {
         const missingTestIds = plan.tests.filter(id => !testsObj[id]);
         if (missingTestIds.length) {
           getTestsByIdAction(missingTestIds);
