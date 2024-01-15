@@ -118,6 +118,7 @@ const PlanNutrition: React.FC<{
             {generalRecipes.map(r => {
               return (
                 <RecipeCard
+                  key={r.id}
                   name={r.name}
                   image={r.image.src}
                   onPress={() => navigation.navigate('Recipe', {recipe: r})}
@@ -150,6 +151,7 @@ const PlanNutrition: React.FC<{
             {preWorkoutRecipes.map(r => {
               return (
                 <RecipeCard
+                  key={r.id}
                   name={r.name}
                   image={r.image.src}
                   onPress={() => navigation.navigate('Recipe', {recipe: r})}
@@ -182,6 +184,7 @@ const PlanNutrition: React.FC<{
             {postWorkoutRecipes.map(r => {
               return (
                 <RecipeCard
+                  key={r.id}
                   name={r.name}
                   image={r.image.src}
                   onPress={() => navigation.navigate('Recipe', {recipe: r})}
