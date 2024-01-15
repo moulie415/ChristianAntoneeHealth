@@ -42,6 +42,7 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@reduxjs/toolkit": "1.9.7",
     "@sentry/react-native": "^5.15.2",
+    "@shopify/flash-list": "^1.6.3",
     "@shopify/react-native-skia": "^0.1.230",
     "@types/react-native-wheel-pick": "^1.1.2",
     "@welldone-software/why-did-you-render": "^7.0.1",

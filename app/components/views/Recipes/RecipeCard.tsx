@@ -19,7 +19,7 @@ const RecipeCard: React.FC<{
   profile: Profile;
 }> = ({onPress, name, image, profile, premium}) => {
   return (
-    <TouchableOpacity onPress={onPress} key={name}>
+    <TouchableOpacity onPress={onPress}>
       <FastImageAnimated
         style={{
           height: Platform.OS === 'ios' ? height / 5.5 : height / 5,

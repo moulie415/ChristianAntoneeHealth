@@ -1,8 +1,8 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {FlashList} from '@shopify/flash-list';
 import React, {useEffect} from 'react';
-import {Dimensions} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {Dimensions, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
@@ -16,6 +16,8 @@ import RecipeCard from './RecipeCard';
 import {recipeCategories} from './RecipeCategories';
 
 const {height} = Dimensions.get('screen');
+
+const estimatedSize = (Platform.OS === 'ios' ? height / 5.5 : height / 5) + 10;
 
 const Recipes: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Recipes'>;
@@ -39,8 +41,10 @@ const Recipes: React.FC<{
         hasBack
         title={recipeCategories.find(c => c.category === category)?.name}
       />
-      <FlatList
+
+      <FlashList
         data={filtered}
+        estimatedItemSize={estimatedSize}
         ListEmptyComponent={() => (
           <SafeAreaView style={{height: height / 2}}>
             <AbsoluteSpinner
