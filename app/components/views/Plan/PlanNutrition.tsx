@@ -32,9 +32,9 @@ const PlanNutrition: React.FC<{
         ) {
           const ids = _.uniq(
             [
-              ...postWorkoutRecipes,
-              ...preWorkoutRecipes,
-              ...generalRecipes,
+              ...(postWorkoutRecipes || []),
+              ...(preWorkoutRecipes || []),
+              ...(generalRecipes || []),
             ].map(r => r),
           ).filter(r => !recipes[r]);
           getRecipesByIdAction(ids);
