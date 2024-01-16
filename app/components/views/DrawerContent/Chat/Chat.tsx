@@ -390,6 +390,11 @@ const Chat: React.FC<ChatProps> = ({
           mimeType: asset.type,
         };
         sendMessageAction({message, chatId, uid});
+      } else if (response.errorMessage || response.errorCode) {
+        logError(new Error(response.errorMessage || response.errorCode));
+        Snackbar.show({
+          text: response.errorMessage || `Error: ${response.errorCode}`,
+        });
       }
     } catch (e) {
       logError(e);
