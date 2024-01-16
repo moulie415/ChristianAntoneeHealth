@@ -57,7 +57,7 @@ const Connections: React.FC<{
       let preview = '';
 
       const sender =
-        message.user._id === profile.uid ? 'You' : `${connections[uid].name}`;
+        message.user?._id === profile.uid ? 'You' : `${connections[uid].name}`;
 
       if (message.type === 'audio') {
         preview = `${sender} sent a voice note`;
