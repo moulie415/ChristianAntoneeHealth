@@ -3,19 +3,55 @@ import React, {useEffect} from 'react';
 import {FlatList, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
-import Profile from '../../../types/Profile';
-import {MyRootState} from '../../../types/Shared';
-import Avatar from '../../commons/Avatar';
-import Text from '../../commons/Text';
-
 import colors from '../../../constants/colors';
 import {truncate} from '../../../helpers';
 import {getSimplifiedTime} from '../../../helpers/profile';
 import {getConnections} from '../../../reducers/profile';
 import Message from '../../../types/Message';
+import Profile from '../../../types/Profile';
+import {MyRootState} from '../../../types/Shared';
+import Avatar from '../../commons/Avatar';
 import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
+import Text from '../../commons/Text';
 import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
+
+export const sortConnections = (
+  profiles: Profile[],
+  messages: {[key: string]: {[key: string]: Message}},
+  unread: {[key: string]: number} | undefined,
+) => {
+  const sortMessages = (msgs: Message[]) => {
+    return msgs.sort((messageA, messageB) => {
+      if (
+        typeof messageA.createdAt === 'number' &&
+        typeof messageB.createdAt === 'number'
+      ) {
+        return messageB.createdAt || 0 - messageA.createdAt || 0;
+      }
+      return (
+        messageB.createdAt?.valueOf() || 0 - messageA.createdAt?.valueOf() || 0
+      );
+    })?.[0]?.createdAt;
+  };
+  return profiles.sort((a, b) => {
+    const unreadA = unread?.[a.uid] || 0;
+    const unreadB = unread?.[b.uid] || 0;
+    const messagesA = Object.values(messages[a.uid] || {});
+    const messagesB = Object.values(messages[b.uid] || {});
+    const latestA = sortMessages(messagesA);
+    const latestB = sortMessages(messagesB);
+    if (unreadA !== unreadB) {
+      return unreadB - unreadA;
+    } else if (latestA !== latestB) {
+      if (typeof latestB === 'number' && typeof latestA === 'number') {
+        return latestB - latestA;
+      }
+      return latestB.valueOf() - latestA.valueOf();
+    }
+    return 0;
+  });
+};
 
 const Connections: React.FC<{
   profile: Profile;
@@ -24,6 +60,7 @@ const Connections: React.FC<{
   loading: boolean;
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
   messages: {[key: string]: {[key: string]: Message}};
+  unread: {[key: string]: number} | undefined;
 }> = ({
   connections,
   getConnectionsAction,
@@ -31,6 +68,7 @@ const Connections: React.FC<{
   navigation,
   messages,
   profile,
+  unread,
 }) => {
   useEffect(() => {
     getConnectionsAction();
@@ -105,7 +143,7 @@ const Connections: React.FC<{
         )}
         <FlatList
           keyExtractor={item => item.uid}
-          data={Object.values(connections)}
+          data={sortConnections(Object.values(connections), messages, unread)}
           renderItem={({item}) => {
             const {preview, createdAt, italicize} = getLastMessage(item.uid);
             return (
@@ -170,6 +208,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   connections: profile.connections,
   loading: profile.loading,
   messages: profile.messages,
+  unread: profile.profile.unread,
 });
 
 const mapDispatchToProps = {

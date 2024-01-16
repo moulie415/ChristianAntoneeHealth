@@ -1,6 +1,5 @@
-import Purchases from 'react-native-purchases';
 import * as Sentry from '@sentry/react-native';
-import moment from 'moment';
+import Purchases from 'react-native-purchases';
 
 export const setUserAttributes = (attributes: {[key: string]: string}) => {
   Purchases.setAttributes(attributes);
