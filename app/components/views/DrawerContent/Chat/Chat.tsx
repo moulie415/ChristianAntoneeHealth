@@ -147,6 +147,8 @@ const Chat: React.FC<ChatProps> = ({
 
   const [showRecorder, setShowRecorder] = useState(false);
 
+  const [isLoading, setLoading] = useState(false);
+
   const persistChat = useMemo(
     () =>
       _.debounce(t => {
@@ -362,6 +364,7 @@ const Chat: React.FC<ChatProps> = ({
 
   const handleResponse = async (response: ImagePickerResponse) => {
     try {
+      setLoading(true);
       if (response.assets) {
         const asset = response.assets[0];
 
@@ -393,13 +396,14 @@ const Chat: React.FC<ChatProps> = ({
       } else if (response.errorMessage || response.errorCode) {
         logError(new Error(response.errorMessage || response.errorCode));
         Snackbar.show({
-          text: response.errorMessage || `Error: ${response.errorCode}`,
+          text: 'Error selecting media',
         });
       }
     } catch (e) {
       logError(e);
       Snackbar.show({text: 'Error sending message'});
     }
+    setLoading(false);
   };
 
   const ref = useRef<FlatList>(null);
@@ -408,6 +412,9 @@ const Chat: React.FC<ChatProps> = ({
     const options: ImageLibraryOptions = {
       mediaType: 'mixed',
       formatAsMp4: true,
+      quality: 0.8,
+      videoQuality: Platform.OS === 'ios' ? 'medium' : 'low',
+      includeBase64: false,
     };
     if (Platform.OS === 'ios') {
       const result = await launchImageLibrary(options);
@@ -667,8 +674,6 @@ const Chat: React.FC<ChatProps> = ({
           )}
           alwaysShowSend
         />
-
-        <AbsoluteSpinner loading={exercisesLoading} text="Fetching exercises" />
       </SafeAreaView>
       <SafeAreaView style={{flex: 0, backgroundColor: colors.appGrey}} />
       <ImageView
@@ -677,6 +682,7 @@ const Chat: React.FC<ChatProps> = ({
         visible={imagesVisible}
         onRequestClose={() => setImagesVisible(false)}
       />
+      <AbsoluteSpinner loading={exercisesLoading || isLoading} />
     </>
   );
 };
