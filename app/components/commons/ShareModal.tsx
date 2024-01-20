@@ -1,28 +1,27 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import Button from './Button';
-import {MyRootState} from '../../types/Shared';
-import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
-import Message, {MessageType} from '../../types/Message';
-import Text from './Text';
-import Avatar from './Avatar';
-import {shareWorkout} from '../../helpers/exercises';
-import Exercise from '../../types/Exercise';
-import {FlatList, View} from 'react-native';
-
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import colors from '../../constants/colors';
-import Chat from '../../types/Chat';
-import Snackbar from 'react-native-snackbar';
-import AbsoluteSpinner from './AbsoluteSpinner';
-import {sendMessage} from '../../helpers/api';
 import moment from 'moment';
+import React, {useCallback, useEffect, useState} from 'react';
+import {FlatList, View} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import Modal from './Modal';
-import Divider from './Divider';
-import ListItem from './ListItem';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import colors from '../../constants/colors';
+import {sendMessage} from '../../helpers/api';
+import {shareWorkout} from '../../helpers/exercises';
 import {setShareModalVisible} from '../../reducers/exercises';
 import {getConnections} from '../../reducers/profile';
+import Chat from '../../types/Chat';
+import Exercise from '../../types/Exercise';
+import Message, {MessageType} from '../../types/Message';
+import Profile from '../../types/Profile';
+import {MyRootState} from '../../types/Shared';
+import AbsoluteSpinner from './AbsoluteSpinner';
+import Avatar from './Avatar';
+import Button from './Button';
+import Divider from './Divider';
+import ListItem from './ListItem';
+import Modal from './Modal';
+import Text from './Text';
 
 const ShareModal: React.FC<{
   visible: boolean;

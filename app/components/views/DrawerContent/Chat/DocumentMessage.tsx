@@ -30,7 +30,7 @@ const DocumentMessage: React.FC<Props> = ({
   filename,
   setDownloadedDocument: setDownloadedDocumentAction,
   downloadedDocuments,
-  onLongPress
+  onLongPress,
 }) => {
   const [progress, setProgress] = useState(0);
   const [downloading, setDownloading] = useState(false);
@@ -38,7 +38,7 @@ const DocumentMessage: React.FC<Props> = ({
     try {
       const ext = mimeType?.split('/')[1];
       const result = await ReactNativeBlobUtil.config({
-        path: `${ReactNativeBlobUtil.fs.dirs.DownloadDir}/${
+        path: `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/${
           filename ?? id + '.' + ext
         }`,
       })
@@ -47,7 +47,6 @@ const DocumentMessage: React.FC<Props> = ({
           const percentage = Number(received) / Number(total);
           setProgress(percentage);
         });
-
       await FileViewer.open(result.path());
       setDownloadedDocumentAction({id: id || '', path: result.path()});
     } catch (e) {

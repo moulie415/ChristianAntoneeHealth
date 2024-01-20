@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Message from '../../../types/Message';
 import Profile from '../../../types/Profile';
 import {sortConnections} from './Connections';
@@ -34,16 +35,15 @@ const unread: {[key: string]: number} = {
 
 const messages: {[key: string]: {[key: string]: Message}} = {
   '1': {
-    a: {} as Message,
-    b: {createdAt: 5} as Message,
+    a: {createdAt: moment().subtract(5, 'minutes').unix()} as Message,
+    b: {createdAt: moment().subtract(1, 'days').unix()} as Message,
   },
   '2': {
-    a: {} as Message,
-    b: {createdAt: 5} as Message,
+    a: {createdAt: moment().unix()} as Message,
   },
   '3': {
-    a: {} as Message,
-    b: {createdAt: 10} as Message,
+    a: {createdAt: moment().subtract(2, 'days').unix()} as Message,
+    b: {createdAt: moment().subtract(3, 'minutes').unix()} as Message,
   },
 };
 

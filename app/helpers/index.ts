@@ -1,14 +1,14 @@
-import PushNotification from 'react-native-push-notification';
+import analytics from '@react-native-firebase/analytics';
 import moment, {Moment} from 'moment';
 import {Dimensions} from 'react-native';
-import analytics from '@react-native-firebase/analytics';
-import {Sample} from '../types/Shared';
-import colors from '../constants/colors';
-import {PercentileTable, Table} from '../types/Test';
-import {Category} from '../types/Education';
-import {logError} from './error';
 import InAppReview from 'react-native-in-app-review';
+import PushNotification from 'react-native-push-notification';
 import {TABLE_HEADER_KEYS} from '../constants';
+import colors from '../constants/colors';
+import {Category} from '../types/Education';
+import {Sample} from '../types/Shared';
+import {PercentileTable, Table} from '../types/Test';
+import {logError} from './error';
 
 const {height, width} = Dimensions.get('window');
 
