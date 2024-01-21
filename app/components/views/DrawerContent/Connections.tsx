@@ -37,7 +37,7 @@ export const sortConnections = (
       if (typeof latestB === 'number' && typeof latestA === 'number') {
         return latestB - latestA;
       }
-      return latestB.valueOf() - latestA.valueOf();
+      return latestB?.valueOf() - latestA?.valueOf();
     }
     return 0;
   });
