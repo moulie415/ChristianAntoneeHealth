@@ -1,8 +1,8 @@
-import moment from 'moment';
-import {logError} from './error';
-import {Sample} from '../types/Shared';
-import Snackbar from 'react-native-snackbar';
 import axios from 'axios';
+import moment from 'moment';
+import Snackbar from 'react-native-snackbar';
+import {Sample} from '../types/Shared';
+import {logError} from './error';
 
 interface PolarHeartRateResponse {
   heart_rates: {

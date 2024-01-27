@@ -33,6 +33,8 @@ jobs:
       #     SENTRY_PROPERTIES: ${{ secrets.SENTRY_PROPERTIES }}
       #   run: |
       #     exec .github/scripts/create-sentry-files.sh
+      - name: Audit deps
+        run: yarn audit-deps
       - name: Create .env
         env:
           REVENUE_CAT_IOS_KEY: ${{ secrets.REVENUE_CAT_IOS_KEY }}

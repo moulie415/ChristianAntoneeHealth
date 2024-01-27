@@ -1,27 +1,20 @@
-import React, {useMemo, useState} from 'react';
-import Snackbar from 'react-native-snackbar';
-import {Dimensions, Platform, ScrollView, View} from 'react-native';
-import {Picker} from 'react-native-wheel-pick';
-import CustomizeExerciseProps from '../../../types/views/CustomExercise';
-import Carousel from 'react-native-snap-carousel';
-import {Goal, MyRootState} from '../../../types/Shared';
-import {connect} from 'react-redux';
-import {useEffect} from 'react';
-import ExerciseVideo from '../../commons/ExerciseVideo';
-import {getVideoHeight} from '../../../helpers';
-import globalStyles from '../../../styles/globalStyles';
-import MusclesDiagram from '../../commons/MusclesDiagram';
-import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import Spinner from '../../commons/Spinner';
-import colors from '../../../constants/colors';
-import {REPS, RESISTANCE, SETS} from '../../../constants';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/core';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {Dimensions, ScrollView, View} from 'react-native';
+import Snackbar from 'react-native-snackbar';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import {REPS} from '../../../constants';
+import {getVideoHeight} from '../../../helpers';
+import {setWorkout} from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
 import Profile from '../../../types/Profile';
-import {setWorkout} from '../../../reducers/exercises';
+import {MyRootState} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import ExerciseVideo from '../../commons/ExerciseVideo';
+import Spinner from '../../commons/Spinner';
+import Text from '../../commons/Text';
 
 REPS.shift();
 
@@ -89,7 +82,7 @@ const CustomizeExercise: React.FC<{
         }}>
         {exercise.name}
       </Text>
-      <Carousel
+      {/* <Carousel
         vertical={false}
         data={[0, 1, 2, 3, 4]}
         sliderWidth={width}
@@ -134,7 +127,7 @@ const CustomizeExercise: React.FC<{
                       alignItems: 'center',
                     }}>
                     <Text>Reps</Text>
-                    {/* @ts-ignore */}
+
                     <Picker
                       style={{
                         height: 200,
@@ -165,7 +158,7 @@ const CustomizeExercise: React.FC<{
                     alignItems: 'center',
                   }}>
                   <Text>Sets</Text>
-                  {/* @ts-ignore */}
+
                   <Picker
                     style={{
                       height: 200,
@@ -196,7 +189,7 @@ const CustomizeExercise: React.FC<{
                     alignItems: 'center',
                   }}>
                   <Text>Resistance</Text>
-                  {/* @ts-ignore */}
+
                   <Picker
                     style={{
                       height: 200,
@@ -219,7 +212,7 @@ const CustomizeExercise: React.FC<{
             </View>
           );
         }}
-      />
+      /> */}
       <Button
         text={
           workout.find(e => e.id === exercise.id)

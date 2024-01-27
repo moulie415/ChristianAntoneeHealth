@@ -718,5 +718,8 @@ export const sendFeedback = async (
   feedback: string,
   rating: number,
 ) => {
-  return db().collection('feedback').doc(uid).set({feedback, rating});
+  return db()
+    .collection('feedback')
+    .doc(uid)
+    .set({feedback, rating, createdate: new Date()});
 };

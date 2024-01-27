@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {logError} from './error';
-import {Sample} from '../types/Shared';
 import moment from 'moment';
-import Snackbar from 'react-native-snackbar';
 import Config from 'react-native-config';
+import Snackbar from 'react-native-snackbar';
+import {Sample} from '../types/Shared';
+import {logError} from './error';
 
 export interface FitbitHeartRateResponse {
   'activities-heart': ActivitiesHeart[];
