@@ -1,5 +1,5 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import {Text, View} from 'react-native';
 import {PurchasesPackage} from 'react-native-purchases';
 
 import colors from '../../constants/colors';
@@ -19,10 +19,10 @@ const getPackageStrings = (p: PurchasesPackage) => {
   switch (p.product.identifier) {
     case 'monthly':
     case 'monthly:p1m':
-      return {title: 'monthly', alt: 'month'};
-    case 'yearly':
-    case 'yearly:p1y':
-      return {title: 'yearly', alt: 'year'};
+      return {title: 'Premium', alt: 'month'};
+    case 'monthly_plus':
+    case 'monthly:monthly-plus':
+      return {title: 'Premium Plus', alt: 'year'};
   }
 };
 
@@ -36,7 +36,7 @@ const PremiumProduct: React.FC<{
   return (
     <SelectableButton
       text={(title || '').toUpperCase()}
-      secondaryText={'Premium'}
+      secondaryText="Monthly"
       selected={selected}
       style={{marginHorizontal: 20, marginTop: 10}}
       onPress={async () => setSelected(p.identifier)}

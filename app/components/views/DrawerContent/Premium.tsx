@@ -1,42 +1,47 @@
-import React, {useEffect, useState} from 'react';
-import {ImageBackground} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import Purchases, {
-  PACKAGE_TYPE,
-  CustomerInfo,
-  PurchasesPackage,
-  PurchasesEntitlementInfo,
-} from 'react-native-purchases';
-import colors from '../../../constants/colors';
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Dimensions,
   Linking,
-  Platform,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {connect} from 'react-redux';
+import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
+import Purchases, {
+  CustomerInfo,
+  PurchasesEntitlementInfo,
+  PurchasesPackage,
+} from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import {navigationRef} from '../../../RootNavigation';
+import colors from '../../../constants/colors';
+import {logError} from '../../../helpers/error';
+import {setPremium} from '../../../reducers/profile';
+import {SettingsState} from '../../../reducers/settings';
+import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import {logError} from '../../../helpers/error';
-import Text from '../../commons/Text';
-import Header from '../../commons/Header';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
-import FastImage from 'react-native-fast-image';
-import {FlatList} from 'react-native';
-import PremiumProduct from '../../commons/PremiumProduct';
-import {SettingsState} from '../../../reducers/settings';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
-import {RouteProp} from '@react-navigation/native';
-import Profile from '../../../types/Profile';
-import {navigationRef} from '../../../RootNavigation';
 import Button from '../../commons/Button';
-import {setPremium} from '../../../reducers/profile';
+import Header from '../../commons/Header';
+import PremiumProduct from '../../commons/PremiumProduct';
+import Text from '../../commons/Text';
+
+const {height} = Dimensions.get('window');
+
+const MIN_CONTENT_HEIGHT = 600;
+
+const CONTENT_HEIGHT =
+  height * 0.7 > MIN_CONTENT_HEIGHT || MIN_CONTENT_HEIGHT > height
+    ? height * 0.7
+    : MIN_CONTENT_HEIGHT;
 
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
@@ -112,6 +117,56 @@ const Premium: React.FC<{
     }
   };
 
+  const premiumPlusStrings = ['monthly_plus'];
+
+  const features: {
+    icon: string;
+    feature: ReactNode | string;
+    available: boolean;
+    solid?: boolean;
+  }[] = [
+    {
+      icon: 'dumbbell',
+      feature: (
+        <>
+          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> on-demand
+          workouts & fitness tests
+        </>
+      ),
+      available: true,
+    },
+    {
+      icon: 'book-open',
+      feature: (
+        <>
+          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> educational
+          content
+        </>
+      ),
+      available: true,
+    },
+    {
+      icon: 'utensils',
+      feature: (
+        <>
+          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> recipes
+        </>
+      ),
+      available: true,
+    },
+    {
+      icon: 'calendar-alt',
+      feature: 'Request custom workouts from Christian',
+      available: premiumPlusStrings.includes(selected),
+    },
+    {
+      icon: 'comment',
+      feature: 'In-app real time trainer-to-client messaging',
+      available: premiumPlusStrings.includes(selected),
+      solid: true,
+    },
+  ];
+
   const premiumActive = info && info.activeSubscriptions[0];
   const hasUsedTrial = info && info.entitlements.all[0];
 
@@ -135,7 +190,7 @@ const Premium: React.FC<{
         style={{
           position: 'absolute',
           right: 0,
-          bottom: '65%',
+          bottom: CONTENT_HEIGHT,
           left: 0,
           height: 200,
         }}
@@ -146,7 +201,7 @@ const Premium: React.FC<{
           bottom: 0,
           right: 0,
           left: 0,
-          height: '65%',
+          height: CONTENT_HEIGHT,
           backgroundColor: colors.appGrey,
         }}>
         <ScrollView>
@@ -166,100 +221,35 @@ const Premium: React.FC<{
               marginHorizontal: 20,
               marginTop: 20,
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: 20,
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center'}}>
-                <Icon
-                  style={{width: 40}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="dumbbell"
-                />
-              </View>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: colors.appWhite,
-                }}>
-                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> on-demand
-                workouts & fitness tests
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: 20,
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center'}}>
-                <Icon
-                  style={{width: 40}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="book-open"
-                />
-              </View>
-
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: colors.appWhite,
-                }}>
-                Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> educational
-                content
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: 20,
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center'}}>
-                <Icon
-                  style={{width: 40}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="calendar-alt"
-                />
-              </View>
-
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: colors.appWhite,
-                }}>
-                Request custom workouts from Christian
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: 10,
-                alignItems: 'center',
-              }}>
-              <View style={{justifyContent: 'center'}}>
-                <Icon
-                  style={{width: 40}}
-                  size={20}
-                  color={colors.appWhite}
-                  name="comment"
-                  solid
-                />
-              </View>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: colors.appWhite,
-                }}>
-                In-app real time trainer-to-client messaging
-              </Text>
-            </View>
+            {features.map(({feature, icon, available, solid}) => {
+              return (
+                <View
+                  key={icon}
+                  style={{
+                    flexDirection: 'row',
+                    marginBottom: 20,
+                    alignItems: 'center',
+                  }}>
+                  <View style={{justifyContent: 'center'}}>
+                    <Icon
+                      style={{width: 40}}
+                      size={20}
+                      color={available ? colors.appWhite : colors.textGrey}
+                      name={icon}
+                      solid={solid}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: available ? colors.appWhite : colors.textGrey,
+                      textDecorationLine: available ? 'none' : 'line-through',
+                    }}>
+                    {feature}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
           {packages.length ? (
             <>
