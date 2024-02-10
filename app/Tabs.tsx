@@ -12,6 +12,7 @@ import ProfileComponent from './components/views/Profile';
 import FitnessTesting from './components/views/Tests/FitnessTesting';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import colors from './constants/colors';
+import {hasPremiumPlus} from './helpers/hasPremiumPlus';
 import Profile from './types/Profile';
 import {MyRootState} from './types/Shared';
 
@@ -85,18 +86,21 @@ const Tabs: React.FC<{
         name="Profile"
         component={ProfileComponent}
       />
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Plan',
-          tabBarIcon: ({color, size}) => (
-            <PlanTabIcon color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-        name="Plan"
-        key="Plan"
-        component={Plan}
-      />
+      {profile.admin ||
+        (hasPremiumPlus(profile.premium) && (
+          <Tab.Screen
+            options={{
+              tabBarLabel: 'Plan',
+              tabBarIcon: ({color, size}) => (
+                <PlanTabIcon color={color} size={size} />
+              ),
+              headerShown: false,
+            }}
+            name="Plan"
+            key="Plan"
+            component={Plan}
+          />
+        ))}
     </Tab.Navigator>
   );
 };

@@ -36,7 +36,7 @@ import Text from '../../commons/Text';
 
 const {height} = Dimensions.get('window');
 
-const MIN_CONTENT_HEIGHT = 600;
+const MIN_CONTENT_HEIGHT = 620;
 
 const CONTENT_HEIGHT =
   height * 0.7 > MIN_CONTENT_HEIGHT || MIN_CONTENT_HEIGHT > height
@@ -129,7 +129,7 @@ const Premium: React.FC<{
       icon: 'dumbbell',
       feature: (
         <>
-          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> on-demand
+          Unlock <Text style={{fontWeight: 'bold'}}>ALL </Text>
           workouts & fitness tests
         </>
       ),
@@ -168,6 +168,10 @@ const Premium: React.FC<{
   ];
 
   const premiumActive = info && info.activeSubscriptions[0];
+
+  const premiumPlusActive =
+    premiumActive === 'monthly:monthly-plus' ||
+    premiumActive === 'monthly_plus';
   const hasUsedTrial = info && info.entitlements.all[0];
 
   return (
@@ -218,7 +222,8 @@ const Premium: React.FC<{
           </Text>
           <View
             style={{
-              marginHorizontal: 20,
+              marginLeft: 20,
+
               marginTop: 20,
             }}>
             {features.map(({feature, icon, available, solid}) => {
@@ -234,7 +239,7 @@ const Premium: React.FC<{
                     <Icon
                       style={{width: 40}}
                       size={20}
-                      color={available ? colors.appWhite : colors.textGrey}
+                      color={colors.appWhite}
                       name={icon}
                       solid={solid}
                     />
@@ -242,11 +247,22 @@ const Premium: React.FC<{
                   <Text
                     style={{
                       fontSize: 14,
-                      color: available ? colors.appWhite : colors.textGrey,
-                      textDecorationLine: available ? 'none' : 'line-through',
+                      color: colors.appWhite,
+                      flex: 1,
                     }}>
                     {feature}
                   </Text>
+                  <Icon
+                    style={{width: 40, fontWeight: 'bold'}}
+                    size={25}
+                    solid
+                    color={
+                      available || premiumPlusActive
+                        ? colors.appGreen
+                        : colors.appRed
+                    }
+                    name={available || premiumPlusActive ? 'check' : 'xmark'}
+                  />
                 </View>
               );
             })}
@@ -266,7 +282,9 @@ const Premium: React.FC<{
                       fontWeight: 'bold',
                       fontSize: 20,
                     }}>
-                    🎉 Premium active 🎉
+                    {`🎉  Premium ${
+                      premiumPlusActive ? 'Plus' : ''
+                    } active  🎉`}
                   </Text>
                   <TouchableOpacity
                     onPress={() => Linking.openURL(info.managementURL || '')}>

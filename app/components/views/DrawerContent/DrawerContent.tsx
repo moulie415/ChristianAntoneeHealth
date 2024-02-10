@@ -20,6 +20,7 @@ import {navigationRef, resetToWelcome} from '../../../RootNavigation';
 import {STORE_LINK} from '../../../constants';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
+import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {setLoggedIn} from '../../../reducers/profile';
 import Profile from '../../../types/Profile';
 import {MyRootState} from '../../../types/Shared';
@@ -113,22 +114,23 @@ const DrawerContent: React.FC<Props> = ({
       icon: 'comment',
       onPress: () => {
         navigation.closeDrawer();
-        if (profile.premium) {
+        if (profile.admin || hasPremiumPlus(profile.premium)) {
           navigationRef.navigate('Connections');
         } else {
           navigationRef.navigate('Premium', {});
         }
       },
-      accessoryRight: profile.premium ? (
-        <UnreadRowCount />
-      ) : (
-        <Icon
-          name="lock"
-          size={20}
-          style={{marginRight: 10}}
-          color={colors.appWhite}
-        />
-      ),
+      accessoryRight:
+        profile.admin || hasPremiumPlus(profile.premium) ? (
+          <UnreadRowCount />
+        ) : (
+          <Icon
+            name="lock"
+            size={20}
+            style={{marginRight: 10}}
+            color={colors.appWhite}
+          />
+        ),
     },
     {
       title: 'Recipes',

@@ -22,6 +22,11 @@ export enum TrainingAvailability {
   FOUR_PLUS = 4,
 }
 
+export type Premium =
+  | undefined
+  | false
+  | {[key: string]: PurchasesEntitlementInfo};
+
 export default interface Profile {
   email: string;
   uid: string;
@@ -36,7 +41,7 @@ export default interface Profile {
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;
-  premium?: false | {[key: string]: PurchasesEntitlementInfo};
+  premium?: Premium;
   unread?: {[key: string]: number};
 
   bodyFatPercentage?: number;
