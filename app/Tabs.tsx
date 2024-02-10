@@ -86,21 +86,20 @@ const Tabs: React.FC<{
         name="Profile"
         component={ProfileComponent}
       />
-      {profile.admin ||
-        (hasPremiumPlus(profile.premium) && (
-          <Tab.Screen
-            options={{
-              tabBarLabel: 'Plan',
-              tabBarIcon: ({color, size}) => (
-                <PlanTabIcon color={color} size={size} />
-              ),
-              headerShown: false,
-            }}
-            name="Plan"
-            key="Plan"
-            component={Plan}
-          />
-        ))}
+      {(profile.admin || hasPremiumPlus(profile.premium)) && (
+        <Tab.Screen
+          options={{
+            tabBarLabel: 'Plan',
+            tabBarIcon: ({color, size}) => (
+              <PlanTabIcon color={color} size={size} />
+            ),
+            headerShown: false,
+          }}
+          name="Plan"
+          key="Plan"
+          component={Plan}
+        />
+      )}
     </Tab.Navigator>
   );
 };
