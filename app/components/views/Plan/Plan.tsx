@@ -17,7 +17,7 @@ import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
-import isTestFlight from '../../../helpers/isTestFlight';
+import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {getPlan, setRead} from '../../../reducers/profile';
 import Profile from '../../../types/Profile';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
@@ -96,7 +96,7 @@ const Plan: React.FC<{
     }
   });
 
-  const hasPremium = profile.premium || profile.admin || isTestFlight();
+  const hasPremium = profile.admin || hasPremiumPlus(profile.premium);
 
   return (
     <>

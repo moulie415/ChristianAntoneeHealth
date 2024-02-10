@@ -103,6 +103,7 @@ import {
 } from '../types/Shared';
 import {handleDeepLink} from './exercises';
 import {getSettings} from './settings';
+import { PREMIUM_PLUS } from '../helpers/hasPremiumPlus';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -781,6 +782,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       yield put(setAdmin(isAdmin));
       if (
         customerInfo.entitlements.active.Premium ||
+        customerInfo.entitlements.active[PREMIUM_PLUS] ||
         isAdmin ||
         isTestFlight()
       ) {

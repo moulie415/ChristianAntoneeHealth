@@ -33,6 +33,7 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
+import { PREMIUM_PLUS } from '../../../helpers/hasPremiumPlus';
 
 const {height} = Dimensions.get('window');
 
@@ -96,7 +97,10 @@ const Premium: React.FC<{
         setLoading(true);
         const {customerInfo, productIdentifier} =
           await Purchases.purchasePackage(p);
-        if (typeof customerInfo.entitlements.active.Premium !== 'undefined') {
+        if (
+          typeof customerInfo.entitlements.active.Premium !== 'undefined' ||
+          typeof customerInfo.entitlements.active[PREMIUM_PLUS] !== 'undefined'
+        ) {
           setLoading(false);
           navigationRef.goBack();
           setPremiumAction(customerInfo.entitlements.active);
@@ -328,7 +332,10 @@ const Premium: React.FC<{
                     setLoading(true);
                     const restore = await Purchases.restorePurchases();
                     if (
-                      typeof restore.entitlements.active.Premium !== 'undefined'
+                      typeof restore.entitlements.active.Premium !==
+                        'undefined' ||
+                      typeof restore.entitlements.active[PREMIUM_PLUS] !==
+                        'undefined'
                     ) {
                       setLoading(false);
                       navigation.goBack();
