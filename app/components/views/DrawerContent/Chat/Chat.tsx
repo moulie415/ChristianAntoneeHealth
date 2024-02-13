@@ -200,14 +200,16 @@ const Chat: React.FC<ChatProps> = ({
   const [imageIndex, setImageIndex] = useState(0);
   const [imagesVisible, setImagesVisible] = useState(false);
 
+  const cursor = useRef(0);
+
   const loadEarlier = useCallback(async () => {
     const startAfter = sorted[sorted.length - 1].createdAt;
+    if (cursor.current === startAfter) {
+      return;
+    }
+    cursor.current = startAfter as number;
     loadEarlierMessagesAction({chatId, uid, startAfter: Number(startAfter)});
   }, [sorted, chatId, uid, loadEarlierMessagesAction]);
-
-  const showLoadEarlier = useMemo(() => {
-    return !sorted.some(m => m.text === 'Beginning of chat');
-  }, [sorted]);
 
   const insets = useSafeAreaInsets();
 
@@ -592,16 +594,17 @@ const Chat: React.FC<ChatProps> = ({
         <GiftedChat
           messageContainerRef={ref}
           renderCustomView={renderCustomView}
-          loadEarlier={showLoadEarlier}
           isLoadingEarlier={loading}
-          onLoadEarlier={loadEarlier}
           keyboardShouldPersistTaps="never"
           renderMessageText={renderMessageText}
           bottomOffset={insets.bottom - 10}
           messages={sorted}
           messagesContainerStyle={{marginBottom: 10}}
           textInputProps={{lineHeight: null}}
-          listViewProps={{marginBottom: 10}}
+          listViewProps={{
+            marginBottom: 10,
+            onEndReached: loadEarlier,
+          }}
           renderInputToolbar={props => (
             <CustomInputToolbar
               {...props}
