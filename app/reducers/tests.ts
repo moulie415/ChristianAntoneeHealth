@@ -1,6 +1,6 @@
-import Test from '../types/Test';
-import {SavedTest} from '../types/SavedItem';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {SavedTest} from '../types/SavedItem';
+import Test from '../types/Test';
 import {setLoggedIn} from './profile';
 
 export interface TestsState {
@@ -43,7 +43,7 @@ const testSlice = createSlice({
       state: TestsState,
       {payload}: PayloadAction<{[key: string]: Test}>,
     ) => {
-      state.tests = payload;
+      state.tests = {...state.tests, ...payload};
     },
 
     setSavedTests: (

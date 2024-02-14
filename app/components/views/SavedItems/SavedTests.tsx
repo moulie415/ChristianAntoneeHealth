@@ -33,7 +33,6 @@ const SavedTests: FunctionComponent<{
       ),
     [savedTests],
   );
-
   return (
     <>
       <View>
