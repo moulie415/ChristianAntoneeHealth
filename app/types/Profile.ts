@@ -22,6 +22,28 @@ export enum TrainingAvailability {
   FOUR_PLUS = 4,
 }
 
+export enum Sleep {
+  LESS_THAN_FOUR,
+  BETWEEN_FOUR_AND_SEVEN,
+  MORE_THAN_SEVEN,
+}
+
+export enum DietaryPreference {
+  VEGETARIAN,
+  VEGAN,
+  INTERMITTENT_FASTING,
+  KETOGENIC,
+  PALEO,
+  GLUTEN_FREE,
+}
+
+export enum CurrentExercise {
+  THREE_FOUR_WEEK,
+  ONE_TWO_WEEK,
+  ONE_TWO_MONTH,
+  NOT_AT_ALL,
+}
+
 export type Premium =
   | undefined
   | false
@@ -43,7 +65,6 @@ export default interface Profile {
   admin?: boolean;
   premium?: Premium;
   unread?: {[key: string]: number};
-
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;
@@ -68,4 +89,18 @@ export default interface Profile {
   equipment?: Equipment;
   experience?: Level;
   favouriteRecipes?: string[];
+
+  stressLevel?: StressLevel;
+  sleep?: Sleep;
+  dietaryPreference?: DietaryPreference | string;
+  currentExercise?: CurrentExercise;
+  fitnessRating?: number;
+  heartCondition?: boolean;
+  activityChestPain?: boolean;
+  chestPain?: boolean;
+  loseBalanceConsciousness?: boolean;
+  boneProblems?: boolean;
+  drugPrescription?: boolean;
+  otherReason?: boolean;
+  willInformDoctor?: boolean;
 };

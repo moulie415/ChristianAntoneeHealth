@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {StackParamList} from './App';
 import PlanTabIcon from './PlanTabIcon';
+import {navigate} from './RootNavigation';
 import Avatar from './components/commons/Avatar';
 import Home from './components/views/Home';
 import Plan from './components/views/Plan/Plan';
@@ -86,20 +87,28 @@ const Tabs: React.FC<{
         name="Profile"
         component={ProfileComponent}
       />
-      {(profile.admin || hasPremiumPlus(profile.premium)) && (
-        <Tab.Screen
-          options={{
-            tabBarLabel: 'Plan',
-            tabBarIcon: ({color, size}) => (
-              <PlanTabIcon color={color} size={size} />
-            ),
-            headerShown: false,
-          }}
-          name="Plan"
-          key="Plan"
-          component={Plan}
-        />
-      )}
+      {/* {(profile.admin || hasPremiumPlus(profile.premium)) && ( */}
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Plan',
+          tabBarIcon: ({color, size}) => (
+            <PlanTabIcon color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+        listeners={{
+          tabPress: e => {
+            if (!(profile.admin || hasPremiumPlus(profile.premium))) {
+              e.preventDefault();
+              navigate('Premium', {});
+            }
+          },
+        }}
+        name="Plan"
+        key="Plan"
+        component={Plan}
+      />
+      {/* )} */}
     </Tab.Navigator>
   );
 };

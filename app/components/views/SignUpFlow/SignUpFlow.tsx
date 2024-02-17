@@ -1,17 +1,20 @@
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import moment from 'moment';
 import React, {useRef, useState} from 'react';
 import {
   Alert,
-  Platform,
   Dimensions,
+  Keyboard,
+  Platform,
   SafeAreaView,
   View,
-  Keyboard,
 } from 'react-native';
+import PagerView from 'react-native-pager-view';
+import StepIndicator from 'react-native-step-indicator';
 import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import Profile, {Gender} from '../../../types/Profile';
-import {Goal, Level, MyRootState, SignUpPayload} from '../../../types/Shared';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
 import {
   getDateOfBirth,
   getHeight,
@@ -22,24 +25,28 @@ import {
   linkToGoogleFit,
 } from '../../../helpers/biometrics';
 import {logError} from '../../../helpers/error';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useInit from '../../../hooks/UseInit';
-import SelectGoal from './SelectGoal';
+import useThrottle from '../../../hooks/UseThrottle';
+import {signUp} from '../../../reducers/profile';
+import Profile, {
+  CurrentExercise,
+  DietaryPreference,
+  Gender,
+  Sleep,
+  StressLevel,
+} from '../../../types/Profile';
+import {Area, Equipment} from '../../../types/QuickRoutines';
+import {Goal, Level, MyRootState, SignUpPayload} from '../../../types/Shared';
+import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Goals from './Goals';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
-import {RouteProp} from '@react-navigation/native';
-import PagerView from 'react-native-pager-view';
-import moment from 'moment';
+import HealthAndLifestyle from './HealthAndLifestyle';
 import PersonalDetails from './PersonalDetails';
 import SelectArea from './SelectArea';
-import Button from '../../commons/Button';
-import StepIndicator from 'react-native-step-indicator';
-import useThrottle from '../../../hooks/UseThrottle';
-import {Area, Equipment} from '../../../types/QuickRoutines';
 import SelectEquipment from './SelectEquipment';
 import SelectExperience from './SelectExperience';
-import {signUp} from '../../../reducers/profile';
+import SelectGoal from './SelectGoal';
 
 const {width} = Dimensions.get('window');
 
@@ -68,6 +75,44 @@ const SignUpFlow: React.FC<{
   const [experience, setExperience] = useState<Level>(
     (profile.experience as Level) || null,
   );
+
+  const [stressLevel, setStressLevel] = useState<StressLevel>(
+    (profile.stressLevel as StressLevel) || null,
+  );
+  const [sleep, setSleep] = useState((profile.sleep || null) as Sleep);
+
+  const [dietaryPreference, setDietaryPreference] = useState<
+    DietaryPreference | string
+  >(profile.dietaryPreference || '');
+
+  const [currentExercise, setCurrentExercise] = useState(
+    (profile.currentExercise || null) as CurrentExercise,
+  );
+  const [fitnessRating, setFitnessRating] = useState(
+    profile.fitnessRating || null,
+  );
+
+  const [heartCondition, setHeartCondition] = useState(
+    profile.heartCondition || false,
+  );
+  const [activityChestPain, setActivityChestPain] = useState(
+    profile.activityChestPain || false,
+  );
+  const [chestPain, setChestPain] = useState(profile.chestPain || false);
+  const [loseBalanceConsciousness, setLoseBalanceConsciousness] = useState(
+    profile.loseBalanceConsciousness || false,
+  );
+  const [boneProblems, setBoneProblems] = useState(
+    profile.boneProblems || false,
+  );
+  const [drugPrescription, setDrugPrescription] = useState(
+    profile.drugPrescription || false,
+  );
+  const [otherReason, setOtherReason] = useState(profile.otherReason || false);
+  const [willInformDoctor, setWillInformDoctor] = useState(
+    profile.willInformDoctor || false,
+  );
+
   const [loading, setLoading] = useState(false);
   const [privacy, setPrivacy] = useState(false);
 
@@ -141,6 +186,29 @@ const SignUpFlow: React.FC<{
 
   const slides = [
     {
+      key: 'health',
+      showNext: !!goal,
+      component: (
+        <HealthAndLifestyle
+          stressLevel={stressLevel}
+          setStressLevel={setStressLevel}
+          sleep={sleep}
+          setSleep={setSleep}
+          dietaryPreference={dietaryPreference}
+          setDietaryPreference={setDietaryPreference}
+          currentExercise={currentExercise}
+          setCurrentExercise={setCurrentExercise}
+          fitnessRating={fitnessRating}
+          setFitnessRating={setFitnessRating}
+        />
+      ),
+    },
+    {
+      key: 'readiness',
+      showNext: !!area,
+      component: <SelectArea area={area} setArea={setArea} />,
+    },
+    {
       showNext:
         !!name &&
         !!surname &&
@@ -181,6 +249,7 @@ const SignUpFlow: React.FC<{
       showNext: !!area,
       component: <SelectArea area={area} setArea={setArea} />,
     },
+
     {
       key: 'equipment',
       showNext: !!equipment,
@@ -218,6 +287,8 @@ const SignUpFlow: React.FC<{
             separatorFinishedColor: colors.appBlue,
             stepIndicatorUnFinishedColor: colors.borderColor,
             stepIndicatorFinishedColor: colors.appBlue,
+            // stepIndicatorSize: 25,
+            // currentStepIndicatorSize: 30
           }}
         />
       </View>

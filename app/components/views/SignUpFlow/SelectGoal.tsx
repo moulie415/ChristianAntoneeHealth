@@ -1,12 +1,10 @@
-import {View} from 'react-native';
 import React from 'react';
-import {Goal} from '../../../types/Shared';
-import Text from '../../commons/Text';
-
+import {View} from 'react-native';
 import colors from '../../../constants/colors';
-import Button from '../../commons/Button';
-import SelectableButton from '../../commons/SelectableButton';
 import {getGoalReadableString} from '../../../helpers/goals';
+import {Goal} from '../../../types/Shared';
+import SelectableButton from '../../commons/SelectableButton';
+import Text from '../../commons/Text';
 
 export const goalDetails: {goal: Goal; text: string; secondaryText: string}[] =
   [

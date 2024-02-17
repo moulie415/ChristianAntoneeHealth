@@ -24,6 +24,7 @@ import {StackParamList} from '../../../App';
 import {navigationRef} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
+import {PREMIUM_PLUS} from '../../../helpers/hasPremiumPlus';
 import {setPremium} from '../../../reducers/profile';
 import {SettingsState} from '../../../reducers/settings';
 import Profile from '../../../types/Profile';
@@ -33,11 +34,10 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
-import { PREMIUM_PLUS } from '../../../helpers/hasPremiumPlus';
 
 const {height} = Dimensions.get('window');
 
-const MIN_CONTENT_HEIGHT = 620;
+const MIN_CONTENT_HEIGHT = 670;
 
 const CONTENT_HEIGHT =
   height * 0.7 > MIN_CONTENT_HEIGHT || MIN_CONTENT_HEIGHT > height
@@ -169,6 +169,21 @@ const Premium: React.FC<{
       available: premiumPlusStrings.includes(selected),
       solid: true,
     },
+    {
+      icon: 'apple-whole',
+      feature: 'Bespoke nutritional support',
+      available: premiumPlusStrings.includes(selected),
+    },
+    {
+      icon: 'chart-column',
+      feature: 'Weekly check-ins to keep you on track',
+      available: premiumPlusStrings.includes(selected),
+    },
+    {
+      icon: 'person-walking',
+      feature: 'Healthy Lifestyle Support',
+      available: premiumPlusStrings.includes(selected),
+    },
   ];
 
   const premiumActive = info && info.activeSubscriptions[0];
@@ -236,10 +251,10 @@ const Premium: React.FC<{
                   key={icon}
                   style={{
                     flexDirection: 'row',
-                    marginBottom: 20,
+                    marginBottom: 10,
                     alignItems: 'center',
                   }}>
-                  <View style={{justifyContent: 'center'}}>
+                  {/* <View style={{justifyContent: 'center'}}>
                     <Icon
                       style={{width: 40}}
                       size={20}
@@ -247,7 +262,7 @@ const Premium: React.FC<{
                       name={icon}
                       solid={solid}
                     />
-                  </View>
+                  </View> */}
                   <Text
                     style={{
                       fontSize: 14,

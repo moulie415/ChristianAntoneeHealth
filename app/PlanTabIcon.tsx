@@ -1,11 +1,12 @@
-import {View} from 'react-native';
 import React from 'react';
+import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {MyRootState} from './types/Shared';
-import Profile from './types/Profile';
 import Text from './components/commons/Text';
 import colors from './constants/colors';
+import {hasPremiumPlus} from './helpers/hasPremiumPlus';
+import Profile from './types/Profile';
+import {MyRootState} from './types/Shared';
 
 const PlanTabIcon: React.FC<{
   color: string;
@@ -16,6 +17,14 @@ const PlanTabIcon: React.FC<{
   return (
     <View>
       <Icon color={color} size={size} name="calendar-days" solid />
+      {!(profile.admin || hasPremiumPlus(profile.premium)) && (
+        <Icon
+          name="lock"
+          color={colors.appBlue}
+          size={15}
+          style={{position: 'absolute', top: -5, right: -5}}
+        />
+      )}
       {profile.premium && count > 0 && (
         <View
           style={{
