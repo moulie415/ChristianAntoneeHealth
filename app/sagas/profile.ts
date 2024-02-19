@@ -51,8 +51,8 @@ import {
 } from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {getGoalsData} from '../helpers/goals';
+import {PREMIUM_PLUS} from '../helpers/hasPremiumPlus';
 import {getProfileImage} from '../helpers/images';
-import isTestFlight from '../helpers/isTestFlight';
 import {setUserAttributes} from '../helpers/profile';
 import {
   GET_CONNECTIONS,
@@ -103,7 +103,6 @@ import {
 } from '../types/Shared';
 import {handleDeepLink} from './exercises';
 import {getSettings} from './settings';
-import { PREMIUM_PLUS } from '../helpers/hasPremiumPlus';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -783,8 +782,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       if (
         customerInfo.entitlements.active.Premium ||
         customerInfo.entitlements.active[PREMIUM_PLUS] ||
-        isAdmin ||
-        isTestFlight()
+        isAdmin
       ) {
         yield put(setPremium(customerInfo.entitlements.active));
         yield fork(getConnections);
