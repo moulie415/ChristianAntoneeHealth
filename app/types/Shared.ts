@@ -5,7 +5,7 @@ import {QuickRoutinesState} from '../reducers/quickRoutines';
 import {RecipesState} from '../reducers/recipes';
 import {SettingsState} from '../reducers/settings';
 import {TestsState} from '../reducers/tests';
-import {Gender} from './Profile';
+import {CurrentExercise, DietaryPreference, Gender, Sleep, StressLevel} from './Profile';
 import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
 
 export type MyRootState = {
@@ -161,6 +161,19 @@ export interface SignUpPayload {
   area: Area;
   equipment: EquipmentLevel;
   experience: Level;
+  stressLevel: StressLevel;
+  sleep: Sleep;
+  dietaryPreference: DietaryPreference | string;
+  currentExercise: CurrentExercise;
+  fitnessRating: number;
+  heartCondition: boolean;
+  activityChestPain: boolean;
+  chestPain: boolean;
+  loseBalanceConsciousness: boolean;
+  boneProblems: boolean;
+  drugPrescription: boolean;
+  otherReason: boolean;
+  willInformDoctor: boolean;
   fromProfile?: boolean;
 }
 

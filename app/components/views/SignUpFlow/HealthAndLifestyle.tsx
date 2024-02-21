@@ -8,6 +8,7 @@ import {
   Sleep,
   StressLevel,
 } from '../../../types/Profile';
+import Input from '../../commons/Input';
 import SelectableButton from '../../commons/SelectableButton';
 
 interface Question<T> {
@@ -15,6 +16,7 @@ interface Question<T> {
   onPress: (x: T) => void;
   buttons: {text: string; value: T}[];
   value: T;
+  key?: string;
 }
 
 const HealthAndLifestyle: React.FC<{
@@ -26,8 +28,8 @@ const HealthAndLifestyle: React.FC<{
   setDietaryPreference: (preference: DietaryPreference | string) => void;
   currentExercise: CurrentExercise;
   setCurrentExercise: (currentExercise: CurrentExercise) => void;
-  fitnessRating: number | null;
-  setFitnessRating: (rating: number | null) => void;
+  fitnessRating: number;
+  setFitnessRating: (rating: number) => void;
 }> = ({
   stressLevel,
   setStressLevel,
@@ -62,6 +64,7 @@ const HealthAndLifestyle: React.FC<{
       value: sleep,
     },
     {
+      key: 'dietaryPreference',
       question: 'How would you describe your dietary preferences?',
       onPress: setDietaryPreference,
       buttons: [
@@ -102,7 +105,7 @@ const HealthAndLifestyle: React.FC<{
         flex: 1,
         paddingHorizontal: 20,
       }}>
-      {questions.map(({question, buttons, onPress, value}) => {
+      {questions.map(({question, buttons, onPress, value, key}) => {
         return (
           <View key={question}>
             <Text
@@ -126,6 +129,33 @@ const HealthAndLifestyle: React.FC<{
                 />
               );
             })}
+            {key === 'dietaryPreference' && (
+              <>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontWeight: 'bold',
+                    padding: 10,
+                    paddingHorizontal: 5,
+                  }}>
+                  Other:
+                </Text>
+                <Input
+                  value={
+                    questions
+                      .find(q => q.key === 'dietaryPreference')
+                      ?.buttons.some(
+                        button => button.value === dietaryPreference,
+                      )
+                      ? ''
+                      : dietaryPreference
+                  }
+                  onPressIn={() => setDietaryPreference('')}
+                  onChangeText={setDietaryPreference}
+                  placeholder="Enter preference here..."
+                />
+              </>
+            )}
           </View>
         );
       })}

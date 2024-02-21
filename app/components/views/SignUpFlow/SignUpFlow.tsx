@@ -89,7 +89,7 @@ const SignUpFlow: React.FC<{
     (profile.currentExercise || null) as CurrentExercise,
   );
   const [fitnessRating, setFitnessRating] = useState(
-    profile.fitnessRating || null,
+    (profile.fitnessRating || null) as number,
   );
 
   const [heartCondition, setHeartCondition] = useState(
@@ -173,6 +173,19 @@ const SignUpFlow: React.FC<{
       area,
       experience,
       equipment,
+      stressLevel,
+      sleep,
+      dietaryPreference,
+      currentExercise,
+      fitnessRating,
+      heartCondition,
+      activityChestPain,
+      chestPain,
+      loseBalanceConsciousness,
+      boneProblems,
+      drugPrescription,
+      otherReason,
+      willInformDoctor,
       fromProfile: !!fromProfile,
     });
   }, 3000);

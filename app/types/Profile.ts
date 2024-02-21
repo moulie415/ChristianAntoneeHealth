@@ -9,39 +9,39 @@ export type Unit = 'metric' | 'imperial';
 export type StressLevel = 'low' | 'medium' | 'high';
 
 export enum SleepPattern {
-  FIVE = 1,
-  FIVE_SIX = 2,
-  SEVEN_EIGHT = 3,
-  EIGHT = 4,
+  FIVE = 'FIVE',
+  FIVE_SIX = 'FIVE_SIX',
+  SEVEN_EIGHT = 'SEVEN_EIGHT',
+  EIGHT = 'EIGHT',
 }
 
 export enum TrainingAvailability {
-  ONE_TWO = 1,
-  TWO_THREE = 2,
-  THREE_FOUR = 3,
-  FOUR_PLUS = 4,
+  ONE_TWO = 'ONE_TWO',
+  TWO_THREE = 'TWO_THREE',
+  THREE_FOUR = 'THREE_FOUR',
+  FOUR_PLUS = 'FOUR_PLUS',
 }
 
 export enum Sleep {
-  LESS_THAN_FOUR,
-  BETWEEN_FOUR_AND_SEVEN,
-  MORE_THAN_SEVEN,
+  LESS_THAN_FOUR = 'LESS_THAN_FOUR',
+  BETWEEN_FOUR_AND_SEVEN = 'BETWEEN_FOUR_AND_SEVEN',
+  MORE_THAN_SEVEN = 'MORE_THAN_SEVEN',
 }
 
 export enum DietaryPreference {
-  VEGETARIAN,
-  VEGAN,
-  INTERMITTENT_FASTING,
-  KETOGENIC,
-  PALEO,
-  GLUTEN_FREE,
+  VEGETARIAN = 'VEGETARIAN',
+  VEGAN = 'VEGAN',
+  INTERMITTENT_FASTING = 'INTERMITTENT_FASTING',
+  KETOGENIC = 'KETOGENIC',
+  PALEO = 'PALEO',
+  GLUTEN_FREE = 'GLUTEN_FREE',
 }
 
 export enum CurrentExercise {
-  THREE_FOUR_WEEK,
-  ONE_TWO_WEEK,
-  ONE_TWO_MONTH,
-  NOT_AT_ALL,
+  THREE_FOUR_WEEK = 'THREE_FOUR_WEEK',
+  ONE_TWO_WEEK = 'ONE_TWO_WEEK',
+  ONE_TWO_MONTH = 'ONE_TWO_MONTH',
+  NOT_AT_ALL = 'NOT_AT_ALL',
 }
 
 export type Premium =
