@@ -43,6 +43,7 @@ import Header from '../../commons/Header';
 import Goals from './Goals';
 import HealthAndLifestyle from './HealthAndLifestyle';
 import PersonalDetails from './PersonalDetails';
+import PhysicalActivityReadiness from './PhysicalActivityReadiness';
 import SelectArea from './SelectArea';
 import SelectEquipment from './SelectEquipment';
 import SelectExperience from './SelectExperience';
@@ -89,7 +90,7 @@ const SignUpFlow: React.FC<{
     (profile.currentExercise || null) as CurrentExercise,
   );
   const [fitnessRating, setFitnessRating] = useState(
-    (profile.fitnessRating || null) as number,
+    profile.fitnessRating || 5,
   );
 
   const [heartCondition, setHeartCondition] = useState(
@@ -112,6 +113,7 @@ const SignUpFlow: React.FC<{
   const [willInformDoctor, setWillInformDoctor] = useState(
     profile.willInformDoctor || false,
   );
+  const [confirmQuestionnaire, setConfirmQuestionnaire] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [privacy, setPrivacy] = useState(false);
@@ -199,8 +201,18 @@ const SignUpFlow: React.FC<{
 
   const slides = [
     {
+      key: 'readiness',
+      showNext: true,
+      component: <PhysicalActivityReadiness />,
+    },
+    {
       key: 'health',
-      showNext: !!goal,
+      showNext:
+        !!stressLevel &&
+        !!sleep &&
+        !!dietaryPreference &&
+        !!currentExercise &&
+        !!fitnessRating,
       component: (
         <HealthAndLifestyle
           stressLevel={stressLevel}
@@ -216,11 +228,7 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-    {
-      key: 'readiness',
-      showNext: !!area,
-      component: <SelectArea area={area} setArea={setArea} />,
-    },
+
     {
       showNext:
         !!name &&

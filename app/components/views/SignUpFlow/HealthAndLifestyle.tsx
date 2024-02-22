@@ -1,6 +1,8 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Picker} from 'react-native-wheel-pick';
+import {FITNESS_RATINGS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {
   CurrentExercise,
@@ -159,6 +161,28 @@ const HealthAndLifestyle: React.FC<{
           </View>
         );
       })}
+      <Text
+        style={{
+          marginTop: 20,
+          fontSize: 24,
+          color: colors.appWhite,
+          fontWeight: 'bold',
+        }}>
+        How would you rate your fitness on a scale of 1-10?
+      </Text>
+      <Picker
+        style={{height: 200, backgroundColor: 'transparent'}}
+        textColor={colors.appWhite}
+        itemStyle={{color: colors.appWhite}}
+        selectedValue={String(fitnessRating)}
+        pickerData={FITNESS_RATINGS.map(value => {
+          return {
+            label: value.toString(),
+            value: String(value),
+          };
+        })}
+        onValueChange={(val: any) => setFitnessRating(Number(val))}
+      />
     </KeyboardAwareScrollView>
   );
 };
