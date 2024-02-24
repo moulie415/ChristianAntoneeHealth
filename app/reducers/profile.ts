@@ -42,7 +42,7 @@ export interface ProfileState {
   state: AppStateStatus;
   weeklyItems: WeeklyItems;
   plan?: Plan;
-  hasViewedTour: boolean;
+  hasViewedTargets: boolean;
   syncedPlanEvents: {[key: string]: string};
   calendarId?: string;
   loginEmail: string;
@@ -101,7 +101,7 @@ const initialState: ProfileState = {
     tests: {},
     workouts: {},
   },
-  hasViewedTour: false,
+  hasViewedTargets: false,
   syncedPlanEvents: {},
   loginEmail: '',
   loginPassword: '',
@@ -216,8 +216,8 @@ export const SET_WEEKLY_ITEMS_FOR_CONNECTION = `${PROFILE}/setWeeklyItemsForConn
 export type SET_WEEKLY_ITEMS_FOR_CONNECTION =
   typeof SET_WEEKLY_ITEMS_FOR_CONNECTION;
 
-export const SET_HAS_VIEWED_TOUR = `${PROFILE}/setHasViewedTour`;
-export type SET_HAS_VIEWED_TOUR = typeof SET_HAS_VIEWED_TOUR;
+export const SET_HAS_VIEWED_TARGETS = `${PROFILE}/setHasViewedTargets`;
+export type SET_HAS_VIEWED_TARGETS = typeof SET_HAS_VIEWED_TARGETS;
 
 export const SET_CHAT_MESSAGE = `${PROFILE}/setChatMessage`;
 export type SET_CHAT_MESSAGE = typeof SET_CHAT_MESSAGE;
@@ -440,8 +440,8 @@ const profileSlice = createSlice({
     ) => {
       state.plan = payload;
     },
-    setHasViewedTour: (state: ProfileState) => {
-      state.hasViewedTour = true;
+    setHasViewedTargets: (state: ProfileState) => {
+      state.hasViewedTargets = true;
     },
     setSyncedPlanEvent: (
       state: ProfileState,
@@ -550,7 +550,7 @@ export const {
   setChatMessage,
   setChats,
   setConnections,
-  setHasViewedTour,
+  setHasViewedTargets,
   setHeightSamples,
   setLoading,
   setLoggedIn,

@@ -1,8 +1,8 @@
 import PushNotification from 'react-native-push-notification';
 import {capitalizeFirstLetter} from '.';
 import {WeeklyItems} from '../reducers/profile';
-import {SettingsState} from '../reducers/settings';
 import {GOALS_CHANNEL_ID} from '../sagas/profile';
+import Profile, {Targets} from '../types/Profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
 import {Goal, Level, PlanWorkout} from '../types/Shared';
@@ -32,12 +32,10 @@ export const contributesToScore = <Type extends GenericWorkout>(
 };
 
 export const getGoalsData = (
-  goal: Goal,
   weeklyItems: WeeklyItems,
   quickRoutinesObj: {[key: string]: QuickRoutine},
-  settings: SettingsState,
+  goalData?: Targets,
 ) => {
-  const goalData = settings.workoutGoals[goal];
   const workoutGoal = goalData?.workouts.number || 0;
   const minsGoal = goalData?.mins || 0;
   const workoutLevelTitleString = capitalizeFirstLetter(
@@ -110,10 +108,9 @@ export const getGoalsData = (
 
 export const sendGoalTargetNotification = (
   payload: SavedWorkout | SavedQuickRoutine,
-  goal: Goal,
   weeklyItems: WeeklyItems,
   quickRoutines: {[key: string]: QuickRoutine},
-  settings: SettingsState,
+  profile: Profile,
 ) => {
   const {
     calories,
@@ -123,7 +120,7 @@ export const sendGoalTargetNotification = (
     minsGoal,
     caloriesGoal,
     workoutLevel,
-  } = getGoalsData(goal, weeklyItems, quickRoutines, settings);
+  } = getGoalsData(weeklyItems, quickRoutines, profile.targets);
 
   const workout: PlanWorkout | QuickRoutine | undefined =
     'quickRoutineId' in payload

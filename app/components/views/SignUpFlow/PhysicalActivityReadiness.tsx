@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {Fragment, ReactNode} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import colors from '../../../constants/colors';
 import Checkbox from '../../commons/Checkbox';
@@ -121,7 +121,6 @@ const PhysicalActivityReadiness: React.FC<{
       contentContainerStyle={{paddingBottom: 100}}
       style={{
         flex: 1,
-   
       }}>
       <Text
         style={{
@@ -135,8 +134,8 @@ const PhysicalActivityReadiness: React.FC<{
       </Text>
       {questions.map(({question, key, value, onChange}) => {
         return (
-          <>
-            <View key={key} style={{marginVertical: 15, paddingHorizontal: 20}}>
+          <Fragment key={key}>
+            <View style={{marginVertical: 15, paddingHorizontal: 20}}>
               <Text
                 style={{
                   fontSize: 16,
@@ -167,7 +166,7 @@ const PhysicalActivityReadiness: React.FC<{
               </View>
             </View>
             <Divider />
-          </>
+          </Fragment>
         );
       })}
       <TouchableOpacity
@@ -182,7 +181,7 @@ const PhysicalActivityReadiness: React.FC<{
           onPress={() => setConfirmQuestionnaire(!confirmQuestionnaire)}
           iconStyle={{color: colors.appWhite}}
         />
-        <Text style={{ color: colors.appWhite, flex: 1, marginLeft: 10}}>
+        <Text style={{color: colors.appWhite, flex: 1, marginLeft: 10}}>
           I have read, understood and completed this questionnaire to my full
           satisfaction.
         </Text>

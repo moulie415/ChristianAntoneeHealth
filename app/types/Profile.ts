@@ -49,6 +49,15 @@ export type Premium =
   | false
   | {[key: string]: PurchasesEntitlementInfo};
 
+export interface Targets {
+  calories: number;
+  mins: number;
+  workouts: {
+    level: Level;
+    number: number;
+  };
+}
+
 export default interface Profile {
   email: string;
   uid: string;
@@ -59,6 +68,7 @@ export default interface Profile {
   weight?: number;
   height?: number;
   goal?: Goal;
+  targets?: Targets;
   marketing?: boolean;
   dob?: string;
   signedUp?: boolean;

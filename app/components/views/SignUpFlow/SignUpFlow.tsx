@@ -40,7 +40,7 @@ import {Area, Equipment} from '../../../types/QuickRoutines';
 import {Goal, Level, MyRootState, SignUpPayload} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
-import Goals from './Goals';
+import Goals from '../TargetModal';
 import HealthAndLifestyle from './HealthAndLifestyle';
 import PersonalDetails from './PersonalDetails';
 import PhysicalActivityReadiness from './PhysicalActivityReadiness';
@@ -231,11 +231,7 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-    {
-      key: 'goal',
-      showNext: !!goal,
-      component: <SelectGoal goal={goal} setGoal={setGoal} />,
-    },
+
     {
       key: 'area',
       showNext: !!area,
@@ -308,10 +304,10 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-
     {
-      key: 'goals',
-      component: <Goals goal={goal} />,
+      key: 'goal',
+      showNext: !!goal,
+      component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
   ];
 
@@ -382,7 +378,7 @@ const SignUpFlow: React.FC<{
                   <Button
                     text="complete"
                     onPress={completeSignUp}
-                    disabled={loading}
+                    disabled={loading || !slide.showNext}
                     loading={loading}
                     style={{
                       flex: 1,

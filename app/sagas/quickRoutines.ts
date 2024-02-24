@@ -15,7 +15,6 @@ import {
   setQuickRoutines,
   setSavedQuickRoutines,
 } from '../reducers/quickRoutines';
-import {SettingsState} from '../reducers/settings';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
 import {MyRootState} from '../types/Shared';
@@ -45,16 +44,11 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
         (state: MyRootState) => state.quickRoutines,
       );
 
-      const settings: SettingsState = yield select(
-        (state: MyRootState) => state.settings,
-      );
-
       sendGoalTargetNotification(
         action.payload,
-        profile.goal,
         weeklyItems,
         quickRoutines,
-        settings,
+        profile,
       );
     }
   } catch (e) {

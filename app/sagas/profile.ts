@@ -286,6 +286,10 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
       console.log(e);
     }
 
+    const settings: SettingsState = yield select(
+      (state: MyRootState) => state.settings,
+    );
+    const targets = settings.workoutGoals[goal];
     const {profile} = yield select((state: MyRootState) => state.profile);
     yield call(
       api.updateUser,
@@ -294,12 +298,14 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
         signedUp: true,
         ...action.payload,
         signUpDate: moment().unix(),
+        targets,
       },
       profile.uid,
     );
     yield put(
       setProfile({
         ...profile,
+        targets,
         ...action.payload,
       }),
     );
@@ -421,15 +427,11 @@ export function* scheduleGoalReminderNotification() {
   const {quickRoutines} = yield select(
     (state: MyRootState) => state.quickRoutines,
   );
-  const settings: SettingsState = yield select(
-    (state: MyRootState) => state.settings,
-  );
   if (profile.goal) {
     const {completed} = getGoalsData(
-      profile.goal,
       weeklyItems,
       quickRoutines,
-      settings,
+      profile.targets,
     );
     const date = moment().set('day', 5).set('hours', 9).set('minutes', 0);
 

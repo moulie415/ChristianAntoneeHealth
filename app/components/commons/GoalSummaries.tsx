@@ -16,7 +16,7 @@ import {
 import {SettingsState} from '../../reducers/settings';
 import Profile from '../../types/Profile';
 import QuickRoutine from '../../types/QuickRoutines';
-import {Goal, MyRootState} from '../../types/Shared';
+import {MyRootState} from '../../types/Shared';
 import Text from './Text';
 import Tile from './Tile';
 
@@ -127,10 +127,9 @@ const GoalSummaries: React.FC<{
     minsGoal,
     workoutLevelTitleString,
   } = getGoalsData(
-    (connection ? connection.goal : profile.goal) || Goal.ACTIVE,
     connection ? connectionWeeklyItems[connection.uid] : weeklyItems,
     quickRoutinesObj,
-    settings,
+    connection ? connection.targets : profile.targets,
   );
 
   const goals: GoalSet[] = [

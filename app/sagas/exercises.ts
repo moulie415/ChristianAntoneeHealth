@@ -71,16 +71,11 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
         (state: MyRootState) => state.quickRoutines,
       );
 
-      const settings: SettingsState = yield select(
-        (state: MyRootState) => state.settings,
-      );
-
       sendGoalTargetNotification(
         action.payload,
-        profile.goal,
         weeklyItems,
         quickRoutines,
-        settings,
+        profile,
       );
     }
   } catch (e) {

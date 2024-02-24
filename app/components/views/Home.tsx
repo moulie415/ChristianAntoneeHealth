@@ -1,15 +1,17 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
+import {setHasViewedTargets} from '../../reducers/profile';
 import Profile from '../../types/Profile';
-import {MyRootState} from '../../types/Shared';
+import {Goal, MyRootState} from '../../types/Shared';
 import Header from '../commons/Header';
 import HomeCard from '../commons/HomeCard';
+import TargetModal from './TargetModal';
 
 const {height, width} = Dimensions.get('window');
 
@@ -21,8 +23,21 @@ type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 
 const Home: React.FC<{
   navigation: HomeNavigationProp;
+  hasViewedTargets: boolean;
+  setHasViewedTargets: () => void;
   profile: Profile;
-}> = ({navigation, profile}) => {
+}> = ({
+  navigation,
+  hasViewedTargets,
+  setHasViewedTargets: setHasViewedTargetsAction,
+  profile,
+}) => {
+  const [targetModalVisible, setTargetModalVisible] = useState(false);
+  useEffect(() => {
+    if (!hasViewedTargets && profile.goal && profile.goal !== Goal.OTHER) {
+      setTargetModalVisible(true);
+    }
+  }, [hasViewedTargets, profile.goal]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
@@ -38,26 +53,6 @@ const Home: React.FC<{
               alignSelf: 'center',
             }}
           />
-
-          {/* <Text
-            style={{
-              marginLeft: 20,
-              fontSize: 14,
-              color: colors.appWhite,
-              fontWeight: 'bold',
-            }}>
-            {`${greetingMessage()},`}
-          </Text> */}
-          {/* <Text
-            style={{
-              marginLeft: 20,
-              marginBottom: 20,
-              fontSize: 30,
-              color: colors.appWhite,
-              fontWeight: 'bold',
-            }}>
-            {profile.name?.split(' ')[0] || 'user'}
-          </Text> */}
 
           <HomeCard
             title="New Workout"
@@ -107,12 +102,24 @@ const Home: React.FC<{
           />
         </ScrollView>
       </SafeAreaView>
+      <TargetModal
+        visible={targetModalVisible}
+        onRequestClose={() => {
+          setTargetModalVisible(false);
+          setHasViewedTargetsAction();
+        }}
+      />
     </View>
   );
 };
 
 const mapStateToProps = ({profile}: MyRootState) => ({
+  hasViewedTargets: profile.hasViewedTargets,
   profile: profile.profile,
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+  setHasViewedTargets,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
