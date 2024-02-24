@@ -23,6 +23,11 @@ export const goalDetails: {goal: Goal; text: string; secondaryText: string}[] =
       text: getGoalReadableString(Goal.ACTIVE),
       secondaryText: 'Feel better as part of a healthier active lifestyle',
     },
+    {
+      goal: Goal.OTHER,
+      text: getGoalReadableString(Goal.OTHER),
+      secondaryText: 'Christian and I have discussed or will discuss my goal',
+    },
   ];
 
 const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({

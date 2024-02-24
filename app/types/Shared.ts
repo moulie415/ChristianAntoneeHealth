@@ -34,6 +34,7 @@ export enum Goal {
   STRENGTH = 'strength',
   WEIGHT_LOSS = 'weightLoss',
   ACTIVE = 'active',
+  OTHER = 'other',
 }
 
 export enum WarmUp {

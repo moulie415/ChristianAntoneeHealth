@@ -196,7 +196,7 @@ const Premium: React.FC<{
   return (
     <>
       <FastImage
-        source={require('../../../images/Equipment-minimal.jpeg')}
+        source={require('../../../images/premium-paywall.jpeg')}
         style={{
           flex: 1,
           position: 'absolute',

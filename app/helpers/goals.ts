@@ -2,10 +2,10 @@ import PushNotification from 'react-native-push-notification';
 import {capitalizeFirstLetter} from '.';
 import {WeeklyItems} from '../reducers/profile';
 import {SettingsState} from '../reducers/settings';
+import {GOALS_CHANNEL_ID} from '../sagas/profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
 import {Goal, Level, PlanWorkout} from '../types/Shared';
-import {GOALS_CHANNEL_ID} from '../sagas/profile';
 
 interface GenericWorkout {
   level: Level;
@@ -193,6 +193,8 @@ export const getGoalReadableString = (goal: Goal) => {
       return 'Become more active';
     case Goal.WEIGHT_LOSS:
       return 'Weight loss';
+    case Goal.OTHER:
+      return 'Other';
     default:
       return '';
   }
