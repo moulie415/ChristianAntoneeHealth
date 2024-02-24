@@ -5,7 +5,13 @@ import {QuickRoutinesState} from '../reducers/quickRoutines';
 import {RecipesState} from '../reducers/recipes';
 import {SettingsState} from '../reducers/settings';
 import {TestsState} from '../reducers/tests';
-import {CurrentExercise, DietaryPreference, Gender, Sleep, StressLevel} from './Profile';
+import {
+  CurrentExercise,
+  DietaryPreference,
+  Gender,
+  Sleep,
+  StressLevel,
+} from './Profile';
 import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
 
 export type MyRootState = {

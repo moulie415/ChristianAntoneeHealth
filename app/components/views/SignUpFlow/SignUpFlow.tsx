@@ -201,35 +201,6 @@ const SignUpFlow: React.FC<{
 
   const slides = [
     {
-      key: 'readiness',
-      showNext: true,
-      component: <PhysicalActivityReadiness />,
-    },
-    {
-      key: 'health',
-      showNext:
-        !!stressLevel &&
-        !!sleep &&
-        !!dietaryPreference &&
-        !!currentExercise &&
-        !!fitnessRating,
-      component: (
-        <HealthAndLifestyle
-          stressLevel={stressLevel}
-          setStressLevel={setStressLevel}
-          sleep={sleep}
-          setSleep={setSleep}
-          dietaryPreference={dietaryPreference}
-          setDietaryPreference={setDietaryPreference}
-          currentExercise={currentExercise}
-          setCurrentExercise={setCurrentExercise}
-          fitnessRating={fitnessRating}
-          setFitnessRating={setFitnessRating}
-        />
-      ),
-    },
-
-    {
       showNext:
         !!name &&
         !!surname &&
@@ -288,6 +259,56 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
+    {
+      key: 'health',
+      showNext:
+        !!stressLevel &&
+        !!sleep &&
+        !!dietaryPreference &&
+        !!currentExercise &&
+        !!fitnessRating,
+      component: (
+        <HealthAndLifestyle
+          stressLevel={stressLevel}
+          setStressLevel={setStressLevel}
+          sleep={sleep}
+          setSleep={setSleep}
+          dietaryPreference={dietaryPreference}
+          setDietaryPreference={setDietaryPreference}
+          currentExercise={currentExercise}
+          setCurrentExercise={setCurrentExercise}
+          fitnessRating={fitnessRating}
+          setFitnessRating={setFitnessRating}
+        />
+      ),
+    },
+    {
+      key: 'readiness',
+      showNext: confirmQuestionnaire,
+      component: (
+        <PhysicalActivityReadiness
+          heartCondition={heartCondition}
+          setHeartCondition={setHeartCondition}
+          activityChestPain={activityChestPain}
+          setActivityChestPain={setActivityChestPain}
+          chestPain={chestPain}
+          setChestPain={setChestPain}
+          loseBalanceConsciousness={loseBalanceConsciousness}
+          setLoseBalanceConsciousness={setLoseBalanceConsciousness}
+          boneProblems={boneProblems}
+          setBoneProblems={setBoneProblems}
+          drugPrescription={drugPrescription}
+          setDrugPrescription={setDrugPrescription}
+          otherReason={otherReason}
+          setOtherReason={setOtherReason}
+          willInformDoctor={willInformDoctor}
+          setWillInformDoctor={setWillInformDoctor}
+          confirmQuestionnaire={confirmQuestionnaire}
+          setConfirmQuestionnaire={setConfirmQuestionnaire}
+        />
+      ),
+    },
+
     {
       key: 'goals',
       component: <Goals goal={goal} />,
