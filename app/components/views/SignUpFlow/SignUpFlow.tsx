@@ -40,7 +40,6 @@ import {Area, Equipment} from '../../../types/QuickRoutines';
 import {Goal, Level, MyRootState, SignUpPayload} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
-import Goals from '../TargetModal';
 import HealthAndLifestyle from './HealthAndLifestyle';
 import PersonalDetails from './PersonalDetails';
 import PhysicalActivityReadiness from './PhysicalActivityReadiness';
@@ -256,6 +255,11 @@ const SignUpFlow: React.FC<{
       ),
     },
     {
+      key: 'goal',
+      showNext: !!goal,
+      component: <SelectGoal goal={goal} setGoal={setGoal} />,
+    },
+    {
       key: 'health',
       showNext:
         !!stressLevel &&
@@ -303,11 +307,6 @@ const SignUpFlow: React.FC<{
           setConfirmQuestionnaire={setConfirmQuestionnaire}
         />
       ),
-    },
-    {
-      key: 'goal',
-      showNext: !!goal,
-      component: <SelectGoal goal={goal} setGoal={setGoal} />,
     },
   ];
 

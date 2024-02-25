@@ -184,17 +184,24 @@ const GoalSummaries: React.FC<{
         Weekly Targets
       </Text>
       <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
-        {goals.map(({goal, score, title, key, icon}) => {
-          return (
-            <GoalCircle
-              title={title}
-              key={key}
-              icon={icon}
-              goal={goal}
-              score={score}
-            />
-          );
-        })}
+        {connection || profile.targets ? (
+          goals.map(({goal, score, title, key, icon}) => {
+            return (
+              <GoalCircle
+                title={title}
+                key={key}
+                icon={icon}
+                goal={goal}
+                score={score}
+              />
+            );
+          })
+        ) : (
+          <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+            Weekly targets will show up here once they have been set by
+            Christian
+          </Text>
+        )}
       </View>
     </Tile>
   );

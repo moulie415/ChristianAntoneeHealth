@@ -289,7 +289,7 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
     const settings: SettingsState = yield select(
       (state: MyRootState) => state.settings,
     );
-    const targets = settings.workoutGoals[goal];
+    const targets = settings.workoutGoals[goal] || null;
     const {profile} = yield select((state: MyRootState) => state.profile);
     yield call(
       api.updateUser,

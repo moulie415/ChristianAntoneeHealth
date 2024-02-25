@@ -1,12 +1,12 @@
 import React from 'react';
-import Modal from '../../commons/Modal';
 import {View} from 'react-native';
-import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
-import Button from '../../commons/Button';
 import {Goal} from '../../../types/Shared';
-import {goalDetails} from '../SignUpFlow/SelectGoal';
+import Button from '../../commons/Button';
+import Modal from '../../commons/Modal';
 import SelectableButton from '../../commons/SelectableButton';
+import Text from '../../commons/Text';
+import {goalDetails} from '../SignUpFlow/SelectGoal';
 
 const SelectGoalModal: React.FC<{
   goalModalVisible: boolean;
@@ -36,7 +36,7 @@ const SelectGoalModal: React.FC<{
           }}>
           Select Goal
         </Text>
-        <View style={{height: 290}}>
+        <View style={{}}>
           {goalDetails.map(({text, secondaryText, goal: g}) => {
             return (
               <SelectableButton

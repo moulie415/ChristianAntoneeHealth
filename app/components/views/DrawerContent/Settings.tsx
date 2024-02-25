@@ -1,7 +1,33 @@
+import Clipboard from '@react-native-clipboard/clipboard';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as _ from 'lodash';
+import moment from 'moment';
 import React, {ReactNode, useState} from 'react';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import RNCalendarEvents from 'react-native-calendar-events';
+import {FlatList} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
-import {Platform, ScrollView, StyleSheet, Switch, View} from 'react-native';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import {PREP_TIME_SECS} from '../../../constants';
+import colors from '../../../constants/colors';
+import {logError} from '../../../helpers/error';
+import {getGoalReadableString} from '../../../helpers/goals';
+import {
+  setCalendarId,
+  syncPlanWithCalendar,
+  updateProfile,
+} from '../../../reducers/profile';
+import Profile from '../../../types/Profile';
 import {
   CalendarType,
   Goal,
@@ -9,42 +35,17 @@ import {
   Plan,
   UpdateProfilePayload,
 } from '../../../types/Shared';
-import {connect} from 'react-redux';
-import moment from 'moment';
-import {TouchableOpacity} from 'react-native';
-import colors from '../../../constants/colors';
-import * as _ from 'lodash';
-import Text from '../../commons/Text';
 import Button from '../../commons/Button';
 import Divider from '../../commons/Divider';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
-import Toggle from '../../commons/Toggle';
-import {PREP_TIME_SECS} from '../../../constants';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
-import Profile from '../../../types/Profile';
-import {SettingsState} from '../../../reducers/settings';
-import PickerModal from '../../commons/PickerModal';
-import Clipboard from '@react-native-clipboard/clipboard';
-import Snackbar from 'react-native-snackbar';
-import Modal from '../../commons/Modal';
 import ListItem from '../../commons/ListItem';
-import {FlatList} from 'react-native-gesture-handler';
-import RNCalendarEvents, {
-  CalendarEventWritable,
-} from 'react-native-calendar-events';
-import {logError} from '../../../helpers/error';
+import Modal from '../../commons/Modal';
+import PickerModal from '../../commons/PickerModal';
+import Text from '../../commons/Text';
+import Toggle from '../../commons/Toggle';
 import SelectGoalModal from './SelectGoalModal';
-import {getGoalReadableString} from '../../../helpers/goals';
-import {
-  setCalendarId,
-  syncPlanWithCalendar,
-  updateProfile,
-} from '../../../reducers/profile';
 
-const isValidGoal = (goal: Goal) =>
-  goal === Goal.STRENGTH || goal === Goal.ACTIVE || goal === Goal.WEIGHT_LOSS;
+
 
 const SettingsItem: React.FC<{
   onPress: () => void;
@@ -109,7 +110,7 @@ const Settings: React.FC<{
   const [marketing, setMarketing] = useState(profile.marketing);
   const [loading, setLoading] = useState(false);
   const [goal, setGoal] = useState<Goal>(
-    profile.goal && isValidGoal(profile.goal) ? profile.goal : Goal.STRENGTH,
+     profile.goal || Goal.STRENGTH
   );
   const [showPrepTime, setShowPrepTime] = useState(false);
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
