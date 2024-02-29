@@ -8,13 +8,6 @@ export type Unit = 'metric' | 'imperial';
 
 export type StressLevel = 'low' | 'medium' | 'high';
 
-export enum SleepPattern {
-  FIVE = 'FIVE',
-  FIVE_SIX = 'FIVE_SIX',
-  SEVEN_EIGHT = 'SEVEN_EIGHT',
-  EIGHT = 'EIGHT',
-}
-
 export enum TrainingAvailability {
   ONE_TWO = 'ONE_TWO',
   TWO_THREE = 'TWO_THREE',
