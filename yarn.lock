@@ -8714,6 +8714,11 @@ react-native-draggable-flatlist@^4.0.1:
   dependencies:
     "@babel/preset-typescript" "^7.17.12"
 
+react-native-email-link@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/react-native-email-link/-/react-native-email-link-1.15.0.tgz#d0cbc37225b7a8f2d513f640383ae84d90453dfc"
+  integrity sha512-DrPoJwf4UphIqOpHxLQTavJ+olFvHNmWyaNHpVXLuYMbLCYUnjomSwFMjmoEUVzhj7zM2JGCpGzj4rZkXh9l8Q==
+
 react-native-fast-image@^8.5.11:
   version "8.5.11"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"

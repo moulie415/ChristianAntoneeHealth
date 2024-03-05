@@ -23,12 +23,7 @@ import {
   signIn,
 } from '../../helpers/api';
 import GoogleLogo from '../../images/google.svg';
-import {
-  handleAuth,
-  setLoginEmail,
-  setLoginPassword,
-  signUp,
-} from '../../reducers/profile';
+import {handleAuth, setLoginEmail, signUp} from '../../reducers/profile';
 import {MyRootState} from '../../types/Shared';
 import Button from '../commons/Button';
 import Input from '../commons/Input';
@@ -39,21 +34,13 @@ const Login: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Login'>;
   handleAuth: (user: FirebaseAuthTypes.User) => void;
   email: string;
-  password: string;
   setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-}> = ({
-  navigation,
-  handleAuth: handleAuthAction,
-  email,
-  password,
-  setEmail,
-  setPassword,
-}) => {
+}> = ({navigation, handleAuth: handleAuthAction, email, setEmail}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState('');
 
   const signInApple = async () => {
     try {
@@ -287,14 +274,12 @@ const Login: React.FC<{
 const mapStateToProps = ({profile}: MyRootState) => ({
   loggedIn: profile.loggedIn,
   email: profile.loginEmail,
-  password: profile.loginPassword,
 });
 
 const mapDispatchToProps = {
   signUp,
   handleAuth,
   setEmail: setLoginEmail,
-  setPassword: setLoginPassword,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -26,6 +26,7 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import _ from 'lodash';
 import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 import {Audio, Image, Video} from 'react-native-compressor';
+import {openInbox} from 'react-native-email-link';
 import RNFS from 'react-native-fs';
 import googleFit from 'react-native-google-fit';
 import Purchases from 'react-native-purchases';
@@ -869,6 +870,10 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       Alert.alert(
         'Account not verified',
         'Please verify your account using the link we sent to your email address, please also check your spam folder',
+        [
+          {text: 'Open email app', onPress: () => openInbox()},
+          {text: 'Cancel', style: 'cancel'},
+        ],
       );
       navigate('Login');
     } else {

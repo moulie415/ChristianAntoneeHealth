@@ -46,7 +46,6 @@ export interface ProfileState {
   syncedPlanEvents: {[key: string]: string};
   calendarId?: string;
   loginEmail: string;
-  loginPassword: string;
   downloadedDocuments: {[key: string]: string};
 }
 
@@ -104,7 +103,6 @@ const initialState: ProfileState = {
   hasViewedTargets: false,
   syncedPlanEvents: {},
   loginEmail: '',
-  loginPassword: '',
   downloadedDocuments: {},
 };
 
@@ -225,8 +223,6 @@ export type SET_CHAT_MESSAGE = typeof SET_CHAT_MESSAGE;
 export const SET_LOGIN_EMAIL = `${PROFILE}/setLoginEmail`;
 export type SET_LOGIN_EMAIL = typeof SET_LOGIN_EMAIL;
 
-export const SET_LOGIN_PASSWORD = `${PROFILE}/setLoginPassword`;
-export type SET_LOGIN_PASSWORD = typeof SET_LOGIN_PASSWORD;
 
 export const SET_CALENDAR_ID = `${PROFILE}/setCalendarId`;
 export type SET_CALENDAR_ID = typeof SET_CALENDAR_ID;
@@ -258,8 +254,7 @@ const profileSlice = createSlice({
         state.loggedIn = payload;
       } else {
         const loginEmail = state.loginEmail;
-        const loginPassword = state.loginPassword;
-        return {...initialState, loginEmail, loginPassword};
+        return {...initialState, loginEmail};
       }
     },
     setWeightSamples: (
@@ -467,12 +462,6 @@ const profileSlice = createSlice({
     setLoginEmail: (state: ProfileState, {payload}: PayloadAction<string>) => {
       state.loginEmail = payload;
     },
-    setLoginPassword: (
-      state: ProfileState,
-      {payload}: PayloadAction<string>,
-    ) => {
-      state.loginPassword = payload;
-    },
     getWeeklyItems: () => {},
     getWeeklyItemsForConnection: (
       state: ProfileState,
@@ -555,7 +544,6 @@ export const {
   setLoading,
   setLoggedIn,
   setLoginEmail,
-  setLoginPassword,
   setMessage,
   setMessages,
   setMuscleMassSamples,

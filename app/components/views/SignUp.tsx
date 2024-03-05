@@ -1,42 +1,33 @@
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {Alert, Platform, SafeAreaView, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import colors from '../../constants/colors';
-import Text from '../commons/Text';
-import Input from '../commons/Input';
-import Button from '../commons/Button';
-import {createUser} from '../../helpers/api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Header from '../commons/Header';
-import {MyRootState} from '../../types/Shared';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import { handleAuth, setLoginEmail, setLoginPassword } from '../../reducers/profile';
+import colors from '../../constants/colors';
+import {createUser} from '../../helpers/api';
+import {handleAuth, setLoginEmail} from '../../reducers/profile';
+import {MyRootState} from '../../types/Shared';
+import Button from '../commons/Button';
+import Header from '../commons/Header';
+import Input from '../commons/Input';
+import Text from '../commons/Text';
 
 const SignUp: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SignUp'>;
   handleAuth: (user: FirebaseAuthTypes.User) => void;
   email: string;
-  password: string;
   setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-}> = ({
-  navigation,
-  handleAuth: handleAuthAction,
-  email,
-  password,
-  setEmail,
-  setPassword,
-}) => {
+}> = ({navigation, handleAuth: handleAuthAction, email, setEmail}) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [confirm, setConfirm] = useState('');
   const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     setEmail('');
-    setPassword('');
   }, [setEmail, setPassword]);
 
   const signUp = async () => {
@@ -186,13 +177,11 @@ const SignUp: React.FC<{
 
 const mapStateToProps = ({profile}: MyRootState) => ({
   email: profile.loginEmail,
-  password: profile.loginPassword,
 });
 
 const mapDispatchToProps = {
   handleAuth,
   setEmail: setLoginEmail,
-  setPassword: setLoginPassword,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

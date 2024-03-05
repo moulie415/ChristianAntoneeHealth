@@ -8,6 +8,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 import moment from 'moment';
 import {Alert} from 'react-native';
+import {openInbox} from 'react-native-email-link';
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import Snackbar from 'react-native-snackbar';
 import {WeeklyItems} from '../reducers/profile';
@@ -119,13 +120,13 @@ export const signIn = async (
   pass: string,
   handleAuthAction: (user: FirebaseAuthTypes.User) => void,
 ) => {
+  const verifyMessage =
+    'You must first verify your email using the link we sent you before logging in, please also check your spam folder';
   try {
     if (username && pass) {
       const {user} = await auth().signInWithEmailAndPassword(username, pass);
       if (!user.emailVerified) {
-        throw Error(
-          'You must first verify your email using the link we sent you before logging in, please also check your spam folder',
-        );
+        throw Error(verifyMessage);
       } else {
         handleAuthAction(user);
       }
@@ -134,7 +135,16 @@ export const signIn = async (
     }
   } catch (e) {
     if (e instanceof Error) {
-      Alert.alert('Sorry', e.message);
+      Alert.alert(
+        'Sorry',
+        e.message,
+        e.message === verifyMessage
+          ? [
+              {text: 'Open email app', onPress: () => openInbox()},
+              {text: 'Cancel', style: 'cancel'},
+            ]
+          : undefined,
+      );
     }
     throw e;
   }
