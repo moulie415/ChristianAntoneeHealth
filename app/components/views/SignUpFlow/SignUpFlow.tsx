@@ -347,9 +347,11 @@ const SignUpFlow: React.FC<{
                 style={{
                   flexDirection: 'row',
                   position: 'absolute',
-                  right: 20,
-                  left: 20,
-                  bottom: 20,
+                  right: 0,
+                  left: 0,
+                  bottom: 0,
+                  padding: 20,
+                  backgroundColor: colors.appGrey
                 }}>
                 {i !== 0 && (
                   <Button
