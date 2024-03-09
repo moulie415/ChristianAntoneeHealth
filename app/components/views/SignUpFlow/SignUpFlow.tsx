@@ -227,6 +227,7 @@ const SignUpFlow: React.FC<{
           setMarketing={setMarketing}
           gender={gender}
           setGender={setGender}
+          navigation={navigation}
         />
       ),
     },

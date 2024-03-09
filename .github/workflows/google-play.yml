@@ -42,6 +42,8 @@ jobs:
           FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
           FACEBOOK_CLIENT_TOKEN: ${{ secrets.FACEBOOK_CLIENT_TOKEN }}
           ROOT_API_URL: ${{ secrets.ROOT_API_URL }}
+          PRIVACY_POLICY: ${{ secrets.PRIVACY_POLICY }}
+          TERMS_AND_CONDITIONS: ${{ secrets.TERMS_AND_CONDITIONS }}
         run: |
           echo REVENUE_CAT_IOS_KEY=$REVENUE_CAT_IOS_KEY >> .env
           echo REVENUE_CAT_ANDROID_KEY=$REVENUE_CAT_ANDROID_KEY >> .env
@@ -49,6 +51,8 @@ jobs:
           echo INSTABUG_DEV_TOKEN=$INSTABUG_DEV_TOKEN >> .env
           echo INSTABUG_PROD_TOKEN=$INSTABUG_PROD_TOKEN >> .env
           echo ROOT_API_URL=$ROOT_API_URL >> .env
+          echo PRIVACY_POLICY=$PRIVACY_POLICY >> .env
+          echo TERMS_AND_CONDITIONS=$TERMS_AND_CONDITIONS >> .env
           echo -n FACEBOOK_CLIENT_TOKEN=$FACEBOOK_CLIENT_TOKEN >> .env
       - name: Bump version
         uses: chkfung/android-version-actions@v1.2

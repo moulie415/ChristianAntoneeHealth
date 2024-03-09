@@ -1,10 +1,10 @@
 import React from 'react';
-import {ImageBackground, Linking, TouchableOpacity, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Linking, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 
+import Config from 'react-native-config';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 
@@ -14,9 +14,7 @@ const Policies = () => {
       <SafeAreaView>
         <Header hasBack title="Policies and Terms" />
         <TouchableOpacity
-          onPress={() =>
-            Linking.openURL('https://christianantonee.com/privacy-policy')
-          }
+          onPress={() => Linking.openURL(Config.PRIVACY_POLICY as string)}
           style={{
             flexDirection: 'row',
             alignItems: 'center',

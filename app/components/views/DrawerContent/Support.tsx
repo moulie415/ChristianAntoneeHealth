@@ -1,23 +1,13 @@
 import React from 'react';
-import {
-  View,
-  Linking,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import SupportProps from '../../../types/views/Support';
-import Button from '../../commons/Button';
-import Header from '../../commons/Header';
-import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import {ListItem, MoreItem} from './DrawerContent';
+import Config from 'react-native-config';
 import {navigate} from '../../../RootNavigation';
+import SupportProps from '../../../types/views/Support';
+import Header from '../../commons/Header';
+import {ListItem, MoreItem} from './DrawerContent';
 
 const Support: React.FC<SupportProps> = () => {
   const items: ListItem[] = [
@@ -25,7 +15,10 @@ const Support: React.FC<SupportProps> = () => {
       title: 'Privacy Policy',
       icon: 'check-circle',
       onPress: () =>
-        Linking.openURL('https://christianantonee.com/privacy-policy'),
+        navigate('PDFViewer', {
+          uri: Config.PRIVACY_POLICY as string,
+          title: 'Privacy Policy',
+        }),
     },
   ];
 

@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 
-import Input from '../../commons/Input';
-import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Linking, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from '@react-native-community/datetimepicker';
-import Modal from '../../commons/Modal';
-import {Platform} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
-import Button from '../../commons/Button';
-import PickerModal from '../../commons/PickerModal';
+import {Linking, Platform, TouchableOpacity, View} from 'react-native';
+import Config from 'react-native-config';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {StackParamList} from '../../../App';
 import {HEIGHTS, WEIGHTS} from '../../../constants';
-import Checkbox from '../../commons/Checkbox';
-import {Gender} from '../../../types/Profile';
+import colors from '../../../constants/colors';
 import {capitalizeFirstLetter} from '../../../helpers';
+import {Gender} from '../../../types/Profile';
+import Button from '../../commons/Button';
+import Checkbox from '../../commons/Checkbox';
+import Input from '../../commons/Input';
+import Modal from '../../commons/Modal';
+import PickerModal from '../../commons/PickerModal';
+import Text from '../../commons/Text';
 
 const PersonalDetails: React.FC<{
   name: string;
@@ -34,6 +36,7 @@ const PersonalDetails: React.FC<{
   setMarketing: (marketing: boolean) => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
+  navigation: NativeStackNavigationProp<StackParamList, 'SignUpFlow'>;
 }> = ({
   name,
   setName,
@@ -51,6 +54,7 @@ const PersonalDetails: React.FC<{
   setMarketing,
   gender,
   setGender,
+  navigation,
 }) => {
   const [showDobModal, setShowDobModal] = useState(false);
   const [showHeightModal, setShowHeightModal] = useState(false);
@@ -242,18 +246,40 @@ const PersonalDetails: React.FC<{
             onPress={() => setPrivacy(!privacy)}
             iconStyle={{color: colors.appWhite}}
           />
-          <Text style={{marginLeft: 10, color: colors.appWhite}}>
-            I've read the{' '}
+          <Text style={{marginHorizontal: 10, color: colors.appWhite}}>
+            I've read and accept the{' '}
             <Text
-              onPress={() => {
-                Linking.openURL('https://christianantonee.com/privacy-policy');
-              }}
+              onPress={() =>
+                Platform.OS === 'ios'
+                  ? navigation.navigate('PDFViewer', {
+                      uri: Config.PRIVACY_POLICY as string,
+                      title: 'Privacy Policy',
+                    })
+                  : Linking.openURL(Config.PRIVACY_POLICY as string)
+              }
               style={{
                 textDecorationLine: 'underline',
                 fontWeight: 'bold',
                 color: colors.appWhite,
               }}>
               Privacy Policy
+            </Text>{' '}
+            and{' '}
+            <Text
+              onPress={() =>
+                Platform.OS === 'ios'
+                  ? navigation.navigate('PDFViewer', {
+                      uri: Config.TERMS_AND_CONDITIONS as string,
+                      title: 'Terms & Conditions',
+                    })
+                  : Linking.openURL(Config.TERMS_AND_CONDITIONS as string)
+              }
+              style={{
+                textDecorationLine: 'underline',
+                fontWeight: 'bold',
+                color: colors.appWhite,
+              }}>
+              Terms & Conditions
             </Text>
             *
           </Text>

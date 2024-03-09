@@ -37,6 +37,7 @@ import QuickRoutineView from './components/views/QuickRoutines/QuickRoutine';
 import QuickRoutineSummary from './components/views/QuickRoutines/QuickRoutineSummary';
 import Rating from './components/views/Rating';
 import Recipe from './components/views/Recipes/Recipe';
+import RecipeCategories from './components/views/Recipes/RecipeCategories';
 import Recipes from './components/views/Recipes/Recipes';
 import SignUp from './components/views/SignUp';
 import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
@@ -54,7 +55,7 @@ import WarmUp from './components/views/Workout/WarmUp';
 import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import RecipeCategories from './components/views/Recipes/RecipeCategories';
+import PDFViewer from './PDFViewer';
 
 const Drawer = createDrawerNavigator();
 
@@ -156,6 +157,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="Recipes" component={Recipes} />
         <Stack.Screen name="RecipeCategories" component={RecipeCategories} />
         <Stack.Screen name="Recipe" component={Recipe} />
+        <Stack.Screen name="PDFViewer" component={PDFViewer} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}
