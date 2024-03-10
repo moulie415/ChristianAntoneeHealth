@@ -116,6 +116,7 @@ const SignUpFlow: React.FC<{
 
   const [loading, setLoading] = useState(false);
   const [privacy, setPrivacy] = useState(false);
+  const [terms, setTerms] = useState(false);
 
   useInit(() => {
     const setup = async () => {
@@ -207,7 +208,8 @@ const SignUpFlow: React.FC<{
         moment().diff(dob, 'years') >= 18 &&
         !!height &&
         !!weight &&
-        !!privacy,
+        !!privacy &&
+        !!terms,
       key: 'name',
       component: (
         <PersonalDetails
@@ -223,6 +225,8 @@ const SignUpFlow: React.FC<{
           setHeight={setHeight}
           privacy={privacy}
           setPrivacy={setPrivacy}
+          terms={terms}
+          setTerms={setTerms}
           marketing={marketing}
           setMarketing={setMarketing}
           gender={gender}
@@ -352,7 +356,7 @@ const SignUpFlow: React.FC<{
                   left: 0,
                   bottom: 0,
                   padding: 20,
-                  backgroundColor: colors.appGrey
+                  backgroundColor: colors.appGrey,
                 }}>
                 {i !== 0 && (
                   <Button

@@ -32,6 +32,8 @@ const PersonalDetails: React.FC<{
   setWeight: (weight: number) => void;
   privacy: boolean;
   setPrivacy: (privacy: boolean) => void;
+  terms: boolean;
+  setTerms: (terms: boolean) => void;
   marketing: boolean;
   setMarketing: (marketing: boolean) => void;
   gender: Gender;
@@ -50,6 +52,8 @@ const PersonalDetails: React.FC<{
   setWeight,
   privacy,
   setPrivacy,
+  terms,
+  setTerms,
   marketing,
   setMarketing,
   gender,
@@ -133,6 +137,7 @@ const PersonalDetails: React.FC<{
           {showDob ? moment(dob).format('DD-MM-YYYY') : 'Date of birth*'}
         </Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => setShowSexModal(true)}
         style={{
@@ -165,6 +170,17 @@ const PersonalDetails: React.FC<{
           {gender !== 'none' ? capitalizeFirstLetter(gender) : 'Sex'}
         </Text>
       </TouchableOpacity>
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontSize: 12,
+          marginTop: 5,
+          marginHorizontal: 5,
+          fontStyle: 'italic',
+        }}>
+        While not mandatory, not specifying sex may limit some of the features
+        of the app.
+      </Text>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           onPress={() => setShowWeightModal(true)}
@@ -240,6 +256,39 @@ const PersonalDetails: React.FC<{
             marginBottom: 10,
             alignItems: 'center',
           }}
+          onPress={() => setTerms(!terms)}>
+          <Checkbox
+            checked={terms}
+            onPress={() => setTerms(!terms)}
+            iconStyle={{color: colors.appWhite}}
+          />
+          <Text style={{marginHorizontal: 10, color: colors.appWhite}}>
+            By ticking this box you confirm and agree that you have read our{' '}
+            <Text
+              onPress={() =>
+                Platform.OS === 'ios'
+                  ? navigation.navigate('PDFViewer', {
+                      uri: Config.TERMS_AND_CONDITIONS as string,
+                      title: 'Terms of Service',
+                    })
+                  : Linking.openURL(Config.TERMS_AND_CONDITIONS as string)
+              }
+              style={{
+                textDecorationLine: 'underline',
+                fontWeight: 'bold',
+                color: colors.appWhite,
+              }}>
+              Terms of Service
+            </Text>
+            *
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            marginBottom: 10,
+            alignItems: 'center',
+          }}
           onPress={() => setPrivacy(!privacy)}>
           <Checkbox
             checked={privacy}
@@ -247,7 +296,8 @@ const PersonalDetails: React.FC<{
             iconStyle={{color: colors.appWhite}}
           />
           <Text style={{marginHorizontal: 10, color: colors.appWhite}}>
-            I've read and accept the{' '}
+            By ticking this box you consent to the processing of your personal
+            data.{' '}
             <Text
               onPress={() =>
                 Platform.OS === 'ios'
@@ -263,25 +313,8 @@ const PersonalDetails: React.FC<{
                 color: colors.appWhite,
               }}>
               Privacy Policy
-            </Text>{' '}
-            and{' '}
-            <Text
-              onPress={() =>
-                Platform.OS === 'ios'
-                  ? navigation.navigate('PDFViewer', {
-                      uri: Config.TERMS_AND_CONDITIONS as string,
-                      title: 'Terms & Conditions',
-                    })
-                  : Linking.openURL(Config.TERMS_AND_CONDITIONS as string)
-              }
-              style={{
-                textDecorationLine: 'underline',
-                fontWeight: 'bold',
-                color: colors.appWhite,
-              }}>
-              Terms & Conditions
             </Text>
-            *
+            <Text style={{fontWeight: 'bold'}}>*</Text>
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
