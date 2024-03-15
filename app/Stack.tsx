@@ -55,7 +55,8 @@ import WarmUp from './components/views/Workout/WarmUp';
 import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import PDFViewer from './PDFViewer';
+import PDFViewer from './components/commons/PDFViewer';
+import WebViewScreen from './components/commons/WebViewScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -158,6 +159,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="RecipeCategories" component={RecipeCategories} />
         <Stack.Screen name="Recipe" component={Recipe} />
         <Stack.Screen name="PDFViewer" component={PDFViewer} />
+        <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}

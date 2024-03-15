@@ -115,6 +115,7 @@
     "react-native-video-cache": "^2.7.3",
     "react-native-view-more-text": "^2.2.0",
     "react-native-watch-connectivity": "^1.1.0",
+    "react-native-webview": "^13.8.1",
     "react-native-wheel-pick": "^1.2.2",
     "react-redux": "9.0.4",
     "redux": "5.0.0",

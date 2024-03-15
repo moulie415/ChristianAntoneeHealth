@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import DatePicker from '@react-native-community/datetimepicker';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
-import {Linking, Platform, TouchableOpacity, View} from 'react-native';
+import {Platform, TouchableOpacity, View} from 'react-native';
 import Config from 'react-native-config';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -266,12 +266,10 @@ const PersonalDetails: React.FC<{
             By ticking this box you confirm and agree that you have read our{' '}
             <Text
               onPress={() =>
-                Platform.OS === 'ios'
-                  ? navigation.navigate('PDFViewer', {
-                      uri: Config.TERMS_AND_CONDITIONS as string,
-                      title: 'Terms of Service',
-                    })
-                  : Linking.openURL(Config.TERMS_AND_CONDITIONS as string)
+                navigation.navigate('WebViewScreen', {
+                  uri: Config.TERMS_AND_CONDITIONS as string,
+                  title: 'Terms of Service',
+                })
               }
               style={{
                 textDecorationLine: 'underline',
@@ -300,12 +298,10 @@ const PersonalDetails: React.FC<{
             data.{' '}
             <Text
               onPress={() =>
-                Platform.OS === 'ios'
-                  ? navigation.navigate('PDFViewer', {
-                      uri: Config.PRIVACY_POLICY as string,
-                      title: 'Privacy Policy',
-                    })
-                  : Linking.openURL(Config.PRIVACY_POLICY as string)
+                navigation.navigate('WebViewScreen', {
+                  uri: Config.PRIVACY_POLICY as string,
+                  title: 'Privacy Policy',
+                })
               }
               style={{
                 textDecorationLine: 'underline',

@@ -1866,6 +1866,10 @@ PODS:
   - react-native-video/Video (6.0.0-alpha.7):
     - PromisesSwift
     - React-Core
+  - react-native-webview (13.8.1):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - React-nativeconfig (0.73.5)
   - React-NativeModulesApple (0.73.5):
     - glog
@@ -2209,6 +2213,7 @@ DEPENDENCIES:
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-video-cache (from `../node_modules/react-native-video-cache`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2415,6 +2420,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-video"
   react-native-video-cache:
     :path: "../node_modules/react-native-video-cache"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -2623,6 +2630,7 @@ SPEC CHECKSUMS:
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: 967eead48aaa42c25a9e1d65c3b1ab30762a88df
   react-native-video-cache: 1f3d0b6841c9cc962ded4ba70b412f121c8e9620
+  react-native-webview: 64c51a60460f8473be97b1959da347893fc9a1fd
   React-nativeconfig: 78e2b14c0ee479449845b67bbe103343257cbcc0
   React-NativeModulesApple: 4fce13d416890352a7a9621427459fe738c4e79a
   React-perflogger: 0dd9f1725d55f8264b81efadd373fe1d9cca7dc2

@@ -1,19 +1,16 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import DatePicker from '@react-native-community/datetimepicker';
+import * as _ from 'lodash';
+import moment from 'moment';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  TouchableOpacity,
-  ScrollView,
-  View,
   Alert,
   Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import DatePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import moment from 'moment';
 import {connect} from 'react-redux';
-import {MyRootState, UpdateProfilePayload} from '../../types/Shared';
-import colors from '../../constants/colors';
-import Profile, {Gender} from '../../types/Profile';
-import * as _ from 'lodash';
 import {
   BONE_DENSITIES,
   HEIGHTS,
@@ -21,37 +18,39 @@ import {
   PERCENTAGES,
   WEIGHTS,
 } from '../../constants';
+import colors from '../../constants/colors';
+import Profile, {Gender} from '../../types/Profile';
+import {MyRootState, UpdateProfilePayload} from '../../types/Shared';
 
-import Avatar from '../commons/Avatar';
+import storage from '@react-native-firebase/storage';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AlertButton} from 'react-native';
+import {Image} from 'react-native-compressor';
+import RNFS from 'react-native-fs';
 import {
-  launchCamera,
-  launchImageLibrary,
   CameraOptions,
   ImageLibraryOptions,
   ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
 } from 'react-native-image-picker';
-import Snackbar from 'react-native-snackbar';
-import AbsoluteSpinner from '../commons/AbsoluteSpinner';
-import {logError} from '../../helpers/error';
-import storage from '@react-native-firebase/storage';
-import Text from '../commons/Text';
-import Button from '../commons/Button';
-import Header from '../commons/Header';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import PickerModal from '../commons/PickerModal';
-import ProfileCharts from '../commons/ProfileCharts';
-import {StackParamList} from '../../App';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Tile from '../commons/Tile';
-import Modal from '../commons/Modal';
-import GoalSummaries from '../commons/GoalSummaries';
-import {AlertButton} from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Snackbar from 'react-native-snackbar';
+import {StackParamList} from '../../App';
+import {logError} from '../../helpers/error';
 import {getSamples, updateProfile} from '../../reducers/profile';
 import {SettingsState} from '../../reducers/settings';
-import RNFS from 'react-native-fs';
-import {Image} from 'react-native-compressor';
+import Avatar from '../commons/Avatar';
+import Button from '../commons/Button';
+import GoalSummaries from '../commons/GoalSummaries';
+import Header from '../commons/Header';
+import Modal from '../commons/Modal';
+import PickerModal from '../commons/PickerModal';
+import ProfileCharts from '../commons/ProfileCharts';
+import Text from '../commons/Text';
+import Tile from '../commons/Tile';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
