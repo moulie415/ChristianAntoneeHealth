@@ -19,7 +19,7 @@ import Message from '../types/Message';
 import Profile from '../types/Profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Goal, Level, Recipe, WarmUp} from '../types/Shared';
+import {CoolDown, Goal, Level, Recipe, Sample, WarmUp} from '../types/Shared';
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
 
@@ -732,4 +732,32 @@ export const sendFeedback = async (
     .collection('feedback')
     .doc(uid)
     .set({feedback, rating, createdate: new Date()});
+};
+
+export const getSamples = async (
+  sample: string,
+  uid: string,
+): Promise<Sample[]> => {
+  const samples = await db()
+    .collection('users')
+    .doc(uid)
+    .collection(sample)
+    .where('createdate', '>=', moment().subtract(1, 'year').toDate())
+    .get();
+  return samples.docs.map(doc => {
+    const data = doc.data();
+    return {
+      startDate: data.createdate,
+      endDate: data.createdate,
+      value: data.value,
+    };
+  });
+};
+
+export const saveSample = (sample: string, value: number, uid: string) => {
+  return db()
+    .collection('users')
+    .doc(uid)
+    .collection(sample)
+    .add({value, createdate: new Date()});
 };

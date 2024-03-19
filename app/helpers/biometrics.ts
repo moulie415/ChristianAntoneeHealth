@@ -1,17 +1,17 @@
+import * as _ from 'lodash';
+import moment from 'moment';
 import {Alert, Linking, Platform} from 'react-native';
-import AppleHealthKit, {HealthValue} from 'react-native-health';
 import GoogleFit, {
   ActivityType,
   BucketUnit,
   HeartRateResponse,
 } from 'react-native-google-fit';
-import moment from 'moment';
+import AppleHealthKit, {HealthValue} from 'react-native-health';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
-import Profile, {Gender, Unit} from '../types/Profile';
-import {PlanWorkout, StepSample} from '../types/Shared';
+import {Gender} from '../types/Profile';
+import {Sample, StepSample} from '../types/Shared';
+import {getSamples, saveSample} from './api';
 import {logError} from './error';
-import db from '@react-native-firebase/firestore';
-import {getCaloriesBurned} from './exercises';
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -145,79 +145,96 @@ export const getWeight = async (): Promise<number | undefined> => {
   }
 };
 
-export const getWeightSamples = async (unit: Unit) => {
-  if (!(await isAvailable()) || !(await isEnabled())) {
-    return;
-  }
+export const getWeightSamples = async (uid: string) => {
+  const samples = await getSamples('weight', uid);
+  let platformSamples: Sample[] = [];
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
+    platformSamples = await new Promise<Sample[]>(async (resolve, reject) => {
+      if (!(await isAvailable()) || !(await isEnabled())) {
+        return [];
+      }
       AppleHealthKit.getWeightSamples(
         {
           startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
           // @ts-ignore
-          unit: unit === 'lbs' ? 'pound' : 'gram',
+          unit: 'gram',
         },
         (err, results) => {
           if (err) {
             reject(err);
           } else {
             resolve(
-              unit === 'imperial'
-                ? results
-                : results.map(result => {
-                    return {...result, value: result.value / 1000};
-                  }),
+              results.map(result => {
+                return {...result, value: result.value / 1000};
+              }),
             );
           }
         },
       );
     });
   }
-  const response = await GoogleFit.getWeightSamples({
-    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-    endDate: moment().endOf('day').toISOString(),
-    unit: unit === 'imperial' ? 'pound' : 'kg',
-  });
-  return response;
+  if (
+    Platform.OS === 'android' &&
+    (await isAvailable()) &&
+    (await isEnabled())
+  ) {
+    platformSamples = await GoogleFit.getWeightSamples({
+      startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+      endDate: moment().endOf('day').toISOString(),
+      unit: 'kg',
+    });
+  }
+  return _.uniqBy(
+    [...platformSamples, ...samples],
+    sample => sample.startDate + sample.endDate,
+  );
 };
 
-export const getHeightSamples = async (unit: Unit) => {
-  if (!(await isAvailable()) || !(await isEnabled())) {
-    return;
-  }
+export const getHeightSamples = async (uid: string) => {
+  const samples = await getSamples('height', uid);
+  let platformSamples: Sample[] = [];
+
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
+    platformSamples = await new Promise<Sample[]>(async (resolve, reject) => {
+      if (!(await isAvailable()) || !(await isEnabled())) {
+        return [];
+      }
       AppleHealthKit.getHeightSamples(
         {
           startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
           endDate: moment().endOf('day').toISOString(),
           // @ts-ignore
-          unit: unit === 'imperial' ? 'inch' : 'meter',
+          unit: 'meter',
         },
         (err, results) => {
           if (err) {
             reject(err);
           } else {
             resolve(
-              unit === 'imperial'
-                ? results
-                : results.map(result => {
-                    return {...result, value: result.value * 100};
-                  }),
+              results.map(result => {
+                return {...result, value: result.value * 100};
+              }),
             );
           }
         },
       );
     });
   }
-  const response = await GoogleFit.getHeightSamples({
-    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-    endDate: moment().endOf('day').toISOString(),
-  });
-  return response.map(item => {
-    return {...item, value: item.value * 100};
-  });
+  if (
+    Platform.OS === 'android' &&
+    (await isAvailable()) &&
+    (await isEnabled())
+  ) {
+    platformSamples = await GoogleFit.getHeightSamples({
+      startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+      endDate: moment().endOf('day').toISOString(),
+    });
+  }
+  return _.uniqBy(
+    [...platformSamples, ...samples],
+    sample => sample.startDate + sample.endDate,
+  );
 };
 
 export const getStepSamples = async () => {
@@ -347,29 +364,27 @@ export const getDateOfBirth = (): void | Promise<string | undefined> => {
   }
 };
 
-export const saveWeight = async (value?: number, unit = 'metric') => {
-  if (!value || !unit) {
+export const saveWeight = async (uid: string, value?: number) => {
+  if (!value) {
     return;
   }
+  await saveSample('weight', value, uid);
   if (!(await isAvailable()) || !(await isEnabled())) {
     return;
   }
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
-      AppleHealthKit.saveWeight(
-        {value: unit === 'metric' ? value * 2.20462 : value},
-        (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        },
-      );
+      AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
+        if (e) {
+          reject(e);
+        } else {
+          resolve(result);
+        }
+      });
     } else {
       GoogleFit.saveWeight(
         {
-          value: unit === 'metric' ? value * 2.20462 : value,
+          value: value * 2.20462,
           date: new Date().toISOString(),
           unit: 'pound',
         },
@@ -385,29 +400,27 @@ export const saveWeight = async (value?: number, unit = 'metric') => {
   });
 };
 
-export const saveHeight = async (value?: number, unit = 'metric') => {
-  if (!value || !unit) {
+export const saveHeight = async (uid: string, value?: number) => {
+  if (!value) {
     return;
   }
+  await saveSample('height', value, uid);
   if (!(await isAvailable()) || !(await isEnabled())) {
     return;
   }
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
-      AppleHealthKit.saveHeight(
-        {value: unit === 'metric' ? value * 0.393701 : value},
-        (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        },
-      );
+      AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
+        if (e) {
+          reject(e);
+        } else {
+          resolve(result);
+        }
+      });
     } else {
       GoogleFit.saveHeight(
         {
-          value: unit === 'metric' ? value / 100 : value * 0.0254,
+          value: value / 100,
           date: new Date().toISOString(),
         },
         (err, res) => {
@@ -511,8 +524,12 @@ export const saveWorkout = async (
 };
 
 export const getBodyFatPercentageSamples = async (uid: string) => {
+  const samples = await getSamples('bodyFatPercentage', uid);
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
+    const iosSamples = await new Promise<Sample[]>(async (resolve, reject) => {
+      if (!(await isAvailable()) || !(await isEnabled())) {
+        return [];
+      }
       AppleHealthKit.getBodyFatPercentageSamples(
         {
           startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
@@ -531,30 +548,17 @@ export const getBodyFatPercentageSamples = async (uid: string) => {
         },
       );
     });
+    return _.uniqBy(
+      [...iosSamples, ...samples],
+      sample => sample.startDate + sample.endDate,
+    );
   } else {
-    const samples = await db()
-      .collection('users')
-      .doc(uid)
-      .collection('bodyFatPercentage')
-      .where('createdate', '>=', moment().subtract(1, 'year').toDate())
-      .get();
-    return samples.docs.map(doc => {
-      const data = doc.data();
-      return {
-        startDate: data.createdate,
-        endDate: data.createdate,
-        value: data.value,
-      };
-    });
+    return samples;
   }
 };
 
 export const saveBodyFatPercentage = async (value: number, uid: string) => {
-  await db()
-    .collection('users')
-    .doc(uid)
-    .collection('bodyFatPercentage')
-    .add({value, createdate: new Date()});
+  await saveSample('bodyFatPercentage', value, uid);
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
@@ -566,54 +570,4 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
       });
     });
   }
-};
-
-export const getMuscleMassSamples = async (uid: string) => {
-  const samples = await db()
-    .collection('users')
-    .doc(uid)
-    .collection('muscleMass')
-    .where('createdate', '>=', moment().subtract(1, 'year').toDate())
-    .get();
-  return samples.docs.map(doc => {
-    const data = doc.data();
-    return {
-      startDate: data.createdate,
-      endDate: data.createdate,
-      value: data.value,
-    };
-  });
-};
-
-export const saveMuscleMass = (value: number, uid: string) => {
-  return db()
-    .collection('users')
-    .doc(uid)
-    .collection('muscleMass')
-    .add({value, createdate: new Date()});
-};
-
-export const getBoneMassSamples = async (uid: string) => {
-  const samples = await db()
-    .collection('users')
-    .doc(uid)
-    .collection('boneMass')
-    .where('createdate', '>=', moment().subtract(1, 'year').toDate())
-    .get();
-  return samples.docs.map(doc => {
-    const data = doc.data();
-    return {
-      startDate: data.createdate,
-      endDate: data.createdate,
-      value: data.value,
-    };
-  });
-};
-
-export const saveBoneMass = (value: number, uid: string) => {
-  return db()
-    .collection('users')
-    .doc(uid)
-    .collection('boneMass')
-    .add({value, createdate: new Date()});
 };

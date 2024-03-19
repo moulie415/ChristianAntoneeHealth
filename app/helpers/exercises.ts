@@ -1,14 +1,13 @@
+import * as _ from 'lodash';
+import moment from 'moment';
 import {Alert, Share} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {capitalizeFirstLetter} from '.';
-import {STORE_LINK} from '../constants';
 import {navigate} from '../RootNavigation';
 import Exercise, {Muscle} from '../types/Exercise';
-import {Gender, Unit} from '../types/Profile';
+import {Gender} from '../types/Profile';
 import {Equipment, Level} from '../types/Shared';
 import {logError} from './error';
-import * as _ from 'lodash';
-import moment from 'moment';
 
 const levelMapping = {
   null: 0,
