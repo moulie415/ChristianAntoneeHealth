@@ -1,11 +1,14 @@
 package com.healthandmovement
 
 import android.os.Bundle
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import org.devio.rn.splashscreen.SplashScreen
+
 
 class MainActivity : ReactActivity() {
 
@@ -19,6 +22,10 @@ class MainActivity : ReactActivity() {
    override fun onCreate(savedInstanceState: Bundle?) {
        SplashScreen.show(this)
        super.onCreate(savedInstanceState)
+       // Instantiate PatchWorker
+       val patchWorker = OneTimeWorkRequest.Builder(PatchWorker::class.java).build()
+       // Enqueue the worker
+       WorkManager.getInstance(applicationContext).enqueue(patchWorker)
    }
 
 
