@@ -10,7 +10,6 @@ const WebViewScreen: React.FC<{
   route: RouteProp<StackParamList, 'WebViewScreen'>;
 }> = ({route}) => {
   const {uri, title} = route.params;
-  console.log(uri);
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header hasBack title={title} />

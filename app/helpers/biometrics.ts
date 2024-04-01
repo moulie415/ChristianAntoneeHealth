@@ -147,94 +147,99 @@ export const getWeight = async (): Promise<number | undefined> => {
 
 export const getWeightSamples = async (uid: string) => {
   const samples = await getSamples('weight', uid);
-  let platformSamples: Sample[] = [];
-  if (Platform.OS === 'ios') {
-    platformSamples = await new Promise<Sample[]>(async (resolve, reject) => {
-      if (!(await isAvailable()) || !(await isEnabled())) {
-        return [];
-      }
-      AppleHealthKit.getWeightSamples(
-        {
-          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
-          // @ts-ignore
-          unit: 'gram',
-        },
-        (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(
-              results.map(result => {
-                return {...result, value: result.value / 1000};
-              }),
-            );
-          }
-        },
-      );
-    });
-  }
-  if (
-    Platform.OS === 'android' &&
-    (await isAvailable()) &&
-    (await isEnabled())
-  ) {
-    platformSamples = await GoogleFit.getWeightSamples({
-      startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-      endDate: moment().endOf('day').toISOString(),
-      unit: 'kg',
-    });
-  }
-  return _.uniqBy(
-    [...platformSamples, ...samples],
-    sample => sample.startDate + sample.endDate,
-  );
+  // let platformSamples: Sample[] = [];
+  // if (Platform.OS === 'ios') {
+  //   platformSamples = await new Promise<Sample[]>(async (resolve, reject) => {
+  //     if (!(await isAvailable()) || !(await isEnabled())) {
+  //       return [];
+  //     }
+  //     AppleHealthKit.getWeightSamples(
+  //       {
+  //         startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+  //         endDate: moment().endOf('day').toISOString(),
+  //         // @ts-ignore
+  //         unit: 'gram',
+  //       },
+  //       (err, results) => {
+  //         if (err) {
+  //           reject(err);
+  //         } else {
+  //           resolve(
+  //             results.map(result => {
+  //               return {...result, value: result.value / 1000};
+  //             }),
+  //           );
+  //         }
+  //       },
+  //     );
+  //   });
+  // }
+  // if (
+  //   Platform.OS === 'android' &&
+  //   (await isAvailable()) &&
+  //   (await isEnabled())
+  // ) {
+  //   platformSamples = await GoogleFit.getWeightSamples({
+  //     startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+  //     endDate: moment().endOf('day').toISOString(),
+  //     unit: 'kg',
+  //   });
+  // }
+
+  return samples;
+
+  // return _.uniqBy(
+  //   [...platformSamples, ...samples],
+  //   sample => sample.startDate + sample.endDate,
+  // );
 };
 
 export const getHeightSamples = async (uid: string) => {
   const samples = await getSamples('height', uid);
-  let platformSamples: Sample[] = [];
+  // let platformSamples: Sample[] = [];
 
-  if (Platform.OS === 'ios') {
-    platformSamples = await new Promise<Sample[]>(async (resolve, reject) => {
-      if (!(await isAvailable()) || !(await isEnabled())) {
-        return [];
-      }
-      AppleHealthKit.getHeightSamples(
-        {
-          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
-          // @ts-ignore
-          unit: 'meter',
-        },
-        (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(
-              results.map(result => {
-                return {...result, value: result.value * 100};
-              }),
-            );
-          }
-        },
-      );
-    });
-  }
-  if (
-    Platform.OS === 'android' &&
-    (await isAvailable()) &&
-    (await isEnabled())
-  ) {
-    platformSamples = await GoogleFit.getHeightSamples({
-      startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-      endDate: moment().endOf('day').toISOString(),
-    });
-  }
-  return _.uniqBy(
-    [...platformSamples, ...samples],
-    sample => sample.startDate + sample.endDate,
-  );
+  // if (Platform.OS === 'ios') {
+  //   platformSamples = await new Promise<Sample[]>(async (resolve, reject) => {
+  //     if (!(await isAvailable()) || !(await isEnabled())) {
+  //       return [];
+  //     }
+  //     AppleHealthKit.getHeightSamples(
+  //       {
+  //         startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+  //         endDate: moment().endOf('day').toISOString(),
+  //         // @ts-ignore
+  //         unit: 'meter',
+  //       },
+  //       (err, results) => {
+  //         if (err) {
+  //           reject(err);
+  //         } else {
+  //           resolve(
+  //             results.map(result => {
+  //               return {...result, value: result.value * 100};
+  //             }),
+  //           );
+  //         }
+  //       },
+  //     );
+  //   });
+  // }
+  // if (
+  //   Platform.OS === 'android' &&
+  //   (await isAvailable()) &&
+  //   (await isEnabled())
+  // ) {
+  //   platformSamples = await GoogleFit.getHeightSamples({
+  //     startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+  //     endDate: moment().endOf('day').toISOString(),
+  //   });
+  // }
+
+  return samples;
+  // return _.uniqBy(
+  //   [...platformSamples, ...samples],
+  //   sample => sample.startDate + sample.endDate,
+  // );
 };
 
 export const getStepSamples = async () => {

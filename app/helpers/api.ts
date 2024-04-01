@@ -744,6 +744,7 @@ export const getSamples = async (
     .collection(sample)
     .where('createdate', '>=', moment().subtract(1, 'year').toDate())
     .get();
+
   return samples.docs.map(doc => {
     const data = doc.data();
     return {

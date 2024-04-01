@@ -37,17 +37,13 @@ import {scheduleLocalNotification} from '../helpers';
 import * as api from '../helpers/api';
 import {
   getBodyFatPercentageSamples,
-  getBoneMassSamples,
   getHeightSamples,
-  getMuscleMassSamples,
   getWeightSamples,
   initBiometrics,
   isAvailable,
   isEnabled,
   saveBodyFatPercentage,
-  saveBoneMass,
   saveHeight,
-  saveMuscleMass,
   saveWeight,
 } from '../helpers/biometrics';
 import {logError} from '../helpers/error';
@@ -128,10 +124,10 @@ type Snapshot =
 
 function* getSamplesWorker() {
   const {uid} = yield select((state: MyRootState) => state.profile.profile);
-  const weightSamples: Sample[] = yield call(getWeightSamples, 'metric');
+  const weightSamples: Sample[] = yield call(getWeightSamples, uid);
   yield put(setWeightSamples(weightSamples));
 
-  const heightSamples: Sample[] = yield call(getHeightSamples, 'metric');
+  const heightSamples: Sample[] = yield call(getHeightSamples, uid);
   yield put(setHeightSamples(heightSamples));
 
   const bodyFatPercentageSamples: Sample[] = yield call(
@@ -141,10 +137,14 @@ function* getSamplesWorker() {
 
   yield put(setBodyFatPercentageSamples(bodyFatPercentageSamples));
 
-  const muscleMassSamples: Sample[] = yield call(getMuscleMassSamples, uid);
+  const muscleMassSamples: Sample[] = yield call(
+    api.getSamples,
+    'muscleMass',
+    uid,
+  );
   yield put(setMuscleMassSamples(muscleMassSamples));
 
-  const boneMassSamples: Sample[] = yield call(getBoneMassSamples, uid);
+  const boneMassSamples: Sample[] = yield call(api.getSamples, 'boneMass', uid);
   yield put(setBoneMassSamples(boneMassSamples));
 
   // const stepSamples: StepSample[] = yield call(getStepSamples);
@@ -208,19 +208,19 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       const enabled: boolean = yield call(isEnabled);
       if (enabled) {
         if (weight) {
-          yield call(saveWeight, weight, 'metric');
+          yield call(saveWeight, uid, weight);
         }
         if (height) {
-          yield call(saveHeight, height, 'metric');
+          yield call(saveHeight, uid, height);
         }
         if (bodyFatPercentage !== undefined) {
           yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
         }
         if (muscleMass !== undefined) {
-          yield call(saveMuscleMass, muscleMass, uid);
+          yield call(api.saveSample, 'muscleMass', muscleMass, uid);
         }
         if (boneMass !== undefined) {
-          yield call(saveBoneMass, boneMass, uid);
+          yield call(api.saveSample, 'boneMass', boneMass, uid);
         }
       }
     } catch (e) {
@@ -258,7 +258,6 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       birthday: dob || '',
       weight: weight?.toString() || '',
       height: height?.toString() || '',
-      unit: 'metric',
       gender: gender || '',
       goal: goal || '',
       uid: profile.uid || '',
@@ -276,12 +275,13 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
 function* signUp(action: PayloadAction<SignUpPayload>) {
   const {name, surname, dob, weight, height, gender, goal, fromProfile} =
     action.payload;
+  const {uid} = yield select((state: MyRootState) => state.profile.profile);
   try {
     try {
       const enabled: boolean = yield call(isEnabled);
       if (enabled) {
-        yield call(saveWeight, weight);
-        yield call(saveHeight, height);
+        yield call(saveWeight, uid, weight);
+        yield call(saveHeight, uid, height);
       }
     } catch (e) {
       console.log(e);
