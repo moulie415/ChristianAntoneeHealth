@@ -37,7 +37,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="house" />
+            <Icon style={{width: 35, alignSelf: 'center'}} color={color} size={size} name="house" />
           ),
           headerShown: false,
         }}
@@ -50,7 +50,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="dumbbell" />
+            <Icon style={{width: 35, alignSelf: 'center'}} color={color} size={size} name="dumbbell" />
           ),
           headerShown: false,
         }}
@@ -62,7 +62,7 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Test',
           tabBarIcon: ({color, size}) => (
-            <Icon color={color} size={size} name="heart-pulse" />
+            <Icon style={{width: 35, alignSelf: 'center'}} color={color} size={size} name="heart-pulse" />
           ),
           headerShown: false,
         }}
