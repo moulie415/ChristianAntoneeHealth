@@ -1,10 +1,9 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import * as _ from 'lodash';
 import React from 'react';
+import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../../constants/colors';
 import Text from './Text';
-import * as _ from 'lodash';
 import Tile from './Tile';
-import {Dimensions} from 'react-native';
 
 const MetricExplained: React.FC<{
   suffix?: string;
@@ -84,6 +83,7 @@ const MetricExplained: React.FC<{
             const diff = nextRange - currentRange;
             const val = current - currentRange;
             const percentage = _.clamp((val / diff) * 100, 100);
+
             return (
               <View key={color} style={{flex: 1}}>
                 <Text
@@ -93,7 +93,9 @@ const MetricExplained: React.FC<{
                     marginLeft: -10,
                     height: 23,
                   }}>
-                  {isFirst ? '' : `${ranges[index] + (suffix as string) || ''}`}
+                  {isFirst
+                    ? ''
+                    : `${ranges[index] + ((suffix || '') as string) || ''}`}
                 </Text>
                 <View
                   style={{

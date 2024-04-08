@@ -93,6 +93,11 @@ const ProfileComponent: React.FC<{
 
   const [showBoneMassModal, setShowBoneMassModal] = useState(false);
   const [boneMass, setBoneMass] = useState(profile.boneMass);
+  const [visceralFat, setVisceralFat] = useState(profile.visceralFat);
+  const [restingMetabolicRate, setRestingMetabolicRate] = useState(
+    profile.restingMetabolicRate,
+  );
+  const [metabolicAge, setMetabolicAge] = useState(profile.metabolicAge);
 
   const [images, setImages] = useState<ImageSource[]>([]);
   const [photoVisible, setPhotoVisible] = useState(false);
@@ -107,6 +112,9 @@ const ProfileComponent: React.FC<{
     ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
     ...(muscleMass !== undefined ? {muscleMass} : {}),
     ...(boneMass !== undefined ? {boneMass} : {}),
+    ...(visceralFat !== undefined ? {visceralFat} : {}),
+    ...(restingMetabolicRate !== undefined ? {restingMetabolicRate} : {}),
+    ...(metabolicAge !== undefined ? {metabolicAge} : {}),
   });
 
   const equal = _.isEqual(newProfile, profile);
@@ -136,6 +144,9 @@ const ProfileComponent: React.FC<{
       ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
       ...(muscleMass !== undefined ? {muscleMass} : {}),
       ...(boneMass !== undefined ? {boneMass} : {}),
+      ...(visceralFat !== undefined ? {visceralFat} : {}),
+      ...(restingMetabolicRate !== undefined ? {restingMetabolicRate} : {}),
+      ...(metabolicAge !== undefined ? {metabolicAge} : {}),
     });
   }, [
     profile,
@@ -147,6 +158,9 @@ const ProfileComponent: React.FC<{
     bodyFatPercentage,
     muscleMass,
     boneMass,
+    visceralFat,
+    metabolicAge,
+    restingMetabolicRate,
   ]);
 
   const onSave = async () => {
@@ -178,6 +192,9 @@ const ProfileComponent: React.FC<{
         ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
         ...(muscleMass !== undefined ? {muscleMass} : {}),
         ...(boneMass !== undefined ? {boneMass} : {}),
+        ...(visceralFat !== undefined ? {visceralFat} : {}),
+        ...(restingMetabolicRate !== undefined ? {restingMetabolicRate} : {}),
+        ...(metabolicAge !== undefined ? {metabolicAge} : {}),
       });
     } catch (e) {
       logError(e);
@@ -213,6 +230,9 @@ const ProfileComponent: React.FC<{
                 setMuscleMass(profile.muscleMass);
                 setBodyFatPercentage(profile.bodyFatPercentage);
                 setDob(profile.dob);
+                setVisceralFat(profile.visceralFat);
+                setMetabolicAge(profile.metabolicAge);
+                setRestingMetabolicRate(profile.restingMetabolicRate);
               }}>
               <Text
                 style={{

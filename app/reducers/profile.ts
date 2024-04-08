@@ -30,6 +30,9 @@ export interface ProfileState {
   bodyFatPercentageSamples: Sample[];
   muscleMassSamples: Sample[];
   boneMassSamples: Sample[];
+  visceralFatSamples: Sample[];
+  restingMetabolicRateSamples: Sample[];
+  metabolicAgeSamples: Sample[];
   stepSamples: StepSample[];
   weeklySteps: StepSample[];
   connections: {[key: string]: Profile};
@@ -85,6 +88,9 @@ const initialState: ProfileState = {
   bodyFatPercentageSamples: [],
   muscleMassSamples: [],
   boneMassSamples: [],
+  visceralFatSamples: [],
+  metabolicAgeSamples: [],
+  restingMetabolicRateSamples: [],
   stepSamples: [],
   weeklySteps: [],
   connections: {},

@@ -122,7 +122,9 @@ type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
-  const {uid} = yield select((state: MyRootState) => state.profile.profile);
+  const {uid, premium} = yield select(
+    (state: MyRootState) => state.profile.profile,
+  );
   const weightSamples: Sample[] = yield call(getWeightSamples, uid);
   yield put(setWeightSamples(weightSamples));
 
@@ -136,46 +138,21 @@ function* getSamplesWorker() {
 
   yield put(setBodyFatPercentageSamples(bodyFatPercentageSamples));
 
-  const muscleMassSamples: Sample[] = yield call(
-    api.getSamples,
-    'muscleMass',
-    uid,
-  );
-  yield put(setMuscleMassSamples(muscleMassSamples));
+  if (premium) {
+    const muscleMassSamples: Sample[] = yield call(
+      api.getSamples,
+      'muscleMass',
+      uid,
+    );
+    yield put(setMuscleMassSamples(muscleMassSamples));
 
-  const boneMassSamples: Sample[] = yield call(api.getSamples, 'boneMass', uid);
-  yield put(setBoneMassSamples(boneMassSamples));
-
-  // const stepSamples: StepSample[] = yield call(getStepSamples);
-  // yield put(setStepSamples(stepSamples));
-
-  // const activitySamples: HealthValue[] | ActivitySampleResponse[] = yield call(
-  //   getActivitySamples,
-  // );
-
-  // if (activitySamples) {
-  // }
-
-  // const weeklySteps: StepSample[] = yield call(getWeeklySteps);
-  // if (Platform.OS === 'ios') {
-  //   const aggregatedWeeklySteps = Object.values(
-  //     weeklySteps.reduce(
-  //       (acc: {[key: string]: {date: string; value: number}}, cur) => {
-  //         const date = moment(cur.date).format('YYYY-MM-DD');
-  //         if (acc[date]) {
-  //           acc[date] = {date, value: acc[date].value + cur.value};
-  //         } else {
-  //           acc[date] = {date, value: cur.value};
-  //         }
-  //         return acc;
-  //       },
-  //       {},
-  //     ),
-  //   );
-  //   yield put(setWeeklySteps(aggregatedWeeklySteps));
-  // } else {
-  //   yield put(setWeeklySteps(weeklySteps));
-  // }
+    const boneMassSamples: Sample[] = yield call(
+      api.getSamples,
+      'boneMass',
+      uid,
+    );
+    yield put(setBoneMassSamples(boneMassSamples));
+  }
 }
 
 function onAuthStateChanged() {
