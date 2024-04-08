@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import Snackbar from 'react-native-snackbar';
 import {eventChannel, EventChannel} from 'redux-saga';
 import {
@@ -9,23 +10,16 @@ import {
   take,
   takeLatest,
 } from 'redux-saga/effects';
-import * as _ from 'lodash';
 
-import {logError} from '../helpers/error';
-import Profile from '../types/Profile';
-import {MyRootState, Plan} from '../types/Shared';
-import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import PushNotification from 'react-native-push-notification';
-import {scheduleLocalNotification} from '../helpers';
-import {
-  scheduleGoalReminderNotification,
-  TEST_REMINDERS_CHANNEL_ID,
-  WORKOUT_REMINDERS_CHANNEL_ID,
-} from './profile';
+import db from '@react-native-firebase/firestore';
+import {PayloadAction} from '@reduxjs/toolkit';
 import moment from 'moment';
 import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
+import PushNotification from 'react-native-push-notification';
+import {scheduleLocalNotification} from '../helpers';
+import {logError} from '../helpers/error';
 import {
   GET_PLAN,
   ProfileState,
@@ -36,8 +30,11 @@ import {
   UPDATE_PROFILE,
   updateProfile,
 } from '../reducers/profile';
-import {PayloadAction} from '@reduxjs/toolkit';
-
+import {MyRootState, Plan} from '../types/Shared';
+import {
+  scheduleGoalReminderNotification,
+  WORKOUT_REMINDERS_CHANNEL_ID,
+} from './profile';
 function* syncPlanWithCalendarWorker(
   action: PayloadAction<{plan: Plan; sync: boolean}>,
 ) {

@@ -9,7 +9,7 @@ import {REPS} from '../../../constants';
 import {getVideoHeight} from '../../../helpers';
 import {setWorkout} from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';

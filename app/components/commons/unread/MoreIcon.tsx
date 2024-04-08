@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {MyRootState} from '../../../types/Shared';
 import colors from '../../../constants/colors';
 
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {View} from 'react-native';
 import Text from '../Text';
 

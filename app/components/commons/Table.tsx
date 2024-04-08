@@ -3,7 +3,7 @@ import React from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {MyRootState} from '../../types/Shared';
 import {Table as TableType} from '../../types/Test';
 import Text from './Text';

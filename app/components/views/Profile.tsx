@@ -1,30 +1,17 @@
 import DatePicker from '@react-native-community/datetimepicker';
+import storage from '@react-native-firebase/storage';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
+  AlertButton,
   Platform,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
-import {
-  BONE_DENSITIES,
-  HEIGHTS,
-  MUSCLE_MASSES,
-  PERCENTAGES,
-  WEIGHTS,
-} from '../../constants';
-import colors from '../../constants/colors';
-import Profile, {Gender} from '../../types/Profile';
-import {MyRootState, UpdateProfilePayload} from '../../types/Shared';
-
-import storage from '@react-native-firebase/storage';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AlertButton} from 'react-native';
 import {Image} from 'react-native-compressor';
 import RNFS from 'react-native-fs';
 import {
@@ -38,10 +25,26 @@ import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
+import {
+  BONE_DENSITIES,
+  HEIGHTS,
+  MUSCLE_MASSES,
+  PERCENTAGES,
+  WEIGHTS,
+} from '../../constants';
+import colors from '../../constants/colors';
 import {logError} from '../../helpers/error';
 import {getSamples, updateProfile} from '../../reducers/profile';
 import {SettingsState} from '../../reducers/settings';
+import {
+  Gender,
+  MyRootState,
+  Profile,
+  UpdateProfilePayload,
+} from '../../types/Shared';
 import Avatar from '../commons/Avatar';
 import Button from '../commons/Button';
 import GoalSummaries from '../commons/GoalSummaries';

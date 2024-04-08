@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState, Recipe} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Text from '../../commons/Text';

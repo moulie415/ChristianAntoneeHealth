@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {setHasViewedTargets} from '../../reducers/profile';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {Goal, MyRootState} from '../../types/Shared';
 import Header from '../commons/Header';
 import HomeCard from '../commons/HomeCard';

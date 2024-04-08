@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Profile from '../types/Profile';
+import {Profile} from '../types/Shared';
 
 export const calculateVO2Max = (
   profile: Profile,

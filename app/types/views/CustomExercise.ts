@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/core';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
-import Profile from '../Profile';
+import {Profile} from '../Shared';
 
 type CustomizeExerciseRouteProp = RouteProp<
   StackParamList,

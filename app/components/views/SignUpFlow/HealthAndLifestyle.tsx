@@ -9,7 +9,7 @@ import {
   DietaryPreference,
   Sleep,
   StressLevel,
-} from '../../../types/Profile';
+} from '../../../types/Shared';
 import Input from '../../commons/Input';
 import SelectableButton from '../../commons/SelectableButton';
 

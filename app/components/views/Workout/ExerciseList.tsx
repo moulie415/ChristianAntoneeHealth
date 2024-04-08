@@ -22,7 +22,7 @@ import {getExercises, setWorkout} from '../../../reducers/exercises';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 
 const ExerciseList: React.FC<{
   exercises: {[key: string]: Exercise};

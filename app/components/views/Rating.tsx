@@ -10,7 +10,7 @@ import Input from '../commons/Input';
 import Snackbar from 'react-native-snackbar';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import * as api from '../../helpers/api';
 import {logError} from '../../helpers/error';
 import {SafeAreaView} from 'react-native-safe-area-context';

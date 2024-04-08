@@ -16,7 +16,7 @@ import {getSavedWorkouts} from './reducers/exercises';
 import {getSavedQuickRoutines} from './reducers/quickRoutines';
 import {getSavedRecipes} from './reducers/recipes';
 import {getSavedTests} from './reducers/tests';
-import Profile from './types/Profile';
+import {Profile} from './types/Shared';
 import {MyRootState} from './types/Shared';
 
 const SavedItemsTabs: React.FC<{

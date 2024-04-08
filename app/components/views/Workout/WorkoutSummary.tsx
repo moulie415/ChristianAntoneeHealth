@@ -14,7 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import {SavedWorkout} from '../../../types/SavedItem';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import Exercise from '../../../types/Exercise';
 import { saveWorkout, setShareModalVisible } from '../../../reducers/exercises';
 

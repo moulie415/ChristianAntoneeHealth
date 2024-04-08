@@ -5,8 +5,7 @@ import Snackbar from 'react-native-snackbar';
 import {capitalizeFirstLetter} from '.';
 import {navigate} from '../RootNavigation';
 import Exercise, {Muscle} from '../types/Exercise';
-import {Gender} from '../types/Profile';
-import {Equipment, Level} from '../types/Shared';
+import {Equipment, Gender, Level} from '../types/Shared';
 import {logError} from './error';
 
 const levelMapping = {

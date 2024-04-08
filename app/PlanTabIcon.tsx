@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Text from './components/commons/Text';
 import colors from './constants/colors';
 import {hasPremiumPlus} from './helpers/hasPremiumPlus';
-import Profile from './types/Profile';
+import {Profile} from './types/Shared';
 import {MyRootState} from './types/Shared';
 
 const PlanTabIcon: React.FC<{

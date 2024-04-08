@@ -11,7 +11,7 @@ import {StackParamList} from '../../../App';
 import {HEIGHTS, WEIGHTS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter} from '../../../helpers';
-import {Gender} from '../../../types/Profile';
+import {Gender} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Checkbox from '../../commons/Checkbox';
 import Input from '../../commons/Input';

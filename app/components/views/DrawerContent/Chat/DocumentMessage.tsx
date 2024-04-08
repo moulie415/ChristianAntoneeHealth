@@ -10,7 +10,7 @@ import colors from '../../../../constants/colors';
 import {logError} from '../../../../helpers/error';
 import {setDownloadedDocument} from '../../../../reducers/profile';
 import Message from '../../../../types/Message';
-import Profile from '../../../../types/Profile';
+import {Profile} from '../../../../types/Shared';
 import {MyRootState} from '../../../../types/Shared';
 import Text from '../../../commons/Text';
 

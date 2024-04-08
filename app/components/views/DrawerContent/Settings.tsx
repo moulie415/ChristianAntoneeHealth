@@ -27,7 +27,7 @@ import {
   syncPlanWithCalendar,
   updateProfile,
 } from '../../../reducers/profile';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {
   CalendarType,
   Goal,

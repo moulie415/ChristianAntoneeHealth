@@ -1,8 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
-import Profile from '../Profile';
-import {SavedQuickRoutine} from '../SavedItem';
+import {Profile} from '../Shared';
 
 type QuickRoutineNavigationProp = NativeStackNavigationProp<
   StackParamList,

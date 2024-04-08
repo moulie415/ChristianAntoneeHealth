@@ -22,7 +22,7 @@ import reducer from './reducers';
 import rootSaga from './sagas';
 import Education from './types/Education';
 import ExerciseType from './types/Exercise';
-import Profile from './types/Profile';
+import {Profile} from './types/Shared';
 import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import {
   CoolDown,

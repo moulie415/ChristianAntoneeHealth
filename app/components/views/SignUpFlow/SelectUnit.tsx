@@ -1,9 +1,8 @@
-import {TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Unit} from '../../../types/Profile';
-
-import Text from '../../commons/Text';
+import {TouchableOpacity, View} from 'react-native';
 import colors from '../../../constants/colors';
+import {Unit} from '../../../types/Shared';
+import Text from '../../commons/Text';
 
 const SelectUnit: React.FC<{unit: Unit; setUnit: (unit: Unit) => void}> = ({
   unit,

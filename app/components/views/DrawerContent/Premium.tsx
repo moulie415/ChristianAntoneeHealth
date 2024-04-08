@@ -27,7 +27,7 @@ import {logError} from '../../../helpers/error';
 import {PREMIUM_PLUS} from '../../../helpers/hasPremiumPlus';
 import {setPremium} from '../../../reducers/profile';
 import {SettingsState} from '../../../reducers/settings';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';

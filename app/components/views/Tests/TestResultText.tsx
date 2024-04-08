@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {MyRootState} from '../../../types/Shared';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {
   capitalizeFirstLetter,
   getCategoryString,

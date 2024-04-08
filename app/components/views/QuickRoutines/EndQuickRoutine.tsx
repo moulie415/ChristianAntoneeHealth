@@ -12,7 +12,7 @@ import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutData from '../../../hooks/UseWorkoutData';
 import {RouteProp} from '@react-navigation/native';
 import {StackParamList} from '../../../App';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';

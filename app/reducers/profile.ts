@@ -6,16 +6,15 @@ import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import Profile from '../types/Profile';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import {
   Plan,
+  Profile,
   Sample,
   SignUpPayload,
   StepSample,
   UpdateProfilePayload,
 } from '../types/Shared';
-
 export interface WeeklyItems {
   quickRoutines: {[key: string]: SavedQuickRoutine};
   tests: {[key: string]: SavedTest};
@@ -222,7 +221,6 @@ export type SET_CHAT_MESSAGE = typeof SET_CHAT_MESSAGE;
 
 export const SET_LOGIN_EMAIL = `${PROFILE}/setLoginEmail`;
 export type SET_LOGIN_EMAIL = typeof SET_LOGIN_EMAIL;
-
 
 export const SET_CALENDAR_ID = `${PROFILE}/setCalendarId`;
 export type SET_CALENDAR_ID = typeof SET_CALENDAR_ID;

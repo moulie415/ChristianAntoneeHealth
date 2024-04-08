@@ -1,11 +1,10 @@
-import {View} from 'react-native';
 import React, {useEffect} from 'react';
-import {Gender, Unit} from '../../../types/Profile';
+import {View} from 'react-native';
 import {Picker} from 'react-native-wheel-pick';
-
-import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
 import {WEIGHTS} from '../../../constants';
+import colors from '../../../constants/colors';
+import {Gender, Unit} from '../../../types/Shared';
+import Text from '../../commons/Text';
 
 const SelectWeight: React.FC<{
   weight: number;

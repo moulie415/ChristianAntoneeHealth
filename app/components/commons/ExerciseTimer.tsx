@@ -14,7 +14,7 @@ import {
 } from 'react-native-countdown-circle-timer';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {workoutSong} from '../../sagas/profile';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 

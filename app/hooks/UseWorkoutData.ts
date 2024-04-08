@@ -1,17 +1,15 @@
-import {useEffect, useState} from 'react';
-import Profile from '../types/Profile';
-import {getHeartRateSamples} from '../helpers/biometrics';
 import moment from 'moment';
-import {Sample} from '../types/Shared';
+import {useState} from 'react';
+import {getHeartRateSamples} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {
   getCaloriesBurned,
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
-import * as polar from '../helpers/polar';
 import * as fitbit from '../helpers/fitbit';
+import * as polar from '../helpers/polar';
+import {Profile, Sample} from '../types/Shared';
 import useInit from './UseInit';
-
 const useWorkoutData = (
   seconds: number,
   profile: Profile,
@@ -29,7 +27,6 @@ const useWorkoutData = (
   const [garminHeartRateSamples, setGarminHeartRateSamples] = useState<
     Sample[]
   >([]);
-
 
   const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
 

@@ -1,15 +1,9 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
 import React from 'react';
-import Text from '../../commons/Text';
-
+import {View} from 'react-native';
 import colors from '../../../constants/colors';
-import {TrainingAvailability} from '../../../types/Profile';
+import {TrainingAvailability} from '../../../types/Shared';
 import Button from '../../commons/Button';
+import Text from '../../commons/Text';
 
 const SelectTrainingAvailability: React.FC<{
   trainingAvailability: TrainingAvailability;

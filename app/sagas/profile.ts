@@ -91,16 +91,15 @@ import {getQuickRoutinesById} from '../reducers/quickRoutines';
 import {SettingsState} from '../reducers/settings';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import Profile from '../types/Profile';
 import {
   MyRootState,
+  Profile,
   Sample,
   SignUpPayload,
   UpdateProfilePayload,
 } from '../types/Shared';
 import {handleDeepLink} from './exercises';
 import {getSettings} from './settings';
-
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
     console.log('failed to load the sound', error);

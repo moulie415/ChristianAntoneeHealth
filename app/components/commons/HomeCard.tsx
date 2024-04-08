@@ -6,7 +6,7 @@ import {Source} from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {MyRootState} from '../../types/Shared';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';

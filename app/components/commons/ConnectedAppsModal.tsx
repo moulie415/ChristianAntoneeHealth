@@ -4,7 +4,7 @@ import Button from './Button';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
 import Config from 'react-native-config';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import Modal from './Modal';
 import colors from '../../constants/colors';
 import FastImageAnimated from './FastImageAnimated';

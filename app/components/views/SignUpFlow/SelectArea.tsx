@@ -1,9 +1,9 @@
-import {View} from 'react-native';
 import React from 'react';
-import Text from '../../commons/Text';
+import {View} from 'react-native';
 import colors from '../../../constants/colors';
-import SelectableButton from '../../commons/SelectableButton';
 import {Area} from '../../../types/QuickRoutines';
+import SelectableButton from '../../commons/SelectableButton';
+import Text from '../../commons/Text';
 
 const areaDetails: {
   area: Area;

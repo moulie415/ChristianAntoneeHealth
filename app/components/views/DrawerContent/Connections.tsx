@@ -9,7 +9,7 @@ import {truncate} from '../../../helpers';
 import {getSimplifiedTime} from '../../../helpers/profile';
 import {getConnections} from '../../../reducers/profile';
 import Message from '../../../types/Message';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState} from '../../../types/Shared';
 import Avatar from '../../commons/Avatar';
 import Divider from '../../commons/Divider';

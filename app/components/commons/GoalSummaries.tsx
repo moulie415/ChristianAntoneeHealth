@@ -14,7 +14,7 @@ import {
   getWeeklyItemsForConnection,
 } from '../../reducers/profile';
 import {SettingsState} from '../../reducers/settings';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
 import {MyRootState} from '../../types/Shared';
 import Text from './Text';

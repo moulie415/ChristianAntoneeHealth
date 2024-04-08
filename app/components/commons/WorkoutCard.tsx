@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Text from './Text';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import FastImage from 'react-native-fast-image';
 import FastImageAnimated from './FastImageAnimated';
 import LinearGradient from 'react-native-linear-gradient';

@@ -1,4 +1,4 @@
-import {Premium} from '../types/Profile';
+import {Premium} from '../types/Shared';
 
 export const PREMIUM_PLUS = 'Premium Plus';
 

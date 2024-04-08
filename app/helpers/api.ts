@@ -16,13 +16,19 @@ import Chat from '../types/Chat';
 import Education from '../types/Education';
 import Exercise from '../types/Exercise';
 import Message from '../types/Message';
-import Profile from '../types/Profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Goal, Level, Recipe, Sample, WarmUp} from '../types/Shared';
+import {
+  CoolDown,
+  Goal,
+  Level,
+  Profile,
+  Recipe,
+  Sample,
+  WarmUp,
+} from '../types/Shared';
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
-
 GoogleSignin.configure({
   webClientId:
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings

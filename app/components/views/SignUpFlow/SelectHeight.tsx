@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {Picker} from 'react-native-wheel-pick';
-import {Gender, Unit} from '../../../types/Profile';
-
 import {HEIGHTS} from '../../../constants';
 import colors from '../../../constants/colors';
+import {Gender, Unit} from '../../../types/Shared';
 import Text from '../../commons/Text';
 
 const SelectHeight: React.FC<{

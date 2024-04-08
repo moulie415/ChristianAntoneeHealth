@@ -13,7 +13,7 @@ import {getConnections} from '../../reducers/profile';
 import Chat from '../../types/Chat';
 import Exercise from '../../types/Exercise';
 import Message, {MessageType} from '../../types/Message';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {MyRootState} from '../../types/Shared';
 import AbsoluteSpinner from './AbsoluteSpinner';
 import Avatar from './Avatar';

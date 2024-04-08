@@ -58,7 +58,7 @@ import {
 } from '../../../../reducers/profile';
 import {SettingsState} from '../../../../reducers/settings';
 import Message, {MessageType} from '../../../../types/Message';
-import Profile from '../../../../types/Profile';
+import {Profile} from '../../../../types/Shared';
 import {MyRootState} from '../../../../types/Shared';
 import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
 import Avatar from '../../../commons/Avatar';

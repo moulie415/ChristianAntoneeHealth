@@ -2,7 +2,7 @@ import {TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import ConnectedAppsModal from './ConnectedAppsModal';
 import Button from './Button';
 import Icon from 'react-native-vector-icons/FontAwesome6';

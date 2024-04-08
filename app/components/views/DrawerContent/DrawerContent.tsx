@@ -22,7 +22,7 @@ import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {setLoggedIn} from '../../../reducers/profile';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState} from '../../../types/Shared';
 import Text from '../../commons/Text';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';

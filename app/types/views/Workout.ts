@@ -1,9 +1,8 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import Exercise from '../Exercise';
-import Profile from '../Profile';
 import {Area} from '../QuickRoutines';
-import {CoolDown, Equipment, Goal, Level, WarmUp} from '../Shared';
+import {CoolDown, Equipment, Goal, Level, Profile, WarmUp} from '../Shared';
 
 type WorkoutNavigationProp = NativeStackNavigationProp<
   StackParamList,

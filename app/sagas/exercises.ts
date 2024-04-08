@@ -28,12 +28,16 @@ import {
 } from '../reducers/exercises';
 import {ProfileState, setProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
-import {SettingsState} from '../reducers/settings';
 import Exercise from '../types/Exercise';
-import Profile from '../types/Profile';
 import {SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Goal, Level, MyRootState, WarmUp} from '../types/Shared';
-
+import {
+  CoolDown,
+  Goal,
+  Level,
+  MyRootState,
+  Profile,
+  WarmUp,
+} from '../types/Shared';
 export function* getExercises(
   action: PayloadAction<{
     level: Level;

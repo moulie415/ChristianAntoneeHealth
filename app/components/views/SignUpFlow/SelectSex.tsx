@@ -1,10 +1,9 @@
+import React from 'react';
 import {View} from 'react-native';
-import React, {useState} from 'react';
-import {Gender} from '../../../types/Profile';
-
-import Text from '../../commons/Text';
 import colors from '../../../constants/colors';
+import {Gender} from '../../../types/Shared';
 import Button from '../../commons/Button';
+import Text from '../../commons/Text';
 
 const SelectSex: React.FC<{
   gender: Gender;

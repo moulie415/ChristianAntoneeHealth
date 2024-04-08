@@ -6,7 +6,7 @@ import {StackParamList} from '../../../App';
 import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 
 import Education from '../../../types/Education';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SettingsState} from '../../../reducers/settings';

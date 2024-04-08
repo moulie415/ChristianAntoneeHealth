@@ -8,7 +8,7 @@ import Snackbar from 'react-native-snackbar';
 import {ImageBackground, Share, StyleSheet, View} from 'react-native';
 import {MyRootState} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {logError} from '../../../helpers/error';
 import IconButton from '../../commons/IconButton';
 import Input from '../../commons/Input';

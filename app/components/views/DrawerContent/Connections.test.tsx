@@ -1,6 +1,6 @@
 import moment from 'moment';
 import Message from '../../../types/Message';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {sortConnections} from './Connections';
 
 jest.mock('react-redux', () => {

@@ -13,7 +13,7 @@ import useWorkoutData from '../../../hooks/UseWorkoutData';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import Exercise from '../../../types/Exercise';
 import {SavedWorkout} from '../../../types/SavedItem';
 import Text from '../../commons/Text';

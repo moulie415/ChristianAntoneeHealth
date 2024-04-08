@@ -33,7 +33,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Exercise from '../../../types/Exercise';
 import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';

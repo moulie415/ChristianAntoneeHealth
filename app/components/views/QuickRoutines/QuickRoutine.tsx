@@ -27,7 +27,7 @@ import WorkoutTabs from '../../commons/WorkoutTabs';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import Toggle from '../../commons/Toggle';
 import {FONTS_SIZES} from '../../../constants';
 import {workoutSong} from '../../../sagas/profile';

@@ -19,7 +19,7 @@ import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {getPlan, setRead} from '../../../reducers/profile';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState, Plan as PlanType} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';

@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getTests} from '../../../reducers/tests';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {MyRootState} from '../../../types/Shared';
 import Test from '../../../types/Test';
 import Header from '../../commons/Header';

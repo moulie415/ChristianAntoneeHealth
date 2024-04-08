@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {Level, MyRootState} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import moment from 'moment';

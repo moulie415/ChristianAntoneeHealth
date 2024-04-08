@@ -6,7 +6,7 @@ import colors from '../../constants/colors';
 import {capitalizeFirstLetter} from '../../helpers';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {MyRootState} from '../../types/Shared';
 import Button from '../commons/Button';
 import Modal from '../commons/Modal';

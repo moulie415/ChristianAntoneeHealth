@@ -14,7 +14,7 @@ import FitnessTesting from './components/views/Tests/FitnessTesting';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import colors from './constants/colors';
 import {hasPremiumPlus} from './helpers/hasPremiumPlus';
-import Profile from './types/Profile';
+import {Profile} from './types/Shared';
 import {MyRootState} from './types/Shared';
 
 const Tab = createBottomTabNavigator<StackParamList>();

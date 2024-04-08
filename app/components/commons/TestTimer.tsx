@@ -4,7 +4,7 @@ import {Text, View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {MyRootState} from '../../types/Shared';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';

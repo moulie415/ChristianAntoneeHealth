@@ -14,7 +14,7 @@ import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useInterval from '../../../hooks/UseInterval';
 import useThrottle from '../../../hooks/UseThrottle';
 import {saveTest} from '../../../reducers/tests';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {SavedTest} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import TestType from '../../../types/Test';

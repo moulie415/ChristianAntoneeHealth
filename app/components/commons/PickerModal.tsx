@@ -1,12 +1,11 @@
-import {View} from 'react-native';
 import React from 'react';
-import Modal from './Modal';
-
+import {View} from 'react-native';
 import {Picker} from 'react-native-wheel-pick';
-import Button from './Button';
 import colors from '../../constants/colors';
+import {Gender} from '../../types/Shared';
+import Button from './Button';
+import Modal from './Modal';
 import Text from './Text';
-import {Gender} from '../../types/Profile';
 
 const PickerModal: React.FC<{
   visible: boolean;

@@ -18,7 +18,7 @@ import Button from '../../commons/Button';
 import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
 import Divider from '../../commons/Divider';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {SettingsState} from '../../../reducers/settings';
 import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';

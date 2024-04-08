@@ -29,15 +29,19 @@ import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useInit from '../../../hooks/UseInit';
 import useThrottle from '../../../hooks/UseThrottle';
 import {signUp} from '../../../reducers/profile';
-import Profile, {
+import {Area, Equipment} from '../../../types/QuickRoutines';
+import {
   CurrentExercise,
   DietaryPreference,
   Gender,
+  Goal,
+  Level,
+  MyRootState,
+  Profile,
+  SignUpPayload,
   Sleep,
   StressLevel,
-} from '../../../types/Profile';
-import {Area, Equipment} from '../../../types/QuickRoutines';
-import {Goal, Level, MyRootState, SignUpPayload} from '../../../types/Shared';
+} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import HealthAndLifestyle from './HealthAndLifestyle';

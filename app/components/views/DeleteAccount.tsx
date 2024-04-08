@@ -5,7 +5,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
 import Text from '../commons/Text';
 import Button from '../commons/Button';

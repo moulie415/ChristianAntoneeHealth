@@ -8,8 +8,7 @@ import GoogleFit, {
 } from 'react-native-google-fit';
 import AppleHealthKit, {HealthValue} from 'react-native-health';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
-import {Gender} from '../types/Profile';
-import {Sample, StepSample} from '../types/Shared';
+import {Gender, Sample, StepSample} from '../types/Shared';
 import {getSamples, saveSample} from './api';
 import {logError} from './error';
 

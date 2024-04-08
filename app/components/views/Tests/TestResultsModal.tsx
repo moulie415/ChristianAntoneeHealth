@@ -12,7 +12,7 @@ import PercentileTable from '../../commons/PercentileTable';
 import {keyHasValue} from '../../../helpers/table';
 import TestResultText from './TestResultText';
 import Divider from '../../commons/Divider';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import {SavedTest} from '../../../types/SavedItem';
 import Test from '../../../types/Test';
 import Modal from '../../commons/Modal';

@@ -13,7 +13,7 @@ import {
 } from '../../../reducers/quickRoutines';
 import {SettingsState} from '../../../reducers/settings';
 import Exercise from '../../../types/Exercise';
-import Profile from '../../../types/Profile';
+import {Profile} from '../../../types/Shared';
 import QuickRoutine from '../../../types/QuickRoutines';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';

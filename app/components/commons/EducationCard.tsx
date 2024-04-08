@@ -8,7 +8,7 @@ import Text from './Text';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {MyRootState} from '../../types/Shared';
 import {connect} from 'react-redux';
-import Profile from '../../types/Profile';
+import {Profile} from '../../types/Shared';
 import LinearGradient from 'react-native-linear-gradient';
 
 const {height, width} = Dimensions.get('window');
