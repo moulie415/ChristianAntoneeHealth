@@ -79,10 +79,12 @@ import {
   setMessage,
   setMessages,
   setMessagesObj,
+  setMetabolicAgeSamples,
   setMuscleMassSamples,
   setPremium,
   setProfile,
   setUnread,
+  setVisceralFatSamples,
   setWeeklyItems,
   setWeeklyItemsForConnection,
   setWeightSamples,
@@ -105,6 +107,8 @@ const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
     console.log('failed to load the sound', error);
   }
 });
+
+Sound.setCategory('Playback', false);
 
 export const workoutSong = new Sound(
   'workout_song.mp3',
@@ -131,14 +135,13 @@ function* getSamplesWorker() {
   const heightSamples: Sample[] = yield call(getHeightSamples, uid);
   yield put(setHeightSamples(heightSamples));
 
-  const bodyFatPercentageSamples: Sample[] = yield call(
-    getBodyFatPercentageSamples,
-    uid,
-  );
-
-  yield put(setBodyFatPercentageSamples(bodyFatPercentageSamples));
-
   if (premium) {
+    const bodyFatPercentageSamples: Sample[] = yield call(
+      getBodyFatPercentageSamples,
+      uid,
+    );
+
+    yield put(setBodyFatPercentageSamples(bodyFatPercentageSamples));
     const muscleMassSamples: Sample[] = yield call(
       api.getSamples,
       'muscleMass',
@@ -152,6 +155,20 @@ function* getSamplesWorker() {
       uid,
     );
     yield put(setBoneMassSamples(boneMassSamples));
+
+    const visceralFatSamples: Sample[] = yield call(
+      api.getSamples,
+      'visceralFat',
+      uid,
+    );
+    yield put(setVisceralFatSamples(visceralFatSamples));
+
+    const metabolicAgeSamples: Sample[] = yield call(
+      api.getSamples,
+      'metabolicAge',
+      uid,
+    );
+    yield put(setMetabolicAgeSamples(metabolicAgeSamples));
   }
 }
 

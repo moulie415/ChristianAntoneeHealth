@@ -31,7 +31,6 @@ export interface ProfileState {
   muscleMassSamples: Sample[];
   boneMassSamples: Sample[];
   visceralFatSamples: Sample[];
-  restingMetabolicRateSamples: Sample[];
   metabolicAgeSamples: Sample[];
   stepSamples: StepSample[];
   weeklySteps: StepSample[];
@@ -90,7 +89,6 @@ const initialState: ProfileState = {
   boneMassSamples: [],
   visceralFatSamples: [],
   metabolicAgeSamples: [],
-  restingMetabolicRateSamples: [],
   stepSamples: [],
   weeklySteps: [],
   connections: {},
@@ -141,6 +139,12 @@ export type SET_MUSCLE_MASS_SAMPLES = typeof SET_MUSCLE_MASS_SAMPLES;
 
 export const SET_BONE_MASS_SAMPLES = `${PROFILE}/setBoneMassSamples`;
 export type SET_BONE_MASS_SAMPLES = typeof SET_BONE_MASS_SAMPLES;
+
+export const SET_VISCERAL_FAT_SAMPLES = `${PROFILE}/setVisceralFatSamples`;
+export type SET_VISCERAL_FAT_SAMPLES = typeof SET_VISCERAL_FAT_SAMPLES;
+
+export const SET_METABOLIC_AGE_SAMPLES = `${PROFILE}/setMetabolicAgeSamples`;
+export type SET_METABOLIC_AGE_SAMPLES = typeof SET_METABOLIC_AGE_SAMPLES;
 
 export const SET_STEP_SAMPLES = `${PROFILE}/setStepSamples`;
 export type SET_STEP_SAMPLES = typeof SET_STEP_SAMPLES;
@@ -290,6 +294,18 @@ const profileSlice = createSlice({
       {payload}: PayloadAction<Sample[]>,
     ) => {
       state.boneMassSamples = payload;
+    },
+    setVisceralFatSamples: (
+      state: ProfileState,
+      {payload}: PayloadAction<Sample[]>,
+    ) => {
+      state.visceralFatSamples = payload;
+    },
+    setMetabolicAgeSamples: (
+      state: ProfileState,
+      {payload}: PayloadAction<Sample[]>,
+    ) => {
+      state.metabolicAgeSamples = payload;
     },
     setStepSamples: (
       state: ProfileState,
@@ -539,6 +555,8 @@ export const {
   setAppState,
   setBodyFatPercentageSamples,
   setBoneMassSamples,
+  setVisceralFatSamples,
+  setMetabolicAgeSamples,
   setCalendarId,
   setChatMessage,
   setChats,

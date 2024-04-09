@@ -93,10 +93,11 @@ const ProfileComponent: React.FC<{
 
   const [showBoneMassModal, setShowBoneMassModal] = useState(false);
   const [boneMass, setBoneMass] = useState(profile.boneMass);
+
+  const [showVisceralFatModal, setShowVisceralFatModal] = useState(false);
   const [visceralFat, setVisceralFat] = useState(profile.visceralFat);
-  const [restingMetabolicRate, setRestingMetabolicRate] = useState(
-    profile.restingMetabolicRate,
-  );
+
+  const [showMetabolicAgeModal, setShowMetabolicAgeModal] = useState(false);
   const [metabolicAge, setMetabolicAge] = useState(profile.metabolicAge);
 
   const [images, setImages] = useState<ImageSource[]>([]);
@@ -113,7 +114,6 @@ const ProfileComponent: React.FC<{
     ...(muscleMass !== undefined ? {muscleMass} : {}),
     ...(boneMass !== undefined ? {boneMass} : {}),
     ...(visceralFat !== undefined ? {visceralFat} : {}),
-    ...(restingMetabolicRate !== undefined ? {restingMetabolicRate} : {}),
     ...(metabolicAge !== undefined ? {metabolicAge} : {}),
   });
 
@@ -145,7 +145,6 @@ const ProfileComponent: React.FC<{
       ...(muscleMass !== undefined ? {muscleMass} : {}),
       ...(boneMass !== undefined ? {boneMass} : {}),
       ...(visceralFat !== undefined ? {visceralFat} : {}),
-      ...(restingMetabolicRate !== undefined ? {restingMetabolicRate} : {}),
       ...(metabolicAge !== undefined ? {metabolicAge} : {}),
     });
   }, [
@@ -160,7 +159,6 @@ const ProfileComponent: React.FC<{
     boneMass,
     visceralFat,
     metabolicAge,
-    restingMetabolicRate,
   ]);
 
   const onSave = async () => {
@@ -193,7 +191,6 @@ const ProfileComponent: React.FC<{
         ...(muscleMass !== undefined ? {muscleMass} : {}),
         ...(boneMass !== undefined ? {boneMass} : {}),
         ...(visceralFat !== undefined ? {visceralFat} : {}),
-        ...(restingMetabolicRate !== undefined ? {restingMetabolicRate} : {}),
         ...(metabolicAge !== undefined ? {metabolicAge} : {}),
       });
     } catch (e) {
@@ -232,7 +229,6 @@ const ProfileComponent: React.FC<{
                 setDob(profile.dob);
                 setVisceralFat(profile.visceralFat);
                 setMetabolicAge(profile.metabolicAge);
-                setRestingMetabolicRate(profile.restingMetabolicRate);
               }}>
               <Text
                 style={{
@@ -434,11 +430,14 @@ const ProfileComponent: React.FC<{
             bodyFatPercentage={bodyFatPercentage}
             muscleMass={muscleMass}
             boneMass={boneMass}
+            visceralFat={visceralFat}
+            metabolicAge={metabolicAge}
             setShowBodyFatPercentageModal={setShowBodyFatPercentageModal}
             setShowBoneMassModal={setShowBoneMassModal}
             setShowMuscleMassModal={setShowMuscleMassModal}
             setShowHeightModal={setShowHeightModal}
             setShowWeightModal={setShowWeightModal}
+            setShowMetabolicAgeModal={setShowMetabolicAgeModal}
           />
 
           <Button

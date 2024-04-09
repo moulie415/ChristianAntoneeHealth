@@ -1,7 +1,11 @@
 import * as _ from 'lodash';
 import React from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {navigate} from '../../RootNavigation';
 import colors from '../../constants/colors';
+import {MyRootState, Profile} from '../../types/Shared';
 import Text from './Text';
 import Tile from './Tile';
 
@@ -15,6 +19,8 @@ const MetricExplained: React.FC<{
   onPressHistorical: () => void;
   title: string;
   connection?: boolean;
+  premium?: boolean;
+  profile: Profile;
 }> = ({
   ranges,
   colors: colorsArr,
@@ -25,10 +31,18 @@ const MetricExplained: React.FC<{
   onPress,
   onPressHistorical,
   connection,
+  premium,
+  profile,
 }) => {
   return (
     <Tile
-      onPress={onPress}
+      onPress={() => {
+        if (premium && !profile.premium) {
+          navigate('Premium', {});
+        } else {
+          onPress && onPress();
+        }
+      }}
       style={{
         width: Dimensions.get('window').width - 40,
         marginBottom: 20,
@@ -85,7 +99,7 @@ const MetricExplained: React.FC<{
             const percentage = _.clamp((val / diff) * 100, 100);
 
             return (
-              <View key={color} style={{flex: 1}}>
+              <View key={color + ranges[index]} style={{flex: 1}}>
                 <Text
                   style={{
                     textAlign: 'left',
@@ -147,8 +161,28 @@ const MetricExplained: React.FC<{
             );
           })}
       </View>
+      {premium && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,0.7)',
+            borderRadius: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Icon name="lock" color={colors.appWhite} size={30} />
+        </View>
+      )}
     </Tile>
   );
 };
 
-export default MetricExplained;
+const mapStateToProps = ({profile}: MyRootState) => ({
+  profile: profile.profile,
+});
+
+export default connect(mapStateToProps)(MetricExplained);

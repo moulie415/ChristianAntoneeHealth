@@ -78,7 +78,6 @@ export interface Profile {
   muscleMass?: number;
   boneMass?: number;
   visceralFat?: number;
-  restingMetabolicRate?: number;
   metabolicAge?: number;
   garminAccessTokenSecret?: string;
   garminAccessToken?: string;

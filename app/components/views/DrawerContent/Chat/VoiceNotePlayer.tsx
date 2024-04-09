@@ -1,13 +1,13 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {IMessage} from 'react-native-gifted-chat';
-import mmss from '../../../../helpers/mmss';
 import {Slider} from '@miblanchard/react-native-slider';
-import colors from '../../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import React, {useEffect, useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {IMessage} from 'react-native-gifted-chat';
 import SoundPlayer from 'react-native-sound-player';
-import useInterval from '../../../../hooks/UseInterval';
 import Spinner from 'react-native-spinkit';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import colors from '../../../../constants/colors';
+import mmss from '../../../../helpers/mmss';
+import useInterval from '../../../../hooks/UseInterval';
 
 const VoiceNotePlayer: React.FC<{message: IMessage}> = ({message}) => {
   const [playing, setPlaying] = useState<boolean>();

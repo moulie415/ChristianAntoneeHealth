@@ -8,8 +8,8 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, Dimensions, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
-import {getBMIItems, getSampleItems} from '../../helpers';
-import {MyRootState, Sample} from '../../types/Shared';
+import {getBMIItems, getBMRItems, getSampleItems} from '../../helpers';
+import {MyRootState, Profile, Sample} from '../../types/Shared';
 import Button from './Button';
 import MetricExplained from './MetricExplained';
 import Modal from './Modal';
@@ -175,6 +175,7 @@ const Chart: React.FC<{
   setFilter,
   filter,
   connection,
+  premium,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -195,6 +196,7 @@ const Chart: React.FC<{
           title={title}
           colors={colorsArr}
           labels={labels}
+          premium={premium}
         />
       </View>
       <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
@@ -216,14 +218,10 @@ const ProfileCharts: React.FC<{
   muscleMassSamples: Sample[];
   boneMassSamples: Sample[];
   visceralFatSamples: Sample[];
-  restingMetabolicRateSamples: Sample[];
-  metabolicAgeSamples: Sample[];
   setShowBodyFatPercentageModal?: (show: boolean) => void;
   setShowMuscleMassModal?: (show: boolean) => void;
   setShowBoneMassModal?: (show: boolean) => void;
-  setVisceralFatModal?: (show: boolean) => void;
-  setRestingMetabolicRateModal?: (show: boolean) => void;
-  setMetabolicAgeModal?: (show: boolean) => void;
+  setShowVisceralFatModal?: (show: boolean) => void;
   setShowWeightModal?: (show: boolean) => void;
   setShowHeightModal?: (show: boolean) => void;
   weight: number;
@@ -233,8 +231,7 @@ const ProfileCharts: React.FC<{
   boneMass?: number;
   connection?: boolean;
   visceralFat?: number;
-  restingMetabolicRate: number;
-  metabolicAge?: number;
+  profile: Profile;
 }> = ({
   weightSamples,
   heightSamples,
@@ -242,14 +239,10 @@ const ProfileCharts: React.FC<{
   muscleMassSamples,
   boneMassSamples,
   visceralFatSamples,
-  metabolicAgeSamples,
-  restingMetabolicRate,
   setShowBodyFatPercentageModal,
   setShowBoneMassModal,
   setShowMuscleMassModal,
-  setMetabolicAgeModal,
-  setRestingMetabolicRateModal,
-  setVisceralFatModal,
+  setShowVisceralFatModal,
   weight,
   height,
   bodyFatPercentage,
@@ -257,12 +250,11 @@ const ProfileCharts: React.FC<{
   boneMass,
   connection,
   visceralFat,
-  restingMetabolicRateSamples,
-  metabolicAge,
+  profile,
 }) => {
   const [filter, setFilter] = useState<6 | 30 | 365>(6);
 
-  const weightItems: {
+  const bmiItems: {
     data: {x: Date; y: number}[];
     lowest: number;
     highest: number;
@@ -302,27 +294,42 @@ const ProfileCharts: React.FC<{
     return getSampleItems(visceralFat, filter, visceralFatSamples);
   }, [filter, visceralFatSamples, visceralFat]);
 
-  const restingMetabolicRateItems: {
+  const bmrItems: {
     data: {x: Date; y: number}[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
-    return getSampleItems(
-      restingMetabolicRate,
+    return getBMRItems(
+      weight,
+      height,
+      weightSamples,
+      heightSamples,
       filter,
-      restingMetabolicRateSamples,
+      profile.gender,
+      profile.dob,
     );
-  }, [filter, restingMetabolicRate, restingMetabolicRateSamples]);
+  }, [
+    filter,
+    height,
+    heightSamples,
+    profile.dob,
+    profile.gender,
+    weight,
+    weightSamples,
+  ]);
 
-  const metabolicAgeItems: {
-    data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
-  } = useMemo(() => {
-    return getSampleItems(metabolicAge, filter, metabolicAgeSamples);
-  }, [filter, metabolicAge, metabolicAgeSamples]);
+  // const metabolicAgeItems: {
+  //   data: {x: Date; y: number}[];
+  //   lowest: number;
+  //   highest: number;
+  // } = useMemo(() => {
+  //   return getSampleItems(metabolicAge, filter, metabolicAgeSamples);
+  // }, [filter, metabolicAge, metabolicAgeSamples]);
 
-  const latestBMI = weightItems?.data[weightItems.data.length - 1]?.y;
+  const latestBMI = bmiItems?.data[bmiItems.data.length - 1]?.y;
+  const latestBMR = bmrItems?.data[bmrItems.data.length - 1]?.y;
+
+  const age = moment().diff(profile.dob, 'years');
 
   return (
     <>
@@ -331,7 +338,7 @@ const ProfileCharts: React.FC<{
         filter={filter}
         current={latestBMI}
         title="BMI"
-        data={weightItems.data}
+        data={bmiItems.data}
         minY={0}
         maxY={40}
         ranges={[18.5, 25.0, 30.0]}
@@ -345,8 +352,35 @@ const ProfileCharts: React.FC<{
         onPress={() =>
           !connection &&
           Alert.alert(
-            'BMI',
-            'Update your weight and height to determine your new BMI',
+            'Body mass index',
+            'BMI is derived from your height and weight',
+          )
+        }
+        connection={connection}
+      />
+
+      <Chart
+        setFilter={setFilter}
+        filter={filter}
+        current={latestBMR}
+        title="BMR"
+        data={bmrItems.data}
+        minY={1000}
+        maxY={2000}
+        ranges={[1200, 1400, 1600, 1800, 2000]}
+        colors={[
+          colors.appBlueDark,
+          colors.appGreen,
+          colors.appBlueLight,
+          colors.muscleSecondary,
+          colors.appRed,
+        ]}
+        labels={[]}
+        onPress={() =>
+          !connection &&
+          Alert.alert(
+            'Basal metabolic rate',
+            'BMR is derived from your height, weight, sex and age',
           )
         }
         connection={connection}
@@ -380,6 +414,7 @@ const ProfileCharts: React.FC<{
           setShowBodyFatPercentageModal && setShowBodyFatPercentageModal(true)
         }
         connection={connection}
+        premium
       />
       <Chart
         setFilter={setFilter}
@@ -427,7 +462,7 @@ const ProfileCharts: React.FC<{
         current={visceralFat}
         data={visceralFatItems.data}
         title="Visceral fat"
-        minY={0}
+        minY={1}
         maxY={59}
         ranges={[12, 35]}
         colors={[
@@ -435,11 +470,30 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           colors.secondaryLight,
         ]}
-        onPress={() => setVisceralFatModal && setVisceralFatModal(true)}
+        onPress={() => setShowVisceralFatModal && setShowVisceralFatModal(true)}
         labels={['Low', 'Medium', 'High']}
         connection={connection}
         premium
       />
+      {/* <Chart
+        setFilter={setFilter}
+        filter={filter}
+        current={metabolicAge}
+        data={metabolicAgeItems.data}
+        title="Metabolic age"
+        minY={1}
+        maxY={100}
+        ranges={[age - 3, age + 3]}
+        colors={[
+          new Color(colors.appGreen).darken(0.4).toString(),
+          colors.appGreen,
+          colors.secondaryLight,
+        ]}
+        onPress={() => setMetabolicAgeModal && setMetabolicAgeModal(true)}
+        labels={['', '', '']}
+        connection={connection}
+        premium
+      /> */}
     </>
   );
 };
@@ -451,8 +505,7 @@ const mapStateToProps = ({profile}: MyRootState) => ({
   muscleMassSamples: profile.muscleMassSamples,
   boneMassSamples: profile.boneMassSamples,
   visceralFatSamples: profile.visceralFatSamples,
-  metabolicAgeSamples: profile.metabolicAgeSamples,
-  restingMetabolicRateSamples: profile.restingMetabolicRateSamples,
+  profile: profile.profile,
 });
 
 export default connect(mapStateToProps)(ProfileCharts);

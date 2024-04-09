@@ -6,7 +6,7 @@ import PushNotification from 'react-native-push-notification';
 import {TABLE_HEADER_KEYS} from '../constants';
 import colors from '../constants/colors';
 import {Category} from '../types/Education';
-import {Sample} from '../types/Shared';
+import {Gender, Sample} from '../types/Shared';
 import {PercentileTable, Table} from '../types/Test';
 import {logError} from './error';
 
@@ -164,10 +164,88 @@ export const getBMIItems = (
   return {data, lowest, highest};
 };
 
+export const getBMRItems = (
+  weight: number,
+  height: number,
+  weightSamples: Sample[],
+  heightSamples: Sample[],
+  filter: 6 | 30 | 365,
+  gender?: Gender,
+  dob?: string,
+) => {
+  const data = [];
+  if (!height || !weight || !dob || !gender) {
+    return {data: [], lowest: 0, highest: 0};
+  }
+  const currentAge = moment().diff(dob, 'years');
+
+  let lowest =
+    weight && height && currentAge
+      ? getBMR(gender, weight, height, currentAge)
+      : 0;
+  let highest =
+    weight && height && currentAge
+      ? getBMR(gender, weight, height, currentAge)
+      : 0;
+
+  for (let i = filter as number; i >= 0; i--) {
+    const day = moment().subtract(i, 'days').endOf('day');
+
+    const age = day.diff(dob, 'years');
+
+    if (i === 0) {
+      const bmr = getBMR(gender, weight, height, age);
+      if (bmr > highest) {
+        highest = bmr;
+      }
+      if (bmr < lowest) {
+        lowest = bmr;
+      }
+      data.push({y: bmr, x: day.toDate()});
+    } else if (
+      i === filter ||
+      filter === 6 ||
+      (filter === 30 && i % 4 === 0) ||
+      (filter === 365 && i % 50 === 0)
+    ) {
+      const weightSample =
+        (weightSamples &&
+          weightSamples.length &&
+          findClosestSampleToDate(weightSamples, day, weight)) ||
+        weight;
+
+      const heightSample =
+        (heightSamples &&
+          heightSamples.length &&
+          findClosestSampleToDate(heightSamples, day, height)) ||
+        height;
+      const bmr = getBMR(gender, weightSample, heightSample, age);
+      if (bmr > highest) {
+        highest = bmr;
+      }
+      if (bmr < lowest) {
+        lowest = bmr;
+      }
+      data.push({y: bmr, x: day.toDate()});
+    }
+  }
+  return {data, lowest, highest};
+};
+
 const getBMI = (h: number, w: number) => {
   const val = w / Math.pow(h / 100, 2);
   // convert to one decimal place
   return Math.round(val * 10) / 10;
+};
+
+// * For Men: BMR = 10 x weight (kg) + 6.25 x height (cm) – 5 x age (years) + 5
+// * For Women: BMR = 10 x weight (kg) + 6.25 x height (cm) – 5 x age (years) – 161
+
+const getBMR = (gender: Gender, w: number, h: number, age: number) => {
+  if (gender === 'male') {
+    return 10 * w + 6.25 * h - 5 * age + 5;
+  }
+  return 10 * w + 6.25 * h - 5 * age - 161;
 };
 
 export const rateApp = async () => {
