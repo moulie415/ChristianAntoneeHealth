@@ -91,8 +91,8 @@ const MetricExplained: React.FC<{
             const currentRange = ranges[index];
             const nextRange = ranges[index + 1];
             const isInRange =
-              (current >= currentRange && current < nextRange) ||
-              (isLast && current > nextRange);
+              (current >= currentRange && current <= nextRange) ||
+              (isLast && current >= nextRange);
 
             const diff = nextRange - currentRange;
             const val = current - currentRange;
@@ -161,7 +161,7 @@ const MetricExplained: React.FC<{
             );
           })}
       </View>
-      {premium && (
+      {premium && !profile.premium && (
         <View
           style={{
             position: 'absolute',

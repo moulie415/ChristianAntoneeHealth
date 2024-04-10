@@ -31,8 +31,10 @@ import {StackParamList} from '../../App';
 import {
   BONE_DENSITIES,
   HEIGHTS,
+  METABOLIC_AGE_VALUES,
   MUSCLE_MASSES,
   PERCENTAGES,
+  VISCERAL_FAT_VALUES,
   WEIGHTS,
 } from '../../constants';
 import colors from '../../constants/colors';
@@ -438,6 +440,7 @@ const ProfileComponent: React.FC<{
             setShowHeightModal={setShowHeightModal}
             setShowWeightModal={setShowWeightModal}
             setShowMetabolicAgeModal={setShowMetabolicAgeModal}
+            setShowVisceralFatModal={setShowVisceralFatModal}
           />
 
           <Button
@@ -449,7 +452,7 @@ const ProfileComponent: React.FC<{
         </ScrollView>
 
         <PickerModal
-          title="Select height"
+          title="Set height"
           visible={showHeightModal}
           selectedValue={String(height)}
           pickerData={HEIGHTS.map(value => {
@@ -462,7 +465,7 @@ const ProfileComponent: React.FC<{
           onRequestClose={() => setShowHeightModal(false)}
         />
         <PickerModal
-          title="Select weight"
+          title="Set weight"
           visible={showWeightModal}
           selectedValue={String(weight)}
           pickerData={WEIGHTS.map(value => {
@@ -475,7 +478,7 @@ const ProfileComponent: React.FC<{
           onRequestClose={() => setShowWeightModal(false)}
         />
         <PickerModal
-          title="Select body fat percentage"
+          title="Set body fat percentage"
           visible={showBodyFatPercentageModal}
           selectedValue={String(bodyFatPercentage)}
           pickerData={PERCENTAGES.map(value => {
@@ -488,7 +491,7 @@ const ProfileComponent: React.FC<{
           onRequestClose={() => setShowBodyFatPercentageModal(false)}
         />
         <PickerModal
-          title="Select muscle mass"
+          title="Set muscle mass"
           visible={showMuscleMassModal}
           selectedValue={String(muscleMass)}
           pickerData={MUSCLE_MASSES.map(value => {
@@ -501,7 +504,7 @@ const ProfileComponent: React.FC<{
           onRequestClose={() => setShowMuscleMassModal(false)}
         />
         <PickerModal
-          title="Select bone mass"
+          title="Set bone mass"
           visible={showBoneMassModal}
           selectedValue={String(boneMass)}
           pickerData={BONE_DENSITIES.map(value => {
@@ -512,6 +515,32 @@ const ProfileComponent: React.FC<{
           })}
           onValueChange={val => setBoneMass(Number(val))}
           onRequestClose={() => setShowBoneMassModal(false)}
+        />
+        <PickerModal
+          title="Set visceral fat"
+          visible={showVisceralFatModal}
+          selectedValue={String(visceralFat)}
+          pickerData={VISCERAL_FAT_VALUES.map(value => {
+            return {
+              label: value.toString(),
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setVisceralFat(Number(val))}
+          onRequestClose={() => setShowVisceralFatModal(false)}
+        />
+        <PickerModal
+          title="Set metabolic age"
+          visible={showMetabolicAgeModal}
+          selectedValue={String(metabolicAge)}
+          pickerData={METABOLIC_AGE_VALUES.map(value => {
+            return {
+              label: value.toString(),
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setMetabolicAge(Number(val))}
+          onRequestClose={() => setShowMetabolicAgeModal(false)}
         />
         <Modal
           visible={showDobModal && Platform.OS === 'ios'}

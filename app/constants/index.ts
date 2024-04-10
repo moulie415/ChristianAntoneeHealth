@@ -1,6 +1,5 @@
 import {Platform} from 'react-native';
 import {Goal} from '../types/Shared';
-import colors from './colors';
 
 export interface GoalItem {
   title: string;
@@ -40,6 +39,8 @@ export const PERCENTAGES = [...Array(100).keys()];
 export const MUSCLE_MASSES = [...Array(100).keys()];
 export const BONE_DENSITIES = [...Array(11).keys()];
 export const PREP_TIME_SECS = [...Array(61).keys()];
+export const VISCERAL_FAT_VALUES = [...Array(59).keys()].map(i => i + 1);
+export const METABOLIC_AGE_VALUES = [...Array(100).keys()].map(i => i + 1);
 
 export const TABLE_HEADER_KEYS = [
   'age',
