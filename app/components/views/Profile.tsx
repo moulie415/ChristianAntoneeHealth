@@ -81,7 +81,6 @@ const ProfileComponent: React.FC<{
   const [avatar, setAvatar] = useState(profile.avatar);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
-  const [showWeightHistorical, setShowWeightHistorical] = useState(false);
   const [showDobModal, setShowDobModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -471,7 +470,6 @@ const ProfileComponent: React.FC<{
           weight={weight}
           setShowWeightModal={setShowWeightModal}
           setWeight={setWeight}
-          setShowWeightHistorical={setShowWeightHistorical}
         />
         <PickerModal
           title="Set body fat percentage"
