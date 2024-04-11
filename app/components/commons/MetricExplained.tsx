@@ -36,13 +36,6 @@ const MetricExplained: React.FC<{
 }) => {
   return (
     <Tile
-      onPress={() => {
-        if (premium && !profile.premium) {
-          navigate('Premium', {});
-        } else {
-          onPress && onPress();
-        }
-      }}
       style={{
         width: Dimensions.get('window').width - 40,
         marginBottom: 20,
@@ -59,22 +52,43 @@ const MetricExplained: React.FC<{
           {title}
         </Text>
         {!connection && (
-          <TouchableOpacity
-            onPress={onPressHistorical}
-            style={{
-              borderWidth: StyleSheet.hairlineWidth,
-              borderColor: colors.appWhite,
-              margin: 10,
-              paddingHorizontal: 10,
-              height: 30,
-              borderRadius: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{color: colors.appWhite, fontSize: 14}}>
-              See historical
-            </Text>
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              onPress={onPressHistorical}
+              style={{
+                borderWidth: StyleSheet.hairlineWidth,
+                borderColor: colors.appWhite,
+                margin: 10,
+                paddingHorizontal: 10,
+                marginRight: 0,
+                height: 30,
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="chart-line" color={colors.appWhite} size={16} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (premium && !profile.premium) {
+                  navigate('Premium', {});
+                } else {
+                  onPress && onPress();
+                }
+              }}
+              style={{
+                borderWidth: StyleSheet.hairlineWidth,
+                borderColor: colors.appWhite,
+                margin: 10,
+                paddingHorizontal: 10,
+                height: 30,
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="plus" color={colors.appWhite} size={16} />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
       <View
