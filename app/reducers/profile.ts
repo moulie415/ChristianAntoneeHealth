@@ -48,6 +48,7 @@ export interface ProfileState {
   calendarId?: string;
   loginEmail: string;
   downloadedDocuments: {[key: string]: string};
+  filter: 6 | 30 | 365;
 }
 
 const initialState: ProfileState = {
@@ -107,6 +108,7 @@ const initialState: ProfileState = {
   syncedPlanEvents: {},
   loginEmail: '',
   downloadedDocuments: {},
+  filter: 6,
 };
 
 export const PROFILE = 'profile';
@@ -249,6 +251,9 @@ export type SET_SYNCED_PLAN_EVENT = typeof SET_SYNCED_PLAN_EVENT;
 
 export const FAVOURITE_RECIPE = `${PROFILE}/favouriteRecipe`;
 export type FAVOURITE_RECIPE = typeof FAVOURITE_RECIPE;
+
+export const SET_FILTER = `${PROFILE}/setFilter`;
+export type SET_FILTER = typeof SET_FILTER;
 
 const profileSlice = createSlice({
   name: PROFILE,
@@ -547,6 +552,12 @@ const profileSlice = createSlice({
         ];
       }
     },
+    setFilter: (
+      state: ProfileState,
+      {payload}: PayloadAction<6 | 30 | 365>,
+    ) => {
+      state.filter = payload;
+    },
   },
 });
 
@@ -596,6 +607,7 @@ export const {
   requestMessageDeletion,
   setDownloadedDocument,
   favouriteRecipe,
+  setFilter,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

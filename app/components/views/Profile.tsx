@@ -35,7 +35,6 @@ import {
   MUSCLE_MASSES,
   PERCENTAGES,
   VISCERAL_FAT_VALUES,
-  WEIGHTS,
 } from '../../constants';
 import colors from '../../constants/colors';
 import {logError} from '../../helpers/error';
@@ -56,6 +55,7 @@ import PickerModal from '../commons/PickerModal';
 import ProfileCharts from '../commons/ProfileCharts';
 import Text from '../commons/Text';
 import Tile from '../commons/Tile';
+import WeightModal from '../commons/WeightModal';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -81,6 +81,7 @@ const ProfileComponent: React.FC<{
   const [avatar, setAvatar] = useState(profile.avatar);
   const [showHeightModal, setShowHeightModal] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
+  const [showWeightHistorical, setShowWeightHistorical] = useState(false);
   const [showDobModal, setShowDobModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -464,18 +465,13 @@ const ProfileComponent: React.FC<{
           onValueChange={val => setHeight(Number(val))}
           onRequestClose={() => setShowHeightModal(false)}
         />
-        <PickerModal
-          title="Set weight"
+
+        <WeightModal
           visible={showWeightModal}
-          selectedValue={String(weight)}
-          pickerData={WEIGHTS.map(value => {
-            return {
-              label: `${value.toString()} kg`,
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setWeight(Number(val))}
-          onRequestClose={() => setShowWeightModal(false)}
+          weight={weight}
+          setShowWeightModal={setShowWeightModal}
+          setWeight={setWeight}
+          setShowWeightHistorical={setShowWeightHistorical}
         />
         <PickerModal
           title="Set body fat percentage"
@@ -542,6 +538,7 @@ const ProfileComponent: React.FC<{
           onValueChange={val => setMetabolicAge(Number(val))}
           onRequestClose={() => setShowMetabolicAgeModal(false)}
         />
+
         <Modal
           visible={showDobModal && Platform.OS === 'ios'}
           onRequestClose={() => setShowDobModal(false)}>
