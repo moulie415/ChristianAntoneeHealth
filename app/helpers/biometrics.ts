@@ -1,12 +1,7 @@
-import * as _ from 'lodash';
 import moment from 'moment';
 import {Alert, Linking, Platform} from 'react-native';
-import GoogleFit, {
-  ActivityType,
-  BucketUnit,
-  HeartRateResponse,
-} from 'react-native-google-fit';
-import AppleHealthKit, {HealthValue} from 'react-native-health';
+import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
+import AppleHealthKit from 'react-native-health';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Sample, StepSample} from '../types/Shared';
 import {getSamples, saveSample} from './api';
@@ -241,7 +236,7 @@ export const getHeightSamples = async (uid: string) => {
   // );
 };
 
-export const getStepSamples = async () => {
+export const getStepSamples = async (startDate: Date, endDate: Date) => {
   if (!(await isAvailable()) || !(await isEnabled())) {
     return;
   }
@@ -249,8 +244,8 @@ export const getStepSamples = async () => {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getDailyStepCountSamples(
         {
-          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
         },
         (err, results) => {
           if (err) {
@@ -263,8 +258,8 @@ export const getStepSamples = async () => {
     });
   }
   const response = await GoogleFit.getDailyStepCountSamples({
-    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-    endDate: moment().endOf('day').toISOString(),
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
     bucketUnit: BucketUnit.DAY,
     bucketInterval: 1,
   });
@@ -306,7 +301,7 @@ export const getWeeklySteps = async (): Promise<StepSample[]> => {
   }, []);
 };
 
-export const getActivitySamples = async () => {
+export const getActivitySamples = async (startDate: Date, endDate: Date) => {
   if (!(await isAvailable()) || !(await isEnabled())) {
     return;
   }
@@ -314,8 +309,8 @@ export const getActivitySamples = async () => {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getSamples(
         {
-          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
         },
         (err, results) => {
           if (err) {
@@ -328,8 +323,8 @@ export const getActivitySamples = async () => {
     });
   }
   const response = await GoogleFit.getActivitySamples({
-    startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-    endDate: moment().endOf('day').toISOString(),
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
   });
 
   return response;
@@ -442,7 +437,7 @@ export const saveHeight = async (uid: string, value?: number) => {
 export const getHeartRateSamples = async (
   startDate: Date,
   endDate: Date,
-): Promise<HealthValue[] | HeartRateResponse[]> => {
+): Promise<Sample[]> => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.getHeartRateSamples(
@@ -465,6 +460,46 @@ export const getHeartRateSamples = async (
     endDate: endDate.toISOString(),
     bucketUnit: BucketUnit.SECOND,
   });
+};
+
+export const getCalorieSamples = async (
+  startDate: Date,
+  endDate: Date,
+): Promise<Sample[]> => {
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.getActiveEnergyBurned(
+        {
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(
+              results.map(res => ({
+                startDate: res.startDate,
+                endDate: res.endDate,
+                value: res.value,
+              })),
+            );
+          }
+        },
+      );
+    });
+  }
+  const samples = await GoogleFit.getDailyCalorieSamples({
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
+    bucketUnit: BucketUnit.SECOND,
+  });
+
+  return samples.map(sample => ({
+    startDate: sample.startDate,
+    endDate: sample.endDate,
+    value: sample.calorie,
+  }));
 };
 
 export const saveWorkout = async (
@@ -529,36 +564,36 @@ export const saveWorkout = async (
 
 export const getBodyFatPercentageSamples = async (uid: string) => {
   const samples = await getSamples('bodyFatPercentage', uid);
-  if (Platform.OS === 'ios') {
-    const iosSamples = await new Promise<Sample[]>(async (resolve, reject) => {
-      if (!(await isAvailable()) || !(await isEnabled())) {
-        return [];
-      }
-      AppleHealthKit.getBodyFatPercentageSamples(
-        {
-          startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
-        },
-        (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(
-              results.map(res => {
-                return {...res, value: res.value * 100};
-              }),
-            );
-          }
-        },
-      );
-    });
-    return _.uniqBy(
-      [...iosSamples, ...samples],
-      sample => sample.startDate + sample.endDate,
-    );
-  } else {
-    return samples;
-  }
+  // if (Platform.OS === 'ios') {
+  //   const iosSamples = await new Promise<Sample[]>(async (resolve, reject) => {
+  //     if (!(await isAvailable()) || !(await isEnabled())) {
+  //       return [];
+  //     }
+  //     AppleHealthKit.getBodyFatPercentageSamples(
+  //       {
+  //         startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
+  //         endDate: moment().endOf('day').toISOString(),
+  //       },
+  //       (err, results) => {
+  //         if (err) {
+  //           reject(err);
+  //         } else {
+  //           resolve(
+  //             results.map(res => {
+  //               return {...res, value: res.value * 100};
+  //             }),
+  //           );
+  //         }
+  //       },
+  //     );
+  //   });
+  //   return _.uniqBy(
+  //     [...iosSamples, ...samples],
+  //     sample => sample.startDate + sample.endDate,
+  //   );
+  // } else {
+  return samples;
+  // }
 };
 
 export const saveBodyFatPercentage = async (value: number, uid: string) => {

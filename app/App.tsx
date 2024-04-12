@@ -22,7 +22,6 @@ import reducer from './reducers';
 import rootSaga from './sagas';
 import Education from './types/Education';
 import ExerciseType from './types/Exercise';
-import {Profile} from './types/Shared';
 import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
 import {
   CoolDown,
@@ -34,8 +33,10 @@ import {
   PlanNutrition,
   PlanSleep,
   PlanWorkout,
+  Profile,
   Recipe,
   RecipeCategory,
+  Sample,
   WarmUp,
 } from './types/Shared';
 
@@ -84,6 +85,7 @@ export type StackParamList = {
     pauseEvents: PauseEvent[];
     startTime: Date;
     planId: string;
+    heartRateSamples: Sample[];
   };
   WorkoutSummary: {
     seconds: number;
@@ -114,6 +116,7 @@ export type StackParamList = {
     endTime: Date;
     exerciseEvents: ExerciseEvent[];
     pauseEvents: PauseEvent[];
+    heartRateSamples: Sample[];
   };
   QuickRoutineSummary: {
     routine: QuickRoutine;

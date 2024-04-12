@@ -1,48 +1,36 @@
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Alert,
-  Dimensions,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import Image from 'react-native-fast-image';
+import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
-import colors from '../../../constants/colors';
-import {MyRootState, PauseEvent, UpdateProfilePayload} from '../../../types/Shared';
-import ExerciseVideo from '../../commons/ExerciseVideo';
-import {getVideoHeight} from '../../../helpers';
-import Text from '../../commons/Text';
-import MusclesDiagram from '../../commons/MusclesDiagram';
-import ViewMore from '../../commons/ViewMore';
-import Modal from '../../commons/Modal';
-import ResistanceScaleInfo from './ResistanceScaleInfo';
-import Button from '../../commons/Button';
-import Spinner from '../../commons/Spinner';
-import Header from '../../commons/Header';
-import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import LinearGradient from 'react-native-linear-gradient';
-import Input from '../../commons/Input';
-import FastImage from 'react-native-fast-image';
-import useInterval from '../../../hooks/UseInterval';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Exercise from '../../../types/Exercise';
 import {StackParamList} from '../../../App';
-import {RouteProp} from '@react-navigation/native';
-import {Profile} from '../../../types/Shared';
-import WorkoutTabs from '../../commons/WorkoutTabs';
-import WorkoutTabFooter from '../../commons/WorkoutTabFooter';
-import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
-import useExerciseEvents from '../../../hooks/UseExerciseEvents';
-import Toggle from '../../commons/Toggle';
 import {FONTS_SIZES} from '../../../constants';
-import {workoutSong} from '../../../sagas/profile';
+import colors from '../../../constants/colors';
+import {getVideoHeight} from '../../../helpers';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
-import { updateProfile } from '../../../reducers/profile';
+import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import useHealthListener from '../../../hooks/UseHealthListener';
+import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
+import {updateProfile} from '../../../reducers/profile';
+import {workoutSong} from '../../../sagas/profile';
+import Exercise from '../../../types/Exercise';
+import {
+  MyRootState,
+  PauseEvent,
+  Profile,
+  UpdateProfilePayload,
+} from '../../../types/Shared';
+import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import Button from '../../commons/Button';
+import ExerciseVideo from '../../commons/ExerciseVideo';
+import Header from '../../commons/Header';
+import Modal from '../../commons/Modal';
+import Spinner from '../../commons/Spinner';
+import Text from '../../commons/Text';
+import Toggle from '../../commons/Toggle';
+import WorkoutTabs from '../../commons/WorkoutTabs';
+import ResistanceScaleInfo from './ResistanceScaleInfo';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -85,6 +73,8 @@ const StartWorkout: React.FC<{
       playWorkoutSong();
     }
   }, [profile.workoutMusic]);
+
+  const {heartRateSamples} = useHealthListener(startTime);
 
   return (
     <View style={{flex: 1}}>
@@ -281,6 +271,7 @@ const StartWorkout: React.FC<{
                                       pauseEvents,
                                       startTime,
                                       planId,
+                                      heartRateSamples,
                                     });
                                     if (workoutSong.isPlaying()) {
                                       workoutSong.stop();

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {useState} from 'react';
-import {getHeartRateSamples} from '../helpers/biometrics';
+import {getCalorieSamples, getHeartRateSamples} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {
   getCaloriesBurned,
@@ -8,7 +8,7 @@ import {
 } from '../helpers/exercises';
 import * as fitbit from '../helpers/fitbit';
 import * as polar from '../helpers/polar';
-import {Profile, Sample} from '../types/Shared';
+import {CalorieCalculationType, Profile, Sample} from '../types/Shared';
 import useInit from './UseInit';
 const useWorkoutData = (
   seconds: number,
@@ -16,6 +16,7 @@ const useWorkoutData = (
   difficulty: number,
   endDate: Date,
   setProfileAction: (payload: Profile) => void,
+  currentHeartRateSamples: Sample[],
 ) => {
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
   const [polarHeartRateSamples, setPolarHeartRateSamples] = useState<Sample[]>(
@@ -28,6 +29,8 @@ const useWorkoutData = (
     Sample[]
   >([]);
 
+  const [calories, setCalories] = useState(0);
+
   const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
 
   const [loading, setLoading] = useState(false);
@@ -35,15 +38,21 @@ const useWorkoutData = (
     const getSamples = async () => {
       try {
         setLoading(true);
-        const samples = await getHeartRateSamples(
+        const samples = currentHeartRateSamples?.length
+          ? currentHeartRateSamples
+          : await getHeartRateSamples(
+              moment(endDate).subtract(seconds, 'seconds').toDate(),
+              endDate,
+            );
+
+        setHeartRateSamples(samples);
+        const calorieSamples = await getCalorieSamples(
           moment(endDate).subtract(seconds, 'seconds').toDate(),
           endDate,
         );
-        setHeartRateSamples(
-          samples.map(({startDate, endDate: e, value}) => {
-            return {startDate, endDate: e, value};
-          }),
-        );
+        if (calorieSamples.length) {
+          setCalories(calorieSamples.reduce((acc, cur) => acc + cur.value, 0));
+        }
         if (profile.polarAccessToken) {
           const pSamples = await polar.getHeartRateSamples(
             profile.polarAccessToken,
@@ -113,24 +122,35 @@ const useWorkoutData = (
       }, 0) / validHeartRateSamples.length
     : 0;
 
+  const calorieCalculationType: CalorieCalculationType = calories
+    ? 'sample'
+    : validHeartRateSamples &&
+      validHeartRateSamples.length &&
+      profile.dob &&
+      profile.gender
+    ? 'heartRate'
+    : 'estimate';
+
   return {
     loading,
     heartRateSamples: validHeartRateSamples,
     averageHeartRate,
     fitbitData,
-    calories:
-      validHeartRateSamples &&
-      validHeartRateSamples.length &&
-      profile.dob &&
-      profile.gender
-        ? getCaloriesBurnedFromAverageHeartRate(
-            seconds,
-            averageHeartRate,
-            profile.dob,
-            profile.weight,
-            profile.gender,
-          )
-        : getCaloriesBurned(seconds, difficulty, profile.weight),
+    calorieCalculationType,
+    calories: calories
+      ? calories
+      : validHeartRateSamples &&
+        validHeartRateSamples.length &&
+        profile.dob &&
+        profile.gender
+      ? getCaloriesBurnedFromAverageHeartRate(
+          seconds,
+          averageHeartRate,
+          profile.dob,
+          profile.weight,
+          profile.gender,
+        )
+      : getCaloriesBurned(seconds, difficulty, profile.weight),
   };
 };
 

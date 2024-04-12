@@ -1,5 +1,11 @@
 import {ActivitiesHeart} from '../helpers/fitbit';
-import {ExerciseEvent, PauseEvent, PlanWorkout, Sample} from './Shared';
+import {
+  CalorieCalculationType,
+  ExerciseEvent,
+  PauseEvent,
+  PlanWorkout,
+  Sample,
+} from './Shared';
 
 export interface SavedWorkout {
   id?: string;
@@ -18,6 +24,7 @@ export interface SavedWorkout {
   endTime: Date;
   fitbitData: ActivitiesHeart[];
   planId: string;
+  calorieCalculationType: CalorieCalculationType;
 }
 
 export interface SavedTest {
@@ -44,4 +51,5 @@ export interface SavedQuickRoutine {
   startTime: Date;
   endTime: Date;
   fitbitData: ActivitiesHeart[];
+  calorieCalculationType: CalorieCalculationType;
 }

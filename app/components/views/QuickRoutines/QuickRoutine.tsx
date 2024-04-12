@@ -1,38 +1,35 @@
+import {RouteProp} from '@react-navigation/core';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {ScrollView, TouchableOpacity, Alert, View} from 'react-native';
-import moment from 'moment';
+import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
+import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import {FONTS_SIZES} from '../../../constants';
+import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import playWorkoutSong from '../../../helpers/playWorkoutSong';
+import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import useHealthListener from '../../../hooks/UseHealthListener';
+import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
+import {updateProfile} from '../../../reducers/profile';
+import {workoutSong} from '../../../sagas/profile';
+import Exercise from '../../../types/Exercise';
 import {
   MyRootState,
   PauseEvent,
   UpdateProfilePayload,
 } from '../../../types/Shared';
-import ExerciseVideo from '../../commons/ExerciseVideo';
-import colors from '../../../constants/colors';
-import PagerView from 'react-native-pager-view';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import ViewMore from '../../commons/ViewMore';
-import Modal from '../../commons/Modal';
 import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import Spinner from '../../commons/Spinner';
+import ExerciseVideo from '../../commons/ExerciseVideo';
 import Header from '../../commons/Header';
-import {StackParamList} from '../../../App';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RouteProp} from '@react-navigation/core';
-import Exercise from '../../../types/Exercise';
+import Modal from '../../commons/Modal';
+import Spinner from '../../commons/Spinner';
+import Text from '../../commons/Text';
+import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
-import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
-import useExerciseEvents from '../../../hooks/UseExerciseEvents';
-import {Profile} from '../../../types/Shared';
-import Toggle from '../../commons/Toggle';
-import {FONTS_SIZES} from '../../../constants';
-import {workoutSong} from '../../../sagas/profile';
-import playWorkoutSong from '../../../helpers/playWorkoutSong';
-import {updateProfile} from '../../../reducers/profile';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -99,6 +96,8 @@ const QuickRoutineView: React.FC<{
   const [showResistanceModal, setShowResistanceModal] = useState(false);
 
   const setAutoPlay = (ap: boolean) => updateProfileAction({autoPlay: ap});
+
+  const {heartRateSamples} = useHealthListener(startTime);
 
   return (
     <View style={{flex: 1}}>
@@ -293,6 +292,7 @@ const QuickRoutineView: React.FC<{
                                       exerciseEvents,
                                       startTime,
                                       pauseEvents,
+                                      heartRateSamples,
                                     });
                                     if (workoutSong.isPlaying()) {
                                       workoutSong.stop();

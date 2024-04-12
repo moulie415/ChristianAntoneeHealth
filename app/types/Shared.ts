@@ -162,6 +162,8 @@ export interface Sample {
   value: number;
 }
 
+export type CalorieCalculationType = 'sample' | 'heartRate' | 'estimate';
+
 export interface StepSample {
   date: string;
   value: number;

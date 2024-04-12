@@ -1,28 +1,25 @@
-import React, {useMemo, useState, useEffect} from 'react';
-import {Alert, View} from 'react-native';
-import {MyRootState} from '../../../types/Shared';
-import {connect} from 'react-redux';
-import {saveWorkout} from '../../../helpers/biometrics';
-import colors from '../../../constants/colors';
-import Button from '../../commons/Button';
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from '../../commons/Header';
-import RPESlider from '../../commons/RPESlider';
+import {connect} from 'react-redux';
+import {StackParamList} from '../../../App';
+import {FONTS_SIZES} from '../../../constants';
+import colors from '../../../constants/colors';
+import {saveWorkout} from '../../../helpers/biometrics';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutData from '../../../hooks/UseWorkoutData';
-import {RouteProp} from '@react-navigation/native';
-import {StackParamList} from '../../../App';
-import {Profile} from '../../../types/Shared';
+import {setProfile} from '../../../reducers/profile';
+import {saveQuickRoutine} from '../../../reducers/quickRoutines';
 import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
+import {MyRootState, Profile} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import RPESlider from '../../commons/RPESlider';
 import Text from '../../commons/Text';
-import {FONTS_SIZES} from '../../../constants';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
-import {saveQuickRoutine} from '../../../reducers/quickRoutines';
-import {setProfile} from '../../../reducers/profile';
 
 const EndQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
@@ -43,8 +40,15 @@ const EndQuickRoutine: React.FC<{
   const [loading, setLoading] = useState(false);
 
   const [note, setNote] = useState('');
-  const {seconds, routine, endTime, exerciseEvents, startTime, pauseEvents} =
-    route.params;
+  const {
+    seconds,
+    routine,
+    endTime,
+    exerciseEvents,
+    startTime,
+    pauseEvents,
+    heartRateSamples: hSamples,
+  } = route.params;
 
   const {
     loading: isLoading,
@@ -52,7 +56,15 @@ const EndQuickRoutine: React.FC<{
     heartRateSamples,
     calories,
     fitbitData,
-  } = useWorkoutData(seconds, profile, difficulty, endTime, setProfileAction);
+    calorieCalculationType
+  } = useWorkoutData(
+    seconds,
+    profile,
+    difficulty,
+    endTime,
+    setProfileAction,
+    hSamples,
+  );
 
   useEffect(() => {
     setLoading(isLoading);
@@ -73,6 +85,7 @@ const EndQuickRoutine: React.FC<{
       startTime,
       endTime,
       fitbitData,
+      calorieCalculationType,
     });
   }, 3000);
 

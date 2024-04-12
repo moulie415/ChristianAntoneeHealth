@@ -1,5 +1,5 @@
-import AppleHealthKit, {HealthKitPermissions} from 'react-native-health';
 import {Scopes} from 'react-native-google-fit';
+import AppleHealthKit, {HealthKitPermissions} from 'react-native-health';
 const PERMS = AppleHealthKit.Constants.Permissions;
 
 export default {
@@ -21,6 +21,7 @@ export const healthKitOptions: HealthKitPermissions = {
       PERMS.BiologicalSex,
       PERMS.Workout,
       PERMS.BodyFatPercentage,
+      PERMS.ActiveEnergyBurned,
     ],
     write: [PERMS.Weight, PERMS.Workout, PERMS.Height, PERMS.BodyFatPercentage],
   },
