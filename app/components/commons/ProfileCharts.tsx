@@ -126,32 +126,24 @@ const ProfileCharts: React.FC<{
 
   const bodyFatItems: {
     data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
   } = useMemo(() => {
     return getSampleItems(bodyFatPercentage, filter, bodyFatPercentageSamples);
   }, [bodyFatPercentageSamples, filter, bodyFatPercentage]);
 
   const muscleMassItems: {
     data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
   } = useMemo(() => {
     return getSampleItems(muscleMass, filter, muscleMassSamples);
   }, [muscleMassSamples, filter, muscleMass]);
 
   const boneMassItems: {
     data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
   } = useMemo(() => {
     return getSampleItems(boneMass, filter, boneMassSamples);
   }, [boneMassSamples, filter, boneMass]);
 
   const visceralFatItems: {
     data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
   } = useMemo(() => {
     return getSampleItems(visceralFat, filter, visceralFatSamples);
   }, [filter, visceralFatSamples, visceralFat]);
@@ -182,8 +174,6 @@ const ProfileCharts: React.FC<{
 
   const metabolicAgeItems: {
     data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
   } = useMemo(() => {
     return getSampleItems(metabolicAge, filter, metabolicAgeSamples);
   }, [filter, metabolicAge, metabolicAgeSamples]);
