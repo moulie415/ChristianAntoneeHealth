@@ -26,10 +26,10 @@ const WeightModal: React.FC<{
   filter,
 }) => {
   const [showWeightHistorical, setShowWeightHistorical] = useState(false);
-
   const [wholeNumber, setWholeNumber] = useState(Math.floor(weight)); // Separate state for the whole number part
-  const [decimalPart, setDecimalPart] = useState(weight % 1); // Separate state for the decimal part
-
+  const [decimalPart, setDecimalPart] = useState(
+    Number(String(weight).split('.')[1] || 0),
+  ); // Separate state for the decimal part
   useEffect(() => {
     const newWeight = parseFloat(wholeNumber + '.' + decimalPart);
     setWeight(newWeight);
@@ -37,11 +37,10 @@ const WeightModal: React.FC<{
 
   const weightItems: {
     data: {x: Date; y: number}[];
-    lowest: number;
-    highest: number;
   } = useMemo(() => {
     return getSampleItems(weight, filter, weightSamples);
   }, [weight, weightSamples, filter]);
+
   return (
     <>
       <Modal visible={visible} onRequestClose={() => setShowWeightModal(false)}>
