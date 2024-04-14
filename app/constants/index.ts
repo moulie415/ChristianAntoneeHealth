@@ -30,6 +30,7 @@ export const UNIT_ID_INTERSTITIAL = getInterstitialId();
 export const AD_KEYWORDS = ['fitness', 'gym', 'health'];
 
 export const WEIGHTS = [...Array(501).keys()];
+export const DECIMAL_PLACES = [...Array(10).keys()];
 export const HEIGHTS = [...Array(501).keys()];
 export const REPS = [...Array(101).keys()];
 export const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
