@@ -1,12 +1,15 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as _ from 'lodash';
 import moment from 'moment';
-import React, {FunctionComponent, useMemo} from 'react';
+import React, {FunctionComponent, useCallback, useMemo, useRef} from 'react';
 import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
+import {getSavedWorkouts} from '../../../reducers/exercises';
+import {getSavedQuickRoutines} from '../../../reducers/quickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../../../types/SavedItem';
 import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
@@ -33,16 +36,32 @@ const SavedWorkouts: FunctionComponent<{
       [
         ...Object.values(savedWorkouts),
         ...Object.values(savedQuickRoutines),
-      ].sort((a, b) => moment(b).valueOf() - moment(a).valueOf()),
+      ].sort(
+        (a, b) =>
+          moment(b.createdate).valueOf() - moment(a.createdate).valueOf(),
+      ),
     [savedQuickRoutines, savedWorkouts],
   );
 
+  const cursor = useRef(new Date());
+
+  const loadEarlier = useCallback(async () => {
+    const startAfter = _.minBy(saved, 'createdate')?.createdate;
+    if (cursor.current === startAfter) {
+      return;
+    }
+    cursor.current = startAfter;
+    loadEarlierMessagesAction({chatId, uid, startAfter: Number(startAfter)});
+  }, []);
 
   return (
     <>
       <View>
         <FlatList
           data={saved}
+          onEndReached={() => {
+            console.log('test');
+          }}
           ListEmptyComponent={
             <SafeAreaView style={{height: height / 2}}>
               {loading ? (
@@ -86,4 +105,9 @@ const mapStateToProps = ({exercises, quickRoutines}: MyRootState) => ({
   savedQuickRoutines: quickRoutines.savedQuickRoutines,
 });
 
-export default connect(mapStateToProps)(SavedWorkouts);
+const mapDispatchToProps = {
+  getSavedQuickRoutines,
+  getSavedWorkouts,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SavedWorkouts);
