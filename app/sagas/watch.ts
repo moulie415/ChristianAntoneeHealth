@@ -8,6 +8,7 @@ import {
 } from 'react-native-watch-connectivity';
 import {EventChannel, eventChannel} from 'redux-saga';
 import {all, call, select, take, takeLatest} from 'redux-saga/effects';
+import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {SET_LOGGED_IN} from '../reducers/profile';
 import {
@@ -16,18 +17,15 @@ import {
 } from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import QuickRoutine from '../types/QuickRoutines';
-import {MyRootState} from '../types/Shared';
 
 function* loggedInWorker(action: PayloadAction<boolean>) {
   const reachable: boolean = yield call(getReachability);
   if (reachable) {
     const loggedIn = action.payload;
     const routines: {[key: string]: QuickRoutine} = yield select(
-      (state: MyRootState) => state.quickRoutines.quickRoutines,
+      (state: RootState) => state.quickRoutines.quickRoutines,
     );
-    const {premium} = yield select(
-      (state: MyRootState) => state.profile.profile,
-    );
+    const {premium} = yield select((state: RootState) => state.profile.profile);
 
     sendMessage({loggedIn, routines, premium}, error => {
       if (error) {
@@ -56,7 +54,7 @@ function* startQuickRoutineWorker(
 ) {
   const reachable: boolean = yield call(getReachability);
   const {id, exerciseIds} = action.payload;
-  const {exercises} = yield select((state: MyRootState) => state.exercises);
+  const {exercises} = yield select((state: RootState) => state.exercises);
   if (reachable) {
     const workout: Exercise[] = exerciseIds.map(e => exercises[e]);
     sendMessage({startQuickRoutine: {id}});
@@ -70,12 +68,10 @@ interface MessageEvent {
 
 function* messageHandler(event: MessageEvent) {
   if (event.message.isLoggedIn) {
-    const {loggedIn} = yield select((state: MyRootState) => state.profile);
-    const {premium} = yield select(
-      (state: MyRootState) => state.profile.profile,
-    );
+    const {loggedIn} = yield select((state: RootState) => state.profile);
+    const {premium} = yield select((state: RootState) => state.profile.profile);
     const routines: {[key: string]: QuickRoutine} = yield select(
-      (state: MyRootState) => state.quickRoutines.quickRoutines,
+      (state: RootState) => state.quickRoutines.quickRoutines,
     );
     event.reply({loggedIn, routines, premium});
   }

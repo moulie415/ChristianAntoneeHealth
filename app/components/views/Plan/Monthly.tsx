@@ -1,19 +1,19 @@
-import {View} from 'react-native';
-import React, {useState} from 'react';
-import {MyRootState, Plan} from '../../../types/Shared';
-import {connect} from 'react-redux';
 import * as _ from 'lodash';
-import {Calendar} from 'react-native-calendars';
 import moment from 'moment';
-import colors from '../../../constants/colors';
+import React, {useState} from 'react';
+import {View} from 'react-native';
+import {Calendar} from 'react-native-calendars';
 import {MarkedDates} from 'react-native-calendars/src/types';
-import Divider from '../../commons/Divider';
 import {FlatList} from 'react-native-gesture-handler';
-import WorkoutCard from '../../commons/WorkoutCard';
-import Exercise from '../../../types/Exercise';
+import {connect} from 'react-redux';
+import {RootState} from '../../../App';
 import {navigate} from '../../../RootNavigation';
-import Text from '../../commons/Text';
+import colors from '../../../constants/colors';
 import {setWorkout} from '../../../reducers/exercises';
+import Exercise from '../../../types/Exercise';
+import {Plan} from '../../../types/Shared';
+import Divider from '../../commons/Divider';
+import WorkoutCard from '../../commons/WorkoutCard';
 
 const Monthly: React.FC<{
   plan?: Plan;
@@ -103,7 +103,7 @@ const Monthly: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: RootState) => ({
   plan: profile.plan,
   exercises: exercises.exercises,
 });

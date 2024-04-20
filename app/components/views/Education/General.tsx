@@ -1,10 +1,9 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo} from 'react';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {getEducation} from '../../../reducers/education';
 import Education, {Category} from '../../../types/Education';
-import {MyRootState} from '../../../types/Shared';
 import ArticleList from './ArticleList';
 
 const General: React.FC<{
@@ -24,7 +23,7 @@ const General: React.FC<{
   return <ArticleList filtered={filtered} navigation={navigation} />;
 };
 
-const mapStateToProps = ({education}: MyRootState) => ({
+const mapStateToProps = ({education}: RootState) => ({
   education: education.education,
 });
 

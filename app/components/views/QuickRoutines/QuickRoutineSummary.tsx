@@ -5,7 +5,7 @@ import {
   getDifficultyText,
 } from '../../../helpers/exercises';
 import {resetToTabs} from '../../../RootNavigation';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import {connect} from 'react-redux';
 import QuickRoutineSummaryProps from '../../../types/views/QuickRoutineSummary';
 import {ImageBackground, View, StyleSheet} from 'react-native';
@@ -48,7 +48,7 @@ const QuickRoutineSummary: React.FC<QuickRoutineSummaryProps> = ({
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

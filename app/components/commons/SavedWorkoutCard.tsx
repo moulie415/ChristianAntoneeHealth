@@ -1,19 +1,17 @@
-import {View, TouchableOpacity} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import moment from 'moment';
 import React from 'react';
-import {SavedQuickRoutine, SavedWorkout} from '../../types/SavedItem';
+import {TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
-import {Level, MyRootState} from '../../types/Shared';
-import QuickRoutine from '../../types/QuickRoutines';
-import {Profile} from '../../types/Shared';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import moment from 'moment';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../App';
-import Exercise from '../../types/Exercise';
-import Text from './Text';
 import {getExercisesById, setWorkout} from '../../reducers/exercises';
+import Exercise from '../../types/Exercise';
+import QuickRoutine from '../../types/QuickRoutines';
+import {SavedQuickRoutine, SavedWorkout} from '../../types/SavedItem';
+import {Profile} from '../../types/Shared';
+import Text from './Text';
 
 const SavedWorkoutCard: React.FC<{
   item: SavedWorkout | SavedQuickRoutine;
@@ -151,7 +149,7 @@ const SavedWorkoutCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({quickRoutines, profile, exercises}: MyRootState) => ({
+const mapStateToProps = ({quickRoutines, profile, exercises}: RootState) => ({
   quickRoutines: quickRoutines.quickRoutines,
   profile: profile.profile,
   exercises: exercises.exercises,

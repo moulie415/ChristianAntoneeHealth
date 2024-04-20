@@ -7,9 +7,9 @@ import {DrawerActions} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
 import Text from './Text';
 
 const Header: React.FC<{
@@ -127,7 +127,7 @@ const Header: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

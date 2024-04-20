@@ -32,6 +32,7 @@ import googleFit from 'react-native-google-fit';
 import Purchases from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
 import Sound from 'react-native-sound';
+import {RootState} from '../App';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {scheduleLocalNotification} from '../helpers';
 import * as api from '../helpers/api';
@@ -94,7 +95,6 @@ import {SettingsState} from '../reducers/settings';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import {
-  MyRootState,
   Profile,
   Sample,
   SignUpPayload,
@@ -127,7 +127,7 @@ type Snapshot =
 
 function* getSamplesWorker() {
   const {uid, premium} = yield select(
-    (state: MyRootState) => state.profile.profile,
+    (state: RootState) => state.profile.profile,
   );
   const weightSamples: Sample[] = yield call(getWeightSamples, uid);
   yield put(setWeightSamples(weightSamples));
@@ -197,7 +197,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
   yield put(setLoading(true));
   try {
     try {
-      const {uid} = yield select((state: MyRootState) => state.profile.profile);
+      const {uid} = yield select((state: RootState) => state.profile.profile);
       const enabled: boolean = yield call(isEnabled);
       if (enabled) {
         if (weight) {
@@ -239,7 +239,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
 
       logError(e);
     }
-    const {profile} = yield select((state: MyRootState) => state.profile);
+    const {profile} = yield select((state: RootState) => state.profile);
     const updateObj = {
       ...profile,
       ...action.payload,
@@ -268,7 +268,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
 function* signUp(action: PayloadAction<SignUpPayload>) {
   const {name, surname, dob, weight, height, gender, goal, fromProfile} =
     action.payload;
-  const {uid} = yield select((state: MyRootState) => state.profile.profile);
+  const {uid} = yield select((state: RootState) => state.profile.profile);
   try {
     try {
       const enabled: boolean = yield call(isEnabled);
@@ -281,10 +281,10 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
     }
 
     const settings: SettingsState = yield select(
-      (state: MyRootState) => state.settings,
+      (state: RootState) => state.settings,
     );
     const targets = settings.workoutGoals[goal] || null;
-    const {profile} = yield select((state: MyRootState) => state.profile);
+    const {profile} = yield select((state: RootState) => state.profile);
     yield call(
       api.updateUser,
       {
@@ -394,10 +394,10 @@ function* createChannels() {
 function* getWeeklyItems() {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
     const {quickRoutines} = yield select(
-      (state: MyRootState) => state.quickRoutines,
+      (state: RootState) => state.quickRoutines,
     );
     const missingRoutines = Object.values(weeklyItems.quickRoutines)
       .filter(item => !quickRoutines[item.quickRoutineId])
@@ -417,9 +417,9 @@ export const GOAL_REMINDER_KEY = 'goalReminder';
 
 export function* scheduleGoalReminderNotification() {
   const {profile, weeklyItems}: {profile: Profile; weeklyItems: WeeklyItems} =
-    yield select((state: MyRootState) => state.profile);
+    yield select((state: RootState) => state.profile);
   const {quickRoutines} = yield select(
-    (state: MyRootState) => state.quickRoutines,
+    (state: RootState) => state.quickRoutines,
   );
   if (profile.goal) {
     const {completed} = getGoalsData(
@@ -452,7 +452,7 @@ function* getWeeklyItemsForConnection(action: PayloadAction<string>) {
     const uid = action.payload;
     const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
     const {quickRoutines} = yield select(
-      (state: MyRootState) => state.quickRoutines,
+      (state: RootState) => state.quickRoutines,
     );
     const missingRoutines = Object.values(weeklyItems.quickRoutines)
       .filter(item => !quickRoutines[item.quickRoutineId])
@@ -469,14 +469,14 @@ function* getWeeklyItemsForConnection(action: PayloadAction<string>) {
 
 function* getConnections() {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     yield put(setLoading(true));
     const connections: {[key: string]: Profile} = yield call(
       api.getConnections,
       uid,
     );
     const currentUnread: {[key: string]: number} = yield select(
-      (state: MyRootState) => state.profile.profile.unread,
+      (state: RootState) => state.profile.profile.unread,
     );
     if (currentUnread) {
       // in case a friend had deleted their account we want to set unread back to 0
@@ -542,7 +542,7 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
 
     if (navigationRef.current) {
       const route: any = navigationRef.current.getCurrentRoute();
-      const {state} = yield select((state: MyRootState) => state.profile);
+      const {state} = yield select((state: RootState) => state.profile);
       if (
         route.name === 'Chat' &&
         route.params?.uid === uid &&
@@ -606,12 +606,12 @@ function* sendMessage(
       }
 
       const maxFileSize: number = yield select(
-        (state: MyRootState) => state.settings.chatMaxFileSizeMb,
+        (state: RootState) => state.settings.chatMaxFileSizeMb,
       );
 
       // file size comes back in bytes so need to divide by 1000000 to get mb
       if (size && size / 1000000 < maxFileSize) {
-        const {profile} = yield select((state: MyRootState) => state.profile);
+        const {profile} = yield select((state: RootState) => state.profile);
         const imageRef = storage()
           .ref(`chats/${profile.uid}`)
           .child(message._id as string);
@@ -670,9 +670,9 @@ function* requestMessageDeletionWorker(
 function* setRead(action: PayloadAction<string>) {
   try {
     const otherUid = action.payload;
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     const current: {[key: string]: number} = yield select(
-      (state: MyRootState) => state.profile.profile.unread,
+      (state: RootState) => state.profile.profile.unread,
     );
     if (current) {
       const unread = {...current, [otherUid]: 0};
@@ -690,7 +690,7 @@ function* loadEarlierMessages(
 ) {
   try {
     const {chatId, uid, startAfter} = action.payload;
-    const {messages} = yield select((state: MyRootState) => state.profile);
+    const {messages} = yield select((state: RootState) => state.profile);
     const current = messages[uid];
     yield put(setLoading(true));
     const earlier: {[key: string]: Message} = yield call(
@@ -710,11 +710,11 @@ function* loadEarlierMessages(
 function* premiumUpdatedWorker() {
   while (true) {
     const oldPremium: boolean = yield select(
-      (state: MyRootState) => state.profile.profile.premium,
+      (state: RootState) => state.profile.profile.premium,
     );
     yield take(SET_PREMIUM);
     const {premium, uid} = yield select(
-      (state: MyRootState) => state.profile.profile,
+      (state: RootState) => state.profile.profile,
     );
     if (!_.isEqual(oldPremium, premium)) {
       yield call(api.updateUser, {premium}, uid);
@@ -771,7 +771,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       const {customerInfo, created} = yield call(Purchases.logIn, user.uid);
       yield call(getSettings);
       const settings: SettingsState = yield select(
-        (state: MyRootState) => state.settings,
+        (state: RootState) => state.settings,
       );
       const isAdmin = settings.admins.includes(user.uid);
       yield put(setAdmin(isAdmin));
@@ -826,7 +826,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         }
 
         const {premium} = yield select(
-          (state: MyRootState) => state.profile.profile,
+          (state: RootState) => state.profile.profile,
         );
         if (doc.data()?.unread && premium) {
           yield put(setUnread(doc.data()?.unread));

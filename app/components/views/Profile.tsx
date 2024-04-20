@@ -27,7 +27,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../App';
+import {RootState, StackParamList} from '../../App';
 import {
   BONE_DENSITIES,
   HEIGHTS,
@@ -40,12 +40,7 @@ import colors from '../../constants/colors';
 import {logError} from '../../helpers/error';
 import {getSamples, updateProfile} from '../../reducers/profile';
 import {SettingsState} from '../../reducers/settings';
-import {
-  Gender,
-  MyRootState,
-  Profile,
-  UpdateProfilePayload,
-} from '../../types/Shared';
+import {Gender, Profile, UpdateProfilePayload} from '../../types/Shared';
 import Avatar from '../commons/Avatar';
 import Button from '../commons/Button';
 import GoalSummaries from '../commons/GoalSummaries';
@@ -604,7 +599,7 @@ const ProfileComponent: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, settings}: MyRootState) => ({
+const mapStateToProps = ({profile, settings}: RootState) => ({
   profile: profile.profile,
   loading: profile.loading,
   settings,

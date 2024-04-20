@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import {setShareModalVisible} from '../../reducers/exercises';
 
 const HeaderShareButton: FunctionComponent<{
@@ -23,7 +23,7 @@ const HeaderShareButton: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises}: RootState) => ({
   visible: exercises.shareModalVisible,
 });
 

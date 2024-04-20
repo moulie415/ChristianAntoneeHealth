@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {SavedTest} from '../../../types/SavedItem';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import SavedTestCard from '../../commons/SavedTestCard';
 import Text from '../../commons/Text';
@@ -75,7 +75,7 @@ const SavedTests: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises, tests}: MyRootState) => ({
+const mapStateToProps = ({exercises, tests}: RootState) => ({
   loading: exercises.loading,
   savedTests: tests.savedTests,
 });

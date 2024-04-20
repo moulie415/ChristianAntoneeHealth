@@ -6,12 +6,11 @@ import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getSavedWorkouts} from '../../../reducers/exercises';
 import {getSavedQuickRoutines} from '../../../reducers/quickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../../../types/SavedItem';
-import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import SavedWorkoutCard from '../../commons/SavedWorkoutCard';
 import Text from '../../commons/Text';
@@ -99,7 +98,7 @@ const SavedWorkouts: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises, quickRoutines}: MyRootState) => ({
+const mapStateToProps = ({exercises, quickRoutines}: RootState) => ({
   loading: exercises.loading,
   savedWorkouts: exercises.savedWorkouts,
   savedQuickRoutines: quickRoutines.savedQuickRoutines,

@@ -4,11 +4,10 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Platform, SafeAreaView, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../App';
+import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {createUser} from '../../helpers/api';
 import {handleAuth, setLoginEmail} from '../../reducers/profile';
-import {MyRootState} from '../../types/Shared';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
@@ -175,7 +174,7 @@ const SignUp: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   email: profile.loginEmail,
 });
 

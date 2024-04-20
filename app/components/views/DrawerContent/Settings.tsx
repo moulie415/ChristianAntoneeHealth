@@ -17,7 +17,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {PREP_TIME_SECS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
@@ -27,12 +27,11 @@ import {
   syncPlanWithCalendar,
   updateProfile,
 } from '../../../reducers/profile';
-import {Profile} from '../../../types/Shared';
 import {
   CalendarType,
   Goal,
-  MyRootState,
   Plan,
+  Profile,
   UpdateProfilePayload,
 } from '../../../types/Shared';
 import Button from '../../commons/Button';
@@ -44,8 +43,6 @@ import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import SelectGoalModal from './SelectGoalModal';
-
-
 
 const SettingsItem: React.FC<{
   onPress: () => void;
@@ -109,9 +106,7 @@ const Settings: React.FC<{
 
   const [marketing, setMarketing] = useState(profile.marketing);
   const [loading, setLoading] = useState(false);
-  const [goal, setGoal] = useState<Goal>(
-     profile.goal || Goal.STRENGTH
-  );
+  const [goal, setGoal] = useState<Goal>(profile.goal || Goal.STRENGTH);
   const [showPrepTime, setShowPrepTime] = useState(false);
   const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -471,7 +466,7 @@ const Settings: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
   syncedPlanEvents: profile.syncedPlanEvents,
   plan: profile.plan,

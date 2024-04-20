@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import Test from '../../types/Test';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
@@ -105,7 +105,7 @@ const TestCard: React.FC<{
     </TouchableOpacity>
   );
 };
-const mapStateToProps = ({profile, tests}: MyRootState) => ({
+const mapStateToProps = ({profile, tests}: RootState) => ({
   profile: profile.profile,
   tests: tests.tests,
 });

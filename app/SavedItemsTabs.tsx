@@ -5,7 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from './App';
+import {RootState, StackParamList} from './App';
 import Header from './components/commons/Header';
 import Text from './components/commons/Text';
 import SavedRecipes from './components/views/SavedItems/SavedRecipes';
@@ -16,7 +16,7 @@ import {getSavedWorkouts} from './reducers/exercises';
 import {getSavedQuickRoutines} from './reducers/quickRoutines';
 import {getSavedRecipes} from './reducers/recipes';
 import {getSavedTests} from './reducers/tests';
-import {MyRootState, Profile} from './types/Shared';
+import {Profile} from './types/Shared';
 
 const SavedItemsTabs: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SavedItems'>;
@@ -141,7 +141,7 @@ const SavedItemsTabs: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises, recipes}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises, recipes}: RootState) => ({
   profile: profile.profile,
   loading: exercises.loading || recipes.loading,
 });

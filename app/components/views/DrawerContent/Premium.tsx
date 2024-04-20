@@ -20,7 +20,7 @@ import Purchases, {
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {navigationRef} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
@@ -28,7 +28,6 @@ import {PREMIUM_PLUS} from '../../../helpers/hasPremiumPlus';
 import {setPremium} from '../../../reducers/profile';
 import {SettingsState} from '../../../reducers/settings';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
@@ -390,7 +389,7 @@ const Premium: React.FC<{
     </>
   );
 };
-const mapStateToProps = ({settings, profile}: MyRootState) => ({
+const mapStateToProps = ({settings, profile}: RootState) => ({
   settings,
   profile: profile.profile,
 });

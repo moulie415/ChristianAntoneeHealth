@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import {Profile} from '../../../types/Shared';
 import {
   capitalizeFirstLetter,
@@ -127,7 +127,7 @@ const TestResultText: React.FC<{
   );
 };
 
-const mapStateToProps = (state: MyRootState) => ({
+const mapStateToProps = (state: RootState) => ({
   profile: state.profile.profile,
 });
 

@@ -7,7 +7,7 @@ import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
 
 import Education from '../../../types/Education';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import {SettingsState} from '../../../reducers/settings';
 import EducationCard from '../../commons/EducationCard';
@@ -43,7 +43,7 @@ const ArticleList: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, education, settings}: MyRootState) => ({
+const mapStateToProps = ({profile, education, settings}: RootState) => ({
   profile: profile.profile,
   loading: education.loading,
   settings,

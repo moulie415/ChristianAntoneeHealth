@@ -5,7 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {resetToTabs} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
@@ -14,9 +14,8 @@ import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useInterval from '../../../hooks/UseInterval';
 import useThrottle from '../../../hooks/UseThrottle';
 import {saveTest} from '../../../reducers/tests';
-import {Profile} from '../../../types/Shared';
 import {SavedTest} from '../../../types/SavedItem';
-import {MyRootState} from '../../../types/Shared';
+import {Profile} from '../../../types/Shared';
 import TestType from '../../../types/Test';
 import Button from '../../commons/Button';
 import FastImageAnimated from '../../commons/FastImageAnimated';
@@ -346,7 +345,7 @@ const Test: React.FC<{
   );
 };
 
-const mapStateToProps = ({tests, profile}: MyRootState) => ({
+const mapStateToProps = ({tests, profile}: RootState) => ({
   tests: tests.tests,
   profile: profile.profile,
 });

@@ -1,11 +1,4 @@
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
-import {EducationState} from '../reducers/education';
-import {ExercisesState} from '../reducers/exercises';
-import {ProfileState} from '../reducers/profile';
-import {QuickRoutinesState} from '../reducers/quickRoutines';
-import {RecipesState} from '../reducers/recipes';
-import {SettingsState} from '../reducers/settings';
-import {TestsState} from '../reducers/tests';
 import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
 
 export interface Targets {
@@ -115,16 +108,6 @@ export interface Profile {
   otherReason?: boolean;
   willInformDoctor?: boolean;
 }
-
-export type MyRootState = {
-  exercises: ExercisesState;
-  profile: ProfileState;
-  tests: TestsState;
-  quickRoutines: QuickRoutinesState;
-  education: EducationState;
-  settings: SettingsState;
-  recipes: RecipesState;
-};
 
 export enum Level {
   BEGINNER = 'beginner',

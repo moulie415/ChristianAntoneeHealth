@@ -3,9 +3,10 @@ import moment from 'moment';
 import React, {useMemo, useState} from 'react';
 import {Alert, View} from 'react-native';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {getBMIItems, getBMRItems, getSampleItems} from '../../helpers';
-import {MyRootState, Profile, Sample} from '../../types/Shared';
+import {Profile, Sample} from '../../types/Shared';
 import MetricExplained from './MetricExplained';
 import Modal from './Modal';
 import ProfileGraph from './ProfileGraph';
@@ -334,7 +335,7 @@ const ProfileCharts: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   weightSamples: profile.weightSamples,
   heightSamples: profile.heightSamples,
   bodyFatPercentageSamples: profile.bodyFatPercentageSamples,

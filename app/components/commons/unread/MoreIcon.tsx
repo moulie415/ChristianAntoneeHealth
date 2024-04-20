@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
 
 import {Profile} from '../../../types/Shared';
@@ -47,7 +47,7 @@ const MoreIcon: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

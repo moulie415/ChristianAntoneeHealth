@@ -2,10 +2,11 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
 import {Picker} from 'react-native-wheel-pick';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import {DECIMAL_PLACES, WEIGHTS} from '../../constants';
 import colors from '../../constants/colors';
 import {getSampleItems} from '../../helpers';
-import {MyRootState, Sample} from '../../types/Shared';
+import {Sample} from '../../types/Shared';
 import Button from './Button';
 import Modal from './Modal';
 import ProfileGraph from './ProfileGraph';
@@ -153,7 +154,7 @@ const WeightModal: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   weightSamples: profile.weightSamples,
   filter: profile.filter,
 });

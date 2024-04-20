@@ -5,7 +5,7 @@ import {Alert} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
 import {saveWorkout} from '../../../helpers/biometrics';
@@ -16,7 +16,7 @@ import {setProfile} from '../../../reducers/profile';
 import {saveQuickRoutine} from '../../../reducers/quickRoutines';
 import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
-import {MyRootState, Profile} from '../../../types/Shared';
+import {Profile} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import RPESlider from '../../commons/RPESlider';
 import Text from '../../commons/Text';
@@ -56,7 +56,7 @@ const EndQuickRoutine: React.FC<{
     heartRateSamples,
     calories,
     fitbitData,
-    calorieCalculationType
+    calorieCalculationType,
   } = useWorkoutData(
     seconds,
     profile,
@@ -176,7 +176,7 @@ const EndQuickRoutine: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: RootState) => ({
   profile: profile.profile,
   workout: exercises.workout,
 });

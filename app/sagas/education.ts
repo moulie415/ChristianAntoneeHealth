@@ -1,6 +1,7 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
 import {call, put, select, throttle} from 'redux-saga/effects';
+import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {
   GET_EDUCATION,
@@ -9,7 +10,6 @@ import {
   setEducationLoading,
 } from '../reducers/education';
 import Education from '../types/Education';
-import {MyRootState} from '../types/Shared';
 
 function* getEducation() {
   try {
@@ -32,7 +32,7 @@ function* getEducationById(action: PayloadAction<string[]>) {
         ids,
       );
       const current: {[key: string]: Education} = yield select(
-        (state: MyRootState) => state.education.education,
+        (state: RootState) => state.education.education,
       );
       yield put(setEducation({...current, ...education}));
     }

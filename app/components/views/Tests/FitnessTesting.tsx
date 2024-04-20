@@ -4,11 +4,10 @@ import React, {useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getTests} from '../../../reducers/tests';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
 import Test from '../../../types/Test';
 import Header from '../../commons/Header';
 import TestCard from '../../commons/TestCard';
@@ -58,7 +57,7 @@ const FitnessTesting: React.FC<{
   );
 };
 
-const mapStateToProps = ({tests, profile}: MyRootState) => ({
+const mapStateToProps = ({tests, profile}: RootState) => ({
   tests: tests.tests,
   profile: profile.profile,
 });

@@ -5,10 +5,10 @@ import React, {useEffect, useMemo} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getRecipesById} from '../../../reducers/recipes';
-import {MyRootState, Recipe} from '../../../types/Shared';
+import {Recipe} from '../../../types/Shared';
 import Header from '../../commons/Header';
 import RecipeCard from '../Recipes/RecipeCard';
 
@@ -198,7 +198,7 @@ const PlanNutrition: React.FC<{
   );
 };
 
-const mapStateToProps = ({recipes}: MyRootState) => ({
+const mapStateToProps = ({recipes}: RootState) => ({
   recipes: recipes.recipes,
 });
 

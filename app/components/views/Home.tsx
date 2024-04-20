@@ -4,11 +4,10 @@ import {Dimensions, ScrollView, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../App';
+import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {setHasViewedTargets} from '../../reducers/profile';
-import {Profile} from '../../types/Shared';
-import {Goal, MyRootState} from '../../types/Shared';
+import {Goal, Profile} from '../../types/Shared';
 import Header from '../commons/Header';
 import HomeCard from '../commons/HomeCard';
 import TargetModal from './TargetModal';
@@ -113,7 +112,7 @@ const Home: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   hasViewedTargets: profile.hasViewedTargets,
   profile: profile.profile,
 });

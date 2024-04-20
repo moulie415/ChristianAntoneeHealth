@@ -1,6 +1,6 @@
 import {TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import {connect} from 'react-redux';
 import {Profile} from '../../types/Shared';
 import ConnectedAppsModal from './ConnectedAppsModal';
@@ -89,7 +89,7 @@ const ConnectedApps: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

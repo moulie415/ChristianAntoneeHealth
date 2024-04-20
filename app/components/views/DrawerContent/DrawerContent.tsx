@@ -16,6 +16,7 @@ import Purchases from 'react-native-purchases';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../../App';
 import {navigationRef, resetToWelcome} from '../../../RootNavigation';
 import {STORE_LINK} from '../../../constants';
 import colors from '../../../constants/colors';
@@ -23,7 +24,6 @@ import {logError} from '../../../helpers/error';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {setLoggedIn} from '../../../reducers/profile';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
 import Text from '../../commons/Text';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 
@@ -228,7 +228,7 @@ const DrawerContent: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

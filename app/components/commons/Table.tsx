@@ -1,14 +1,14 @@
 import moment from 'moment';
 import React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
+import {TABLE_HEADER_KEYS} from '../../constants';
 import colors from '../../constants/colors';
+import {keyHasValue} from '../../helpers/table';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
 import {Table as TableType} from '../../types/Test';
 import Text from './Text';
-import {keyHasValue} from '../../helpers/table';
-import {TABLE_HEADER_KEYS} from '../../constants';
 
 const CELL_WIDTH = 65;
 
@@ -157,7 +157,7 @@ const Table: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

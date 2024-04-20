@@ -8,7 +8,7 @@ import {Dimensions, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import {setFilter} from '../../reducers/profile';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import Button from './Button';
 import Text from './Text';
 
@@ -143,7 +143,7 @@ const ProfileGraph: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   filter: profile.filter,
 });
 

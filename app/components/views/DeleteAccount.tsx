@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../App';
-import {MyRootState} from '../../types/Shared';
-import {connect} from 'react-redux';
-import {Profile} from '../../types/Shared';
-import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
-import Text from '../commons/Text';
-import Button from '../commons/Button';
-import Input from '../commons/Input';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from '../commons/Header';
+import React, {useEffect, useState} from 'react';
+import {Alert, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+import {RootState, StackParamList} from '../../App';
+import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
 import {setLoggedIn} from '../../reducers/profile';
+import {Profile} from '../../types/Shared';
+import Button from '../commons/Button';
+import Header from '../commons/Header';
+import Input from '../commons/Input';
+import Text from '../commons/Text';
 
 const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
@@ -144,7 +143,7 @@ const DeleteAccount: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

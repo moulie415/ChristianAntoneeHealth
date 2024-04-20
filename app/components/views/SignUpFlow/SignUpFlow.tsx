@@ -13,7 +13,7 @@ import {
 import PagerView from 'react-native-pager-view';
 import StepIndicator from 'react-native-step-indicator';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {
   getDateOfBirth,
@@ -36,7 +36,6 @@ import {
   Gender,
   Goal,
   Level,
-  MyRootState,
   Profile,
   SignUpPayload,
   Sleep,
@@ -405,7 +404,7 @@ const SignUpFlow: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

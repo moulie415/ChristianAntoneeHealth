@@ -1,9 +1,9 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
-import ExerciseListHeaderRightProps from '../../types/commons/ExerciseListHeaderRight';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
+import ExerciseListHeaderRightProps from '../../types/commons/ExerciseListHeaderRight';
 
 import Text from './Text';
 
@@ -25,7 +25,7 @@ const ExerciseListHeaderRight: React.FC<ExerciseListHeaderRightProps> = ({
   ) : null;
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises}: RootState) => ({
   workout: exercises.workout,
 });
 export default connect(mapStateToProps)(ExerciseListHeaderRight);

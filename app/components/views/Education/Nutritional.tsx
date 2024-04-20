@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import Education, {Category} from '../../../types/Education';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import ArticleList from './ArticleList';
 
 const Nutritional: React.FC<{
@@ -19,7 +19,7 @@ const Nutritional: React.FC<{
   return <ArticleList filtered={filtered} navigation={navigation} />;
 };
 
-const mapStateToProps = ({education}: MyRootState) => ({
+const mapStateToProps = ({education}: RootState) => ({
   education: education.education,
 });
 

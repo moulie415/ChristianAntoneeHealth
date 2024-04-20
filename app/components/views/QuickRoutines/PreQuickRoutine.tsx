@@ -1,27 +1,26 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
 import {RouteProp, useIsFocused} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect, useMemo, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
-import Header from '../../commons/Header';
-import Button from '../../commons/Button';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {Dimensions, StyleSheet, View} from 'react-native';
-import {MyRootState, UpdateProfilePayload} from '../../../types/Shared';
-import {connect} from 'react-redux';
-import Exercise from '../../../types/Exercise';
-import {getEquipmentList} from '../../../helpers/exercises';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
-import Spinner from '../../commons/Spinner';
-import ConnectedApps from '../../commons/ConnectedApps';
-import Toggle from '../../commons/Toggle';
+import {connect} from 'react-redux';
+import {RootState, StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
+import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
+import {getEquipmentList} from '../../../helpers/exercises';
 import {updateProfile} from '../../../reducers/profile';
+import Exercise from '../../../types/Exercise';
+import {UpdateProfilePayload} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import Header from '../../commons/Header';
+import Spinner from '../../commons/Spinner';
+import Text from '../../commons/Text';
+import Toggle from '../../commons/Toggle';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -277,7 +276,7 @@ const PreQuickRoutine: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: RootState) => ({
   exercisesObj: exercises.exercises,
   workoutMusic: profile.profile.workoutMusic,
 });

@@ -3,7 +3,7 @@ import Color from 'color';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from './App';
+import {RootState, StackParamList} from './App';
 import PlanTabIcon from './PlanTabIcon';
 import {navigate} from './RootNavigation';
 import Avatar from './components/commons/Avatar';
@@ -15,7 +15,6 @@ import WhatEquipment from './components/views/Workout/WhatEquipment';
 import colors from './constants/colors';
 import {hasPremiumPlus} from './helpers/hasPremiumPlus';
 import {Profile} from './types/Shared';
-import {MyRootState} from './types/Shared';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
@@ -37,7 +36,12 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <Icon style={{width: 35, alignSelf: 'center'}} color={color} size={size} name="house" />
+            <Icon
+              style={{width: 35, alignSelf: 'center'}}
+              color={color}
+              size={size}
+              name="house"
+            />
           ),
           headerShown: false,
         }}
@@ -50,7 +54,12 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <Icon style={{width: 35, alignSelf: 'center'}} color={color} size={size} name="dumbbell" />
+            <Icon
+              style={{width: 35, alignSelf: 'center'}}
+              color={color}
+              size={size}
+              name="dumbbell"
+            />
           ),
           headerShown: false,
         }}
@@ -62,7 +71,12 @@ const Tabs: React.FC<{
         options={{
           tabBarLabel: 'Test',
           tabBarIcon: ({color, size}) => (
-            <Icon style={{width: 35, alignSelf: 'center'}} color={color} size={size} name="heart-pulse" />
+            <Icon
+              style={{width: 35, alignSelf: 'center'}}
+              color={color}
+              size={size}
+              name="heart-pulse"
+            />
           ),
           headerShown: false,
         }}
@@ -113,7 +127,7 @@ const Tabs: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

@@ -1,18 +1,17 @@
-import React, {useEffect} from 'react';
-import colors from '../../../constants/colors';
-import {MyRootState} from '../../../types/Shared';
-import {connect} from 'react-redux';
-import {View} from 'react-native';
-import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import Test from '../../../types/Test';
-import Modal from '../../commons/Modal';
-import {SavedTest} from '../../../types/SavedItem';
-import Spinner from '../../commons/Spinner';
-import {FlatList} from 'react-native-gesture-handler';
-import ListItem from '../../commons/ListItem';
 import moment from 'moment';
-import { getSavedTests } from '../../../reducers/tests';
+import React, {useEffect} from 'react';
+import {View} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
+import {RootState} from '../../../App';
+import colors from '../../../constants/colors';
+import {getSavedTests} from '../../../reducers/tests';
+import {SavedTest} from '../../../types/SavedItem';
+import Test from '../../../types/Test';
+import Button from '../../commons/Button';
+import Modal from '../../commons/Modal';
+import Spinner from '../../commons/Spinner';
+import Text from '../../commons/Text';
 
 const HistoricalTestsModal: React.FC<{
   test: Test;
@@ -111,7 +110,7 @@ const HistoricalTestsModal: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, tests}: MyRootState) => ({
+const mapStateToProps = ({exercises, tests}: RootState) => ({
   loading: exercises.loading,
   savedTestsObj: tests.savedTests,
 });

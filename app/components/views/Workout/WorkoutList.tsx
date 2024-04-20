@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getExercisesById} from '../../../reducers/exercises';
 import {
@@ -13,9 +13,8 @@ import {
 } from '../../../reducers/quickRoutines';
 import {SettingsState} from '../../../reducers/settings';
 import Exercise from '../../../types/Exercise';
-import {Profile} from '../../../types/Shared';
 import QuickRoutine from '../../../types/QuickRoutines';
-import {MyRootState} from '../../../types/Shared';
+import {Profile} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Header from '../../commons/Header';
 import WorkoutCard from '../../commons/WorkoutCard';
@@ -129,7 +128,7 @@ const mapStateToProps = ({
   profile,
   settings,
   exercises,
-}: MyRootState) => ({
+}: RootState) => ({
   quickRoutines: quickRoutines.quickRoutines,
   profile: profile.profile,
   settings,

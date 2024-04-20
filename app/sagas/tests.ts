@@ -1,6 +1,7 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
 import {call, put, select, throttle} from 'redux-saga/effects';
+import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
 import {setLoading} from '../reducers/exercises';
@@ -13,7 +14,6 @@ import {
   setTests,
 } from '../reducers/tests';
 import {SavedTest} from '../types/SavedItem';
-import {MyRootState} from '../types/Shared';
 import Test from '../types/Test';
 
 export function* getTests() {
@@ -23,7 +23,7 @@ export function* getTests() {
 
 function* saveTest(action: PayloadAction<SavedTest>) {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     yield call(api.saveTest, action.payload, uid);
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Test saved'});
@@ -37,7 +37,7 @@ function* saveTest(action: PayloadAction<SavedTest>) {
 function* getSavedTests() {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
 
     const savedTests: {[key: string]: SavedTest} = yield call(
       api.getSavedTests,
@@ -45,7 +45,7 @@ function* getSavedTests() {
     );
     yield put(setSavedTests(savedTests));
     const tests: {[key: string]: Test} = yield select(
-      (state: MyRootState) => state.tests.tests,
+      (state: RootState) => state.tests.tests,
     );
     const missingTests = Object.values(savedTests)
       .filter(test => !tests[test.testId])

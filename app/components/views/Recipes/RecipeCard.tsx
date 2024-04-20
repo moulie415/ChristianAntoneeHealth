@@ -3,9 +3,9 @@ import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
 import FastImageAnimated from '../../commons/FastImageAnimated';
 import Text from '../../commons/Text';
 
@@ -70,7 +70,7 @@ const RecipeCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

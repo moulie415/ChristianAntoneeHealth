@@ -2,6 +2,7 @@ import moment from 'moment';
 import React, {useEffect, useMemo} from 'react';
 import {ScrollView, View} from 'react-native';
 import {connect} from 'react-redux';
+import {RootState} from '../../../App';
 import {navigate} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {objectHasNonEmptyValues} from '../../../helpers';
@@ -10,7 +11,7 @@ import {getExercisesById, setWorkout} from '../../../reducers/exercises';
 import {getTestsById} from '../../../reducers/tests';
 import Education from '../../../types/Education';
 import Exercise from '../../../types/Exercise';
-import {MyRootState, Plan} from '../../../types/Shared';
+import {Plan} from '../../../types/Shared';
 import Test from '../../../types/Test';
 import EducationCard from '../../commons/EducationCard';
 import NutritionCard from '../../commons/NutritionCard';
@@ -206,7 +207,7 @@ const mapStateToProps = ({
   exercises,
   tests,
   education,
-}: MyRootState) => ({
+}: RootState) => ({
   plan: profile.plan,
   exercises: exercises.exercises,
   tests: tests.tests,

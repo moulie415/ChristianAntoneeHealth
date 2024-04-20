@@ -5,7 +5,7 @@ import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import WorkoutCard from '../../commons/WorkoutCard';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import Exercise from '../../../types/Exercise';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
@@ -54,7 +54,7 @@ const MonthlyDayView: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises}: RootState) => ({
   exercises: exercises.exercises,
 });
 

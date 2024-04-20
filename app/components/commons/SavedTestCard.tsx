@@ -1,18 +1,18 @@
-import {View, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {SavedTest} from '../../types/SavedItem';
+import {TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
+import {SavedTest} from '../../types/SavedItem';
 import Test from '../../types/Test';
 
-import {Profile} from '../../types/Shared';
-import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../App';
-import Text from './Text';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {StackParamList} from '../../App';
+import colors from '../../constants/colors';
+import {Profile} from '../../types/Shared';
 import FastImageAnimated from './FastImageAnimated';
+import Text from './Text';
 
 const SavedTestCard: React.FC<{
   item: SavedTest;
@@ -103,7 +103,7 @@ const SavedTestCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({tests, profile}: MyRootState) => ({
+const mapStateToProps = ({tests, profile}: RootState) => ({
   tests: tests.tests,
   profile: profile.profile,
 });

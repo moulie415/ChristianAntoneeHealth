@@ -1,28 +1,26 @@
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
+import {FlatList} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
+import {truncate} from '../../../helpers';
+import {getExercises, setWorkout} from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
 import {
   CoolDown,
   Equipment,
   Goal,
   Level,
-  MyRootState,
+  Profile,
   WarmUp,
 } from '../../../types/Shared';
-import {truncate} from '../../../helpers';
-import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
-import {FlatList} from 'react-native-gesture-handler';
-import Text from '../../commons/Text';
 import ListItem from '../../commons/ListItem';
-import {getExercises, setWorkout} from '../../../reducers/exercises';
-import {StackParamList} from '../../../App';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RouteProp} from '@react-navigation/native';
-import {Profile} from '../../../types/Shared';
+import Text from '../../commons/Text';
 
 const ExerciseList: React.FC<{
   exercises: {[key: string]: Exercise};
@@ -167,7 +165,7 @@ const ExerciseList: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: RootState) => ({
   exercises: exercises.exercises,
   workout: exercises.workout,
   loading: exercises.loading,

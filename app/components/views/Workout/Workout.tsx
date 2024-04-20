@@ -1,21 +1,20 @@
-import React, {useRef, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import {TouchableOpacity, SafeAreaView, View, Alert} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import colors from '../../../constants/colors';
-import WorkoutProps from '../../../types/views/Workout';
-import {Equipment, MyRootState, Goal} from '../../../types/Shared';
-import {connect} from 'react-redux';
 import BottomSheet from '@gorhom/bottom-sheet';
-
+import React, {useRef, useState} from 'react';
+import {Alert, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {RootState} from '../../../App';
+import colors from '../../../constants/colors';
 import {capitalizeFirstLetter} from '../../../helpers';
-import EquipmentMenu from './EquipmentMenu';
-import ImageLoader from '../../commons/ImageLoader';
-import globalStyles from '../../../styles/globalStyles';
-import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import Divider from '../../commons/Divider';
 import {setEquipment, setWorkout} from '../../../reducers/exercises';
+import {Equipment, Goal} from '../../../types/Shared';
+import WorkoutProps from '../../../types/views/Workout';
+import Button from '../../commons/Button';
+import Divider from '../../commons/Divider';
+import ImageLoader from '../../commons/ImageLoader';
+import Text from '../../commons/Text';
+import EquipmentMenu from './EquipmentMenu';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,
@@ -382,7 +381,7 @@ const Workout: React.FC<WorkoutProps> = ({
   );
 };
 
-const mapStateToProps = ({profile, exercises}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: RootState) => ({
   profile: profile.profile,
   fitnessGoal: exercises.fitnessGoal,
   level: exercises.level,

@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../../constants/colors';
 
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import Text from '../Text';
 
 const UnreadConnectionCount: React.FC<{
@@ -39,7 +39,7 @@ const UnreadConnectionCount: React.FC<{
   return null;
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   unread: profile.profile.unread,
 });
 

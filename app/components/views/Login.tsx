@@ -14,7 +14,7 @@ import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../App';
+import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {
   appleSignIn,
@@ -24,7 +24,6 @@ import {
 } from '../../helpers/api';
 import GoogleLogo from '../../images/google.svg';
 import {handleAuth, setLoginEmail, signUp} from '../../reducers/profile';
-import {MyRootState} from '../../types/Shared';
 import Button from '../commons/Button';
 import Input from '../commons/Input';
 import Spinner from '../commons/Spinner';
@@ -271,7 +270,7 @@ const Login: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   loggedIn: profile.loggedIn,
   email: profile.loginEmail,
 });

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import moment from 'moment';
 import colors from '../../../constants/colors';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import {connect} from 'react-redux';
 import {Alert, View} from 'react-native';
 import Button from '../../commons/Button';
@@ -119,7 +119,7 @@ const TestResultsModal: React.FC<{
   );
 };
 
-const mapStateToProps = (state: MyRootState) => ({
+const mapStateToProps = (state: RootState) => ({
   profile: state.profile.profile,
 });
 

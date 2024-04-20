@@ -1,22 +1,17 @@
-import {View, SectionList, Alert} from 'react-native';
-import React, {useEffect, useMemo} from 'react';
-import {
-  MyRootState,
-  Plan,
-  PlanExercise,
-  PlanWorkout,
-} from '../../../types/Shared';
-import {connect} from 'react-redux';
 import moment from 'moment';
-
-import Text from '../../commons/Text';
-import Exercise from '../../../types/Exercise';
-import Test from '../../../types/Test';
-import colors from '../../../constants/colors';
+import React, {useMemo} from 'react';
+import {Alert, SectionList, View} from 'react-native';
+import {connect} from 'react-redux';
 import {navigate} from '../../../RootNavigation';
+import colors from '../../../constants/colors';
+import {getExercisesById, setWorkout} from '../../../reducers/exercises';
+import {getTestsById} from '../../../reducers/tests';
+import Exercise from '../../../types/Exercise';
+import {Plan, PlanWorkout} from '../../../types/Shared';
+import Test from '../../../types/Test';
+import Text from '../../commons/Text';
 import WorkoutCard from '../../commons/WorkoutCard';
-import { getExercisesById, setWorkout } from '../../../reducers/exercises';
-import { getTestsById } from '../../../reducers/tests';
+import { RootState } from '../../../App';
 
 const Weekly: React.FC<{
   plan?: Plan;
@@ -157,7 +152,7 @@ const Weekly: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises, tests}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises, tests}: RootState) => ({
   plan: profile.plan,
   loading: profile.loading,
   exercises: exercises.exercises,

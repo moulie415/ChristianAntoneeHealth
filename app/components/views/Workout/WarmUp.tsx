@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, TouchableOpacity, Switch} from 'react-native';
+import {SafeAreaView, Switch, TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
-import {CoolDown, MyRootState, WarmUp} from '../../../types/Shared';
+import {RootState} from '../../../App';
+import {setCoolDown, setWarmUp} from '../../../reducers/exercises';
+import {CoolDown, WarmUp} from '../../../types/Shared';
 import Divider from '../../commons/Divider';
 import ImageLoader from '../../commons/ImageLoader';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
-import { setCoolDown, setWarmUp } from '../../../reducers/exercises';
 
 const WarmUpAndCoolDown: React.FC<{
   warmUp: WarmUp[];
@@ -165,7 +166,7 @@ const WarmUpAndCoolDown: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises}: RootState) => ({
   warmUp: exercises.warmUp,
   coolDown: exercises.coolDown,
 });

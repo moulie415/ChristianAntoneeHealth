@@ -14,13 +14,12 @@ import Purchases, {
 } from 'react-native-purchases';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {getPlan, setRead} from '../../../reducers/profile';
-import {Profile} from '../../../types/Shared';
-import {MyRootState, Plan as PlanType} from '../../../types/Shared';
+import {Plan as PlanType, Profile} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
@@ -209,7 +208,7 @@ const Plan: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
   loading: profile.loading,
   plan: profile.plan,

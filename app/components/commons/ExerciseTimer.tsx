@@ -1,19 +1,19 @@
-import {View, Text} from 'react-native';
-import React, {RefObject, useMemo, useState} from 'react';
-import colors from '../../constants/colors';
 import moment from 'moment';
-import Exercise from '../../types/Exercise';
-import PagerView from 'react-native-pager-view';
-import {MyRootState, PlanWorkout} from '../../types/Shared';
-import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import Animated, {FadeIn} from 'react-native-reanimated';
+import React, {RefObject, useState} from 'react';
+import {Text, View} from 'react-native';
 import {
   ColorFormat,
   CountdownCircleTimer,
 } from 'react-native-countdown-circle-timer';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import PagerView from 'react-native-pager-view';
+import Animated, {FadeIn} from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {RootState} from '../../App';
+import colors from '../../constants/colors';
 import {workoutSong} from '../../sagas/profile';
+import Exercise from '../../types/Exercise';
 import {Profile} from '../../types/Shared';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
@@ -172,7 +172,7 @@ const ExerciseTimer: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

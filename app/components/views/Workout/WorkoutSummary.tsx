@@ -1,22 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {resetToTabs} from '../../../RootNavigation';
-import {MyRootState} from '../../../types/Shared';
-import {connect} from 'react-redux';
-import {StyleSheet, View} from 'react-native';
-import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import colors from '../../../constants/colors';
-import FastImage from 'react-native-fast-image';
-import WorkoutSummaryInfo from '../../commons/WorkoutSummaryInfo';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+import {RootState, StackParamList} from '../../../App';
+import {resetToTabs} from '../../../RootNavigation';
+import colors from '../../../constants/colors';
+import {useBackHandler} from '../../../hooks/UseBackHandler';
+import {saveWorkout, setShareModalVisible} from '../../../reducers/exercises';
+import Exercise from '../../../types/Exercise';
 import {SavedWorkout} from '../../../types/SavedItem';
 import {Profile} from '../../../types/Shared';
-import Exercise from '../../../types/Exercise';
-import { saveWorkout, setShareModalVisible } from '../../../reducers/exercises';
+import Button from '../../commons/Button';
+import WorkoutSummaryInfo from '../../commons/WorkoutSummaryInfo';
 
 const WorkoutSummary: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'WorkoutSummary'>;
@@ -61,7 +57,7 @@ const WorkoutSummary: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: RootState) => ({
   profile: profile.profile,
   workout: exercises.workout,
 });

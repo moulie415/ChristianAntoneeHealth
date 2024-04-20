@@ -2,11 +2,11 @@ import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from './App';
 import Text from './components/commons/Text';
 import colors from './constants/colors';
 import {hasPremiumPlus} from './helpers/hasPremiumPlus';
 import {Profile} from './types/Shared';
-import {MyRootState} from './types/Shared';
 
 const PlanTabIcon: React.FC<{
   color: string;
@@ -52,7 +52,7 @@ const PlanTabIcon: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

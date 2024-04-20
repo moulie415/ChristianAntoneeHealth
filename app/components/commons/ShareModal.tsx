@@ -5,6 +5,7 @@ import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {sendMessage} from '../../helpers/api';
 import {shareWorkout} from '../../helpers/exercises';
@@ -14,7 +15,6 @@ import Chat from '../../types/Chat';
 import Exercise from '../../types/Exercise';
 import Message, {MessageType} from '../../types/Message';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
 import AbsoluteSpinner from './AbsoluteSpinner';
 import Avatar from './Avatar';
 import Button from './Button';
@@ -176,7 +176,7 @@ const ShareModal: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: MyRootState) => ({
+const mapStateToProps = ({profile, exercises}: RootState) => ({
   connections: profile.connections,
   profile: profile.profile,
   visible: exercises.shareModalVisible,

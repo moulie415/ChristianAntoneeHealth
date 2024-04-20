@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
 
 import {View} from 'react-native';
@@ -44,7 +44,7 @@ const UnreadRowCount: React.FC<{
   return null;
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   unread: profile.profile.unread,
 });
 

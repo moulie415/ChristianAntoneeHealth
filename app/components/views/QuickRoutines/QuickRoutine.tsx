@@ -4,7 +4,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
@@ -15,11 +15,7 @@ import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import {updateProfile} from '../../../reducers/profile';
 import {workoutSong} from '../../../sagas/profile';
 import Exercise from '../../../types/Exercise';
-import {
-  MyRootState,
-  PauseEvent,
-  UpdateProfilePayload,
-} from '../../../types/Shared';
+import {PauseEvent, UpdateProfilePayload} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
@@ -414,7 +410,7 @@ const QuickRoutineView: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: RootState) => ({
   videos: exercises.videos,
   loading: exercises.videoLoading,
   exerciseNotes: exercises.exerciseNotes,

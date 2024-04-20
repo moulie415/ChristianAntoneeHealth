@@ -1,23 +1,22 @@
-import {View} from 'react-native';
-import React, {useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import {StackParamList} from '../../App';
 
-import StarRating from 'react-native-star-rating';
-import {rateApp} from '../../helpers';
-import Button from '../commons/Button';
-import Input from '../commons/Input';
-import Snackbar from 'react-native-snackbar';
-import {MyRootState} from '../../types/Shared';
-import {connect} from 'react-redux';
-import {Profile} from '../../types/Shared';
-import * as api from '../../helpers/api';
-import {logError} from '../../helpers/error';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from '../commons/Header';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Snackbar from 'react-native-snackbar';
+import StarRating from 'react-native-star-rating';
+import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
+import {rateApp} from '../../helpers';
+import * as api from '../../helpers/api';
+import {logError} from '../../helpers/error';
+import {Profile} from '../../types/Shared';
+import Button from '../commons/Button';
+import Header from '../commons/Header';
+import Input from '../commons/Input';
 
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
@@ -101,7 +100,7 @@ const Rating: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

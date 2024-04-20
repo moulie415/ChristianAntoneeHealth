@@ -5,7 +5,7 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';
 import Input from './Input';
@@ -182,7 +182,7 @@ const TestTimer: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

@@ -5,11 +5,10 @@ import React, {useEffect} from 'react';
 import {Dimensions, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getRecipes} from '../../../reducers/recipes';
-import {Profile} from '../../../types/Shared';
-import {MyRootState, Recipe} from '../../../types/Shared';
+import {Profile, Recipe} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Header from '../../commons/Header';
 import RecipeCard from './RecipeCard';
@@ -73,7 +72,7 @@ const Recipes: React.FC<{
   );
 };
 
-const mapStateToProps = ({recipes, profile}: MyRootState) => ({
+const mapStateToProps = ({recipes, profile}: RootState) => ({
   recipes: recipes.recipes,
   loading: recipes.loading,
   profile: profile.profile,

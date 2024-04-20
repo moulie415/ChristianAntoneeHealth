@@ -1,15 +1,15 @@
 import moment from 'moment';
 import React from 'react';
 import {Dimensions, TouchableOpacity, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import Education from '../../types/Education';
+import {Profile} from '../../types/Shared';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import {MyRootState} from '../../types/Shared';
-import {connect} from 'react-redux';
-import {Profile} from '../../types/Shared';
-import LinearGradient from 'react-native-linear-gradient';
 
 const {height, width} = Dimensions.get('window');
 
@@ -98,7 +98,7 @@ const EducationCard: React.FC<{
             left: 0,
             padding: 10,
             height: 100,
-            marginBottom: -1
+            marginBottom: -1,
           }}>
           <Text
             style={{
@@ -132,7 +132,7 @@ const EducationCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

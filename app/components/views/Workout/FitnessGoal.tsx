@@ -1,17 +1,17 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {Fragment} from 'react';
 import {
-  View,
+  ImageSourcePropType,
   SafeAreaView,
   TouchableOpacity,
-  ImageSourcePropType,
+  View,
 } from 'react-native';
-import {Goal, MyRootState} from '../../../types/Shared';
-import ImageLoader from '../../commons/ImageLoader';
 import {connect} from 'react-redux';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
-import Text from '../../commons/Text';
+import {RootState, StackParamList} from '../../../App';
 import {setFitnessGoal, setStrengthArea} from '../../../reducers/exercises';
+import {Goal} from '../../../types/Shared';
+import ImageLoader from '../../commons/ImageLoader';
+import Text from '../../commons/Text';
 
 const FitnessGoal: React.FC<{
   setFitnessGoalAction: (goal: Goal) => void;
@@ -69,7 +69,7 @@ const FitnessGoal: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises}: RootState) => ({
   fitnessGoal: exercises.fitnessGoal,
   strengthArea: exercises.strengthArea,
 });

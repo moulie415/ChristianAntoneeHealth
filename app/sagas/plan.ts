@@ -18,6 +18,7 @@ import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
 import PushNotification from 'react-native-push-notification';
+import {RootState} from '../App';
 import {scheduleLocalNotification} from '../helpers';
 import {logError} from '../helpers/error';
 import {
@@ -30,7 +31,7 @@ import {
   UPDATE_PROFILE,
   updateProfile,
 } from '../reducers/profile';
-import {MyRootState, Plan} from '../types/Shared';
+import {Plan} from '../types/Shared';
 import {
   scheduleGoalReminderNotification,
   WORKOUT_REMINDERS_CHANNEL_ID,
@@ -41,7 +42,7 @@ function* syncPlanWithCalendarWorker(
   try {
     const {plan, sync} = action.payload;
     if (sync) {
-      const {calendarId} = yield select((state: MyRootState) => state.profile);
+      const {calendarId} = yield select((state: RootState) => state.profile);
       if (!calendarId) {
         throw new Error('No valid calendar found');
       }
@@ -53,7 +54,7 @@ function* syncPlanWithCalendarWorker(
       const keys: string[] = [];
 
       const {syncedPlanEvents, profile}: ProfileState = yield select(
-        (state: MyRootState) => state.profile,
+        (state: RootState) => state.profile,
       );
 
       plan?.workouts?.forEach(workout => {
@@ -115,10 +116,10 @@ function* syncPlanWithCalendarWorker(
 export function* schedulePlanReminders() {
   PushNotification.cancelAllLocalNotifications();
   const plan: Plan | undefined = yield select(
-    (state: MyRootState) => state.profile.plan,
+    (state: RootState) => state.profile.plan,
   );
   const {calendarId, profile}: ProfileState = yield select(
-    (state: MyRootState) => state.profile,
+    (state: RootState) => state.profile,
   );
   if (plan) {
     if (plan.workouts && profile.workoutReminders) {
@@ -248,12 +249,12 @@ function onPlanChanged(uid: string) {
 
 function* planWatcher() {
   try {
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
     while (true) {
       const plan: Plan | {} = yield take(channel);
       const current: Plan = yield select(
-        (state: MyRootState) => state.profile.plan,
+        (state: RootState) => state.profile.plan,
       );
       if (_.isEmpty(plan)) {
         yield put(setPlan(undefined));
@@ -269,7 +270,7 @@ function* planWatcher() {
         }
         yield put(setPlan(plan as Plan));
         const {syncPlanWithCalendar: sync, calendarId} = yield select(
-          (state: MyRootState) => state.profile,
+          (state: RootState) => state.profile,
         );
         if (sync && calendarId) {
           const p = plan as Plan;

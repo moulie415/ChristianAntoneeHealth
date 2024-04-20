@@ -1,6 +1,7 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
 import {call, debounce, put, select, throttle} from 'redux-saga/effects';
+import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
 import {FAVOURITE_RECIPE} from '../reducers/profile';
@@ -11,7 +12,7 @@ import {
   setRecipes,
   setRecipesLoading,
 } from '../reducers/recipes';
-import {MyRootState, Recipe} from '../types/Shared';
+import {Recipe} from '../types/Shared';
 
 function* getRecipes() {
   try {
@@ -34,7 +35,7 @@ function* getRecipesById(action: PayloadAction<string[]>) {
         ids,
       );
       const current: {[key: string]: Recipe} = yield select(
-        (state: MyRootState) => state.recipes.recipes,
+        (state: RootState) => state.recipes.recipes,
       );
       yield put(setRecipes({...current, ...recipes}));
     }
@@ -48,9 +49,9 @@ function* getRecipesById(action: PayloadAction<string[]>) {
 function* favouriteRecipe(action: PayloadAction<string>) {
   try {
     const favouriteRecipes: string[] = yield select(
-      (state: MyRootState) => state.profile.profile.favouriteRecipes,
+      (state: RootState) => state.profile.profile.favouriteRecipes,
     );
-    const {profile} = yield select((state: MyRootState) => state.profile);
+    const {profile} = yield select((state: RootState) => state.profile);
     const updateObj = {
       ...profile,
       favouriteRecipes,
@@ -65,11 +66,11 @@ function* getSavedRecipes() {
   try {
     yield put(setRecipesLoading(true));
     const {favouriteRecipes} = yield select(
-      (state: MyRootState) => state.profile.profile,
+      (state: RootState) => state.profile.profile,
     );
     if (favouriteRecipes) {
       const recipes: {[key: string]: Recipe} = yield select(
-        (state: MyRootState) => state.recipes.recipes,
+        (state: RootState) => state.recipes.recipes,
       );
       const missingRecipes = favouriteRecipes.filter(
         (r: string) => !recipes[r],

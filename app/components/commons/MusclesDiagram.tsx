@@ -2,14 +2,9 @@ import React, {memo} from 'react';
 import {View} from 'react-native';
 import colors from '../../constants/colors';
 
-import Text from './Text';
-import {Muscle} from '../../types/Exercise';
-import {
-  backMuscles,
-  frontMuscles,
-  muscleReadableString,
-} from '../../helpers/exercises';
 import Svg, {Path} from 'react-native-svg';
+import {backMuscles, frontMuscles} from '../../helpers/exercises';
+import {Muscle} from '../../types/Exercise';
 import MuscleFill from './MuscleFill';
 
 const DefaultPath: React.FC<{d: string}> = ({d}) => {

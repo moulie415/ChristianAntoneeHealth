@@ -4,13 +4,12 @@ import React, {useState} from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import {REPS} from '../../../constants';
 import {getVideoHeight} from '../../../helpers';
 import {setWorkout} from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import Spinner from '../../commons/Spinner';
@@ -226,7 +225,7 @@ const CustomizeExercise: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: RootState) => ({
   workout: exercises.workout,
   loading: exercises.videoLoading,
   profile: profile.profile,

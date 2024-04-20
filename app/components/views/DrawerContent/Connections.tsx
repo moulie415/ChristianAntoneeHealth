@@ -3,14 +3,13 @@ import * as _ from 'lodash';
 import React, {useEffect} from 'react';
 import {FlatList, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {truncate} from '../../../helpers';
 import {getSimplifiedTime} from '../../../helpers/profile';
 import {getConnections} from '../../../reducers/profile';
 import Message from '../../../types/Message';
 import {Profile} from '../../../types/Shared';
-import {MyRootState} from '../../../types/Shared';
 import Avatar from '../../commons/Avatar';
 import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
@@ -193,7 +192,7 @@ const Connections: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
   connections: profile.connections,
   loading: profile.loading,

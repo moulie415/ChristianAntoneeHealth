@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {all, call, put, select, take, throttle} from 'redux-saga/effects';
+import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
@@ -30,14 +31,8 @@ import {ProfileState, setProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
-import {
-  CoolDown,
-  Goal,
-  Level,
-  MyRootState,
-  Profile,
-  WarmUp,
-} from '../types/Shared';
+import {CoolDown, Goal, Level, Profile, WarmUp} from '../types/Shared';
+
 export function* getExercises(
   action: PayloadAction<{
     level: Level;
@@ -62,7 +57,7 @@ export function* getExercises(
 export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
   try {
     const {profile, weeklyItems}: ProfileState = yield select(
-      (state: MyRootState) => state.profile,
+      (state: RootState) => state.profile,
     );
 
     yield call(api.saveWorkout, action.payload, profile.uid);
@@ -72,7 +67,7 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
 
     if (profile.goal) {
       const {quickRoutines}: QuickRoutinesState = yield select(
-        (state: MyRootState) => state.quickRoutines,
+        (state: RootState) => state.quickRoutines,
       );
 
       sendGoalTargetNotification(
@@ -91,14 +86,14 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
 function* getSavedWorkouts() {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     const workouts: {[key: string]: SavedWorkout} = yield call(
       api.getSavedWorkouts,
       uid,
     );
     yield put(setSavedWorkouts(workouts));
     const exercises: {[key: string]: Exercise} = yield select(
-      (state: MyRootState) => state.exercises.exercises,
+      (state: RootState) => state.exercises.exercises,
     );
     const missingExercises = Object.values(workouts).reduce(
       (acc: string[], cur) => {
@@ -154,10 +149,10 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
     yield put(setLoading(true));
     const ids = action.payload;
     const exercises: {[key: string]: Exercise} = yield select(
-      (state: MyRootState) => state.exercises.exercises,
+      (state: RootState) => state.exercises.exercises,
     );
     const {premium, admin} = yield select(
-      (state: MyRootState) => state.profile.profile,
+      (state: RootState) => state.profile.profile,
     );
     const missing = ids.filter(id => {
       return !exercises[id];
@@ -169,7 +164,7 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
       });
     }
     const updatedExercises: {[key: string]: Exercise} = yield select(
-      (state: MyRootState) => state.exercises.exercises,
+      (state: RootState) => state.exercises.exercises,
     );
     const filtered = Object.values(updatedExercises).filter(exercise =>
       ids.includes(exercise.id || ''),
@@ -202,9 +197,7 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
 
 export function* handleDeepLink(url: string) {
   const parsed = queryString.parseUrl(url);
-  const {loggedIn, profile} = yield select(
-    (state: MyRootState) => state.profile,
-  );
+  const {loggedIn, profile} = yield select((state: RootState) => state.profile);
   switch (parsed.url) {
     case 'https://healthandmovement/workout':
       try {

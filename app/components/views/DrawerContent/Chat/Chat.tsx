@@ -43,7 +43,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../../App';
+import {RootState, StackParamList} from '../../../../App';
 import colors from '../../../../constants/colors';
 import {logError} from '../../../../helpers/error';
 import useInit from '../../../../hooks/UseInit';
@@ -59,7 +59,6 @@ import {
 import {SettingsState} from '../../../../reducers/settings';
 import Message, {MessageType} from '../../../../types/Message';
 import {Profile} from '../../../../types/Shared';
-import {MyRootState} from '../../../../types/Shared';
 import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
 import Avatar from '../../../commons/Avatar';
 import Header from '../../../commons/Header';
@@ -691,7 +690,7 @@ const Chat: React.FC<ChatProps> = ({
 };
 
 const mapStateToProps = (
-  {profile, exercises, settings}: MyRootState,
+  {profile, exercises, settings}: RootState,
   props: {
     route: RouteProp<StackParamList, 'Chat'>;
   },

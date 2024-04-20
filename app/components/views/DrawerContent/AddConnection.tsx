@@ -6,7 +6,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Button from '../../commons/Button';
 import Snackbar from 'react-native-snackbar';
 import {ImageBackground, Share, StyleSheet, View} from 'react-native';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import {connect} from 'react-redux';
 import {Profile} from '../../../types/Shared';
 import {logError} from '../../../helpers/error';
@@ -102,7 +102,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

@@ -2,12 +2,12 @@ import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {capitalizeFirstLetter} from '../../helpers';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
 import Button from '../commons/Button';
 import Modal from '../commons/Modal';
 import Text from '../commons/Text';
@@ -115,7 +115,7 @@ const Goals: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

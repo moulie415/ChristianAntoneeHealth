@@ -1,6 +1,7 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
 import {call, put, select, throttle} from 'redux-saga/effects';
+import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
 import {sendGoalTargetNotification} from '../helpers/goals';
@@ -17,7 +18,6 @@ import {
 } from '../reducers/quickRoutines';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
-import {MyRootState} from '../types/Shared';
 
 export function* getQuickRoutines() {
   try {
@@ -33,7 +33,7 @@ export function* getQuickRoutines() {
 function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
   try {
     const {profile, weeklyItems}: ProfileState = yield select(
-      (state: MyRootState) => state.profile,
+      (state: RootState) => state.profile,
     );
     yield call(api.saveQuickRoutine, action.payload, profile.uid);
     if (action.payload.saved) {
@@ -41,7 +41,7 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
     }
     if (profile.goal) {
       const {quickRoutines}: QuickRoutinesState = yield select(
-        (state: MyRootState) => state.quickRoutines,
+        (state: RootState) => state.quickRoutines,
       );
 
       sendGoalTargetNotification(
@@ -60,14 +60,14 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
 export function* getSavedQuickRoutines() {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: MyRootState) => state.profile.profile);
+    const {uid} = yield select((state: RootState) => state.profile.profile);
     const savedQuickRoutines: {[key: string]: SavedQuickRoutine} = yield call(
       api.getSavedQuickRoutines,
       uid,
     );
     yield put(setSavedQuickRoutines(savedQuickRoutines));
     const quickRoutines: {[key: string]: QuickRoutine} = yield select(
-      (state: MyRootState) => state.quickRoutines.quickRoutines,
+      (state: RootState) => state.quickRoutines.quickRoutines,
     );
     const missingRoutines = Object.values(savedQuickRoutines)
       .filter(routine => !quickRoutines[routine.quickRoutineId])

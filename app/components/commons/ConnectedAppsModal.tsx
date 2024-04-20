@@ -1,7 +1,7 @@
 import {View, Linking, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
 import Button from './Button';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import {connect} from 'react-redux';
 import Config from 'react-native-config';
 import {Profile} from '../../types/Shared';
@@ -151,7 +151,7 @@ const ConnectedAppsModal: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

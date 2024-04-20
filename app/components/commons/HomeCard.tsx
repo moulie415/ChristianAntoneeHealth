@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
 
@@ -92,7 +92,7 @@ const HomeCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

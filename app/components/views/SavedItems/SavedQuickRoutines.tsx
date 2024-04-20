@@ -7,7 +7,7 @@ import {StackParamList} from '../../../App';
 import {getDifficultyEmoji} from '../../../helpers/exercises';
 import QuickRoutine from '../../../types/QuickRoutines';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
-import {MyRootState} from '../../../types/Shared';
+import {RootState} from '../../../App';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
 import ListItem from '../../commons/ListItem';
@@ -123,7 +123,7 @@ const SavedQuickRoutines: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises, quickRoutines}: MyRootState) => ({
+const mapStateToProps = ({exercises, quickRoutines}: RootState) => ({
   loading: exercises.loading,
   savedQuickRoutines: quickRoutines.savedQuickRoutines,
   quickRoutines: quickRoutines.quickRoutines,

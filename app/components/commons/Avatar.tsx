@@ -6,8 +6,8 @@ import UserAvatar from 'react-native-user-avatar';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 
-import {MyRootState} from '../../types/Shared';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import {RootState} from '../../App';
 
 const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
   return (
@@ -60,7 +60,7 @@ const Avatar: React.FC<{
   );
 };
 
-const mapStateToProps = ({settings, profile}: MyRootState) => ({
+const mapStateToProps = ({settings, profile}: RootState) => ({
   admins: settings.admins,
 });
 

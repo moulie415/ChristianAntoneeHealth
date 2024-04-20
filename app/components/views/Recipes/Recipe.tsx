@@ -9,14 +9,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {
   favouriteRecipe,
   setDownloadedDocument,
 } from '../../../reducers/profile';
-import {MyRootState} from '../../../types/Shared';
 import Header from '../../commons/Header';
 import Spinner from '../../commons/Spinner';
 
@@ -101,7 +100,7 @@ const Recipe: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   favourites: profile.profile.favouriteRecipes,
   downloadedDocuments: profile.downloadedDocuments,
 });

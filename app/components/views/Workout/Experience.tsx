@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {View, SafeAreaView, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import {Level, MyRootState} from '../../../types/Shared';
-import ImageLoader from '../../commons/ImageLoader';
-import Text from '../../commons/Text';
-import Collapsible from 'react-native-collapsible';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
+import React, {useState} from 'react';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
+import Collapsible from 'react-native-collapsible';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import ListItem from '../../commons/ListItem';
 import {setLevel} from '../../../reducers/exercises';
+import {Level} from '../../../types/Shared';
+import ImageLoader from '../../commons/ImageLoader';
+import ListItem from '../../commons/ListItem';
+import Text from '../../commons/Text';
 
 const Experience: React.FC<{
   setLevelAction: (level: Level) => void;
@@ -169,7 +169,7 @@ const Experience: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: MyRootState) => ({
+const mapStateToProps = ({exercises}: RootState) => ({
   level: exercises.level,
 });
 

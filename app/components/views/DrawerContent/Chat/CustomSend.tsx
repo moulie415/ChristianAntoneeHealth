@@ -4,8 +4,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {IMessage, Send, SendProps} from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../../../App';
 import colors from '../../../../constants/colors';
-import {MyRootState} from '../../../../types/Shared';
 
 interface Props extends SendProps<IMessage> {
   onPressAttachment: () => void;
@@ -67,7 +67,7 @@ const CustomSend: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = ({settings}: MyRootState) => ({
+const mapStateToProps = ({settings}: RootState) => ({
   attachmentsDisabled: settings.attachmentsDisabled,
   voiceNotesDisabled: settings.voiceNotesDisabled,
 });

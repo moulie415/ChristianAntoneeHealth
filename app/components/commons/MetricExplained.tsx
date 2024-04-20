@@ -3,9 +3,10 @@ import React from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import {navigate} from '../../RootNavigation';
 import colors from '../../constants/colors';
-import {MyRootState, Profile} from '../../types/Shared';
+import {Profile} from '../../types/Shared';
 import Text from './Text';
 import Tile from './Tile';
 
@@ -195,7 +196,7 @@ const MetricExplained: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

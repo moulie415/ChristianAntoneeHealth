@@ -16,7 +16,7 @@ import {
 import {SettingsState} from '../../reducers/settings';
 import {Profile} from '../../types/Shared';
 import QuickRoutine from '../../types/QuickRoutines';
-import {MyRootState} from '../../types/Shared';
+import {RootState} from '../../App';
 import Text from './Text';
 import Tile from './Tile';
 
@@ -207,7 +207,7 @@ const GoalSummaries: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, quickRoutines, settings}: MyRootState) => ({
+const mapStateToProps = ({profile, quickRoutines, settings}: RootState) => ({
   profile: profile.profile,
   weeklyItems: profile.weeklyItems,
   connectionWeeklyItems: profile.connectionWeeklyItems,

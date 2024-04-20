@@ -6,12 +6,12 @@ import * as Progress from 'react-native-progress';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../../../App';
 import colors from '../../../../constants/colors';
 import {logError} from '../../../../helpers/error';
 import {setDownloadedDocument} from '../../../../reducers/profile';
 import Message from '../../../../types/Message';
 import {Profile} from '../../../../types/Shared';
-import {MyRootState} from '../../../../types/Shared';
 import Text from '../../../commons/Text';
 
 interface Props extends Message {
@@ -127,7 +127,7 @@ const DocumentMessage: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
   downloadedDocuments: profile.downloadedDocuments,
 });

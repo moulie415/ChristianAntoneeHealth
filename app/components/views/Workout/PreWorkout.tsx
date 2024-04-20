@@ -1,23 +1,22 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React, {useMemo} from 'react';
 import {RouteProp} from '@react-navigation/native';
-import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from '../../commons/Header';
 import {ScrollView} from 'react-native-gesture-handler';
-import colors from '../../../constants/colors';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import Button from '../../commons/Button';
-import {MyRootState, UpdateProfilePayload} from '../../../types/Shared';
 import {connect} from 'react-redux';
-import Exercise from '../../../types/Exercise';
+import {RootState, StackParamList} from '../../../App';
+import colors from '../../../constants/colors';
+import {getVideoHeight} from '../../../helpers';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
-import ConnectedApps from '../../commons/ConnectedApps';
-import Toggle from '../../commons/Toggle';
 import {updateProfile} from '../../../reducers/profile';
+import Exercise from '../../../types/Exercise';
+import {UpdateProfilePayload} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import Header from '../../commons/Header';
+import Toggle from '../../commons/Toggle';
 
 const PreWorkout: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreWorkout'>;
@@ -177,7 +176,7 @@ const PreWorkout: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile}: RootState) => ({
   workout: exercises.workout,
   workoutMusic: profile.profile.workoutMusic,
 });

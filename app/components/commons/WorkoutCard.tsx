@@ -1,16 +1,14 @@
-import {View, TouchableOpacity, ImageBackground} from 'react-native';
 import React from 'react';
-import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
-
-import {Goal, Level, MyRootState, PlanWorkout} from '../../types/Shared';
-import {connect} from 'react-redux';
-import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import Text from './Text';
-import {Profile} from '../../types/Shared';
-import FastImage from 'react-native-fast-image';
-import FastImageAnimated from './FastImageAnimated';
+import {TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {RootState} from '../../App';
+import colors from '../../constants/colors';
+import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
+import {Level, PlanWorkout, Profile} from '../../types/Shared';
+import FastImageAnimated from './FastImageAnimated';
+import Text from './Text';
 
 export const getEquipmentString = (equipment: Equipment) => {
   if (equipment === 'full') {
@@ -171,7 +169,7 @@ const WorkoutCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: MyRootState) => ({
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

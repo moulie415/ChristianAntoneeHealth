@@ -1,28 +1,26 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import Image from 'react-native-fast-image';
+import React, {useCallback} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
-import colors from '../../../constants/colors';
-import {AD_KEYWORDS, UNIT_ID_INTERSTITIAL} from '../../../constants';
-import Exercise from '../../../types/Exercise';
-import ReviewExercisesProps from '../../../types/views/ReviewExercises';
-import {truncate} from '../../../helpers';
-import {MyRootState} from '../../../types/Shared';
-import {connect} from 'react-redux';
+import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
+import {RootState} from '../../../App';
+import colors from '../../../constants/colors';
+import {truncate} from '../../../helpers';
+import Exercise from '../../../types/Exercise';
 
-import ShareModal from '../../commons/ShareModal';
-import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import ListItem from '../../commons/ListItem';
-import Divider from '../../commons/Divider';
-import {Profile} from '../../../types/Shared';
-import {SettingsState} from '../../../reducers/settings';
-import {StackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {StackParamList} from '../../../App';
 import {setWorkout} from '../../../reducers/exercises';
+import {SettingsState} from '../../../reducers/settings';
+import {Profile} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import Divider from '../../commons/Divider';
+import ListItem from '../../commons/ListItem';
+import ShareModal from '../../commons/ShareModal';
+import Text from '../../commons/Text';
 
 const ReviewExercises: React.FC<{
   workout: Exercise[];
@@ -111,7 +109,7 @@ const ReviewExercises: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile, settings}: MyRootState) => ({
+const mapStateToProps = ({exercises, profile, settings}: RootState) => ({
   workout: exercises.workout,
   profile: profile.profile,
   settings,
