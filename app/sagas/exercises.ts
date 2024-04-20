@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import queryString from 'query-string';
 import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
-import {all, call, put, select, take, throttle} from 'redux-saga/effects';
+import {all, call, debounce, put, select, take, throttle} from 'redux-saga/effects';
 import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
@@ -83,38 +83,44 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
   }
 }
 
-function* getSavedWorkouts() {
-  try {
-    yield put(setLoading(true));
-    const {uid} = yield select((state: RootState) => state.profile.profile);
-    const workouts: {[key: string]: SavedWorkout} = yield call(
-      api.getSavedWorkouts,
-      uid,
-    );
-    yield put(setSavedWorkouts(workouts));
-    const exercises: {[key: string]: Exercise} = yield select(
-      (state: RootState) => state.exercises.exercises,
-    );
-    const missingExercises = Object.values(workouts).reduce(
-      (acc: string[], cur) => {
-        const missing = cur.workout.filter(exercise => !exercises[exercise]);
-        return [...acc, ...missing];
-      },
-      [],
-    );
+function* getSavedWorkouts(action: PayloadAction<Date | undefined>) {
+  const {profile}: ProfileState = yield select(
+    (state: RootState) => state.profile,
+  );
+  if (profile.premium) {
+    try {
+      yield put(setLoading(true));
+      const {uid} = yield select((state: RootState) => state.profile.profile);
+      const workouts: {[key: string]: SavedWorkout} = yield call(
+        api.getSavedWorkouts,
+        uid,
+        action.payload,
+      );
+      yield put(setSavedWorkouts(workouts));
+      const exercises: {[key: string]: Exercise} = yield select(
+        (state: RootState) => state.exercises.exercises,
+      );
+      const missingExercises = Object.values(workouts).reduce(
+        (acc: string[], cur) => {
+          const missing = cur.workout.filter(exercise => !exercises[exercise]);
+          return [...acc, ...missing];
+        },
+        [],
+      );
 
-    if (missingExercises.length) {
-      yield call(getExercisesById, {
-        payload: missingExercises,
-        type: GET_EXERCISES_BY_ID,
-      });
+      if (missingExercises.length) {
+        yield call(getExercisesById, {
+          payload: missingExercises,
+          type: GET_EXERCISES_BY_ID,
+        });
+      }
+
+      yield put(setLoading(false));
+    } catch (e) {
+      logError(e);
+      yield put(setLoading(false));
+      Snackbar.show({text: 'Error getting saved workouts'});
     }
-
-    yield put(setLoading(false));
-  } catch (e) {
-    logError(e);
-    yield put(setLoading(false));
-    Snackbar.show({text: 'Error getting saved workouts'});
   }
 }
 
@@ -308,7 +314,7 @@ export default function* exercisesSaga() {
   yield all([
     throttle(5000, GET_EXERCISES, getExercises),
     throttle(5000, SAVE_WORKOUT, saveWorkout),
-    throttle(5000, GET_SAVED_WORKOUTS, getSavedWorkouts),
+    debounce(500, GET_SAVED_WORKOUTS, getSavedWorkouts),
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),
     throttle(5000, VIEW_WORKOUT, viewWorkoutWatcher),
   ]);

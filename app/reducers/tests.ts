@@ -55,7 +55,10 @@ const testSlice = createSlice({
     saveTest: (state: TestsState, {payload}: PayloadAction<SavedTest>) => {},
     getTests: () => {},
     getTestsById: (state: TestsState, {payload}: PayloadAction<string[]>) => {},
-    getSavedTests: () => {},
+    getSavedTests: (
+      state: TestsState,
+      {payload}: PayloadAction<Date | undefined>,
+    ) => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {

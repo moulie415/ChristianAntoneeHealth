@@ -173,7 +173,10 @@ const exerciseSlice = createSlice({
       state: ExercisesState,
       {payload}: PayloadAction<SavedWorkout>,
     ) => {},
-    getSavedWorkouts: () => {},
+    getSavedWorkouts: (
+      state: ExercisesState,
+      {payload}: PayloadAction<Date | undefined>,
+    ) => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {

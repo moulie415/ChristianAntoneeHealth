@@ -4,11 +4,10 @@ import React, {FunctionComponent, useMemo} from 'react';
 import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
+import {useAppSelector} from '../../../hooks/redux';
 import {SavedTest} from '../../../types/SavedItem';
-import {RootState} from '../../../App';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import SavedTestCard from '../../commons/SavedTestCard';
 import Text from '../../commons/Text';
@@ -21,11 +20,11 @@ type SavedItemsNavigationProp = NativeStackNavigationProp<
 >;
 
 const SavedTests: FunctionComponent<{
-  loading: boolean;
-  savedTests: {[key: string]: SavedTest};
-  getSavedTestsAction: () => void;
   navigation: SavedItemsNavigationProp;
-}> = ({loading, savedTests, navigation}) => {
+  loadEarlier: (saved: SavedTest[]) => void;
+}> = ({navigation, loadEarlier}) => {
+  const {savedTests} = useAppSelector(state => state.tests);
+  const {loading} = useAppSelector(state => state.exercises);
   const saved = useMemo(
     () =>
       Object.values(savedTests).sort(
@@ -65,6 +64,7 @@ const SavedTests: FunctionComponent<{
             </SafeAreaView>
           }
           data={saved}
+          onEndReached={() => loadEarlier(saved)}
           keyExtractor={item => item.id || ''}
           renderItem={({item}) => {
             return <SavedTestCard item={item} navigation={navigation} />;
@@ -75,9 +75,4 @@ const SavedTests: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises, tests}: RootState) => ({
-  loading: exercises.loading,
-  savedTests: tests.savedTests,
-});
-
-export default connect(mapStateToProps)(SavedTests);
+export default SavedTests;

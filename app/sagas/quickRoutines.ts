@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, put, select, throttle} from 'redux-saga/effects';
+import {call, debounce, put, select, throttle} from 'redux-saga/effects';
 import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
@@ -57,33 +57,41 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
   }
 }
 
-export function* getSavedQuickRoutines() {
-  try {
-    yield put(setLoading(true));
-    const {uid} = yield select((state: RootState) => state.profile.profile);
-    const savedQuickRoutines: {[key: string]: SavedQuickRoutine} = yield call(
-      api.getSavedQuickRoutines,
-      uid,
-    );
-    yield put(setSavedQuickRoutines(savedQuickRoutines));
-    const quickRoutines: {[key: string]: QuickRoutine} = yield select(
-      (state: RootState) => state.quickRoutines.quickRoutines,
-    );
-    const missingRoutines = Object.values(savedQuickRoutines)
-      .filter(routine => !quickRoutines[routine.quickRoutineId])
-      .map(routine => routine.quickRoutineId);
+export function* getSavedQuickRoutines(
+  action: PayloadAction<Date | undefined>,
+) {
+  const {profile}: ProfileState = yield select(
+    (state: RootState) => state.profile,
+  );
+  if (profile.premium) {
+    try {
+      yield put(setLoading(true));
+      const {uid} = yield select((state: RootState) => state.profile.profile);
+      const savedQuickRoutines: {[key: string]: SavedQuickRoutine} = yield call(
+        api.getSavedQuickRoutines,
+        uid,
+        action.payload,
+      );
+      yield put(setSavedQuickRoutines(savedQuickRoutines));
+      const quickRoutines: {[key: string]: QuickRoutine} = yield select(
+        (state: RootState) => state.quickRoutines.quickRoutines,
+      );
+      const missingRoutines = Object.values(savedQuickRoutines)
+        .filter(routine => !quickRoutines[routine.quickRoutineId])
+        .map(routine => routine.quickRoutineId);
 
-    if (missingRoutines.length) {
-      yield call(getQuickRoutinesById, {
-        payload: missingRoutines,
-        type: GET_QUICK_ROUTINES_BY_ID,
-      });
+      if (missingRoutines.length) {
+        yield call(getQuickRoutinesById, {
+          payload: missingRoutines,
+          type: GET_QUICK_ROUTINES_BY_ID,
+        });
+      }
+      yield put(setLoading(false));
+    } catch (e) {
+      logError(e);
+      yield put(setLoading(false));
+      Snackbar.show({text: 'Error getting saved workouts'});
     }
-    yield put(setLoading(false));
-  } catch (e) {
-    logError(e);
-    yield put(setLoading(false));
-    Snackbar.show({text: 'Error getting saved workouts'});
   }
 }
 
@@ -109,6 +117,6 @@ function* getQuickRoutinesById(action: PayloadAction<string[]>) {
 export default function* quickRoutinesSaga() {
   yield throttle(5000, GET_QUICK_ROUTINES, getQuickRoutines);
   yield throttle(5000, SAVE_QUICK_ROUTINE, saveQuickRoutine);
-  yield throttle(5000, GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
+  yield debounce(500, GET_SAVED_QUICK_ROUTINES, getSavedQuickRoutines);
   yield throttle(5000, GET_QUICK_ROUTINES_BY_ID, getQuickRoutinesById);
 }

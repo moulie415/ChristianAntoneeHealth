@@ -67,7 +67,10 @@ const quickRoutineSlice = createSlice({
       {payload}: PayloadAction<string[]>,
     ) => {},
     getQuickRoutines: () => {},
-    getSavedQuickRoutines: () => {},
+    getSavedQuickRoutines: (
+      state: QuickRoutinesState,
+      {payload}: PayloadAction<Date | undefined>,
+    ) => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {

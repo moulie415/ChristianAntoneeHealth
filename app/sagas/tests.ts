@@ -14,6 +14,7 @@ import {
   setTests,
 } from '../reducers/tests';
 import {SavedTest} from '../types/SavedItem';
+import {Profile} from '../types/Shared';
 import Test from '../types/Test';
 
 export function* getTests() {
@@ -34,30 +35,39 @@ function* saveTest(action: PayloadAction<SavedTest>) {
   }
 }
 
-function* getSavedTests() {
-  try {
-    yield put(setLoading(true));
-    const {uid} = yield select((state: RootState) => state.profile.profile);
+function* getSavedTests(action: PayloadAction<Date | undefined>) {
+  const profile: Profile = yield select(
+    (state: RootState) => state.profile.profile,
+  );
+  if (profile.premium) {
+    try {
+      yield put(setLoading(true));
+      const {uid} = yield select((state: RootState) => state.profile.profile);
 
-    const savedTests: {[key: string]: SavedTest} = yield call(
-      api.getSavedTests,
-      uid,
-    );
-    yield put(setSavedTests(savedTests));
-    const tests: {[key: string]: Test} = yield select(
-      (state: RootState) => state.tests.tests,
-    );
-    const missingTests = Object.values(savedTests)
-      .filter(test => !tests[test.testId])
-      .map(test => test.testId);
-    if (missingTests.length) {
-      yield call(getTestsById, {payload: missingTests, type: GET_TESTS_BY_ID});
+      const savedTests: {[key: string]: SavedTest} = yield call(
+        api.getSavedTests,
+        uid,
+        action.payload,
+      );
+      yield put(setSavedTests(savedTests));
+      const tests: {[key: string]: Test} = yield select(
+        (state: RootState) => state.tests.tests,
+      );
+      const missingTests = Object.values(savedTests)
+        .filter(test => !tests[test.testId])
+        .map(test => test.testId);
+      if (missingTests.length) {
+        yield call(getTestsById, {
+          payload: missingTests,
+          type: GET_TESTS_BY_ID,
+        });
+      }
+      yield put(setLoading(false));
+    } catch (e) {
+      logError(e);
+      yield put(setLoading(false));
+      Snackbar.show({text: 'Error getting saved tests'});
     }
-    yield put(setLoading(false));
-  } catch (e) {
-    logError(e);
-    yield put(setLoading(false));
-    Snackbar.show({text: 'Error getting saved tests'});
   }
 }
 

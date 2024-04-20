@@ -448,16 +448,18 @@ export const saveQuickRoutine = (
     .collection('savedQuickRoutines')
     .add(quickRoutine);
 };
-
+// .orderBy('createdAt')
+// .where('createdAt', '<', startAfter)
+// .limitToLast(20)
 export const getSavedWorkouts = async (uid: string, startAfter?: Date) => {
   const savedWorkouts = await db()
     .collection('users')
     .doc(uid)
     .collection('savedWorkouts')
     .where('saved', '==', true)
-    .where('createdate', '<', startAfter || new Date())
     .orderBy('createdate')
-    .limitToLast(2)
+    .where('createdate', '<', startAfter || new Date())
+    .limitToLast(10)
     .get();
   return savedWorkouts.docs.reduce((acc: {[id: string]: SavedWorkout}, cur) => {
     const workout: any = cur.data();
@@ -476,8 +478,8 @@ export const getSavedTests = async (uid: string, startAfter?: Date) => {
     .doc(uid)
     .collection('savedTests')
     .where('saved', '==', true)
-    .where('createdate', '<', startAfter || new Date())
     .orderBy('createdate')
+    .where('createdate', '<', startAfter || new Date())
     .limitToLast(20)
     .get();
   return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, cur) => {
@@ -495,7 +497,7 @@ export const getSavedQuickRoutines = async (uid: string, startAfter?: Date) => {
     .where('saved', '==', true)
     .where('createdate', '<', startAfter || new Date())
     .orderBy('createdate')
-    .limitToLast(2)
+    .limitToLast(10)
     .get();
   return savedQuickRoutines.docs.reduce(
     (acc: {[id: string]: SavedQuickRoutine}, cur) => {
