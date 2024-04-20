@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, put, select, throttle} from 'redux-saga/effects';
+import {call, debounce, put, select, throttle} from 'redux-saga/effects';
 import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
@@ -90,6 +90,6 @@ function* getTestsById(action: PayloadAction<string[]>) {
 export default function* testsSaga() {
   yield throttle(5000, GET_TESTS, getTests);
   yield throttle(5000, SAVE_TEST, saveTest);
-  yield throttle(5000, GET_SAVED_TESTS, getSavedTests);
+  yield debounce(500, GET_SAVED_TESTS, getSavedTests);
   yield throttle(5000, GET_TESTS_BY_ID, getTestsById);
 }
