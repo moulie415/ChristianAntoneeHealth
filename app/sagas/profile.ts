@@ -736,7 +736,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         user.uid,
       );
 
-
       if (doc.exists) {
         yield put(setProfile(doc.data() as Profile));
       } else {
@@ -779,7 +778,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       const isAdmin = settings.admins.includes(user.uid);
       yield put(setAdmin(isAdmin));
 
-
       if (
         customerInfo.entitlements.active.Premium ||
         customerInfo.entitlements.active[PREMIUM_PLUS] ||
@@ -790,7 +788,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       } else {
         yield put(setPremium(false));
       }
-
 
       setUserAttributes({
         email: user.email || '',
@@ -803,7 +800,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       });
 
       if (doc.exists && doc.data()?.signedUp) {
-
         const available: boolean = yield call(isAvailable);
         if (available) {
           yield call(initBiometrics);
