@@ -736,6 +736,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         user.uid,
       );
 
+
       if (doc.exists) {
         yield put(setProfile(doc.data() as Profile));
       } else {
@@ -767,14 +768,18 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         yield put(setProfile(userObj));
         yield call(api.setUser, userObj);
       }
+
       yield fork(premiumUpdatedWorker);
       const {customerInfo, created} = yield call(Purchases.logIn, user.uid);
       yield call(getSettings);
       const settings: SettingsState = yield select(
         (state: RootState) => state.settings,
       );
+
       const isAdmin = settings.admins.includes(user.uid);
       yield put(setAdmin(isAdmin));
+
+
       if (
         customerInfo.entitlements.active.Premium ||
         customerInfo.entitlements.active[PREMIUM_PLUS] ||
@@ -785,6 +790,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       } else {
         yield put(setPremium(false));
       }
+
 
       setUserAttributes({
         email: user.email || '',
@@ -797,10 +803,12 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       });
 
       if (doc.exists && doc.data()?.signedUp) {
+
         const available: boolean = yield call(isAvailable);
         if (available) {
           yield call(initBiometrics);
         }
+
         resetToTabs();
         try {
           const getLinkPromise = () => {

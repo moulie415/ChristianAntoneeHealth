@@ -250,7 +250,9 @@ function onPlanChanged(uid: string) {
 function* planWatcher() {
   try {
     const {uid} = yield select((state: RootState) => state.profile.profile);
+
     const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
+
     while (true) {
       const plan: Plan | {} = yield take(channel);
       const current: Plan = yield select(

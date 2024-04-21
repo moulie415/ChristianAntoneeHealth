@@ -186,11 +186,11 @@ const App: React.FC = () => {
     rnfbProvider.configure({
       android: {
         provider: __DEV__ ? 'debug' : 'playIntegrity',
-        debugToken: Config.APP_CHECK_DEBUG_TOKEN,
+        debugToken: Config.APP_CHECK_DEBUG_TOKEN_ANDROID,
       },
       apple: {
         provider: __DEV__ ? 'debug' : 'appAttestWithDeviceCheckFallback',
-        debugToken: Config.APP_CHECK_DEBUG_TOKEN,
+        debugToken: Config.APP_CHECK_DEBUG_TOKEN_IOS,
       },
     });
 
