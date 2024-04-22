@@ -8,7 +8,7 @@ import Config from 'react-native-config';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../../App';
-import {HEIGHTS, WEIGHTS} from '../../../constants';
+import {HEIGHTS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter} from '../../../helpers';
 import {Gender} from '../../../types/Shared';
@@ -18,6 +18,7 @@ import Input from '../../commons/Input';
 import Modal from '../../commons/Modal';
 import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
+import SignUpWeightModal from './SignUpWeightModal';
 
 const PersonalDetails: React.FC<{
   name: string;
@@ -400,17 +401,10 @@ const PersonalDetails: React.FC<{
         onValueChange={val => setHeight(Number(val))}
         onRequestClose={() => setShowHeightModal(false)}
       />
-      <PickerModal
-        title="Select weight"
+      <SignUpWeightModal
+        weight={weight}
         visible={showWeightModal}
-        selectedValue={String(weight)}
-        pickerData={WEIGHTS.map(value => {
-          return {
-            label: `${value.toString()} kg`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setWeight(Number(val))}
+        setWeight={setWeight}
         onRequestClose={() => setShowWeightModal(false)}
       />
       <PickerModal
