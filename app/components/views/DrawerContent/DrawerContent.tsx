@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
 import React, {ReactNode} from 'react';
@@ -12,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
+import {LoginManager} from 'react-native-fbsdk-next';
 import Purchases from 'react-native-purchases';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -87,11 +89,31 @@ const DrawerContent: React.FC<Props> = ({
         text: 'OK',
         onPress: async () => {
           try {
+            const user = auth().currentUser;
             navigation.closeDrawer();
             resetToWelcome();
             await messaging().deleteToken();
             await Purchases.logOut();
             await auth().signOut();
+            try {
+              if (
+                user?.providerData?.find(
+                  data => data.providerId === 'google.com',
+                )
+              ) {
+                await GoogleSignin.signOut();
+              }
+
+              if (
+                user?.providerData?.find(
+                  data => data.providerId === 'facebook.com',
+                )
+              ) {
+                LoginManager.logOut();
+              }
+            } catch (e) {
+              logError(e);
+            }
             setLoggedInAction(false);
           } catch (e) {
             logError(e);

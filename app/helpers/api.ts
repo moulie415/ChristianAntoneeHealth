@@ -109,6 +109,7 @@ export const googleSignIn = async () => {
 
     // Sign-in the user with the credential
     const credentials = await auth().signInWithCredential(googleCredential);
+
     return credentials;
   } catch (e) {
     // @ts-ignore
