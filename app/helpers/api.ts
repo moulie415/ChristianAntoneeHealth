@@ -7,10 +7,16 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import moment from 'moment';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {openInbox} from 'react-native-email-link';
-import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import {
+  AccessToken,
+  AuthenticationToken,
+  LoginManager,
+} from 'react-native-fbsdk-next';
+import {sha256} from 'react-native-sha256';
 import Snackbar from 'react-native-snackbar';
+import uuid from 'react-native-uuid';
 import {WeeklyItems} from '../reducers/profile';
 import Chat from '../types/Chat';
 import Education from '../types/Education';
@@ -29,6 +35,7 @@ import {
 } from '../types/Shared';
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
+
 GoogleSignin.configure({
   webClientId:
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
@@ -67,28 +74,55 @@ export const appleSignIn = async () => {
 export const facebookSignIn = async () => {
   try {
     // Attempt login with permissions
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
+    if (Platform.OS === 'ios') {
+      const nonce = uuid.v4() as string;
+      const nonceSha256 = await sha256(nonce);
+      const result = await LoginManager.logInWithPermissions(
+        ['public_profile', 'email'],
+        'limited',
+        nonceSha256,
+      );
 
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+
+      const data = await AuthenticationToken.getAuthenticationTokenIOS();
+
+      if (!data) {
+        throw 'Something went wrong obtaining access token';
+      }
+      // Create a Firebase credential with the AccessToken
+      const facebookCredential = auth.FacebookAuthProvider.credential(
+        data.authenticationToken,
+        nonce,
+      );
+      // Sign-in the user with the credential
+      const credentials = await auth().signInWithCredential(facebookCredential);
+      return credentials;
+    } else {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw 'Something went wrong obtaining access token';
+      }
+
+      const facebookCredential = auth.FacebookAuthProvider.credential(
+        data.accessToken,
+      );
+
+      const credentials = await auth().signInWithCredential(facebookCredential);
+      return credentials;
     }
-
-    // Once signed in, get the users AccesToken
-    const data = await AccessToken.getCurrentAccessToken();
-
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
-    // Create a Firebase credential with the AccessToken
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
-    // Sign-in the user with the credential
-    const credentials = await auth().signInWithCredential(facebookCredential);
-    return credentials;
   } catch (e) {
     if (e !== 'User cancelled the login process') {
       if (e instanceof Error) {

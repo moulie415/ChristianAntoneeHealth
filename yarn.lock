@@ -8747,12 +8747,10 @@ react-native-fast-image@^8.5.11:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
-react-native-fbsdk-next@11.2.1:
-  version "11.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-11.2.1.tgz#624b16c245c505887ad1dd17265ddaefb6c71e02"
-  integrity sha512-CfJmexiDpdeAUAGM3uHxLEHyRtiAQTeELoZ+eKp1z9W2X5a7/uITHIxCaqy/B+4GfHCCj4m1WF1RKjOy+d6G/A==
-  dependencies:
-    xml2js "^0.4.23"
+react-native-fbsdk-next@13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-13.0.0.tgz#d44d29352c2677626479dcd333b7a1671f04a1dc"
+  integrity sha512-Bfe2xFbtBPyX3aCgxb+NBGH9pLvb0NnlUnALkmkIU2++imdJN+aUpXRpMGyGm+OqApAEcELNBytYh9W3anR58g==
 
 react-native-file-viewer@^2.1.5:
   version "2.1.5"
@@ -8938,6 +8936,11 @@ react-native-screens@^3.31.1:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-sha256@^1.4.10:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.4.10.tgz#b4c9990430849ee29a00dfd606fd92f08e003dc7"
+  integrity sha512-x12owcA1jQZ1GMUX2xg2+4IOVJciZChcyNvolt6IjLdAFtu1tttDF9aHsCTW1J1SbLGSoYCo/UTAoNZay/YAsg==
 
 react-native-snackbar@^2.6.2:
   version "2.6.2"
@@ -10624,14 +10627,6 @@ xml2js@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.6.0.tgz#07afc447a97d2bd6507a1f76eeadddb09f7a8282"
   integrity sha512-eLTh0kA8uHceqesPqSE+VvO1CDDJWMwlQfB6LuN6T8w6MaDJ8Txm8P7s5cHD0miF0V+GGTZrDQfxPZQVsur33w==
-  dependencies:
-    sax ">=0.6.0"
-    xmlbuilder "~11.0.0"
-
-xml2js@^0.4.23:
-  version "0.4.23"
-  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
-  integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"

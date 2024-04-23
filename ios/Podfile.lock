@@ -967,8 +967,8 @@ PODS:
     - React-Core
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
-  - FBAEMKit (15.0.0):
-    - FBSDKCoreKit_Basics (= 15.0.0)
+  - FBAEMKit (17.0.0):
+    - FBSDKCoreKit_Basics (= 17.0.0)
   - FBLazyVector (0.73.6)
   - FBReactNativeSpec (0.73.6):
     - RCT-Folly (= 2022.05.16.00)
@@ -977,18 +977,18 @@ PODS:
     - React-Core (= 0.73.6)
     - React-jsi (= 0.73.6)
     - ReactCommon/turbomodule/core (= 0.73.6)
-  - FBSDKCoreKit (15.0.0):
-    - FBAEMKit (= 15.0.0)
-    - FBSDKCoreKit_Basics (= 15.0.0)
-  - FBSDKCoreKit_Basics (15.0.0)
-  - FBSDKGamingServicesKit (15.0.0):
-    - FBSDKCoreKit (= 15.0.0)
-    - FBSDKCoreKit_Basics (= 15.0.0)
-    - FBSDKShareKit (= 15.0.0)
-  - FBSDKLoginKit (15.0.0):
-    - FBSDKCoreKit (= 15.0.0)
-  - FBSDKShareKit (15.0.0):
-    - FBSDKCoreKit (= 15.0.0)
+  - FBSDKCoreKit (17.0.0):
+    - FBAEMKit (= 17.0.0)
+    - FBSDKCoreKit_Basics (= 17.0.0)
+  - FBSDKCoreKit_Basics (17.0.0)
+  - FBSDKGamingServicesKit (17.0.0):
+    - FBSDKCoreKit (= 17.0.0)
+    - FBSDKCoreKit_Basics (= 17.0.0)
+    - FBSDKShareKit (= 17.0.0)
+  - FBSDKLoginKit (17.0.0):
+    - FBSDKCoreKit (= 17.0.0)
+  - FBSDKShareKit (17.0.0):
+    - FBSDKCoreKit (= 17.0.0)
   - Firebase/Analytics (10.24.0):
     - Firebase/Core
   - Firebase/AppCheck (10.24.0):
@@ -2166,20 +2166,20 @@ PODS:
     - React-Core
   - react-native-document-picker (9.1.0):
     - React-Core
-  - react-native-fbsdk-next (11.2.1):
+  - react-native-fbsdk-next (13.0.0):
     - React-Core
-    - react-native-fbsdk-next/Core (= 11.2.1)
-    - react-native-fbsdk-next/Login (= 11.2.1)
-    - react-native-fbsdk-next/Share (= 11.2.1)
-  - react-native-fbsdk-next/Core (11.2.1):
-    - FBSDKCoreKit (~> 15.0.0)
+    - react-native-fbsdk-next/Core (= 13.0.0)
+    - react-native-fbsdk-next/Login (= 13.0.0)
+    - react-native-fbsdk-next/Share (= 13.0.0)
+  - react-native-fbsdk-next/Core (13.0.0):
+    - FBSDKCoreKit (~> 17.0.0)
     - React-Core
-  - react-native-fbsdk-next/Login (11.2.1):
-    - FBSDKLoginKit (~> 15.0.0)
+  - react-native-fbsdk-next/Login (13.0.0):
+    - FBSDKLoginKit (~> 17.0.0)
     - React-Core
-  - react-native-fbsdk-next/Share (11.2.1):
-    - FBSDKGamingServicesKit (~> 15.0.0)
-    - FBSDKShareKit (~> 15.0.0)
+  - react-native-fbsdk-next/Share (13.0.0):
+    - FBSDKGamingServicesKit (~> 17.0.0)
+    - FBSDKShareKit (~> 17.0.0)
     - React-Core
   - react-native-image-picker (7.1.0):
     - glog
@@ -2482,6 +2482,8 @@ PODS:
     - React-Core
     - React-hermes
     - Sentry/HybridSDK (= 8.24.0)
+  - RNSha256 (1.4.10):
+    - React-Core
   - RNSnackbar (2.6.2):
     - React-Core
   - RNSound (0.11.2):
@@ -2611,6 +2613,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
+  - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
@@ -2870,6 +2873,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
+  RNSha256:
+    :path: "../node_modules/react-native-sha256"
   RNSnackbar:
     :path: "../node_modules/react-native-snackbar"
   RNSound:
@@ -2896,14 +2901,14 @@ SPEC CHECKSUMS:
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
-  FBAEMKit: d8312d8451ead46282adc7f3565ffc4965e3a4a7
+  FBAEMKit: 31a20c2d8744d8c57d3a5b7ae4e27b4fdd819193
   FBLazyVector: f64d1e2ea739b4d8f7e4740cde18089cd97fe864
   FBReactNativeSpec: 9f2b8b243131565335437dba74923a8d3015e780
-  FBSDKCoreKit: 81879058dd06208c0820fc713d054ca54903e8ba
-  FBSDKCoreKit_Basics: eebc9bb69a0e5d133b92dca53a20716227faa454
-  FBSDKGamingServicesKit: e0766514d64d26a9f846e793c0a44bc4a236723b
-  FBSDKLoginKit: 11995469cd7da16fd4d5245e8d2ec61060479270
-  FBSDKShareKit: 9501792c3024580809f811a8a549868699d9bd32
+  FBSDKCoreKit: dac911b656816f8d0b06e5fa4bac60e89505bb3b
+  FBSDKCoreKit_Basics: 92b7b7458d57091370b0b6cc197578874c3b4b16
+  FBSDKGamingServicesKit: 0ae05466560dca03aa6c8691746e664c351b5d9e
+  FBSDKLoginKit: 5d5271ebfd1e39c6b071de8db5c4bd6255be3561
+  FBSDKShareKit: 09dbbe11cf43a4a831b92f064f974e9a01b4f8bc
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
   FirebaseAnalytics: b5efc493eb0f40ec560b04a472e3e1a15d39ca13
   FirebaseAppCheck: afb42367002c12bbb5f58c4a954ecd2f0a171182
@@ -2968,7 +2973,7 @@ SPEC CHECKSUMS:
   react-native-compressor: 7ffcf879187aa99196569c3f5923dfc7e68c714d
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-document-picker: b4f4a23b73f864ce17965b284c0757648993805b
-  react-native-fbsdk-next: 5291a5d67aab4e649d072c50988033ff0d05b915
+  react-native-fbsdk-next: 84746ea062dc3b1a422154d7674ba4c5836b6d82
   react-native-image-picker: 88f0a6e61299e8a94391284302633411a82ba395
   react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
   react-native-pager-view: d211379f61895b6349bd7e571b44a26d005c2975
@@ -3033,6 +3038,7 @@ SPEC CHECKSUMS:
   RNReanimated: 91f980a433a2c966a7634b9c438312d8f5a0942e
   RNScreens: f0e300a3be13eff48f8afb0b5c6fc558c9369b03
   RNSentry: 7ae2a06a5563de39ec09dcb1e751ac0c67f1883c
+  RNSha256: e1bc64e9e50b293d5282bb4caa1b2043931f1c9d
   RNSnackbar: 3727b42bf6c4314a53c18185b5203e915a4ab020
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSoundPlayer: 369105c565b8fe6ea0a43fc882dc81eba444e842
