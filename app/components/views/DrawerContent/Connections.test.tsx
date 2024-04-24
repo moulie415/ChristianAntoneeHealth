@@ -6,6 +6,12 @@ import {sortConnections} from './Connections';
 jest.mock('react-redux', () => {
   return {
     connect: () => jest.fn(),
+    useDispatch: {
+      withTypes: () => jest.fn(),
+    },
+    useSelector: {
+      withTypes: () => jest.fn(),
+    },
   };
 });
 jest.mock('react-native-push-notification', () => {});
