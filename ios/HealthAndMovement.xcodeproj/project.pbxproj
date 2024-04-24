@@ -13,6 +13,7 @@
 		0A24F535261784EB00859CAB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A24F534261784EB00859CAB /* HealthKit.framework */; };
 		0A33190427D39ADF00C74CD6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33190327D39ADF00C74CD6 /* logo.png */; };
 		0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */; };
+		0A4D19682BD8F66700056159 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D19672BD8F66700056159 /* PrivacyInfo.xcprivacy */; };
 		0A8218D92844D0B200C94F96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8218D82844D0B200C94F96 /* Assets.xcassets */; };
 		0A8218DF2844D0B300C94F96 /* CA Health WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0A8218DE2844D0B300C94F96 /* CA Health WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0A8218E42844D0B300C94F96 /* HealthAndMovementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8218E32844D0B300C94F96 /* HealthAndMovementApp.swift */; };
@@ -97,6 +98,7 @@
 		0A24F534261784EB00859CAB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		0A33190327D39ADF00C74CD6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../app/images/logo.png; sourceTree = "<group>"; };
 		0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HealthAndMovement/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A4D19672BD8F66700056159 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0A6FCF5C2760C6F70090931A /* HealthAndMovementDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HealthAndMovementDebug.entitlements; path = HealthAndMovement/HealthAndMovementDebug.entitlements; sourceTree = "<group>"; };
 		0A701BC526BF232800EB809A /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		0A8218D62844D0B100C94F96 /* CA Health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CA Health.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,6 +268,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0A4D19672BD8F66700056159 /* PrivacyInfo.xcprivacy */,
 				0A8DBD902B3C505B00075880 /* Fonts */,
 				0AC506472AD5B2920061CBD5 /* workout_song.mp3 */,
 				0AB82E47278E202400DBEE1A /* notif.wav */,
@@ -483,6 +486,7 @@
 				0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */,
 				0A3762D4242F929D00019FC6 /* GoogleService-Info.plist in Resources */,
 				90FF22CB05814F73A1C21308 /* MrDafoe-Regular.ttf in Resources */,
+				0A4D19682BD8F66700056159 /* PrivacyInfo.xcprivacy in Resources */,
 				0AC506482AD5B2920061CBD5 /* workout_song.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
