@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Video, {OnProgressData} from 'react-native-video';
+import Video, {OnProgressData, ResizeMode, VideoRef} from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {getVideoHeight} from '../../helpers';
 
@@ -35,7 +35,7 @@ const ExerciseVideo: React.FC<{
 }) => {
   const [paused, setPaused] = useState(startedPaused);
   const [hideTime, setHideTime] = useState(moment().unix());
-  const ref = useRef<Video>(null);
+  const ref = useRef<VideoRef>(null);
   const showControls = paused || moment().unix() < hideTime + 3;
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const ExerciseVideo: React.FC<{
       <Video
         source={{uri: convertToProxyURL(path)}}
         style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
-        resizeMode={'none'}
+        resizeMode={ResizeMode.NONE}
         ref={ref}
         onError={e => console.error(e)}
         repeat

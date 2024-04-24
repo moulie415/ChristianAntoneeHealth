@@ -2,7 +2,7 @@ import {NavigationProp, RouteProp} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Video from 'react-native-video';
+import Video, { ResizeMode } from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
@@ -138,7 +138,7 @@ const Test: React.FC<{
         <Video
           source={{uri: convertToProxyURL(test.video?.src)}}
           style={{height: getVideoHeight(), width: '100%'}}
-          resizeMode={'cover'}
+          resizeMode={ResizeMode.COVER}
           repeat
           disableFocus
         />

@@ -40,7 +40,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import Video from 'react-native-video';
+import Video, { ResizeMode } from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../../App';
@@ -303,7 +303,7 @@ const Chat: React.FC<ChatProps> = ({
             width: 250,
             borderRadius: 15,
           }}
-          resizeMode="cover"
+          resizeMode={ResizeMode.COVER}
           muted
           paused
           source={{
