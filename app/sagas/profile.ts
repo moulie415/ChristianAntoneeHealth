@@ -50,7 +50,6 @@ import {
 import {logError} from '../helpers/error';
 import {getGoalsData} from '../helpers/goals';
 import {PREMIUM_PLUS} from '../helpers/hasPremiumPlus';
-import {getProfileImage} from '../helpers/images';
 import {setUserAttributes} from '../helpers/profile';
 import {
   GET_CONNECTIONS,
@@ -739,7 +738,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       if (doc.exists) {
         yield put(setProfile(doc.data() as Profile));
       } else {
-        const avatar = getProfileImage(user);
         const reminderTime = new Date(
           new Date().getFullYear(),
           new Date().getMonth(),
@@ -751,7 +749,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         const userObj = {
           uid: user.uid,
           email: user.email || '',
-          avatar: avatar || '',
+          avatar: '',
           name: user.displayName || '',
           providerId: user.providerData[0].providerId || '',
           workoutReminders: true,
