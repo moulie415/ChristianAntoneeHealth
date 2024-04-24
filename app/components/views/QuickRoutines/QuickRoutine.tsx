@@ -20,12 +20,10 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import Header from '../../commons/Header';
-import Modal from '../../commons/Modal';
 import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import ResistanceScaleInfo from '../Workout/ResistanceScaleInfo';
 
 const QuickRoutineView: React.FC<{
   videos: {[key: string]: {src: string; path: string}};
@@ -51,7 +49,6 @@ const QuickRoutineView: React.FC<{
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const [routineStarted, setRoutineStarted] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(true);
   const [fullscreen, setFullScreen] = useState(false);
   const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
@@ -89,7 +86,6 @@ const QuickRoutineView: React.FC<{
     }
   }, [exercises, index, navigation]);
 
-  const [showResistanceModal, setShowResistanceModal] = useState(false);
 
   const setAutoPlay = (ap: boolean) => updateProfileAction({autoPlay: ap});
 
@@ -313,99 +309,6 @@ const QuickRoutineView: React.FC<{
           })}
         </PagerView>
       )}
-      {/* <Modal visible={showModal} onRequestClose={() => setShowModal(false)}>
-        <View
-          style={{
-            backgroundColor: colors.appGrey,
-            width: '95%',
-            alignSelf: 'center',
-            borderRadius: 10,
-          }}>
-          <Icon
-            style={{alignSelf: 'center', margin: 10}}
-            name="info-circle"
-            color={colors.appWhite}
-            size={30}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              padding: 15,
-              fontSize: 25,
-              paddingTop: 0,
-              color: colors.appWhite,
-              fontWeight: 'bold',
-            }}>
-            Instructions
-          </Text>
-          <View style={{marginBottom: 10}}>
-            {routine.steps ? (
-              routine.steps.map(step => {
-                return (
-                  <View
-                    key={step}
-                    style={{
-                      flexDirection: 'row',
-                      margin: 10,
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: colors.appWhite,
-                        marginRight: 10,
-                      }}>
-                      ●
-                    </Text>
-                    <Text style={{color: colors.appWhite, flex: 1}}>
-                      {step}
-                    </Text>
-                  </View>
-                );
-              })
-            ) : (
-              <Text
-                style={{
-                  color: colors.appWhite,
-                  marginHorizontal: 20,
-                }}>
-                {routine.instructions}
-              </Text>
-            )}
-          </View>
-          <Button
-            text="OK"
-            onPress={() => setShowModal(false)}
-            style={{
-              margin: 10,
-            }}
-          />
-        </View>
-      </Modal> */}
-      <Modal
-        visible={showResistanceModal}
-        onRequestClose={() => setShowResistanceModal(false)}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              padding: 15,
-            }}>
-            Resistance scale explained
-          </Text>
-          <ResistanceScaleInfo />
-          <Button
-            text="OK"
-            onPress={() => setShowResistanceModal(false)}
-            style={{margin: 10}}
-          />
-        </View>
-      </Modal>
-      {/* <MusicButton /> */}
     </View>
   );
 };

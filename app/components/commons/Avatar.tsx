@@ -3,11 +3,10 @@ import {View} from 'react-native';
 import Image from 'react-native-fast-image';
 // @ts-ignore
 import UserAvatar from 'react-native-user-avatar';
-import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {RootState} from '../../App';
+import {useAppSelector} from '../../hooks/redux';
 
 const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
   return (
@@ -32,10 +31,10 @@ const Avatar: React.FC<{
   src?: string;
   size?: number;
   name: string;
-  admins: string[];
   uid: string;
   hideCheck?: boolean;
-}> = ({src, size, name, uid, admins, hideCheck}) => {
+}> = ({src, size, name, uid, hideCheck}) => {
+  const {admins} = useAppSelector(state => state.settings);
   const isAdmin = admins.includes(uid);
   if (src) {
     return (
@@ -60,8 +59,4 @@ const Avatar: React.FC<{
   );
 };
 
-const mapStateToProps = ({settings, profile}: RootState) => ({
-  admins: settings.admins,
-});
-
-export default connect(mapStateToProps)(Avatar);
+export default Avatar;

@@ -1279,8 +1279,8 @@ PODS:
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
-  - PurchasesHybridCommon (8.1.1):
-    - RevenueCat (= 4.31.2)
+  - PurchasesHybridCommon (10.4.1):
+    - RevenueCat (= 4.40.1)
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -2208,7 +2208,7 @@ PODS:
   - react-native-video (6.0.0-alpha.7):
     - React-Core
     - react-native-video/Video (= 6.0.0-alpha.7)
-  - react-native-video-cache (2.7.3):
+  - react-native-video-cache (2.7.4):
     - KTVHTTPCache (~> 2.0.0)
     - React
   - react-native-video/Video (6.0.0-alpha.7):
@@ -2386,7 +2386,7 @@ PODS:
     - React-logger (= 0.73.6)
     - React-perflogger (= 0.73.6)
   - RecaptchaInterop (100.0.0)
-  - RevenueCat (4.31.2)
+  - RevenueCat (4.40.1)
   - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNAppleHealthKit (1.7.0):
@@ -2464,10 +2464,10 @@ PODS:
   - RNGoogleSignin (11.0.0):
     - GoogleSignIn (~> 7.0)
     - React-Core
-  - RNPurchases (7.5.1):
-    - PurchasesHybridCommon (= 8.1.1)
+  - RNPurchases (7.26.2):
+    - PurchasesHybridCommon (= 10.4.1)
     - React-Core
-  - RNReanimated (3.6.1):
+  - RNReanimated (3.8.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -2946,7 +2946,7 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
-  PurchasesHybridCommon: 2439f6e671fb4d60878a652e4377fa7e588368e6
+  PurchasesHybridCommon: 596ac8a54be4e03cc1398b012bd9cdf134111b70
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: ca1d7414aba0b27efcfa2ccd37637edb1ab77d96
   RCTTypeSafety: 678e344fb976ff98343ca61dc62e151f3a042292
@@ -2984,7 +2984,7 @@ SPEC CHECKSUMS:
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: 967eead48aaa42c25a9e1d65c3b1ab30762a88df
-  react-native-video-cache: 1f3d0b6841c9cc962ded4ba70b412f121c8e9620
+  react-native-video-cache: 8300762bd3fd1c3dd19b76ba5236ca35de1f4bf7
   react-native-webview: 64c51a60460f8473be97b1959da347893fc9a1fd
   React-nativeconfig: e700ac3ec3d66329076bd2c2787a204411815d43
   React-NativeModulesApple: f7fa541118d195ac850ca2ea460f338152ced167
@@ -3007,7 +3007,7 @@ SPEC CHECKSUMS:
   React-utils: a45dd70919baff681d43a4a457e9884ef96b4581
   ReactCommon: e168ee1704806f10f47ee8c7f825b5850b18eaea
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RevenueCat: 63f6f4ae6916095561b90b2e1de86a492af67493
+  RevenueCat: 9f6b84da3f00953b2eeaaa6fc4710c1d280a5710
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNAudioRecorderPlayer: ba0aca62cd47c6f878313fdadb0edb23ef9dbf90
@@ -3034,8 +3034,8 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: e1f2aea0c2ba66aeb1ec5af824a94c6e92d202cc
   RNGoogleSignin: fc408799f1990a12497a32f64280c0fe353ffcc1
-  RNPurchases: 6460a884756442e75b2d25a1d7e58cd39ebbffe6
-  RNReanimated: 91f980a433a2c966a7634b9c438312d8f5a0942e
+  RNPurchases: 1d676de19b7bcb2fd39b187b76bc82b807c359fa
+  RNReanimated: de95bb2cf26ccfa2b6fdf7e1a57158fb5c9d9515
   RNScreens: f0e300a3be13eff48f8afb0b5c6fc558c9369b03
   RNSentry: 7ae2a06a5563de39ec09dcb1e751ac0c67f1883c
   RNSha256: e1bc64e9e50b293d5282bb4caa1b2043931f1c9d

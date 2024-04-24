@@ -47,8 +47,6 @@ const StartWorkout: React.FC<{
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [showResistanceModal, setShowResistanceModal] = useState(false);
   const [hasPressedPlay, setHasPressedPlay] = useState(true);
   const planWorkout = route.params?.planWorkout;
   const startTime = route.params?.startTime;
@@ -291,31 +289,6 @@ const StartWorkout: React.FC<{
           })}
         </PagerView>
       )}
-      <Modal
-        visible={showResistanceModal}
-        onRequestClose={() => setShowResistanceModal(false)}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              padding: 15,
-            }}>
-            Resistance scale explained
-          </Text>
-          <ResistanceScaleInfo />
-          <Button
-            text="OK"
-            onPress={() => setShowResistanceModal(false)}
-            style={{margin: 10}}
-          />
-        </View>
-      </Modal>
-      {/* <MusicButton /> */}
     </View>
   );
 };
