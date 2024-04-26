@@ -38,21 +38,7 @@ const useWorkoutData = (
     const getSamples = async () => {
       try {
         setLoading(true);
-        const samples = currentHeartRateSamples?.length
-          ? currentHeartRateSamples
-          : await getHeartRateSamples(
-              moment(endDate).subtract(seconds, 'seconds').toDate(),
-              endDate,
-            );
 
-        setHeartRateSamples(samples);
-        const calorieSamples = await getCalorieSamples(
-          moment(endDate).subtract(seconds, 'seconds').toDate(),
-          endDate,
-        );
-        if (calorieSamples.length) {
-          setCalories(calorieSamples.reduce((acc, cur) => acc + cur.value, 0));
-        }
         if (profile.polarAccessToken) {
           const pSamples = await polar.getHeartRateSamples(
             profile.polarAccessToken,
@@ -60,8 +46,7 @@ const useWorkoutData = (
             endDate,
           );
           setPolarHeartRateSamples(pSamples);
-        }
-        if (
+        } else if (
           profile.fitbitToken &&
           profile.fitbitUserId &&
           profile.fitbitRefreshToken &&
@@ -91,6 +76,24 @@ const useWorkoutData = (
             );
           setFitbitData(data);
           setFitbitHeartRateSamples(fSamples);
+        } else {
+          const samples = currentHeartRateSamples?.length
+            ? currentHeartRateSamples
+            : await getHeartRateSamples(
+                moment(endDate).subtract(seconds, 'seconds').toDate(),
+                endDate,
+              );
+
+          setHeartRateSamples(samples);
+          const calorieSamples = await getCalorieSamples(
+            moment(endDate).subtract(seconds, 'seconds').toDate(),
+            endDate,
+          );
+          if (calorieSamples.length) {
+            setCalories(
+              calorieSamples.reduce((acc, cur) => acc + cur.value, 0),
+            );
+          }
         }
       } catch (e) {
         logError(e);
