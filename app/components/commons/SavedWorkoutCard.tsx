@@ -36,6 +36,7 @@ const SavedWorkoutCard: React.FC<{
     return null;
   }
   const locked = quickRoutine && quickRoutine.premium && !profile.premium;
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -71,7 +72,7 @@ const SavedWorkoutCard: React.FC<{
         }>
         <View
           style={{
-            height: 140,
+            height: 120,
             justifyContent: 'center',
             padding: 10,
             borderRadius: 10,
@@ -80,7 +81,7 @@ const SavedWorkoutCard: React.FC<{
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: 16,
+              fontSize: 18,
             }}>
             {`${moment(item.createdate).format('MMMM Do YYYY')}`}
           </Text>
@@ -90,18 +91,18 @@ const SavedWorkoutCard: React.FC<{
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <View>
+            <View style={{marginRight: 10, marginVertical: 5}}>
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: 12,
+                  fontSize: 14,
                 }}>
                 Duration
               </Text>
               <Text
                 style={{
                   color: colors.appWhite,
-                  fontSize: 12,
+                  fontSize: 14,
                 }}>
                 <Text style={{fontWeight: 'bold'}}>
                   {moment()
@@ -112,6 +113,46 @@ const SavedWorkoutCard: React.FC<{
                 </Text>
               </Text>
             </View>
+            {!!item.calories && (
+              <View style={{marginRight: 10}}>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 14,
+                  }}>
+                  Calories
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 14,
+                  }}>
+                  <Text style={{fontWeight: 'bold'}}>
+                    {Math.round(item.calories)}
+                  </Text>
+                </Text>
+              </View>
+            )}
+            {!!item.averageHeartRate && (
+              <View>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 14,
+                  }}>
+                  Avg Heart Rate
+                </Text>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    fontSize: 14,
+                  }}>
+                  <Text style={{fontWeight: 'bold'}}>
+                    {Math.round(item.averageHeartRate)}
+                  </Text>
+                </Text>
+              </View>
+            )}
           </View>
 
           <View
