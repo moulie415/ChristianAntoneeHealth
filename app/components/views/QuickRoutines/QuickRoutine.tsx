@@ -15,7 +15,7 @@ import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import {updateProfile} from '../../../reducers/profile';
 import {workoutSong} from '../../../sagas/profile';
 import Exercise from '../../../types/Exercise';
-import {PauseEvent, UpdateProfilePayload} from '../../../types/Shared';
+import {PauseEvent, Profile, UpdateProfilePayload} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
@@ -35,6 +35,7 @@ const QuickRoutineView: React.FC<{
   autoPlay?: boolean;
   workoutMusic?: boolean;
   updateProfile: (payload: UpdateProfilePayload) => void;
+  profile: Profile;
 }> = ({
   loading,
   route,
@@ -43,6 +44,7 @@ const QuickRoutineView: React.FC<{
   autoPlay,
   workoutMusic,
   updateProfile: updateProfileAction,
+  profile,
 }) => {
   const {routine, startTime} = route.params;
   const [tabIndex, setTabIndex] = useState(0);
@@ -194,6 +196,7 @@ const QuickRoutineView: React.FC<{
                         tabIndex={tabIndex}
                         setTabIndex={setTabIndex}
                         exercise={exercise}
+                        profile={profile}
                         i={i}
                         index={index}
                         workout={exercises}
@@ -322,6 +325,7 @@ const mapStateToProps = ({exercises, profile}: RootState) => ({
   exercisesObj: exercises.exercises,
   autoPlay: profile.profile.autoPlay,
   workoutMusic: profile.profile.workoutMusic,
+  profile: profile.profile,
 });
 
 const mapDispatchToProps = {

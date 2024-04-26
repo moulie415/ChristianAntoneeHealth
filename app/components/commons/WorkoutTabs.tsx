@@ -1,9 +1,10 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useState, RefObject} from 'react';
-import Exercise from '../../types/Exercise';
-import MusclesDiagram from './MusclesDiagram';
-import ExerciseTimer from './ExerciseTimer';
+import React, {RefObject} from 'react';
+import {View} from 'react-native';
 import PagerView from 'react-native-pager-view';
+import Exercise from '../../types/Exercise';
+import {Profile} from '../../types/Shared';
+import ExerciseTimer from './ExerciseTimer';
+import MusclesDiagram from './MusclesDiagram';
 import MyTabs from './MyTabs';
 
 const WorkoutTabs: React.FC<{
@@ -16,6 +17,7 @@ const WorkoutTabs: React.FC<{
   pagerRef: RefObject<PagerView>;
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
+  profile: Profile;
 }> = ({
   tabIndex,
   setTabIndex,
@@ -26,6 +28,7 @@ const WorkoutTabs: React.FC<{
   pagerRef,
   timerPaused,
   onTimerPaused,
+  profile,
 }) => {
   const tabs = ['Timer', 'Muscles'];
 
@@ -51,6 +54,7 @@ const WorkoutTabs: React.FC<{
           <MusclesDiagram
             primary={exercise.muscles}
             secondary={exercise.musclesSecondary}
+            gender={profile.gender}
           />
         )}
       </View>

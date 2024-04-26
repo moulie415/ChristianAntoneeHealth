@@ -1,5 +1,4 @@
 import React from 'react';
-import {Muscle} from '../../types/Exercise';
 import {Path} from 'react-native-svg';
 import colors from '../../constants/colors';
 import {
@@ -24,46 +23,48 @@ import {
   upperBodyBack,
   upperBodyFront,
 } from '../../constants/musclePaths';
+import {Muscle} from '../../types/Exercise';
+import {Gender} from '../../types/Shared';
 
-const getMuscle = (m: Muscle, back?: boolean) => {
+const getMuscle = (m: Muscle, gender?: Gender, back?: boolean) => {
   switch (m) {
     case 'abdominals':
-      return abdominals;
+      return abdominals(gender);
     case 'biceps':
-      return biceps;
+      return biceps(gender);
     case 'calves':
-      return calves;
+      return calves(gender);
     case 'chest':
-      return chest;
+      return chest(gender);
     case 'gluteals':
-      return glutes;
+      return glutes(gender);
     case 'hamstrings':
-      return hamstrings;
+      return hamstrings(gender);
     case 'hipFlexors':
-      return hipFlexors;
+      return hipFlexors(gender);
     case 'innerThigh':
-      return innerThighs;
+      return innerThighs(gender);
     case 'lowBack':
-      return lowerBack;
+      return lowerBack(gender);
     case 'midBack':
     case 'upperBack':
-      return midUpperBack;
+      return midUpperBack(gender);
     case 'obliques':
-      return obliques;
+      return obliques(gender);
     case 'quadriceps':
-      return quads;
+      return quads(gender);
     case 'shoulders':
-      return shoulders;
+      return shoulders(gender);
     case 'triceps':
-      return triceps;
+      return triceps(gender);
     case 'all':
-      return back ? allBack : allFront;
+      return back ? allBack(gender) : allFront(gender);
     case 'arms':
-      return back ? triceps : biceps;
+      return back ? triceps(gender) : biceps(gender);
     case 'upperBody':
-      return back ? upperBodyBack : upperBodyFront;
+      return back ? upperBodyBack(gender) : upperBodyFront(gender);
     case 'leg':
-      return back ? legsBack : legsFront;
+      return back ? legsBack(gender) : legsFront(gender);
   }
 };
 
@@ -71,10 +72,11 @@ const MuscleFill: React.FC<{
   muscle: Muscle;
   secondary?: boolean;
   back?: boolean;
-}> = ({muscle, back, secondary}) => {
+  gender?: Gender;
+}> = ({muscle, back, secondary, gender}) => {
   return (
     <>
-      {getMuscle(muscle, back)?.map(d => {
+      {getMuscle(muscle, gender, back)?.map(d => {
         return (
           <Path
             key={d}

@@ -172,6 +172,7 @@ const StartWorkout: React.FC<{
                         tabIndex={tabIndex}
                         setTabIndex={setTabIndex}
                         exercise={exercise}
+                        profile={profile}
                         i={i}
                         index={index}
                         workout={workout}
