@@ -86,8 +86,13 @@ const QuickRoutineView: React.FC<{
     }
   }, [exercises, index, navigation]);
 
+  const [ap, setAp] = useState(autoPlay);
 
-  const setAutoPlay = (ap: boolean) => updateProfileAction({autoPlay: ap});
+  useEffect(() => {
+    if (ap !== autoPlay) {
+      updateProfileAction({autoPlay: ap, disableSnackbar: true});
+    }
+  }, [ap, updateProfileAction, autoPlay]);
 
   const {heartRateSamples} = useHealthListener(startTime);
 
@@ -219,7 +224,7 @@ const QuickRoutineView: React.FC<{
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index === 0 && (
                           <TouchableOpacity
-                            onPress={() => setAutoPlay(!autoPlay)}
+                            onPress={() => setAp(!ap)}
                             style={{
                               flex: 1,
                               flexDirection: 'row',
@@ -238,10 +243,7 @@ const QuickRoutineView: React.FC<{
                               }}>
                               AUTO-PLAY
                             </Text>
-                            <Toggle
-                              value={autoPlay}
-                              onValueChange={setAutoPlay}
-                            />
+                            <Toggle value={ap} onValueChange={setAp} />
                           </TouchableOpacity>
                         )}
                         {index !== 0 && (

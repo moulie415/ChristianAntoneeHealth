@@ -192,6 +192,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
     muscleMass,
     boneMass,
     goalReminders,
+    disableSnackbar,
   } = action.payload;
   yield put(setLoading(true));
   try {
@@ -245,7 +246,9 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
     };
     yield call(api.updateUser, updateObj, profile.uid);
     yield put(setProfile(updateObj));
-    yield call(Snackbar.show, {text: 'Profile updated'});
+    if (!disableSnackbar) {
+      yield call(Snackbar.show, {text: 'Profile updated'});
+    }
     setUserAttributes({
       birthday: dob || '',
       weight: weight?.toString() || '',
@@ -891,7 +894,7 @@ export default function* profileSaga() {
   yield all([
     throttle(3000, SIGN_UP, signUp),
     takeLatest(GET_SAMPLES, getSamplesWorker),
-    throttle(3000, UPDATE_PROFILE, updateProfile),
+    debounce(1000, UPDATE_PROFILE, updateProfile),
     debounce(3000, HANDLE_AUTH, handleAuthWorker),
     throttle(1000, GET_CONNECTIONS, getConnections),
     takeLatest(SEND_MESSAGE, sendMessage),

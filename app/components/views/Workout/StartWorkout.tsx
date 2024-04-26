@@ -20,12 +20,10 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import Header from '../../commons/Header';
-import Modal from '../../commons/Modal';
 import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import ResistanceScaleInfo from './ResistanceScaleInfo';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -59,7 +57,13 @@ const StartWorkout: React.FC<{
 
   const loadingExercises = !workout || workout.some(e => e === undefined);
 
-  const setAutoPlay = (autoPlay: boolean) => updateProfileAction({autoPlay});
+  const [ap, setAp] = useState(profile.autoPlay);
+
+  useEffect(() => {
+    if (ap !== profile.autoPlay) {
+      updateProfileAction({autoPlay: ap, disableSnackbar: true});
+    }
+  }, [ap, updateProfileAction, profile.autoPlay]);
 
   useEffect(() => {
     if (profile.workoutMusic) {
@@ -198,7 +202,7 @@ const StartWorkout: React.FC<{
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index === 0 && (
                           <TouchableOpacity
-                            onPress={() => setAutoPlay(!profile.autoPlay)}
+                            onPress={() => setAp(!ap)}
                             style={{
                               flex: 1,
                               flexDirection: 'row',
@@ -217,10 +221,7 @@ const StartWorkout: React.FC<{
                               }}>
                               AUTO-PLAY
                             </Text>
-                            <Toggle
-                              value={profile.autoPlay}
-                              onValueChange={setAutoPlay}
-                            />
+                            <Toggle value={ap} onValueChange={setAp} />
                           </TouchableOpacity>
                         )}
                         {index !== 0 && (

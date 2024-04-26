@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import Video, { ResizeMode } from 'react-native-video';
+import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
@@ -60,8 +60,13 @@ const PreQuickRoutine: React.FC<{
   const [paused, setPaused] = useState(false);
   const focused = useIsFocused();
 
-  const setWorkoutMusic = (wm: boolean) =>
-    updateProfileAction({workoutMusic: wm});
+  const [wMusic, setWMusic] = useState(workoutMusic);
+
+  useEffect(() => {
+    if (wMusic !== workoutMusic) {
+      updateProfileAction({workoutMusic: wMusic, disableSnackbar: true});
+    }
+  }, [wMusic, updateProfileAction, workoutMusic]);
 
   useEffect(() => {
     if (focused) {
@@ -256,8 +261,8 @@ const PreQuickRoutine: React.FC<{
           <Text style={{color: colors.appWhite, flex: 1}}>Workout music</Text>
           <Toggle
             style={{marginRight: 20}}
-            value={workoutMusic}
-            onValueChange={setWorkoutMusic}
+            value={wMusic}
+            onValueChange={setWMusic}
           />
         </View>
 

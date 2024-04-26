@@ -292,6 +292,7 @@ export interface UpdateProfilePayload {
   syncPlanWithCalendar?: boolean;
   goalReminders?: boolean;
   favouriteRecipes?: string[];
+  disableSnackbar?: boolean;
 }
 
 export interface Recipe {

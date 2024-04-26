@@ -1,6 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -36,8 +36,13 @@ const PreWorkout: React.FC<{
   const equipmentList = getEquipmentList(workout);
   const musclesList = getMusclesList(workout);
 
-  const setWorkoutMusic = (music: boolean) =>
-    updateProfileAction({workoutMusic: music});
+  const [wMusic, setWMusic] = useState(workoutMusic);
+
+  useEffect(() => {
+    if (wMusic !== workoutMusic) {
+      updateProfileAction({workoutMusic: wMusic, disableSnackbar: true});
+    }
+  }, [wMusic, updateProfileAction, workoutMusic]);
 
   return (
     <>
@@ -156,8 +161,8 @@ const PreWorkout: React.FC<{
           <Text style={{color: colors.appWhite, flex: 1}}>Workout music</Text>
           <Toggle
             style={{marginRight: 20}}
-            value={workoutMusic}
-            onValueChange={setWorkoutMusic}
+            value={wMusic}
+            onValueChange={setWMusic}
           />
         </View>
         <Button
