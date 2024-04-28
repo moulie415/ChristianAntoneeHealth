@@ -11,6 +11,8 @@ import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
+import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
+import {useAppSelector} from '../../../hooks/redux';
 import {updateProfile} from '../../../reducers/profile';
 import Exercise from '../../../types/Exercise';
 import {UpdateProfilePayload} from '../../../types/Shared';
@@ -43,6 +45,10 @@ const PreWorkout: React.FC<{
       updateProfileAction({workoutMusic: wMusic, disableSnackbar: true});
     }
   }, [wMusic, updateProfileAction, workoutMusic]);
+
+  const {prepTime} = useAppSelector(state => state.profile.profile);
+
+  const duration = getWorkoutDurationRounded(workout, prepTime);
 
   return (
     <>
@@ -79,6 +85,25 @@ const PreWorkout: React.FC<{
           }}>
           {planWorkout.name}
         </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 10,
+          }}>
+          <View style={{width: 55, alignItems: 'center'}}>
+            <Icon
+              name="stopwatch"
+              size={25}
+              color={colors.appWhite}
+              style={{
+                marginHorizontal: 15,
+              }}
+            />
+          </View>
+          <Text
+            style={{color: colors.appWhite}}>{`Under ${duration} mins`}</Text>
+        </View>
         <View
           style={{
             flexDirection: 'row',
