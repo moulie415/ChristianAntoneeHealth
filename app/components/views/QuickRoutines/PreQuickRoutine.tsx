@@ -136,25 +136,27 @@ const PreQuickRoutine: React.FC<{
           }}>
           {name}
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
-              name="stopwatch"
-              size={25}
-              color={colors.appWhite}
-              style={{
-                marginHorizontal: 15,
-              }}
-            />
+        {!!duration && (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 10,
+            }}>
+            <View style={{width: 55, alignItems: 'center'}}>
+              <Icon
+                name="stopwatch"
+                size={25}
+                color={colors.appWhite}
+                style={{
+                  marginHorizontal: 15,
+                }}
+              />
+            </View>
+            <Text
+              style={{color: colors.appWhite}}>{`Under ${duration} mins`}</Text>
           </View>
-          <Text
-            style={{color: colors.appWhite}}>{`Under ${duration} mins`}</Text>
-        </View>
+        )}
         <View
           style={{
             flexDirection: 'row',
