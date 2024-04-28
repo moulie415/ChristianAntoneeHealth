@@ -7,7 +7,6 @@ export default interface QuickRoutine {
   id: string;
   name: string;
   area: Area;
-  duration: number;
   equipment: Equipment;
   level: Level;
   premium: boolean;

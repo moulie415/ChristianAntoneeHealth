@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
 import colors from '../../constants/colors';
+import {getWorkoutDurationRounded} from '../../helpers/getWorkoutDurationRounded';
+import {useAppSelector} from '../../hooks/redux';
 import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
-import {Level, PlanWorkout, Profile} from '../../types/Shared';
+import {Level, PlanWorkout} from '../../types/Shared';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
 
@@ -33,10 +33,27 @@ export const getLevelString = (level: Level) => {
 const WorkoutCard: React.FC<{
   item: QuickRoutine | PlanWorkout;
   onPress: () => void;
-  profile: Profile;
   disabled?: boolean;
   plan?: boolean;
-}> = ({item, onPress, profile, disabled, plan}) => {
+}> = ({item, onPress, disabled, plan}) => {
+  const {profile} = useAppSelector(state => state.profile);
+
+  const exercisesObj = useAppSelector(state => state.exercises.exercises);
+
+  const exercises = useMemo(() => {
+    if ('exerciseIds' in item) {
+      return item.exerciseIds.map(id => {
+        return exercisesObj[id];
+      });
+    }
+    if ('exercises' in item) {
+      return item.exercises;
+    }
+    return [];
+  }, [exercisesObj, item]);
+
+  const duration = getWorkoutDurationRounded(exercises, profile.prepTime);
+
   const locked = 'premium' in item && item.premium && !profile.premium;
   return (
     <TouchableOpacity
@@ -125,7 +142,7 @@ const WorkoutCard: React.FC<{
                 )}
               </View>
               <View style={{justifyContent: 'flex-end'}}>
-                {'duration' in item ? (
+                {'duration' in item && (
                   <>
                     <Text
                       style={{
@@ -140,11 +157,12 @@ const WorkoutCard: React.FC<{
                         color: colors.appWhite,
                         fontSize: 12,
                       }}>
-                      <Text style={{fontWeight: 'bold'}}>{item.duration}</Text>
+                      <Text style={{fontWeight: 'bold'}}>{duration}</Text>
                       {' mins'}
                     </Text>
                   </>
-                ) : (
+                )}
+                {'exercises' in item && (
                   <View style={{flexDirection: 'row'}}>
                     <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
                       {item.exercises.length + ' '}
@@ -169,8 +187,4 @@ const WorkoutCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
-  profile: profile.profile,
-});
-
-export default connect(mapStateToProps)(WorkoutCard);
+export default WorkoutCard;

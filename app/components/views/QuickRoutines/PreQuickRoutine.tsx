@@ -8,14 +8,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
 import {getEquipmentList} from '../../../helpers/exercises';
+import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {updateProfile} from '../../../reducers/profile';
-import Exercise from '../../../types/Exercise';
-import {UpdateProfilePayload} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Spinner from '../../commons/Spinner';
@@ -25,23 +24,21 @@ import Toggle from '../../commons/Toggle';
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
   route: RouteProp<StackParamList, 'PreQuickRoutine'>;
-  exercisesObj: {[key: string]: Exercise};
-  workoutMusic?: boolean;
-  updateProfile: (payload: UpdateProfilePayload) => void;
-}> = ({
-  route,
-  navigation,
-  exercisesObj,
-  workoutMusic,
-  updateProfile: updateProfileAction,
-}) => {
+}> = ({route, navigation}) => {
+  const {prepTime, workoutMusic} = useAppSelector(
+    state => state.profile.profile,
+  );
+
+  const exercisesObj = useAppSelector(state => state.exercises.exercises);
+
+  const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState(false);
   const {
     routine: {
       name,
       thumbnail,
       area,
-      duration,
       equipment,
       level,
       exerciseIds,
@@ -55,6 +52,8 @@ const PreQuickRoutine: React.FC<{
     });
   }, [exercisesObj, exerciseIds]);
 
+  const duration = getWorkoutDurationRounded(exercises, prepTime);
+
   const equipmentList = getEquipmentList(exercises);
 
   const [paused, setPaused] = useState(false);
@@ -64,9 +63,9 @@ const PreQuickRoutine: React.FC<{
 
   useEffect(() => {
     if (wMusic !== workoutMusic) {
-      updateProfileAction({workoutMusic: wMusic, disableSnackbar: true});
+      dispatch(updateProfile({workoutMusic: wMusic, disableSnackbar: true}));
     }
-  }, [wMusic, updateProfileAction, workoutMusic]);
+  }, [wMusic, workoutMusic, dispatch]);
 
   useEffect(() => {
     if (focused) {
@@ -281,13 +280,4 @@ const PreQuickRoutine: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: RootState) => ({
-  exercisesObj: exercises.exercises,
-  workoutMusic: profile.profile.workoutMusic,
-});
-
-const mapDispatchToProps = {
-  updateProfile,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PreQuickRoutine);
+export default PreQuickRoutine;
