@@ -24,7 +24,7 @@ export const scheduleLocalNotification = (
   date: Date,
   channel: string,
   title?: string,
-  id?: string,
+  id?: string | number,
   repeatType?: 'week' | 'day' | 'hour' | 'minute' | 'time',
 ) => {
   try {
