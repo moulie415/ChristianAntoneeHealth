@@ -492,7 +492,7 @@ export const getCalorieSamples = async (
   const samples = await GoogleFit.getDailyCalorieSamples({
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
-    bucketUnit: BucketUnit.SECOND,
+    bucketUnit: BucketUnit.DAY,
   });
 
   return samples.map(sample => ({

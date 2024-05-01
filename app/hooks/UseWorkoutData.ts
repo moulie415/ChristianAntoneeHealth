@@ -6,8 +6,6 @@ import {
   getCaloriesBurned,
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
-import * as fitbit from '../helpers/fitbit';
-import * as polar from '../helpers/polar';
 import {CalorieCalculationType, Profile, Sample} from '../types/Shared';
 import useInit from './UseInit';
 const useWorkoutData = (
@@ -15,85 +13,36 @@ const useWorkoutData = (
   profile: Profile,
   difficulty: number,
   endDate: Date,
-  setProfileAction: (payload: Profile) => void,
   currentHeartRateSamples: Sample[],
 ) => {
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
-  const [polarHeartRateSamples, setPolarHeartRateSamples] = useState<Sample[]>(
-    [],
-  );
-  const [fitbitHeartRateSamples, setFitbitHeartRateSamples] = useState<
-    Sample[]
-  >([]);
-  const [garminHeartRateSamples, setGarminHeartRateSamples] = useState<
-    Sample[]
-  >([]);
+  const [calorieSamples, setCalorieSamples] = useState<Sample[]>([]);
 
   const [calories, setCalories] = useState(0);
 
-  const [fitbitData, setFitbitData] = useState<fitbit.ActivitiesHeart[]>([]);
-
   const [loading, setLoading] = useState(false);
+
   useInit(() => {
     const getSamples = async () => {
       try {
         setLoading(true);
-
-        if (profile.polarAccessToken) {
-          const pSamples = await polar.getHeartRateSamples(
-            profile.polarAccessToken,
-            moment(endDate).subtract(seconds, 'seconds').toDate(),
-            endDate,
-          );
-          setPolarHeartRateSamples(pSamples);
-        } else if (
-          profile.fitbitToken &&
-          profile.fitbitUserId &&
-          profile.fitbitRefreshToken &&
-          profile.fitbitTokenTimestamp &&
-          profile.fitbitTokenExpiresIn
-        ) {
-          let token = profile.fitbitToken;
-          if (
-            profile.fitbitTokenTimestamp + profile.fitbitTokenExpiresIn <
-            moment().unix()
-          ) {
-            const data = await fitbit.refreshToken(
-              profile.uid,
-              profile.fitbitRefreshToken,
-            );
-            if (data) {
-              token = data.fitbitToken;
-              setProfileAction({...profile, ...data});
-            }
-          }
-          const {samples: fSamples, data} =
-            await fitbit.getHeartRateTimeSeriesByDate(
-              token,
-              profile.fitbitUserId,
+        const samples = currentHeartRateSamples?.length
+          ? currentHeartRateSamples
+          : await getHeartRateSamples(
               moment(endDate).subtract(seconds, 'seconds').toDate(),
               endDate,
             );
-          setFitbitData(data);
-          setFitbitHeartRateSamples(fSamples);
-        } else {
-          const samples = currentHeartRateSamples?.length
-            ? currentHeartRateSamples
-            : await getHeartRateSamples(
-                moment(endDate).subtract(seconds, 'seconds').toDate(),
-                endDate,
-              );
 
-          setHeartRateSamples(samples);
-          const calorieSamples = await getCalorieSamples(
-            moment(endDate).subtract(seconds, 'seconds').toDate(),
-            endDate,
-          );
-          if (calorieSamples.length) {
-            setCalories(
-              calorieSamples.reduce((acc, cur) => acc + cur.value, 0),
-            );
-          }
+        setHeartRateSamples(samples);
+
+        const cSamples = await getCalorieSamples(
+          moment(endDate).subtract(seconds, 'seconds').toDate(),
+          endDate,
+        );
+
+        if (cSamples.length) {
+          setCalorieSamples(cSamples);
+          setCalories(calorieSamples.reduce((acc, cur) => acc + cur.value, 0));
         }
       } catch (e) {
         logError(e);
@@ -103,57 +52,56 @@ const useWorkoutData = (
     getSamples();
   });
 
-  const getValidHeartRateSamples = () => {
-    if (polarHeartRateSamples.length) {
-      return polarHeartRateSamples;
-    }
-    if (garminHeartRateSamples.length) {
-      return garminHeartRateSamples;
-    }
-
-    if (fitbitHeartRateSamples.length) {
-      return fitbitHeartRateSamples;
-    }
-    return heartRateSamples;
-  };
-
-  const validHeartRateSamples = getValidHeartRateSamples();
-
-  const averageHeartRate = validHeartRateSamples.length
-    ? validHeartRateSamples.reduce((acc, cur) => {
+  const averageHeartRate = heartRateSamples.length
+    ? heartRateSamples.reduce((acc, cur) => {
         return acc + cur.value;
-      }, 0) / validHeartRateSamples.length
+      }, 0) / heartRateSamples.length
     : 0;
 
-  const calorieCalculationType: CalorieCalculationType = calories
-    ? 'sample'
-    : validHeartRateSamples &&
-      validHeartRateSamples.length &&
-      profile.dob &&
-      profile.gender
-    ? 'heartRate'
-    : 'estimate';
+  const calorieSamplesSpan = Math.abs(
+    calorieSamples.reduce((acc, cur) => {
+      const start = moment(cur.startDate);
+      const end = moment(cur.endDate);
+      const diff = start.diff(end, 'seconds');
+      return acc + diff;
+    }, 0),
+  );
 
-  return {
-    loading,
-    heartRateSamples: validHeartRateSamples,
-    averageHeartRate,
-    fitbitData,
-    calorieCalculationType,
-    calories: calories
-      ? calories
-      : validHeartRateSamples &&
-        validHeartRateSamples.length &&
-        profile.dob &&
-        profile.gender
+  const caloriesEstimate =
+    getCaloriesBurned(seconds, difficulty, profile.weight) || 0;
+
+  const shouldUseCalorieSamples =
+    calorieSamplesSpan / seconds >= 0.8 &&
+    calories > (caloriesEstimate || 0) / 2;
+
+  const caloriesFromHeartRate =
+    heartRateSamples && heartRateSamples.length && profile.dob && profile.gender
       ? getCaloriesBurnedFromAverageHeartRate(
           seconds,
           averageHeartRate,
           profile.dob,
           profile.weight,
           profile.gender,
-        )
-      : getCaloriesBurned(seconds, difficulty, profile.weight),
+        ) || 0
+      : 0;
+
+  const calorieCalculationType: CalorieCalculationType = shouldUseCalorieSamples
+    ? 'sample'
+    : caloriesFromHeartRate
+    ? 'heartRate'
+    : 'estimate';
+
+  return {
+    loading,
+    heartRateSamples,
+    averageHeartRate,
+    calorieSamples,
+    calorieCalculationType,
+    calories: shouldUseCalorieSamples
+      ? calories
+      : caloriesFromHeartRate
+      ? caloriesFromHeartRate
+      : caloriesEstimate,
   };
 };
 

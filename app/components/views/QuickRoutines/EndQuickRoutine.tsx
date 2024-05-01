@@ -12,7 +12,6 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutData from '../../../hooks/UseWorkoutData';
-import {setProfile} from '../../../reducers/profile';
 import {saveQuickRoutine} from '../../../reducers/quickRoutines';
 import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
@@ -27,14 +26,12 @@ const EndQuickRoutine: React.FC<{
   profile: Profile;
   workout: Exercise[];
   saveQuickRoutine: (payload: SavedQuickRoutine) => void;
-  setProfile: (profile: Profile) => void;
 }> = ({
   route,
   navigation,
   profile,
   workout,
   saveQuickRoutine: saveQuickRoutineAction,
-  setProfile: setProfileAction,
 }) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -55,16 +52,9 @@ const EndQuickRoutine: React.FC<{
     averageHeartRate,
     heartRateSamples,
     calories,
-    fitbitData,
+    calorieSamples,
     calorieCalculationType,
-  } = useWorkoutData(
-    seconds,
-    profile,
-    difficulty,
-    endTime,
-    setProfileAction,
-    hSamples,
-  );
+  } = useWorkoutData(seconds, profile, difficulty, endTime, hSamples);
 
   useEffect(() => {
     setLoading(isLoading);
@@ -84,7 +74,7 @@ const EndQuickRoutine: React.FC<{
       pauseEvents,
       startTime,
       endTime,
-      fitbitData,
+      calorieSamples,
       calorieCalculationType,
     });
   }, 3000);
@@ -183,7 +173,6 @@ const mapStateToProps = ({profile, exercises}: RootState) => ({
 
 const mapDispatchToProps = {
   saveQuickRoutine,
-  setProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EndQuickRoutine);

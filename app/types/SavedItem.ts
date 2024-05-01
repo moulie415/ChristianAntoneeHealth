@@ -22,7 +22,7 @@ export interface SavedWorkout {
   pauseEvents: PauseEvent[];
   startTime: Date;
   endTime: Date;
-  fitbitData: ActivitiesHeart[];
+  calorieSamples: Sample[];
   planId: string;
   calorieCalculationType: CalorieCalculationType;
 }
@@ -50,6 +50,6 @@ export interface SavedQuickRoutine {
   pauseEvents: PauseEvent[];
   startTime: Date;
   endTime: Date;
-  fitbitData: ActivitiesHeart[];
+  calorieSamples: Sample[];
   calorieCalculationType: CalorieCalculationType;
 }

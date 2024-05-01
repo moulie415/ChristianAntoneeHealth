@@ -13,7 +13,6 @@ import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutData from '../../../hooks/UseWorkoutData';
 import {saveWorkout as saveWorkoutAction} from '../../../reducers/exercises';
-import {setProfile} from '../../../reducers/profile';
 import Exercise from '../../../types/Exercise';
 import {SavedWorkout} from '../../../types/SavedItem';
 import {Profile} from '../../../types/Shared';
@@ -28,14 +27,7 @@ const EndWorkout: React.FC<{
   workout: Exercise[];
   saveWorkoutAction: (workout: SavedWorkout) => void;
   setProfile: (profile: Profile) => void;
-}> = ({
-  route,
-  navigation,
-  profile,
-  workout,
-  saveWorkoutAction: saveAction,
-  setProfile: setProfileAction,
-}) => {
+}> = ({route, navigation, profile, workout, saveWorkoutAction: saveAction}) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
@@ -55,16 +47,9 @@ const EndWorkout: React.FC<{
     averageHeartRate,
     heartRateSamples,
     calories,
-    fitbitData,
+    calorieSamples,
     calorieCalculationType,
-  } = useWorkoutData(
-    seconds,
-    profile,
-    difficulty,
-    endTime,
-    setProfileAction,
-    hSamples,
-  );
+  } = useWorkoutData(seconds, profile, difficulty, endTime, hSamples);
 
   useEffect(() => {
     setLoading(isLoading);
@@ -85,7 +70,7 @@ const EndWorkout: React.FC<{
       pauseEvents,
       startTime,
       endTime,
-      fitbitData,
+      calorieSamples,
       planId: planId || '',
       calorieCalculationType,
     });
@@ -178,7 +163,6 @@ const EndWorkout: React.FC<{
 
 const mapDispatchToProps = {
   saveWorkoutAction,
-  setProfile,
 };
 
 const mapStateToProps = ({profile, exercises}: RootState) => ({
