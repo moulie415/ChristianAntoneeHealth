@@ -415,8 +415,7 @@ function* getWeeklyItems() {
   }
 }
 
-export const GOAL_REMINDER_KEY =
-  Platform.OS === 'ios' ? 'goalReminder' : undefined;
+export const GOAL_REMINDER_KEY = 'goalReminder';
 
 export function* scheduleGoalReminderNotification() {
   const {profile, weeklyItems}: {profile: Profile; weeklyItems: WeeklyItems} =
