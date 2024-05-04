@@ -21,7 +21,7 @@ class MainActivity : ReactActivity() {
 
    override fun onCreate(savedInstanceState: Bundle?) {
        SplashScreen.show(this)
-       super.onCreate(savedInstanceState)
+       super.onCreate(null)
        // Instantiate PatchWorker
        val patchWorker = OneTimeWorkRequest.Builder(PatchWorker::class.java).build()
        // Enqueue the worker
