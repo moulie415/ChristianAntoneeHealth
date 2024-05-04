@@ -142,7 +142,7 @@ const WorkoutCard: React.FC<{
                 )}
               </View>
               <View style={{justifyContent: 'flex-end'}}>
-                {'duration' in item && !!item.duration && (
+                {!!duration && (
                   <>
                     <Text
                       style={{
