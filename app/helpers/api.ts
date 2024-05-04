@@ -794,8 +794,8 @@ export const getSamples = async (
   return samples.docs.map(doc => {
     const data = doc.data();
     return {
-      startDate: data.createdate,
-      endDate: data.createdate,
+      startDate: data.createdate?.toDate(),
+      endDate: data.createdate?.toDate(),
       value: data.value,
     };
   });
