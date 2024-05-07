@@ -1,13 +1,12 @@
-import {View} from 'react-native';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {navigationRef} from '../../RootNavigation';
+import colors from '../../constants/colors';
 import {PlanSleep} from '../../types/Shared';
 import Text from './Text';
-import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import LinearGradient from 'react-native-linear-gradient';
 
 const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
   return (
@@ -32,7 +31,7 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
             padding: 10,
             borderRadius: 10,
             position: 'absolute',
-            bottom: 0,
+            bottom: -1,
             right: 0,
             left: 0,
           }}>

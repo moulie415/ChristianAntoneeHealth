@@ -1,6 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {ReactNode, useEffect, useState} from 'react';
+import LottieView from 'lottie-react-native';
+import React, {ReactNode, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -55,6 +56,7 @@ const Premium: React.FC<{
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
   const onActivated = route.params?.onActivated;
 
   const getOfferings = async () => {
@@ -104,9 +106,18 @@ const Premium: React.FC<{
           await getOfferings();
 
           setLoading(false);
-          const isPremiumPlus =  typeof customerInfo.entitlements.active[PREMIUM_PLUS] !== 'undefined';
+          setShowAnimation(true);
+
+          const isPremiumPlus =
+            typeof customerInfo.entitlements.active[PREMIUM_PLUS] !==
+            'undefined';
+          isPremiumPlus
+            ? premiumPlusAnimationRef.current?.play()
+            : premiumAnimationRef.current?.play();
           setPremiumAction(customerInfo.entitlements.active);
-          Snackbar.show({text: 'Premium activated!'});
+          Snackbar.show({
+            text: `Premium ${isPremiumPlus ? 'Plus ' : ''}activated!`,
+          });
           if (onActivated) {
             onActivated();
           }
@@ -194,6 +205,10 @@ const Premium: React.FC<{
     premiumActive === 'monthly:monthly-plus' ||
     premiumActive === 'monthly_plus';
   const hasUsedTrial = info && info.entitlements.all[0];
+
+  const premiumAnimationRef = useRef<LottieView>(null);
+
+  const premiumPlusAnimationRef = useRef<LottieView>(null);
 
   return (
     <>
@@ -354,10 +369,22 @@ const Premium: React.FC<{
                       typeof restore.entitlements.active[PREMIUM_PLUS] !==
                         'undefined'
                     ) {
+                      await getOfferings();
                       setLoading(false);
-                      navigation.goBack();
                       setPremiumAction(restore.entitlements.active);
-                      Snackbar.show({text: 'Premium re-activated'});
+                      const isPremiumPlus =
+                        typeof restore.entitlements.active[PREMIUM_PLUS] !==
+                        'undefined';
+                      setShowAnimation(true);
+
+                      isPremiumPlus
+                        ? premiumPlusAnimationRef.current?.play()
+                        : premiumAnimationRef.current?.play();
+                      Snackbar.show({
+                        text: `Premium ${
+                          isPremiumPlus ? 'Plus ' : ''
+                        }re-activated`,
+                      });
                     } else {
                       setLoading(false);
                       Snackbar.show({
@@ -389,6 +416,34 @@ const Premium: React.FC<{
       </View>
 
       <AbsoluteSpinner loading={loading} />
+      <LottieView
+        source={require('../../../animations/fireworks.json')}
+        ref={premiumPlusAnimationRef}
+        onAnimationFinish={() => setShowAnimation(false)}
+        loop={false}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+          display: showAnimation ? 'flex' : 'none',
+        }}
+      />
+      <LottieView
+        source={require('../../../animations/tick.json')}
+        ref={premiumAnimationRef}
+        loop={false}
+        onAnimationFinish={() => setShowAnimation(false)}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+          display: showAnimation ? 'flex' : 'none',
+        }}
+      />
     </>
   );
 };

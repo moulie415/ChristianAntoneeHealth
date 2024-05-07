@@ -546,7 +546,7 @@ const Chat: React.FC<ChatProps> = ({
     const messageId = msg.id;
     const options = ['Cancel'];
 
-    const copyText = 'Copy Text';
+    const copyText = 'Copy text';
     const deleteMessage = 'Delete message';
     if (message.user._id === profile.uid) {
       options.unshift(deleteMessage);
