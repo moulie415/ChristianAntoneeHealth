@@ -131,37 +131,46 @@ const MetricExplained: React.FC<{
                     backgroundColor: color,
                     height: 7,
                     justifyContent: 'center',
-                  }}>
-                  {isInRange && !!current && (
-                    <>
-                      <View
-                        style={{
-                          height: 15,
-                          width: 15,
-                          backgroundColor: colors.appWhite,
-                          borderRadius: 8,
-                          left: `${percentage}%`,
-                          marginLeft: -8,
-                          borderWidth: 2,
-                          borderColor: color,
-                        }}
-                      />
-                      <Text
-                        style={{
-                          position: 'absolute',
-                          left: `${percentage}%`,
-                          color: colors.appWhite,
-                          top: 14,
-                          marginLeft: current > 9 ? -7 : -4,
-                          fontSize: 10,
-                          textAlign: 'center',
-                          fontWeight: 'bold',
-                        }}>
-                        {current}
-                      </Text>
-                    </>
-                  )}
-                </View>
+                  }}
+                />
+                {isInRange && !!current && (
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      zIndex: 2,
+                      alignItems: 'center',
+                      backgroundColor: 'red',
+                      marginTop: -3.5
+                    }}>
+                    <View
+                      style={{
+                        height: 15,
+                        width: 15,
+                        backgroundColor: colors.appWhite,
+                        borderRadius: 8,
+                        left: `${percentage}%`,
+                        marginLeft: -8,
+                        borderWidth: 2,
+                        borderColor: color,
+                        position: 'absolute',
+                      }}
+                    />
+                    <Text
+                      style={{
+                        position: 'absolute',
+                        left: `${percentage}%`,
+                        color: colors.appWhite,
+                        top: 14,
+                        marginLeft: current > 9 ? -7 : -4,
+                        fontSize: 10,
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                      }}>
+                      {current}
+                    </Text>
+                  </View>
+                )}
+
                 <Text
                   style={{
                     fontSize: 9,
