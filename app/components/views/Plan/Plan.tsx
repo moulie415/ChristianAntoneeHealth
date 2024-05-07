@@ -20,8 +20,8 @@ import {logError} from '../../../helpers/error';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {getPlan, setRead} from '../../../reducers/profile';
 import {Plan as PlanType, Profile} from '../../../types/Shared';
-import Button from '../../commons/Button';
 import Header from '../../commons/Header';
+import Loader from '../../commons/Loader';
 import Text from '../../commons/Text';
 import Daily from './Daily';
 import Monthly from './Monthly';
@@ -185,8 +185,8 @@ const Plan: React.FC<{
               Christian creates your plan it will appear here.{' '}
               {hasPremium ? (
                 <Text>
-                  You're are already subscribed to Premium so you just need to
-                  wait for Christian to create your plan.
+                  You're are already subscribed to Premium Plus so you just need
+                  to wait for Christian to create your plan.
                 </Text>
               ) : (
                 <Text>
@@ -194,13 +194,9 @@ const Plan: React.FC<{
                 </Text>
               )}
             </Text>
-            {!hasPremium && (
-              <Button
-                style={{marginTop: 20}}
-                text="Get Premium"
-                onPress={() => navigation.navigate('Premium', {})}
-              />
-            )}
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <Loader size={300} />
+            </View>
           </View>
         </SafeAreaView>
       )}

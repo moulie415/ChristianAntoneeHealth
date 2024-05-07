@@ -1,7 +1,7 @@
 import React from 'react';
-import Spinner from 'react-native-spinkit';
-import colors from '../../constants/colors';
 import {View} from 'react-native';
+import colors from '../../constants/colors';
+import Loader from '../commons/Loader';
 
 const Loading = () => {
   return (
@@ -14,7 +14,7 @@ const Loading = () => {
         justifyContent: 'center',
         backgroundColor: colors.appGrey,
       }}>
-      <Spinner type="ChasingDots" color={colors.appWhite} />
+      <Loader />
     </View>
   );
 };

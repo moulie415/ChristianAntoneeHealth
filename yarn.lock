@@ -2976,10 +2976,10 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
 
-"@revenuecat/purchases-typescript-internal@10.4.1":
-  version "10.4.1"
-  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-10.4.1.tgz#ff9272e4d2cd8a92b70c0ecb2f0e0d84ec17c65b"
-  integrity sha512-RaN4dAhsieV+oLJNJEd7Am05qpBuhyzigIaOjgTWJtyonYKDqeNmvKkWoDG4obN2ONbIzShfFXaBnReBa5GuhQ==
+"@revenuecat/purchases-typescript-internal@10.6.1":
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-10.6.1.tgz#f3e34ef9114ba65028c5b8e92e4e89c1bdfd0671"
+  integrity sha512-97FsLylxu+qHocxFbLkoHbJ9WRfFXGUT1srKUcvcH33UPFP8eQHrsJwMPlB/4EmXC9Uf/CchTakNcSNsx5vmhQ==
 
 "@sentry-internal/feedback@7.110.1":
   version "7.110.1"
@@ -7228,6 +7228,11 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lottie-react-native@^6.7.2:
+  version "6.7.2"
+  resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-6.7.2.tgz#615fc16f88970fcbdf63699537f499b5937afe8a"
+  integrity sha512-MZVx6N1EeO/EaSx8T44mJ0aHc5Mqee+xIfWwszni0oz8U2wlHdaWGjES44dHxaxgAp/0dRaFt3PkpZ6egTzcBg==
+
 lower-case@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/lower-case/-/lower-case-2.0.2.tgz#6fa237c63dbdc4a82ca0fd882e4722dc5e634e28"
@@ -8918,12 +8923,12 @@ react-native-progress@^5.0.1:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-purchases@^7.26.2:
-  version "7.26.2"
-  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-7.26.2.tgz#c55966986ee88c357549f52c2d295b39d912c1fb"
-  integrity sha512-s87KGiRnjZyZlspXVrq9Kfqhgf9wZodHorapgX8+JjKcYEJQNFKvedLvH5zwIh/Xw/JNU5VCnDwik3k/ZIbnuA==
+react-native-purchases@^7.27.1:
+  version "7.27.1"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-7.27.1.tgz#2e5c640fc5c5027fd843fe87432bc8d173a63bd6"
+  integrity sha512-F/YT80W/VBsL86UUsNubj05Tiapgs+0i7Cw0qLKJQXnlGAAUYgbUgW24LIQon5wOlmCvvefmnuHoXuWsCbxy4A==
   dependencies:
-    "@revenuecat/purchases-typescript-internal" "10.4.1"
+    "@revenuecat/purchases-typescript-internal" "10.6.1"
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"

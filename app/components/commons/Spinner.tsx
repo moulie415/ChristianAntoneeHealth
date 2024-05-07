@@ -1,7 +1,7 @@
 import React from 'react';
 import {ViewStyle} from 'react-native';
-import SpinKit from 'react-native-spinkit';
 import colors from '../../constants/colors';
+import Loader from './Loader';
 
 const Spinner: React.FC<{
   color?: string;
@@ -9,15 +9,10 @@ const Spinner: React.FC<{
   visible?: boolean;
   style?: ViewStyle;
 }> = ({color = colors.appWhite, size = 35, visible = true, style}) => {
-  return (
-    <SpinKit
-      color={color}
-      size={size}
-      isVisible={visible}
-      style={style}
-      type="ChasingDots"
-    />
-  );
+  if (!visible) {
+    return null;
+  }
+  return <Loader />;
 };
 
 export default Spinner;

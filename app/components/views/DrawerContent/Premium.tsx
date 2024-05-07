@@ -21,7 +21,6 @@ import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
-import {navigationRef} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {PREMIUM_PLUS} from '../../../helpers/hasPremiumPlus';
@@ -57,27 +56,29 @@ const Premium: React.FC<{
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
   const onActivated = route.params?.onActivated;
-  useEffect(() => {
-    const getOfferings = async () => {
-      try {
-        const purchaserInfo = await Purchases.getCustomerInfo();
-        setInfo(purchaserInfo);
-        const offerings = await Purchases.getOfferings();
-        if (
-          offerings.current !== null &&
-          offerings.current.availablePackages.length !== 0
-        ) {
-          // offerings.current.availablePackages.forEach(pkg => {
-          //   console.log(pkg.product.productCategory);
-          // });
-          setPackages(offerings.current.availablePackages);
-        }
-      } catch (e) {
-        // @ts-ignore
-        Alert.alert('Error fetching Premium offerings', e.message);
-        logError(e);
+
+  const getOfferings = async () => {
+    try {
+      const purchaserInfo = await Purchases.getCustomerInfo();
+      setInfo(purchaserInfo);
+      const offerings = await Purchases.getOfferings();
+      if (
+        offerings.current !== null &&
+        offerings.current.availablePackages.length !== 0
+      ) {
+        // offerings.current.availablePackages.forEach(pkg => {
+        //   console.log(pkg.product.productCategory);
+        // });
+        setPackages(offerings.current.availablePackages);
       }
-    };
+    } catch (e) {
+      // @ts-ignore
+      Alert.alert('Error fetching Premium offerings', e.message);
+      logError(e);
+    }
+  };
+
+  useEffect(() => {
     getOfferings();
   }, []);
 
@@ -100,8 +101,10 @@ const Premium: React.FC<{
           typeof customerInfo.entitlements.active.Premium !== 'undefined' ||
           typeof customerInfo.entitlements.active[PREMIUM_PLUS] !== 'undefined'
         ) {
+          await getOfferings();
+
           setLoading(false);
-          navigationRef.goBack();
+          const isPremiumPlus =  typeof customerInfo.entitlements.active[PREMIUM_PLUS] !== 'undefined';
           setPremiumAction(customerInfo.entitlements.active);
           Snackbar.show({text: 'Premium activated!'});
           if (onActivated) {
