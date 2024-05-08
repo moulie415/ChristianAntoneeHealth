@@ -17,7 +17,6 @@ import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {updateProfile} from '../../../reducers/profile';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
-import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 
@@ -83,21 +82,10 @@ const PreQuickRoutine: React.FC<{
             source={{uri: convertToProxyURL(preview.src)}}
             style={{height: getVideoHeight(), width: '100%'}}
             resizeMode={ResizeMode.COVER}
-            onLoad={() => setLoading(false)}
-            onLoadStart={() => setLoading(true)}
             repeat
             disableFocus
             paused={paused}
           />
-          {loading && (
-            <Spinner
-              style={{
-                position: 'absolute',
-                left: '45%',
-                top: getVideoHeight() / 2,
-              }}
-            />
-          )}
           <Header absolute hasBack />
         </>
       ) : (
