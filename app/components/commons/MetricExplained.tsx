@@ -114,7 +114,7 @@ const MetricExplained: React.FC<{
             const percentage = _.clamp((val / diff) * 100, 100);
 
             return (
-              <View key={color + ranges[index]} style={{flex: 1}}>
+              <View key={color + ranges[index]} style={{flex: 1, zIndex: -index}}>
                 <Text
                   style={{
                     textAlign: 'left',
@@ -137,7 +137,6 @@ const MetricExplained: React.FC<{
                   <View
                     style={{
                       justifyContent: 'center',
-                      zIndex: 2,
                       width: '100%',
                       height: '100%',
                       position: 'absolute',
