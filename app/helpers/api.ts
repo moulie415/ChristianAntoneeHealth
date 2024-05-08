@@ -71,7 +71,9 @@ export const appleSignIn = async () => {
   }
 };
 
-export const facebookSignIn = async () => {
+export const facebookSignIn = async (
+  handleAuthAction: (user: FirebaseAuthTypes.User) => void,
+) => {
   try {
     // Attempt login with permissions
     if (Platform.OS === 'ios') {
@@ -121,6 +123,7 @@ export const facebookSignIn = async () => {
       );
 
       const credentials = await auth().signInWithCredential(facebookCredential);
+      handleAuthAction(credentials.user);
       return credentials;
     }
   } catch (e) {
@@ -133,7 +136,9 @@ export const facebookSignIn = async () => {
   }
 };
 
-export const googleSignIn = async () => {
+export const googleSignIn = async (
+  handleAuthAction: (user: FirebaseAuthTypes.User) => void,
+) => {
   // Get the users ID token
   try {
     const {idToken} = await GoogleSignin.signIn();
@@ -143,7 +148,7 @@ export const googleSignIn = async () => {
 
     // Sign-in the user with the credential
     const credentials = await auth().signInWithCredential(googleCredential);
-
+    handleAuthAction(credentials.user);
     return credentials;
   } catch (e) {
     // @ts-ignore

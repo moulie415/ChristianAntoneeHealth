@@ -53,7 +53,7 @@ const Login: React.FC<{
   const signInFacebook = async () => {
     try {
       setFacebookLoading(true);
-      await facebookSignIn();
+      await facebookSignIn(handleAuthAction);
     } catch (e) {
       setFacebookLoading(false);
     }
@@ -62,7 +62,7 @@ const Login: React.FC<{
   const signInGoogle = async () => {
     try {
       setGoogleLoading(true);
-      await googleSignIn();
+      await googleSignIn(handleAuthAction);
     } catch (e) {
       setGoogleLoading(false);
     }

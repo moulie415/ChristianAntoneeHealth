@@ -138,9 +138,11 @@ const MetricExplained: React.FC<{
                     style={{
                       justifyContent: 'center',
                       zIndex: 2,
-                      alignItems: 'center',
-                      backgroundColor: 'red',
-                      marginTop: -3.5
+                      width: '100%',
+                      height: '100%',
+                      position: 'absolute',
+                      left: `${percentage}%`,
+                      marginTop: -7
                     }}>
                     <View
                       style={{
@@ -148,23 +150,20 @@ const MetricExplained: React.FC<{
                         width: 15,
                         backgroundColor: colors.appWhite,
                         borderRadius: 8,
-                        left: `${percentage}%`,
+                    
                         marginLeft: -8,
                         borderWidth: 2,
                         borderColor: color,
-                        position: 'absolute',
                       }}
                     />
                     <Text
                       style={{
-                        position: 'absolute',
-                        left: `${percentage}%`,
                         color: colors.appWhite,
-                        top: 14,
                         marginLeft: current > 9 ? -7 : -4,
                         fontSize: 10,
-                        textAlign: 'center',
                         fontWeight: 'bold',
+                        position: 'absolute',
+                        bottom: 10                        
                       }}>
                       {current}
                     </Text>
