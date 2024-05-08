@@ -72,7 +72,7 @@ export const appleSignIn = async () => {
 };
 
 export const facebookSignIn = async (
-  handleAuthAction: (user: FirebaseAuthTypes.User) => void,
+  handleAuthAction?: (user: FirebaseAuthTypes.User) => void,
 ) => {
   try {
     // Attempt login with permissions
@@ -123,7 +123,9 @@ export const facebookSignIn = async (
       );
 
       const credentials = await auth().signInWithCredential(facebookCredential);
-      handleAuthAction(credentials.user);
+      if (handleAuthAction) {
+        handleAuthAction(credentials.user);
+      }
       return credentials;
     }
   } catch (e) {
@@ -137,7 +139,7 @@ export const facebookSignIn = async (
 };
 
 export const googleSignIn = async (
-  handleAuthAction: (user: FirebaseAuthTypes.User) => void,
+  handleAuthAction?: (user: FirebaseAuthTypes.User) => void,
 ) => {
   // Get the users ID token
   try {
@@ -148,7 +150,9 @@ export const googleSignIn = async (
 
     // Sign-in the user with the credential
     const credentials = await auth().signInWithCredential(googleCredential);
-    handleAuthAction(credentials.user);
+    if (handleAuthAction) {
+      handleAuthAction(credentials.user);
+    }
     return credentials;
   } catch (e) {
     // @ts-ignore
