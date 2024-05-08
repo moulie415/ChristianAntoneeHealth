@@ -182,7 +182,7 @@ const Chat: React.FC<ChatProps> = ({
   const sorted = useMemo(() => {
     const messages = Object.values(messagesObj || {});
     return messages
-      .sort((a, b) => (b.createdAt as number) - (a.createdAt as number))
+      .sort((a, b) => (b?.createdAt as number) - (a?.createdAt as number))
       .map(message => {
         return {
           ...message,
@@ -202,8 +202,8 @@ const Chat: React.FC<ChatProps> = ({
   const cursor = useRef(0);
 
   const loadEarlier = useCallback(async () => {
-    const startAfter = sorted[sorted.length - 1].createdAt;
-    if (cursor.current === startAfter) {
+    const startAfter = sorted[sorted.length - 1]?.createdAt;
+    if (cursor.current === startAfter || !startAfter) {
       return;
     }
     cursor.current = startAfter as number;

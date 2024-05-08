@@ -77,7 +77,7 @@ const Connections: React.FC<{
         user: {_id: ''},
       };
       messagesArr.forEach(msg => {
-        if (msg.createdAt > message.createdAt) {
+        if (msg?.createdAt > message?.createdAt) {
           message = msg;
         }
       });
@@ -105,7 +105,7 @@ const Connections: React.FC<{
           message.type === 'video' ||
           message.type === 'document' ||
           message.type === 'image',
-        createdAt: message.createdAt as number,
+        createdAt: message?.createdAt as number,
       };
     }
     return {preview: 'Beginning of chat', italicize: true};
