@@ -41,7 +41,9 @@ GoogleSignin.configure({
     '48631950986-ibg0u91q5m6hsllkunhe9frf00id7r8c.apps.googleusercontent.com', // From Firebase Console Settings
 });
 
-export const appleSignIn = async () => {
+export const appleSignIn = async (
+  handleAuthAction?: (user: FirebaseAuthTypes.User) => void,
+) => {
   try {
     // Start the sign-in request
     const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -62,7 +64,11 @@ export const appleSignIn = async () => {
     );
 
     // Sign the user in with the credential
-    return auth().signInWithCredential(appleCredential);
+    const credentials = await auth().signInWithCredential(appleCredential);
+    if (handleAuthAction) {
+      handleAuthAction(credentials.user);
+    }
+    return credentials;
   } catch (e) {
     if (e instanceof Error) {
       Alert.alert('Error', e.message);

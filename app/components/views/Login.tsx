@@ -44,7 +44,7 @@ const Login: React.FC<{
   const signInApple = async () => {
     try {
       setAppleLoading(true);
-      await appleSignIn();
+      await appleSignIn(handleAuthAction);
     } catch (e) {
       setAppleLoading(false);
     }

@@ -1,7 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import LottieView from 'lottie-react-native';
-import React, {ReactNode, useEffect, useRef, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -22,15 +22,17 @@ import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
+import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
-import {PREMIUM_PLUS} from '../../../helpers/hasPremiumPlus';
+import {PREMIUM_PLUS, hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {setPremium} from '../../../reducers/profile';
 import {SettingsState} from '../../../reducers/settings';
 import {Profile} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
+import Modal from '../../commons/Modal';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
 
@@ -56,7 +58,7 @@ const Premium: React.FC<{
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [showAnimationModal, setShowAnimationModal] = useState(false);
   const onActivated = route.params?.onActivated;
 
   const getOfferings = async () => {
@@ -106,18 +108,10 @@ const Premium: React.FC<{
           await getOfferings();
 
           setLoading(false);
-          setShowAnimation(true);
+          setShowAnimationModal(true);
 
-          const isPremiumPlus =
-            typeof customerInfo.entitlements.active[PREMIUM_PLUS] !==
-            'undefined';
-          isPremiumPlus
-            ? premiumPlusAnimationRef.current?.play()
-            : premiumAnimationRef.current?.play();
           setPremiumAction(customerInfo.entitlements.active);
-          Snackbar.show({
-            text: `Premium ${isPremiumPlus ? 'Plus ' : ''}activated!`,
-          });
+
           if (onActivated) {
             onActivated();
           }
@@ -201,14 +195,8 @@ const Premium: React.FC<{
 
   const premiumActive = info && info.activeSubscriptions[0];
 
-  const premiumPlusActive =
-    premiumActive === 'monthly:monthly-plus' ||
-    premiumActive === 'monthly_plus';
+  const premiumPlusActive = hasPremiumPlus(profile.premium);
   const hasUsedTrial = info && info.entitlements.all[0];
-
-  const premiumAnimationRef = useRef<LottieView>(null);
-
-  const premiumPlusAnimationRef = useRef<LottieView>(null);
 
   return (
     <>
@@ -372,19 +360,8 @@ const Premium: React.FC<{
                       await getOfferings();
                       setLoading(false);
                       setPremiumAction(restore.entitlements.active);
-                      const isPremiumPlus =
-                        typeof restore.entitlements.active[PREMIUM_PLUS] !==
-                        'undefined';
-                      setShowAnimation(true);
 
-                      isPremiumPlus
-                        ? premiumPlusAnimationRef.current?.play()
-                        : premiumAnimationRef.current?.play();
-                      Snackbar.show({
-                        text: `Premium ${
-                          isPremiumPlus ? 'Plus ' : ''
-                        }re-activated`,
-                      });
+                      setShowAnimationModal(true);
                     } else {
                       setLoading(false);
                       Snackbar.show({
@@ -416,34 +393,53 @@ const Premium: React.FC<{
       </View>
 
       <AbsoluteSpinner loading={loading} />
-      <LottieView
-        source={require('../../../animations/fireworks.json')}
-        ref={premiumPlusAnimationRef}
-        onAnimationFinish={() => setShowAnimation(false)}
-        loop={false}
-        style={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-          display: showAnimation ? 'flex' : 'none',
-        }}
-      />
-      <LottieView
-        source={require('../../../animations/tick.json')}
-        ref={premiumAnimationRef}
-        loop={false}
-        onAnimationFinish={() => setShowAnimation(false)}
-        style={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-          display: showAnimation ? 'flex' : 'none',
-        }}
-      />
+      <Modal
+        visible={showAnimationModal}
+        onRequestClose={() => setShowAnimationModal(false)}>
+        <View
+          style={{
+            backgroundColor: colors.appGrey,
+            width: '90%',
+            borderRadius: 10,
+            padding: 20,
+          }}>
+          <Text
+            style={{
+              color: colors.appWhite,
+              textAlign: 'center',
+              fontSize: FONTS_SIZES.LARGE,
+            }}>
+            Thank you for your purchase!
+          </Text>
+          {premiumPlusActive ? (
+            <LottieView
+              source={require('../../../animations/fireworks.json')}
+              autoPlay
+              loop
+              style={{width: '100%', height: 300}}
+            />
+          ) : (
+            <LottieView
+              source={require('../../../animations/tick.json')}
+              autoPlay
+              loop={false}
+              style={{width: '100%', height: 300}}
+            />
+          )}
+          <Text
+            style={{
+              color: colors.appWhite,
+              marginBottom: 20,
+              textAlign: 'center',
+              fontSize: FONTS_SIZES.MEDIUM_LARGE,
+            }}>
+            {premiumPlusActive
+              ? 'Are you ready to elevate your fitness game! Check your messages for the next steps!'
+              : 'Enjoy full acccess to all content and features!'}
+          </Text>
+          <Button onPress={() => setShowAnimationModal(false)} text="Close" />
+        </View>
+      </Modal>
     </>
   );
 };
