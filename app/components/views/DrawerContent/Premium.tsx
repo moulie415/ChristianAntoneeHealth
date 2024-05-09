@@ -434,7 +434,7 @@ const Premium: React.FC<{
               fontSize: FONTS_SIZES.MEDIUM_LARGE,
             }}>
             {premiumPlusActive
-              ? 'Are you ready to elevate your fitness game! Check your messages for the next steps!'
+              ? 'Are you ready to elevate your fitness game? Check your messages for the next steps!'
               : 'Enjoy full acccess to all content and features!'}
           </Text>
           <Button onPress={() => setShowAnimationModal(false)} text="Close" />
