@@ -19,10 +19,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
-  
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self
-                                            launchOptions:launchOptions];
-  
   [RNFBAppCheckModule sharedInstance];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
@@ -42,7 +38,6 @@
     
   bool didFinish = [super application:application didFinishLaunchingWithOptions:launchOptions];
   [RNSplashScreen show];
-  [[RCTAppleHealthKit new] initializeBackgroundObservers:bridge];
   return didFinish;
 }
 

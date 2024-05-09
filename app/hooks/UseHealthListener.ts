@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
-import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
-import {getHeartRateSamples} from '../helpers/biometrics';
+import {Platform} from 'react-native';
 import {Sample} from '../types/Shared';
 
 const useHealthListener = (startDate: Date) => {
@@ -8,17 +7,17 @@ const useHealthListener = (startDate: Date) => {
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
-      new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-        'healthKit:HeartRate:new',
-        async () => {
-          const samples = await getHeartRateSamples(startDate, new Date());
-          setHeartRateSamples(
-            samples.map(({startDate: s, endDate: e, value}) => {
-              return {startDate: s, endDate: e, value};
-            }),
-          );
-        },
-      );
+      // new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
+      //   'healthKit:HeartRate:new',
+      //   async () => {
+      //     const samples = await getHeartRateSamples(startDate, new Date());
+      //     setHeartRateSamples(
+      //       samples.map(({startDate: s, endDate: e, value}) => {
+      //         return {startDate: s, endDate: e, value};
+      //       }),
+      //     );
+      //   },
+      // );
     }
   }, [startDate]);
 
