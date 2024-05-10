@@ -1,6 +1,5 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import LottieView from 'lottie-react-native';
 import React, {ReactNode, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -22,17 +21,14 @@ import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {PREMIUM_PLUS, hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {setPremium} from '../../../reducers/profile';
-import {SettingsState} from '../../../reducers/settings';
 import {Profile} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
-import Modal from '../../commons/Modal';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
 
@@ -50,15 +46,13 @@ const Premium: React.FC<{
   setPremiumAction: (
     premium: false | {[key: string]: PurchasesEntitlementInfo},
   ) => void;
-  settings: SettingsState;
   route: RouteProp<StackParamList, 'Premium'>;
   profile: Profile;
-}> = ({navigation, setPremiumAction, settings, route, profile}) => {
+}> = ({navigation, setPremiumAction, route, profile}) => {
   const [selected, setSelected] = useState('');
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
-  const [showAnimationModal, setShowAnimationModal] = useState(false);
   const onActivated = route.params?.onActivated;
 
   const getOfferings = async () => {
@@ -108,7 +102,7 @@ const Premium: React.FC<{
           await getOfferings();
 
           setLoading(false);
-          setShowAnimationModal(true);
+          navigation.navigate('PremiumPurchased', {});
 
           setPremiumAction(customerInfo.entitlements.active);
 
@@ -360,8 +354,7 @@ const Premium: React.FC<{
                       await getOfferings();
                       setLoading(false);
                       setPremiumAction(restore.entitlements.active);
-
-                      setShowAnimationModal(true);
+                      navigation.navigate('PremiumPurchased', {restored: true});
                     } else {
                       setLoading(false);
                       Snackbar.show({
@@ -393,58 +386,10 @@ const Premium: React.FC<{
       </View>
 
       <AbsoluteSpinner loading={loading} />
-      <Modal
-        visible={showAnimationModal}
-        onRequestClose={() => setShowAnimationModal(false)}>
-        <View
-          style={{
-            backgroundColor: colors.appGrey,
-            width: '90%',
-            borderRadius: 10,
-            padding: 20,
-          }}>
-          <Text
-            style={{
-              color: colors.appWhite,
-              textAlign: 'center',
-              fontSize: FONTS_SIZES.LARGE,
-            }}>
-            Thank you for your purchase!
-          </Text>
-          {premiumPlusActive ? (
-            <LottieView
-              source={require('../../../animations/fireworks.json')}
-              autoPlay
-              loop
-              style={{width: '100%', height: 300}}
-            />
-          ) : (
-            <LottieView
-              source={require('../../../animations/tick.json')}
-              autoPlay
-              loop={false}
-              style={{width: '100%', height: 300}}
-            />
-          )}
-          <Text
-            style={{
-              color: colors.appWhite,
-              marginBottom: 20,
-              textAlign: 'center',
-              fontSize: FONTS_SIZES.MEDIUM_LARGE,
-            }}>
-            {premiumPlusActive
-              ? 'Are you ready to elevate your fitness game? Check your messages for the next steps!'
-              : 'Enjoy full acccess to all content and features!'}
-          </Text>
-          <Button onPress={() => setShowAnimationModal(false)} text="Close" />
-        </View>
-      </Modal>
     </>
   );
 };
-const mapStateToProps = ({settings, profile}: RootState) => ({
-  settings,
+const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 

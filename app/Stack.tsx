@@ -11,6 +11,8 @@ import SavedItemsTabs from './SavedItemsTabs';
 import Tabs from './Tabs';
 import ExerciseListHeaderRight from './components/commons/ExerciseListHeaderRight';
 import HeaderShareButton from './components/commons/HeaderShareButton';
+import PDFViewer from './components/commons/PDFViewer';
+import WebViewScreen from './components/commons/WebViewScreen';
 import DeleteAccount from './components/views/DeleteAccount';
 import About from './components/views/DrawerContent/About';
 import AddConnection from './components/views/DrawerContent/AddConnection';
@@ -21,6 +23,7 @@ import DrawerContent from './components/views/DrawerContent/DrawerContent';
 import Notifications from './components/views/DrawerContent/Notifications';
 import Policies from './components/views/DrawerContent/Policies';
 import Premium from './components/views/DrawerContent/Premium';
+import PremiumPurchased from './components/views/DrawerContent/PremiumPurchased';
 import Settings from './components/views/DrawerContent/Settings';
 import Support from './components/views/DrawerContent/Support';
 import Terms from './components/views/DrawerContent/Terms';
@@ -55,8 +58,6 @@ import WarmUp from './components/views/Workout/WarmUp';
 import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import PDFViewer from './components/commons/PDFViewer';
-import WebViewScreen from './components/commons/WebViewScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -147,6 +148,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="Education" component={EducationTabs} />
         <Stack.Screen name="Connections" component={Connections} />
         <Stack.Screen name="Premium" component={Premium} />
+        <Stack.Screen name="PremiumPurchased" component={PremiumPurchased} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="Support" component={Support} />

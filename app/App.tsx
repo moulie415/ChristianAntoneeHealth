@@ -104,6 +104,7 @@ export type StackParamList = {
   History: undefined;
   Notifications: undefined;
   Premium: {onActivated?: () => void};
+  PremiumPurchased: {restored?: boolean};
   Support: undefined;
   Terms: undefined;
   Workout: undefined;

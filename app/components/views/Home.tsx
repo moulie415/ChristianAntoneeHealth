@@ -34,7 +34,9 @@ const Home: React.FC<{
   const [targetModalVisible, setTargetModalVisible] = useState(false);
   useEffect(() => {
     if (!hasViewedTargets && profile.goal && profile.goal !== Goal.OTHER) {
-      setTargetModalVisible(true);
+      setTimeout(() => {
+        setTargetModalVisible(true);
+      }, 500);
     }
   }, [hasViewedTargets, profile.goal]);
   return (
