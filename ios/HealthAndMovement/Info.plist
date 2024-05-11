@@ -145,7 +145,7 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Share workout data with other apps.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>So you can record audio when reporting a problem with the app</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -311,7 +311,6 @@
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>MaterialIcons.ttf</string>
 		<string>Feather.ttf</string>
-		<string>MrDafoe-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
