@@ -1,5 +1,6 @@
 import {Platform} from 'react-native';
 import {Goal} from '../types/Shared';
+import { generateValues } from '../helpers/generateValues';
 
 export interface GoalItem {
   title: string;
@@ -29,7 +30,7 @@ export const UNIT_ID_INTERSTITIAL = getInterstitialId();
 
 export const AD_KEYWORDS = ['fitness', 'gym', 'health'];
 
-export const WEIGHTS = [...Array(501).keys()];
+export const WEIGHTS = generateValues(1, 500, 0.1);
 export const DECIMAL_PLACES = [...Array(10).keys()];
 export const HEIGHTS = [...Array(501).keys()];
 export const REPS = [...Array(101).keys()];
