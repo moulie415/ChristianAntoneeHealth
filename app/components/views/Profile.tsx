@@ -28,13 +28,6 @@ import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
-import {
-  BONE_DENSITIES,
-  METABOLIC_AGE_VALUES,
-  MUSCLE_MASSES,
-  PERCENTAGES,
-  VISCERAL_FAT_VALUES,
-} from '../../constants';
 import colors from '../../constants/colors';
 import {logError} from '../../helpers/error';
 import {getSamples, updateProfile} from '../../reducers/profile';
@@ -45,8 +38,8 @@ import Button from '../commons/Button';
 import GoalSummaries from '../commons/GoalSummaries';
 import Header from '../commons/Header';
 import HeightModal from '../commons/HeightModal';
+import MetricModal from '../commons/MetricModal';
 import Modal from '../commons/Modal';
-import PickerModal from '../commons/PickerModal';
 import ProfileCharts from '../commons/ProfileCharts';
 import Text from '../commons/Text';
 import Tile from '../commons/Tile';
@@ -459,69 +452,52 @@ const ProfileComponent: React.FC<{
           setShowWeightModal={setShowWeightModal}
           setWeight={setWeight}
         />
-        <PickerModal
+        <MetricModal
           title="Set body fat percentage"
           visible={showBodyFatPercentageModal}
-          selectedValue={String(bodyFatPercentage)}
-          pickerData={PERCENTAGES.map(value => {
-            return {
-              label: `${value.toString()} %`,
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setBodyFatPercentage(Number(val))}
+          selectedValue={bodyFatPercentage}
+          min={0}
+          max={100}
+          unit="%"
+          onValueChange={setBodyFatPercentage}
           onRequestClose={() => setShowBodyFatPercentageModal(false)}
         />
-        <PickerModal
+        <MetricModal
           title="Set muscle mass"
           visible={showMuscleMassModal}
-          selectedValue={String(muscleMass)}
-          pickerData={MUSCLE_MASSES.map(value => {
-            return {
-              label: `${value.toString()} kg`,
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setMuscleMass(Number(val))}
+          selectedValue={muscleMass}
+          min={0}
+          max={100}
+          unit="kg"
+          onValueChange={val => setMuscleMass(val)}
           onRequestClose={() => setShowMuscleMassModal(false)}
         />
-        <PickerModal
+        <MetricModal
           title="Set bone mass"
           visible={showBoneMassModal}
-          selectedValue={String(boneMass)}
-          pickerData={BONE_DENSITIES.map(value => {
-            return {
-              label: `${value.toString()} kg`,
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setBoneMass(Number(val))}
+          selectedValue={boneMass}
+          min={0}
+          max={10}
+          unit="kg"
+          onValueChange={val => setBoneMass(val)}
           onRequestClose={() => setShowBoneMassModal(false)}
         />
-        <PickerModal
+        <MetricModal
           title="Set visceral fat"
           visible={showVisceralFatModal}
-          selectedValue={String(visceralFat)}
-          pickerData={VISCERAL_FAT_VALUES.map(value => {
-            return {
-              label: value.toString(),
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setVisceralFat(Number(val))}
+          selectedValue={visceralFat}
+          min={0}
+          max={60}
+          onValueChange={val => setVisceralFat(val)}
           onRequestClose={() => setShowVisceralFatModal(false)}
         />
-        <PickerModal
+        <MetricModal
           title="Set metabolic age"
           visible={showMetabolicAgeModal}
-          selectedValue={String(metabolicAge)}
-          pickerData={METABOLIC_AGE_VALUES.map(value => {
-            return {
-              label: value.toString(),
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setMetabolicAge(Number(val))}
+          selectedValue={metabolicAge}
+          min={0}
+          max={100}
+          onValueChange={val => setMetabolicAge(val)}
           onRequestClose={() => setShowMetabolicAgeModal(false)}
         />
 

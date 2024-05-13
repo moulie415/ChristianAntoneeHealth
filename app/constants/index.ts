@@ -33,12 +33,7 @@ export const REPS = [...Array(101).keys()];
 export const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const FITNESS_RATINGS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const RESISTANCE = [...Array(301).keys()];
-export const PERCENTAGES = [...Array(100).keys()];
-export const MUSCLE_MASSES = [...Array(100).keys()];
-export const BONE_DENSITIES = [...Array(11).keys()];
 export const PREP_TIME_SECS = [...Array(61).keys()];
-export const VISCERAL_FAT_VALUES = [...Array(59).keys()].map(i => i + 1);
-export const METABOLIC_AGE_VALUES = [...Array(100).keys()].map(i => i + 1);
 
 export const TABLE_HEADER_KEYS = [
   'age',
