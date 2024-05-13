@@ -68,7 +68,7 @@ const SignUpFlow: React.FC<{
   const [marketing, setMarketing] = useState(profile.marketing || false);
   const [height, setHeight] = useState<number>((profile.height as number) || 0);
   const [gender, setGender] = useState<Gender>(
-    (profile.gender as Gender) || 'none',
+    (profile.gender as Gender) || 'male',
   );
   const [goal, setGoal] = useState<Goal>((profile.goal as Goal) || null);
   const [area, setArea] = useState<Area>((profile.area as Area) || null);
