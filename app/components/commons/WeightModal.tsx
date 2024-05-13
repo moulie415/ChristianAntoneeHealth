@@ -63,10 +63,9 @@ const WeightModal: React.FC<{
             step={0.1}
             fractionDigits={1}
             width={windowWidth * 0.9}
-            initialValue={weight + 0.1}
+            initialValue={weight ? weight : 80}
             unitTextStyle={{color: colors.appWhite}}
             valueTextStyle={{color: colors.appWhite}}
-            //  onValueChange={number => setWeight(Number(number))}
             onValueChangeEnd={number => setWeight(Number(number))}
             unit="kg"
             indicatorColor={colors.appBlue}

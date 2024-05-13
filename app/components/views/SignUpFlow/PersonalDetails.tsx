@@ -8,12 +8,12 @@ import Config from 'react-native-config';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../../App';
-import {HEIGHTS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter} from '../../../helpers';
 import {Gender} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Checkbox from '../../commons/Checkbox';
+import HeightModal from '../../commons/HeightModal';
 import Input from '../../commons/Input';
 import Modal from '../../commons/Modal';
 import PickerModal from '../../commons/PickerModal';
@@ -388,18 +388,11 @@ const PersonalDetails: React.FC<{
           }}
         />
       )}
-      <PickerModal
-        title="Select height"
+      <HeightModal
         visible={showHeightModal}
-        selectedValue={String(height)}
-        pickerData={HEIGHTS.map(value => {
-          return {
-            label: `${value.toString()} cm`,
-            value: String(value),
-          };
-        })}
-        onValueChange={val => setHeight(Number(val))}
         onRequestClose={() => setShowHeightModal(false)}
+        height={height}
+        setHeight={setHeight}
       />
       <SignUpWeightModal
         weight={weight}

@@ -30,7 +30,6 @@ import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import {
   BONE_DENSITIES,
-  HEIGHTS,
   METABOLIC_AGE_VALUES,
   MUSCLE_MASSES,
   PERCENTAGES,
@@ -45,6 +44,7 @@ import Avatar from '../commons/Avatar';
 import Button from '../commons/Button';
 import GoalSummaries from '../commons/GoalSummaries';
 import Header from '../commons/Header';
+import HeightModal from '../commons/HeightModal';
 import Modal from '../commons/Modal';
 import PickerModal from '../commons/PickerModal';
 import ProfileCharts from '../commons/ProfileCharts';
@@ -446,18 +446,11 @@ const ProfileComponent: React.FC<{
           />
         </ScrollView>
 
-        <PickerModal
-          title="Set height"
+        <HeightModal
           visible={showHeightModal}
-          selectedValue={String(height)}
-          pickerData={HEIGHTS.map(value => {
-            return {
-              label: `${value.toString()} cm`,
-              value: String(value),
-            };
-          })}
-          onValueChange={val => setHeight(Number(val))}
           onRequestClose={() => setShowHeightModal(false)}
+          height={height}
+          setHeight={setHeight}
         />
 
         <WeightModal
