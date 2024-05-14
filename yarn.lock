@@ -8734,11 +8734,6 @@ react-native-compressor@^1.8.23:
   resolved "https://registry.yarnpkg.com/react-native-compressor/-/react-native-compressor-1.8.23.tgz#87fef6759d776e05753cee5e723696119c2f6b32"
   integrity sha512-llqV+BRgRL8xdUDFpYfaP/HSo9sUcqewlzXa6obgoXCTJT8ZmT0zUFYgGTtb0Urz2o2T15PqTij5f2Sg8phPjw==
 
-react-native-confetti@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-confetti/-/react-native-confetti-0.1.0.tgz#9ec93c07f845de5ebeaed700043fd5218792b6f1"
-  integrity sha512-+cXJvnPXKc0i/eTQcuzcjrlfIxmn/xFw4UyuVKQOWNK6BfWABvO6Ms6Zp6ivF1E8Vxt2vJkzJlNyoBvMh9FxKA==
-
 react-native-config@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.1.tgz#73c94f511493e9b7ff9350cdf351d203a1b05acc"
