@@ -114,7 +114,9 @@ const MetricExplained: React.FC<{
             const percentage = _.clamp((val / diff) * 100, 100);
 
             return (
-              <View key={color + ranges[index]} style={{flex: 1, zIndex: -index}}>
+              <View
+                key={color + ranges[index]}
+                style={{flex: 1, zIndex: -index}}>
                 <Text
                   style={{
                     textAlign: 'left',
@@ -141,7 +143,7 @@ const MetricExplained: React.FC<{
                       height: '100%',
                       position: 'absolute',
                       left: `${percentage}%`,
-                      marginTop: -7
+                      marginTop: -7,
                     }}>
                     <View
                       style={{
@@ -149,7 +151,7 @@ const MetricExplained: React.FC<{
                         width: 15,
                         backgroundColor: colors.appWhite,
                         borderRadius: 8,
-                    
+
                         marginLeft: -8,
                         borderWidth: 2,
                         borderColor: color,
@@ -162,7 +164,7 @@ const MetricExplained: React.FC<{
                         fontSize: 10,
                         fontWeight: 'bold',
                         position: 'absolute',
-                        bottom: 10                        
+                        bottom: 10,
                       }}>
                       {current}
                     </Text>
@@ -184,7 +186,9 @@ const MetricExplained: React.FC<{
           })}
       </View>
       {premium && !profile.premium && (
-        <View
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigate('Premium', {})}
           style={{
             position: 'absolute',
             top: 0,
@@ -197,7 +201,7 @@ const MetricExplained: React.FC<{
             alignItems: 'center',
           }}>
           <Icon name="lock" color={colors.appWhite} size={30} />
-        </View>
+        </TouchableOpacity>
       )}
     </Tile>
   );
