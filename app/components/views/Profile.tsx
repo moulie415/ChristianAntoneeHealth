@@ -44,6 +44,8 @@ import ProfileCharts from '../commons/ProfileCharts';
 import Text from '../commons/Text';
 import Tile from '../commons/Tile';
 import WeightModal from '../commons/WeightModal';
+import PickerModal from '../commons/PickerModal';
+import { HEIGHTS } from '../../constants';
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -439,12 +441,28 @@ const ProfileComponent: React.FC<{
           />
         </ScrollView>
 
-        <HeightModal
-          visible={showHeightModal}
-          onRequestClose={() => setShowHeightModal(false)}
-          height={height}
-          setHeight={setHeight}
-        />
+        {Platform.OS === 'ios' ? (
+          <HeightModal
+            visible={showHeightModal}
+            onRequestClose={() => setShowHeightModal(false)}
+            height={height}
+            setHeight={setHeight}
+          />
+        ) : (
+          <PickerModal
+            title="Set height"
+            visible={showHeightModal}
+            selectedValue={String(height)}
+            pickerData={HEIGHTS.map(value => {
+              return {
+                label: `${value.toString()} cm`,
+                value: String(value),
+              };
+            })}
+            onValueChange={val => setHeight(Number(val))}
+            onRequestClose={() => setShowHeightModal(false)}
+          />
+        )}
 
         <WeightModal
           visible={showWeightModal}

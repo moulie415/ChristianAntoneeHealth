@@ -19,6 +19,7 @@ import Modal from '../../commons/Modal';
 import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
 import SignUpWeightModal from './SignUpWeightModal';
+import { HEIGHTS } from '../../../constants';
 
 const PersonalDetails: React.FC<{
   name: string;
@@ -388,12 +389,28 @@ const PersonalDetails: React.FC<{
           }}
         />
       )}
-      <HeightModal
-        visible={showHeightModal}
-        onRequestClose={() => setShowHeightModal(false)}
-        height={height}
-        setHeight={setHeight}
-      />
+      {Platform.OS === 'ios' ? (
+        <HeightModal
+          visible={showHeightModal}
+          onRequestClose={() => setShowHeightModal(false)}
+          height={height}
+          setHeight={setHeight}
+        />
+      ) : (
+        <PickerModal
+          title="Set height"
+          visible={showHeightModal}
+          selectedValue={String(height)}
+          pickerData={HEIGHTS.map(value => {
+            return {
+              label: `${value.toString()} cm`,
+              value: String(value),
+            };
+          })}
+          onValueChange={val => setHeight(Number(val))}
+          onRequestClose={() => setShowHeightModal(false)}
+        />
+      )}
       <SignUpWeightModal
         weight={weight}
         visible={showWeightModal}

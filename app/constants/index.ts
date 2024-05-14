@@ -32,6 +32,7 @@ export const AD_KEYWORDS = ['fitness', 'gym', 'health'];
 
 export const DECIMAL_PLACES = generateValues(0, 9, 1);
 export const WEIGHTS = generateValues(0, 500, 1);
+export const HEIGHTS = generateValues(0, 500, 1);
 export const REPS = [...Array(101).keys()];
 export const SETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const FITNESS_RATINGS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
