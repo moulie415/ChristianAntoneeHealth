@@ -1,18 +1,12 @@
-import {View, ScrollView} from 'react-native';
-import React, {useEffect} from 'react';
-import colors from '../../constants/colors';
-import {getDifficultyEmoji} from '../../helpers/exercises';
+import Color from 'color';
 import moment from 'moment';
-import {rpeSliderScale} from './RPESlider';
+import React from 'react';
+import {ScrollView, View} from 'react-native';
+import Animated, {FadeIn} from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import colors from '../../constants/colors';
 import Text from './Text';
 import Tile from './Tile';
-import Animated, {FadeIn} from 'react-native-reanimated';
-import Fire from '../../images/fire.svg';
-import Time from '../../images/time.svg';
-import {FONTS_SIZES} from '../../constants';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import Color from 'color';
-import {navigationRef} from '../../RootNavigation';
 
 type Props = {
   children?: React.ReactNode;

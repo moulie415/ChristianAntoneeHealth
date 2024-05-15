@@ -60,6 +60,7 @@ const Home: React.FC<{
             subtitle="Start a new workout now"
             image={require('../../images/new_workout.jpeg')}
             onPress={() => navigation.navigate('Workout')}
+            delay={0}
           />
 
           <HomeCard
@@ -67,6 +68,7 @@ const Home: React.FC<{
             subtitle="Browse a list of recipes"
             image={require('../../images/recipes.jpg')}
             onPress={() => navigation.navigate('RecipeCategories')}
+            delay={500}
           />
 
           <HomeCard
@@ -74,6 +76,7 @@ const Home: React.FC<{
             subtitle="Health and nutrition articles"
             image={require('../../images/Education.jpg')}
             onPress={() => navigation.navigate('Education')}
+            delay={1000}
           />
           <HomeCard
             title="Saved workouts, tests, recipes"
@@ -81,12 +84,14 @@ const Home: React.FC<{
             image={require('../../images/Saved_workouts.jpg')}
             premium
             onPress={() => navigation.navigate('SavedItems')}
+            delay={1500}
           />
           <HomeCard
             title="Fitness tests"
             subtitle="Track your fitness overtime"
             image={require('../../images/fitness_testing.jpeg')}
             onPress={() => navigation.navigate('Fitness')}
+            delay={2000}
           />
 
           <HomeCard
@@ -94,12 +99,14 @@ const Home: React.FC<{
             subtitle="Explore premium features"
             image={require('../../images/Premium.jpeg')}
             onPress={() => navigation.navigate('Premium', {})}
+            delay={2500}
           />
           <HomeCard
             title="Rate the app"
             subtitle="Let us know what you think"
             image={require('../../images/Rate_the_app.jpeg')}
             onPress={() => navigation.navigate('Rating')}
+            delay={3000}
           />
         </ScrollView>
       </SafeAreaView>

@@ -1,14 +1,20 @@
-import {Animated} from 'react-native';
 import React, {useRef} from 'react';
+import {Animated} from 'react-native';
 import FastImage, {FastImageProps} from 'react-native-fast-image';
 
-const FastImageAnimated: React.FC<FastImageProps> = props => {
+interface Props extends FastImageProps {
+  delay?: number;
+  duration?: number;
+}
+
+const FastImageAnimated: React.FC<Props> = props => {
   const imageScaleValue = useRef(new Animated.Value(0));
 
   const onImageLoadEnd = () => {
     Animated.timing(imageScaleValue.current, {
       toValue: 1,
-      duration: 500,
+      duration: props.duration || 500,
+      delay: props.delay,
       useNativeDriver: true,
     }).start();
   };

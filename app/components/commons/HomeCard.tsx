@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {Source} from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {RootState} from '../../App';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
 
@@ -22,7 +22,8 @@ const HomeCard: React.FC<{
   image: Source | number;
   premium?: boolean;
   profile: Profile;
-}> = ({title, subtitle, onPress, image, profile, premium}) => {
+  delay?: number;
+}> = ({title, subtitle, onPress, image, profile, premium, delay}) => {
   return (
     <TouchableOpacity
       style={{
@@ -34,60 +35,61 @@ const HomeCard: React.FC<{
       }}
       onPress={onPress}>
       <FastImageAnimated
+        delay={delay}
+        duration={1000}
         style={{
           position: 'absolute',
           height: CARD_HEIGHT,
           width: '100%',
         }}
-        source={image}
-      />
-
-      <LinearGradient
-        colors={[
-          'rgba(54, 57, 68,0)',
-          'rgba(54, 57, 68,0.8)',
-          'rgb(54, 57, 68)',
-        ]}
-        // start={{x: 0, y: 0}}
-        // end={{x: 1, y: 0}}
-        style={{
-          position: 'absolute',
-          alignSelf: 'flex-end',
-          right: 0,
-          left: 0,
-          bottom: -1,
-          width: width,
-          padding: 10,
-          height: 100,
-          justifyContent: 'flex-end',
-        }}>
-        <Text
+        source={image}>
+        <LinearGradient
+          colors={[
+            'rgba(54, 57, 68,0)',
+            'rgba(54, 57, 68,0.8)',
+            'rgb(54, 57, 68)',
+          ]}
+          // start={{x: 0, y: 0}}
+          // end={{x: 1, y: 0}}
           style={{
-            color: colors.appWhite,
-            fontSize: 18,
-            fontWeight: 'bold',
+            position: 'absolute',
+            alignSelf: 'flex-end',
+            right: 0,
+            left: 0,
+            bottom: -1,
+            width: width,
+            padding: 10,
+            height: 100,
+            justifyContent: 'flex-end',
           }}>
-          {title}
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <Text style={{color: colors.appWhite, flex: 3}}>{subtitle}</Text>
-        </View>
-        {premium && !profile.premium && (
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}>
+            {title}
+          </Text>
           <View
             style={{
-              position: 'absolute',
-              bottom: 15,
-              right: 15,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
-            <Icon name="lock" size={20} color={colors.appWhite} />
+            <Text style={{color: colors.appWhite, flex: 3}}>{subtitle}</Text>
           </View>
-        )}
-      </LinearGradient>
+          {premium && !profile.premium && (
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 15,
+                right: 15,
+              }}>
+              <Icon name="lock" size={20} color={colors.appWhite} />
+            </View>
+          )}
+        </LinearGradient>
+      </FastImageAnimated>
     </TouchableOpacity>
   );
 };
