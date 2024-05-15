@@ -113,6 +113,7 @@ const StartWorkout: React.FC<{
           onPageSelected={e => {
             setIndex(e.nativeEvent.position);
           }}
+          offscreenPageLimit={1}
           scrollEnabled={!fullscreen}
           style={{flex: 1, paddingHorizontal: 0}}>
           {workout.map((exercise, i) => {

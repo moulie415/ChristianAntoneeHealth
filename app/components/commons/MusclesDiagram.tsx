@@ -1,6 +1,5 @@
 import React, {memo} from 'react';
 import {View} from 'react-native';
-
 import Svg from 'react-native-svg';
 import {backMuscles, frontMuscles} from '../../helpers/exercises';
 import {Muscle} from '../../types/Exercise';
