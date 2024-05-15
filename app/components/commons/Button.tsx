@@ -1,16 +1,14 @@
 import React from 'react';
-import colors from '../../constants/colors';
 import {
   TextStyle,
   TouchableOpacity,
   TouchableOpacityProps,
   View,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import colors from '../../constants/colors';
 import Text from './Text';
 
 import Spinner from './Spinner';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 
 interface Props extends TouchableOpacityProps {
   text: string;
@@ -38,12 +36,15 @@ const Button: React.FC<Props> = ({
           height: 50,
           justifyContent: 'center',
           padding: 10,
-          opacity: disabled ? 0.5 : 1,
           backgroundColor:
             variant === 'secondary'
               ? 'transparent'
               : variant === 'danger'
-              ? colors.appRed
+              ? disabled
+                ? colors.appRedOpacity
+                : colors.appRed
+              : disabled
+              ? colors.appBlueOpacity
               : colors.appBlue,
           borderWidth: variant === 'secondary' ? 2 : 0,
           borderColor: colors.appBlue,
