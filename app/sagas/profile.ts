@@ -520,7 +520,7 @@ function onChatMessage(id: string) {
           emitter(snapshot);
         },
         error => {
-          console.warn(error);
+          logError(error);
         },
       );
 
@@ -682,7 +682,6 @@ function* setRead(action: PayloadAction<string>) {
       yield put(setUnread(unread));
     }
   } catch (e) {
-    console.warn(e);
     logError(e);
   }
 }

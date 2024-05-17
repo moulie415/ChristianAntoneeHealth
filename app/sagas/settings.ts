@@ -1,5 +1,6 @@
 import {call, put} from 'redux-saga/effects';
 import * as api from '../helpers/api';
+import {logError} from '../helpers/error';
 import {SettingsState, setSettings} from '../reducers/settings';
 
 export function* getSettings() {
@@ -7,6 +8,6 @@ export function* getSettings() {
     const settings: SettingsState = yield call(api.getSettings);
     yield put(setSettings(settings));
   } catch (e) {
-    console.warn('error fetching settings');
+    logError(e);
   }
 }
