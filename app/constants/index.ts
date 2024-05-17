@@ -60,3 +60,5 @@ export const FONTS_SIZES = {
   MEDIUM_LARGE: 18,
   LARGE: 24,
 };
+
+export const ignoredErrors = ['firestore/permission-denied'];

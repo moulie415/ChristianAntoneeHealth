@@ -271,7 +271,6 @@ const Login: React.FC<{
 };
 
 const mapStateToProps = ({profile}: RootState) => ({
-  loggedIn: profile.loggedIn,
   email: profile.loginEmail,
 });
 

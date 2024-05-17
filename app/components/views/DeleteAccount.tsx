@@ -122,8 +122,9 @@ const DeleteAccount: React.FC<{
               setLoggedInAction(false);
               Alert.alert('Success', 'Your account has been deleted');
             } catch (e) {
-              // @ts-ignore
-              Alert.alert('Error', e.message);
+              if (e instanceof Error) {
+                Alert.alert('Error', e.message);
+              }
             }
             setLoading(false);
           }}
