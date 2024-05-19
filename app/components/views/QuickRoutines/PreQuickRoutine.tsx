@@ -15,6 +15,7 @@ import {getEquipmentList} from '../../../helpers/exercises';
 import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {updateProfile} from '../../../reducers/profile';
+import {startQuickRoutine} from '../../../reducers/quickRoutines';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
@@ -258,12 +259,13 @@ const PreQuickRoutine: React.FC<{
         <Button
           style={{margin: 15}}
           text="Let's go!"
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('QuickRoutine', {
               routine: route.params.routine,
               startTime: new Date(),
-            })
-          }
+            });
+            dispatch(startQuickRoutine(route.params.routine));
+          }}
         />
       </ScrollView>
     </>

@@ -7,10 +7,7 @@ import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getExercisesById} from '../../../reducers/exercises';
-import {
-  getQuickRoutines,
-  startQuickRoutine,
-} from '../../../reducers/quickRoutines';
+import {getQuickRoutines} from '../../../reducers/quickRoutines';
 import {SettingsState} from '../../../reducers/settings';
 import Exercise from '../../../types/Exercise';
 import QuickRoutine from '../../../types/QuickRoutines';
@@ -31,7 +28,6 @@ const WorkoutList: React.FC<{
   settings: SettingsState;
   exercises: {[key: string]: Exercise};
   loading: boolean;
-  startQuickRoutine: (routine: QuickRoutine) => void;
 }> = ({
   navigation,
   route,
@@ -42,7 +38,6 @@ const WorkoutList: React.FC<{
   settings,
   exercises,
   loading,
-  startQuickRoutine: startQuickRoutineAction,
 }) => {
   const {area, equipment} = route.params;
 
@@ -70,14 +65,8 @@ const WorkoutList: React.FC<{
     if (selectedItem) {
       getExercisesByIdAction(selectedItem.exerciseIds);
       navigation.navigate('PreQuickRoutine', {routine: selectedItem});
-      startQuickRoutineAction(selectedItem);
     }
-  }, [
-    navigation,
-    selectedItem,
-    getExercisesByIdAction,
-    startQuickRoutineAction,
-  ]);
+  }, [navigation, selectedItem, getExercisesByIdAction]);
 
   const filtered = Object.values(quickRoutines).filter(routine => {
     return (
@@ -111,7 +100,6 @@ const WorkoutList: React.FC<{
                   } else {
                     getExercisesByIdAction(item.exerciseIds);
                     navigation.navigate('PreQuickRoutine', {routine: item});
-                    startQuickRoutineAction(item);
                   }
                 }}
               />
@@ -139,7 +127,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   getQuickRoutines,
   getExercisesById,
-  startQuickRoutine,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutList);

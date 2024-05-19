@@ -7,10 +7,13 @@
 import WatchKit
 import Foundation
 import WatchConnectivity
+import HealthKit
 
 
 class Connectivity: NSObject, WCSessionDelegate {
   var session: WCSession?
+  var builder: HKLiveWorkoutBuilder?
+  var workoutSession: HKWorkoutSession?
 
   init(session: WCSession = .default){
     super.init()
@@ -24,57 +27,79 @@ class Connectivity: NSObject, WCSessionDelegate {
   
   // Called when the activation of a session finishes
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-//    self.session?.sendMessage(["isLoggedIn": true], replyHandler: { reply in
-//      if (reply["loggedIn"] != nil) {
-//        if (reply["loggedIn"] as! Int == 1) {
-//          let dict: Dictionary<String, Dictionary<String, Any>> = reply["routines"] as! Dictionary<String, Dictionary<String, Any>>
-//          self.convertQuickRoutines(dict: dict)
-//          Singleton.instance.loggedIn = true
-//          if (Singleton.instance.routines.isEmpty) {
-//            self.getQuickRoutines()
-//          }
-//        } else {
-//          Singleton.instance.loggedIn = false
-//        }
-//      }
-//    })
+
   }
 
   // Called when an immediate message arrives
   func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-    if (message["loggedIn"] != nil) {
-//      if (message["loggedIn"] as! Int == 1) {
-//        let dict: Dictionary<String, Dictionary<String, Any>> = message["routines"] as! Dictionary<String, Dictionary<String, Any>>
-//        self.convertQuickRoutines(dict: dict)
-//        Singleton.instance.loggedIn = true
-//        if (Singleton.instance.routines.isEmpty) {
-//          self.getQuickRoutines()
-//        }
-//      } else {
-//        Singleton.instance.loggedIn = false
-//      }
+    if (message["startQuickRoutine"] != nil) {
+      startWorkout();
     }
   }
   
-  func convertQuickRoutines(dict: Dictionary<String, Dictionary<String, Any>>) {
-    var arr = [Dictionary<String, Any>]()
-    for (_, value) in dict{
-      arr.append(value)
+  func startWorkout() {
+    if HKHealthStore.isHealthDataAvailable() {
+      let typesToShare: Set = [
+        HKQuantityType.workoutType()
+      ]
+      let typesToRead: Set = [
+        HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+        HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+      ]
+      
+      let healthStore = HKHealthStore()
+      
+      healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
+        if (success) {
+          
+          let configuration = HKWorkoutConfiguration()
+          configuration.activityType = .functionalStrengthTraining;
+          configuration.locationType = .unknown;
+          
+          do {
+            self.workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: configuration);
+            self.builder = self.workoutSession?.associatedWorkoutBuilder();
+            self.builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
+                                                         workoutConfiguration: configuration);
+            self.workoutSession?.startActivity(with: Date())
+            self.builder?.beginCollection(withStart: Date()) { (success, error) in
+              
+              guard success else {
+                return;
+              }
+                // Indicate that the session has started.
+            }
+          } catch {
+              // Handle failure here.
+              return
+          }
+          
+        }
+      }
     }
-    Singleton.instance.routines = arr.map { routine in
-      return Routine(
-        id: routine["id"] as! String,
-        name: routine["name"] as! String,
-        level: routine["level"] as! String
-      )
-    }
+
   }
   
-  func getQuickRoutines() {
-    self.session?.sendMessage(["getQuickRoutines" : true], replyHandler: { reply in
-      let dict: Dictionary<String, Dictionary<String, Any>> = reply["routines"] as! Dictionary<String, Dictionary<String, Any>>
-      self.convertQuickRoutines(dict: dict)
-    })
+  func endWorkout() {
+    self.workoutSession?.end();
+    self.builder?.endCollection(withEnd: Date()) { (success, error) in
+        
+        guard success else {
+          return;
+        }
+        
+      self.builder?.finishWorkout { (workout, error) in
+            
+            guard workout != nil else {
+              return;
+            }
+            
+            DispatchQueue.main.async() {
+                // Update the user interface.
+            }
+        }
+    }
   }
+
 
 }
