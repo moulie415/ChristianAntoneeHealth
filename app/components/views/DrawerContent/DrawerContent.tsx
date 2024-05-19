@@ -4,14 +4,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
 import React, {ReactNode} from 'react';
-import {
-  Alert,
-  FlatList,
-  Linking,
-  Share,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, FlatList, Share, TouchableOpacity, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import {LoginManager} from 'react-native-fbsdk-next';
 import Purchases from 'react-native-purchases';
@@ -190,11 +183,7 @@ const DrawerContent: React.FC<Props> = ({
       title: 'Report a problem',
       icon: 'bug',
       onPress: () => {
-        Linking.openURL(
-          encodeURI(
-            'mailto:info@christianantonee.com?subject=CA Health Bug Report',
-          ),
-        );
+        navigationRef.navigate('ReportProblem');
         navigation.closeDrawer();
       },
     },

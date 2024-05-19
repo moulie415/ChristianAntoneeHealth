@@ -24,6 +24,7 @@ import Notifications from './components/views/DrawerContent/Notifications';
 import Policies from './components/views/DrawerContent/Policies';
 import Premium from './components/views/DrawerContent/Premium';
 import PremiumPurchased from './components/views/DrawerContent/PremiumPurchased';
+import ReportProblem from './components/views/DrawerContent/ReportProblem';
 import Settings from './components/views/DrawerContent/Settings';
 import Support from './components/views/DrawerContent/Support';
 import Terms from './components/views/DrawerContent/Terms';
@@ -162,6 +163,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="Recipe" component={Recipe} />
         <Stack.Screen name="PDFViewer" component={PDFViewer} />
         <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
+        <Stack.Screen name="ReportProblem" component={ReportProblem} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}

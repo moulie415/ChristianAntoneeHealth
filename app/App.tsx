@@ -149,6 +149,7 @@ export type StackParamList = {
   RecipeCategories: undefined;
   PDFViewer: {uri: string; title?: string};
   WebViewScreen: {uri: string; title?: string};
+  ReportProblem: undefined;
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
