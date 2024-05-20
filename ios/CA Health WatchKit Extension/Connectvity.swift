@@ -32,8 +32,8 @@ class Connectivity: NSObject, WCSessionDelegate {
 
   // Called when an immediate message arrives
   func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-    if (message["startQuickRoutine"] != nil) {
-      startWorkout();
+    if (message["startQuickRoutine"] != nil || message["startWorkout"] != nil) {
+     // startWorkout();
     }
   }
   
