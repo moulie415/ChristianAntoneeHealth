@@ -10,7 +10,8 @@ import WatchConnectivity
 import HealthKit
 
 
-class Connectivity: NSObject, WCSessionDelegate {
+class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
+
   var session: WCSession?
   var builder: HKLiveWorkoutBuilder?
   var workoutSession: HKWorkoutSession?
@@ -58,7 +59,9 @@ class Connectivity: NSObject, WCSessionDelegate {
           
           do {
             self.workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: configuration);
+            self.workoutSession?.delegate = self;
             self.builder = self.workoutSession?.associatedWorkoutBuilder();
+            self.builder?.delegate = self;
             self.builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
                                                          workoutConfiguration: configuration);
             self.workoutSession?.startActivity(with: Date())
@@ -99,6 +102,36 @@ class Connectivity: NSObject, WCSessionDelegate {
             }
         }
     }
+  }
+  
+  func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: any Error) {
+  }
+  
+  func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
+  }
+  
+  func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+      for type in collectedTypes {
+          guard let quantityType = type as? HKQuantityType else {
+              return // Nothing to do.
+          }
+          
+          // Calculate statistics for the type.
+          let statistics = workoutBuilder.statistics(for: quantityType)
+          
+          DispatchQueue.main.async() {
+              // Update the user interface.
+          }
+      }
+  }
+  
+  func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
+      
+      let lastEvent = workoutBuilder.workoutEvents.last
+      
+      DispatchQueue.main.async() {
+          // Update the user interface here.
+      }
   }
 
 
