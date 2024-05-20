@@ -7,7 +7,7 @@ import {navigate} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {objectHasNonEmptyValues} from '../../../helpers';
 import {getEducationById} from '../../../reducers/education';
-import {getExercisesById, setWorkout} from '../../../reducers/exercises';
+import {setWorkout} from '../../../reducers/exercises';
 import {getTestsById} from '../../../reducers/tests';
 import Education from '../../../types/Education';
 import Exercise from '../../../types/Exercise';
@@ -24,7 +24,6 @@ const Daily: React.FC<{
   plan?: Plan;
   exercises: {[key: string]: Exercise};
   tests: {[key: string]: Test};
-  getExercisesById: (ids: string[]) => void;
   getTestsById: (ids: string[]) => void;
   loading: boolean;
   setWorkout: (workout: Exercise[]) => void;
@@ -35,7 +34,6 @@ const Daily: React.FC<{
   plan,
   exercises,
   tests: testsObj,
-  getExercisesById: getExercisesByIdAction,
   getTestsById: getTestsByIdAction,
   loading,
   setWorkout: setWorkoutAction,
@@ -52,21 +50,6 @@ const Daily: React.FC<{
       );
     }
   }, [plan]);
-
-  useEffect(() => {
-    if (plan?.workouts?.length) {
-      const allExercises: string[] = plan?.workouts.reduce(
-        (acc: string[], cur) => {
-          return [...acc, ...cur.exercises.map(e => e.exercise)];
-        },
-        [],
-      );
-      const missingExerciseIds = allExercises.filter(id => !exercises[id]);
-      if (missingExerciseIds.length) {
-        getExercisesByIdAction(missingExerciseIds);
-      }
-    }
-  }, [exercises, plan?.workouts, getExercisesByIdAction]);
 
   useEffect(() => {
     if (plan?.tests) {
@@ -217,7 +200,6 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = {
-  getExercisesById,
   getTestsById,
   setWorkout,
   getEducationById,

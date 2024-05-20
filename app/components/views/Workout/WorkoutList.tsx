@@ -6,11 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import {getExercisesById} from '../../../reducers/exercises';
-import {
-  getQuickRoutines,
-  startQuickRoutine,
-} from '../../../reducers/quickRoutines';
+import {startQuickRoutine} from '../../../reducers/quickRoutines';
 import {SettingsState} from '../../../reducers/settings';
 import Exercise from '../../../types/Exercise';
 import QuickRoutine from '../../../types/QuickRoutines';
@@ -25,8 +21,6 @@ const WorkoutList: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'WorkoutList'>;
   route: RouteProp<StackParamList, 'WorkoutList'>;
   quickRoutines: {[key: string]: QuickRoutine};
-  getQuickRoutines: () => void;
-  getExercisesById: (ids: string[]) => void;
   profile: Profile;
   settings: SettingsState;
   exercises: {[key: string]: Exercise};
@@ -35,9 +29,7 @@ const WorkoutList: React.FC<{
 }> = ({
   navigation,
   route,
-  getQuickRoutines: getQuickRoutinesAction,
   quickRoutines,
-  getExercisesById: getExercisesByIdAction,
   profile,
   settings,
   exercises,
@@ -49,35 +41,11 @@ const WorkoutList: React.FC<{
   const [selectedItem, setSelectedItem] = useState<QuickRoutine>();
 
   useEffect(() => {
-    getQuickRoutinesAction();
-  }, [getQuickRoutinesAction]);
-  useEffect(() => {
-    if (quickRoutines) {
-      const ids: string[] = Object.values(quickRoutines).reduce(
-        (acc: string[], cur) => {
-          const missing = cur.exerciseIds.filter(e => !exercises[e]);
-          return [...acc, ...missing];
-        },
-        [],
-      );
-      if (ids && ids.length) {
-        getExercisesByIdAction(ids);
-      }
-    }
-  }, [exercises, quickRoutines, getExercisesByIdAction]);
-
-  useEffect(() => {
     if (selectedItem) {
-      getExercisesByIdAction(selectedItem.exerciseIds);
       navigation.navigate('PreQuickRoutine', {routine: selectedItem});
       startQuickRoutineAction(selectedItem);
     }
-  }, [
-    navigation,
-    selectedItem,
-    getExercisesByIdAction,
-    startQuickRoutineAction,
-  ]);
+  }, [navigation, selectedItem, startQuickRoutineAction]);
 
   const filtered = Object.values(quickRoutines).filter(routine => {
     return (
@@ -109,7 +77,6 @@ const WorkoutList: React.FC<{
                   if (item.premium && !profile.premium) {
                     navigation.navigate('Premium', {});
                   } else {
-                    getExercisesByIdAction(item.exerciseIds);
                     navigation.navigate('PreQuickRoutine', {routine: item});
                     startQuickRoutineAction(item);
                   }
@@ -137,8 +104,6 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = {
-  getQuickRoutines,
-  getExercisesById,
   startQuickRoutine,
 };
 

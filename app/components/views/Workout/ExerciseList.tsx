@@ -1,6 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {FlatList} from 'react-native-gesture-handler';
@@ -9,16 +9,9 @@ import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {truncate} from '../../../helpers';
-import {getExercises, setWorkout} from '../../../reducers/exercises';
+import {setWorkout} from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
-import {
-  CoolDown,
-  Equipment,
-  Goal,
-  Level,
-  Profile,
-  WarmUp,
-} from '../../../types/Shared';
+import {Equipment, Profile} from '../../../types/Shared';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
 
@@ -26,17 +19,6 @@ const ExerciseList: React.FC<{
   exercises: {[key: string]: Exercise};
   navigation: NativeStackNavigationProp<StackParamList, 'ExerciseList'>;
   route: RouteProp<StackParamList, 'ExerciseList'>;
-  getExercisesAction: ({
-    level,
-    goal,
-    warmUp,
-    coolDown,
-  }: {
-    level: Level;
-    goal: Goal;
-    warmUp: WarmUp[];
-    coolDown: CoolDown[];
-  }) => void;
   workout: Exercise[];
   setWorkoutAction: (workout: Exercise[]) => void;
   loading: boolean;
@@ -45,17 +27,12 @@ const ExerciseList: React.FC<{
   exercises,
   route,
   navigation,
-  getExercisesAction,
   workout,
   setWorkoutAction,
   loading,
   profile,
 }) => {
   const {level, goal, equipment, warmUp, coolDown} = route.params;
-
-  useEffect(() => {
-    getExercisesAction({level, goal, warmUp, coolDown});
-  }, [getExercisesAction, level, goal, warmUp, coolDown]);
 
   const selectExercise = (exercise: Exercise) => {
     if (workout.find(e => e.id === exercise.id)) {
@@ -173,7 +150,6 @@ const mapStateToProps = ({exercises, profile}: RootState) => ({
 });
 
 const mapDispatchToProps = {
-  getExercisesAction: getExercises,
   setWorkoutAction: setWorkout,
 };
 

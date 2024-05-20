@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import {getExercisesById, setWorkout} from '../../reducers/exercises';
+import {setWorkout} from '../../reducers/exercises';
 import Exercise from '../../types/Exercise';
 import QuickRoutine from '../../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../../types/SavedItem';
@@ -20,14 +20,13 @@ const SavedWorkoutCard: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SavedItems'>;
   exercises: {[key: string]: Exercise};
   setWorkoutAction: (workout: Exercise[]) => void;
-  getExercisesByIdAction: (ids: string[]) => void;
 }> = ({
   item,
   quickRoutines,
   profile,
   navigation,
   exercises,
-  getExercisesByIdAction,
+
   setWorkoutAction,
 }) => {
   const quickRoutine =
@@ -51,7 +50,6 @@ const SavedWorkoutCard: React.FC<{
             planId: item.planId,
           });
         } else if (quickRoutine) {
-          getExercisesByIdAction(quickRoutine.exerciseIds);
           navigation.navigate('PreQuickRoutine', {
             routine: quickRoutine,
           });
@@ -198,7 +196,6 @@ const mapStateToProps = ({quickRoutines, profile, exercises}: RootState) => ({
 
 const mapDispatchToProps = {
   setWorkoutAction: setWorkout,
-  getExercisesByIdAction: getExercisesById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedWorkoutCard);

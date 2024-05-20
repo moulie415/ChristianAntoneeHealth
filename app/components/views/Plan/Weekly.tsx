@@ -2,30 +2,28 @@ import moment from 'moment';
 import React, {useMemo} from 'react';
 import {Alert, SectionList, View} from 'react-native';
 import {connect} from 'react-redux';
+import {RootState} from '../../../App';
 import {navigate} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {getExercisesById, setWorkout} from '../../../reducers/exercises';
+import {setWorkout} from '../../../reducers/exercises';
 import {getTestsById} from '../../../reducers/tests';
 import Exercise from '../../../types/Exercise';
 import {Plan, PlanWorkout} from '../../../types/Shared';
 import Test from '../../../types/Test';
 import Text from '../../commons/Text';
 import WorkoutCard from '../../commons/WorkoutCard';
-import { RootState } from '../../../App';
 
 const Weekly: React.FC<{
   plan?: Plan;
   loading: boolean;
   exercises: {[key: string]: Exercise};
   tests: {[key: string]: Test};
-  getExercisesById: (ids: string[]) => void;
   getTestsById: (ids: string[]) => void;
   setWorkout: (workout: Exercise[]) => void;
 }> = ({
   plan,
   exercises,
   tests: testsObj,
-  getExercisesById: getExercisesByIdAction,
   getTestsById: getTestsByIdAction,
   loading,
   setWorkout: setWorkoutAction,
@@ -160,7 +158,6 @@ const mapStateToProps = ({profile, exercises, tests}: RootState) => ({
 });
 
 const mapDispatchToProps = {
-  getExercisesById,
   getTestsById,
   setWorkout,
 };

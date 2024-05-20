@@ -5,11 +5,7 @@ import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import {getDifficultyEmoji} from '../../../helpers/exercises';
-import {getExercisesById} from '../../../reducers/exercises';
-import {
-  getQuickRoutinesById,
-  getSavedQuickRoutines,
-} from '../../../reducers/quickRoutines';
+import {getSavedQuickRoutines} from '../../../reducers/quickRoutines';
 import QuickRoutine from '../../../types/QuickRoutines';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
@@ -28,16 +24,12 @@ const SavedQuickRoutines: FunctionComponent<{
   getSavedQuickRoutinesAction: () => void;
   quickRoutines: {[key: string]: QuickRoutine};
   navigation: SavedItemsNavigationProp;
-  getQuickRoutinesByIdAction: (ids: string[]) => void;
-  getExercisesByIdAction: (ids: string[]) => void;
 }> = ({
   loading,
   savedQuickRoutines,
   getSavedQuickRoutinesAction,
   quickRoutines,
   navigation,
-  getQuickRoutinesByIdAction,
-  getExercisesByIdAction,
 }) => {
   useEffect(() => {
     getSavedQuickRoutinesAction();
@@ -48,12 +40,6 @@ const SavedQuickRoutines: FunctionComponent<{
       .filter(routine => !quickRoutines[routine.quickRoutineId])
       .map(routine => routine.quickRoutineId);
   }, [quickRoutines, savedQuickRoutines]);
-
-  useEffect(() => {
-    if (missingRoutines.length) {
-      getQuickRoutinesByIdAction(missingRoutines);
-    }
-  }, [getQuickRoutinesByIdAction, missingRoutines]);
 
   return (
     <>
@@ -67,7 +53,6 @@ const SavedQuickRoutines: FunctionComponent<{
               return (
                 <ListItem
                   onPress={() => {
-                    getExercisesByIdAction(quickRoutine.exerciseIds);
                     navigation.navigate('PreQuickRoutine', {
                       routine: quickRoutine,
                     });
@@ -130,8 +115,6 @@ const mapStateToProps = ({exercises, quickRoutines}: RootState) => ({
 
 const mapDispatchToProps = {
   getSavedQuickRoutinesAction: getSavedQuickRoutines,
-  getQuickRoutinesByIdAction: getQuickRoutinesById,
-  getExercisesByIdAction: getExercisesById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedQuickRoutines);

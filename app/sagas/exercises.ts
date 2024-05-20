@@ -158,6 +158,20 @@ export function* getExercisesById(action: PayloadAction<string[]>) {
   }
 }
 
+export function* getAllExercises() {
+  try {
+    yield put(setLoading(true));
+    const exercises: {[key: string]: Exercise} = yield call(
+      api.getAllExercises,
+    );
+    yield put(setExercises(exercises));
+  } catch (e) {
+    logError(e);
+    Snackbar.show({text: 'Error fetching exercises'});
+  }
+  yield put(setLoading(false));
+}
+
 export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
   try {
     yield put(setLoading(true));
