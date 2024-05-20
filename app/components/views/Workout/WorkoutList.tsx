@@ -25,7 +25,6 @@ const WorkoutList: React.FC<{
   settings: SettingsState;
   exercises: {[key: string]: Exercise};
   loading: boolean;
-  startQuickRoutine: (routine: QuickRoutine) => void;
 }> = ({
   navigation,
   route,
@@ -34,7 +33,6 @@ const WorkoutList: React.FC<{
   settings,
   exercises,
   loading,
-  startQuickRoutine: startQuickRoutineAction,
 }) => {
   const {area, equipment} = route.params;
 
@@ -43,9 +41,8 @@ const WorkoutList: React.FC<{
   useEffect(() => {
     if (selectedItem) {
       navigation.navigate('PreQuickRoutine', {routine: selectedItem});
-      startQuickRoutineAction(selectedItem);
     }
-  }, [navigation, selectedItem, startQuickRoutineAction]);
+  }, [navigation, selectedItem]);
 
   const filtered = Object.values(quickRoutines).filter(routine => {
     return (
@@ -78,7 +75,6 @@ const WorkoutList: React.FC<{
                     navigation.navigate('Premium', {});
                   } else {
                     navigation.navigate('PreQuickRoutine', {routine: item});
-                    startQuickRoutineAction(item);
                   }
                 }}
               />

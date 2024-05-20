@@ -24,7 +24,6 @@
 		0A8218F12844D0B400C94F96 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8218F02844D0B400C94F96 /* Preview Assets.xcassets */; };
 		0A8218F62844D0B400C94F96 /* CA Health.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0A8218D62844D0B100C94F96 /* CA Health.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0A8219052844EEF700C94F96 /* Connectvity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8219042844EEF700C94F96 /* Connectvity.swift */; };
-		0A8219072844F8B600C94F96 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8219062844F8B600C94F96 /* Singleton.swift */; };
 		0A8DBD912B3C505B00075880 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 0A8DBD902B3C505B00075880 /* Fonts */; };
 		0AB82E48278E202400DBEE1A /* notif.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AB82E47278E202400DBEE1A /* notif.wav */; };
 		0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABF7D9925FCF2D0008BB70F /* File.swift */; };
@@ -112,7 +111,6 @@
 		0A8218F22844D0B400C94F96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A8218F32844D0B400C94F96 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		0A8219042844EEF700C94F96 /* Connectvity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectvity.swift; sourceTree = "<group>"; };
-		0A8219062844F8B600C94F96 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		0A8DBD902B3C505B00075880 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		0AB82E47278E202400DBEE1A /* notif.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = notif.wav; path = ../app/audio/notif.wav; sourceTree = "<group>"; };
 		0ABF7D9825FCF2D0008BB70F /* HealthAndMovement-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HealthAndMovement-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 				0A8218F32844D0B400C94F96 /* PushNotificationPayload.apns */,
 				0A8218EF2844D0B400C94F96 /* Preview Content */,
 				0A8219042844EEF700C94F96 /* Connectvity.swift */,
-				0A8219062844F8B600C94F96 /* Singleton.swift */,
 			);
 			path = "CA Health WatchKit Extension";
 			sourceTree = "<group>";
@@ -873,7 +870,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A8218E82844D0B300C94F96 /* NotificationController.swift in Sources */,
-				0A8219072844F8B600C94F96 /* Singleton.swift in Sources */,
 				0A8218E62844D0B300C94F96 /* ContentView.swift in Sources */,
 				0A8218EC2844D0B300C94F96 /* ComplicationController.swift in Sources */,
 				0A8218E42844D0B300C94F96 /* HealthAndMovementApp.swift in Sources */,
