@@ -1,21 +1,23 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
 import {RouteProp} from '@react-navigation/native';
-import {StackParamList} from '../../App';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from '../commons/Header';
-import Avatar from '../commons/Avatar';
-import Tile from '../commons/Tile';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import ProfileCharts from '../commons/ProfileCharts';
+import Avatar from '../commons/Avatar';
 import GoalSummaries from '../commons/GoalSummaries';
+import Header from '../commons/Header';
+import ProfileCharts from '../commons/ProfileCharts';
+import Tile from '../commons/Tile';
 
 const ViewProfile: React.FC<{
   route: RouteProp<StackParamList, 'ViewProfile'>;
-}> = ({route}) => {
+  navigation: NativeStackNavigationProp<StackParamList, 'ViewProfile'>;
+}> = ({route, navigation}) => {
   const {connection} = route.params;
 
   const [images, setImages] = useState<ImageSource[]>([]);
@@ -138,7 +140,7 @@ const ViewProfile: React.FC<{
             </Tile>
           </View>
 
-          <GoalSummaries connection={connection} />
+          <GoalSummaries connection={connection} navigation={navigation} />
 
           <ProfileCharts
             weight={connection.weight || 0}

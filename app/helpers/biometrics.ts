@@ -236,7 +236,10 @@ export const getHeightSamples = async (uid: string) => {
   // );
 };
 
-export const getStepSamples = async (startDate: Date, endDate: Date) => {
+export const getStepSamples = async (
+  startDate = moment().startOf('day').toDate(),
+  endDate = moment().endOf('day').toDate(),
+): Promise<Sample[] | undefined> => {
   if (!(await isAvailable()) || !(await isEnabled())) {
     return;
   }
@@ -265,8 +268,15 @@ export const getStepSamples = async (startDate: Date, endDate: Date) => {
   });
 
   // difference between steps and rawSteps?
-  return response.reduce((acc: {date: string; value: number}[], cur) => {
-    return [...acc, ...cur.steps];
+  return response.reduce((acc: Sample[], cur) => {
+    return [
+      ...acc,
+      ...cur.steps.map(item => ({
+        endDate: item.date,
+        startDate: item.date,
+        value: item.value,
+      })),
+    ];
   }, []);
 };
 

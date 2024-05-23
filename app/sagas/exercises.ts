@@ -4,6 +4,7 @@ import dynamicLinks, {
 import {EventChannel, eventChannel} from '@redux-saga/core';
 import {PayloadAction} from '@reduxjs/toolkit';
 import * as _ from 'lodash';
+import moment from 'moment';
 import queryString from 'query-string';
 import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
@@ -11,6 +12,7 @@ import {
   all,
   call,
   debounce,
+  fork,
   put,
   select,
   take,
@@ -35,7 +37,7 @@ import {
   setWorkout,
   viewWorkout,
 } from '../reducers/exercises';
-import {ProfileState, setProfile} from '../reducers/profile';
+import {ProfileState, setProfile, updateProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
@@ -85,9 +87,51 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
         profile,
       );
     }
+
+    yield fork(incrementWorkoutStreak);
   } catch (e) {
     logError(e);
     yield call(Snackbar.show, {text: 'Error saving workout'});
+  }
+}
+
+export function* incrementWorkoutStreak() {
+  try {
+    const {dailyWorkoutStreak, lastWorkoutDate}: Profile = yield select(
+      (state: RootState) => state.profile.profile,
+    );
+    if (!lastWorkoutDate || !moment(lastWorkoutDate).isSame(moment(), 'day')) {
+      yield put(
+        updateProfile({
+          dailyWorkoutStreak: dailyWorkoutStreak ? dailyWorkoutStreak + 1 : 1,
+          lastWorkoutDate: new Date().toISOString(),
+          disableSnackbar: true,
+        }),
+      );
+    }
+  } catch (e) {
+    logError(e);
+  }
+}
+
+export function* checkWorkoutStreak() {
+  try {
+    const {dailyWorkoutStreak, lastWorkoutDate}: Profile = yield select(
+      (state: RootState) => state.profile.profile,
+    );
+    if (
+      dailyWorkoutStreak &&
+      moment().diff(moment(lastWorkoutDate).endOf('day'), 'day', true) >= 1
+    ) {
+      yield put(
+        updateProfile({
+          dailyWorkoutStreak: 0,
+          disableSnackbar: true,
+        }),
+      );
+    }
+  } catch (e) {
+    logError(e);
   }
 }
 

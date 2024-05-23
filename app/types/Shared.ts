@@ -90,7 +90,7 @@ export interface Profile {
   syncPlanWithCalendar?: boolean;
   goalReminders?: boolean;
   area?: Area;
-  equipment?: Equipment;
+  equipment?: EquipmentLevel;
   experience?: Level;
   favouriteRecipes?: string[];
 
@@ -107,6 +107,8 @@ export interface Profile {
   drugPrescription?: boolean;
   otherReason?: boolean;
   willInformDoctor?: boolean;
+  dailyWorkoutStreak?: number;
+  lastWorkoutDate?: string;
 }
 
 export enum Level {
@@ -292,6 +294,8 @@ export interface UpdateProfilePayload {
   syncPlanWithCalendar?: boolean;
   goalReminders?: boolean;
   favouriteRecipes?: string[];
+  dailyWorkoutStreak?: number;
+  lastWorkoutDate?: string;
   disableSnackbar?: boolean;
 }
 

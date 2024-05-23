@@ -1,11 +1,17 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as _ from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {Dimensions, View} from 'react-native';
+import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import PagerView from 'react-native-pager-view';
 import {SvgProps} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
+import {getStepSamples} from '../../helpers/biometrics';
 import {getGoalsData} from '../../helpers/goals';
+import {kFormatter} from '../../helpers/kFormatter';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
 import {
@@ -13,12 +19,11 @@ import {
   getWeeklyItems,
   getWeeklyItemsForConnection,
 } from '../../reducers/profile';
-import {SettingsState} from '../../reducers/settings';
+import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
 import {Profile} from '../../types/Shared';
-import QuickRoutine from '../../types/QuickRoutines';
-import {RootState} from '../../App';
 import Text from './Text';
 import Tile from './Tile';
+import WorkoutCard from './WorkoutCard';
 
 interface GoalSet {
   title: string;
@@ -32,8 +37,9 @@ const GoalCircle: React.FC<{
   title: string;
   goal: number;
   score: number;
+  hideGoal?: boolean;
   icon: React.FC<SvgProps>;
-}> = ({title, goal, score, icon: Icon}) => {
+}> = ({title, goal, score, icon: Icon, hideGoal}) => {
   const [fill, setFill] = useState(0);
 
   useEffect(() => {
@@ -70,7 +76,7 @@ const GoalCircle: React.FC<{
           alignSelf: 'center',
           marginTop: -10,
         }}>
-        {`${score}/${goal}`}
+        {!hideGoal ? `${kFormatter(score)}/${kFormatter(goal)}` : score}
       </Text>
       <Text
         style={{
@@ -96,28 +102,62 @@ const GoalSummaries: React.FC<{
   getWeeklyItemsForConnectionAction: (uid: string) => void;
   weeklyItems: WeeklyItems;
   quickRoutinesObj: {[key: string]: QuickRoutine};
-  settings: SettingsState;
   connection?: Profile;
   connectionWeeklyItems: {[key: string]: WeeklyItems};
+  navigation: NativeStackNavigationProp<
+    StackParamList,
+    'Profile' | 'ViewProfile'
+  >;
 }> = ({
   profile: defaultProfile,
   getWeeklyItemsAction,
   getWeeklyItemsForConnectionAction,
   weeklyItems,
   quickRoutinesObj,
-  settings,
   connection,
   connectionWeeklyItems,
+  navigation,
 }) => {
+  const [dailySteps, setDailySteps] = useState(0);
   useEffect(() => {
+    const getSteps = async () => {
+      const dailyStepsSamples = await getStepSamples();
+      if (dailyStepsSamples) {
+        setDailySteps(
+          dailyStepsSamples.reduce((acc, cur) => acc + cur.value, 0),
+        );
+      }
+    };
     if (connection) {
       getWeeklyItemsForConnectionAction(connection.uid);
     } else {
       getWeeklyItemsAction();
+      getSteps();
     }
   }, [getWeeklyItemsAction, getWeeklyItemsForConnectionAction, connection]);
 
   const profile = connection || defaultProfile;
+
+  const recommendedWorkout =
+    profile &&
+    _.shuffle(
+      Object.values(quickRoutinesObj).filter(routine => {
+        const allowedEquipment: Equipment[] =
+          profile.equipment === 'full'
+            ? ['full', 'minimal', 'none']
+            : profile.equipment === 'minimal'
+            ? ['minimal', 'none']
+            : ['none'];
+
+        return (
+          routine.area === profile.area &&
+          allowedEquipment.includes(routine.equipment) &&
+          routine.level === profile.experience
+        );
+      }),
+    )[0];
+
+  const [index, setIndex] = useState(0);
   const {
     calories,
     mins,
@@ -166,53 +206,156 @@ const GoalSummaries: React.FC<{
   ];
 
   return (
-    <Tile
-      style={{
-        width: Dimensions.get('window').width - 40,
-        marginBottom: 20,
-        alignSelf: 'center',
-        padding: 10,
-      }}>
-      <Text
+    <>
+      <PagerView
+        onPageSelected={e => {
+          setIndex(e.nativeEvent.position);
+        }}
         style={{
-          color: colors.appWhite,
-          fontWeight: 'bold',
-          fontSize: 16,
-          textAlign: 'center',
-          marginVertical: 10,
+          height: 215,
         }}>
-        Weekly Targets
-      </Text>
-      <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
-        {connection || profile.targets ? (
-          goals.map(({goal, score, title, key, icon}) => {
-            return (
-              <GoalCircle
-                title={title}
-                key={key}
-                icon={icon}
-                goal={goal}
-                score={score}
-              />
-            );
-          })
-        ) : (
-          <Text style={{color: colors.appWhite, textAlign: 'center'}}>
-            Weekly targets will show up here once they have been set by
-            Christian
+        <Tile
+          key="goals"
+          style={{
+            // width: Dimensions.get('window').width - 40,
+            marginBottom: 15,
+            alignSelf: 'center',
+            padding: 10,
+            marginHorizontal: 20,
+          }}>
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              fontSize: 16,
+              textAlign: 'center',
+              marginVertical: 10,
+            }}>
+            Weekly Targets
           </Text>
+          <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
+            {connection || profile.targets ? (
+              goals.map(({goal, score, title, key, icon}) => {
+                return (
+                  <GoalCircle
+                    title={title}
+                    key={key}
+                    icon={icon}
+                    goal={goal}
+                    score={score}
+                  />
+                );
+              })
+            ) : (
+              <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+                Weekly targets will show up here once they have been set by
+                Christian
+              </Text>
+            )}
+          </View>
+        </Tile>
+        {!connection && (
+          <Tile
+            key="dailies"
+            style={{
+              // width: Dimensions.get('window').width - 40,
+              marginBottom: 20,
+              alignSelf: 'center',
+              padding: 10,
+              marginHorizontal: 20,
+            }}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                fontSize: 16,
+                textAlign: 'center',
+                marginVertical: 10,
+              }}>
+              Daily Challenges
+            </Text>
+            <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
+              <GoalCircle
+                title="Steps"
+                icon={() => (
+                  <Icon
+                    name="shoe-prints"
+                    size={25}
+                    color={colors.button}
+                    style={{
+                      marginHorizontal: 15,
+                    }}
+                  />
+                )}
+                goal={10000}
+                score={dailySteps}
+              />
+              <GoalCircle
+                title="Workout streak"
+                icon={Fire}
+                score={profile.dailyWorkoutStreak || 0}
+                goal={1}
+                hideGoal
+              />
+            </View>
+          </Tile>
         )}
+        {!connection && (
+          <View style={{justifyContent: 'center'}}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginVertical: 15,
+                margin: 10,
+              }}>
+              Recommended workout
+            </Text>
+            {recommendedWorkout && (
+              <WorkoutCard
+                item={recommendedWorkout}
+                onPress={() =>
+                  navigation.navigate('PreQuickRoutine', {
+                    routine: recommendedWorkout,
+                  })
+                }
+              />
+            )}
+          </View>
+        )}
+      </PagerView>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginBottom: 20,
+        }}>
+        {(connection ? [0] : [0, 1, 2]).map(i => {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor:
+                  i === index ? colors.appWhite : colors.textGrey,
+                height: 8,
+                width: 8,
+                borderRadius: 4,
+                marginHorizontal: 3,
+              }}
+            />
+          );
+        })}
       </View>
-    </Tile>
+    </>
   );
 };
 
-const mapStateToProps = ({profile, quickRoutines, settings}: RootState) => ({
+const mapStateToProps = ({profile, quickRoutines}: RootState) => ({
   profile: profile.profile,
   weeklyItems: profile.weeklyItems,
   connectionWeeklyItems: profile.connectionWeeklyItems,
   quickRoutinesObj: quickRoutines.quickRoutines,
-  settings,
 });
 
 const mapDispatchToProps = {

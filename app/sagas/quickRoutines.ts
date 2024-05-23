@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, debounce, put, select, throttle} from 'redux-saga/effects';
+import {call, debounce, fork, put, select, throttle} from 'redux-saga/effects';
 import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
@@ -18,6 +18,7 @@ import {
 } from '../reducers/quickRoutines';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
+import {incrementWorkoutStreak} from './exercises';
 
 export function* getQuickRoutines() {
   try {
@@ -51,6 +52,8 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
         profile,
       );
     }
+
+    yield fork(incrementWorkoutStreak);
   } catch (e) {
     logError(e);
     yield call(Snackbar.show, {text: 'Error saving workout'});

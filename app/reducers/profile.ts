@@ -81,6 +81,7 @@ const initialState: ProfileState = {
     prepTime: 15,
     workoutMusic: true,
     favouriteRecipes: [],
+    dailyWorkoutStreak: 0,
   },
   loggedIn: false,
   weightSamples: [],

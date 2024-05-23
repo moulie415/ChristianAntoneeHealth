@@ -99,7 +99,7 @@ import {
   SignUpPayload,
   UpdateProfilePayload,
 } from '../types/Shared';
-import {getAllExercises, handleDeepLink} from './exercises';
+import {checkWorkoutStreak, getAllExercises, handleDeepLink} from './exercises';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
@@ -740,6 +740,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
 
       yield fork(getAllExercises);
       yield fork(getQuickRoutines);
+      yield fork(checkWorkoutStreak);
 
       if (doc.exists) {
         yield put(setProfile(doc.data() as Profile));

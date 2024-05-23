@@ -421,7 +421,7 @@ const ProfileComponent: React.FC<{
             </Tile>
           </View>
 
-          <GoalSummaries />
+          <GoalSummaries navigation={navigation} />
 
           <ProfileCharts
             weight={weight}
