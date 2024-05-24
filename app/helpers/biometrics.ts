@@ -269,14 +269,17 @@ export const getStepSamples = async (
 
   // difference between steps and rawSteps?
   return response.reduce((acc: Sample[], cur) => {
-    return [
-      ...acc,
-      ...cur.steps.map(item => ({
-        endDate: item.date,
-        startDate: item.date,
-        value: item.value,
-      })),
-    ];
+    if (cur.source === 'com.google.android.gms:estimated_steps') {
+      return [
+        ...acc,
+        ...cur.steps.map(item => ({
+          endDate: item.date,
+          startDate: item.date,
+          value: item.value,
+        })),
+      ];
+    }
+    return acc;
   }, []);
 };
 
