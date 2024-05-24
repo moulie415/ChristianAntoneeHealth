@@ -94,6 +94,7 @@
 		08BC403BF1F89030606A217B /* Pods-HealthAndMovement.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthAndMovement.release.xcconfig"; path = "Target Support Files/Pods-HealthAndMovement/Pods-HealthAndMovement.release.xcconfig"; sourceTree = "<group>"; };
 		0A24E31326DCFE050030CD7E /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = countdown.wav; path = ../app/audio/countdown.wav; sourceTree = "<group>"; };
 		0A24F534261784EB00859CAB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		0A263E332C00E0E9004EA6C7 /* CA Health WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CA Health WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		0A33190327D39ADF00C74CD6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../app/images/logo.png; sourceTree = "<group>"; };
 		0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HealthAndMovement/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A6FCF5C2760C6F70090931A /* HealthAndMovementDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HealthAndMovementDebug.entitlements; path = HealthAndMovement/HealthAndMovementDebug.entitlements; sourceTree = "<group>"; };
@@ -192,6 +193,7 @@
 		0A8218E22844D0B300C94F96 /* CA Health WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				0A263E332C00E0E9004EA6C7 /* CA Health WatchKit Extension.entitlements */,
 				0A8218E32844D0B300C94F96 /* HealthAndMovementApp.swift */,
 				0A8218E52844D0B300C94F96 /* ContentView.swift */,
 				0A8218E72844D0B300C94F96 /* NotificationController.swift */,
@@ -977,6 +979,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "CA Health WatchKit Extension/CA Health WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 195;
@@ -1021,6 +1024,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "CA Health WatchKit Extension/CA Health WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
