@@ -740,7 +740,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
 
       yield fork(getAllExercises);
       yield fork(getQuickRoutines);
-      yield fork(checkWorkoutStreak);
 
       if (doc.exists) {
         yield put(setProfile(doc.data() as Profile));
@@ -773,6 +772,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         yield call(api.setUser, userObj);
       }
 
+      yield fork(checkWorkoutStreak);
       yield fork(premiumUpdatedWorker);
       const {customerInfo, created} = yield call(Purchases.logIn, user.uid);
       yield call(getSettings);
