@@ -24,30 +24,5 @@ class Singleton: ObservableObject {
     let connectivity = Connectivity()
     var loggedIn: Bool = false
     
-    @Published var goalData: GoalData? {
-        didSet {
-            saveGoalData() // Save the goalData whenever it's updated
-        }
-    }
-    
-    private let goalDataKey = "GoalData"
-    
-    private init() {
-        loadGoalData() // Load the goalData when the Singleton instance is created
-    }
-    
-    private func saveGoalData() {
-        guard let data = try? JSONEncoder().encode(goalData) else {
-            return
-        }
-        UserDefaults.standard.set(data, forKey: goalDataKey)
-    }
-    
-    private func loadGoalData() {
-        guard let data = UserDefaults.standard.data(forKey: goalDataKey),
-              let loadedGoalData = try? JSONDecoder().decode(GoalData.self, from: data) else {
-            return
-        }
-        goalData = loadedGoalData
-    }
+    @Published var goalData: GoalData? 
 }

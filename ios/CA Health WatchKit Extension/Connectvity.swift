@@ -16,19 +16,27 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
   var builder: HKLiveWorkoutBuilder?
   var workoutSession: HKWorkoutSession?
 
-  init(session: WCSession = .default){
+  init(session: WCSession = .default) {
     super.init()
     if WCSession.isSupported() {
-        self.session = WCSession.default
-        self.session?.delegate = self
-        self.session?.activate()
+      self.session = WCSession.default
+      self.session?.delegate = self
+      self.session?.activate()
+      if let context = self.session?.applicationContext {
+        getGoalDataFromContext(applicationContext: context)
       }
     }
+  }
+
   
   
   // Called when the activation of a session finishes
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-
+    if let error = error {
+          print("WCSession activation failed with error: \(error.localizedDescription)")
+          return
+      }
+      print("WCSession activated with state: \(activationState.rawValue)")
   }
 
   // Called when an immediate message arrives
@@ -37,8 +45,15 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
      // startWorkout();
     }
     
-    
-    if let goalDataDict = message["goalData"] as? [String: Any] {
+  }
+
+  
+  func session(_ session: WCSession, didReceiveApplicationContext context: [String: Any]) {
+    getGoalDataFromContext(applicationContext: context)
+  }
+  
+  func getGoalDataFromContext(applicationContext: [String: Any]) {
+    if let goalDataDict = applicationContext["goalData"] as? [String: Any] {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: goalDataDict, options: [])
                 let goalData = try JSONDecoder().decode(GoalData.self, from: jsonData)

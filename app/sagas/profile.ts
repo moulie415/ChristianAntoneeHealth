@@ -32,7 +32,7 @@ import googleFit from 'react-native-google-fit';
 import Purchases from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
 import Sound from 'react-native-sound';
-import {sendMessage as sendWatchMessage} from 'react-native-watch-connectivity';
+import {updateApplicationContext} from 'react-native-watch-connectivity';
 import {RootState} from '../App';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {scheduleLocalNotification} from '../helpers';
@@ -416,7 +416,7 @@ function* getWeeklyItems() {
 
     const goalData = getGoalsData(weeklyItems, quickRoutines, profile.targets);
     if (Platform.OS === 'ios') {
-      sendWatchMessage({goalData});
+      updateApplicationContext({goalData});
     }
   } catch (e) {
     yield put(setLoading(false));

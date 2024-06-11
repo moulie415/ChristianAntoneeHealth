@@ -2168,7 +2168,7 @@ PODS:
     - react-native-config/App (= 1.5.1)
   - react-native-config/App (1.5.1):
     - React-Core
-  - react-native-document-picker (9.1.0):
+  - react-native-document-picker (9.3.0):
     - React-Core
   - react-native-fbsdk-next (13.0.0):
     - React-Core
@@ -2980,7 +2980,7 @@ SPEC CHECKSUMS:
   react-native-blob-util: d8fa1a7f726867907a8e43163fdd8b441d4489ea
   react-native-compressor: 7ffcf879187aa99196569c3f5923dfc7e68c714d
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
-  react-native-document-picker: b4f4a23b73f864ce17965b284c0757648993805b
+  react-native-document-picker: 5b97e24a7f1a1e4a50a72c540a043f32d29a70a2
   react-native-fbsdk-next: 84746ea062dc3b1a422154d7674ba4c5836b6d82
   react-native-image-picker: 88f0a6e61299e8a94391284302633411a82ba395
   react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
