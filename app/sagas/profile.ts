@@ -415,7 +415,9 @@ function* getWeeklyItems() {
     yield call(scheduleGoalReminderNotification);
 
     const goalData = getGoalsData(weeklyItems, quickRoutines, profile.targets);
-    sendWatchMessage({goalData});
+    if (Platform.OS === 'ios') {
+      sendWatchMessage({goalData});
+    }
   } catch (e) {
     yield put(setLoading(false));
     logError(e);

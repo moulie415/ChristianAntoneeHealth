@@ -14,7 +14,7 @@ struct LogoView: View {
         Image("logo")
           .resizable()
           .scaledToFit()
-          .padding(.all)
+          .padding(20)
 
 //        NavigationLink(destination: EquipmentView()) {
 //          Text("Start Workout")
@@ -30,11 +30,42 @@ struct LogoView: View {
     }
 }
 
-struct CaloriesView: View {
-  @ObservedObject var instance = Singleton.instance;
+struct CircularProgressView: View {
+    let value: Double
+    let goal: Double
+    let label: String
+    
     var body: some View {
-      if let goalData = instance.goalData {
-        Text("\(goalData.calories )/\(goalData.caloriesGoal) Calories burned")
+        VStack {
+            ZStack {
+                ProgressView(value: value, total: goal)
+                .tint(Color.blue)
+                .scaleEffect(1.8)
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .frame(width: 100, height: 100) // Adjust the size as needed
+
+                Text("\(Int(value))/\(Int(goal))")
+                    .font(.caption)
+                    .foregroundColor(.primary)
+            }
+
+            Text(label)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+struct CaloriesView: View {
+    @ObservedObject var instance = Singleton.instance
+    
+    var body: some View {
+        if let goalData = instance.goalData {
+            CircularProgressView(
+                value: Double(goalData.calories),
+                goal: Double(goalData.caloriesGoal),
+                label: "Calories burned"
+            )
         } else {
             ProgressView()
         }
@@ -42,10 +73,15 @@ struct CaloriesView: View {
 }
 
 struct MinutesView: View {
-  @ObservedObject var instance = Singleton.instance;
+    @ObservedObject var instance = Singleton.instance
+    
     var body: some View {
-      if let goalData = instance.goalData {
-            Text("\(goalData.mins)/\(goalData.minsGoal) Active minutes")
+        if let goalData = instance.goalData {
+            CircularProgressView(
+                value: Double(goalData.mins),
+                goal: Double(goalData.minsGoal),
+                label: "Active minutes"
+            )
         } else {
             ProgressView()
         }
@@ -53,17 +89,20 @@ struct MinutesView: View {
 }
 
 struct WorkoutLevelScoreView: View {
-  @ObservedObject var instance = Singleton.instance;
+    @ObservedObject var instance = Singleton.instance
+    
     var body: some View {
-      if let goalData = instance.goalData, let workoutGoalInt = Int(goalData.workoutGoal) {
-            Text("\(goalData.workoutLevelScore)/\(workoutGoalInt) \(goalData.workoutLevelTitleString) workout")
+        if let goalData = instance.goalData, let workoutGoalInt = Int(goalData.workoutGoal) {
+            CircularProgressView(
+                value: Double(goalData.workoutLevelScore),
+                goal: Double(workoutGoalInt),
+                label: "\(goalData.workoutLevelTitleString) workouts"
+            )
         } else {
             ProgressView()
         }
     }
 }
-
-
 
 
 struct HomeView: View {
@@ -78,9 +117,6 @@ struct HomeView: View {
     .tabViewStyle(PageTabViewStyle())
   }
 }
-
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

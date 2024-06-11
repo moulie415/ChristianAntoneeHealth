@@ -82,11 +82,10 @@ export const getGoalsData = (
     }, 0),
   );
 
-  const calories = [...savedWorkouts, ...savedQuickRoutines].reduce(
-    (acc, cur) => {
+  const calories = Math.round(
+    [...savedWorkouts, ...savedQuickRoutines].reduce((acc, cur) => {
       return acc + (cur.calories || 0);
-    },
-    0,
+    }, 0),
   );
   const completed =
     calories >= caloriesGoal &&
