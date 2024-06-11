@@ -32,6 +32,7 @@ import googleFit from 'react-native-google-fit';
 import Purchases from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
 import Sound from 'react-native-sound';
+import {sendMessage as sendWatchMessage} from 'react-native-watch-connectivity';
 import {RootState} from '../App';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {scheduleLocalNotification} from '../helpers';
@@ -397,8 +398,11 @@ function* createChannels() {
 function* getWeeklyItems() {
   try {
     yield put(setLoading(true));
-    const {uid} = yield select((state: RootState) => state.profile.profile);
-    const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
+    const {profile} = yield select((state: RootState) => state.profile);
+    const weeklyItems: WeeklyItems = yield call(
+      api.getWeeklyItems,
+      profile.uid,
+    );
     const {quickRoutines} = yield select(
       (state: RootState) => state.quickRoutines,
     );
@@ -409,6 +413,9 @@ function* getWeeklyItems() {
     yield put(setWeeklyItems(weeklyItems));
     yield put(setLoading(false));
     yield call(scheduleGoalReminderNotification);
+
+    const goalData = getGoalsData(weeklyItems, quickRoutines, profile.targets);
+    sendWatchMessage({goalData});
   } catch (e) {
     yield put(setLoading(false));
     logError(e);

@@ -7,16 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct LogoView: View {
     var body: some View {
 
       VStack {
         Image("logo")
           .resizable()
           .scaledToFit()
+          .padding(.all)
 
-        Text("Functionality coming soon")
-          .padding(.vertical)
 //        NavigationLink(destination: EquipmentView()) {
 //          Text("Start Workout")
 //
@@ -31,16 +30,50 @@ struct ContentView: View {
     }
 }
 
+struct CaloriesView: View {
+  @ObservedObject var instance = Singleton.instance;
+    var body: some View {
+      if let goalData = instance.goalData {
+        Text("\(goalData.calories )/\(goalData.caloriesGoal) Calories burned")
+        } else {
+            ProgressView()
+        }
+    }
+}
+
+struct MinutesView: View {
+  @ObservedObject var instance = Singleton.instance;
+    var body: some View {
+      if let goalData = instance.goalData {
+            Text("\(goalData.mins)/\(goalData.minsGoal) Active minutes")
+        } else {
+            ProgressView()
+        }
+    }
+}
+
+struct WorkoutLevelScoreView: View {
+  @ObservedObject var instance = Singleton.instance;
+    var body: some View {
+      if let goalData = instance.goalData, let workoutGoalInt = Int(goalData.workoutGoal) {
+            Text("\(goalData.workoutLevelScore)/\(workoutGoalInt) \(goalData.workoutLevelTitleString) workout")
+        } else {
+            ProgressView()
+        }
+    }
+}
 
 
 
-struct WorkoutView: View {
+
+struct HomeView: View {
   
   var body: some View {
     TabView {
-      Text("Page One")
-      Text("Page Two")
-      Text("Page Three")
+      LogoView()
+      WorkoutLevelScoreView()
+      CaloriesView()
+      MinutesView()
     }
     .tabViewStyle(PageTabViewStyle())
   }
@@ -51,8 +84,6 @@ struct WorkoutView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-//        EquipmentView()
-//        AreaView()
+      HomeView()
     }
 }

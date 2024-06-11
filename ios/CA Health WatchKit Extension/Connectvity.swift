@@ -36,6 +36,20 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
     if (message["startQuickRoutine"] != nil || message["startWorkout"] != nil) {
      // startWorkout();
     }
+    
+    
+    if let goalDataDict = message["goalData"] as? [String: Any] {
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: goalDataDict, options: [])
+                let goalData = try JSONDecoder().decode(GoalData.self, from: jsonData)
+                
+                DispatchQueue.main.async {
+                    Singleton.instance.goalData = goalData
+                }
+            } catch {
+                print("Failed to decode GoalData: \(error)")
+            }
+        }
   }
   
   func startWorkout() {

@@ -6,10 +6,23 @@ struct Routine : Identifiable {
   let level: String
 }
 
-class Singleton {
+struct GoalData: Codable {
+  let workoutLevelTitleString: String;
+  let minsGoal: Int;
+  let caloriesGoal: Int;
+  let calories: Int;
+  let workoutLevel: String;
+  let workoutGoal: String;
+  let completed: Bool;
+  let mins: Int;
+  let workoutLevelScore: Int;
+}
+
+class Singleton : ObservableObject {
   static let instance = Singleton()
   let connectivity = Connectivity()
   var loggedIn: Bool = false;
+  @Published var goalData: GoalData?;
   var equipment: String?
   var area: String?
   var routines: Array<Routine> = []

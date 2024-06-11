@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct HealthAndMovementApp: App {
+
     @SceneBuilder var body: some Scene {
+      var _ = Singleton.instance
+
         WindowGroup {
             NavigationView {
-                ContentView()
+             HomeView()
             }
         }
 
