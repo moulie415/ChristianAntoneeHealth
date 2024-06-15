@@ -2,10 +2,8 @@ import React from 'react';
 import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
-import {Profile} from '../../../types/Shared';
+import {useAppSelector} from '../../../hooks/redux';
 import FastImageAnimated from '../../commons/FastImageAnimated';
 import Text from '../../commons/Text';
 
@@ -15,9 +13,9 @@ const RecipeCard: React.FC<{
   name: string;
   image: string;
   onPress: () => void;
-  premium: boolean;
-  profile: Profile;
-}> = ({onPress, name, image, profile, premium}) => {
+  premium?: boolean;
+}> = ({onPress, name, image, premium}) => {
+  const {profile} = useAppSelector(state => state.profile);
   return (
     <TouchableOpacity onPress={onPress}>
       <FastImageAnimated
@@ -51,6 +49,7 @@ const RecipeCard: React.FC<{
               color: colors.appWhite,
               fontSize: 20,
               fontWeight: 'bold',
+              maxWidth: 300,
             }}>
             {name}
           </Text>
@@ -59,7 +58,7 @@ const RecipeCard: React.FC<{
           <View
             style={{
               position: 'absolute',
-              top: 15,
+              bottom: 15,
               right: 15,
             }}>
             <Icon name="lock" color={colors.appWhite} size={20} />
@@ -70,8 +69,4 @@ const RecipeCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
-  profile: profile.profile,
-});
-
-export default connect(mapStateToProps)(RecipeCard);
+export default RecipeCard;

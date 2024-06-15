@@ -57,6 +57,7 @@ const Recipes: React.FC<{
             <RecipeCard
               name={item.name}
               image={item.image.src}
+              premium={item.premium}
               onPress={() => {
                 if (item.premium && !profile.premium) {
                   navigation.navigate('Premium', {});

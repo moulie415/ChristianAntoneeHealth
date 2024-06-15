@@ -71,6 +71,7 @@ const SavedRecipes: FunctionComponent<{
           return (
             <RecipeCard
               name={item.name}
+              premium={item.premium}
               image={item.image.src}
               onPress={() => {
                 if (item.premium && !profile.premium) {
