@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
@@ -32,6 +31,7 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
+import Config from 'react-native-config';
 
 const {height} = Dimensions.get('window');
 
@@ -338,38 +338,38 @@ const Premium: React.FC<{
                     disabled={!selected}
                     style={{margin: 20, marginBottom: 0}}
                   />
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      margin: 20,
-                    }}>
-                    <Button
-                      variant="secondary"
-                      text="Terms of Service"
-                      onPress={() =>
-                        navigation.navigate('WebViewScreen', {
-                          uri: Config.TERMS_AND_CONDITIONS as string,
-                          title: 'Terms of Service',
-                        })
-                      }
-                      style={{flex: 1, marginRight: 5}}
-                    />
-
-                    <Button
-                      variant="secondary"
-                      text="Privacy Policy"
-                      onPress={() =>
-                        navigation.navigate('WebViewScreen', {
-                          uri: Config.PRIVACY_POLICY as string,
-                          title: 'Privacy Policy',
-                        })
-                      }
-                      style={{flex: 1, marginLeft: 5}}
-                    />
-                  </View>
                 </>
               )}
 
+              <View
+                style={{
+                  flexDirection: 'row',
+                  margin: 20,
+                }}>
+                <Button
+                  variant="secondary"
+                  text="Terms of Service"
+                  onPress={() =>
+                    navigation.navigate('WebViewScreen', {
+                      uri: Config.TERMS_AND_CONDITIONS as string,
+                      title: 'Terms of Service',
+                    })
+                  }
+                  style={{flex: 1, marginRight: 5}}
+                />
+
+                <Button
+                  variant="secondary"
+                  text="Privacy Policy"
+                  onPress={() =>
+                    navigation.navigate('WebViewScreen', {
+                      uri: Config.PRIVACY_POLICY as string,
+                      title: 'Privacy Policy',
+                    })
+                  }
+                  style={{flex: 1, marginLeft: 5}}
+                />
+              </View>
               <TouchableOpacity
                 onPress={async () => {
                   try {
