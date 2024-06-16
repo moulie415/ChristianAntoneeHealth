@@ -8,6 +8,7 @@ import Config from 'react-native-config';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../../App';
+import {HEIGHTS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter} from '../../../helpers';
 import {Gender} from '../../../types/Shared';
@@ -19,7 +20,6 @@ import Modal from '../../commons/Modal';
 import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
 import SignUpWeightModal from './SignUpWeightModal';
-import { HEIGHTS } from '../../../constants';
 
 const PersonalDetails: React.FC<{
   name: string;
