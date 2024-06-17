@@ -23,20 +23,12 @@ const PlanNutrition: React.FC<{
   useEffect(() => {
     const getMissingRecipes = () => {
       if (nutrition) {
-        const {postWorkoutRecipes, preWorkoutRecipes, generalRecipes} =
+        const {generalRecipes} =
           nutrition;
-        if (
-          postWorkoutRecipes?.length ||
-          preWorkoutRecipes?.length ||
-          generalRecipes?.length
-        ) {
-          const ids = _.uniq(
-            [
-              ...(postWorkoutRecipes || []),
-              ...(preWorkoutRecipes || []),
-              ...(generalRecipes || []),
-            ].map(r => r),
-          ).filter(r => !recipes[r]);
+        if (generalRecipes?.length) {
+          const ids = _.uniq((generalRecipes || []).map(r => r)).filter(
+            r => !recipes[r],
+          );
           getRecipesByIdAction(ids);
         }
       }
@@ -50,22 +42,6 @@ const PlanNutrition: React.FC<{
       []
     );
   }, [nutrition?.generalRecipes, recipes]);
-
-  const postWorkoutRecipes = useMemo(() => {
-    return (
-      nutrition?.postWorkoutRecipes
-        ?.filter(r => recipes[r])
-        .map(r => recipes[r]) || []
-    );
-  }, [nutrition?.postWorkoutRecipes, recipes]);
-
-  const preWorkoutRecipes = useMemo(() => {
-    return (
-      nutrition?.preWorkoutRecipes
-        ?.filter(r => recipes[r])
-        .map(r => recipes[r]) || []
-    );
-  }, [nutrition?.preWorkoutRecipes, recipes]);
 
   return (
     <ScrollView bounces={false} style={{backgroundColor: colors.appGrey}}>
@@ -116,72 +92,6 @@ const PlanNutrition: React.FC<{
               {nutrition.general}
             </Text>
             {generalRecipes.map(r => {
-              return (
-                <RecipeCard
-                  key={r.id}
-                  name={r.name}
-                  image={r.image.src}
-                  onPress={() => navigation.navigate('Recipe', {recipe: r})}
-                />
-              );
-            })}
-          </>
-        )}
-        {!!nutrition.preWorkout && (
-          <>
-            <Text
-              style={{
-                fontSize: 25,
-                fontWeight: 'bold',
-                paddingHorizontal: 20,
-                paddingTop: 10,
-                fontFamily: 'Helvetica',
-                color: colors.appWhite,
-              }}>
-              Pre-workout
-            </Text>
-            <Text
-              style={{
-                color: colors.appWhite,
-                padding: 20,
-                paddingVertical: 10,
-              }}>
-              {nutrition.preWorkout}
-            </Text>
-            {preWorkoutRecipes.map(r => {
-              return (
-                <RecipeCard
-                  key={r.id}
-                  name={r.name}
-                  image={r.image.src}
-                  onPress={() => navigation.navigate('Recipe', {recipe: r})}
-                />
-              );
-            })}
-          </>
-        )}
-        {!!nutrition.postWorkout && (
-          <>
-            <Text
-              style={{
-                fontSize: 25,
-                fontWeight: 'bold',
-                paddingHorizontal: 20,
-                paddingTop: 10,
-                fontFamily: 'Helvetica',
-                color: colors.appWhite,
-              }}>
-              Post-workout
-            </Text>
-            <Text
-              style={{
-                color: colors.appWhite,
-                padding: 20,
-                paddingVertical: 10,
-              }}>
-              {nutrition.postWorkout}
-            </Text>
-            {postWorkoutRecipes.map(r => {
               return (
                 <RecipeCard
                   key={r.id}

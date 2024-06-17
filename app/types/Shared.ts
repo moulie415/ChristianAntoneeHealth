@@ -106,6 +106,7 @@ export interface Profile {
   boneProblems?: boolean;
   drugPrescription?: boolean;
   otherReason?: boolean;
+  otherReasonDescription?: string;
   willInformDoctor?: boolean;
   dailyWorkoutStreak?: number;
   lastWorkoutDate?: string;
@@ -204,10 +205,6 @@ export interface PlanWorkout {
 }
 
 export interface PlanNutrition {
-  preWorkout: string;
-  preWorkoutRecipes: string[];
-  postWorkout: string;
-  postWorkoutRecipes: string[];
   general: string;
   generalRecipes: string[];
 }
@@ -269,7 +266,7 @@ export interface SignUpPayload {
   boneProblems: boolean;
   drugPrescription: boolean;
   otherReason: boolean;
-  willInformDoctor: boolean;
+  otherReasonDescription: string;
   fromProfile?: boolean;
 }
 

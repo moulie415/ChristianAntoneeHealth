@@ -31,9 +31,21 @@ const Recipes: React.FC<{
   }, [getRecipesAction]);
   const {category} = route.params;
 
-  const filtered = Object.values(recipes).filter(
-    recipe => recipe.category === category,
-  );
+  const filtered = Object.values(recipes)
+    .filter(recipe => recipe.category === category)
+    .sort((a, b) => {
+      if (profile.premium) {
+        return 0;
+      }
+
+      if (a.premium && !b.premium) {
+        return 1;
+      }
+      if (b.premium && !a.premium) {
+        return -1;
+      }
+      return 0;
+    });
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header

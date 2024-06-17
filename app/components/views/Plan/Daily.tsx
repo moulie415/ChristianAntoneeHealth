@@ -150,12 +150,9 @@ const Daily: React.FC<{
       {(objectHasNonEmptyValues(plan?.sleep) ||
         objectHasNonEmptyValues(plan?.nutrition)) && (
         <>
-          {plan?.nutrition &&
-            (plan.nutrition.general ||
-              plan.nutrition.preWorkout ||
-              plan.nutrition.postWorkout) && (
-              <NutritionCard nutrition={plan.nutrition} />
-            )}
+          {plan?.nutrition && plan.nutrition.general && (
+            <NutritionCard nutrition={plan.nutrition} />
+          )}
           {plan?.sleep && plan.sleep.general && (
             <SleepCard sleep={plan.sleep} />
           )}

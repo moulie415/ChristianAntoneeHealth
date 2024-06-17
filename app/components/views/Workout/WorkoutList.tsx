@@ -44,12 +44,26 @@ const WorkoutList: React.FC<{
     }
   }, [navigation, selectedItem]);
 
-  const filtered = Object.values(quickRoutines).filter(routine => {
-    return (
-      routine.area === area &&
-      (routine.equipment === equipment || equipment === 'full')
-    );
-  });
+  const filtered = Object.values(quickRoutines)
+    .filter(routine => {
+      return (
+        routine.area === area &&
+        (routine.equipment === equipment || equipment === 'full')
+      );
+    })
+    .sort((a, b) => {
+      if (profile.premium) {
+        return 0;
+      }
+
+      if (a.premium && !b.premium) {
+        return 1;
+      }
+      if (b.premium && !a.premium) {
+        return -1;
+      }
+      return 0;
+    });
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>

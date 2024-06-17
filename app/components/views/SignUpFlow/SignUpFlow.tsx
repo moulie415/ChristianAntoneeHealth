@@ -2,14 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
 import React, {useRef, useState} from 'react';
-import {
-  Alert,
-  Dimensions,
-  Keyboard,
-  Platform,
-  SafeAreaView,
-  View,
-} from 'react-native';
+import {Alert, Keyboard, Platform, SafeAreaView, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import StepIndicator from 'react-native-step-indicator';
 import {connect} from 'react-redux';
@@ -50,8 +43,6 @@ import SelectArea from './SelectArea';
 import SelectEquipment from './SelectEquipment';
 import SelectExperience from './SelectExperience';
 import SelectGoal from './SelectGoal';
-
-const {width} = Dimensions.get('window');
 
 const SignUpFlow: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SignUpFlow'>;
@@ -112,8 +103,8 @@ const SignUpFlow: React.FC<{
     profile.drugPrescription || false,
   );
   const [otherReason, setOtherReason] = useState(profile.otherReason || false);
-  const [willInformDoctor, setWillInformDoctor] = useState(
-    profile.willInformDoctor || false,
+  const [otherReasonDescription, setOtherReasonDescription] = useState(
+    profile.otherReasonDescription || '',
   );
   const [confirmQuestionnaire, setConfirmQuestionnaire] = useState(false);
 
@@ -190,7 +181,7 @@ const SignUpFlow: React.FC<{
       boneProblems,
       drugPrescription,
       otherReason,
-      willInformDoctor,
+      otherReasonDescription,
       fromProfile: !!fromProfile,
     });
   }, 3000);
@@ -292,7 +283,8 @@ const SignUpFlow: React.FC<{
     },
     {
       key: 'readiness',
-      showNext: confirmQuestionnaire,
+      showNext:
+        confirmQuestionnaire && (!otherReason || otherReasonDescription),
       component: (
         <PhysicalActivityReadiness
           heartCondition={heartCondition}
@@ -309,8 +301,8 @@ const SignUpFlow: React.FC<{
           setDrugPrescription={setDrugPrescription}
           otherReason={otherReason}
           setOtherReason={setOtherReason}
-          willInformDoctor={willInformDoctor}
-          setWillInformDoctor={setWillInformDoctor}
+          otherReasonDescription={otherReasonDescription}
+          setOtherReasonDescription={setOtherReasonDescription}
           confirmQuestionnaire={confirmQuestionnaire}
           setConfirmQuestionnaire={setConfirmQuestionnaire}
         />

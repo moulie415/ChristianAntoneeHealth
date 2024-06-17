@@ -1,8 +1,9 @@
-import React, {Fragment, ReactNode} from 'react';
+import React, {Fragment, ReactNode, useEffect} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import colors from '../../../constants/colors';
 import Checkbox from '../../commons/Checkbox';
 import Divider from '../../commons/Divider';
+import Input from '../../commons/Input';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 
@@ -28,8 +29,8 @@ const PhysicalActivityReadiness: React.FC<{
   setDrugPrescription: (drugPrescription: boolean) => void;
   otherReason: boolean;
   setOtherReason: (reason: boolean) => void;
-  willInformDoctor: boolean;
-  setWillInformDoctor: (willInform: boolean) => void;
+  otherReasonDescription: string;
+  setOtherReasonDescription: (description: string) => void;
   confirmQuestionnaire: boolean;
   setConfirmQuestionnaire: (confirm: boolean) => void;
 }> = ({
@@ -47,11 +48,16 @@ const PhysicalActivityReadiness: React.FC<{
   setDrugPrescription,
   otherReason,
   setOtherReason,
-  willInformDoctor,
-  setWillInformDoctor,
+  otherReasonDescription,
+  setOtherReasonDescription,
   confirmQuestionnaire,
   setConfirmQuestionnaire,
 }) => {
+  useEffect(() => {
+    if (!otherReason) {
+      setOtherReasonDescription('');
+    }
+  }, [otherReason, setOtherReasonDescription]);
   const questions: Question<any>[] = [
     {
       key: 'heartCondition',
@@ -102,19 +108,6 @@ const PhysicalActivityReadiness: React.FC<{
       value: otherReason,
       onChange: setOtherReason,
     },
-
-    {
-      key: 'willInformDoctor',
-      question: (
-        <Text>
-          If you answered <Text style={{fontWeight: 'bold'}}>YES</Text> to any
-          of the above questions, will you inform your doctor that you intend to
-          increase your physical activity levels?
-        </Text>
-      ),
-      value: willInformDoctor,
-      onChange: setWillInformDoctor,
-    },
   ];
   return (
     <ScrollView
@@ -164,11 +157,21 @@ const PhysicalActivityReadiness: React.FC<{
                   Yes
                 </Text>
               </View>
+              {key === 'otherReason' && otherReason && (
+                <Input
+                  containerStyle={{marginTop: 15}}
+                  value={otherReasonDescription}
+                  multiline
+                  onChangeText={setOtherReasonDescription}
+                  placeholder="Please enter reason here..."
+                />
+              )}
             </View>
             <Divider />
           </Fragment>
         );
       })}
+
       <TouchableOpacity
         onPress={() => setConfirmQuestionnaire(!confirmQuestionnaire)}
         style={{
@@ -182,8 +185,11 @@ const PhysicalActivityReadiness: React.FC<{
           iconStyle={{color: colors.appWhite}}
         />
         <Text style={{color: colors.appWhite, flex: 1, marginLeft: 10}}>
-          I have read, understood and completed this questionnaire to my full
-          satisfaction.
+          I have read, understood and accurately completed this questionnaire. I
+          confirm that I am voluntarily engaging in an acceptable level of
+          exercise and my participation involves a risk of injury. If I have
+          answered YES to one of the above questions, I have sought medical
+          advice and my GP has agreed that I may exercise.
         </Text>
       </TouchableOpacity>
     </ScrollView>
