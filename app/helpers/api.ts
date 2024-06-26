@@ -565,7 +565,10 @@ export const getSavedQuickRoutines = async (uid: string, startAfter?: Date) => {
 
 export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
   try {
-    const response = await functions().httpsCallable('getWeeklyItems')({uid});
+    const response = await functions().httpsCallable<
+      {uid: string},
+      WeeklyItems
+    >('getWeeklyItems')({uid});
     const {quickRoutines, tests, workouts} = response.data;
     return {quickRoutines, tests, workouts};
   } catch (e) {
@@ -664,7 +667,9 @@ export const getRecipesById = async (ids: string[]) => {
 
 export const generateLink = async () => {
   try {
-    const response = await functions().httpsCallable('generateLink')();
+    const response = await functions().httpsCallable<{}, {link: string}>(
+      'generateLink',
+    )();
     return response.data.link;
   } catch (e) {
     Snackbar.show({text: 'Error generating link'});
@@ -672,7 +677,9 @@ export const generateLink = async () => {
 };
 
 export const acceptInviteLink = async (value: string) => {
-  const response = await functions().httpsCallable('acceptInviteLink')({
+  const response = await functions().httpsCallable<{}, {user: Profile}>(
+    'acceptInviteLink',
+  )({
     value,
   });
   return response.data.user;

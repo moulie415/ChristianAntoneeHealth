@@ -22,7 +22,6 @@ const SavedRecipes: FunctionComponent<{
   loading: boolean;
   navigation: SavedItemsNavigationProp;
   profile: Profile;
-  getSavedRecipes: () => void;
   recipes: {[key: string]: Recipe};
 }> = ({loading, navigation, profile, recipes}) => {
   const missing = useMemo(

@@ -26,7 +26,6 @@ const EndWorkout: React.FC<{
   profile: Profile;
   workout: Exercise[];
   saveWorkoutAction: (workout: SavedWorkout) => void;
-  setProfile: (profile: Profile) => void;
 }> = ({route, navigation, profile, workout, saveWorkoutAction: saveAction}) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);

@@ -76,13 +76,13 @@ const ProfileCharts: React.FC<{
   boneMassSamples: Sample[];
   visceralFatSamples: Sample[];
   metabolicAgeSamples: Sample[];
-  setShowBodyFatPercentageModal: (show: boolean) => void;
-  setShowMuscleMassModal: (show: boolean) => void;
-  setShowBoneMassModal: (show: boolean) => void;
-  setShowVisceralFatModal: (show: boolean) => void;
-  setShowMetabolicAgeModal: (show: boolean) => void;
-  setShowWeightModal: (show: boolean) => void;
-  setShowHeightModal: (show: boolean) => void;
+  setShowBodyFatPercentageModal?: (show: boolean) => void;
+  setShowMuscleMassModal?: (show: boolean) => void;
+  setShowBoneMassModal?: (show: boolean) => void;
+  setShowVisceralFatModal?: (show: boolean) => void;
+  setShowMetabolicAgeModal?: (show: boolean) => void;
+  setShowWeightModal?: (show: boolean) => void;
+  setShowHeightModal?: (show: boolean) => void;
   weight: number;
   height: number;
   bodyFatPercentage?: number;
@@ -257,7 +257,9 @@ const ProfileCharts: React.FC<{
           'Obesity',
         ]}
         suffix="%"
-        onPress={() => setShowBodyFatPercentageModal(true)}
+        onPress={() =>
+          setShowBodyFatPercentageModal && setShowBodyFatPercentageModal(true)
+        }
         connection={connection}
         premium
       />
@@ -274,7 +276,7 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           new Color(colors.appGreen).darken(0.4).toString(),
         ]}
-        onPress={() => setShowMuscleMassModal(true)}
+        onPress={() => setShowMuscleMassModal && setShowMuscleMassModal(true)}
         labels={['Low', 'Normal', 'High']}
         connection={connection}
         premium
@@ -292,7 +294,7 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           new Color(colors.appGreen).darken(0.4).toString(),
         ]}
-        onPress={() => setShowBoneMassModal(true)}
+        onPress={() => setShowBoneMassModal && setShowBoneMassModal(true)}
         labels={['Below average', 'Average', 'Above average']}
         connection={connection}
         premium
@@ -309,7 +311,7 @@ const ProfileCharts: React.FC<{
           colors.secondaryLight,
           colors.appRed,
         ]}
-        onPress={() => setShowVisceralFatModal(true)}
+        onPress={() => setShowVisceralFatModal && setShowVisceralFatModal(true)}
         labels={['Healthy', 'Excessive', 'High']}
         connection={connection}
         premium
@@ -326,7 +328,9 @@ const ProfileCharts: React.FC<{
           colors.appGreen,
           colors.secondaryLight,
         ]}
-        onPress={() => setShowMetabolicAgeModal(true)}
+        onPress={() =>
+          setShowMetabolicAgeModal && setShowMetabolicAgeModal(true)
+        }
         labels={['', '', '']}
         connection={connection}
         premium

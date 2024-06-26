@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
-import {generateLink} from '../../../helpers/api';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import Clipboard from '@react-native-clipboard/clipboard';
+import React, {useState} from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {generateLink} from '../../../helpers/api';
 
-import Button from '../../commons/Button';
+import {Share, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {ImageBackground, Share, StyleSheet, View} from 'react-native';
-import {RootState} from '../../../App';
 import {connect} from 'react-redux';
-import {Profile} from '../../../types/Shared';
+import {RootState} from '../../../App';
+import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
+import {Profile} from '../../../types/Shared';
+import Button from '../../commons/Button';
+import Header from '../../commons/Header';
 import IconButton from '../../commons/IconButton';
 import Input from '../../commons/Input';
 import Text from '../../commons/Text';
-import colors from '../../../constants/colors';
-import Header from '../../commons/Header';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import FastImage from 'react-native-fast-image';
 
 const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   const [loading, setLoading] = useState(false);
@@ -94,7 +94,9 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
             const data = await generateLink();
 
             setLoading(false);
-            setLink(data);
+            if (data) {
+              setLink(data);
+            }
           }}
         />
       </SafeAreaView>
