@@ -23,7 +23,7 @@
     "@miblanchard/react-native-slider": "^2.3.1",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-clipboard/clipboard": "^1.11.2",
-    "@react-native-community/datetimepicker": "^7.6.2",
+    "@react-native-community/datetimepicker": "^7.7.0",
     "@react-native-community/push-notification-ios": "^1.11.0",
     "@react-native-firebase/analytics": "^19.2.2",
     "@react-native-firebase/app": "^19.2.2",
@@ -58,7 +58,7 @@
     "patch-package": "^6.5.1",
     "query-string": "^7.0.1",
     "react": "18.2.0",
-    "react-native": "0.73.6",
+    "react-native": "0.73.8",
     "react-native-audio-recorder-player": "^3.6.5",
     "react-native-background-timer": "^2.4.1",
     "react-native-blob-util": "^0.19.6",
@@ -73,7 +73,7 @@
     "react-native-document-picker": "^9.1.0",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-email-link": "^1.15.0",
-    "react-native-fast-image": "^8.5.11",
+    "react-native-fast-image": "8.5.11",
     "react-native-fbsdk-next": "13.0.0",
     "react-native-file-viewer": "^2.1.5",
     "react-native-fs": "^2.20.0",
@@ -161,5 +161,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
