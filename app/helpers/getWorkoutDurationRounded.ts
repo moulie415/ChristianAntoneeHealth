@@ -11,7 +11,7 @@ export const getWorkoutDurationRounded = (
 ): number => {
   let total = 0;
   for (let i = 0; i < (exercises?.length || 0); i++) {
-    const exercise = exercises?.[0];
+    const exercise = exercises?.[i];
     if (exercise) {
       total += (exercise.time || 0) + (prepTime || 0);
     }
