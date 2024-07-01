@@ -886,7 +886,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
           {text: 'Cancel', style: 'cancel'},
         ],
       );
-      navigate('Login');
+      navigate('LoginEmail');
     } else {
       yield put(setLoggedIn(false));
       navigate('Login');
