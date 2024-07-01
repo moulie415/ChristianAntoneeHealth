@@ -32,6 +32,7 @@ import EducationArticle from './components/views/Education/EducationArticle';
 import ForgotPassword from './components/views/ForgotPassword';
 import Loading from './components/views/Loading';
 import Login from './components/views/Login';
+import LoginEmail from './components/views/LoginEmail';
 import MonthlyDayView from './components/views/Plan/MonthlyDayView';
 import PlanNutrition from './components/views/Plan/PlanNutrition';
 import PlanSleep from './components/views/Plan/PlanSleep';
@@ -95,6 +96,7 @@ const StackComponent: React.FC = () => {
       <Stack.Group>
         <Stack.Screen name="Loading" component={Loading} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="LoginEmail" component={LoginEmail} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} />

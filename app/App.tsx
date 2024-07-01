@@ -57,6 +57,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type StackParamList = {
   Login: undefined;
+  LoginEmail: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
   DeleteAccount: undefined;

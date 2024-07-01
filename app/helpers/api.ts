@@ -71,8 +71,12 @@ export const appleSignIn = async (
     return credentials;
   } catch (e) {
     if (e instanceof Error) {
-      Alert.alert('Error', e.message);
+      //@ts-ignore
+      if (e.code !== '1000') {
+        Alert.alert('Error', e.message);
+      }
     }
+
     throw e;
   }
 };

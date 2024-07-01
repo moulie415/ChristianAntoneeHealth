@@ -1,45 +1,28 @@
-import appleAuth from '@invertase/react-native-apple-authentication';
+import appleAuth, {
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {
-  Image,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
+import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import {
-  appleSignIn,
-  facebookSignIn,
-  googleSignIn,
-  signIn,
-} from '../../helpers/api';
-import GoogleLogo from '../../images/google.svg';
-import {handleAuth, setLoginEmail, signUp} from '../../reducers/profile';
+import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
+import GoogleIcon from '../../images/google.svg';
+import {handleAuth, signUp} from '../../reducers/profile';
 import Button from '../commons/Button';
-import Input from '../commons/Input';
-import Spinner from '../commons/Spinner';
 import Text from '../commons/Text';
 
 const Login: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Login'>;
   handleAuth: (user: FirebaseAuthTypes.User) => void;
-  email: string;
-  setEmail: (email: string) => void;
-}> = ({navigation, handleAuth: handleAuthAction, email, setEmail}) => {
+}> = ({navigation, handleAuth: handleAuthAction}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState('');
 
   const signInApple = async () => {
     try {
@@ -68,16 +51,7 @@ const Login: React.FC<{
     }
   };
 
-  const signInEmail = async () => {
-    try {
-      setLoading(true);
-      await signIn(email, password, handleAuthAction);
-    } catch (e) {
-      setLoading(false);
-    }
-  };
-
-  const disabled = facebookLoading || googleLoading || appleLoading || loading;
+  const disabled = facebookLoading || googleLoading || appleLoading;
 
   return (
     <FastImage
@@ -125,58 +99,13 @@ const Login: React.FC<{
               </View>
             </View>
 
-            <Input
-              onChangeText={setEmail}
-              value={email}
-              containerStyle={{
+            <Button
+              text="Log in with email"
+              style={{
                 marginHorizontal: 20,
                 marginTop: 60,
               }}
-              placeholder="Email"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              placeholderTextColor={colors.appWhite}
-              icon="envelope"
-            />
-            <Input
-              onChangeText={setPassword}
-              value={password}
-              containerStyle={{
-                marginHorizontal: 20,
-                marginTop: 20,
-              }}
-              placeholder="Password"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholderTextColor={colors.appWhite}
-              secure
-            />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ForgotPassword')}
-              hitSlop={{
-                top: 10,
-                bottom: 10,
-                right: 10,
-                left: 10,
-              }}
-              style={{
-                alignSelf: 'flex-end',
-                marginRight: 20,
-                marginTop: 10,
-              }}>
-              <Text style={{color: colors.appWhite}}>Forgot password?</Text>
-            </TouchableOpacity>
-
-            <Button
-              disabled={loading}
-              loading={loading}
-              text="Log in"
-              style={{
-                marginHorizontal: 20,
-                marginTop: 20,
-              }}
-              onPress={signInEmail}
+              onPress={() => navigation.navigate('LoginEmail')}
             />
             <Text
               style={{
@@ -186,83 +115,51 @@ const Login: React.FC<{
               }}>
               OR
             </Text>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              {Platform.OS === 'ios' && appleAuth.isSupported && (
-                <TouchableOpacity
-                  disabled={disabled}
-                  onPress={signInApple}
-                  style={{
-                    height: 70,
-                    width: 70,
-                    marginHorizontal: 5,
-                    marginLeft: 10,
-                    borderColor: '#36415F',
-                    borderWidth: 2,
-                    borderRadius: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  {appleLoading ? (
-                    <Spinner />
-                  ) : (
-                    <Icon name="apple" color="#fff" size={35} />
-                  )}
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity
-                onPress={signInFacebook}
-                disabled={disabled}
-                style={{
-                  height: 70,
-                  width: 70,
-                  marginHorizontal: 5,
-                  marginLeft: Platform.OS === 'ios' ? 5 : 10,
-                  borderColor: '#36415F',
-                  borderWidth: 2,
-                  borderRadius: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {facebookLoading ? (
-                  <Spinner />
-                ) : (
-                  <Icon color="#fff" name="facebook-f" size={35} />
-                )}
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={signInGoogle}
-                disabled={disabled}
-                style={{
-                  height: 70,
-                  width: 70,
-                  marginHorizontal: 5,
-                  marginRight: 10,
+            {Platform.OS === 'ios' && appleAuth.isSupported && (
+              <AppleButton
+                buttonStyle={AppleButton.Style.WHITE}
+                buttonType={AppleButton.Type.CONTINUE}
+                onPress={() => !disabled && signInApple()}
+                style={{height: 50, marginHorizontal: 20}}
+              />
+            )}
 
-                  borderColor: '#36415F',
-                  borderWidth: 2,
-                  borderRadius: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {googleLoading ? <Spinner /> : <GoogleLogo width={35} />}
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity
-              style={{marginVertical: 20, alignSelf: 'center'}}
-              onPress={() => {
-                navigation.navigate('SignUp');
-              }}>
-              <Text style={{color: 'rgba(255, 255, 255, 0.56)'}}>
-                {"Don't have an account? "}
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontWeight: 'bold',
-                  }}>
-                  Sign up
-                </Text>
-              </Text>
-            </TouchableOpacity>
+            <Button
+              onPress={signInFacebook}
+              disabled={disabled}
+              icon="facebook"
+              text="Continue with Facebook"
+              overrideCasing
+              iconColor="#1877F2"
+              textStyle={{fontSize: 18, color: "#1877F2"}}
+              style={{
+                marginTop: 20,
+                marginHorizontal: 20,
+                backgroundColor: colors.appWhite,
+                borderRadius: 5,
+                borderColor: '#1877F2',
+                borderWidth: 1,
+              }}
+            />
+
+            <Button
+              onPress={signInGoogle}
+              icon={
+                <GoogleIcon style={{marginRight: 10}} height={20} width={20} />
+              }
+              disabled={disabled}
+              text="Continue with Google"
+              overrideCasing
+              textStyle={{color: '#1F1F1F', fontSize: 18}}
+              style={{
+                marginTop: 20,
+                marginHorizontal: 20,
+                backgroundColor: colors.appWhite,
+                borderRadius: 5,
+                borderWidth: 1,
+                borderColor: '#747775',
+              }}
+            />
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
@@ -270,14 +167,9 @@ const Login: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
-  email: profile.loginEmail,
-});
-
 const mapDispatchToProps = {
   signUp,
   handleAuth,
-  setEmail: setLoginEmail,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
