@@ -131,9 +131,9 @@ const Login: React.FC<{
               text="Continue with Facebook"
               overrideCasing
               iconColor="#1877F2"
-              textStyle={{fontSize: 18, color: "#1877F2"}}
+              textStyle={{fontSize: 18, color: '#1877F2'}}
               style={{
-                marginTop: 20,
+                marginTop: Platform.OS === 'ios' ? 20 : 0,
                 marginHorizontal: 20,
                 backgroundColor: colors.appWhite,
                 borderRadius: 5,
