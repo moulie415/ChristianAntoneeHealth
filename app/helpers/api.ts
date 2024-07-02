@@ -68,7 +68,7 @@ export const appleSignIn = async (
     if (handleAuthAction) {
       handleAuthAction(credentials.user);
     }
-    return credentials;
+    return {credentials, appleAuthRequestResponse};
   } catch (e) {
     if (e instanceof Error) {
       //@ts-ignore

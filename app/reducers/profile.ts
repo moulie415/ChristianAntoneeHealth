@@ -21,6 +21,10 @@ export interface WeeklyItems {
   workouts: {[key: string]: SavedWorkout};
 }
 
+export interface LoginFullname {
+  name: string;
+  surname: string;
+}
 export interface ProfileState {
   step: number;
   profile: Profile;
@@ -47,6 +51,7 @@ export interface ProfileState {
   syncedPlanEvents: {[key: string]: string};
   calendarId?: string;
   loginEmail: string;
+  loginFullname?: LoginFullname;
   downloadedDocuments: {[key: string]: string};
   filter: 6 | 30 | 365;
 }
@@ -234,6 +239,9 @@ export type SET_CHAT_MESSAGE = typeof SET_CHAT_MESSAGE;
 
 export const SET_LOGIN_EMAIL = `${PROFILE}/setLoginEmail`;
 export type SET_LOGIN_EMAIL = typeof SET_LOGIN_EMAIL;
+
+export const SET_LOGIN_FULLNAME = `${PROFILE}/setLoginFullname`;
+export type SET_LOGIN_FULLNAME = typeof SET_LOGIN_FULLNAME;
 
 export const SET_CALENDAR_ID = `${PROFILE}/setCalendarId`;
 export type SET_CALENDAR_ID = typeof SET_CALENDAR_ID;
@@ -488,6 +496,12 @@ const profileSlice = createSlice({
     setLoginEmail: (state: ProfileState, {payload}: PayloadAction<string>) => {
       state.loginEmail = payload;
     },
+    setLoginFullname: (
+      state: ProfileState,
+      {payload}: PayloadAction<LoginFullname>,
+    ) => {
+      state.loginFullname = payload;
+    },
     getWeeklyItems: () => {},
     getWeeklyItemsForConnection: (
       state: ProfileState,
@@ -578,6 +592,7 @@ export const {
   setLoading,
   setLoggedIn,
   setLoginEmail,
+  setLoginFullname,
   setMessage,
   setMessages,
   setMuscleMassSamples,

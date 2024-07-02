@@ -12,14 +12,24 @@ import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
 import GoogleIcon from '../../images/google.svg';
-import {handleAuth, signUp} from '../../reducers/profile';
+import {
+  LoginFullname,
+  handleAuth,
+  setLoginFullname,
+} from '../../reducers/profile';
+import AbsoluteSpinner from '../commons/AbsoluteSpinner';
 import Button from '../commons/Button';
 import Text from '../commons/Text';
 
 const Login: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Login'>;
   handleAuth: (user: FirebaseAuthTypes.User) => void;
-}> = ({navigation, handleAuth: handleAuthAction}) => {
+  setLoginFullname: (fullname: LoginFullname) => void;
+}> = ({
+  navigation,
+  handleAuth: handleAuthAction,
+  setLoginFullname: setFullname,
+}) => {
   const [facebookLoading, setFacebookLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [appleLoading, setAppleLoading] = useState(false);
@@ -27,7 +37,7 @@ const Login: React.FC<{
   const signInApple = async () => {
     try {
       setAppleLoading(true);
-      await appleSignIn(handleAuthAction);
+      return await appleSignIn(handleAuthAction);
     } catch (e) {
       setAppleLoading(false);
     }
@@ -52,6 +62,20 @@ const Login: React.FC<{
   };
 
   const disabled = facebookLoading || googleLoading || appleLoading;
+
+  const onPressAppleButton = async () => {
+    if (!disabled) {
+      const response = await signInApple();
+      if (response?.appleAuthRequestResponse?.fullName) {
+        const {givenName, familyName} =
+          response.appleAuthRequestResponse.fullName;
+        setFullname({
+          name: givenName || '',
+          surname: familyName || '',
+        });
+      }
+    }
+  };
 
   return (
     <FastImage
@@ -119,7 +143,7 @@ const Login: React.FC<{
               <AppleButton
                 buttonStyle={AppleButton.Style.WHITE}
                 buttonType={AppleButton.Type.CONTINUE}
-                onPress={() => !disabled && signInApple()}
+                onPress={onPressAppleButton}
                 style={{height: 50, marginHorizontal: 20}}
               />
             )}
@@ -163,13 +187,14 @@ const Login: React.FC<{
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
+      <AbsoluteSpinner loading={disabled} />
     </FastImage>
   );
 };
 
 const mapDispatchToProps = {
-  signUp,
   handleAuth,
+  setLoginFullname,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

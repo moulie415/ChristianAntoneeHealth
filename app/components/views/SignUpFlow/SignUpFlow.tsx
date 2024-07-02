@@ -21,7 +21,7 @@ import {logError} from '../../../helpers/error';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useInit from '../../../hooks/UseInit';
 import useThrottle from '../../../hooks/UseThrottle';
-import {signUp} from '../../../reducers/profile';
+import {LoginFullname, signUp} from '../../../reducers/profile';
 import {Area, Equipment} from '../../../types/QuickRoutines';
 import {
   CurrentExercise,
@@ -49,10 +49,13 @@ const SignUpFlow: React.FC<{
   route: RouteProp<StackParamList, 'SignUpFlow'>;
   profile: Profile;
   signUp: (payload: SignUpPayload) => void;
-}> = ({navigation, route, profile, signUp: signUpAction}) => {
+  loginFullname?: LoginFullname;
+}> = ({navigation, route, profile, signUp: signUpAction, loginFullname}) => {
   const fromProfile = route.params?.fromProfile;
-  const [name, setName] = useState(profile.name || '');
-  const [surname, setSurname] = useState(profile.surname || '');
+  const [name, setName] = useState(profile.name || loginFullname?.name || '');
+  const [surname, setSurname] = useState(
+    profile.surname || loginFullname?.surname || '',
+  );
   const [dob, setDob] = useState(profile.dob || new Date().toISOString());
   const [weight, setWeight] = useState<number>(profile.weight || 0);
 
@@ -398,6 +401,7 @@ const SignUpFlow: React.FC<{
 
 const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
+  loginFullname: profile.loginFullname,
 });
 
 const mapDispatchToProps = {
