@@ -35,6 +35,7 @@ import {
 } from '../types/Shared';
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
+import {logError} from './error';
 
 GoogleSignin.configure({
   webClientId:
@@ -71,9 +72,14 @@ export const appleSignIn = async (
     return {credentials, appleAuthRequestResponse};
   } catch (e) {
     if (e instanceof Error) {
-      //@ts-ignore
-      if (e.code !== '1000') {
+      if (
+        //@ts-ignore
+        e.code !== appleAuth.Error.CANCELED &&
+        //@ts-ignore
+        e.code !== appleAuth.Error.UNKNOWN
+      ) {
         Alert.alert('Error', e.message);
+        logError(e);
       }
     }
 
@@ -142,6 +148,7 @@ export const facebookSignIn = async (
     if (e !== 'User cancelled the login process') {
       if (e instanceof Error) {
         Alert.alert('Error', e.message);
+        logError(e);
       }
     }
     throw e;
@@ -169,6 +176,7 @@ export const googleSignIn = async (
     if (e.code !== statusCodes.SIGN_IN_CANCELLED) {
       if (e instanceof Error) {
         Alert.alert('Error', e.message);
+        logError(e);
       }
     }
     throw e;
