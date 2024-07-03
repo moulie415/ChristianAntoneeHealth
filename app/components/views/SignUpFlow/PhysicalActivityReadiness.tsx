@@ -1,5 +1,6 @@
 import React, {Fragment, ReactNode, useEffect} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {Platform, TouchableOpacity, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../../../constants/colors';
 import Checkbox from '../../commons/Checkbox';
 import Divider from '../../commons/Divider';
@@ -110,10 +111,13 @@ const PhysicalActivityReadiness: React.FC<{
     },
   ];
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
+      enableOnAndroid
+      extraScrollHeight={Platform.OS === 'ios' ? 50 : 75}
       contentContainerStyle={{paddingBottom: 100}}
       style={{
         flex: 1,
+        paddingHorizontal: 20,
       }}>
       <Text
         style={{
@@ -192,7 +196,7 @@ const PhysicalActivityReadiness: React.FC<{
           advice and my GP has agreed that I may exercise.
         </Text>
       </TouchableOpacity>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
