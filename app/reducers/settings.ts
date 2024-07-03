@@ -17,6 +17,7 @@ export interface SettingsState {
   attachmentsDisabled: boolean;
   voiceNotesDisabled: boolean;
   chatMaxFileSizeMb: number;
+  premiumPlusMaxSubscriptions?: number;
 }
 
 const initialState: SettingsState = {

@@ -93,7 +93,6 @@ export interface Profile {
   equipment?: EquipmentLevel;
   experience?: Level;
   favouriteRecipes?: string[];
-
   stressLevel?: StressLevel;
   sleep?: Sleep;
   dietaryPreference?: DietaryPreference | string;
@@ -110,6 +109,7 @@ export interface Profile {
   willInformDoctor?: boolean;
   dailyWorkoutStreak?: number;
   lastWorkoutDate?: string;
+  freeBiometrics?: boolean;
 }
 
 export enum Level {

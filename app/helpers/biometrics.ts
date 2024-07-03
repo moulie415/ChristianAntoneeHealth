@@ -1,5 +1,6 @@
 import moment from 'moment';
-import {Alert, Linking, Platform} from 'react-native';
+import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
+import {getApiLevel} from 'react-native-device-info';
 import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import AppleHealthKit from 'react-native-health';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
@@ -68,6 +69,12 @@ export const initBiometrics = async () => {
         }
       });
     });
+  }
+  const apiLevel = await getApiLevel();
+  if (apiLevel >= 10) {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION,
+    );
   }
   const result = await GoogleFit.authorize(googleFitOptions);
   if (!result.success) {

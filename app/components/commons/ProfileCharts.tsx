@@ -261,7 +261,7 @@ const ProfileCharts: React.FC<{
           setShowBodyFatPercentageModal && setShowBodyFatPercentageModal(true)
         }
         connection={connection}
-        premium
+        premium={!profile.freeBiometrics}
       />
       <Chart
         current={muscleMass}
@@ -279,7 +279,7 @@ const ProfileCharts: React.FC<{
         onPress={() => setShowMuscleMassModal && setShowMuscleMassModal(true)}
         labels={['Low', 'Normal', 'High']}
         connection={connection}
-        premium
+        premium={!profile.freeBiometrics}
       />
       <Chart
         current={boneMass}
@@ -297,7 +297,7 @@ const ProfileCharts: React.FC<{
         onPress={() => setShowBoneMassModal && setShowBoneMassModal(true)}
         labels={['Below average', 'Average', 'Above average']}
         connection={connection}
-        premium
+        premium={!profile.freeBiometrics}
       />
       <Chart
         current={visceralFat}
@@ -314,7 +314,7 @@ const ProfileCharts: React.FC<{
         onPress={() => setShowVisceralFatModal && setShowVisceralFatModal(true)}
         labels={['Healthy', 'Excessive', 'High']}
         connection={connection}
-        premium
+        premium={!profile.freeBiometrics}
       />
       <Chart
         current={metabolicAge}
@@ -333,7 +333,7 @@ const ProfileCharts: React.FC<{
         }
         labels={['', '', '']}
         connection={connection}
-        premium
+        premium={!profile.freeBiometrics}
       />
     </>
   );

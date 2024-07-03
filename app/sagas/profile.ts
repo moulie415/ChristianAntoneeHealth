@@ -127,7 +127,7 @@ type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
-  const {uid, premium} = yield select(
+  const {uid, premium, freeBiometrics} = yield select(
     (state: RootState) => state.profile.profile,
   );
   const weightSamples: Sample[] = yield call(getWeightSamples, uid);
@@ -136,7 +136,7 @@ function* getSamplesWorker() {
   const heightSamples: Sample[] = yield call(getHeightSamples, uid);
   yield put(setHeightSamples(heightSamples));
 
-  if (premium) {
+  if (premium || freeBiometrics) {
     const bodyFatPercentageSamples: Sample[] = yield call(
       getBodyFatPercentageSamples,
       uid,

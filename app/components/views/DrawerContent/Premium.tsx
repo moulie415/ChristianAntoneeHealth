@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
@@ -22,6 +23,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
+import * as api from '../../../helpers/api';
 import {logError} from '../../../helpers/error';
 import {PREMIUM_PLUS, hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {setPremium} from '../../../reducers/profile';
@@ -31,7 +33,6 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
-import Config from 'react-native-config';
 
 const {height} = Dimensions.get('window');
 
@@ -49,11 +50,19 @@ const Premium: React.FC<{
   ) => void;
   route: RouteProp<StackParamList, 'Premium'>;
   profile: Profile;
-}> = ({navigation, setPremiumAction, route, profile}) => {
+  premiumPlusMaxSubscriptions?: number;
+}> = ({
+  navigation,
+  setPremiumAction,
+  route,
+  profile,
+  premiumPlusMaxSubscriptions,
+}) => {
   const [selected, setSelected] = useState('');
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
+  const [premiumPlusUserCount, setPremiumPlusUserCount] = useState<number>();
   const onActivated = route.params?.onActivated;
 
   const getOfferings = async () => {
@@ -94,6 +103,21 @@ const Premium: React.FC<{
     if (p) {
       try {
         setLoading(true);
+        if (premiumPlusStrings.includes(p.identifier)) {
+          const userCount =
+            premiumPlusUserCount !== undefined
+              ? premiumPlusUserCount
+              : (await api.getPremiumUserCount()).data;
+
+          setPremiumPlusUserCount(userCount);
+          if (userCount >= (premiumPlusMaxSubscriptions || 0)) {
+            Alert.alert(
+              'Sorry',
+              'Due to high demand Premium Plus is no longer available',
+            );
+            return;
+          }
+        }
         const {customerInfo, productIdentifier} =
           await Purchases.purchasePackage(p);
         if (
@@ -419,8 +443,9 @@ const Premium: React.FC<{
     </>
   );
 };
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({profile, settings}: RootState) => ({
   profile: profile.profile,
+  premiumPlusMaxSubscriptions: settings.premiumPlusMaxSubscriptions,
 });
 
 const mapDispatchToProps = {

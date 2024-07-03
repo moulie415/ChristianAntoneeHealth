@@ -36,6 +36,7 @@ import {
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
 import {logError} from './error';
+import {PREMIUM_PLUS} from './hasPremiumPlus';
 
 GoogleSignin.configure({
   webClientId:
@@ -841,4 +842,8 @@ export const saveSample = (sample: string, value: number, uid: string) => {
     .doc(uid)
     .collection(sample)
     .add({value, createdate: new Date()});
+};
+
+export const getPremiumUserCount = async () => {
+  return functions().httpsCallable<{}, number>('getPremiumPlusUserCount')();
 };
