@@ -71,7 +71,7 @@ const MetricExplained: React.FC<{
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                if (premium && !profile.premium) {
+                if (premium && !profile.premium && !profile.freeBiometrics) {
                   navigate('Premium', {});
                 } else {
                   onPress && onPress();
