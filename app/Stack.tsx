@@ -26,7 +26,6 @@ import Premium from './components/views/DrawerContent/Premium';
 import PremiumPurchased from './components/views/DrawerContent/PremiumPurchased';
 import ReportProblem from './components/views/DrawerContent/ReportProblem';
 import Settings from './components/views/DrawerContent/Settings';
-import Support from './components/views/DrawerContent/Support';
 import Terms from './components/views/DrawerContent/Terms';
 import EducationArticle from './components/views/Education/EducationArticle';
 import ForgotPassword from './components/views/ForgotPassword';
@@ -154,7 +153,6 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="PremiumPurchased" component={PremiumPurchased} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Support" component={Support} />
         <Stack.Screen name="Rating" component={Rating} />
         <Stack.Screen name="Nutrition" component={PlanNutrition} />
         <Stack.Screen name="Sleep" component={PlanSleep} />

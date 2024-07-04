@@ -13,7 +13,6 @@ const WebViewScreen: React.FC<{
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header hasBack title={title} />
-
       <WebView source={{uri}} style={{flex: 1}} />
     </SafeAreaView>
   );
