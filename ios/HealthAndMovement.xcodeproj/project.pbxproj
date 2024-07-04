@@ -1009,9 +1009,11 @@
 				INFOPLIST_FILE = "CA Health WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "CA Health WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = CA_Health_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Read and understand health data.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Share workout data with other apps.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch.extension;
@@ -1056,9 +1058,11 @@
 				INFOPLIST_FILE = "CA Health WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "CA Health WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = CA_Health_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Read and understand health data.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Share workout data with other apps.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -1100,7 +1104,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "CA Health";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.HealthAndMovement;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch;
@@ -1144,7 +1148,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "CA Health";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.HealthAndMovement;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
