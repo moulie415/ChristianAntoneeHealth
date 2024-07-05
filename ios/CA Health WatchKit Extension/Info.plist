@@ -18,5 +18,19 @@
 	<array>
 		<string>workout-processing</string>
 	</array>
+  <key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+  <key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+  <key>CFBundleDisplayName</key>
+  <string>CA Health WatchKit Extension</string>
+  <key>CLKComplicationPrincipalClass</key>
+  <string>CA_Health_WatchKit_Extension.ComplicationController</string>
+  <key>NSHealthShareUsageDescription</key>
+  <string>Read and understand health data.</string>
+  <key>NSHealthUpdateUsageDescription</key>
+  <string>Share workout data with other apps.</string>
+  <key>NSHumanReadableCopyright</key>
+  <string></string>
 </dict>
 </plist>
