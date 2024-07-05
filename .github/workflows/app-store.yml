@@ -26,13 +26,10 @@ jobs:
           node-version-file: '.node-version'
           cache: 'yarn'
       - uses: actions/cache@v3
-        id: yarn-ios-cache
+        id: yarn-cache
         with:
           path: node_modules
           key: ${{ hashFiles('yarn.lock') }}
-      - name: Install npm dependencies
-        run: |
-          yarn
       - uses: actions/cache@v3
         id: pod-cache
         with:
