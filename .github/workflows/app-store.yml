@@ -6,6 +6,9 @@ on:
       version:
         type: string
         required: true
+      run_number:
+        type: string
+        required: true
 
 jobs:
   deploy:
@@ -99,7 +102,7 @@ jobs:
           echo $GOOGLE_SERVICE_INFO >> GoogleService-Info.plist
       - uses: yanamura/ios-bump-version@v1.7.0
         with:
-          build-number: ${{github.run_number}}
+          build-number: ${{inputs.run_number}}
           version: ${{inputs.version}}
           project-path: ios #Example for React Native project
       - name: Pod install

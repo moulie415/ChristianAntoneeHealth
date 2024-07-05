@@ -33,9 +33,13 @@ jobs:
         id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Increase build
+        run: |
+          echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($GITHUB_RUN_NUMBER+440))" >> $GITHUB_ENV
     outputs:
       release_published: ${{ steps.semantic-release.outputs.new_release_published }}
       release_version: ${{ steps.semantic-release.outputs.new_release_version }}
+      run_number: ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
 
   android:
     if: ${{ needs.release.outputs.release_published }}
@@ -43,6 +47,7 @@ jobs:
     needs: release
     with:
       version: ${{ needs.release.outputs.release_version }}
+      run_number: ${{ needs.release.outputs.run_number }}
     secrets: inherit
     permissions:
       id-token: write
@@ -54,6 +59,7 @@ jobs:
     needs: release
     with:
       version: ${{ needs.release.outputs.release_version }}
+      run_number: ${{ needs.release.outputs.run_number }}
     secrets: inherit
     permissions:
       id-token: write

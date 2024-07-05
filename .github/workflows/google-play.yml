@@ -6,6 +6,9 @@ on:
       version:
         type: string
         required: true
+      run_number:
+        type: string
+        required: true
 jobs:
   install-and-deploy:
     runs-on: ubuntu-latest
@@ -48,7 +51,7 @@ jobs:
         uses: chkfung/android-version-actions@v1.2
         with:
           gradlePath: android/app/build.gradle
-          versionCode: ${{github.run_number}}
+          versionCode: ${{inputs.run_number}}
           versionName: ${{inputs.version}}
       - name: Build android aab
         env:
