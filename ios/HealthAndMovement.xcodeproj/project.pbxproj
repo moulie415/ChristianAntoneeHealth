@@ -1101,6 +1101,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = CA_Health_WatchKit_Extension;
+				INFOPLIST_FILE = "CA Health/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "CA Health";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.HealthAndMovement;
@@ -1145,6 +1146,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = CA_Health_WatchKit_Extension;
+				INFOPLIST_FILE = "CA Health/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "CA Health";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.HealthAndMovement;
