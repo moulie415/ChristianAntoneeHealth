@@ -1,4 +1,4 @@
-name: app-store
+name: iOS
 
 on:
   workflow_call:

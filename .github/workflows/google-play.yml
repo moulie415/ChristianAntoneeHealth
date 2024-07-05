@@ -1,4 +1,4 @@
-name: Deploy android to Google Play
+name: Android
 
 on:
   workflow_call:
