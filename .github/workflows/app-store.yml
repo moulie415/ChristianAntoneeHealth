@@ -12,12 +12,12 @@ on:
 
 jobs:
   deploy:
-    runs-on: macos-13
+    runs-on: macos-14
 
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15'
+          xcode-version: '15.4'
       - name: Checkout project
         uses: actions/checkout@v3
       - name: Setup Node
