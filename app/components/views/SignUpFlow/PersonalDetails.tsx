@@ -75,11 +75,11 @@ const PersonalDetails: React.FC<{
     <KeyboardAwareScrollView
       enableOnAndroid
       contentContainerStyle={{
-        flex: 1,
         marginHorizontal: 20,
         marginTop: 20,
+        paddingBottom: 150,
       }}
-      style={{}}>
+      style={{flex: 1}}>
       <Text
         style={{
           marginBottom: 20,
