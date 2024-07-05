@@ -15,5 +15,7 @@
   </array>
   <key>WKCompanionAppBundleIdentifier</key>
   <string>com.HealthAndMovement</string>
+  <key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 </dict>
 </plist>
