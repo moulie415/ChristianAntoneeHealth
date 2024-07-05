@@ -15,7 +15,11 @@
   </array>
   <key>WKCompanionAppBundleIdentifier</key>
   <string>com.HealthAndMovement</string>
-  <key>CFBundleIdentifier</key>
+  <key>WKAppBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  <!-- <key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string> -->
+  <key>WKWatchKitApp</key>
+  <true />
 </dict>
 </plist>
