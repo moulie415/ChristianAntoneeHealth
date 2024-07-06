@@ -2,37 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSExtension</key>
-	<dict>
-		<key>NSExtensionAttributes</key>
-		<dict>
-			<key>WKAppBundleIdentifier</key>
-			<string>com.HealthAndMovement.watch</string>
-		</dict>
-		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.watchkit</string>
-	</dict>
-	<key>UIBackgroundModes</key>
-	<array/>
-	<key>WKBackgroundModes</key>
-	<array>
-		<string>workout-processing</string>
-	</array>
-  <key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
-  <key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
-  <key>CFBundleDisplayName</key>
-  <string>CA Health WatchKit Extension</string>
-  <key>CLKComplicationPrincipalClass</key>
-  <string>CA_Health_WatchKit_Extension.ComplicationController</string>
-  <key>NSHealthShareUsageDescription</key>
-  <string>Read and understand health data.</string>
-  <key>NSHealthUpdateUsageDescription</key>
-  <string>Share workout data with other apps.</string>
-  <key>NSHumanReadableCopyright</key>
-  <string></string>
-  <key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleDisplayName</key>
+    <string>CA Health</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.HealthAndMovement.watch.extension</string>
+    <key>CFBundlePackageType</key>
+    <string>XPC!</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>NSExtension</key>
+    <dict>
+        <key>NSExtensionAttributes</key>
+        <dict>
+            <key>WKAppBundleIdentifier</key>
+            <string>com.HealthAndMovement.watch</string>
+        </dict>
+        <key>NSExtensionPointIdentifier</key>
+        <string>com.apple.watchkit</string>
+    </dict>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.13</string>
+    <key>CFBundleVersion</key>
+    <string>454</string>
+    <key>NSHealthShareUsageDescription</key>
+    <string>Read and understand health data.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>Share workout data with other apps.</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
 </dict>
 </plist>
