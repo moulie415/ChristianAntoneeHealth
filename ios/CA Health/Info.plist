@@ -17,8 +17,8 @@
   <string>com.HealthAndMovement</string>
   <key>WKAppBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-  <!-- <key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string> -->
+  <key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
   <key>WKWatchKitApp</key>
   <true />
 </dict>
