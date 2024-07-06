@@ -20,13 +20,18 @@ const DeleteAccount: React.FC<{
   setLoggedIn: (loggedIn: boolean) => void;
 }> = ({profile, setLoggedIn: setLoggedInAction}) => {
   const [email, setEmail] = useState('');
+  const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [requiresPassword, setRequiresPassword] = useState(false);
+  const [isApple, setIsApple] = useState(false);
   useEffect(() => {
     const user = auth().currentUser;
     if (user?.providerData?.find(data => data.providerId === 'password')) {
       setRequiresPassword(true);
+    }
+    if (user?.providerData?.find(data => data.providerId === 'apple.com')) {
+      setIsApple(true);
     }
   }, []);
   return (
@@ -50,7 +55,9 @@ const DeleteAccount: React.FC<{
             fontWeight: 'bold',
             lineHeight: 20,
           }}>
-          {`We're sad to see you go, please enter your email${
+          {`We're sad to see you go, please enter your ${
+            isApple ? 'full name' : 'email'
+          } ${
             requiresPassword ? ' and password' : ''
           } to confirm deletion and be aware that this will delete all your CA Health data and it will not be recoverable.`}
         </Text>
@@ -59,14 +66,14 @@ const DeleteAccount: React.FC<{
             margin: 10,
           }}>
           <Input
-            placeholder="Email"
-            onChangeText={e => setEmail(e)}
-            value={email}
+            placeholder={isApple ? 'Full name' : 'Email'}
+            onChangeText={e => (isApple ? setFullname(e) : setEmail(e))}
+            value={isApple ? fullname : email}
             placeholderTextColor="#fff"
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"
-            icon="envelope"
+            icon={isApple ? 'user' : 'envelope'}
           />
         </View>
         {requiresPassword && (
@@ -134,7 +141,8 @@ const DeleteAccount: React.FC<{
             marginTop: 5,
           }}
           disabled={
-            email !== profile.email ||
+            (email !== profile.email &&
+              fullname !== `${profile.name} ${profile.surname || ''}`) ||
             (requiresPassword && !password) ||
             loading
           }
