@@ -35,6 +35,7 @@ const MetricExplained: React.FC<{
   premium,
   profile,
 }) => {
+  const needsPremium = premium && !profile.premium && !profile.freeBiometrics;
   return (
     <Tile
       style={{
@@ -71,7 +72,7 @@ const MetricExplained: React.FC<{
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                if (premium && !profile.premium && !profile.freeBiometrics) {
+                if (needsPremium) {
                   navigate('Premium', {});
                 } else {
                   onPress && onPress();
@@ -185,7 +186,7 @@ const MetricExplained: React.FC<{
             );
           })}
       </View>
-      {premium && !profile.premium && (
+      {needsPremium && (
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => navigate('Premium', {})}
