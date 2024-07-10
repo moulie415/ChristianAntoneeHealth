@@ -266,44 +266,40 @@ const ProfileComponent: React.FC<{
             }}>
             <TouchableOpacity
               onPress={() => {
-                if (profile.premium) {
-                  const MAX_SIZE = 500;
-                  const cameraOptions: CameraOptions = {
-                    mediaType: 'photo',
-                    maxHeight: MAX_SIZE,
-                    maxWidth: MAX_SIZE,
-                  };
-                  const imageLibraryOptions: ImageLibraryOptions = {
-                    mediaType: 'photo',
-                    maxHeight: MAX_SIZE,
-                    maxWidth: MAX_SIZE,
-                  };
-                  const options: AlertButton[] = [
-                    {
-                      text: 'Upload from image library',
-                      onPress: () =>
-                        launchImageLibrary(cameraOptions, handlePickerCallback),
-                    },
-                    {
-                      text: 'Take photo',
-                      onPress: () =>
-                        launchCamera(imageLibraryOptions, handlePickerCallback),
-                    },
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                  ];
-                  if (profile.avatar) {
-                    options.splice(2, 0, {
-                      text: 'View photo',
-                      onPress: () => setPhotoVisible(true),
-                    });
-                  }
-                  Alert.alert('Profile photo', '', options);
-                } else {
-                  navigation.navigate('Premium', {});
+                const MAX_SIZE = 500;
+                const cameraOptions: CameraOptions = {
+                  mediaType: 'photo',
+                  maxHeight: MAX_SIZE,
+                  maxWidth: MAX_SIZE,
+                };
+                const imageLibraryOptions: ImageLibraryOptions = {
+                  mediaType: 'photo',
+                  maxHeight: MAX_SIZE,
+                  maxWidth: MAX_SIZE,
+                };
+                const options: AlertButton[] = [
+                  {
+                    text: 'Upload from image library',
+                    onPress: () =>
+                      launchImageLibrary(cameraOptions, handlePickerCallback),
+                  },
+                  {
+                    text: 'Take photo',
+                    onPress: () =>
+                      launchCamera(imageLibraryOptions, handlePickerCallback),
+                  },
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ];
+                if (profile.avatar) {
+                  options.splice(2, 0, {
+                    text: 'View photo',
+                    onPress: () => setPhotoVisible(true),
+                  });
                 }
+                Alert.alert('Profile photo', '', options);
               }}
               style={{
                 width: 95,
@@ -334,11 +330,7 @@ const ProfileComponent: React.FC<{
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Icon
-                  size={15}
-                  name={profile.premium ? 'pencil' : 'lock'}
-                  color={colors.appBlue}
-                />
+                <Icon size={15} name="pencil" color={colors.appBlue} />
               </View>
             </TouchableOpacity>
           </View>

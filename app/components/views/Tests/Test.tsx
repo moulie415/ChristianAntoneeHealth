@@ -2,7 +2,7 @@ import {NavigationProp, RouteProp} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Video, { ResizeMode } from 'react-native-video';
+import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
@@ -264,8 +264,14 @@ const Test: React.FC<{
                       marginLeft: 20,
                       margin: 10,
                     }}
-                    onPress={() => setViewHistorical(true)}
+                    onPress={() =>
+                      profile.premium
+                        ? setViewHistorical(true)
+                        : navigation.navigate('Premium', {})
+                    }
                     text="Historical"
+                    icon={profile.premium ? undefined : 'lock'}
+                    iconColor={colors.appBlue}
                   />
                   <Button
                     text={getButtonString()}

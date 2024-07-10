@@ -1,21 +1,18 @@
-import React, {useEffect} from 'react';
 import moment from 'moment';
-import colors from '../../../constants/colors';
-import {RootState} from '../../../App';
+import React from 'react';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
-import {Alert, View} from 'react-native';
-import Button from '../../commons/Button';
-import Text from '../../commons/Text';
-import useThrottle from '../../../hooks/UseThrottle';
-import Table from '../../commons/Table';
-import PercentileTable from '../../commons/PercentileTable';
+import {RootState} from '../../../App';
+import colors from '../../../constants/colors';
 import {keyHasValue} from '../../../helpers/table';
-import TestResultText from './TestResultText';
-import Divider from '../../commons/Divider';
 import {Profile} from '../../../types/Shared';
-import {SavedTest} from '../../../types/SavedItem';
 import Test from '../../../types/Test';
+import Button from '../../commons/Button';
 import Modal from '../../commons/Modal';
+import PercentileTable from '../../commons/PercentileTable';
+import Table from '../../commons/Table';
+import Text from '../../commons/Text';
+import TestResultText from './TestResultText';
 
 const TestResultsModal: React.FC<{
   profile: Profile;
@@ -43,9 +40,9 @@ const TestResultsModal: React.FC<{
       <View
         style={{
           backgroundColor: colors.appGrey,
-          width: '95%',
+          width: '100%',
           borderRadius: 10,
-          padding: 20,
+          paddingVertical: 20,
         }}>
         <Text
           style={{
@@ -58,52 +55,48 @@ const TestResultsModal: React.FC<{
           Compare result
         </Text>
         <View>
-          <View style={{padding: 10, paddingTop: 0}}>
-            {showMens &&
-              test.mens &&
-              'age' in test.mens &&
-              keyHasValue(test.mens, 'age') && (
-                <Table
-                  score={score}
-                  table={test.mens}
-                  metric={test.metric}
-                  title="Mens table"
-                />
-              )}
-            {showWomens &&
-              test.womens &&
-              'age' in test.womens &&
-              keyHasValue(test.womens, 'age') && (
-                <Table
-                  score={score}
-                  table={test.womens}
-                  metric={test.metric}
-                  title="Women's table"
-                />
-              )}
-            {showMens &&
-              test.mens &&
-              '10th' in test.mens &&
-              test.mens['10th'] && (
-                <PercentileTable
-                  score={score}
-                  table={test.mens}
-                  title="Mens percentile table"
-                />
-              )}
-            {showWomens &&
-              test.womens &&
-              '10th' in test.womens &&
-              test.womens['10th'] && (
-                <PercentileTable
-                  score={score}
-                  table={test.womens}
-                  title="Women's percentile table"
-                />
-              )}
-          </View>
-
-          <Divider style={{marginBottom: 10}} />
+          {showMens &&
+            test.mens &&
+            'age' in test.mens &&
+            keyHasValue(test.mens, 'age') && (
+              <Table
+                score={score}
+                table={test.mens}
+                metric={test.metric}
+                title="Mens table"
+              />
+            )}
+          {showWomens &&
+            test.womens &&
+            'age' in test.womens &&
+            keyHasValue(test.womens, 'age') && (
+              <Table
+                score={score}
+                table={test.womens}
+                metric={test.metric}
+                title="Women's table"
+              />
+            )}
+          {showMens &&
+            test.mens &&
+            '10th' in test.mens &&
+            test.mens['10th'] && (
+              <PercentileTable
+                score={score}
+                table={test.mens}
+                title="Mens percentile table"
+              />
+            )}
+          {showWomens &&
+            test.womens &&
+            '10th' in test.womens &&
+            test.womens['10th'] && (
+              <PercentileTable
+                score={score}
+                table={test.womens}
+                title="Women's percentile table"
+              />
+            )}
 
           {!noGender && test.mens && test.womens && (
             <TestResultText
@@ -113,7 +106,11 @@ const TestResultsModal: React.FC<{
           )}
         </View>
 
-        <Button text="Close" style={{marginTop: 20}} onPress={onRequestClose} />
+        <Button
+          text="Close"
+          style={{margin: 20, marginBottom: 0}}
+          onPress={onRequestClose}
+        />
       </View>
     </Modal>
   );

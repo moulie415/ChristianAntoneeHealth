@@ -78,7 +78,14 @@ const Table: React.FC<{
 
   return (
     <>
-      <Text style={{color: colors.appWhite, marginBottom: 5, fontSize: 15}}>
+      <Text
+        style={{
+          color: colors.appWhite,
+          marginBottom: 5,
+          marginHorizontal: 20,
+          fontWeight: 'bold',
+          fontSize: 15,
+        }}>
         {title}
       </Text>
       <ScrollView
