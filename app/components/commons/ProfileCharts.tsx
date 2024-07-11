@@ -200,13 +200,6 @@ const ProfileCharts: React.FC<{
           colors.appRed,
         ]}
         labels={['Underweight', 'Normal', 'Overweight', 'Obesity']}
-        onPress={() =>
-          !connection &&
-          Alert.alert(
-            'Body mass index',
-            'BMI is derived from your height and weight',
-          )
-        }
         connection={connection}
       />
 
@@ -225,13 +218,6 @@ const ProfileCharts: React.FC<{
           new Color(colors.appGreen).darken(0.9).toString(),
         ]}
         labels={[]}
-        onPress={() =>
-          !connection &&
-          Alert.alert(
-            'Basal metabolic rate',
-            'BMR is derived from your height, weight, sex and age',
-          )
-        }
         connection={connection}
       />
 

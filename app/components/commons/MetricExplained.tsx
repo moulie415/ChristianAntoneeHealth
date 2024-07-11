@@ -62,7 +62,6 @@ const MetricExplained: React.FC<{
                 borderColor: colors.appWhite,
                 margin: 10,
                 paddingHorizontal: 10,
-                marginRight: 0,
                 height: 30,
                 borderRadius: 5,
                 justifyContent: 'center',
@@ -70,26 +69,29 @@ const MetricExplained: React.FC<{
               }}>
               <Icon name="chart-line" color={colors.appWhite} size={16} />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                if (needsPremium) {
-                  navigate('Premium', {});
-                } else {
-                  onPress && onPress();
-                }
-              }}
-              style={{
-                borderWidth: StyleSheet.hairlineWidth,
-                borderColor: colors.appWhite,
-                margin: 10,
-                paddingHorizontal: 10,
-                height: 30,
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Icon name="plus" color={colors.appWhite} size={16} />
-            </TouchableOpacity>
+            {onPress && (
+              <TouchableOpacity
+                onPress={() => {
+                  if (needsPremium) {
+                    navigate('Premium', {});
+                  } else {
+                    onPress();
+                  }
+                }}
+                style={{
+                  borderWidth: StyleSheet.hairlineWidth,
+                  borderColor: colors.appWhite,
+                  margin: 10,
+                  marginLeft: 0,
+                  paddingHorizontal: 10,
+                  height: 30,
+                  borderRadius: 5,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon name="plus" color={colors.appWhite} size={16} />
+              </TouchableOpacity>
+            )}
           </View>
         )}
       </View>
