@@ -1,7 +1,6 @@
 # Christian Antonee Health 🚀
 
-![iOS](https://github.com/moulie415/ChristianAntoneeHealth/actions/workflows/app-store.yml/badge.svg)
-![Android](https://github.com/moulie415/ChristianAntoneeHealth/actions/workflows/google-play.yml/badge.svg)
+![Release](https://github.com/moulie415/ChristianAntoneeHealth/actions/workflows/semantic-release.yml/badge.svg)
 
 ## Setup
 
