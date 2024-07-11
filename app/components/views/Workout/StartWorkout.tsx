@@ -45,12 +45,12 @@ const StartWorkout: React.FC<{
   const [index, setIndex] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
-  const [hasPressedPlay, setHasPressedPlay] = useState(true);
   const planWorkout = route.params?.planWorkout;
   const startTime = route.params?.startTime;
   const planId = route.params?.planId;
   const [fullscreen, setFullScreen] = useState(false);
   const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
+  const [paused, setPaused] = useState(false);
 
   const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(1000);
   const {exerciseEvents} = useExerciseEvents(index);
@@ -125,10 +125,10 @@ const StartWorkout: React.FC<{
                     path={exercise.video.src}
                     videoIndex={i}
                     currentIndex={index}
-                    hasPressedPlay={hasPressedPlay}
-                    setHasPressedPlay={setHasPressedPlay}
                     fullscreen={fullscreen}
                     setFullScreen={setFullScreen}
+                    paused={paused}
+                    setPaused={setPaused}
                   />
                 ) : (
                   <View
@@ -179,12 +179,13 @@ const StartWorkout: React.FC<{
                         workout={workout}
                         pagerRef={pagerRef}
                         timerPaused={timerPaused}
-                        onTimerPaused={paused => {
-                          setTimerPaused(paused);
+                        onTimerPaused={p => {
+                          setTimerPaused(p);
                           setPauseEvents([
                             ...pauseEvents,
-                            {time: new Date(), paused},
+                            {time: new Date(), paused: p},
                           ]);
+                          setPaused(p);
                         }}
                       />
 

@@ -51,9 +51,9 @@ const QuickRoutineView: React.FC<{
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const [routineStarted, setRoutineStarted] = useState(false);
-  const [hasPressedPlay, setHasPressedPlay] = useState(true);
   const [fullscreen, setFullScreen] = useState(false);
   const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
+  const [paused, setPaused] = useState(false);
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
@@ -149,10 +149,10 @@ const QuickRoutineView: React.FC<{
                     path={exercise.video.src}
                     videoIndex={i}
                     currentIndex={index}
-                    hasPressedPlay={hasPressedPlay}
-                    setHasPressedPlay={setHasPressedPlay}
                     fullscreen={fullscreen}
                     setFullScreen={setFullScreen}
+                    setPaused={setPaused}
+                    paused={paused}
                   />
                 ) : (
                   <View
@@ -203,12 +203,13 @@ const QuickRoutineView: React.FC<{
                         workout={exercises}
                         pagerRef={pagerRef}
                         timerPaused={timerPaused}
-                        onTimerPaused={paused => {
-                          setTimerPaused(paused);
+                        onTimerPaused={p => {
+                          setTimerPaused(p);
                           setPauseEvents([
                             ...pauseEvents,
-                            {time: new Date(), paused},
+                            {time: new Date(), paused: p},
                           ]);
+                          setPaused(p);
                         }}
                       />
 
