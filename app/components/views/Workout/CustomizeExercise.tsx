@@ -61,6 +61,7 @@ const CustomizeExercise: React.FC<{
           path={exercise.video.src}
           fullscreen={fullscreen}
           setFullScreen={setFullScreen}
+          setPaused={() => {}}
         />
       ) : (
         <View

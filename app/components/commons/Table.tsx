@@ -77,7 +77,7 @@ const Table: React.FC<{
   );
 
   const getCellValue = (key: string, col?: Cell) => {
-    if (!col) {
+    if (!col || !(col.higher || col.lower)) {
       return null;
     }
     const metricStr = metric && key !== 'age' ? metric : '';
@@ -106,9 +106,11 @@ const Table: React.FC<{
     );
   };
 
-  const ageHeaders = cols.map(col =>
-    getCellValue(validHeaderKeys[0], table[validHeaderKeys[0]]?.[col]),
-  );
+  const ageHeaders = cols
+    .map(col =>
+      getCellValue(validHeaderKeys[0], table[validHeaderKeys[0]]?.[col]),
+    )
+    .filter(h => h);
 
   return (
     <>
@@ -159,7 +161,7 @@ const Table: React.FC<{
                   const highlight = shouldHighlight(col, key);
                   return (
                     <Text
-                      key={key}
+                      key={key + col}
                       style={[
                         styles.cell,
                         highlight

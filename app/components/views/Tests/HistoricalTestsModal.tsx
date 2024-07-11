@@ -1,16 +1,16 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
 import React, {useEffect} from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import {RootState} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getSavedTests} from '../../../reducers/tests';
 import {SavedTest} from '../../../types/SavedItem';
 import Test from '../../../types/Test';
 import Button from '../../commons/Button';
 import Modal from '../../commons/Modal';
-import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 
 const HistoricalTestsModal: React.FC<{
@@ -20,6 +20,8 @@ const HistoricalTestsModal: React.FC<{
   loading: boolean;
   getSavedTestsAction: () => void;
   savedTestsObj: {[key: string]: SavedTest};
+  navigation: NativeStackNavigationProp<StackParamList, 'Test'>;
+  tests: {[key: string]: Test};
 }> = ({
   test,
   visible,
@@ -27,6 +29,8 @@ const HistoricalTestsModal: React.FC<{
   savedTestsObj,
   getSavedTestsAction,
   loading,
+  navigation,
+  tests,
 }) => {
   useEffect(() => {
     if (visible) {
@@ -58,50 +62,51 @@ const HistoricalTestsModal: React.FC<{
           Historical
         </Text>
         <View style={{flex: 1}}>
-          {loading ? (
-            <View
-              style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-              <Spinner />
-            </View>
-          ) : (
-            <FlatList
-              data={savedTests}
-              keyExtractor={item => item.id || ''}
-              renderItem={({item}) => {
-                return (
-                  <View
-                    style={{
-                      borderRadius: 12,
-                      borderWidth: 1,
-                      borderColor: colors.borderColor,
-                      padding: 15,
-                    }}>
-                    <Text
-                      style={{
-                        color: colors.appWhite,
-                        fontWeight: 'bold',
-                        marginBottom: 5,
-                      }}>{`Result: ${item.result}`}</Text>
-                    <Text style={{color: colors.offWhite}}>
-                      {moment(item.createdate).format('MMMM Do YYYY')}
-                    </Text>
-                  </View>
-                );
-              }}
-              ListEmptyComponent={
-                <View>
+          <FlatList
+            data={savedTests}
+            keyExtractor={item => item.id || ''}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    onRequestClose();
+                    navigation.navigate('TestResults', {
+                      test: tests[item.testId],
+                      seconds: item.seconds || 0,
+                      testResult: item.result,
+                    });
+                  }}
+                  style={{
+                    borderRadius: 12,
+                    borderWidth: 1,
+                    borderColor: colors.borderColor,
+                    padding: 15,
+                  }}>
                   <Text
                     style={{
                       color: colors.appWhite,
-                      marginTop: 100,
-                      textAlign: 'center',
-                    }}>
-                    No historical test results found
+                      fontWeight: 'bold',
+                      marginBottom: 5,
+                    }}>{`Result: ${item.result}`}</Text>
+                  <Text style={{color: colors.offWhite}}>
+                    {moment(item.createdate).format('MMMM Do YYYY')}
                   </Text>
-                </View>
-              }
-            />
-          )}
+                </TouchableOpacity>
+              );
+            }}
+            ListEmptyComponent={
+              <View>
+                <Text
+                  style={{
+                    color: colors.appWhite,
+                    marginTop: 100,
+                    textAlign: 'center',
+                  }}>
+                  No historical test results found
+                </Text>
+              </View>
+            }
+          />
         </View>
 
         <Button text="Close" style={{marginTop: 20}} onPress={onRequestClose} />
@@ -113,6 +118,7 @@ const HistoricalTestsModal: React.FC<{
 const mapStateToProps = ({exercises, tests}: RootState) => ({
   loading: exercises.loading,
   savedTestsObj: tests.savedTests,
+  tests: tests.tests,
 });
 
 const mapDispatchToProps = {

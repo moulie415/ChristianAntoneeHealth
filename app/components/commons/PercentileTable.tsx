@@ -65,12 +65,21 @@ const PercentileTable: React.FC<{
   const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <View style={{paddingVertical: 10, marginHorizontal: 10}}>
-      <Text style={{color: colors.appWhite, marginBottom: 5, fontSize: 15}}>
+      <Text
+        style={{
+          color: colors.appWhite,
+          margin: 20,
+          marginVertical: 10,
+          fontSize: 15,
+          fontWeight: 'bold',
+        }}>
         {title}
       </Text>
-      {rows.map(row => {
-        return <Row key={row} row={row} table={table} score={score} />;
-      })}
+      <View style={{alignItems: 'center'}}>
+        {rows.map(row => {
+          return <Row key={row} row={row} table={table} score={score} />;
+        })}
+      </View>
     </View>
   );
 };

@@ -5,9 +5,14 @@ import {View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
+import {resetToTabs} from '../../../RootNavigation';
 import colors from '../../../constants/colors';
 import {keyHasValue} from '../../../helpers/table';
+import useThrottle from '../../../hooks/UseThrottle';
+import {saveTest} from '../../../reducers/tests';
+import {SavedTest} from '../../../types/SavedItem';
 import {Profile} from '../../../types/Shared';
+import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PercentileTable from '../../commons/PercentileTable';
 import Table from '../../commons/Table';
@@ -17,7 +22,8 @@ const TestResults: React.FC<{
   profile: Profile;
   navigation: NativeStackNavigationProp<StackParamList, 'TestResults'>;
   route: RouteProp<StackParamList, 'TestResults'>;
-}> = ({profile, route}) => {
+  saveTest: (test: SavedTest) => void;
+}> = ({profile, route, saveTest: saveTestAction}) => {
   const {testResult, seconds, test} = route.params;
 
   const gender = profile.gender;
@@ -29,6 +35,17 @@ const TestResults: React.FC<{
   const showWomens = gender === 'female';
 
   const score = testResult || seconds;
+
+  const saveThrottled = useThrottle((saved: boolean) => {
+    saveTestAction({
+      seconds,
+      result: testResult || 0,
+      createdate: new Date(),
+      testId: test.id,
+      saved,
+    });
+    resetToTabs();
+  }, 5000);
 
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
@@ -82,6 +99,15 @@ const TestResults: React.FC<{
           />
         )}
       </View>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        {profile.premium && (
+          <Button
+            style={{margin: 20}}
+            text="Save result"
+            onPress={() => saveThrottled(true)}
+          />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -90,4 +116,8 @@ const mapStateToProps = (state: RootState) => ({
   profile: state.profile.profile,
 });
 
-export default connect(mapStateToProps)(TestResults);
+const mapDispatchToProps = {
+  saveTest,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestResults);

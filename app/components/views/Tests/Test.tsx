@@ -1,4 +1,5 @@
-import {NavigationProp, RouteProp} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -33,7 +34,7 @@ const INTERVAL = 100;
 const Test: React.FC<{
   tests: {[key: string]: TestType};
   route: RouteProp<StackParamList, 'Test'>;
-  navigation: NavigationProp<StackParamList, 'Test'>;
+  navigation: NativeStackNavigationProp<StackParamList, 'Test'>;
   profile: Profile;
   saveTestAction: (test: SavedTest) => void;
 }> = ({route, tests, profile, saveTestAction, navigation}) => {
@@ -129,6 +130,9 @@ const Test: React.FC<{
   };
 
   useBackHandler(handleBackPress);
+
+  const showRestart =
+    testStarted && test.type !== 'untimed' && !complete && !isPrepping;
 
   return (
     <View style={{flex: 1}}>
@@ -228,49 +232,48 @@ const Test: React.FC<{
           )}
 
           <View style={{flexDirection: 'row'}}>
-            {testStarted &&
-              test.type !== 'untimed' &&
-              !complete &&
-              !isPrepping && (
-                <Button
-                  variant={test.type === 'countdown' ? 'primary' : 'secondary'}
-                  text="Restart"
-                  onPress={() => {
-                    if (test.type === 'countup') {
-                      setTestTime(0);
-                    } else {
-                      setTestTime(test.time as number);
-                    }
-                  }}
-                  style={{
-                    margin: 10,
-                    marginLeft: 20,
-                    marginRight: test.type === 'countdown' ? 20 : 10,
-                    flex: 1,
-                  }}
-                />
-              )}
+            {showRestart && (
+              <Button
+                variant={test.type === 'countdown' ? 'primary' : 'secondary'}
+                text="Restart"
+                onPress={() => {
+                  if (test.type === 'countup') {
+                    setTestTime(0);
+                  } else {
+                    setTestTime(test.time as number);
+                  }
+                }}
+                style={{
+                  margin: 10,
+                  marginLeft: 20,
+                  marginRight: test.type === 'countdown' ? 20 : 10,
+                  flex: 1,
+                }}
+              />
+            )}
             {!(testStarted && test.type === 'countdown') &&
               !complete &&
               !isPrepping && (
                 <>
-                  <Button
-                    variant="secondary"
-                    style={{
-                      flex: 1,
-                      marginRight: 10,
-                      marginLeft: 20,
-                      margin: 10,
-                    }}
-                    onPress={() =>
-                      profile.premium
-                        ? setViewHistorical(true)
-                        : navigation.navigate('Premium', {})
-                    }
-                    text="Historical"
-                    icon={profile.premium ? undefined : 'lock'}
-                    iconColor={colors.appBlue}
-                  />
+                  {!showRestart && (
+                    <Button
+                      variant="secondary"
+                      style={{
+                        flex: 1,
+                        marginRight: 10,
+                        marginLeft: 20,
+                        margin: 10,
+                      }}
+                      onPress={() =>
+                        profile.premium
+                          ? setViewHistorical(true)
+                          : navigation.navigate('Premium', {})
+                      }
+                      text="Historical"
+                      icon={profile.premium ? undefined : 'lock'}
+                      iconColor={colors.appBlue}
+                    />
+                  )}
                   <Button
                     text={getButtonString()}
                     onPress={() => {
@@ -342,6 +345,7 @@ const Test: React.FC<{
         visible={viewHistorical}
         test={test}
         onRequestClose={() => setViewHistorical(false)}
+        navigation={navigation}
       />
     </View>
   );
