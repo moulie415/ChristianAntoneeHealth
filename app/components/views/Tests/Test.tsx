@@ -25,7 +25,6 @@ import TestTimer from '../../commons/TestTimer';
 import Text from '../../commons/Text';
 import ViewMore from '../../commons/ViewMore';
 import HistoricalTestsModal from './HistoricalTestsModal';
-import TestResultsModal from './TestResultsModal';
 
 export const PREP_TIME = 5;
 
@@ -46,7 +45,6 @@ const Test: React.FC<{
   const [testResult, setTestResult] = useState<number>();
   const [heartRate, setHeartRate] = useState(0);
   const [prepTime, setPrepTime] = useState(PREP_TIME);
-  const [modalVisible, setModalVisible] = useState(false);
   const [viewHistorical, setViewHistorical] = useState(false);
 
   const [testTime, setTestTime] = useState(
@@ -320,7 +318,16 @@ const Test: React.FC<{
               />
               <Button
                 text="Compare result"
-                onPress={() => setModalVisible(true)}
+                onPress={() =>
+                  navigation.navigate('TestResults', {
+                    test,
+                    seconds: testTime,
+                    testResult:
+                      test.formula === 'vo2'
+                        ? calculateVO2Max(profile, testTime, heartRate) || 0
+                        : testResult,
+                  })
+                }
                 style={{marginRight: 15, marginLeft: 8, flex: 1}}
                 disabled={
                   (!testResult && test.type !== 'countup') ||
@@ -331,17 +338,6 @@ const Test: React.FC<{
           )}
         </KeyboardAwareScrollView>
       </View>
-      <TestResultsModal
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-        testResult={
-          test.formula === 'vo2'
-            ? calculateVO2Max(profile, testTime, heartRate) || 0
-            : testResult
-        }
-        seconds={testTime}
-        test={test}
-      />
       <HistoricalTestsModal
         visible={viewHistorical}
         test={test}

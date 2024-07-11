@@ -59,6 +59,7 @@ import WarmUp from './components/views/Workout/WarmUp';
 import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
+import TestResults from './components/views/Tests/TestResults';
 
 const Drawer = createDrawerNavigator();
 
@@ -132,6 +133,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="EducationArticle" component={EducationArticle} />
         <Stack.Screen name="Policies" component={Policies} />
         <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="TestResults" component={TestResults} />
         <Stack.Screen name="PreQuickRoutine" component={PreQuickRoutine} />
         <Stack.Screen name="QuickRoutine" component={QuickRoutineView} />
         <Stack.Screen name="EndQuickRoutine" component={EndQuickRoutine} />

@@ -39,6 +39,7 @@ import {
   Sample,
   WarmUp,
 } from './types/Shared';
+import Test from './types/Test';
 
 const {height, width} = Dimensions.get('window');
 
@@ -68,6 +69,7 @@ export type StackParamList = {
   Fitness: undefined;
   Goals: undefined;
   Test: {id: string};
+  TestResults: {test: Test; testResult?: number; seconds: number};
   FitnessGoal: undefined;
   Experience: undefined;
   WarmUp: undefined;

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import colors from '../../constants/colors';
 import {PercentileTable as PercentileTableType} from '../../types/Test';
 import Text from './Text';

@@ -3,11 +3,11 @@ import moment, {Moment} from 'moment';
 import {Dimensions} from 'react-native';
 import InAppReview from 'react-native-in-app-review';
 import PushNotification from 'react-native-push-notification';
-import {TABLE_HEADER_KEYS} from '../constants';
+import {TABLE_HEADER_KEYS} from '../components/commons/Table';
 import colors from '../constants/colors';
 import {Category} from '../types/Education';
 import {Gender, Sample} from '../types/Shared';
-import {PercentileTable, Table} from '../types/Test';
+import {Cell, PercentileTable, Row, Table} from '../types/Test';
 import {logError} from './error';
 
 const {height, width} = Dimensions.get('window');
@@ -379,29 +379,38 @@ export const getCategoryColor = (category: string) => {
   }
 };
 
-export const getTableColumn = (table: Table, age: number) => {
-  return (
-    table &&
-    Object.keys(table.age).find(c => {
-      // @ts-ignore
-      const values: Cell = table.age[c];
-      if (
-        (values.higher || values.lower) &&
-        (!values.higher || age <= Number(values.higher)) &&
-        (!values.lower || age >= Number(values.lower))
-      ) {
-        return c;
-      }
-    })
-  );
+export const getTableColumn = (
+  table: Table,
+  age: number,
+): keyof Row | undefined => {
+  if (!table) {
+    return;
+  }
+  const keys: (keyof Row)[] = Object.keys(table.age) as (keyof Row)[];
+  return keys.find(c => {
+    const values = table.age[c];
+    if (
+      values &&
+      (values.higher || values.lower) &&
+      (!values.higher || age <= Number(values.higher)) &&
+      (!values.lower || age >= Number(values.lower))
+    ) {
+      return c;
+    }
+  });
 };
 
-export const getTableCategory = (table: Table, col: string, score: number) => {
+export const getTableCategory = (
+  table: Table,
+  col: keyof Row,
+  score: number,
+) => {
   return Object.keys(table).find(key => {
-    if (key !== 'age' && TABLE_HEADER_KEYS.includes(key)) {
-      // @ts-ignore
-      const values: Cell = table[key][col];
+    if (key !== 'age' && TABLE_HEADER_KEYS.includes(key as keyof Table)) {
+      const values = table[key as keyof Table]?.[col];
+
       if (
+        values &&
         (values.higher || values.lower) &&
         (!values.higher || score <= Number(values.higher)) &&
         (!values.lower || score >= Number(values.lower))
@@ -428,9 +437,8 @@ export const getTableMax = (table: Table, col: string) => {
   return max;
 };
 
-export const getTableAverage = (table: Table, col?: string) => {
-  // @ts-ignore
-  return table.average[col];
+export const getTableAverage = (table: Table, col: keyof Row) => {
+  return table.average?.[col];
 };
 
 export const getPercentile = (table: PercentileTable, score: number) => {

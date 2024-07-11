@@ -1,21 +1,13 @@
 import React, {useState} from 'react';
-import {
-  Alert,
-  ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import {Alert, SafeAreaView} from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StackParamList} from '../../App';
-import Button from '../commons/Button';
-import Input from '../commons/Input';
 import colors from '../../constants/colors';
+import Button from '../commons/Button';
 import Header from '../commons/Header';
-import FastImage from 'react-native-fast-image';
+import Input from '../commons/Input';
 
 const ForgotPassword: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ForgotPassword'>;

@@ -1,23 +1,22 @@
-import {View, Text} from 'react-native';
+import moment from 'moment';
 import React from 'react';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {connect} from 'react-redux';
 import {RootState} from '../../../App';
-import {Profile} from '../../../types/Shared';
+import colors from '../../../constants/colors';
 import {
   capitalizeFirstLetter,
   getCategoryString,
+  getPercentile,
   getScoreIcon,
   getTableAverage,
   getTableCategory,
   getTableColumn,
 } from '../../../helpers';
-import {getPercentile} from '../../../helpers';
-import {PercentileTable} from '../../../types/Test';
-import {Table} from '../../../types/Test';
-import colors from '../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
 import {keyHasValue} from '../../../helpers/table';
-import moment from 'moment';
+import {Profile} from '../../../types/Shared';
+import {PercentileTable, Table} from '../../../types/Test';
 
 const TestResultText: React.FC<{
   profile: Profile;
@@ -46,7 +45,7 @@ const TestResultText: React.FC<{
     column &&
     getTableAverage(table, column);
   return (
-    <View style={{marginTop: 10}}>
+    <View style={{marginTop: 20}}>
       <View
         style={{
           flexDirection: 'row',
