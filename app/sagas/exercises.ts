@@ -33,6 +33,7 @@ import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
 import {CoolDown, Goal, Level, Profile, WarmUp} from '../types/Shared';
+import { feedbackTrigger } from './profile';
 
 export function* getExercises(
   action: PayloadAction<{
@@ -80,6 +81,7 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
     }
 
     yield fork(incrementWorkoutStreak);
+    yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
     yield call(Snackbar.show, {text: 'Error saving workout'});

@@ -30,7 +30,7 @@ import Purchases from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
 import Sound from 'react-native-sound';
 import {updateApplicationContext} from 'react-native-watch-connectivity';
-import {RootState} from '../App';
+import {RootState, store} from '../App';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {scheduleLocalNotification} from '../helpers';
 import * as api from '../helpers/api';
@@ -86,6 +86,7 @@ import {
   setWeeklyItems,
   setWeeklyItemsForConnection,
   setWeightSamples,
+  updateProfile as updateProfileAction,
 } from '../reducers/profile';
 import {getQuickRoutinesById} from '../reducers/quickRoutines';
 import {SettingsState} from '../reducers/settings';
@@ -875,6 +876,38 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
     if (e instanceof Error) {
       Alert.alert('Error', e.message);
     }
+  }
+}
+
+export function* feedbackTrigger() {
+  const {premium, hasLeftFeedback, dontAskAgain} = yield select(
+    (state: RootState) => state.profile.profile,
+  );
+
+  if (!premium && !hasLeftFeedback && !dontAskAgain) {
+    yield call(
+      Alert.alert,
+      'Enjoying the app?',
+      "We'd appreciated it if you'd take some time to leave some feedback?",
+      [
+        {text: 'Maybe later'},
+        {
+          text: "Don't ask me again",
+          style: 'destructive',
+          onPress: () => {
+            store.dispatch(
+              updateProfileAction({disableSnackbar: true, dontAskAgain: true}),
+            );
+          },
+        },
+        {
+          text: 'Ok',
+          onPress: () => {
+            navigate('Rating');
+          },
+        },
+      ],
+    );
   }
 }
 

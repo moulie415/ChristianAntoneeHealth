@@ -16,6 +16,7 @@ import {
 import {SavedTest} from '../types/SavedItem';
 import {Profile} from '../types/Shared';
 import Test from '../types/Test';
+import {feedbackTrigger} from './profile';
 
 export function* getTests() {
   const tests: {[key: string]: Test} = yield call(api.getTests);
@@ -29,6 +30,7 @@ function* saveTest(action: PayloadAction<SavedTest>) {
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Test saved'});
     }
+    yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
     yield call(Snackbar.show, {text: 'Error saving test'});

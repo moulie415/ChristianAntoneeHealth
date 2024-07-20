@@ -7,24 +7,25 @@ import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import StarRating from 'react-native-star-rating';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {rateApp} from '../../helpers';
 import * as api from '../../helpers/api';
 import {logError} from '../../helpers/error';
-import {Profile} from '../../types/Shared';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux';
+import {updateProfile} from '../../reducers/profile';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
 
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
-  profile: Profile;
-}> = ({navigation, profile}) => {
+}> = ({navigation}) => {
   const [rating, setRating] = useState<number>();
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const {profile} = useAppSelector(state => state.profile);
+  const dispatch = useAppDispatch();
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -84,6 +85,14 @@ const Rating: React.FC<{
                 try {
                   if (rating) {
                     await api.sendFeedback(profile.uid, feedback, rating);
+                    if (!profile.hasLeftFeedback) {
+                      dispatch(
+                        updateProfile({
+                          disableSnackbar: true,
+                          hasLeftFeedback: true,
+                        }),
+                      );
+                    }
                   }
                 } catch (e) {
                   logError(e);
@@ -100,8 +109,4 @@ const Rating: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
-  profile: profile.profile,
-});
-
-export default connect(mapStateToProps)(Rating);
+export default Rating;

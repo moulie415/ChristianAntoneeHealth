@@ -19,6 +19,7 @@ import {
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
 import {incrementWorkoutStreak} from './exercises';
+import {feedbackTrigger} from './profile';
 
 export function* getQuickRoutines() {
   try {
@@ -54,6 +55,7 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
     }
 
     yield fork(incrementWorkoutStreak);
+    yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
     yield call(Snackbar.show, {text: 'Error saving workout'});

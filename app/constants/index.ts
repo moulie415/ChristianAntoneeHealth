@@ -44,11 +44,8 @@ export const FITNESS_RATINGS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const RESISTANCE = [...Array(301).keys()];
 export const PREP_TIME_SECS = [...Array(61).keys()];
 
-
-
 export const FONTS_SIZES = {
   SMALL: 12,
   MEDIUM_LARGE: 18,
   LARGE: 24,
 };
-

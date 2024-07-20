@@ -4,6 +4,7 @@ import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
+import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
 import {
   capitalizeFirstLetter,
@@ -81,12 +82,22 @@ const TestResultText: React.FC<{
             : `${capitalizeFirstLetter(percentile as string)} percentile`}
         </Text>
       </View>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontWeight: 'bold',
+          color: colors.appWhite,
+          fontSize: FONTS_SIZES.LARGE,
+          marginTop: 10,
+        }}>
+        {score}
+      </Text>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           marginHorizontal: 10,
-          marginTop: 20,
+          marginTop: 10,
         }}>
         <Icon
           style={{

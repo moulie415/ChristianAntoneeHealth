@@ -110,6 +110,8 @@ export interface Profile {
   dailyWorkoutStreak?: number;
   lastWorkoutDate?: string;
   freeBiometrics?: boolean;
+  hasLeftFeedback?: boolean;
+  dontAskAgain?: boolean;
 }
 
 export enum Level {
@@ -294,6 +296,8 @@ export interface UpdateProfilePayload {
   dailyWorkoutStreak?: number;
   lastWorkoutDate?: string;
   disableSnackbar?: boolean;
+  dontAskAgain?: boolean;
+  hasLeftFeedback?: boolean;
 }
 
 export interface Recipe {
