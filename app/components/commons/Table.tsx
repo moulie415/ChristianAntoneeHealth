@@ -85,9 +85,9 @@ const Table: React.FC<{
       return `${col.lower} - ${col.higher}${metricStr}`;
     }
     if (col.lower) {
-      return `> ${col.lower}${metricStr}`;
+      return `> ${Number(col.lower) - 1}${metricStr}`;
     }
-    return `< ${col.higher}${metricStr}`;
+    return `< ${Number(col.higher) + 1}${metricStr}`;
   };
 
   const age = profile.dob && moment().diff(profile.dob, 'years');
