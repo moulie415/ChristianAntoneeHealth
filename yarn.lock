@@ -4996,7 +4996,6 @@ __metadata:
     echarts: "npm:^5.4.3"
     eslint: "npm:^8.19.0"
     eslint-plugin-ft-flow: "npm:^3.0.2"
-    improved-yarn-audit: "npm:^3.0.0"
     jest: "npm:^29.7.0"
     lodash: "npm:^4.17.21"
     lottie-react-native: "npm:^6.7.2"
@@ -8423,15 +8422,6 @@ __metadata:
   version: 4.1.0
   resolution: "import-meta-resolve@npm:4.1.0"
   checksum: 10c0/42f3284b0460635ddf105c4ad99c6716099c3ce76702602290ad5cbbcd295700cbc04e4bdf47bacf9e3f1a4cec2e1ff887dabc20458bef398f9de22ddff45ef5
-  languageName: node
-  linkType: hard
-
-"improved-yarn-audit@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "improved-yarn-audit@npm:3.0.0"
-  bin:
-    improved-yarn-audit: bin/improved-yarn-audit
-  checksum: 10c0/59f4a5d3f31c3bbd671206103769bd18b4d130ee567d74e78789180cfd66a0e48bc75f7bc64936f5021f678ac04c5102f5702b02ab5b5a02a1cbead7c41b412f
   languageName: node
   linkType: hard
 
