@@ -2984,19 +2984,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-firebase/dynamic-links@npm:^19.2.2":
-  version: 19.3.0
-  resolution: "@react-native-firebase/dynamic-links@npm:19.3.0"
-  peerDependencies:
-    "@react-native-firebase/app": 19.3.0
-    expo: ">=47.0.0"
-  peerDependenciesMeta:
-    expo:
-      optional: true
-  checksum: 10c0/175a7de48f70966cc8a983d27c3da1b9a640c182d36101ae171efb2cd225d1e52f63e7d6b1e86f8914b3be84eb945b2bf6ad461c084c76aa9f775a64dfe813c6
-  languageName: node
-  linkType: hard
-
 "@react-native-firebase/firestore@npm:^19.2.2":
   version: 19.3.0
   resolution: "@react-native-firebase/firestore@npm:19.3.0"
@@ -4962,7 +4949,6 @@ __metadata:
     "@react-native-firebase/app": "npm:^19.2.2"
     "@react-native-firebase/app-check": "npm:^19.2.2"
     "@react-native-firebase/auth": "npm:^19.2.2"
-    "@react-native-firebase/dynamic-links": "npm:^19.2.2"
     "@react-native-firebase/firestore": "npm:^19.2.2"
     "@react-native-firebase/functions": "npm:^19.2.2"
     "@react-native-firebase/messaging": "npm:^19.2.2"

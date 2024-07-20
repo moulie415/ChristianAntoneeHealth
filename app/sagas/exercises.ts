@@ -1,11 +1,6 @@
-import dynamicLinks, {
-  FirebaseDynamicLinksTypes,
-} from '@react-native-firebase/dynamic-links';
-import {EventChannel, eventChannel} from '@redux-saga/core';
 import {PayloadAction} from '@reduxjs/toolkit';
 import * as _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {
@@ -15,16 +10,13 @@ import {
   fork,
   put,
   select,
-  take,
   throttle,
 } from 'redux-saga/effects';
 import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
-import {alertPremiumFeature} from '../helpers/exercises';
 import {sendGoalTargetNotification} from '../helpers/goals';
-import * as polar from '../helpers/polar';
 import {
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
@@ -35,9 +27,8 @@ import {
   setLoading,
   setSavedWorkouts,
   setWorkout,
-  viewWorkout,
 } from '../reducers/exercises';
-import {ProfileState, setProfile, updateProfile} from '../reducers/profile';
+import {ProfileState, updateProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
@@ -267,115 +258,6 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
   }
 }
 
-export function* handleDeepLink(url: string) {
-  const parsed = queryString.parseUrl(url);
-  const {loggedIn, profile} = yield select((state: RootState) => state.profile);
-  switch (parsed.url) {
-    case 'https://healthandmovement/workout':
-      try {
-        if (loggedIn) {
-          navigate('Loading');
-          if (typeof parsed.query.exercises === 'string') {
-            const exerciseIds = parsed.query.exercises.split(',');
-            yield put(viewWorkout(exerciseIds));
-          }
-        } else {
-          Alert.alert('Error', 'Please log in before using that link');
-        }
-      } catch (e) {
-        if (e instanceof Error) {
-          Alert.alert('Error handling link', e.message);
-        }
-        resetToTabs();
-      }
-      break;
-    case 'https://healthandmovement/invite':
-      try {
-        if (loggedIn) {
-          navigate('Loading');
-          if (profile.premium) {
-            if (typeof parsed.query.value === 'string') {
-              const user: Profile = yield call(
-                api.acceptInviteLink,
-                parsed.query.value,
-              );
-              Snackbar.show({text: `You are now connected with ${user.name}`});
-              resetToTabs();
-              navigate('Connections');
-            }
-          } else {
-            resetToTabs();
-            alertPremiumFeature();
-          }
-        } else {
-          Alert.alert('Error', 'Please log in before using that link');
-        }
-      } catch (e) {
-        resetToTabs();
-        if (e instanceof Error) {
-          Alert.alert('Error handling link', e.message);
-        }
-      }
-      break;
-    case 'https://healthandmovement/garmin':
-      const {garminAccessTokenSecret, garminAccessToken} = parsed.query;
-      if (garminAccessTokenSecret && garminAccessToken) {
-        yield put(
-          setProfile({...profile, garminAccessToken, garminAccessTokenSecret}),
-        );
-        Snackbar.show({text: 'Garmin Connect authorization successful'});
-      } else {
-        Alert.alert('Error', 'Error processing link');
-      }
-      break;
-    case 'https://healthandmovement/polar':
-      const {polarAccessToken} = parsed.query;
-      if (polarAccessToken) {
-        yield put(setProfile({...profile, polarAccessToken}));
-        yield call(polar.registerUser, profile.uid, polarAccessToken as string);
-        Snackbar.show({text: 'Polar authorization successful'});
-      } else {
-        Alert.alert('Error', 'Error processing link');
-      }
-      break;
-    case 'https://healthandmovement/fitbit':
-      const {
-        fitbitToken,
-        fitbitRefreshToken,
-        fitbitUserId,
-        fitbitTokenExpiresIn,
-        fitbitTokenTimestamp,
-      } = parsed.query;
-      if (fitbitToken && fitbitRefreshToken) {
-        yield put(
-          setProfile({
-            ...profile,
-            fitbitToken,
-            fitbitRefreshToken,
-            fitbitUserId,
-            fitbitTokenExpiresIn,
-            fitbitTokenTimestamp,
-          }),
-        );
-        Snackbar.show({text: 'Fitbit authorization successful'});
-      } else {
-        Alert.alert('Error', 'Error processing link');
-      }
-      break;
-    default:
-      Alert.alert('Error', 'Invalid link');
-  }
-}
-
-function onDynamicLink() {
-  return eventChannel(emitter => {
-    const subscriber = dynamicLinks().onLink(({url}) => {
-      emitter(url);
-    });
-    return subscriber;
-  });
-}
-
 export default function* exercisesSaga() {
   yield all([
     throttle(5000, GET_EXERCISES, getExercises),
@@ -384,12 +266,4 @@ export default function* exercisesSaga() {
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),
     throttle(5000, VIEW_WORKOUT, viewWorkoutWatcher),
   ]);
-
-  const dynamicLinkChannel: EventChannel<FirebaseDynamicLinksTypes.DynamicLink> =
-    yield call(onDynamicLink);
-
-  while (true) {
-    const url: string = yield take(dynamicLinkChannel);
-    yield call(handleDeepLink, url);
-  }
 }

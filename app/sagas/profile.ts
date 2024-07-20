@@ -15,9 +15,6 @@ import {
   throttle,
 } from 'redux-saga/effects';
 
-import dynamicLinks, {
-  FirebaseDynamicLinksTypes,
-} from '@react-native-firebase/dynamic-links';
 import db from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
@@ -100,7 +97,7 @@ import {
   SignUpPayload,
   UpdateProfilePayload,
 } from '../types/Shared';
-import {checkWorkoutStreak, getAllExercises, handleDeepLink} from './exercises';
+import {checkWorkoutStreak, getAllExercises} from './exercises';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
@@ -820,28 +817,6 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         }
 
         resetToTabs();
-        try {
-          const getLinkPromise = () => {
-            return new Promise<FirebaseDynamicLinksTypes.DynamicLink | null>(
-              resolve => {
-                dynamicLinks()
-                  .getInitialLink()
-                  .then(link => {
-                    resolve(link);
-                  });
-              },
-            );
-          };
-          const link: FirebaseDynamicLinksTypes.DynamicLink = yield call(
-            getLinkPromise,
-          );
-
-          if (link && link.url) {
-            yield call(handleDeepLink, link.url);
-          }
-        } catch (e: unknown) {
-          logError(e);
-        }
 
         const {premium} = yield select(
           (state: RootState) => state.profile.profile,
