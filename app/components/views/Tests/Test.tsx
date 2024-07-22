@@ -1,7 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, Platform, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
@@ -172,6 +172,7 @@ const Test: React.FC<{
         {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
         <KeyboardAwareScrollView
           enableOnAndroid
+          extraScrollHeight={Platform.OS === 'ios' ? 150 : 0}
           contentContainerStyle={{paddingBottom: 220}}>
           <Text
             style={{
@@ -299,7 +300,7 @@ const Test: React.FC<{
                     style={{
                       margin: 10,
                       marginRight: 20,
-                      marginLeft: test.type === 'untimed' ? 20 : 10,
+                      marginLeft:  10,
                       flex: 1,
                     }}
                   />
@@ -317,7 +318,7 @@ const Test: React.FC<{
                   }
                   resetToTabs();
                 }}
-                style={{marginLeft: 15, marginRight: 8, flex: 1}}
+                style={{marginRight: 10, marginLeft: 20, margin: 10, flex: 1}}
               />
               <Button
                 text="Compare result"
@@ -331,7 +332,7 @@ const Test: React.FC<{
                         : testResult,
                   })
                 }
-                style={{marginRight: 15, marginLeft: 8, flex: 1}}
+                style={{marginLeft: 10, marginRight: 20, margin: 10, flex: 1}}
                 disabled={
                   (!testResult && test.type !== 'countup') ||
                   (test.formula === 'vo2' && !heartRate)

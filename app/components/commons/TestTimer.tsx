@@ -3,9 +3,9 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {RootState} from '../../App';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';
 import Input from './Input';
@@ -87,7 +87,7 @@ const TestTimer: React.FC<{
       rotation={0}
       lineCap="round">
       {fill => (
-        <View style={{transform: [{scaleX}]}}>
+        <View style={{transform: [{scaleX}], alignItems: 'center'}}>
           {showTimer && (
             <Text
               style={{

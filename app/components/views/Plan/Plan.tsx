@@ -195,7 +195,7 @@ const Plan: React.FC<{
               )}
             </Text>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Loader size={300} />
+              <Loader size={250} />
             </View>
           </View>
         </SafeAreaView>
