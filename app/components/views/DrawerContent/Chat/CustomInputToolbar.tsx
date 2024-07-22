@@ -5,6 +5,7 @@ import {
   InputToolbarProps,
 } from 'react-native-gifted-chat';
 import VoiceNoteRecorder from './VoiceNoteRecorder';
+import { Platform } from 'react-native';
 
 interface Props extends InputToolbarProps<IMessage> {
   text: string;
@@ -30,6 +31,7 @@ const CustomInputToolbar: React.FC<Props> = props => {
         {
           marginHorizontal: 20,
           borderRadius: 30,
+          marginBottom: Platform.OS === 'ios' ? 0 : 10,
         },
       ]}
     />
