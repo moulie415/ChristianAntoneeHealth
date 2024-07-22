@@ -6,7 +6,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import {startQuickRoutine} from '../../../reducers/quickRoutines';
 import {SettingsState} from '../../../reducers/settings';
 import Exercise from '../../../types/Exercise';
 import QuickRoutine from '../../../types/QuickRoutines';
@@ -113,8 +112,5 @@ const mapStateToProps = ({
   loading: exercises.loading,
 });
 
-const mapDispatchToProps = {
-  startQuickRoutine,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutList);
+export default connect(mapStateToProps)(WorkoutList);

@@ -31,6 +31,8 @@
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0ACBC0332C179A4C00044038 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACBC0312C179A4B00044038 /* Constants.swift */; };
 		0ACBC0342C179A4C00044038 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACBC0322C179A4C00044038 /* Singleton.swift */; };
+		0AF442592C4F0AC000E9E994 /* WatchWorkoutModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF442582C4F0AC000E9E994 /* WatchWorkoutModule.swift */; };
+		0AF4425B2C4F0E2C00E9E994 /* WatchWorkoutModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4425A2C4F0E2C00E9E994 /* WatchWorkoutModule.m */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
 		0AFAEB4F2BD909CD00A2176B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAEB4E2BD909CD00A2176B /* PrivacyInfo.xcprivacy */; };
 		13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* appdelegate.mm */; };
@@ -122,6 +124,8 @@
 		0AC9281126BEBEE20027F8AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0ACBC0312C179A4B00044038 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0ACBC0322C179A4C00044038 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		0AF442582C4F0AC000E9E994 /* WatchWorkoutModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutModule.swift; sourceTree = "<group>"; };
+		0AF4425A2C4F0E2C00E9E994 /* WatchWorkoutModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchWorkoutModule.m; sourceTree = "<group>"; };
 		0AF814E82436AD100056E3CD /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		0AFA94C72438B073003ADDE3 /* Health and Movement.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Health and Movement.entitlements"; path = "HealthAndMovement/Health and Movement.entitlements"; sourceTree = "<group>"; };
 		0AFAEB4E2BD909CD00A2176B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = HealthAndMovement/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0AF4425A2C4F0E2C00E9E994 /* WatchWorkoutModule.m */,
+				0AF442582C4F0AC000E9E994 /* WatchWorkoutModule.swift */,
 				0AFAEB4E2BD909CD00A2176B /* PrivacyInfo.xcprivacy */,
 				0A8DBD902B3C505B00075880 /* Fonts */,
 				0AC506472AD5B2920061CBD5 /* workout_song.mp3 */,
@@ -899,6 +905,8 @@
 				13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */,
 				0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				0AF4425B2C4F0E2C00E9E994 /* WatchWorkoutModule.m in Sources */,
+				0AF442592C4F0AC000E9E994 /* WatchWorkoutModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

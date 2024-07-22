@@ -9,20 +9,11 @@ import {
 import {EventChannel, eventChannel} from 'redux-saga';
 import {all, call, select, take, takeLatest} from 'redux-saga/effects';
 import {RootState} from '../App';
-import {START_QUICK_ROUTINE} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
+import { START_WORKOUT } from '../reducers/exercises';
+import { PlanWorkout } from '../types/Shared';
 
-function* startQuickRoutineWorker(
-  action: PayloadAction<{id: string; exerciseIds: string[]}>,
-) {
-  const reachable: boolean = yield call(getReachability);
-  const {id, exerciseIds} = action.payload;
-  const {exercises} = yield select((state: RootState) => state.exercises);
-  if (reachable) {
-    const workout: Exercise[] = exerciseIds.map(e => exercises[e]);
-    sendMessage({startQuickRoutine: {id}});
-  }
-}
+
 
 interface MessageEvent {
   message: {[key: string]: any};
@@ -42,7 +33,6 @@ function onMessage() {
 
 export default function* watchSaga() {
   if (Platform.OS === 'ios') {
-    yield all([takeLatest(START_QUICK_ROUTINE, startQuickRoutineWorker)]);
 
     const messageChannel: EventChannel<MessageEvent> = yield call(onMessage);
     while (true) {

@@ -35,8 +35,6 @@ export type SET_QUICK_ROUTINES = typeof SET_QUICK_ROUTINES;
 export const SAVE_QUICK_ROUTINE = `${QUICK_ROUTINES}/saveQuickRoutine`;
 export type SAVE_QUICK_ROUTINE = typeof SAVE_QUICK_ROUTINE;
 
-export const START_QUICK_ROUTINE = `${QUICK_ROUTINES}/startQuickRoutine`;
-export type START_QUICK_ROUTINE = typeof START_QUICK_ROUTINE;
 
 const quickRoutineSlice = createSlice({
   name: QUICK_ROUTINES,
@@ -54,10 +52,6 @@ const quickRoutineSlice = createSlice({
     ) => {
       state.savedQuickRoutines = {...state.savedQuickRoutines, ...payload};
     },
-    startQuickRoutine: (
-      state: QuickRoutinesState,
-      {payload}: PayloadAction<QuickRoutine>,
-    ) => {},
     saveQuickRoutine: (
       state: QuickRoutinesState,
       {payload}: PayloadAction<SavedQuickRoutine>,
@@ -84,7 +78,6 @@ const quickRoutineSlice = createSlice({
 export const {
   setQuickRoutines,
   setSavedQuickRoutines,
-  startQuickRoutine,
   saveQuickRoutine,
   getQuickRoutines,
   getQuickRoutinesById,
