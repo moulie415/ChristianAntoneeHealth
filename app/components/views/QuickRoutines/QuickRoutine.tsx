@@ -117,12 +117,14 @@ const QuickRoutineView: React.FC<{
             },
             {
               text: 'Yes',
-              onPress: () => {
+              onPress: async () => {
                 navigation.goBack();
-                endWatchWorkout();
+
                 if (workoutSong.isPlaying()) {
                   workoutSong.stop();
                 }
+                const test = await endWatchWorkout(startTime);
+                console.log(test);
               },
             },
           ]);

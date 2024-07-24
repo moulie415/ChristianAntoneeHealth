@@ -47,7 +47,7 @@ const EndWorkout: React.FC<{
     calories,
     calorieSamples,
     calorieCalculationType,
-  } = useWorkoutData(seconds, profile, difficulty, endTime);
+  } = useWorkoutData(seconds, profile, difficulty, startTime, endTime);
 
   useEffect(() => {
     setLoading(isLoading);

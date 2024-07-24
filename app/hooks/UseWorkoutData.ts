@@ -16,6 +16,7 @@ const useWorkoutData = (
   seconds: number,
   profile: Profile,
   difficulty: number,
+  startDate: Date,
   endDate: Date,
 ) => {
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
@@ -30,22 +31,17 @@ const useWorkoutData = (
       try {
         setLoading(true);
 
-        const watchData = endWatchWorkout();
-        console.log(watchData);
+        const watchData = await endWatchWorkout(startDate);
 
-        const samples = []?.length
-          ? []
-          : await getHeartRateSamples(
-              moment(endDate).subtract(seconds, 'seconds').toDate(),
-              endDate,
-            );
+        const samples =
+          watchData?.heartRateSamples ??
+          (await getHeartRateSamples(startDate, endDate));
 
         setHeartRateSamples(samples);
 
-        const cSamples = await getCalorieSamples(
-          moment(endDate).subtract(seconds, 'seconds').toDate(),
-          endDate,
-        );
+        const cSamples =
+          watchData?.energySamples ??
+          (await getCalorieSamples(startDate, endDate));
 
         if (cSamples.length) {
           setCalorieSamples(cSamples);

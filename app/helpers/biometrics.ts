@@ -642,22 +642,38 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
 
 export const startWatchWorkout = async () => {
   try {
-    const paired = await getIsPaired();
-    if (paired) {
-      await WatchWorkoutModule.startWatchWorkout();
+    if (Platform.OS === 'ios') {
+      const paired = await getIsPaired();
+      if (paired) {
+        await WatchWorkoutModule.startWatchWorkout();
+      }
     }
   } catch (e) {
     logError(e);
   }
 };
 
-export const endWatchWorkout = async () => {
+interface WatchWorkoutResponse {
+  energySamples: Sample[];
+  heartRateSamples: Sample[];
+}
+
+export const endWatchWorkout = async (startDate: Date) => {
   try {
-    const paired = await getIsPaired();
-    if (paired) {
-      const result = await WatchWorkoutModule.endWatchWorkout();
-      console.log(result);
-      return result;
+    if (Platform.OS === 'ios') {
+      const paired = await getIsPaired();
+      if (paired) {
+        const {energySamples, heartRateSamples}: WatchWorkoutResponse =
+          await WatchWorkoutModule.endWatchWorkout();
+        return {
+          energySamples: energySamples.filter(
+            s => new Date(s.startDate) > startDate,
+          ),
+          heartRateSamples: heartRateSamples.filter(
+            s => new Date(s.startDate) > startDate,
+          ),
+        };
+      }
     }
   } catch (e) {
     logError(e);

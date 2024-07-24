@@ -12,11 +12,9 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     super.init()
     self.store = HKHealthStore()
     self.store?.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
-      // Ensure self is not nil
       guard let self = self else { return }
-
-      // Save a reference to the workout session
       self.session = mirroredSession
+      print("Workout session mirroring started on iOS")
     }
   }
 
@@ -34,8 +32,10 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     Task {
       do {
         try await store.startWatchApp(toHandle: configuration)
+        print("Workout session started on the Watch")
         resolve("*** Workout Session Started ***")
       } catch {
+        print("Failed to start workout session on the Watch: \(error.localizedDescription)")
         reject("START_WATCH_APP_ERROR", "An error occurred while starting a workout on Apple Watch: \(error.localizedDescription)", error)
       }
     }
@@ -50,13 +50,8 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
 
     Task {
       do {
-        // End the workout session on the watch
         session.end()
-
-        // Fetch workout data
         let workoutData = try await fetchWorkoutData(from: session)
-        
-        // Resolve the workout data to React Native
         resolve(workoutData)
       } catch {
         reject("END_WORKOUT_ERROR", "An error occurred while ending the workout session: \(error.localizedDescription)", error)
@@ -67,37 +62,32 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
   private func fetchWorkoutData(from session: HKWorkoutSession) async throws -> [String: Any] {
     var workoutData = [String: Any]()
 
-    // Define the predicates
     let predicate = HKQuery.predicateForSamples(withStart: session.startDate, end: session.endDate, options: .strictStartDate)
 
-    // Fetch total energy burned
     if let energyType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) {
-      let energySum = try await fetchStatistics(for: energyType, predicate: predicate, options: .cumulativeSum)
-      let energyBurned = energySum?.sumQuantity()?.doubleValue(for: .kilocalorie())
-      workoutData["energyBurned"] = energyBurned ?? 0.0
+      let energySamples = try await fetchSamples(for: energyType, predicate: predicate)
+      workoutData["energySamples"] = energySamples.map { sample in
+        return [
+          "value": sample.quantity.doubleValue(for: .kilocalorie()),
+          "startDate": sample.startDate.ISO8601Format(),
+          "endDate": sample.endDate.ISO8601Format()
+          
+        ]
+      }
     }
 
-    // Fetch heart rate data
     if let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) {
-      let heartRateData = try await fetchSamples(for: heartRateType, predicate: predicate)
-      let heartRateValues = heartRateData.map { $0.quantity.doubleValue(for: HKUnit(from: "count/min")) }
-      workoutData["heartRateData"] = heartRateValues
+      let heartRateSamples = try await fetchSamples(for: heartRateType, predicate: predicate)
+      workoutData["heartRateSamples"] = heartRateSamples.map { sample in
+        return [
+          "value": sample.quantity.doubleValue(for: HKUnit(from: "count/min")),
+          "startDate": sample.startDate.ISO8601Format(),
+          "endDate": sample.endDate.ISO8601Format()
+        ]
+      }
     }
 
     return workoutData
-  }
-
-  private func fetchStatistics(for type: HKQuantityType, predicate: NSPredicate, options: HKStatisticsOptions) async throws -> HKStatistics? {
-    return try await withCheckedThrowingContinuation { continuation in
-      let query = HKStatisticsQuery(quantityType: type, quantitySamplePredicate: predicate, options: options) { _, result, error in
-        if let error = error {
-          continuation.resume(throwing: error)
-        } else {
-          continuation.resume(returning: result)
-        }
-      }
-      store?.execute(query)
-    }
   }
 
   private func fetchSamples(for type: HKQuantityType, predicate: NSPredicate) async throws -> [HKQuantitySample] {
@@ -113,13 +103,11 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     }
   }
 
-  // Implement the required delegate methods
   func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-    // Handle session state changes
+    // Handle state change if needed
   }
 
   func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-    // Handle session failure
+    // Handle error if needed
   }
 }
-

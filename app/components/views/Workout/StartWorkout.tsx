@@ -94,10 +94,10 @@ const StartWorkout: React.FC<{
               text: 'Yes',
               onPress: () => {
                 navigation.goBack();
-                endWatchWorkout();
                 if (workoutSong.isPlaying()) {
                   workoutSong.stop();
                 }
+                endWatchWorkout(startTime);
               },
             },
           ]);
