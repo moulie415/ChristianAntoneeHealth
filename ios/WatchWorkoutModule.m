@@ -5,7 +5,7 @@
 RCT_EXTERN_METHOD(startWatchWorkout:(RCTPromiseResolveBlock)resolver
                   rejecter:(RCTPromiseRejectBlock)rejecter)
 
-RCT_EXTERN_METHOD(endWatchWorkout:(RCTPromiseResolveBlock)resolver
-                  rejecter:(RCTPromiseRejectBlock)rejecter)
+RCT_EXTERN_METHOD(endWatchWorkout: (NSString *)startDateString resolver: (RCTPromiseResolveBlock)resolve rejecter: (RCTPromiseRejectBlock)reject)
+
 
 @end

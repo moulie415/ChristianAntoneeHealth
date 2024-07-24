@@ -663,16 +663,9 @@ export const endWatchWorkout = async (startDate: Date) => {
     if (Platform.OS === 'ios') {
       const paired = await getIsPaired();
       if (paired) {
-        const {energySamples, heartRateSamples}: WatchWorkoutResponse =
-          await WatchWorkoutModule.endWatchWorkout();
-        return {
-          energySamples: energySamples.filter(
-            s => new Date(s.startDate) > startDate,
-          ),
-          heartRateSamples: heartRateSamples.filter(
-            s => new Date(s.startDate) > startDate,
-          ),
-        };
+        const response: WatchWorkoutResponse =
+          await WatchWorkoutModule.endWatchWorkout(startDate.toISOString());
+        return response;
       }
     }
   } catch (e) {

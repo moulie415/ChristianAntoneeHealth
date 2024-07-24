@@ -42,7 +42,7 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
   }
 
   @objc
-  func endWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func endWatchWorkout(_ startDateString: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     guard let session = self.session else {
       reject("SESSION_ERROR", "No active workout session found", nil)
       return
@@ -51,7 +51,7 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     Task {
       do {
         session.end()
-        let workoutData = try await fetchWorkoutData(from: session)
+        let workoutData = try await fetchWorkoutData(from: session, startDateString: startDateString)
         resolve(workoutData)
       } catch {
         reject("END_WORKOUT_ERROR", "An error occurred while ending the workout session: \(error.localizedDescription)", error)
@@ -59,10 +59,14 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     }
   }
 
-  private func fetchWorkoutData(from session: HKWorkoutSession) async throws -> [String: Any] {
+  private func fetchWorkoutData(from session: HKWorkoutSession, startDateString: String) async throws -> [String: Any] {
     var workoutData = [String: Any]()
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    let startDate = dateFormatter.date(from: startDateString);
 
-    let predicate = HKQuery.predicateForSamples(withStart: session.startDate, end: session.endDate, options: .strictStartDate)
+    let predicate = HKQuery.predicateForSamples(withStart: session.startDate ?? startDate, end: session.endDate ?? Date(), options: .strictStartDate)
 
     if let energyType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) {
       let energySamples = try await fetchSamples(for: energyType, predicate: predicate)
