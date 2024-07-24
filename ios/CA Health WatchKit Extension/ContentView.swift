@@ -7,6 +7,22 @@
 
 import SwiftUI
 
+
+struct WorkoutStartedView: View {
+    var body: some View {
+        VStack {
+            Text("Workout Started")
+            .font(.caption)
+                .padding()
+
+            Image("dumbbell")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+        }
+    }
+}
+
 struct LogoView: View {
     var body: some View {
 
@@ -15,15 +31,6 @@ struct LogoView: View {
           .resizable()
           .scaledToFit()
           .padding(20)
-
-//        NavigationLink(destination: EquipmentView()) {
-//          Text("Start Workout")
-//
-//        }
-//        .background(
-//            RoundedRectangle(cornerRadius: 50, style: .continuous).fill(Color("appBlue"))
-//        )
-//        .padding(.vertical)
         
       }
 
@@ -107,6 +114,8 @@ struct WorkoutLevelScoreView: View {
 
 struct HomeView: View {
   
+  @State private var isWorkoutStarted = false
+  
   var body: some View {
     TabView {
       LogoView()
@@ -115,6 +124,15 @@ struct HomeView: View {
       MinutesView()
     }
     .tabViewStyle(PageTabViewStyle())
+    .fullScreenCover(isPresented: $isWorkoutStarted) {
+             WorkoutStartedView()
+         }
+         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("WorkoutStarted")), perform: { _ in
+             isWorkoutStarted = true
+         })
+         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("WorkoutEnded")), perform: { _ in
+             isWorkoutStarted = false
+         })
   }
 }
 

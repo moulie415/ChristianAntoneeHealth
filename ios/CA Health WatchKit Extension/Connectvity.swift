@@ -4,6 +4,8 @@ import WatchConnectivity
 import HealthKit
 
 class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate, WKApplicationDelegate  {
+
+  
     
     var session: WCSession?
     var builder: HKLiveWorkoutBuilder?
@@ -18,6 +20,9 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
             self.session = WCSession.default
             self.session?.delegate = self
             self.session?.activate()
+            if let context = self.session?.applicationContext {
+              getGoalDataFromContext(applicationContext: context)
+            }
         }
       
         requestHealthKitAuthorization()
@@ -71,7 +76,9 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
             
             try await builder?.beginCollection(at: start)
             
-            print("*** Workout Session Started ***")
+          DispatchQueue.main.async {
+           NotificationCenter.default.post(name: Notification.Name("WorkoutStarted"), object: nil)
+            }
         } catch {
             print("*** An error occurred: \(error.localizedDescription) ***")
         }
@@ -88,12 +95,31 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
     }
 
     func session(_ session: WCSession, didReceiveApplicationContext context: [String: Any]) {
-        // Handle application context updates.
+      getGoalDataFromContext(applicationContext: context)
+    }
+  
+  func getGoalDataFromContext(applicationContext: [String: Any]) {
+    if let goalDataDict = applicationContext["goalData"] as? [String: Any] {
+      do {
+        let jsonData = try JSONSerialization.data(withJSONObject: goalDataDict, options: [])
+        let goalData = try JSONDecoder().decode(GoalData.self, from: jsonData)
+        
+        DispatchQueue.main.async {
+          Singleton.instance.goalData = goalData
+        }
+      } catch {
+        print("Failed to decode GoalData: \(error)")
+      }
     }
     
+  }
     // MARK: - HKWorkoutSessionDelegate
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-        // Handle session state changes.
+      if toState == .ended {
+          DispatchQueue.main.async {
+              NotificationCenter.default.post(name: Notification.Name("WorkoutEnded"), object: nil)
+          }
+      }
     }
     
     func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
@@ -109,4 +135,5 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
         // Handle events.
     }
 }
+  
 
