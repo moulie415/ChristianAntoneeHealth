@@ -21,7 +21,6 @@ struct GoalData: Codable {
 class Singleton: ObservableObject {
     static let instance = Singleton()
     
-    let connectivity = Connectivity()
     var loggedIn: Bool = false
     
     @Published var goalData: GoalData? 

@@ -92,7 +92,6 @@ export type StackParamList = {
     pauseEvents: PauseEvent[];
     startTime: Date;
     planId: string;
-    heartRateSamples: Sample[];
   };
   WorkoutSummary: {
     seconds: number;
@@ -124,7 +123,6 @@ export type StackParamList = {
     endTime: Date;
     exerciseEvents: ExerciseEvent[];
     pauseEvents: PauseEvent[];
-    heartRateSamples: Sample[];
   };
   QuickRoutineSummary: {
     routine: QuickRoutine;

@@ -1,12 +1,21 @@
 import moment from 'moment';
-import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
+import {
+  Alert,
+  Linking,
+  NativeModules,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import {getApiLevel} from 'react-native-device-info';
 import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import AppleHealthKit from 'react-native-health';
+import {getIsPaired} from 'react-native-watch-connectivity';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Sample, StepSample} from '../types/Shared';
 import {getSamples, saveSample} from './api';
 import {logError} from './error';
+
+const {WatchWorkoutModule} = NativeModules;
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -628,5 +637,29 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
         }
       });
     });
+  }
+};
+
+export const startWatchWorkout = async () => {
+  try {
+    const paired = await getIsPaired();
+    if (paired) {
+      await WatchWorkoutModule.startWatchWorkout();
+    }
+  } catch (e) {
+    logError(e);
+  }
+};
+
+export const endWatchWorkout = async () => {
+  try {
+    const paired = await getIsPaired();
+    if (paired) {
+      const result = await WatchWorkoutModule.endWatchWorkout();
+      console.log(result);
+      return result;
+    }
+  } catch (e) {
+    logError(e);
   }
 };

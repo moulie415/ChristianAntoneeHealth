@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct HealthAndMovementApp: App {
+  
+  @WKApplicationDelegateAdaptor var appDelegate: Connectivity
 
     @SceneBuilder var body: some Scene {
       var _ = Singleton.instance

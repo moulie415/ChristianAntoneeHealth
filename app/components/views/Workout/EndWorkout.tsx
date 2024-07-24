@@ -38,7 +38,6 @@ const EndWorkout: React.FC<{
     pauseEvents,
     startTime,
     planId,
-    heartRateSamples: hSamples,
   } = route.params;
 
   const {
@@ -48,7 +47,7 @@ const EndWorkout: React.FC<{
     calories,
     calorieSamples,
     calorieCalculationType,
-  } = useWorkoutData(seconds, profile, difficulty, endTime, hSamples);
+  } = useWorkoutData(seconds, profile, difficulty, endTime);
 
   useEffect(() => {
     setLoading(isLoading);

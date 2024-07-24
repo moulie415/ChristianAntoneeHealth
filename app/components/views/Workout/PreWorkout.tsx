@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
+import {startWatchWorkout} from '../../../helpers/biometrics';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
 import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
 import {useAppSelector} from '../../../hooks/redux';
@@ -195,13 +196,14 @@ const PreWorkout: React.FC<{
         <Button
           style={{margin: 15}}
           text="Start workout"
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('StartWorkout', {
               planWorkout,
               startTime: new Date(),
               planId,
-            })
-          }
+            });
+            startWatchWorkout();
+          }}
         />
       </ScrollView>
     </>

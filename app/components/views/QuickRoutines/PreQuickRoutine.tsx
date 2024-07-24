@@ -19,6 +19,7 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
+import { startWatchWorkout } from '../../../helpers/biometrics';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -263,6 +264,7 @@ const PreQuickRoutine: React.FC<{
               routine: route.params.routine,
               startTime: new Date(),
             });
+            startWatchWorkout();
           }}
         />
       </ScrollView>

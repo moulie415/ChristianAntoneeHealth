@@ -422,12 +422,12 @@
 					0A8218D52844D0B100C94F96 = {
 						CreatedOnToolsVersion = 13.4;
 						DevelopmentTeam = 27RJG57PEM;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					0A8218DD2844D0B300C94F96 = {
 						CreatedOnToolsVersion = 13.4;
 						DevelopmentTeam = 27RJG57PEM;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 27RJG57PEM;
@@ -1000,13 +1000,12 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "CA Health WatchKit Extension/CA Health WatchKit Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 454;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"CA Health WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 27RJG57PEM;
-				"DEVELOPMENT_TEAM[sdk=watchos*]" = 27RJG57PEM;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "CA Health WatchKit Extension/Info.plist";
@@ -1016,8 +1015,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE_SPECIFIER = "CA Health Watch Extension Development";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "CA Health Watch Extension Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1084,12 +1082,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 454;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=watchos*]" = 27RJG57PEM;
+				DEVELOPMENT_TEAM = 27RJG57PEM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = CA_Health_WatchKit_Extension;
 				INFOPLIST_FILE = "CA Health/Info.plist";
@@ -1099,7 +1095,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.HealthAndMovement.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "CA Health Watch Development";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;

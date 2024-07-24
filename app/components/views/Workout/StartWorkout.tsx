@@ -8,9 +8,9 @@ import {RootState, StackParamList} from '../../../App';
 import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
+import {endWatchWorkout} from '../../../helpers/biometrics';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
-import useHealthListener from '../../../hooks/UseHealthListener';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import {updateProfile} from '../../../reducers/profile';
 import {workoutSong} from '../../../sagas/profile';
@@ -71,8 +71,6 @@ const StartWorkout: React.FC<{
     }
   }, [profile.workoutMusic]);
 
-  const {heartRateSamples} = useHealthListener(startTime);
-
   return (
     <View style={{flex: 1}}>
       <Header
@@ -96,6 +94,7 @@ const StartWorkout: React.FC<{
               text: 'Yes',
               onPress: () => {
                 navigation.goBack();
+                endWatchWorkout();
                 if (workoutSong.isPlaying()) {
                   workoutSong.stop();
                 }
@@ -268,7 +267,6 @@ const StartWorkout: React.FC<{
                                       pauseEvents,
                                       startTime,
                                       planId,
-                                      heartRateSamples,
                                     });
                                     if (workoutSong.isPlaying()) {
                                       workoutSong.stop();

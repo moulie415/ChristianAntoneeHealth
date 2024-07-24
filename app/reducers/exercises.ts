@@ -2,7 +2,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import Exercise from '../types/Exercise';
 import {Area} from '../types/QuickRoutines';
 import {SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Equipment, Goal, Level, PlanWorkout, WarmUp} from '../types/Shared';
+import {CoolDown, Equipment, Goal, Level, WarmUp} from '../types/Shared';
 import {setLoggedIn} from './profile';
 
 export interface ExercisesState {
@@ -91,7 +91,6 @@ export type SET_SHARE_MODAL_VISIBLE = typeof SET_SHARE_MODAL_VISIBLE;
 
 export const VIEW_WORKOUT = `${EXERCISES}/viewWorkout`;
 export type VIEW_WORKOUT = typeof VIEW_WORKOUT;
-
 
 const exerciseSlice = createSlice({
   name: EXERCISES,

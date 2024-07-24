@@ -1,6 +1,10 @@
 import moment from 'moment';
 import {useState} from 'react';
-import {getCalorieSamples, getHeartRateSamples} from '../helpers/biometrics';
+import {
+  endWatchWorkout,
+  getCalorieSamples,
+  getHeartRateSamples,
+} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {
   getCaloriesBurned,
@@ -13,7 +17,6 @@ const useWorkoutData = (
   profile: Profile,
   difficulty: number,
   endDate: Date,
-  currentHeartRateSamples: Sample[],
 ) => {
   const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
   const [calorieSamples, setCalorieSamples] = useState<Sample[]>([]);
@@ -26,8 +29,12 @@ const useWorkoutData = (
     const getSamples = async () => {
       try {
         setLoading(true);
-        const samples = currentHeartRateSamples?.length
-          ? currentHeartRateSamples
+
+        const watchData = endWatchWorkout();
+        console.log(watchData);
+
+        const samples = []?.length
+          ? []
           : await getHeartRateSamples(
               moment(endDate).subtract(seconds, 'seconds').toDate(),
               endDate,

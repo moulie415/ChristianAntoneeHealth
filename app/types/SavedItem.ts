@@ -1,4 +1,3 @@
-import {ActivitiesHeart} from '../helpers/fitbit';
 import {
   CalorieCalculationType,
   ExerciseEvent,
