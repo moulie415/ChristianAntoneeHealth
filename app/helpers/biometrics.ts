@@ -653,18 +653,33 @@ export const startWatchWorkout = async () => {
   }
 };
 
+export const endWatchWorkout = async () => {
+  try {
+    if (Platform.OS === 'ios') {
+      const paired = await getIsPaired();
+      if (paired) {
+        await WatchWorkoutModule.endWatchWorkout();
+      }
+    }
+  } catch (e) {
+    logError(e);
+  }
+};
+
 interface WatchWorkoutResponse {
   energySamples: Sample[];
   heartRateSamples: Sample[];
 }
 
-export const endWatchWorkout = async (startDate: Date) => {
+export const fetchWatchWorkoutData = async (startDate: Date) => {
   try {
     if (Platform.OS === 'ios') {
       const paired = await getIsPaired();
       if (paired) {
         const response: WatchWorkoutResponse =
-          await WatchWorkoutModule.endWatchWorkout(startDate.toISOString());
+          await WatchWorkoutModule.fetchWatchWorkoutData(
+            startDate.toISOString(),
+          );
         return response;
       }
     }

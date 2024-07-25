@@ -123,7 +123,7 @@ const QuickRoutineView: React.FC<{
                 if (workoutSong.isPlaying()) {
                   workoutSong.stop();
                 }
-                endWatchWorkout(startTime);
+                endWatchWorkout();
               },
             },
           ]);
@@ -284,6 +284,7 @@ const QuickRoutineView: React.FC<{
                                 {
                                   text: 'Yes',
                                   onPress: () => {
+                                    endWatchWorkout();
                                     navigation.navigate('EndQuickRoutine', {
                                       seconds,
                                       routine,

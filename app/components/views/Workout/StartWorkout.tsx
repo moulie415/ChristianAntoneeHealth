@@ -97,7 +97,7 @@ const StartWorkout: React.FC<{
                 if (workoutSong.isPlaying()) {
                   workoutSong.stop();
                 }
-                endWatchWorkout(startTime);
+                endWatchWorkout();
               },
             },
           ]);
@@ -259,6 +259,7 @@ const StartWorkout: React.FC<{
                                 {
                                   text: 'Yes',
                                   onPress: () => {
+                                    endWatchWorkout();
                                     navigation.navigate('EndWorkout', {
                                       seconds,
                                       planWorkout,
@@ -271,6 +272,7 @@ const StartWorkout: React.FC<{
                                     if (workoutSong.isPlaying()) {
                                       workoutSong.stop();
                                     }
+                                    endWatchWorkout();
                                   },
                                 },
                               ]);

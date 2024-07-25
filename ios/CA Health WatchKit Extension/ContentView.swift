@@ -13,7 +13,7 @@ struct WorkoutStartedView: View {
         VStack {
             Text("Workout Started")
             .font(.caption)
-                .padding()
+            .padding(.bottom)
 
             Image("dumbbell")
                 .resizable()

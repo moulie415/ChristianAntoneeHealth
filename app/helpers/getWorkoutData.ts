@@ -1,59 +1,41 @@
 import moment from 'moment';
-import {useState} from 'react';
 import {
-  endWatchWorkout,
+  fetchWatchWorkoutData,
   getCalorieSamples,
   getHeartRateSamples,
 } from '../helpers/biometrics';
-import {logError} from '../helpers/error';
 import {
   getCaloriesBurned,
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
-import {CalorieCalculationType, Profile, Sample} from '../types/Shared';
-import useInit from './UseInit';
-const useWorkoutData = (
+import {CalorieCalculationType, Profile} from '../types/Shared';
+export const getWorkoutData = async (
   seconds: number,
   profile: Profile,
   difficulty: number,
   startDate: Date,
   endDate: Date,
 ) => {
-  const [heartRateSamples, setHeartRateSamples] = useState<Sample[]>([]);
-  const [calorieSamples, setCalorieSamples] = useState<Sample[]>([]);
+  let heartRateSamples = [];
+  heartRateSamples = await getHeartRateSamples(startDate, endDate);
 
-  const [calories, setCalories] = useState(0);
+  let calorieSamples = [];
+  let calories = 0;
+  calorieSamples = await getCalorieSamples(startDate, endDate);
 
-  const [loading, setLoading] = useState(false);
+  if (calorieSamples.length) {
+    calories = calorieSamples.reduce((acc, cur) => acc + cur.value, 0);
+  }
 
-  useInit(() => {
-    const getSamples = async () => {
-      try {
-        setLoading(true);
+  const watchWorkoutData = await fetchWatchWorkoutData(startDate);
 
-        const watchData = await endWatchWorkout(startDate);
+  if (watchWorkoutData?.heartRateSamples.length) {
+    heartRateSamples = watchWorkoutData.heartRateSamples;
+  }
 
-        const samples =
-          watchData?.heartRateSamples ??
-          (await getHeartRateSamples(startDate, endDate));
-
-        setHeartRateSamples(samples);
-
-        const cSamples =
-          watchData?.energySamples ??
-          (await getCalorieSamples(startDate, endDate));
-
-        if (cSamples.length) {
-          setCalorieSamples(cSamples);
-          setCalories(calorieSamples.reduce((acc, cur) => acc + cur.value, 0));
-        }
-      } catch (e) {
-        logError(e);
-      }
-      setLoading(false);
-    };
-    getSamples();
-  });
+  if (watchWorkoutData?.energySamples.length) {
+    calorieSamples = watchWorkoutData.energySamples;
+  }
 
   const averageHeartRate = heartRateSamples.length
     ? heartRateSamples.reduce((acc, cur) => {
@@ -95,7 +77,6 @@ const useWorkoutData = (
     : 'estimate';
 
   return {
-    loading,
     heartRateSamples,
     averageHeartRate,
     calorieSamples,
@@ -107,5 +88,3 @@ const useWorkoutData = (
       : caloriesEstimate,
   };
 };
-
-export default useWorkoutData;

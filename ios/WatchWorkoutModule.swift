@@ -14,6 +14,7 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     self.store?.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
       guard let self = self else { return }
       self.session = mirroredSession
+      
       print("Workout session mirroring started on iOS")
     }
   }
@@ -42,15 +43,25 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
   }
 
   @objc
-  func endWatchWorkout(_ startDateString: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+  func endWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     guard let session = self.session else {
       reject("SESSION_ERROR", "No active workout session found", nil)
       return
     }
-
+    
+    session.end()
+  }
+  
+  @objc
+  func fetchWatchWorkoutData(_ startDateString: String, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    
+    guard let session = self.session else {
+      reject("SESSION_ERROR", "No active workout session found", nil)
+      return
+    }
+    
     Task {
       do {
-        session.end()
         let workoutData = try await fetchWorkoutData(from: session, startDateString: startDateString)
         resolve(workoutData)
       } catch {
@@ -64,9 +75,10 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-    let startDate = dateFormatter.date(from: startDateString);
+    let start = session.startDate ?? dateFormatter.date(from: startDateString);
+    let end = session.endDate
 
-    let predicate = HKQuery.predicateForSamples(withStart: session.startDate ?? startDate, end: session.endDate ?? Date(), options: .strictStartDate)
+    let predicate = HKQuery.predicateForSamples(withStart: start, end: session.endDate ?? Date(), options: .strictStartDate)
 
     if let energyType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) {
       let energySamples = try await fetchSamples(for: energyType, predicate: predicate)
@@ -108,7 +120,7 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
   }
 
   func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-    // Handle state change if needed
+
   }
 
   func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {

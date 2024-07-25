@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, ViewStyle} from 'react-native';
+import colors from '../../constants/colors';
 import globalStyles from '../../styles/globalStyles';
 import Spinner from './Spinner';
 import Text from './Text';
-import colors from '../../constants/colors';
 
 const AbsoluteSpinner: React.FC<{
   loading: boolean;
