@@ -1,5 +1,6 @@
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
+import { Timestamp } from '@react-native-firebase/firestore';
 
 export interface Targets {
   calories: number;
@@ -159,12 +160,12 @@ export interface StepSample {
 
 export interface ExerciseEvent {
   value: number;
-  time: Date;
+  time: Date | Timestamp;
 }
 
 export interface PauseEvent {
   paused: boolean;
-  time: Date;
+  time: Date | Timestamp;
 }
 
 export enum Equipment {

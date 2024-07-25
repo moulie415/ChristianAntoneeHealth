@@ -13,6 +13,7 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import {logError} from '../../../helpers/error';
 import {getWorkoutData} from '../../../helpers/getWorkoutData';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
+import useThrottle from '../../../hooks/UseThrottle';
 import {saveWorkout as saveWorkoutAction} from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
 import {SavedWorkout} from '../../../types/SavedItem';
@@ -44,7 +45,7 @@ const EndWorkout: React.FC<{
 
   useBackHandler(() => true);
 
-  const handleSave = async (saved: boolean) => {
+  const handleSave = useThrottle(async (saved: boolean) => {
     try {
       if (loading) {
         return;
@@ -97,7 +98,7 @@ const EndWorkout: React.FC<{
       logError(e);
       setLoading(false);
     }
-  };
+  }, 3000);
 
   const saveAndContinue = async () => {
     if (profile.premium) {

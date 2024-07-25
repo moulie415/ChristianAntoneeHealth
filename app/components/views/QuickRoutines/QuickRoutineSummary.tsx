@@ -21,6 +21,9 @@ const QuickRoutineSummary: React.FC<{
 }> = ({route, navigation, profile}) => {
   const {savedQuickRoutine, routine, saved} = route.params;
 
+  const showBreakdown =
+    !!savedQuickRoutine.heartRateSamples.length ||
+    !!savedQuickRoutine.calorieSamples.length;
   useBackHandler(() => true);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -33,7 +36,7 @@ const QuickRoutineSummary: React.FC<{
         {saved ? (
           <BackButton style={{margin: 20}} onPress={navigation.goBack} />
         ) : (
-          <View style={{width: 40, height: 40, margin: 20}} />
+          <View style={{height: 40, marginVertical: 20}} />
         )}
         <Text
           numberOfLines={1}
@@ -57,7 +60,7 @@ const QuickRoutineSummary: React.FC<{
       <View style={{flexDirection: 'row'}}>
         {saved && (
           <Button
-            variant="secondary"
+            variant={showBreakdown ? 'secondary' : 'primary'}
             text="Retry workout"
             onPress={() => {
               navigation.navigate('PreQuickRoutine', {
@@ -66,7 +69,7 @@ const QuickRoutineSummary: React.FC<{
             }}
             style={{
               margin: 20,
-              marginRight: 10,
+              marginRight: showBreakdown ? 10 : 20,
               flex: 1,
             }}
           />
@@ -74,25 +77,27 @@ const QuickRoutineSummary: React.FC<{
 
         {!saved && (
           <Button
-            variant="secondary"
+            variant={showBreakdown ? 'secondary' : 'primary'}
             text="Return Home"
             onPress={resetToTabs}
             style={{
               margin: 20,
               flex: 1,
-              marginRight: 10,
+              marginRight: showBreakdown ? 10 : 20,
             }}
           />
         )}
-        <Button
-          style={{margin: 20, marginLeft: 10, flex: 1}}
-          onPress={() =>
-            navigation.navigate('WorkoutBreakdown', {
-              workout: savedQuickRoutine,
-            })
-          }
-          text="View breakdown"
-        />
+        {showBreakdown && (
+          <Button
+            style={{margin: 20, marginLeft: showBreakdown ? 10 : 20, flex: 1}}
+            onPress={() =>
+              navigation.navigate('WorkoutBreakdown', {
+                workout: savedQuickRoutine,
+              })
+            }
+            text="View breakdown"
+          />
+        )}
       </View>
     </SafeAreaView>
   );

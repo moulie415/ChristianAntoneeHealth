@@ -4,6 +4,7 @@ import {LineChart} from 'echarts/charts';
 import {
   GridComponent,
   LegendComponent,
+  MarkLineComponent,
   TitleComponent,
   TooltipComponent,
 } from 'echarts/components';
@@ -24,9 +25,10 @@ echarts.use([
   SVGRenderer,
   LineChart,
   LegendComponent,
+  MarkLineComponent,
 ]);
 
-const E_HEIGHT = 300;
+const E_HEIGHT = 350;
 
 const WorkoutBreakdown: React.FC<{
   route: RouteProp<StackParamList, 'WorkoutBreakdown'>;
@@ -35,26 +37,57 @@ const WorkoutBreakdown: React.FC<{
   const {workout} = route.params;
 
   // Calculate cumulative calories
-  const cumulativeCalories = workout.calorieSamples.reduce(
-    (acc: {startDate: string; value: number}[], sample, index) => {
-      const previousValue = index === 0 ? 0 : acc[index - 1].value;
-      const cumulativeValue = previousValue + sample.value;
-      return [
-        ...acc,
-        {
-          startDate: sample.startDate,
-          value: cumulativeValue,
+  const cumulativeCalories = useMemo(
+    () =>
+      workout.calorieSamples?.reduce(
+        (acc: {startDate: string; value: number}[], sample, index) => {
+          const previousValue = index === 0 ? 0 : acc[index - 1].value;
+          const cumulativeValue = previousValue + sample.value;
+          return [
+            ...acc,
+            {
+              startDate: sample.startDate,
+              value: cumulativeValue,
+            },
+          ];
         },
-      ];
-    },
+        [],
+      ) || [],
     [],
   );
 
+  // Convert events into mark lines
+  const exerciseEventLines = workout.exerciseEvents?.map(event => ({
+    name: 'Exercise Event',
+    xAxis:
+      'toDate' in event.time
+        ? event.time.toDate().getTime()
+        : event.time.getTime(), // Ensure the time is in milliseconds
+    lineStyle: {
+      color: colors.appBlue,
+      type: 'solid', // Make the line solid
+    },
+  }));
+
+  const pauseEventLines = workout.pauseEvents?.map(event => ({
+    name: 'Pause Events',
+    xAxis:
+      'toDate' in event.time
+        ? event.time.toDate().getTime()
+        : event.time.getTime(), // Ensure the time is in milliseconds
+    lineStyle: {
+      color: colors.appWhite,
+      type: 'solid', // Make the line solid
+    },
+  }));
+
   const option: ECBasicOption = useMemo(() => {
     return {
+      grid: {bottom: 100},
       legend: {
         orient: 'horizontal',
-        bottom: 0, // Position the legend at the bottom
+
+        bottom: 0, // Adjust bottom position to avoid overlap
         left: 'center', // Center the legend horizontally
         textStyle: {
           color: colors.appWhite, // Text color
@@ -63,8 +96,10 @@ const WorkoutBreakdown: React.FC<{
         itemWidth: 20, // Width of the legend item (square or circle)
         itemHeight: 12, // Height of the legend item
         data: [
-          {name: 'Heart Rate', icon: 'roundRect'}, // Legend item for Heart Rate
-          {name: 'Calories', icon: 'roundRect'}, // Legend item for Calories
+          {name: 'Heart Rate', icon: 'roundRect', color: colors.appRed}, // Legend item for Heart Rate
+          {name: 'Calories', icon: 'roundRect', color: colors.secondaryDark}, // Legend item for Calories
+          {name: 'New Exercise', icon: 'roundRect', color: colors.appBlue}, // Legend item for New Exercise
+          {name: 'Pause Events', icon: 'roundRect', color: colors.appWhite}, // Legend item for Pause Events
         ],
       },
       xAxis: {
@@ -76,6 +111,13 @@ const WorkoutBreakdown: React.FC<{
           rotate: 45,
           showMaxLabel: true,
         },
+        axisLine: {
+          onZero: false,
+        },
+        axisTick: {
+          alignWithLabel: true,
+        },
+        boundaryGap: false,
       },
       yAxis: [
         {
@@ -118,6 +160,7 @@ const WorkoutBreakdown: React.FC<{
             },
           },
           yAxisIndex: 0,
+          z: 10, // Make sure this series is above the mark lines
         },
         {
           name: 'Calories',
@@ -151,13 +194,40 @@ const WorkoutBreakdown: React.FC<{
             },
           },
           yAxisIndex: 1,
+          z: 10, // Make sure this series is above the mark lines
+        },
+        {
+          name: 'New Exercise',
+          type: 'line',
+          data: [], // This series doesn't need data; lines are added as markLines
+          markLine: {
+            data: exerciseEventLines,
+            symbol: 'none',
+            label: {
+              show: false,
+            },
+          },
+          z: 1, // Ensure this is below other series
+        },
+        {
+          name: 'Pause Events',
+          type: 'line',
+          data: [], // This series doesn't need data; lines are added as markLines
+          markLine: {
+            data: pauseEventLines,
+            symbol: 'none',
+            label: {
+              show: false,
+            },
+          },
+          z: 1, // Ensure this is below other series
         },
       ],
       tooltip: {
         trigger: 'axis',
-        formatter: function (params) {
+        formatter: function (params: any) {
           let tooltipContent = '';
-          params.forEach(param => {
+          params.forEach((param: any) => {
             const date = moment(param.value[0]).format('HH:mm:ss');
             tooltipContent += `${param.seriesName} at ${date}: ${Math.round(
               param.value[1],
@@ -167,7 +237,7 @@ const WorkoutBreakdown: React.FC<{
         },
       },
     };
-  }, [workout, cumulativeCalories]);
+  }, [workout, cumulativeCalories, exerciseEventLines, pauseEventLines]);
 
   useEffect(() => {
     let chart: echarts.ECharts;
@@ -184,7 +254,7 @@ const WorkoutBreakdown: React.FC<{
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <Header hasBack title="Workout breakdown" />
+      <Header hasBack title="Workout Breakdown" />
       <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
         <SvgChart ref={chartRef} />
       </View>

@@ -21,7 +21,9 @@ const WorkoutSummary: React.FC<{
 }> = ({route, navigation}) => {
   const {savedWorkout, saved} = route.params;
   useBackHandler(() => true);
-
+  const showBreakdown =
+    !!savedWorkout.heartRateSamples.length ||
+    !!savedWorkout.calorieSamples.length;
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
       <WorkoutSummaryInfo
@@ -34,7 +36,7 @@ const WorkoutSummary: React.FC<{
       <View style={{flexDirection: 'row'}}>
         {savedWorkout.planWorkout && saved && (
           <Button
-            variant="secondary"
+            variant={showBreakdown ? 'secondary' : 'primary'}
             text="Retry workout"
             onPress={() => {
               if (savedWorkout.planWorkout) {
@@ -46,7 +48,7 @@ const WorkoutSummary: React.FC<{
             }}
             style={{
               margin: 20,
-              marginRight: 10,
+              marginRight: showBreakdown ? 10 : 20,
               flex: 1,
             }}
           />
@@ -54,25 +56,27 @@ const WorkoutSummary: React.FC<{
 
         {!saved && (
           <Button
-            variant="secondary"
+            variant={showBreakdown ? 'secondary' : 'primary'}
             text="Return Home"
             onPress={resetToTabs}
             style={{
               margin: 20,
               flex: 1,
-              marginRight: 10,
+              marginRight: showBreakdown ? 10 : 20,
             }}
           />
         )}
-        <Button
-          style={{margin: 20, marginLeft: 10, flex: 1}}
-          onPress={() =>
-            navigation.navigate('WorkoutBreakdown', {
-              workout: savedWorkout,
-            })
-          }
-          text="View breakdown"
-        />
+        {showBreakdown && (
+          <Button
+            style={{margin: 20, marginLeft: showBreakdown ? 10 : 20, flex: 1}}
+            onPress={() =>
+              navigation.navigate('WorkoutBreakdown', {
+                workout: savedWorkout,
+              })
+            }
+            text="View breakdown"
+          />
+        )}
       </View>
     </SafeAreaView>
   );

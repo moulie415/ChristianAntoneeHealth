@@ -21,6 +21,7 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import RPESlider from '../../commons/RPESlider';
 import Text from '../../commons/Text';
+import useThrottle from '../../../hooks/UseThrottle';
 
 const EndQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
@@ -44,7 +45,7 @@ const EndQuickRoutine: React.FC<{
 
   useBackHandler(() => true);
 
-  const handleSave = async (saved: boolean) => {
+  const handleSave = useThrottle(async (saved: boolean) => {
     try {
       if (loading) {
         return;
@@ -97,7 +98,7 @@ const EndQuickRoutine: React.FC<{
       Snackbar.show({text: 'Error fetching workout data'});
     }
     setLoading(false);
-  };
+  }, 3000);
 
   const saveAndContinue = async () => {
     if (profile.premium) {
