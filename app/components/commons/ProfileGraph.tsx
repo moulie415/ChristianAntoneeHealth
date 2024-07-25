@@ -6,9 +6,9 @@ import moment from 'moment';
 import React, {useEffect, useRef} from 'react';
 import {Dimensions, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {setFilter} from '../../reducers/profile';
-import {RootState} from '../../App';
 import Button from './Button';
 import Text from './Text';
 

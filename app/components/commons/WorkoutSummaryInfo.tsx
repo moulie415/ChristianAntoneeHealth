@@ -44,17 +44,6 @@ const WorkoutSummaryInfo: React.FC<{
 }> = ({calories, seconds, averageHeartRate, difficulty}) => {
   return (
     <ScrollView style={{flex: 1}}>
-      <Text
-        style={{
-          color: colors.appWhite,
-          fontSize: 22,
-          fontWeight: 'bold',
-          textAlign: 'center',
-          margin: 20,
-        }}>
-        Workout Summary
-      </Text>
-
       <SummaryTile>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text

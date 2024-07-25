@@ -31,49 +31,49 @@ const WorkoutSummary: React.FC<{
         averageHeartRate={savedWorkout.averageHeartRate}
       />
 
-      {saved ? (
-        <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row'}}>
+        {savedWorkout.planWorkout && saved && (
           <Button
             variant="secondary"
-            text="Back"
-            onPress={() => navigation.goBack()}
+            text="Retry workout"
+            onPress={() => {
+              if (savedWorkout.planWorkout) {
+                navigation.navigate('PreWorkout', {
+                  planWorkout: savedWorkout.planWorkout,
+                  planId: savedWorkout.planId,
+                });
+              }
+            }}
             style={{
               margin: 20,
               marginRight: 10,
               flex: 1,
             }}
           />
-          {savedWorkout.planWorkout && (
-            <Button
-              variant="secondary"
-              text="Retry workout"
-              onPress={() => {
-                if (savedWorkout.planWorkout) {
-                  navigation.navigate('PreWorkout', {
-                    planWorkout: savedWorkout.planWorkout,
-                    planId: savedWorkout.planId,
-                  });
-                }
-              }}
-              style={{
-                margin: 20,
-                marginLeft: 10,
-                flex: 1,
-              }}
-            />
-          )}
-        </View>
-      ) : (
+        )}
+
+        {!saved && (
+          <Button
+            variant="secondary"
+            text="Return Home"
+            onPress={resetToTabs}
+            style={{
+              margin: 20,
+              flex: 1,
+              marginRight: 10,
+            }}
+          />
+        )}
         <Button
-          variant="secondary"
-          text="Return Home"
-          onPress={resetToTabs}
-          style={{
-            margin: 20,
-            marginTop: 10,
-          }}
+          style={{margin: 20, marginLeft: 10, flex: 1}}
+          onPress={() =>
+            navigation.navigate('WorkoutBreakdown', {
+              workout: savedWorkout,
+            })
+          }
+          text="View breakdown"
         />
-      )}
+      </View>
     </SafeAreaView>
   );
 };

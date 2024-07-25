@@ -60,6 +60,7 @@ import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
 import TestResults from './components/views/Tests/TestResults';
+import WorkoutBreakdown from './components/views/Workout/WorkoutBreakdown';
 
 const Drawer = createDrawerNavigator();
 
@@ -166,6 +167,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="PDFViewer" component={PDFViewer} />
         <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
         <Stack.Screen name="ReportProblem" component={ReportProblem} />
+        <Stack.Screen name="WorkoutBreakdown" component={WorkoutBreakdown} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}
