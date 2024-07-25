@@ -23,6 +23,7 @@ import rootSaga from './sagas';
 import Education from './types/Education';
 import ExerciseType from './types/Exercise';
 import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
+import {SavedQuickRoutine, SavedWorkout} from './types/SavedItem';
 import {
   CoolDown,
   Equipment as EquipmentItem,
@@ -36,7 +37,6 @@ import {
   Profile,
   Recipe,
   RecipeCategory,
-  Sample,
   WarmUp,
 } from './types/Shared';
 import Test from './types/Test';
@@ -94,10 +94,8 @@ export type StackParamList = {
     planId: string;
   };
   WorkoutSummary: {
-    seconds: number;
-    calories?: number;
-    difficulty: number;
-    averageHeartRate: number;
+    savedWorkout: SavedWorkout;
+    saved?: boolean;
   };
   Education: undefined;
   EducationArticle: {education: Education};
@@ -126,10 +124,8 @@ export type StackParamList = {
   };
   QuickRoutineSummary: {
     routine: QuickRoutine;
-    seconds: number;
-    calories?: number;
-    difficulty: number;
-    averageHeartRate: number;
+    savedQuickRoutine: SavedQuickRoutine;
+    saved?: boolean;
   };
   SavedItems: undefined;
   Connections: undefined;

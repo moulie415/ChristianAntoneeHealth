@@ -13,7 +13,8 @@ type Props = {
   delay?: number;
 };
 
-const TILE_SIZE = 130;
+const TILE_SIZE = 120;
+const TILE_WIDTH = 230;
 
 const SummaryTile: React.FC<Props> = ({children, delay = 500}) => {
   return (
@@ -21,8 +22,8 @@ const SummaryTile: React.FC<Props> = ({children, delay = 500}) => {
       <Tile
         style={{
           height: TILE_SIZE,
+          width: TILE_WIDTH,
           alignSelf: 'center',
-          width: 250,
           marginBottom: 20,
           padding: 10,
 
@@ -80,7 +81,7 @@ const WorkoutSummaryInfo: React.FC<{
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: 35,
+                fontSize: 30,
                 fontWeight: 'bold',
                 textAlign: 'center',
               }}>
@@ -114,7 +115,7 @@ const WorkoutSummaryInfo: React.FC<{
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: 35,
+              fontSize: 30,
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
@@ -141,7 +142,7 @@ const WorkoutSummaryInfo: React.FC<{
           <Text
             style={{
               color: colors.appWhite,
-              fontSize: 35,
+              fontSize: 30,
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
@@ -170,7 +171,7 @@ const WorkoutSummaryInfo: React.FC<{
             <Text
               style={{
                 color: colors.appWhite,
-                fontSize: 35,
+                fontSize: 30,
                 fontWeight: 'bold',
                 textAlign: 'center',
               }}>

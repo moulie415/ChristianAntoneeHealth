@@ -50,6 +50,7 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
     }
     
     session.end()
+    resolve("*** Workout Session Ended ***")
   }
   
   @objc

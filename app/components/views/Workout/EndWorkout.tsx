@@ -70,7 +70,7 @@ const EndWorkout: React.FC<{
         workout.map(e => e.name).join(', '),
         calories || 0,
       );
-      saveAction({
+      const savedWorkout = {
         calories: calories || 0,
         seconds,
         difficulty,
@@ -87,12 +87,10 @@ const EndWorkout: React.FC<{
         calorieSamples,
         planId: planId || '',
         calorieCalculationType,
-      });
+      };
+      saveAction(savedWorkout);
       navigation.navigate('WorkoutSummary', {
-        calories,
-        seconds,
-        difficulty,
-        averageHeartRate,
+        savedWorkout,
       });
     } catch (e) {
       Snackbar.show({text: 'Error fetching workout data'});

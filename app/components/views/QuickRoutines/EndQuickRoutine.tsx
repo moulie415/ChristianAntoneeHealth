@@ -70,7 +70,8 @@ const EndQuickRoutine: React.FC<{
         routine.name,
         calories || 0,
       );
-      saveQuickRoutineAction({
+
+      const savedQuickRoutine = {
         calories: calories || 0,
         seconds,
         difficulty,
@@ -85,13 +86,11 @@ const EndQuickRoutine: React.FC<{
         endTime,
         calorieSamples,
         calorieCalculationType,
-      });
+      };
+      saveQuickRoutineAction(savedQuickRoutine);
       navigation.navigate('QuickRoutineSummary', {
-        calories,
-        seconds,
-        difficulty,
+        savedQuickRoutine,
         routine,
-        averageHeartRate,
       });
     } catch (e) {
       logError(e);

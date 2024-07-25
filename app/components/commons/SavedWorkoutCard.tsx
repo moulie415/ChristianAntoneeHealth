@@ -45,13 +45,16 @@ const SavedWorkoutCard: React.FC<{
               return exercises[id];
             }),
           );
-          navigation.navigate('PreWorkout', {
-            planWorkout: item.planWorkout,
-            planId: item.planId,
+
+          navigation.navigate('WorkoutSummary', {
+            savedWorkout: item,
+            saved: true,
           });
         } else if (quickRoutine) {
-          navigation.navigate('PreQuickRoutine', {
+          navigation.navigate('QuickRoutineSummary', {
+            savedQuickRoutine: item,
             routine: quickRoutine,
+            saved: true,
           });
         }
       }}
