@@ -40,9 +40,7 @@
   </array>
   <key>BGTaskSchedulerPermittedIdentifiers</key>
   <array>
-      <string>com.HealthAndMovement.watch.extension</string>
-      <string>com.HealthAndMovement.watch</string>
-      <string>com.HealthAndMovement</string>
+      <string>com.HealthAndMovement.watch.extension.task</string>
   </array>
 </dict>
 </plist>
