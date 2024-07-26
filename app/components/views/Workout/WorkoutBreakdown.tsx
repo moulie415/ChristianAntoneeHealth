@@ -14,9 +14,13 @@ import {ECBasicOption} from 'echarts/types/dist/shared';
 import moment from 'moment';
 import React, {useEffect, useMemo, useRef} from 'react';
 import {Dimensions, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
+import {FONTS_SIZES} from '../../../constants';
 import colors from '../../../constants/colors';
+import {useAppSelector} from '../../../hooks/redux';
+import Dumbbell from '../../../images/dumbbell.svg';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 
@@ -44,6 +48,16 @@ const WorkoutBreakdown: React.FC<{
 }> = ({route}) => {
   const chartRef = useRef<typeof SvgChart>(null);
   const {workout} = route.params;
+
+  const {quickRoutines} = useAppSelector(state => state.quickRoutines);
+  const {exercises} = useAppSelector(state => state.exercises);
+
+  const exerciseIds =
+    'quickRoutineId' in workout
+      ? quickRoutines[workout.quickRoutineId]?.exerciseIds
+      : workout.workout;
+
+  const exerciseList = exerciseIds.map(id => exercises[id]).filter(e => e);
 
   // Calculate cumulative calories
   const cumulativeCalories = useMemo(
@@ -141,7 +155,7 @@ const WorkoutBreakdown: React.FC<{
       series: [
         {
           name: 'Heart Rate',
-          data: workout.heartRateSamples.map(sample => ({
+          data: workout.heartRateSamples?.map(sample => ({
             value: [sample.startDate, sample.value],
           })),
           type: 'line',
@@ -303,9 +317,9 @@ const WorkoutBreakdown: React.FC<{
   ];
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header hasBack title="Workout Breakdown" />
-      <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
+      <ScrollView>
         <SvgChart ref={chartRef} />
         <View
           style={{
@@ -315,7 +329,7 @@ const WorkoutBreakdown: React.FC<{
             flexWrap: 'wrap',
           }}>
           {legendItems
-            .filter(({items}) => items.length)
+            .filter(({items}) => items?.length)
             .map(item => (
               <View
                 key={item.label}
@@ -338,8 +352,66 @@ const WorkoutBreakdown: React.FC<{
               </View>
             ))}
         </View>
-        
-      </View>
+
+        {exerciseList && (
+          <View style={{marginHorizontal: 20}}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: FONTS_SIZES.LARGE,
+                fontWeight: 'bold',
+                marginTop: 20,
+                marginBottom: 10,
+              }}>
+              Exercises
+            </Text>
+            {exerciseList.map(({name, thumbnail, time, weight}) => {
+              return (
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.borderColor,
+                    padding: 15,
+                    marginBottom: 10,
+                    flexDirection: 'row',
+                    borderRadius: 15,
+                  }}>
+                  <Dumbbell width={50} height={50} />
+                  <View
+                    style={{marginHorizontal: 10, justifyContent: 'center'}}>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        color: colors.appWhite,
+                        marginBottom: 2,
+                      }}>
+                      {name}
+                    </Text>
+                    <View style={{flexDirection: 'row'}}>
+                      {time && (
+                        <Text style={{color: colors.offWhite, marginTop: 2}}>
+                          {`${time} seconds`}
+                        </Text>
+                      )}
+                      {time && weight && (
+                        <Text style={{color: colors.offWhite, marginTop: 2}}>
+                          {' / '}
+                        </Text>
+                      )}
+                      {weight && (
+                        <Text style={{color: colors.offWhite, marginTop: 2}}>
+                          {weight}
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

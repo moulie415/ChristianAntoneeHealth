@@ -23,8 +23,8 @@ const QuickRoutineSummary: React.FC<{
 
   const showBreakdown =
     savedQuickRoutine &&
-    (!!savedQuickRoutine.heartRateSamples.length ||
-      !!savedQuickRoutine.calorieSamples.length);
+    (!!savedQuickRoutine.heartRateSamples?.length ||
+      !!savedQuickRoutine.calorieSamples?.length);
   useBackHandler(() => true);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
