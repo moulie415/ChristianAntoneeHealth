@@ -22,8 +22,9 @@ const WorkoutSummary: React.FC<{
   const {savedWorkout, saved} = route.params;
   useBackHandler(() => true);
   const showBreakdown =
-    !!savedWorkout.heartRateSamples.length ||
-    !!savedWorkout.calorieSamples.length;
+    savedWorkout &&
+    (!!savedWorkout.heartRateSamples.length ||
+      !!savedWorkout.calorieSamples.length);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
       <WorkoutSummaryInfo

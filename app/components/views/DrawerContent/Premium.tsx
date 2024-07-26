@@ -74,14 +74,12 @@ const Premium: React.FC<{
         offerings.current !== null &&
         offerings.current.availablePackages.length !== 0
       ) {
-        // offerings.current.availablePackages.forEach(pkg => {
-        //   console.log(pkg.product.productCategory);
-        // });
         setPackages(offerings.current.availablePackages);
       }
     } catch (e) {
-      // @ts-ignore
-      Alert.alert('Error fetching Premium offerings', e.message);
+      if (e instanceof Error) {
+        Alert.alert('Error fetching Premium offerings', e.message);
+      }
       logError(e);
     }
   };

@@ -2,6 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {SvgChart, SVGRenderer} from '@wuba/react-native-echarts';
 import {LineChart} from 'echarts/charts';
 import {
+  DataZoomComponent,
   GridComponent,
   LegendComponent,
   MarkLineComponent,
@@ -17,6 +18,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import Header from '../../commons/Header';
+import Text from '../../commons/Text';
 
 echarts.use([
   TitleComponent,
@@ -26,9 +28,16 @@ echarts.use([
   LineChart,
   LegendComponent,
   MarkLineComponent,
+  DataZoomComponent,
 ]);
 
 const E_HEIGHT = 350;
+
+interface LegendItem {
+  color: string;
+  label: string;
+  items: any[];
+}
 
 const WorkoutBreakdown: React.FC<{
   route: RouteProp<StackParamList, 'WorkoutBreakdown'>;
@@ -53,12 +62,12 @@ const WorkoutBreakdown: React.FC<{
         },
         [],
       ) || [],
-    [],
+    [workout.calorieSamples],
   );
 
   // Convert events into mark lines
   const exerciseEventLines = workout.exerciseEvents?.map(event => ({
-    name: 'Exercise Event',
+    name: 'Next exercise',
     xAxis:
       'toDate' in event.time
         ? event.time.toDate().getTime()
@@ -69,39 +78,36 @@ const WorkoutBreakdown: React.FC<{
     },
   }));
 
-  const pauseEventLines = workout.pauseEvents?.map(event => ({
-    name: 'Pause Events',
-    xAxis:
-      'toDate' in event.time
-        ? event.time.toDate().getTime()
-        : event.time.getTime(), // Ensure the time is in milliseconds
-    lineStyle: {
-      color: colors.appWhite,
-      type: 'solid', // Make the line solid
-    },
-  }));
+  const pauseEventLines = workout.pauseEvents
+    ?.filter(event => event.paused)
+    .map(event => ({
+      name: 'Pause events',
+      xAxis:
+        'toDate' in event.time
+          ? event.time.toDate().getTime()
+          : event.time.getTime(), // Ensure the time is in milliseconds
+      lineStyle: {
+        color: colors.appWhite,
+        type: 'solid', // Make the line solid
+      },
+    }));
+
+  const resumeEventLines = workout.pauseEvents
+    ?.filter(event => !event.paused)
+    .map(event => ({
+      name: 'Resume events',
+      xAxis:
+        'toDate' in event.time
+          ? event.time.toDate().getTime()
+          : event.time.getTime(), // Ensure the time is in milliseconds
+      lineStyle: {
+        color: colors.appGreen,
+        type: 'solid', // Make the line solid
+      },
+    }));
 
   const option: ECBasicOption = useMemo(() => {
     return {
-      grid: {bottom: 100},
-      legend: {
-        orient: 'horizontal',
-
-        bottom: 0, // Adjust bottom position to avoid overlap
-        left: 'center', // Center the legend horizontally
-        textStyle: {
-          color: colors.appWhite, // Text color
-          fontSize: 14, // Font size
-        },
-        itemWidth: 20, // Width of the legend item (square or circle)
-        itemHeight: 12, // Height of the legend item
-        data: [
-          {name: 'Heart Rate', icon: 'roundRect', color: colors.appRed}, // Legend item for Heart Rate
-          {name: 'Calories', icon: 'roundRect', color: colors.secondaryDark}, // Legend item for Calories
-          {name: 'New Exercise', icon: 'roundRect', color: colors.appBlue}, // Legend item for New Exercise
-          {name: 'Pause Events', icon: 'roundRect', color: colors.appWhite}, // Legend item for Pause Events
-        ],
-      },
       xAxis: {
         type: 'time',
         axisLabel: {
@@ -125,6 +131,11 @@ const WorkoutBreakdown: React.FC<{
         },
         {
           type: 'value',
+          axisLabel: {
+            formatter: function (value: number) {
+              return Math.round(value);
+            },
+          },
         },
       ],
       series: [
@@ -197,7 +208,7 @@ const WorkoutBreakdown: React.FC<{
           z: 10, // Make sure this series is above the mark lines
         },
         {
-          name: 'New Exercise',
+          name: 'New exercise',
           type: 'line',
           data: [], // This series doesn't need data; lines are added as markLines
           markLine: {
@@ -210,11 +221,24 @@ const WorkoutBreakdown: React.FC<{
           z: 1, // Ensure this is below other series
         },
         {
-          name: 'Pause Events',
+          name: 'Pause events',
           type: 'line',
           data: [], // This series doesn't need data; lines are added as markLines
           markLine: {
             data: pauseEventLines,
+            symbol: 'none',
+            label: {
+              show: false,
+            },
+          },
+          z: 1, // Ensure this is below other series
+        },
+        {
+          name: 'Resume events',
+          type: 'line',
+          data: [], // This series doesn't need data; lines are added as markLines
+          markLine: {
+            data: resumeEventLines,
             symbol: 'none',
             label: {
               show: false,
@@ -237,7 +261,13 @@ const WorkoutBreakdown: React.FC<{
         },
       },
     };
-  }, [workout, cumulativeCalories, exerciseEventLines, pauseEventLines]);
+  }, [
+    workout,
+    cumulativeCalories,
+    exerciseEventLines,
+    pauseEventLines,
+    resumeEventLines,
+  ]);
 
   useEffect(() => {
     let chart: echarts.ECharts;
@@ -252,11 +282,63 @@ const WorkoutBreakdown: React.FC<{
     return () => chart?.dispose();
   }, [option]);
 
+  const legendItems: LegendItem[] = [
+    {
+      color: colors.appRed,
+      label: 'Heart rate',
+      items: workout.heartRateSamples,
+    },
+    {
+      color: colors.secondaryDark,
+      label: 'Calories',
+      items: workout.calorieSamples,
+    },
+    {
+      color: colors.appBlue,
+      label: 'Next exercise',
+      items: workout.exerciseEvents,
+    },
+    {color: colors.appWhite, label: 'Pause events', items: pauseEventLines},
+    {color: colors.appGreen, label: 'Resume events', items: resumeEventLines},
+  ];
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
       <Header hasBack title="Workout Breakdown" />
       <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
         <SvgChart ref={chartRef} />
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 5,
+            justifyContent: 'space-evenly',
+            flexWrap: 'wrap',
+          }}>
+          {legendItems
+            .filter(({items}) => items.length)
+            .map(item => (
+              <View
+                key={item.label}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}>
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: item.color,
+                  }}
+                />
+
+                <Text style={{color: colors.appWhite, marginHorizontal: 10}}>
+                  {item.label}
+                </Text>
+              </View>
+            ))}
+        </View>
+        
       </View>
     </SafeAreaView>
   );
