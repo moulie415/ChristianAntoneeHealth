@@ -102,6 +102,9 @@ const SignUpFlow: React.FC<{
   const [boneProblems, setBoneProblems] = useState(
     profile.boneProblems || false,
   );
+  const [boneProblemsDescription, setBoneProblemsDescription] = useState(
+    profile.boneProblemsDescription || '',
+  );
   const [drugPrescription, setDrugPrescription] = useState(
     profile.drugPrescription || false,
   );
@@ -109,6 +112,7 @@ const SignUpFlow: React.FC<{
   const [otherReasonDescription, setOtherReasonDescription] = useState(
     profile.otherReasonDescription || '',
   );
+
   const [confirmQuestionnaire, setConfirmQuestionnaire] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -182,6 +186,7 @@ const SignUpFlow: React.FC<{
       chestPain,
       loseBalanceConsciousness,
       boneProblems,
+      boneProblemsDescription,
       drugPrescription,
       otherReason,
       otherReasonDescription,
@@ -300,6 +305,8 @@ const SignUpFlow: React.FC<{
           setLoseBalanceConsciousness={setLoseBalanceConsciousness}
           boneProblems={boneProblems}
           setBoneProblems={setBoneProblems}
+          boneProblemsDescription={boneProblemsDescription}
+          setBoneProblemsDescription={setBoneProblemsDescription}
           drugPrescription={drugPrescription}
           setDrugPrescription={setDrugPrescription}
           otherReason={otherReason}

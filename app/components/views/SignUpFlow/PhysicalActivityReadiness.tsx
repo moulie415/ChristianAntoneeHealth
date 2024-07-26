@@ -12,7 +12,10 @@ interface Question<T> {
   question: string | ReactNode;
   value: T;
   onChange: (x: boolean) => void;
-  key?: string;
+  key: string;
+  description?: string;
+  setDescription?: (description: string) => void;
+  descriptionPlaceholder?: string;
 }
 
 const PhysicalActivityReadiness: React.FC<{
@@ -26,6 +29,8 @@ const PhysicalActivityReadiness: React.FC<{
   setLoseBalanceConsciousness: (loseBalance: boolean) => void;
   boneProblems: boolean;
   setBoneProblems: (boneProblems: boolean) => void;
+  boneProblemsDescription: string;
+  setBoneProblemsDescription: (string: string) => void;
   drugPrescription: boolean;
   setDrugPrescription: (drugPrescription: boolean) => void;
   otherReason: boolean;
@@ -45,6 +50,8 @@ const PhysicalActivityReadiness: React.FC<{
   setLoseBalanceConsciousness,
   boneProblems,
   setBoneProblems,
+  boneProblemsDescription,
+  setBoneProblemsDescription,
   drugPrescription,
   setDrugPrescription,
   otherReason,
@@ -58,7 +65,15 @@ const PhysicalActivityReadiness: React.FC<{
     if (!otherReason) {
       setOtherReasonDescription('');
     }
-  }, [otherReason, setOtherReasonDescription]);
+    if (!boneProblems) {
+      setBoneProblemsDescription('');
+    }
+  }, [
+    otherReason,
+    setOtherReasonDescription,
+    boneProblems,
+    setBoneProblemsDescription,
+  ]);
   const questions: Question<any>[] = [
     {
       key: 'heartCondition',
@@ -94,6 +109,9 @@ const PhysicalActivityReadiness: React.FC<{
         'Do you have a bone or joint problem (for example, back, knee or hip) that could be made worse by a change in your physical activity?',
       value: boneProblems,
       onChange: setBoneProblems,
+      description: boneProblemsDescription,
+      setDescription: setBoneProblemsDescription,
+      descriptionPlaceholder: 'Please enter details here...',
     },
     {
       key: 'drugPrescription',
@@ -108,6 +126,9 @@ const PhysicalActivityReadiness: React.FC<{
         'Do you know of any other reason why you should not do physical activity?',
       value: otherReason,
       onChange: setOtherReason,
+      description: otherReasonDescription,
+      setDescription: setOtherReasonDescription,
+      descriptionPlaceholder: 'Please enter reason here...',
     },
   ];
   return (
@@ -129,52 +150,62 @@ const PhysicalActivityReadiness: React.FC<{
         }}>
         Physical activity readiness questionnaire
       </Text>
-      {questions.map(({question, key, value, onChange}) => {
-        return (
-          <Fragment key={key}>
-            <View style={{marginVertical: 15, paddingHorizontal: 20}}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: colors.appWhite,
-                  lineHeight: 20,
-                  flex: 1,
-                }}>
-                {question}
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 10,
-                }}>
-                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  No
+      {questions.map(
+        ({
+          question,
+          key,
+          value,
+          onChange,
+          description,
+          setDescription,
+          descriptionPlaceholder,
+        }) => {
+          return (
+            <Fragment key={key}>
+              <View style={{marginVertical: 15, paddingHorizontal: 20}}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: colors.appWhite,
+                    lineHeight: 20,
+                    flex: 1,
+                  }}>
+                  {question}
                 </Text>
-                <Toggle
-                  onValueChange={onChange}
-                  value={value}
-                  style={{marginHorizontal: 5}}
-                />
-                <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
-                  Yes
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    // justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 10,
+                  }}>
+                  <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                    No
+                  </Text>
+                  <Toggle
+                    onValueChange={onChange}
+                    value={value}
+                    style={{marginHorizontal: 5}}
+                  />
+                  <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                    Yes
+                  </Text>
+                </View>
+                {setDescription && value && (
+                  <Input
+                    containerStyle={{marginTop: 15}}
+                    value={description}
+                    multiline
+                    onChangeText={setDescription}
+                    placeholder={descriptionPlaceholder}
+                  />
+                )}
               </View>
-              {key === 'otherReason' && otherReason && (
-                <Input
-                  containerStyle={{marginTop: 15}}
-                  value={otherReasonDescription}
-                  multiline
-                  onChangeText={setOtherReasonDescription}
-                  placeholder="Please enter reason here..."
-                />
-              )}
-            </View>
-            <Divider />
-          </Fragment>
-        );
-      })}
+              <Divider />
+            </Fragment>
+          );
+        },
+      )}
 
       <TouchableOpacity
         onPress={() => setConfirmQuestionnaire(!confirmQuestionnaire)}

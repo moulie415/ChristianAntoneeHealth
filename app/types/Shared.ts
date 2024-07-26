@@ -1,6 +1,6 @@
+import {Timestamp} from '@react-native-firebase/firestore';
 import {PurchasesEntitlementInfo} from 'react-native-purchases';
 import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
-import { Timestamp } from '@react-native-firebase/firestore';
 
 export interface Targets {
   calories: number;
@@ -104,6 +104,7 @@ export interface Profile {
   chestPain?: boolean;
   loseBalanceConsciousness?: boolean;
   boneProblems?: boolean;
+  boneProblemsDescription?: string;
   drugPrescription?: boolean;
   otherReason?: boolean;
   otherReasonDescription?: string;
@@ -267,6 +268,7 @@ export interface SignUpPayload {
   chestPain: boolean;
   loseBalanceConsciousness: boolean;
   boneProblems: boolean;
+  boneProblemsDescription: string;
   drugPrescription: boolean;
   otherReason: boolean;
   otherReasonDescription: string;
