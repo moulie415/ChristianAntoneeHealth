@@ -665,7 +665,6 @@ export const endWatchWorkout = async () => {
       if (paired) {
         const response: WatchWorkoutResponse =
           await WatchWorkoutModule.endWatchWorkout();
-        console.log(response);
         return response;
       }
     }

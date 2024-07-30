@@ -274,7 +274,6 @@ const WorkoutBreakdown: React.FC<{
           return tooltipContent;
         },
       },
- 
     };
   }, [
     workout,

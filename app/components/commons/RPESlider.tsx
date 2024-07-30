@@ -1,17 +1,13 @@
-import {View} from 'react-native';
-import React, {useState} from 'react';
-
 import {Slider} from '@miblanchard/react-native-slider';
-import colors from '../../constants/colors';
-import LinearGradient from 'react-native-linear-gradient';
-import {getDifficultyEmoji} from '../../helpers/exercises';
-import Text from './Text';
+import Color from 'color';
+import React from 'react';
+import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {FONTS_SIZES} from '../../constants';
-import Tile from './Tile';
-import Color from 'color';
+import colors from '../../constants/colors';
 import ResistanceScaleInfo from '../views/Workout/ResistanceScaleInfo';
-import {ScrollView} from 'react-native-gesture-handler';
+import Text from './Text';
+import Tile from './Tile';
 
 export const rpeSliderScale: {
   rpe: number;
