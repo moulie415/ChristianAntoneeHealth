@@ -274,6 +274,7 @@ const WorkoutBreakdown: React.FC<{
           return tooltipContent;
         },
       },
+ 
     };
   }, [
     workout,
@@ -319,40 +320,39 @@ const WorkoutBreakdown: React.FC<{
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header hasBack title="Workout Breakdown" />
-      <ScrollView>
-        <SvgChart ref={chartRef} />
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 5,
-            justifyContent: 'space-evenly',
-            flexWrap: 'wrap',
-          }}>
-          {legendItems
-            .filter(({items}) => items?.length)
-            .map(item => (
+      <SvgChart ref={chartRef} />
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingHorizontal: 5,
+          justifyContent: 'space-evenly',
+          flexWrap: 'wrap',
+        }}>
+        {legendItems
+          .filter(({items}) => items?.length)
+          .map(item => (
+            <View
+              key={item.label}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
               <View
-                key={item.label}
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: 10,
-                }}>
-                <View
-                  style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: item.color,
-                  }}
-                />
+                  width: 10,
+                  height: 10,
+                  backgroundColor: item.color,
+                }}
+              />
 
-                <Text style={{color: colors.appWhite, marginHorizontal: 10}}>
-                  {item.label}
-                </Text>
-              </View>
-            ))}
-        </View>
-
+              <Text style={{color: colors.appWhite, marginHorizontal: 10}}>
+                {item.label}
+              </Text>
+            </View>
+          ))}
+      </View>
+      <ScrollView>
         {exerciseList && (
           <View style={{marginHorizontal: 20}}>
             <Text

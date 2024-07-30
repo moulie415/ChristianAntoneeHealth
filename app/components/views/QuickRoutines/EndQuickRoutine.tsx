@@ -13,6 +13,7 @@ import {saveWorkout} from '../../../helpers/biometrics';
 import {logError} from '../../../helpers/error';
 import {getWorkoutData} from '../../../helpers/getWorkoutData';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
+import useThrottle from '../../../hooks/UseThrottle';
 import {saveQuickRoutine} from '../../../reducers/quickRoutines';
 import Exercise from '../../../types/Exercise';
 import {SavedQuickRoutine} from '../../../types/SavedItem';
@@ -21,7 +22,6 @@ import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import RPESlider from '../../commons/RPESlider';
 import Text from '../../commons/Text';
-import useThrottle from '../../../hooks/UseThrottle';
 
 const EndQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'EndQuickRoutine'>;
@@ -39,9 +39,15 @@ const EndQuickRoutine: React.FC<{
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const [note, setNote] = useState('');
-  const {seconds, routine, endTime, exerciseEvents, startTime, pauseEvents} =
-    route.params;
+  const {
+    seconds,
+    routine,
+    endTime,
+    exerciseEvents,
+    startTime,
+    pauseEvents,
+    watchWorkoutData,
+  } = route.params;
 
   useBackHandler(() => true);
 
@@ -64,7 +70,9 @@ const EndQuickRoutine: React.FC<{
         difficulty,
         startTime,
         endTime,
+        watchWorkoutData,
       );
+
       await saveWorkout(
         seconds,
         'CA Health workout',
@@ -145,16 +153,7 @@ const EndQuickRoutine: React.FC<{
           Workout complete!
         </Text>
         <RPESlider setRpe={setDifficulty} rpe={difficulty} />
-        {/* <Text style={{color: colors.appWhite, margin: 10}}>
-          Workout note
-        </Text>
-        <Input
-          style={{minHeight: 50, margin: 10}}
-          multiline
-          placeholder="Add details about this workout"
-          value={note}
-          onChangeText={setNote}
-        /> */}
+
         <Button
           text="Save & Continue"
           disabled={loading}

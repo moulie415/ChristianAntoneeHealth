@@ -38,6 +38,7 @@ import {
   Recipe,
   RecipeCategory,
   WarmUp,
+  WatchWorkoutResponse,
 } from './types/Shared';
 import Test from './types/Test';
 
@@ -92,6 +93,7 @@ export type StackParamList = {
     pauseEvents: PauseEvent[];
     startTime: Date;
     planId: string;
+    watchWorkoutData?: WatchWorkoutResponse;
   };
   WorkoutSummary: {
     savedWorkout: SavedWorkout;
@@ -121,6 +123,7 @@ export type StackParamList = {
     endTime: Date;
     exerciseEvents: ExerciseEvent[];
     pauseEvents: PauseEvent[];
+    watchWorkoutData?: WatchWorkoutResponse;
   };
   QuickRoutineSummary: {
     routine: QuickRoutine;

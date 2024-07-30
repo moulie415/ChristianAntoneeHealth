@@ -321,3 +321,8 @@ export enum RecipeCategory {
   FIVE_INGREDIENT = 'fiveIngredient',
   GLUTEN_FREE = 'glutenFree',
 }
+
+export interface WatchWorkoutResponse {
+  energySamples: Sample[];
+  heartRateSamples: Sample[];
+}

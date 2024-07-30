@@ -11,7 +11,12 @@ import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import AppleHealthKit from 'react-native-health';
 import {getIsPaired} from 'react-native-watch-connectivity';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
-import {Gender, Sample, StepSample} from '../types/Shared';
+import {
+  Gender,
+  Sample,
+  StepSample,
+  WatchWorkoutResponse,
+} from '../types/Shared';
 import {getSamples, saveSample} from './api';
 import {logError} from './error';
 
@@ -658,28 +663,9 @@ export const endWatchWorkout = async () => {
     if (Platform.OS === 'ios') {
       const paired = await getIsPaired();
       if (paired) {
-        await WatchWorkoutModule.endWatchWorkout();
-      }
-    }
-  } catch (e) {
-    logError(e);
-  }
-};
-
-interface WatchWorkoutResponse {
-  energySamples: Sample[];
-  heartRateSamples: Sample[];
-}
-
-export const fetchWatchWorkoutData = async (startDate: Date) => {
-  try {
-    if (Platform.OS === 'ios') {
-      const paired = await getIsPaired();
-      if (paired) {
         const response: WatchWorkoutResponse =
-          await WatchWorkoutModule.fetchWatchWorkoutData(
-            startDate.toISOString(),
-          );
+          await WatchWorkoutModule.endWatchWorkout();
+        console.log(response);
         return response;
       }
     }
@@ -687,3 +673,4 @@ export const fetchWatchWorkoutData = async (startDate: Date) => {
     logError(e);
   }
 };
+

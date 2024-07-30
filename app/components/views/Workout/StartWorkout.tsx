@@ -11,6 +11,7 @@ import {getVideoHeight} from '../../../helpers';
 import {endWatchWorkout} from '../../../helpers/biometrics';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import {updateProfile} from '../../../reducers/profile';
 import {workoutSong} from '../../../sagas/profile';
@@ -70,6 +71,23 @@ const StartWorkout: React.FC<{
       playWorkoutSong();
     }
   }, [profile.workoutMusic]);
+
+  const endWorkout = useThrottle(async () => {
+    const response = await endWatchWorkout();
+    navigation.navigate('EndWorkout', {
+      seconds,
+      planWorkout,
+      endTime: new Date(),
+      exerciseEvents,
+      pauseEvents,
+      startTime,
+      planId,
+      watchWorkoutData: response,
+    });
+    if (workoutSong.isPlaying()) {
+      workoutSong.stop();
+    }
+  }, 3000);
 
   return (
     <View style={{flex: 1}}>
@@ -258,22 +276,7 @@ const StartWorkout: React.FC<{
                                 {text: 'No', style: 'cancel'},
                                 {
                                   text: 'Yes',
-                                  onPress: () => {
-                                    endWatchWorkout();
-                                    navigation.navigate('EndWorkout', {
-                                      seconds,
-                                      planWorkout,
-                                      endTime: new Date(),
-                                      exerciseEvents,
-                                      pauseEvents,
-                                      startTime,
-                                      planId,
-                                    });
-                                    if (workoutSong.isPlaying()) {
-                                      workoutSong.stop();
-                                    }
-                                    endWatchWorkout();
-                                  },
+                                  onPress: endWorkout,
                                 },
                               ]);
                             }}

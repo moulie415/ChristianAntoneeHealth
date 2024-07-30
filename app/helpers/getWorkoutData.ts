@@ -1,20 +1,21 @@
 import moment from 'moment';
-import {
-  fetchWatchWorkoutData,
-  getCalorieSamples,
-  getHeartRateSamples,
-} from '../helpers/biometrics';
+import {getCalorieSamples, getHeartRateSamples} from '../helpers/biometrics';
 import {
   getCaloriesBurned,
   getCaloriesBurnedFromAverageHeartRate,
 } from '../helpers/exercises';
-import {CalorieCalculationType, Profile} from '../types/Shared';
+import {
+  CalorieCalculationType,
+  Profile,
+  WatchWorkoutResponse,
+} from '../types/Shared';
 export const getWorkoutData = async (
   seconds: number,
   profile: Profile,
   difficulty: number,
   startDate: Date,
   endDate: Date,
+  watchWorkoutData?: WatchWorkoutResponse,
 ) => {
   let heartRateSamples = [];
   heartRateSamples = await getHeartRateSamples(startDate, endDate);
@@ -26,8 +27,6 @@ export const getWorkoutData = async (
   if (calorieSamples.length) {
     calories = calorieSamples.reduce((acc, cur) => acc + cur.value, 0);
   }
-
-  const watchWorkoutData = await fetchWatchWorkoutData(startDate);
 
   if (watchWorkoutData?.heartRateSamples.length) {
     heartRateSamples = watchWorkoutData.heartRateSamples;

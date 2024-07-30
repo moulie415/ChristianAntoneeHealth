@@ -11,6 +11,7 @@ import {getVideoHeight} from '../../../helpers';
 import {endWatchWorkout} from '../../../helpers/biometrics';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import {updateProfile} from '../../../reducers/profile';
 import {workoutSong} from '../../../sagas/profile';
@@ -95,6 +96,22 @@ const QuickRoutineView: React.FC<{
       updateProfileAction({autoPlay: ap, disableSnackbar: true});
     }
   }, [ap, updateProfileAction, autoPlay]);
+
+  const endWorkout = useThrottle(async () => {
+    const response = await endWatchWorkout();
+    navigation.navigate('EndQuickRoutine', {
+      seconds,
+      routine,
+      endTime: new Date(),
+      exerciseEvents,
+      startTime,
+      pauseEvents,
+      watchWorkoutData: response,
+    });
+    if (workoutSong.isPlaying()) {
+      workoutSong.stop();
+    }
+  }, 3000);
 
   return (
     <View style={{flex: 1}}>
@@ -283,20 +300,7 @@ const QuickRoutineView: React.FC<{
                                 {text: 'No', style: 'cancel'},
                                 {
                                   text: 'Yes',
-                                  onPress: () => {
-                                    endWatchWorkout();
-                                    navigation.navigate('EndQuickRoutine', {
-                                      seconds,
-                                      routine,
-                                      endTime: new Date(),
-                                      exerciseEvents,
-                                      startTime,
-                                      pauseEvents,
-                                    });
-                                    if (workoutSong.isPlaying()) {
-                                      workoutSong.stop();
-                                    }
-                                  },
+                                  onPress: endWorkout,
                                 },
                               ]);
                             }}

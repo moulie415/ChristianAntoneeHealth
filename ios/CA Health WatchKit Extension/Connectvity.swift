@@ -3,6 +3,33 @@ import Foundation
 import WatchConnectivity
 import HealthKit
 
+struct CodableQuantitySample: Codable {
+    let value: Double
+    let startDate: String
+    let endDate: String
+
+    init(from sample: HKQuantitySample) {
+        let formatter = ISO8601DateFormatter()
+        self.startDate = formatter.string(from: sample.startDate)
+        self.endDate = formatter.string(from: sample.endDate)
+
+        switch sample.quantityType {
+        case HKQuantityType.quantityType(forIdentifier: .heartRate):
+            self.value = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
+        case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
+            self.value = sample.quantity.doubleValue(for: .kilocalorie())
+        default:
+            self.value = sample.quantity.doubleValue(for: HKUnit.count())
+        }
+    }
+}
+
+struct WorkoutData: Codable {
+    var heartRateSamples: [CodableQuantitySample]
+    var energySamples: [CodableQuantitySample]
+}
+
+
 class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate, WKApplicationDelegate  {
 
   
@@ -85,7 +112,6 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
     }
   
     
-    // MARK: - WCSessionDelegate
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
             print("WCSession activation failed with error: \(error.localizedDescription)")
@@ -113,7 +139,60 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
     }
     
   }
-    // MARK: - HKWorkoutSessionDelegate
+  
+  func sendCollectedData() {
+       collectHeartRateSamples { heartRateSamples in
+           self.collectEnergySamples { energySamples in
+               let codableHeartRateSamples = heartRateSamples.map { CodableQuantitySample(from: $0) }
+               let codableEnergySamples = energySamples.map { CodableQuantitySample(from: $0) }
+               let workoutData = WorkoutData(heartRateSamples: codableHeartRateSamples, energySamples: codableEnergySamples)
+               if #available(watchOSApplicationExtension 10.0, *) {
+                   Task {
+                       do {
+                           let encoder = JSONEncoder()
+                           let data = try encoder.encode(workoutData)
+                           try await self.workoutSession?.sendToRemoteWorkoutSession(data: data)
+                       } catch {
+                           print("*** An error occurred while sending the health data to the companion iPhone: \(error.localizedDescription) ***")
+                       }
+                   }
+               }
+           }
+       }
+   }
+   
+   func collectHeartRateSamples(completion: @escaping ([HKQuantitySample]) -> Void) {
+       let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+       let startDate = workoutSession?.startDate ?? Date()
+       
+       let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date())
+       let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { query, samples, error in
+           guard let samples = samples as? [HKQuantitySample], error == nil else {
+               print("Error collecting heart rate samples: \(String(describing: error))")
+               completion([])
+               return
+           }
+           completion(samples)
+       }
+       healthStore.execute(query)
+   }
+   
+   func collectEnergySamples(completion: @escaping ([HKQuantitySample]) -> Void) {
+       let activeEnergyType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+       let startDate = workoutSession?.startDate ?? Date()
+       
+       let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date())
+       let query = HKSampleQuery(sampleType: activeEnergyType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { query, samples, error in
+           guard let samples = samples as? [HKQuantitySample], error == nil else {
+               print("Error collecting energy samples: \(String(describing: error))")
+               completion([])
+               return
+           }
+           completion(samples)
+       }
+       healthStore.execute(query)
+   }
+  
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
       if toState == .ended {
           DispatchQueue.main.async {
@@ -125,15 +204,19 @@ class Connectivity: NSObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiv
     func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
         // Handle session failure.
     }
-    
-    // MARK: - HKLiveWorkoutBuilderDelegate
+  
+  
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
         // Handle data collection.
+      sendCollectedData()
+      
     }
     
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
         // Handle events.
+      
     }
+  
 }
   
 

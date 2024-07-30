@@ -32,7 +32,6 @@ const EndWorkout: React.FC<{
 }> = ({route, navigation, profile, workout, saveWorkoutAction: saveAction}) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [note, setNote] = useState('');
   const {
     seconds,
     planWorkout,
@@ -41,6 +40,7 @@ const EndWorkout: React.FC<{
     pauseEvents,
     startTime,
     planId,
+    watchWorkoutData,
   } = route.params;
 
   useBackHandler(() => true);
@@ -64,6 +64,7 @@ const EndWorkout: React.FC<{
         difficulty,
         startTime,
         endTime,
+        watchWorkoutData,
       );
       await saveWorkout(
         seconds,
