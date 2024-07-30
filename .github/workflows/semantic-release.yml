@@ -42,7 +42,7 @@ jobs:
       run_number: ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
 
   android:
-    if: ${{ needs.release.outputs.release_published }}
+    if: ${{ needs.release.outputs.release_version }}
     uses: ./.github/workflows/google-play.yml
     needs: release
     with:
@@ -54,7 +54,7 @@ jobs:
       contents: read
 
   ios:
-    if: ${{ needs.release.outputs.release_published }}
+    if: ${{ needs.release.outputs.release_version }}
     uses: ./.github/workflows/app-store.yml
     needs: release
     with:
