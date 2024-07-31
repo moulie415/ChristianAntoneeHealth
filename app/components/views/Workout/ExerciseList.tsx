@@ -38,10 +38,7 @@ const ExerciseList: React.FC<{
     if (workout.find(e => e.id === exercise.id)) {
       setWorkoutAction(workout.filter(e => e.id !== exercise.id));
     } else {
-      setWorkoutAction([
-        ...workout,
-        {...exercise, reps: '15', sets: '3', resistance: '0'},
-      ]);
+      setWorkoutAction([...workout, {...exercise, reps: '15', sets: '3'}]);
     }
   };
 

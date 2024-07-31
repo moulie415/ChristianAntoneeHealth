@@ -118,15 +118,6 @@ const QuickRoutineView: React.FC<{
       <Header
         hasBack
         absolute
-        // right={
-        //   routine.steps ? (
-        //     <TouchableOpacity
-        //       style={{marginTop: 10}}
-        //       onPress={() => setShowModal(true)}>
-        //       <Icon name="info-circle" color={colors.appWhite} size={30} />
-        //     </TouchableOpacity>
-        //   ) : null
-        // }
         customBackPress={() => {
           Alert.alert('Exit workout', 'Are you sure?', [
             {

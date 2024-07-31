@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react';
+import React, {RefObject, useMemo} from 'react';
 import {View} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Exercise from '../../types/Exercise';
@@ -6,6 +6,7 @@ import {Profile} from '../../types/Shared';
 import ExerciseTimer from './ExerciseTimer';
 import MusclesDiagram from './MusclesDiagram';
 import MyTabs from './MyTabs';
+import ViewMore from './ViewMore';
 
 const WorkoutTabs: React.FC<{
   tabIndex: number;
@@ -30,7 +31,13 @@ const WorkoutTabs: React.FC<{
   onTimerPaused,
   profile,
 }) => {
-  const tabs = ['Timer', 'Muscles'];
+  const tabs = useMemo(() => {
+    const t = ['Timer', 'Muscles'];
+    if (exercise.notes) {
+      t.push('Notes');
+    }
+    return t;
+  }, [exercise.notes]);
 
   return (
     <>
@@ -56,6 +63,16 @@ const WorkoutTabs: React.FC<{
             secondary={exercise.musclesSecondary}
             gender={profile.gender}
           />
+        )}
+
+        {tabIndex === 2 && i === index && (
+          <View style={{minHeight: 200}}>
+            <ViewMore
+              textAlign="justify"
+              text={exercise.notes || ''}
+              lines={9}
+            />
+          </View>
         )}
       </View>
     </>

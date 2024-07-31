@@ -31,7 +31,6 @@ const CustomizeExercise: React.FC<{
   const current = workout.find(e => e.id === exercise.id);
   const [reps, setReps] = useState(current?.reps || 15);
   const [sets, setSets] = useState(current?.sets || 3);
-  const [resistance, setResistance] = useState(current?.resistance || 0);
   const [fullscreen, setFullScreen] = useState(false);
 
   const selectExercise = () => {
@@ -45,7 +44,6 @@ const CustomizeExercise: React.FC<{
           ...exercise,
           reps: String(reps),
           sets: String(sets),
-          resistance: String(resistance),
         },
       ]);
       Snackbar.show({text: 'Exercise added'});

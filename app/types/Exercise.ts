@@ -1,11 +1,11 @@
-import { Area } from './QuickRoutines';
+import {Area} from './QuickRoutines';
 import {
-  Level,
-  Goal,
-  FlexibilityArea,
-  WarmUp,
   CoolDown,
   Equipment as EquipmentItem,
+  FlexibilityArea,
+  Goal,
+  Level,
+  WarmUp,
 } from './Shared';
 
 export interface Thumbnail {
@@ -34,14 +34,12 @@ export default interface Exercise {
   premium?: boolean;
   reps?: string;
   sets?: string;
-  resistance?: string;
   thumbnail?: Thumbnail;
   video?: Video;
-  resistanceScale?: string;
-  duration?: string;
   notes?: string;
   weight?: string;
   time?: number;
+  prepTime?: number;
 }
 
 export type Muscle =

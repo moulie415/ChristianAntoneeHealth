@@ -11,6 +11,7 @@ import convertToProxyURL from 'react-native-video-cache';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
+import {startWatchWorkout} from '../../../helpers/biometrics';
 import {getEquipmentList} from '../../../helpers/exercises';
 import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
@@ -19,7 +20,6 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
-import { startWatchWorkout } from '../../../helpers/biometrics';
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -35,16 +35,7 @@ const PreQuickRoutine: React.FC<{
 
   const [loading, setLoading] = useState(false);
   const {
-    routine: {
-      name,
-      thumbnail,
-      area,
-      equipment,
-      level,
-      exerciseIds,
-      instructions,
-      preview,
-    },
+    routine: {name, thumbnail, area, equipment, level, exerciseIds, preview},
   } = route.params;
   const exercises = useMemo(() => {
     return exerciseIds.map(id => {

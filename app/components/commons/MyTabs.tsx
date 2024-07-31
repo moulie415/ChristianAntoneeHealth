@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../constants/colors';
 
 const MyTabs: React.FC<{
@@ -30,12 +30,13 @@ const MyTabs: React.FC<{
                 justifyContent: 'center',
                 backgroundColor:
                   tabIndex === index ? colors.borderColor : 'transparent',
-                borderRadius: 12,
-                borderTopRightRadius: index === 0 ? 0 : 12,
-                borderBottomRightRadius: index === 0 ? 0 : 12,
-                borderTopLeftRadius: index === tabs.length - 1 ? 0 : 12,
-                borderBottomLeftRadius: index === tabs.length - 1 ? 0 : 12,
+                borderTopLeftRadius: index === 0 ? 12 : 0,
+                borderBottomLeftRadius: index === 0 ? 12 : 0,
+                borderTopRightRadius: index === tabs.length - 1 ? 12 : 0,
+                borderBottomRightRadius: index === tabs.length - 1 ? 12 : 0,
                 borderWidth: 2,
+                borderRightWidth: index === 0 ? 1 : 2,
+                borderLeftWidth: index === tabs.length - 1 ? 1: 2,
                 borderColor:
                   tabIndex === index ? colors.borderColor : colors.borderColor,
               }}>

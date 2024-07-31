@@ -190,12 +190,9 @@ export enum Equipment {
 
 export interface PlanExercise {
   exercise: string;
-  sets: string;
-  reps: string;
-  duration: string;
-  resistanceScale: string;
-  restTime: string;
-  additionalNotes: string;
+  prepTime?: number;
+  weight?: string;
+  notes?: string;
   time?: number;
 }
 

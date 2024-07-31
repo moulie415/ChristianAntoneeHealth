@@ -86,7 +86,11 @@ const ExerciseTimer: React.FC<{
             ? (colors.muscleSecondary as ColorFormat)
             : (colors.borderColor as ColorFormat)
         }
-        duration={key === 'prep' ? profile.prepTime || 15 : exercise.time || 30}
+        duration={
+          key === 'prep'
+            ? exercise.prepTime || profile.prepTime || 15
+            : exercise.time || 30
+        }
         colors={[
           colors.appBlue as `#${string}`,
           colors.appBlue as `#${string}`,
