@@ -231,6 +231,8 @@ const Chat: React.FC<ChatProps> = ({
   const renderMessageText = (props: MessageTextProps<Message>) => {
     switch (props.currentMessage?.type) {
       case 'text':
+      case 'video':
+      case 'image':
       case 'workout':
         return <MessageText {...props} />;
       default:
@@ -293,18 +295,25 @@ const Chat: React.FC<ChatProps> = ({
             navigation.navigate('VideoView', {message: props.currentMessage});
           }
         }}
-        style={{position: 'relative', height: 150, width: 250, margin: 3}}>
+        style={{
+          position: 'relative',
+          height: 150,
+          width: '97%',
+          margin: 3,
+          borderRadius: 15,
+          overflow: 'hidden',
+        }}>
         <Video
           style={{
             position: 'absolute',
             left: 0,
             top: 0,
+            right: 0,
             height: 150,
-            width: 250,
+            width: '100%',
             borderRadius: 15,
           }}
           resizeMode={ResizeMode.COVER}
-          muted
           paused
           source={{
             uri: convertToProxyURL(props.currentMessage?.video || ''),
