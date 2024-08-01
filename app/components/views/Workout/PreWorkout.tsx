@@ -13,7 +13,8 @@ import {getVideoHeight} from '../../../helpers';
 import {startWatchWorkout} from '../../../helpers/biometrics';
 import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
 import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
-import {useAppSelector} from '../../../hooks/redux';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {setWorkout} from '../../../reducers/exercises';
 import {updateProfile} from '../../../reducers/profile';
 import Exercise from '../../../types/Exercise';
 import {UpdateProfilePayload} from '../../../types/Shared';
@@ -41,11 +42,27 @@ const PreWorkout: React.FC<{
 
   const [wMusic, setWMusic] = useState(workoutMusic);
 
+  const dispatch = useAppDispatch();
+  const {exercises} = useAppSelector(state => state.exercises);
+
   useEffect(() => {
     if (wMusic !== workoutMusic) {
       updateProfileAction({workoutMusic: wMusic, disableSnackbar: true});
     }
   }, [wMusic, updateProfileAction, workoutMusic]);
+
+  useEffect(() => {
+    dispatch(
+      setWorkout(
+        planWorkout.exercises.map(e => {
+          return {
+            ...exercises[e.exercise],
+            ...e,
+          };
+        }),
+      ),
+    );
+  }, [dispatch, planWorkout.exercises, exercises]);
 
   const {prepTime} = useAppSelector(state => state.profile.profile);
 
