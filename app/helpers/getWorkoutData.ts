@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {getCalorieSamples, getHeartRateSamples} from '../helpers/biometrics';
 import {
   getCaloriesBurned,
@@ -23,10 +24,6 @@ export const getWorkoutData = async (
   let calories = 0;
   calorieSamples = await getCalorieSamples(startDate, endDate);
 
-  if (calorieSamples.length) {
-    calories = calorieSamples.reduce((acc, cur) => acc + cur.value, 0);
-  }
-
   if (watchWorkoutData?.heartRateSamples.length) {
     heartRateSamples = watchWorkoutData.heartRateSamples;
   }
@@ -35,14 +32,32 @@ export const getWorkoutData = async (
     calorieSamples = watchWorkoutData.energySamples;
   }
 
+  if (calorieSamples.length) {
+    calories = calorieSamples.reduce((acc, cur) => acc + cur.value, 0);
+  }
+
   const averageHeartRate = heartRateSamples.length
     ? heartRateSamples.reduce((acc, cur) => {
         return acc + cur.value;
       }, 0) / heartRateSamples.length
     : 0;
 
+  const calorieSamplesSpan = Math.abs(
+    calorieSamples.reduce((acc, cur) => {
+      const start = moment(cur.startDate);
+      const end = moment(cur.endDate);
+      const diff = start.diff(end, 'seconds');
+      return acc + diff;
+    }, 0),
+  );
+
   const caloriesEstimate =
     getCaloriesBurned(seconds, difficulty, profile.weight) || 0;
+
+  const shouldUseCalorieSamples =
+    !!watchWorkoutData?.energySamples.length ||
+    (calorieSamplesSpan / seconds >= 0.8 &&
+      calories > (caloriesEstimate || 0) / 2);
 
   const caloriesFromHeartRate =
     heartRateSamples && heartRateSamples.length && profile.dob && profile.gender
@@ -55,8 +70,7 @@ export const getWorkoutData = async (
         ) || 0
       : 0;
 
-  const calorieCalculationType: CalorieCalculationType = watchWorkoutData
-    ?.energySamples.length
+  const calorieCalculationType: CalorieCalculationType = shouldUseCalorieSamples
     ? 'sample'
     : caloriesFromHeartRate
     ? 'heartRate'
@@ -67,7 +81,7 @@ export const getWorkoutData = async (
     averageHeartRate,
     calorieSamples,
     calorieCalculationType,
-    calories: watchWorkoutData?.energySamples.length
+    calories: shouldUseCalorieSamples
       ? calories
       : caloriesFromHeartRate
       ? caloriesFromHeartRate
