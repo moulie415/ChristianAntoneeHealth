@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {getCalorieSamples, getHeartRateSamples} from '../helpers/biometrics';
 import {
   getCaloriesBurned,
@@ -42,21 +41,8 @@ export const getWorkoutData = async (
       }, 0) / heartRateSamples.length
     : 0;
 
-  const calorieSamplesSpan = Math.abs(
-    calorieSamples.reduce((acc, cur) => {
-      const start = moment(cur.startDate);
-      const end = moment(cur.endDate);
-      const diff = start.diff(end, 'seconds');
-      return acc + diff;
-    }, 0),
-  );
-
   const caloriesEstimate =
     getCaloriesBurned(seconds, difficulty, profile.weight) || 0;
-
-  const shouldUseCalorieSamples =
-    calorieSamplesSpan / seconds >= 0.8 &&
-    calories > (caloriesEstimate || 0) / 2;
 
   const caloriesFromHeartRate =
     heartRateSamples && heartRateSamples.length && profile.dob && profile.gender
@@ -69,7 +55,8 @@ export const getWorkoutData = async (
         ) || 0
       : 0;
 
-  const calorieCalculationType: CalorieCalculationType = shouldUseCalorieSamples
+  const calorieCalculationType: CalorieCalculationType = watchWorkoutData
+    ?.energySamples.length
     ? 'sample'
     : caloriesFromHeartRate
     ? 'heartRate'
@@ -80,7 +67,7 @@ export const getWorkoutData = async (
     averageHeartRate,
     calorieSamples,
     calorieCalculationType,
-    calories: shouldUseCalorieSamples
+    calories: watchWorkoutData?.energySamples.length
       ? calories
       : caloriesFromHeartRate
       ? caloriesFromHeartRate
