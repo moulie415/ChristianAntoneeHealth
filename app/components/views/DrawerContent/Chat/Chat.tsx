@@ -298,7 +298,7 @@ const Chat: React.FC<ChatProps> = ({
         style={{
           position: 'relative',
           height: 150,
-          width: 250,
+          width: 272,
           margin: 3,
           borderRadius: 15,
           overflow: 'hidden',
@@ -310,7 +310,7 @@ const Chat: React.FC<ChatProps> = ({
             top: 0,
             right: 0,
             height: 150,
-            width: 250,
+            width: 272,
             borderRadius: 15,
           }}
           resizeMode={ResizeMode.COVER}
