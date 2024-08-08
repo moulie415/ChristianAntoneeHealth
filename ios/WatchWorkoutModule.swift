@@ -78,7 +78,7 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
   @objc
   func endWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
     guard let session = self.session else {
-      reject("SESSION_ERROR", "No active workout session found", nil)
+      resolve(nil)
       return
     }
     resolve(self.workoutData)

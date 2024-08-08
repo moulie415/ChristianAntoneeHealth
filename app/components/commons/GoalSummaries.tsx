@@ -1,6 +1,6 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import PagerView from 'react-native-pager-view';
@@ -150,24 +150,26 @@ const GoalSummaries: React.FC<{
 
   const profile = connection || defaultProfile;
 
-  const recommendedWorkout =
-    profile &&
-    _.shuffle(
-      Object.values(quickRoutinesObj).filter(routine => {
-        const allowedEquipment: Equipment[] =
-          profile.equipment === 'full'
-            ? ['full', 'minimal', 'none']
-            : profile.equipment === 'minimal'
-            ? ['minimal', 'none']
-            : ['none'];
+  const recommendedWorkout = useMemo(() => {
+    if (profile) {
+      return _.shuffle(
+        Object.values(quickRoutinesObj).filter(routine => {
+          const allowedEquipment: Equipment[] =
+            profile.equipment === 'full'
+              ? ['full', 'minimal', 'none']
+              : profile.equipment === 'minimal'
+              ? ['minimal', 'none']
+              : ['none'];
 
-        return (
-          routine.area === profile.area &&
-          allowedEquipment.includes(routine.equipment) &&
-          routine.level === profile.experience
-        );
-      }),
-    )[0];
+          return (
+            routine.area === profile.area &&
+            allowedEquipment.includes(routine.equipment) &&
+            routine.level === profile.experience
+          );
+        }),
+      )[0];
+    }
+  }, [profile, quickRoutinesObj]);
 
   const [index, setIndex] = useState(0);
   const {

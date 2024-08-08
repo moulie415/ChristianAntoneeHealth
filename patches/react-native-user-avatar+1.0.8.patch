@@ -1,0 +1,59 @@
+diff --git a/node_modules/react-native-user-avatar/src/index.js b/node_modules/react-native-user-avatar/src/index.js
+index 170bad8..105c65b 100644
+--- a/node_modules/react-native-user-avatar/src/index.js
++++ b/node_modules/react-native-user-avatar/src/index.js
+@@ -17,18 +17,26 @@ import {
+ 
+ const UserAvatar = (props) => {
+   let {
+-    name,
++    name = 'John Doe',
+     src,
+     bgColor,
+-    bgColors,
+-    textColor,
+-    size,
++    bgColors =  [ // from https://flatuicolors.com/
++      '#2ecc71', // emerald
++      '#3498db', // peter river
++      '#8e44ad', // wisteria
++      '#e67e22', // carrot
++      '#e74c3c', // alizarin
++      '#1abc9c', // turquoise
++      '#2c3e50', // midnight blue
++    ],
++    textColor = '#fff',
++    size = 32,
+     imageStyle,
+     style,
+     borderRadius,
+     component,
+     noUpperCase,
+-    textStyle,
++    textStyle = {},
+   } = props;
+ 
+   // Validations
+@@ -91,21 +99,7 @@ UserAvatar.propTypes = {
+   textStyle: PropTypes.object,
+ };
+ 
+-UserAvatar.defaultProps = {
+-  size: 32,
+-  textColor: '#fff',
+-  name: 'John Doe',
+-  bgColors: [ // from https://flatuicolors.com/
+-    '#2ecc71', // emerald
+-    '#3498db', // peter river
+-    '#8e44ad', // wisteria
+-    '#e67e22', // carrot
+-    '#e74c3c', // alizarin
+-    '#1abc9c', // turquoise
+-    '#2c3e50', // midnight blue
+-  ],
+-  textStyle: {},
+-};
++
+ 
+ export {generateBackgroundColor};
+ 

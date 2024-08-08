@@ -329,7 +329,22 @@ const Chat: React.FC<ChatProps> = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Icon name="play" color={colors.appWhite} size={40} />
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.7)',
+              borderRadius: 25,
+            }}>
+            <Icon
+              style={{marginLeft: 3}}
+              name="play"
+              color={colors.appWhite}
+              size={25}
+            />
+          </View>
         </View>
       </TouchableOpacity>
     );

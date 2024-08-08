@@ -36,7 +36,6 @@ import {
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
 import {logError} from './error';
-import {PREMIUM_PLUS} from './hasPremiumPlus';
 
 GoogleSignin.configure({
   webClientId:
@@ -350,10 +349,11 @@ export const getAllExercises = async () => {
 };
 
 export const getExercisesById = async (ids: string[]) => {
-  if (!ids?.length) {
+  const validIds = ids?.filter(id => id);
+
+  if (!validIds?.length) {
     return [];
   }
-  const validIds = ids.filter(id => id);
 
   if (validIds.length > 10) {
     const snapshot = await db().collection('exercises').get();
@@ -402,10 +402,11 @@ export const getTests = async () => {
 };
 
 export const getTestsById = async (ids: string[]) => {
-  if (!ids?.length) {
+  const validIds = ids?.filter(id => id);
+
+  if (!validIds?.length) {
     return [];
   }
-  const validIds = ids.filter(id => id);
   if (validIds.length > 10) {
     const snapshot = await db().collection('tests').get();
     return snapshot.docs
@@ -453,10 +454,11 @@ export const getQuickRoutines = async () => {
 };
 
 export const getQuickRoutinesById = async (ids: string[]) => {
-  if (!ids?.length) {
+  const validIds = ids?.filter(id => id);
+
+  if (!validIds?.length) {
     return [];
   }
-  const validIds = ids.filter(id => id);
   if (validIds.length > 10) {
     const snapshot = await db().collection('quickRoutines').get();
     return snapshot.docs
@@ -600,10 +602,11 @@ export const getEducation = async () => {
 };
 
 export const getEducationById = async (ids: string[]) => {
-  if (!ids?.length) {
+  const validIds = ids?.filter(id => id);
+
+  if (!validIds?.length) {
     return [];
   }
-  const validIds = ids.filter(id => id);
   if (validIds.length > 10) {
     const snapshot = await db().collection('education').get();
     return snapshot.docs
@@ -644,10 +647,11 @@ export const getRecipes = async () => {
 };
 
 export const getRecipesById = async (ids: string[]) => {
-  if (!ids?.length) {
+  const validIds = ids?.filter(id => id);
+
+  if (!validIds?.length) {
     return [];
   }
-  const validIds = ids.filter(id => id);
   if (validIds.length > 10) {
     const snapshot = await db().collection('recipes').get();
     return snapshot.docs

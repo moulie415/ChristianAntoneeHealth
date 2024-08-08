@@ -3565,9 +3565,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/react-native@npm:^5.22.0":
-  version: 5.26.0
-  resolution: "@sentry/react-native@npm:5.26.0"
+"@sentry/react-native@npm:^5.27.0":
+  version: 5.27.0
+  resolution: "@sentry/react-native@npm:5.27.0"
   dependencies:
     "@sentry/babel-plugin-component-annotate": "npm:2.20.1"
     "@sentry/browser": "npm:7.117.0"
@@ -3587,7 +3587,7 @@ __metadata:
       optional: true
   bin:
     sentry-expo-upload-sourcemaps: scripts/expo-upload-sourcemaps.js
-  checksum: 10c0/e3348fe6e2cd70d64d0f69c608e601d0f2eb2f29e3a93c2d0ff60720ab589d0008c2aa8cd7ee4e4c5033b48e5760a5abc8fc91a8932149206c046866c83987b5
+  checksum: 10c0/dca55b34f4a24bb6d2feca76d847fd8b353290302ebf3e5347d2e2f90b6eb9d606bfd0322d7c1731acbda6b6e5586d7fceeb11c74f989de684983adecd1db8e4
   languageName: node
   linkType: hard
 
@@ -4528,7 +4528,7 @@ __metadata:
     "@semantic-release/commit-analyzer": "npm:^13.0.0"
     "@semantic-release/github": "npm:^10.0.7"
     "@semantic-release/release-notes-generator": "npm:^14.0.1"
-    "@sentry/react-native": "npm:^5.22.0"
+    "@sentry/react-native": "npm:^5.27.0"
     "@shopify/flash-list": "npm:^1.6.3"
     "@shopify/react-native-skia": "npm:^0.1.230"
     "@tsconfig/react-native": "npm:^3.0.0"

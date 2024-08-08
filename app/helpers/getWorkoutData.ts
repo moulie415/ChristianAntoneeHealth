@@ -7,6 +7,7 @@ import {
 import {
   CalorieCalculationType,
   Profile,
+  Sample,
   WatchWorkoutResponse,
 } from '../types/Shared';
 export const getWorkoutData = async (
@@ -17,10 +18,10 @@ export const getWorkoutData = async (
   endDate: Date,
   watchWorkoutData?: WatchWorkoutResponse,
 ) => {
-  let heartRateSamples = [];
+  let heartRateSamples: Sample[] = [];
   heartRateSamples = await getHeartRateSamples(startDate, endDate);
 
-  let calorieSamples = [];
+  let calorieSamples: Sample[] = [];
   let calories = 0;
   calorieSamples = await getCalorieSamples(startDate, endDate);
 
