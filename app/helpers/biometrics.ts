@@ -54,10 +54,6 @@ const checkPermission = async (
           },
         },
         (_, results) => {
-          console.log(
-            `has permission: ${permission}`,
-            results.permissions[isWrite ? 'write' : 'read'].some(p => p === 2),
-          );
           resolve(
             results.permissions[isWrite ? 'write' : 'read'].some(p => p === 2),
           );

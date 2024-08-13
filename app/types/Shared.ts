@@ -51,6 +51,17 @@ export enum CurrentExercise {
   NOT_AT_ALL = 'NOT_AT_ALL',
 }
 
+export interface DeviceInfo {
+  fontScale: number;
+  buildNumber: string;
+  version: string;
+  brand: string;
+  deviceId: string;
+  deviceType: string;
+  isTablet: boolean;
+  os: string;
+}
+
 export interface Profile {
   email: string;
   uid: string;
@@ -114,6 +125,7 @@ export interface Profile {
   freeBiometrics?: boolean;
   hasLeftFeedback?: boolean;
   dontAskAgain?: boolean;
+  deviceInfo?: DeviceInfo;
 }
 
 export enum Level {

@@ -226,7 +226,7 @@ export const setUser = (user: Profile) => {
   return db().collection('users').doc(user.uid).set(user);
 };
 
-export const updateUser = (user: any, uid: string) => {
+export const updateUser = async (user: Partial<Profile>, uid: string) => {
   return db()
     .collection('users')
     .doc(uid)

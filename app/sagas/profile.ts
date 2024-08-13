@@ -23,6 +23,15 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import _ from 'lodash';
 import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 import {Audio, Image, Video} from 'react-native-compressor';
+import {
+  getBrand,
+  getBuildNumber,
+  getDeviceId,
+  getDeviceType,
+  getFontScale,
+  getVersion,
+  isTablet,
+} from 'react-native-device-info';
 import {openInbox} from 'react-native-email-link';
 import RNFS from 'react-native-fs';
 import googleFit from 'react-native-google-fit';
@@ -240,7 +249,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       logError(e);
     }
     const {profile} = yield select((state: RootState) => state.profile);
-    const updateObj = {
+    const updateObj: Profile = {
       ...profile,
       ...action.payload,
     };
@@ -731,6 +740,32 @@ function* premiumUpdatedWorker() {
   }
 }
 
+function* checkDeviceInfoChanged() {
+  try {
+    const fontScale: number = yield call(getFontScale);
+    const deviceInfo = {
+      fontScale,
+      buildNumber: getBuildNumber(),
+      version: getVersion(),
+      brand: getBrand(),
+      deviceId: getDeviceId(),
+      deviceType: getDeviceType(),
+      isTablet: isTablet(),
+      os: Platform.OS,
+    };
+
+    const profile: Profile = yield select(
+      (state: RootState) => state.profile.profile,
+    );
+
+    if (!_.isEqual(deviceInfo, profile.deviceInfo)) {
+      yield call(api.updateUser, {deviceInfo}, profile.uid);
+    }
+  } catch (e) {
+    logError(e);
+  }
+}
+
 function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
   const user = action.payload;
   try {
@@ -810,6 +845,8 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         name: doc.exists ? doc.data()?.name || '' : '',
         surname: doc.exists ? doc.data()?.surname || '' : '',
       });
+
+      yield fork(checkDeviceInfoChanged);
 
       if (doc.exists && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
