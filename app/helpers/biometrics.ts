@@ -223,11 +223,6 @@ export const getStepSamples = async (
   endDate = moment().endOf('day').toDate(),
 ): Promise<Sample[] | undefined> => {
   try {
-    const permission = await checkPermission(PERMS.StepCount);
-
-    if (!permission) {
-      return;
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
         AppleHealthKit.getDailyStepCountSamples(
@@ -276,11 +271,6 @@ export const getStepSamples = async (
 
 export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
   try {
-    const permission = await checkPermission(PERMS.StepCount);
-
-    if (!permission) {
-      return;
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
         AppleHealthKit.getDailyStepCountSamples(
@@ -503,11 +493,6 @@ export const getHeartRateSamples = async (
   endDate: Date,
 ): Promise<Sample[]> => {
   try {
-    const permission = await checkPermission(PERMS.HeartRate);
-
-    if (!permission) {
-      return [];
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[]>((resolve, reject) => {
         AppleHealthKit.getHeartRateSamples(
@@ -544,11 +529,6 @@ export const getCalorieSamples = async (
   endDate: Date,
 ): Promise<Sample[]> => {
   try {
-    const permission = await checkPermission(PERMS.ActiveEnergyBurned);
-
-    if (!permission) {
-      return [];
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[]>((resolve, reject) => {
         AppleHealthKit.getActiveEnergyBurned(
