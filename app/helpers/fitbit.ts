@@ -1,4 +1,3 @@
-import axios from 'axios';
 import moment from 'moment';
 import Config from 'react-native-config';
 import Snackbar from 'react-native-snackbar';
@@ -47,17 +46,17 @@ export const refreshToken = async (
   fitbitTokenTimestamp: number;
 }> => {
   try {
-    const response = await axios.get(
-      `${Config.ROOT_API_URL}auth/fitbit/refresh`,
-      {params: {uid, fitbitRefreshToken: rToken}},
+    const response = await fetch(
+      `${Config.ROOT_API_URL}auth/fitbit/refresh?uid=${uid}&fitbitRefreshToken=${rToken}`,
     );
+
     const {
       fitbitToken,
       fitbitRefreshToken,
       fitbitUserId,
       fitbitTokenExpiresIn,
       fitbitTokenTimestamp,
-    } = response.data;
+    } = await response.json();
     return {
       fitbitToken,
       fitbitRefreshToken,
@@ -78,7 +77,7 @@ export const getHeartRateTimeSeriesByDate = async (
   to: Date,
 ): Promise<{samples: Sample[]; data: ActivitiesHeart[]}> => {
   try {
-    const {data}: {data: FitbitHeartRateResponse} = await axios.get(
+    const data = await fetch(
       `https://api.fitbit.com/1/user/${fitbitUserId}/activities/heart/date/today/1d.json`,
       {
         headers: {
@@ -86,9 +85,11 @@ export const getHeartRateTimeSeriesByDate = async (
         },
       },
     );
+
+    const response: FitbitHeartRateResponse = await data.json();
     const activities: ActivitiesHeart[] = [];
     const samples: Sample[] = [];
-    data['activities-heart'].forEach(activity => {
+    response['activities-heart'].forEach(activity => {
       if (
         moment(activity.dateTime).isAfter(from) &&
         moment(activity.dateTime).isBefore(to)

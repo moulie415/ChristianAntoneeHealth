@@ -1,4 +1,3 @@
-import axios from 'axios';
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
 import {Sample} from '../types/Shared';
@@ -14,15 +13,13 @@ interface PolarHeartRateResponse {
 
 export const registerUser = async (uid: string, token: string) => {
   try {
-    await axios.post(
-      'https://www.polaraccesslink.com/v3/users',
-      {
+    await fetch('https://www.polaraccesslink.com/v3/users', {
+      method: 'POST',
+      body: JSON.stringify({
         'member-id': uid,
-      },
-      {
-        headers: {Accept: 'application/json', Authorization: `Bearer ${token}`},
-      },
-    );
+      }),
+      headers: {Accept: 'application/json', Authorization: `Bearer ${token}`},
+    });
   } catch (e) {
     logError(e);
     Snackbar.show({text: 'Error registering with Polar'});
@@ -35,7 +32,7 @@ export const getHeartRateSamples = async (
   to: Date,
 ): Promise<Sample[]> => {
   try {
-    const {data}: {data: PolarHeartRateResponse} = await axios.get(
+    const data = await fetch(
       `https://www.polaraccesslink.com/v3/users/continuous-heart-rate/${moment(
         from,
       ).format('YYYY-MM-DD')}`,
@@ -46,7 +43,8 @@ export const getHeartRateSamples = async (
         // },
       },
     );
-    return data.heart_rates.reduce((acc: Sample[], cur) => {
+    const json: PolarHeartRateResponse = await data.json();
+    return json.heart_rates.reduce((acc: Sample[], cur) => {
       const samples: Sample[] = [];
       cur.heart_rate_samples.forEach(sample => {
         const dateString = `${cur.date}T${sample.sample_time}Z`;
