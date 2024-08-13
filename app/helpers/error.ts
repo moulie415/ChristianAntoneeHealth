@@ -1,9 +1,6 @@
 import * as Sentry from '@sentry/react-native';
 
-export const ignoredErrors = [
-  'firestore/permission-denied',
-  'com.apple.healthkit Code=4',
-];
+export const ignoredErrors = ['firestore/permission-denied'];
 
 export const logError = (e: Error | any) => {
   if (
