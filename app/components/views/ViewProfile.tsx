@@ -60,7 +60,7 @@ const ViewProfile: React.FC<{
                 src={connection.avatar}
                 size={80}
                 uid={connection.uid}
-                hideCheck
+                hideAdmin
               />
             </TouchableOpacity>
           </View>
