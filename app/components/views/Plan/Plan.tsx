@@ -13,6 +13,7 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -21,7 +22,6 @@ import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {getPlan, setRead} from '../../../reducers/profile';
 import {Plan as PlanType, Profile} from '../../../types/Shared';
 import Header from '../../commons/Header';
-import Loader from '../../commons/Loader';
 import Text from '../../commons/Text';
 import Daily from './Daily';
 import Monthly from './Monthly';
@@ -167,35 +167,63 @@ const Plan: React.FC<{
       ) : (
         <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
           <Header showDrawerMenuButton />
-          <Text
+          <View
             style={{
-              textAlign: 'center',
-              margin: 20,
-              marginTop: 0,
-              fontSize: 25,
-              fontWeight: 'bold',
-              color: colors.appWhite,
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: -100,
             }}>
-            My workout plan
-          </Text>
-
-          <View style={{margin: 20, marginTop: 0}}>
-            <Text style={{lineHeight: 25, color: '#fff'}}>
-              This is your the screen for your personal customized plan, when
-              Christian creates your plan it will appear here.{' '}
-              {hasPremium ? (
-                <Text>
-                  You're are already subscribed to Premium Plus so you just need
-                  to wait for Christian to create your plan.
-                </Text>
-              ) : (
-                <Text>
-                  To view your plan also make sure you're subscribed to Premium.
-                </Text>
-              )}
+            <View
+              style={{
+                width: 100,
+                height: 100,
+                backgroundColor: colors.borderColor,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon
+                style={{position: 'absolute'}}
+                name="calendar-days"
+                color={colors.appBlue}
+                solid
+                size={50}
+              />
+            </View>
+            <Text
+              style={{
+                textAlign: 'center',
+                margin: 20,
+                fontSize: 25,
+                fontWeight: 'bold',
+                color: colors.appWhite,
+              }}>
+              My workout plan
             </Text>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Loader size={250} />
+
+            <View style={{marginHorizontal: 20, width: 275}}>
+              <Text
+                style={{
+                  color: colors.offWhite,
+                  fontSize: 12,
+                  lineHeight: 20,
+                  textAlign: 'center',
+                }}>
+                This is your the screen for your personal customized plan, when
+                Christian creates your plan it will appear here.{' '}
+                {hasPremium ? (
+                  <Text>
+                    You're are already subscribed to Premium Plus so you just
+                    need to wait for Christian to create your plan.
+                  </Text>
+                ) : (
+                  <Text>
+                    To view your plan also make sure you're subscribed to
+                    Premium.
+                  </Text>
+                )}
+              </Text>
             </View>
           </View>
         </SafeAreaView>

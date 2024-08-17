@@ -311,6 +311,7 @@ export interface UpdateProfilePayload {
   disableSnackbar?: boolean;
   dontAskAgain?: boolean;
   hasLeftFeedback?: boolean;
+  optedInToLeaderboards?: boolean;
 }
 
 export interface Recipe {

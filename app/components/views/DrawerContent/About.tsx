@@ -138,7 +138,6 @@ const About: React.FC<AboutProps> = () => {
           <Text
             style={{
               color: colors.appWhite,
-
               lineHeight: 25,
               margin: 10,
               marginHorizontal: 20,

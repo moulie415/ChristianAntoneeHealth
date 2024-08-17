@@ -66,6 +66,7 @@ export type StackParamList = {
   SignUpFlow: {fromProfile?: boolean};
   Tabs: undefined;
   Home: undefined;
+  Leaderboards: undefined;
   Exercise: {id: string};
   Fitness: undefined;
   Goals: undefined;
@@ -151,6 +152,7 @@ export type StackParamList = {
   WebViewScreen: {uri: string; title?: string};
   ReportProblem: undefined;
   WorkoutBreakdown: {workout: SavedQuickRoutine | SavedWorkout};
+  
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

@@ -123,6 +123,10 @@ const Settings: React.FC<{
   );
   const [goalModalVisible, setGoalModalVisible] = useState(false);
 
+  const [optedInToLeaderboards, setOptedInToLeaderboards] = useState(
+    profile.optedInToLeaderboards,
+  );
+
   const newProfile = {
     ...profile,
     goal,
@@ -134,6 +138,7 @@ const Settings: React.FC<{
     goalReminders,
     workoutReminders,
     syncPlanWithCalendar: syncPlan,
+    ...(optedInToLeaderboards !== undefined ? {optedInToLeaderboards} : {}),
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -362,6 +367,32 @@ const Settings: React.FC<{
               </View>
             }
           />
+
+          {!!profile.premium && (
+            <>
+              <Text
+                style={{
+                  margin: 10,
+                  marginTop: 35,
+                  color: colors.appWhite,
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                Leaderboards
+              </Text>
+
+              <SettingsItem
+                onPress={() => setOptedInToLeaderboards(!optedInToLeaderboards)}
+                text="Opt in to leaderboards"
+                right={
+                  <Toggle
+                    value={optedInToLeaderboards}
+                    onValueChange={setOptedInToLeaderboards}
+                  />
+                }
+              />
+            </>
+          )}
 
           <Button
             variant="danger"

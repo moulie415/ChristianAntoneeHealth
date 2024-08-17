@@ -29,7 +29,7 @@ const FitnessTesting: React.FC<{
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
-        <Header showDrawerMenuButton />
+        <Header hasBack title="Fitness tests" />
         <ScrollView
           contentContainerStyle={{
             paddingBottom: 60,

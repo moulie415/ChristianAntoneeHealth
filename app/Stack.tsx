@@ -45,7 +45,9 @@ import RecipeCategories from './components/views/Recipes/RecipeCategories';
 import Recipes from './components/views/Recipes/Recipes';
 import SignUp from './components/views/SignUp';
 import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
+import FitnessTesting from './components/views/Tests/FitnessTesting';
 import Test from './components/views/Tests/Test';
+import TestResults from './components/views/Tests/TestResults';
 import ViewProfile from './components/views/ViewProfile';
 import CustomizeExercise from './components/views/Workout/CustomizeExercise';
 import EndWorkout from './components/views/Workout/EndWorkout';
@@ -57,10 +59,9 @@ import ReviewExercises from './components/views/Workout/ReviewExercises';
 import StartWorkout from './components/views/Workout/StartWorkout';
 import WarmUp from './components/views/Workout/WarmUp';
 import WhatArea from './components/views/Workout/WhatArea';
+import WorkoutBreakdown from './components/views/Workout/WorkoutBreakdown';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import TestResults from './components/views/Tests/TestResults';
-import WorkoutBreakdown from './components/views/Workout/WorkoutBreakdown';
 
 const Drawer = createDrawerNavigator();
 
@@ -106,6 +107,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="FitnessGoal" component={FitnessGoal} />
         <Stack.Screen name="Experience" component={Experience} />
         <Stack.Screen name="WarmUp" component={WarmUp} />
+        <Stack.Screen name="Fitness" component={FitnessTesting} />
         <Stack.Screen
           name="ExerciseList"
           component={ExerciseList}

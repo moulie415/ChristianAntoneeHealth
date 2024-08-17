@@ -4,13 +4,14 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from './App';
+import LeaderboardTabIcon from './LeaderboardTabIcon';
 import PlanTabIcon from './PlanTabIcon';
 import {navigate} from './RootNavigation';
 import Avatar from './components/commons/Avatar';
 import Home from './components/views/Home';
+import Leaderboards from './components/views/Leaderboards/Leaderboards';
 import Plan from './components/views/Plan/Plan';
 import ProfileComponent from './components/views/Profile';
-import FitnessTesting from './components/views/Tests/FitnessTesting';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import colors from './constants/colors';
 import {hasPremiumPlus} from './helpers/hasPremiumPlus';
@@ -49,7 +50,23 @@ const Tabs: React.FC<{
         key="Home"
         component={Home}
       />
-
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color, size}) => (
+            <Avatar
+              name={`${profile.name} ${profile.surname || ''}`}
+              src={profile.avatar}
+              uid={profile.uid}
+              size={28}
+            />
+          ),
+          headerShown: false,
+        }}
+        key="Profile"
+        name="Profile"
+        component={ProfileComponent}
+      />
       <Tab.Screen
         options={{
           tabBarLabel: 'Workout',
@@ -69,39 +86,25 @@ const Tabs: React.FC<{
       />
       <Tab.Screen
         options={{
-          tabBarLabel: 'Test',
+          tabBarLabel: 'Leaderboards',
           tabBarIcon: ({color, size}) => (
-            <Icon
-              style={{width: 35, alignSelf: 'center'}}
-              color={color}
-              size={size}
-              name="heart-pulse"
-            />
+            <LeaderboardTabIcon color={color} size={size} />
           ),
           headerShown: false,
         }}
-        key="Fitness"
-        name="Fitness"
-        component={FitnessTesting}
-      />
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
-            <Avatar
-              name={`${profile.name} ${profile.surname || ''}`}
-              src={profile.avatar}
-              uid={profile.uid}
-              size={28}
-            />
-          ),
-          headerShown: false,
+        key="Leaderboards"
+        name="Leaderboards"
+        component={Leaderboards}
+        listeners={{
+          tabPress: e => {
+            if (!profile.premium) {
+              e.preventDefault();
+              navigate('Premium', {});
+            }
+          },
         }}
-        key="Profile"
-        name="Profile"
-        component={ProfileComponent}
       />
-      {/* {(profile.admin || hasPremiumPlus(profile.premium)) && ( */}
+
       <Tab.Screen
         options={{
           tabBarLabel: 'Plan',

@@ -2,7 +2,6 @@ import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
-import * as Sentry from '@sentry/react-native';
 import React, {ReactNode} from 'react';
 import {Alert, FlatList, Share, TouchableOpacity, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
@@ -156,6 +155,14 @@ const DrawerContent: React.FC<Props> = ({
       },
     },
     {
+      title: 'Fitness tests',
+      icon: 'heart-pulse',
+      onPress: () => {
+        navigationRef.navigate('Fitness');
+        navigation.closeDrawer();
+      },
+    },
+    {
       title: 'Premium',
       icon: 'crown',
       onPress: () => {
@@ -208,14 +215,6 @@ const DrawerContent: React.FC<Props> = ({
     },
     {title: 'Log out', icon: 'right-from-bracket', onPress: logOut},
   ];
-
-  if (profile.admin) {
-    listItems.push({
-      title: 'Force crash (admin)',
-      icon: 'car-burst',
-      onPress: () => Sentry.nativeCrash(),
-    });
-  }
 
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
