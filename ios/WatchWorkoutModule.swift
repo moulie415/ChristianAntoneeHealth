@@ -41,50 +41,61 @@ class WatchWorkoutModule: NSObject, HKWorkoutSessionDelegate {
   
   override init() {
     super.init()
-    self.store = HKHealthStore()
-    self.store?.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
-      guard let self = self else { return }
-      self.session = mirroredSession
-      
-      self.session?.delegate = self
-      
-      print("Workout session mirroring started on iOS")
-    }
-  }
-  
-  @objc
-  func startWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
-    let configuration = HKWorkoutConfiguration()
-    configuration.activityType = .functionalStrengthTraining
-    configuration.locationType = .unknown
-    
-    guard let store = self.store else {
-      reject("STORE_ERROR", "HealthStore is not initialized", nil)
-      return
-    }
-    
-    Task {
-      do {
-        try await store.startWatchApp(toHandle: configuration)
-        print("Workout session started on the Watch")
-        resolve("*** Workout Session Started ***")
-      } catch {
-        print("Failed to start workout session on the Watch: \(error.localizedDescription)")
-        reject("START_WATCH_APP_ERROR", "An error occurred while starting a workout on Apple Watch: \(error.localizedDescription)", error)
+    if #available(iOS 17.0, *) {
+      self.store = HKHealthStore()
+      self.store?.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
+        guard let self = self else { return }
+        self.session = mirroredSession
+        self.session?.delegate = self
+        print("Workout session mirroring started on iOS")
       }
     }
   }
   
   @objc
-  func endWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
-    guard let session = self.session else {
-      resolve(nil)
-      return
+  func startWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    if #available(iOS 17.0, *) {
+      let configuration = HKWorkoutConfiguration()
+      configuration.activityType = .functionalStrengthTraining
+      configuration.locationType = .unknown
+      
+      guard let store = self.store else {
+        reject("STORE_ERROR", "HealthStore is not initialized", nil)
+        return
+      }
+      
+      Task {
+        do {
+          try await store.startWatchApp(toHandle: configuration)
+          print("Workout session started on the Watch")
+          resolve("*** Workout Session Started ***")
+          return;
+        } catch {
+          print("Failed to start workout session on the Watch: \(error.localizedDescription)")
+          reject("START_WATCH_APP_ERROR", "An error occurred while starting a workout on Apple Watch: \(error.localizedDescription)", error)
+          return;
+        }
+      }
     }
-    resolve(self.workoutData)
-    session.end()
-    self.workoutData = [:]
+    resolve("*** iOS version too low to start session ***")
   }
+  
+  @objc
+  func endWatchWorkout(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+      if #available(iOS 17.0, *) {
+        guard let session = self.session else {
+          resolve(nil)
+          return
+        }
+        resolve(self.workoutData)
+        session.end()
+        self.workoutData = [:]
+        return;
+      } else {
+        resolve(nil)
+      }
+    }
+
   
 
   
