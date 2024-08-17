@@ -1,6 +1,6 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import PagerView from 'react-native-pager-view';
@@ -9,10 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import {getStepSamples} from '../../helpers/biometrics';
 import {getGoalsData} from '../../helpers/goals';
 import {kFormatter} from '../../helpers/kFormatter';
-import useInterval from '../../hooks/UseInterval';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
 import {
@@ -119,34 +117,13 @@ const GoalSummaries: React.FC<{
   connectionWeeklyItems,
   navigation,
 }) => {
-  const [dailySteps, setDailySteps] = useState(0);
-  const getSteps = useCallback(async () => {
-    const dailyStepsSamples = await getStepSamples();
-    if (dailyStepsSamples) {
-      const steps = dailyStepsSamples.reduce((acc, cur) => acc + cur.value, 0);
-      if (steps !== dailySteps) {
-        setDailySteps(steps);
-      }
-    }
-  }, [dailySteps]);
-
-  useInterval(() => {
-    getSteps();
-  }, 60000);
-
   useEffect(() => {
     if (connection) {
       getWeeklyItemsForConnectionAction(connection.uid);
     } else {
       getWeeklyItemsAction();
-      getSteps();
     }
-  }, [
-    getWeeklyItemsAction,
-    getWeeklyItemsForConnectionAction,
-    connection,
-    getSteps,
-  ]);
+  }, [getWeeklyItemsAction, getWeeklyItemsForConnectionAction, connection]);
 
   const profile = connection || defaultProfile;
 
@@ -302,7 +279,7 @@ const GoalSummaries: React.FC<{
                   />
                 )}
                 goal={10000}
-                score={dailySteps}
+                score={profile.dailySteps || 0}
               />
               <GoalCircle
                 title="Workout streak"

@@ -176,8 +176,8 @@ export const getHeightSamples = async (uid: string) => {
 };
 
 export const getStepSamples = async (
-  startDate = moment().startOf('day').toDate(),
-  endDate = moment().endOf('day').toDate(),
+  startDate = moment().utc().startOf('day').toDate(),
+  endDate = moment().utc().endOf('day').toDate(),
 ): Promise<Sample[] | undefined> => {
   try {
     if (Platform.OS === 'ios') {
@@ -232,11 +232,8 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
         AppleHealthKit.getDailyStepCountSamples(
           {
-            startDate: moment()
-              .subtract(1, 'week')
-              .startOf('day')
-              .toISOString(),
-            endDate: moment().endOf('day').toISOString(),
+            startDate: moment().utc().startOf('isoWeek').toISOString(),
+            endDate: moment().utc().endOf('day').toISOString(),
           },
           (err, results) => {
             if (err) {
@@ -259,7 +256,7 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       const samples = await promise;
       return samples;
     }
-    const response = await GoogleFit.getWeeklySteps();
+    const response = await GoogleFit.getWeeklySteps(new Date(), 1);
     return response.reduce((acc: Sample[], cur) => {
       return [
         ...acc,

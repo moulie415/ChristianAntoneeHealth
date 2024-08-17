@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {PurchasesPackage} from 'react-native-purchases';
 
 import colors from '../../constants/colors';
 import SelectableButton from './SelectableButton';
+import Text from './Text';
 
 const monthlyPrice = (p: PurchasesPackage) => {
   switch (p.product.identifier) {

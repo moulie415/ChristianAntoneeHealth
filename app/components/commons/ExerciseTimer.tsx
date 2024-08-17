@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, {RefObject, useState} from 'react';
-import {Text, View} from 'react-native';
+import { View} from 'react-native';
 import {
   ColorFormat,
   CountdownCircleTimer,
@@ -15,6 +15,7 @@ import colors from '../../constants/colors';
 import {workoutSong} from '../../sagas/profile';
 import Exercise from '../../types/Exercise';
 import {Profile} from '../../types/Shared';
+import Text from './Text';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 

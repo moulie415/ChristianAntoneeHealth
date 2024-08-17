@@ -1,6 +1,7 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import colors from '../../constants/colors';
+import Text from './Text';
 
 const MyTabs: React.FC<{
   tabs: string[];
@@ -36,7 +37,7 @@ const MyTabs: React.FC<{
                 borderBottomRightRadius: index === tabs.length - 1 ? 12 : 0,
                 borderWidth: 2,
                 borderRightWidth: index === 0 ? 1 : 2,
-                borderLeftWidth: index === tabs.length - 1 ? 1: 2,
+                borderLeftWidth: index === tabs.length - 1 ? 1 : 2,
                 borderColor:
                   tabIndex === index ? colors.borderColor : colors.borderColor,
               }}>

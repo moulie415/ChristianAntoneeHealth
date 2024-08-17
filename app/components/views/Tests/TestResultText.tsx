@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
@@ -18,6 +18,7 @@ import {
 import {keyHasValue} from '../../../helpers/table';
 import {Profile} from '../../../types/Shared';
 import {PercentileTable, Table} from '../../../types/Test';
+import Text from '../../commons/Text';
 
 const TestResultText: React.FC<{
   profile: Profile;

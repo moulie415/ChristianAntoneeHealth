@@ -7,6 +7,7 @@ import {
   all,
   call,
   debounce,
+  delay,
   fork,
   put,
   select,
@@ -15,6 +16,7 @@ import {
 import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
+import {getStepSamples, getWeeklySteps} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {sendGoalTargetNotification} from '../helpers/goals';
 import {
@@ -32,8 +34,8 @@ import {ProfileState, updateProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Goal, Level, Profile, WarmUp} from '../types/Shared';
-import { feedbackTrigger } from './profile';
+import {CoolDown, Goal, Level, Profile, Sample, WarmUp} from '../types/Shared';
+import {feedbackTrigger} from './profile';
 
 export function* getExercises(
   action: PayloadAction<{
@@ -260,6 +262,41 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
   }
 }
 
+function* checkSteps() {
+  const profile: Profile = yield select(
+    (state: RootState) => state.profile.profile,
+  );
+
+  const {premium, optedInToLeaderboards, dailySteps, weeklySteps} = profile;
+
+  if (premium && optedInToLeaderboards) {
+    const dailyStepsSamples: Sample[] = yield call(getStepSamples);
+    if (dailyStepsSamples) {
+      const steps = dailyStepsSamples.reduce((acc, cur) => acc + cur.value, 0);
+
+      if (steps !== dailySteps) {
+        yield put(updateProfile({dailySteps: steps, disableSnackbar: true}));
+      }
+    }
+
+    const weeklyStepsSamples: Sample[] = yield call(getWeeklySteps);
+    if (weeklyStepsSamples) {
+      const steps = weeklyStepsSamples.reduce((acc, cur) => acc + cur.value, 0);
+
+      if (steps !== weeklySteps) {
+        yield put(updateProfile({weeklySteps: steps, disableSnackbar: true}));
+      }
+    }
+  }
+}
+
+function* checkPeriodically() {
+  while (true) {
+    yield call(checkSteps);
+    yield delay(60000);
+  }
+}
+
 export default function* exercisesSaga() {
   yield all([
     throttle(5000, GET_EXERCISES, getExercises),
@@ -267,5 +304,6 @@ export default function* exercisesSaga() {
     debounce(500, GET_SAVED_WORKOUTS, getSavedWorkouts),
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),
     throttle(5000, VIEW_WORKOUT, viewWorkoutWatcher),
+    fork(checkPeriodically),
   ]);
 }

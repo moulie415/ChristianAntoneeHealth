@@ -1,0 +1,50 @@
+import React, {useCallback, useEffect} from 'react';
+import {FlatList, RefreshControl, View} from 'react-native';
+import colors from '../../../constants/colors';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {getLeaderboard} from '../../../reducers/leaderboards';
+import {LeaderboardType} from '../../../types/Shared';
+import LeaderboardEmpty from '../../commons/LeaderboardEmpty';
+import LeaderboardRow from '../../commons/LeaderboardRow';
+
+const workoutStreakType: LeaderboardType = 'workoutStreak';
+
+const Ongoing = () => {
+  const dispatch = useAppDispatch();
+  const {leaderboards, loading} = useAppSelector(state => state.leaderboards);
+
+  const workoutStreakLeaderboard = leaderboards[workoutStreakType];
+
+  useEffect(() => {
+    dispatch(getLeaderboard(workoutStreakType));
+  }, [dispatch]);
+
+  const onRefresh = useCallback(() => {
+    dispatch(getLeaderboard(workoutStreakType));
+  }, [dispatch]);
+
+  return (
+    <View style={{flex: 1}}>
+      <FlatList
+        data={workoutStreakLeaderboard?.leaderboard}
+        ListEmptyComponent={
+          workoutStreakLeaderboard?.leaderboard?.length === 0
+            ? LeaderboardEmpty
+            : undefined
+        }
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.appWhite}
+            refreshing={loading}
+            onRefresh={onRefresh}
+          />
+        }
+        renderItem={({item}) => {
+          return <LeaderboardRow item={item} />;
+        }}
+      />
+    </View>
+  );
+};
+
+export default Ongoing;

@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import LottieView from 'lottie-react-native';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
 import {FONTS_SIZES} from '../../../constants';
@@ -10,6 +10,7 @@ import colors from '../../../constants/colors';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
 import {useAppSelector} from '../../../hooks/redux';
 import Header from '../../commons/Header';
+import Text from '../../commons/Text';
 
 const PremiumPurchased: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PremiumPurchased'>;

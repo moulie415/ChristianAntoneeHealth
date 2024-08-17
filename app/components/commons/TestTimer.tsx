@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
@@ -9,6 +9,7 @@ import {Profile} from '../../types/Shared';
 import Test from '../../types/Test';
 import {PREP_TIME} from '../views/Tests/Test';
 import Input from './Input';
+import Text from './Text';
 
 const TestTimer: React.FC<{
   test: Test;

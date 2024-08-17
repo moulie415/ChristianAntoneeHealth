@@ -3,6 +3,7 @@ import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
 import education from './education';
 import exercises from './exercises';
+import leaderboards from './leaderboards';
 import profile from './profile';
 import quickRoutines from './quickRoutines';
 import recipes from './recipes';
@@ -12,7 +13,7 @@ import tests from './tests';
 const config = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['exercises', 'profile', 'education', 'music', 'tour'],
+  blacklist: ['exercises', 'profile', 'education', 'recipes', 'leaderboards'],
 };
 
 const exercisesPersistConfig = {
@@ -39,6 +40,12 @@ const recipesPersistConfig = {
   blacklist: ['loading'],
 };
 
+const leaderboardsPersistConfig = {
+  key: 'leaderboards',
+  storage: AsyncStorage,
+  blacklist: ['loading'],
+};
+
 const rootReducer = combineReducers({
   profile: persistReducer(profilePersistConfig, profile),
   exercises: persistReducer(exercisesPersistConfig, exercises),
@@ -47,6 +54,7 @@ const rootReducer = combineReducers({
   education: persistReducer(educationPersistConfig, education),
   settings,
   recipes: persistReducer(recipesPersistConfig, recipes),
+  leaderboards: persistReducer(leaderboardsPersistConfig, leaderboards),
 });
 
 export default persistReducer(config, rootReducer);

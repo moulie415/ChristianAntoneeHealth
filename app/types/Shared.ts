@@ -120,6 +120,10 @@ export interface Profile {
   otherReason?: boolean;
   otherReasonDescription?: string;
   willInformDoctor?: boolean;
+  dailySteps?: number;
+  dailyCalories?: number;
+  weeklySteps?: number;
+  weeklyCalories?: number;
   dailyWorkoutStreak?: number;
   lastWorkoutDate?: string;
   freeBiometrics?: boolean;
@@ -312,6 +316,10 @@ export interface UpdateProfilePayload {
   dontAskAgain?: boolean;
   hasLeftFeedback?: boolean;
   optedInToLeaderboards?: boolean;
+  dailySteps?: number;
+  dailyCalories?: number;
+  weeklySteps?: number;
+  weeklyCalories?: number;
 }
 
 export interface Recipe {
@@ -338,16 +346,19 @@ export interface WatchWorkoutResponse {
   heartRateSamples: Sample[];
 }
 
-
 export type LeaderboardType =
   | 'dailySteps'
   | 'weeklySteps'
   | 'dailyCalories'
-  | 'weeklyCalories';
+  | 'weeklyCalories'
+  | 'workoutStreak';
 
 export interface LeaderboardItem {
   score: number;
   userId: string;
+  rank: number;
+  timestamp: Timestamp;
+  user?: Partial<Profile>;
 }
 
 export type Leaderboard = LeaderboardItem[];

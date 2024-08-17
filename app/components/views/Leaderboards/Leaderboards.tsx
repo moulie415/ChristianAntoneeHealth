@@ -11,9 +11,9 @@ import {updateProfile} from '../../../reducers/profile';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
-import Daily from './Daily';
-import Ongoing from './Ongoing';
-import Weekly from './Weekly';
+import Daily from './DailyLeaderboard';
+import Ongoing from './OngoingLeaderboard';
+import Weekly from './WeeklyLeaderboard';
 
 const Leaderboards = () => {
   const layout = useWindowDimensions();
@@ -92,7 +92,6 @@ const Leaderboards = () => {
                     backgroundColor: 'transparent',
                   }}
                   contentContainerStyle={{
-                    marginBottom: 20,
                     justifyContent: 'space-evenly',
                   }}
                   indicatorStyle={{backgroundColor: 'transparent'}}
