@@ -221,7 +221,7 @@ const DrawerContent: React.FC<Props> = ({
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <FlatList
         data={listItems}
-        contentContainerStyle={{marginTop: 40}}
+        contentContainerStyle={{marginTop: 40, paddingBottom: 80}}
         renderItem={({item}) => {
           return <MoreItem item={item} />;
         }}
