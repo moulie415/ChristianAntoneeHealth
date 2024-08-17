@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {useAppSelector} from '../../hooks/redux';
 
 const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
-  console.log(-(size / 6))
   return (
     <View
       style={{

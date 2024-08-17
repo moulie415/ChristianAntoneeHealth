@@ -27,6 +27,7 @@ import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
 import {
   CoolDown,
   Goal,
+  LeaderboardType,
   Level,
   Profile,
   Recipe,
@@ -233,6 +234,7 @@ export const updateUser = async (user: Partial<Profile>, uid: string) => {
     .update({
       ...user,
       birthday: moment(user.dob).dayOfYear(),
+      updatedAt: new Date(),
     });
 };
 
@@ -850,4 +852,55 @@ export const saveSample = (sample: string, value: number, uid: string) => {
 
 export const getPremiumUserCount = async () => {
   return functions().httpsCallable<{}, number>('getPremiumPlusUserCount')();
+};
+
+export const getLeaderboardData = async (
+  uid: string,
+  leaderboard: LeaderboardType,
+  n: number,
+) => {
+  const userScoreSnapshot = await db()
+    .collection(leaderboard)
+    .where('userId', '==', uid)
+    .get();
+
+  const userScoreData = userScoreSnapshot.docs[0].data();
+  const userScore = userScoreData.score;
+  const userTimestamp = userScoreData.timestamp;
+
+  const higherScoresCountSnapshot = await db()
+    .collection(leaderboard)
+    .where('score', '>', userScore)
+    .count()
+    .get();
+
+  const higherScoresCount = higherScoresCountSnapshot.data().count;
+
+  const tiedScoresCountSnapshot = await db()
+    .collection(leaderboard)
+    .where('score', '==', userScore)
+    .where('timestamp', '<', userTimestamp)
+    .count()
+    .get();
+
+  const tiedScoresCount = tiedScoresCountSnapshot.data().count;
+  const userRank = higherScoresCount + tiedScoresCount + 1;
+
+  const ranksAboveSnapshot = await db()
+    .collection(leaderboard)
+    .orderBy('score', 'desc')
+    .orderBy('timestamp', 'asc')
+    .startAt(userScore, userTimestamp)
+    .limit(n)
+    .get();
+
+  const ranksBelowSnapshot = await db()
+    .collection(leaderboard)
+    .orderBy('score', 'desc')
+    .orderBy('timestamp', 'asc')
+    .endBefore(userScore, userTimestamp)
+    .limitToLast(n)
+    .get();
+
+  return {ranksAboveSnapshot, ranksBelowSnapshot, userRank};
 };

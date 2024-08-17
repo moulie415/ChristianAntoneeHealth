@@ -126,6 +126,7 @@ export interface Profile {
   hasLeftFeedback?: boolean;
   dontAskAgain?: boolean;
   deviceInfo?: DeviceInfo;
+  optedInToLeaderboards?: boolean;
 }
 
 export enum Level {
@@ -335,3 +336,17 @@ export interface WatchWorkoutResponse {
   energySamples: Sample[];
   heartRateSamples: Sample[];
 }
+
+
+export type LeaderboardType =
+  | 'dailySteps'
+  | 'weeklySteps'
+  | 'dailyCalories'
+  | 'weeklyCalories';
+
+export interface LeaderboardItem {
+  score: number;
+  userId: string;
+}
+
+export type Leaderboard = LeaderboardItem[];
