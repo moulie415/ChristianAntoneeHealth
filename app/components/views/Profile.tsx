@@ -1,5 +1,6 @@
 import DatePicker from '@react-native-community/datetimepicker';
 import storage from '@react-native-firebase/storage';
+import {useFocusEffect} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -38,6 +39,8 @@ import {
 } from '../../constants';
 import colors from '../../constants/colors';
 import {logError} from '../../helpers/error';
+import {useAppDispatch} from '../../hooks/redux';
+import {checkStepsCalories} from '../../reducers/exercises';
 import {getSamples, updateProfile} from '../../reducers/profile';
 import {SettingsState} from '../../reducers/settings';
 import {Gender, Profile, UpdateProfilePayload} from '../../types/Shared';
@@ -69,6 +72,7 @@ const ProfileComponent: React.FC<{
   loading: pLoading,
   settings,
 }) => {
+  const dispatch = useAppDispatch();
   const [gender, setGender] = useState<Gender>(
     (profile.gender as Gender) || null,
   );
@@ -117,6 +121,10 @@ const ProfileComponent: React.FC<{
   });
 
   const equal = _.isEqual(newProfile, profile);
+
+  useFocusEffect(() => {
+    dispatch(checkStepsCalories());
+  });
 
   const handlePickerCallback = useCallback(
     async (response: ImagePickerResponse) => {

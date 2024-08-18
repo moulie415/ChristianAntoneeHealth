@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback} from 'react';
 import {RefreshControl, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
@@ -7,29 +7,30 @@ import {getLeaderboard} from '../../../reducers/leaderboards';
 import {LeaderboardType} from '../../../types/Shared';
 import LeaderboardEmpty from '../../commons/LeaderboardEmpty';
 import LeaderboardRow from '../../commons/LeaderboardRow';
+import LeaderboardTimeLeft from '../../commons/LeaderboardTimeLeft';
 import MyTabs from '../../commons/MyTabs';
 
 const caloriesType: LeaderboardType = 'weeklyCalories';
 const stepsType: LeaderboardType = 'weeklySteps';
 
-const Weekly = () => {
+const Weekly: React.FC<{
+  tabIndex: number;
+  setTabIndex: (index: number) => void;
+}> = ({tabIndex, setTabIndex}) => {
   const dispatch = useAppDispatch();
   const tabs = ['Steps', 'Calories'];
-
-  const [tabIndex, setTabIndex] = useState(0);
 
   const {leaderboards, loading} = useAppSelector(state => state.leaderboards);
 
   const calorieLeaderboard = leaderboards[caloriesType];
   const stepsLeaderboard = leaderboards[stepsType];
 
-  useEffect(() => {
-    dispatch(getLeaderboard(tabIndex === 0 ? stepsType : caloriesType));
-  }, [dispatch, tabIndex]);
-
   const onRefresh = useCallback(() => {
     dispatch(getLeaderboard(tabIndex === 0 ? stepsType : caloriesType));
   }, [dispatch, tabIndex]);
+
+  const endTime =
+    tabIndex === 0 ? stepsLeaderboard?.endTime : calorieLeaderboard?.endTime;
 
   const leaderboard =
     tabIndex === 0
@@ -38,7 +39,10 @@ const Weekly = () => {
 
   return (
     <View style={{flex: 1}}>
-      <MyTabs tabs={tabs} tabIndex={tabIndex} setTabIndex={setTabIndex} />
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <MyTabs tabs={tabs} tabIndex={tabIndex} setTabIndex={setTabIndex} />
+        {endTime && <LeaderboardTimeLeft endTime={endTime} />}
+      </View>
       <FlatList
         data={leaderboard}
         ListEmptyComponent={

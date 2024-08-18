@@ -223,6 +223,7 @@ export const getStepSamples = async (
     }, []);
   } catch (e) {
     logError(e);
+    return [];
   }
 };
 
@@ -269,6 +270,7 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
     }, []);
   } catch (e) {
     logError(e);
+    return [];
   }
 };
 

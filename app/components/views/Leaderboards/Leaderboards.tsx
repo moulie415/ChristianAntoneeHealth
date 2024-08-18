@@ -6,7 +6,9 @@ import {TabBar, TabView} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {useDebouncedEffect} from '../../../hooks/UseDebouncedEffect';
 import useThrottle from '../../../hooks/UseThrottle';
+import {getLeaderboard} from '../../../reducers/leaderboards';
 import {updateProfile} from '../../../reducers/profile';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
@@ -17,19 +19,44 @@ import Weekly from './WeeklyLeaderboard';
 
 const Leaderboards = () => {
   const layout = useWindowDimensions();
+  const [tabIndex, setTabIndex] = useState(0);
 
   const renderScene = ({route}: {route: {key: string}}) => {
     switch (route.key) {
       case 'daily':
-        return <Daily />;
+        return <Daily tabIndex={tabIndex} setTabIndex={setTabIndex} />;
       case 'weekly':
-        return <Weekly />;
+        return <Weekly tabIndex={tabIndex} setTabIndex={setTabIndex} />;
       default:
         return <Ongoing />;
     }
   };
 
   const [index, setIndex] = useState(0);
+
+  const fetchLeaderboard = () => {
+    switch (index) {
+      case 0:
+        return dispatch(
+          getLeaderboard(tabIndex === 0 ? 'dailySteps' : 'dailyCalories'),
+        );
+      case 1:
+        return dispatch(
+          getLeaderboard(tabIndex === 0 ? 'weeklySteps' : 'weeklyCalories'),
+        );
+      case 2:
+        return dispatch(getLeaderboard('workoutStreak'));
+    }
+  };
+
+  useDebouncedEffect(
+    () => {
+      fetchLeaderboard();
+    },
+    [index, tabIndex],
+    1000,
+  );
+
   const [routes] = useState([
     {key: 'daily', title: 'Daily'},
     {key: 'weekly', title: 'Weekly'},

@@ -150,7 +150,6 @@ const GoalSummaries: React.FC<{
 
   const [index, setIndex] = useState(0);
   const {
-    calories,
     mins,
     workoutLevelScore,
     caloriesGoal,
@@ -162,6 +161,8 @@ const GoalSummaries: React.FC<{
     quickRoutinesObj,
     connection ? connection.targets : profile.targets,
   );
+
+  const {dailyCalories, dailySteps, dailyWorkoutStreak} = profile;
 
   const goals: GoalSet[] = [
     {
@@ -191,7 +192,7 @@ const GoalSummaries: React.FC<{
       title: 'Calories burned',
       key: 'calories',
       goal: caloriesGoal,
-      score: Math.round(calories),
+      score: Math.round(dailyCalories || 0),
       icon: Fire,
     },
   ];
@@ -279,12 +280,27 @@ const GoalSummaries: React.FC<{
                   />
                 )}
                 goal={10000}
-                score={profile.dailySteps || 0}
+                score={dailySteps || 0}
+              />
+              <GoalCircle
+                title="Calories"
+                icon={Fire}
+                goal={caloriesGoal / 7}
+                score={dailyCalories || 0}
               />
               <GoalCircle
                 title="Workout streak"
-                icon={Fire}
-                score={profile.dailyWorkoutStreak || 0}
+                icon={() => (
+                  <Icon
+                    name="bolt"
+                    size={25}
+                    color={colors.button}
+                    style={{
+                      marginHorizontal: 15,
+                    }}
+                  />
+                )}
+                score={dailyWorkoutStreak || 0}
                 goal={1}
                 hideGoal
               />

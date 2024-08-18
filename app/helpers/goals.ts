@@ -5,6 +5,7 @@ import {GOALS_CHANNEL_ID} from '../sagas/profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
 import {Goal, Level, PlanWorkout, Profile, Targets} from '../types/Shared';
+import moment from 'moment';
 
 interface GenericWorkout {
   level: Level;
@@ -87,12 +88,22 @@ export const getGoalsData = (
       return acc + (cur.calories || 0);
     }, 0),
   );
+
+  const dailyCalories = Math.round(
+    [...savedWorkouts, ...savedQuickRoutines].reduce((acc, cur) => {
+      if (moment(cur.endTime).isSame(moment(), 'day')) {
+        return acc + (cur.calories || 0);
+      }
+      return acc;
+    }, 0),
+  );
   const completed =
     calories >= caloriesGoal &&
     mins >= minsGoal &&
     workoutLevelScore >= workoutGoal;
   return {
     calories,
+    dailyCalories,
     mins,
     workoutLevelScore,
     workoutGoal,

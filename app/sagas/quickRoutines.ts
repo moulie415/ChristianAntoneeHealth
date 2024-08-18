@@ -18,7 +18,7 @@ import {
 } from '../reducers/quickRoutines';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
-import {incrementWorkoutStreak} from './exercises';
+import {checkStepsCalories, incrementWorkoutStreak} from './exercises';
 import {feedbackTrigger} from './profile';
 
 export function* getQuickRoutines() {
@@ -55,6 +55,7 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
     }
 
     yield fork(incrementWorkoutStreak);
+    yield fork(checkStepsCalories);
     yield call(feedbackTrigger);
   } catch (e) {
     logError(e);

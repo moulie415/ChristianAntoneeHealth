@@ -182,6 +182,22 @@ const Premium: React.FC<{
       ),
       available: true,
     },
+
+    {
+      icon: 'heart',
+      feature: (
+        <>
+          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> biometric
+          tracking
+        </>
+      ),
+      available: true,
+    },
+    {
+      icon: 'trophy',
+      feature: 'Compete in leaderboards',
+      available: true,
+    },
     {
       icon: 'calendar-alt',
       feature: 'Request custom workouts from Christian',
@@ -193,19 +209,10 @@ const Premium: React.FC<{
       available: premiumPlusStrings.includes(selected),
       solid: true,
     },
-    {
-      icon: 'apple-whole',
-      feature: 'Bespoke nutritional support',
-      available: premiumPlusStrings.includes(selected),
-    },
+
     {
       icon: 'chart-column',
       feature: 'Weekly check-ins to keep you on track',
-      available: premiumPlusStrings.includes(selected),
-    },
-    {
-      icon: 'person-walking',
-      feature: 'Healthy Lifestyle Support',
       available: premiumPlusStrings.includes(selected),
     },
   ];

@@ -92,6 +92,9 @@ export type SET_SHARE_MODAL_VISIBLE = typeof SET_SHARE_MODAL_VISIBLE;
 export const VIEW_WORKOUT = `${EXERCISES}/viewWorkout`;
 export type VIEW_WORKOUT = typeof VIEW_WORKOUT;
 
+export const CHECK_STEPS_CALORIES = `${EXERCISES}/checkStepsCalories`;
+export type CHECK_STEPS_CALORIES = typeof CHECK_STEPS_CALORIES;
+
 const exerciseSlice = createSlice({
   name: EXERCISES,
   initialState,
@@ -150,33 +153,23 @@ const exerciseSlice = createSlice({
     ) => {
       state.shareModalVisible = payload;
     },
-    viewWorkout: (
-      state: ExercisesState,
-      {payload}: PayloadAction<string[]>,
-    ) => {},
+    viewWorkout: (_: ExercisesState, __: PayloadAction<string[]>) => {},
     getExercises: (
-      state: ExercisesState,
-      {
-        payload,
-      }: PayloadAction<{
+      _: ExercisesState,
+      __: PayloadAction<{
         level: Level;
         goal: Goal;
         warmUp: WarmUp[];
         coolDown: CoolDown[];
       }>,
     ) => {},
-    getExercisesById: (
-      state: ExercisesState,
-      {payload}: PayloadAction<string[]>,
-    ) => {},
-    saveWorkout: (
-      state: ExercisesState,
-      {payload}: PayloadAction<SavedWorkout>,
-    ) => {},
+    getExercisesById: (_: ExercisesState, __: PayloadAction<string[]>) => {},
+    saveWorkout: (_: ExercisesState, __: PayloadAction<SavedWorkout>) => {},
     getSavedWorkouts: (
-      state: ExercisesState,
-      {payload}: PayloadAction<Date | undefined>,
+      _: ExercisesState,
+      __: PayloadAction<Date | undefined>,
     ) => {},
+    checkStepsCalories: (_: ExercisesState) => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {
@@ -204,6 +197,7 @@ export const {
   getExercisesById,
   getSavedWorkouts,
   saveWorkout,
+  checkStepsCalories,
 } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

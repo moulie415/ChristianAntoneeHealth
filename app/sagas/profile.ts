@@ -107,7 +107,11 @@ import {
   SignUpPayload,
   UpdateProfilePayload,
 } from '../types/Shared';
-import {checkWorkoutStreak, getAllExercises} from './exercises';
+import {
+  checkStepsCalories,
+  checkWorkoutStreak,
+  getAllExercises,
+} from './exercises';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
@@ -866,7 +870,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         navigate('SignUpFlow');
       }
       yield put(setLoggedIn(true));
-
+      yield fork(checkStepsCalories);
       yield fork(createChannels);
       const version = Platform.Version as number;
       if (Platform.OS === 'android' && version >= 33) {

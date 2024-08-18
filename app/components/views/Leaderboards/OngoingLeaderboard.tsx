@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import colors from '../../../constants/colors';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
@@ -14,10 +14,6 @@ const Ongoing = () => {
   const {leaderboards, loading} = useAppSelector(state => state.leaderboards);
 
   const workoutStreakLeaderboard = leaderboards[workoutStreakType];
-
-  useEffect(() => {
-    dispatch(getLeaderboard(workoutStreakType));
-  }, [dispatch]);
 
   const onRefresh = useCallback(() => {
     dispatch(getLeaderboard(workoutStreakType));

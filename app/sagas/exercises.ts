@@ -7,7 +7,6 @@ import {
   all,
   call,
   debounce,
-  delay,
   fork,
   put,
   select,
@@ -16,10 +15,15 @@ import {
 import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
-import {getStepSamples, getWeeklySteps} from '../helpers/biometrics';
-import {logError} from '../helpers/error';
-import {sendGoalTargetNotification} from '../helpers/goals';
 import {
+  getCalorieSamples,
+  getStepSamples,
+  getWeeklySteps,
+} from '../helpers/biometrics';
+import {logError} from '../helpers/error';
+import {getGoalsData, sendGoalTargetNotification} from '../helpers/goals';
+import {
+  CHECK_STEPS_CALORIES,
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
   GET_SAVED_WORKOUTS,
@@ -34,7 +38,15 @@ import {ProfileState, updateProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Goal, Level, Profile, Sample, WarmUp} from '../types/Shared';
+import {
+  CoolDown,
+  Goal,
+  Level,
+  Profile,
+  Sample,
+  UpdateProfilePayload,
+  WarmUp,
+} from '../types/Shared';
 import {feedbackTrigger} from './profile';
 
 export function* getExercises(
@@ -83,6 +95,7 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
     }
 
     yield fork(incrementWorkoutStreak);
+    yield fork(checkStepsCalories);
     yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
@@ -262,38 +275,111 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
   }
 }
 
-function* checkSteps() {
-  const profile: Profile = yield select(
-    (state: RootState) => state.profile.profile,
-  );
+export function* checkStepsCalories() {
+  try {
+    const profileState: ProfileState = yield select(
+      (state: RootState) => state.profile,
+    );
 
-  const {premium, optedInToLeaderboards, dailySteps, weeklySteps} = profile;
+    const {quickRoutines} = yield select(
+      (state: RootState) => state.quickRoutines,
+    );
 
-  if (premium && optedInToLeaderboards) {
-    const dailyStepsSamples: Sample[] = yield call(getStepSamples);
-    if (dailyStepsSamples) {
-      const steps = dailyStepsSamples.reduce((acc, cur) => acc + cur.value, 0);
+    const {loggedIn, weeklyItems} = profileState;
+    const {dailySteps, weeklySteps, targets, weeklyCalories, dailyCalories} =
+      profileState.profile;
 
-      if (steps !== dailySteps) {
-        yield put(updateProfile({dailySteps: steps, disableSnackbar: true}));
+    let updatePayload: UpdateProfilePayload = {disableSnackbar: true};
+
+    if (loggedIn) {
+      const dailyStepsSamples: Sample[] = yield call(getStepSamples);
+      if (dailyStepsSamples) {
+        const steps = dailyStepsSamples.reduce(
+          (acc, cur) => acc + cur.value,
+          0,
+        );
+
+        if (steps !== dailySteps) {
+          updatePayload = {...updatePayload, dailySteps: steps};
+        }
+      }
+
+      const weeklyStepsSamples: Sample[] = yield call(getWeeklySteps);
+      if (weeklyStepsSamples) {
+        const steps = weeklyStepsSamples.reduce(
+          (acc, cur) => acc + cur.value,
+          0,
+        );
+
+        if (steps !== weeklySteps) {
+          updatePayload = {...updatePayload, weeklySteps: steps};
+        }
+      }
+
+      const {calories, dailyCalories: dCalories} = getGoalsData(
+        weeklyItems,
+        quickRoutines,
+        targets,
+      );
+
+      const dailyCalorieSamples: Sample[] = yield call(
+        getCalorieSamples,
+        moment().startOf('day').toDate(),
+        moment().toDate(),
+      );
+
+      const dailyCalorieSamplesCombined = dailyCalorieSamples.reduce(
+        (acc, cur) => acc + cur.value,
+        0,
+      );
+
+      const higherDailyCalories = _.max([
+        dailyCalorieSamplesCombined,
+        dCalories,
+      ]);
+
+      if (
+        higherDailyCalories !== undefined &&
+        higherDailyCalories !== dailyCalories
+      ) {
+        updatePayload = {
+          ...updatePayload,
+          dailyCalories: higherDailyCalories,
+        };
+      }
+
+      const weeklyCalorieSamples: Sample[] = yield call(
+        getCalorieSamples,
+        moment().startOf('isoWeek').toDate(),
+        moment().toDate(),
+      );
+
+      const weeklyCalorieSamplesCombined = weeklyCalorieSamples.reduce(
+        (acc, cur) => acc + cur.value,
+        0,
+      );
+
+      const higherWeeklyCalories = _.max([
+        weeklyCalorieSamplesCombined,
+        calories,
+      ]);
+
+      if (
+        higherWeeklyCalories !== undefined &&
+        higherWeeklyCalories !== weeklyCalories
+      ) {
+        updatePayload = {
+          ...updatePayload,
+          weeklyCalories: higherWeeklyCalories,
+        };
+      }
+
+      if (Object.values(updatePayload).length > 1) {
+        yield put(updateProfile(updatePayload));
       }
     }
-
-    const weeklyStepsSamples: Sample[] = yield call(getWeeklySteps);
-    if (weeklyStepsSamples) {
-      const steps = weeklyStepsSamples.reduce((acc, cur) => acc + cur.value, 0);
-
-      if (steps !== weeklySteps) {
-        yield put(updateProfile({weeklySteps: steps, disableSnackbar: true}));
-      }
-    }
-  }
-}
-
-function* checkPeriodically() {
-  while (true) {
-    yield call(checkSteps);
-    yield delay(60000);
+  } catch (e) {
+    logError(e);
   }
 }
 
@@ -304,6 +390,6 @@ export default function* exercisesSaga() {
     debounce(500, GET_SAVED_WORKOUTS, getSavedWorkouts),
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),
     throttle(5000, VIEW_WORKOUT, viewWorkoutWatcher),
-    fork(checkPeriodically),
+    debounce(1000, CHECK_STEPS_CALORIES, checkStepsCalories),
   ]);
 }

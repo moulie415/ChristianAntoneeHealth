@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, debounce, put, select, throttle} from 'redux-saga/effects';
+import {call, debounce, fork, put, select, throttle} from 'redux-saga/effects';
 import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {logError} from '../helpers/error';
@@ -16,6 +16,7 @@ import {
 import {SavedTest} from '../types/SavedItem';
 import {Profile} from '../types/Shared';
 import Test from '../types/Test';
+import {checkStepsCalories} from './exercises';
 import {feedbackTrigger} from './profile';
 
 export function* getTests() {
@@ -30,6 +31,8 @@ function* saveTest(action: PayloadAction<SavedTest>) {
     if (action.payload.saved) {
       yield call(Snackbar.show, {text: 'Test saved'});
     }
+
+    yield fork(checkStepsCalories);
     yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
