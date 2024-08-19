@@ -4,6 +4,7 @@ export const ignoredErrors = [
   'firestore/permission-denied',
   'error getting latest height',
   'An error occured saving the workoutError',
+  'error saving body fat percent sampleError',
 ];
 
 export const ignoredCodes = ['E(null)0', 'ECOM.APPLE.HEALTHKIT4'];
