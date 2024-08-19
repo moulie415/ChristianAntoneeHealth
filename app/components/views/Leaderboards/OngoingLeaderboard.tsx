@@ -9,9 +9,9 @@ import LeaderboardRow from '../../commons/LeaderboardRow';
 
 const workoutStreakType: LeaderboardType = 'workoutStreak';
 
-const Ongoing = () => {
+const Ongoing: React.FC<{loading: boolean}> = ({loading}) => {
   const dispatch = useAppDispatch();
-  const {leaderboards, loading} = useAppSelector(state => state.leaderboards);
+  const {leaderboards} = useAppSelector(state => state.leaderboards);
 
   const workoutStreakLeaderboard = leaderboards[workoutStreakType];
 

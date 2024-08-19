@@ -35,11 +35,14 @@ const LeaderboardRow: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
         name={item.user ? `${item.user.name} ${item.user.surname || ''}` : ''}
         uid={item.userId}
       />
-      <Text style={{color: colors.appWhite, paddingLeft: 10, flex: 1}}>
+      <Text
+        numberOfLines={1}
+        style={{color: colors.appWhite, paddingHorizontal: 10, flex: 1}}>
         {item.user ? `${item.user.name} ${item.user.surname || ''}` : ''}
       </Text>
 
-      <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+      <Text
+        style={{color: colors.appWhite, fontWeight: 'bold', marginRight: 10}}>
         {`${item.score} ${suffix || ''}`}
       </Text>
     </View>

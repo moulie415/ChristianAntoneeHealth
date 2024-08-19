@@ -322,20 +322,13 @@ export function* checkStepsCalories() {
         targets,
       );
 
-      const dailyCalorieSamples: Sample[] = yield call(
-        getCalorieSamples,
-        moment().startOf('day').toDate(),
-        moment().toDate(),
-      );
+      // const activitySamples = yield call(
+      //   getActivitySamples,
+      //   moment().subtract(2, 'year').startOf('day').toDate(),
+      //   moment().toDate(),
+      // );
 
-      const dailyCalorieSamplesCombined = Math.round(
-        dailyCalorieSamples.reduce((acc, cur) => acc + cur.value, 0),
-      );
-
-      const higherDailyCalories = _.max([
-        dailyCalorieSamplesCombined,
-        dCalories,
-      ]);
+      const higherDailyCalories = _.max([dCalories]);
 
       if (
         higherDailyCalories !== undefined &&

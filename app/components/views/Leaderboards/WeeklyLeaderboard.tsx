@@ -16,11 +16,12 @@ const stepsType: LeaderboardType = 'weeklySteps';
 const Weekly: React.FC<{
   tabIndex: number;
   setTabIndex: (index: number) => void;
-}> = ({tabIndex, setTabIndex}) => {
+  loading: boolean;
+}> = ({tabIndex, setTabIndex, loading}) => {
   const dispatch = useAppDispatch();
   const tabs = ['Steps', 'Calories'];
 
-  const {leaderboards, loading} = useAppSelector(state => state.leaderboards);
+  const {leaderboards} = useAppSelector(state => state.leaderboards);
 
   const calorieLeaderboard = leaderboards[caloriesType];
   const stepsLeaderboard = leaderboards[stepsType];

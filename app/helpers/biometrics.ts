@@ -307,6 +307,7 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
     return response;
   } catch (e) {
     logError(e);
+    return [];
   }
 };
 

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {useWindowDimensions, View} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TabBar, TabView} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {useDebouncedEffect} from '../../../hooks/UseDebouncedEffect';
 import useThrottle from '../../../hooks/UseThrottle';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {getLeaderboard} from '../../../reducers/leaderboards';
 import {updateProfile} from '../../../reducers/profile';
 import Button from '../../commons/Button';
@@ -21,18 +21,35 @@ const Leaderboards = () => {
   const layout = useWindowDimensions();
   const [tabIndex, setTabIndex] = useState(0);
 
-  const renderScene = ({route}: {route: {key: string}}) => {
-    switch (route.key) {
-      case 'daily':
-        return <Daily tabIndex={tabIndex} setTabIndex={setTabIndex} />;
-      case 'weekly':
-        return <Weekly tabIndex={tabIndex} setTabIndex={setTabIndex} />;
-      default:
-        return <Ongoing />;
-    }
-  };
-
   const [index, setIndex] = useState(0);
+
+  useDebouncedEffect(
+    () => {
+      fetchLeaderboard();
+    },
+    [index, tabIndex],
+    500,
+  );
+
+  const [routes] = useState([
+    {key: 'daily', title: 'Daily'},
+    {key: 'weekly', title: 'Weekly'},
+    {key: 'ongoing', title: 'Ongoing'},
+  ]);
+
+  const {profile, loading} = useAppSelector(state => state.profile);
+
+  const {loading: leaderboardsLoading} = useAppSelector(
+    state => state.leaderboards,
+  );
+
+  const dispatch = useAppDispatch();
+
+  const optIn = useThrottle(() => {
+    dispatch(
+      updateProfile({disableSnackbar: true, optedInToLeaderboards: true}),
+    );
+  }, 3000);
 
   const fetchLeaderboard = () => {
     switch (index) {
@@ -49,29 +66,28 @@ const Leaderboards = () => {
     }
   };
 
-  useDebouncedEffect(
-    () => {
-      fetchLeaderboard();
-    },
-    [index, tabIndex],
-    1000,
-  );
-
-  const [routes] = useState([
-    {key: 'daily', title: 'Daily'},
-    {key: 'weekly', title: 'Weekly'},
-    {key: 'ongoing', title: 'Ongoing'},
-  ]);
-
-  const {profile, loading} = useAppSelector(state => state.profile);
-
-  const dispatch = useAppDispatch();
-
-  const optIn = useThrottle(() => {
-    dispatch(
-      updateProfile({disableSnackbar: true, optedInToLeaderboards: true}),
-    );
-  }, 3000);
+  const renderScene = ({route}: {route: {key: string}}) => {
+    switch (route.key) {
+      case 'daily':
+        return (
+          <Daily
+            tabIndex={tabIndex}
+            setTabIndex={setTabIndex}
+            loading={leaderboardsLoading}
+          />
+        );
+      case 'weekly':
+        return (
+          <Weekly
+            tabIndex={tabIndex}
+            setTabIndex={setTabIndex}
+            loading={leaderboardsLoading}
+          />
+        );
+      default:
+        return <Ongoing loading={leaderboardsLoading} />;
+    }
+  };
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
@@ -113,7 +129,7 @@ const Leaderboards = () => {
                                 style={{
                                   color: colors.appWhite,
                                   fontWeight: 'bold',
-                                  marginLeft: 5
+                                  marginLeft: 5,
                                 }}>
                                 Streak
                               </Text>
