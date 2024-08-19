@@ -22,6 +22,7 @@ const Ongoing = () => {
   return (
     <View style={{flex: 1}}>
       <FlatList
+        contentContainerStyle={{marginTop: 20}}
         data={workoutStreakLeaderboard?.leaderboard}
         ListEmptyComponent={
           workoutStreakLeaderboard?.leaderboard?.length === 0

@@ -102,14 +102,32 @@ const Leaderboards = () => {
                             borderColor: colors.borderColor,
                             flexDirection: 'row',
                           }}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: '#fff',
-                              textAlign: 'center',
-                            }}>
-                            {props.route?.title}
-                          </Text>
+                          {props.key === 'ongoing' ? (
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                              }}>
+                              <Icon name="bolt" color={colors.appWhite} />
+                              <Text
+                                style={{
+                                  color: colors.appWhite,
+                                  fontWeight: 'bold',
+                                  marginLeft: 5
+                                }}>
+                                Streak
+                              </Text>
+                            </View>
+                          ) : (
+                            <Text
+                              style={{
+                                fontWeight: 'bold',
+                                color: '#fff',
+                                textAlign: 'center',
+                              }}>
+                              {props.route?.title}
+                            </Text>
+                          )}
                         </View>
                       </TouchableOpacity>
                     );
