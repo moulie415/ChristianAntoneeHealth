@@ -3,9 +3,10 @@ import * as Sentry from '@sentry/react-native';
 export const ignoredErrors = [
   'firestore/permission-denied',
   'error getting latest height',
+  'An error occured saving the workoutError',
 ];
 
-export const ignoredCodes = ['E(null)0'];
+export const ignoredCodes = ['E(null)0', 'ECOM.APPLE.HEALTHKIT4'];
 
 export const logError = (e: Error | any) => {
   if (
