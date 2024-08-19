@@ -82,6 +82,10 @@ const HealthAndLifestyle: React.FC<{
           value: DietaryPreference.GLUTEN_FREE,
           text: 'Gluten Free',
         },
+        {
+          value: DietaryPreference.EVERYTHING,
+          text: 'A bit of everything',
+        },
       ],
       value: dietaryPreference,
     },

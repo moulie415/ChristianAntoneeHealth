@@ -42,6 +42,7 @@ export enum DietaryPreference {
   KETOGENIC = 'KETOGENIC',
   PALEO = 'PALEO',
   GLUTEN_FREE = 'GLUTEN_FREE',
+  EVERYTHING = 'EVERYTHING',
 }
 
 export enum CurrentExercise {
