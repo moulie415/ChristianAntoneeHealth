@@ -1,6 +1,11 @@
 import * as Sentry from '@sentry/react-native';
 
-export const ignoredErrors = ['firestore/permission-denied'];
+export const ignoredErrors = [
+  'firestore/permission-denied',
+  'error getting latest height',
+];
+
+export const ignoredCodes = ['E(null)0'];
 
 export const logError = (e: Error | any) => {
   if (
@@ -9,6 +14,11 @@ export const logError = (e: Error | any) => {
   ) {
     return;
   }
+
+  if ('code' in e && ignoredCodes.some(ignored => e.code === ignored)) {
+    return;
+  }
+
   try {
     if (__DEV__) {
       console.warn(e);

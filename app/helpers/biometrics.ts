@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {getApiLevel} from 'react-native-device-info';
 import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
-import AppleHealthKit, {HealthPermission} from 'react-native-health';
+import AppleHealthKit from 'react-native-health';
 import {getIsPaired} from 'react-native-watch-connectivity';
 import {googleFitOptions, healthKitOptions} from '../constants/strings';
 import {Gender, Sample, WatchWorkoutResponse} from '../types/Shared';
@@ -15,8 +15,6 @@ import {getSamples, saveSample} from './api';
 import {logError} from './error';
 
 const {WatchWorkoutModule} = NativeModules;
-
-const PERMS = AppleHealthKit.Constants.Permissions;
 
 export const isAvailable = () => {
   if (Platform.OS === 'ios') {
@@ -35,33 +33,6 @@ export const isAvailable = () => {
       resolve(result);
     });
   });
-};
-
-const checkPermission = async (
-  permission: HealthPermission,
-  isWrite?: boolean,
-) => {
-  if (!(await isAvailable()) || !(await isEnabled())) {
-    return false;
-  }
-  if (Platform.OS === 'ios') {
-    return new Promise(resolve => {
-      AppleHealthKit.getAuthStatus(
-        {
-          permissions: {
-            read: isWrite ? [] : [permission],
-            write: isWrite ? [permission] : [],
-          },
-        },
-        (_, results) => {
-          resolve(
-            results.permissions[isWrite ? 'write' : 'read'].some(p => p === 2),
-          );
-        },
-      );
-    });
-  }
-  return true;
 };
 
 export const isEnabled = () => {
@@ -121,11 +92,6 @@ export const initBiometrics = async () => {
 
 export const getHeight = async (): Promise<number | undefined> => {
   try {
-    const permission = await checkPermission(PERMS.Height);
-
-    if (!permission) {
-      return;
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<number | undefined>((resolve, reject) => {
         // @ts-ignore
@@ -163,11 +129,6 @@ export const getHeight = async (): Promise<number | undefined> => {
 
 export const getWeight = async (): Promise<number | undefined> => {
   try {
-    const permission = await checkPermission(PERMS.Weight);
-
-    if (!permission) {
-      return;
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<number | undefined>((resolve, reject) => {
         // @ts-ignore
@@ -351,11 +312,6 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
 };
 
 export const getSex = async (): Promise<Gender | undefined> => {
-  const permission = await checkPermission(PERMS.BiologicalSex);
-
-  if (!permission) {
-    return;
-  }
   if (Platform.OS === 'ios') {
     const promise = new Promise<Gender | undefined>((resolve, reject) => {
       // @ts-ignore
@@ -378,11 +334,6 @@ export const getSex = async (): Promise<Gender | undefined> => {
 
 export const getDateOfBirth = async (): Promise<string | undefined> => {
   try {
-    const permission = await checkPermission(PERMS.DateOfBirth);
-
-    if (!permission) {
-      return;
-    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<string | undefined>((resolve, reject) => {
         AppleHealthKit.getDateOfBirth(null, (e, result) => {
@@ -407,11 +358,6 @@ export const saveWeight = async (uid: string, value?: number) => {
       return;
     }
     await saveSample('weight', value, uid);
-    const permission = await checkPermission(PERMS.Weight, true);
-
-    if (!permission) {
-      return;
-    }
     await new Promise((resolve, reject) => {
       if (Platform.OS === 'ios') {
         AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
@@ -449,11 +395,6 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     await saveSample('height', value, uid);
-    const permission = await checkPermission(PERMS.Height, true);
-
-    if (!permission) {
-      return;
-    }
     await new Promise((resolve, reject) => {
       if (Platform.OS === 'ios') {
         AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
@@ -574,12 +515,6 @@ export const saveWorkout = async (
   calories: number,
 ) => {
   try {
-    const permission = await checkPermission(PERMS.Workout, true);
-
-    if (!permission) {
-      return;
-    }
-
     const startDate = moment().subtract(seconds, 'seconds').toISOString();
     const endDate = moment().toISOString();
     if (Platform.OS === 'ios') {
@@ -632,11 +567,6 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
   try {
     await saveSample('bodyFatPercentage', value, uid);
     if (Platform.OS === 'ios') {
-      const permission = await checkPermission(PERMS.BodyFatPercentage, true);
-
-      if (!permission) {
-        return;
-      }
       await new Promise((resolve, reject) => {
         AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
           if (e) {
