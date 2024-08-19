@@ -286,7 +286,7 @@ const GoalSummaries: React.FC<{
                 title="Calories"
                 icon={Fire}
                 goal={caloriesGoal / 7}
-                score={dailyCalories || 0}
+                score={Math.round(dailyCalories || 0)}
               />
               <GoalCircle
                 title="Workout streak"

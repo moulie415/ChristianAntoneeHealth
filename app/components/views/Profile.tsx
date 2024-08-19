@@ -121,7 +121,6 @@ const ProfileComponent: React.FC<{
   });
 
   const equal = _.isEqual(newProfile, profile);
-
   useFocusEffect(() => {
     dispatch(checkStepsCalories());
   });

@@ -328,9 +328,8 @@ export function* checkStepsCalories() {
         moment().toDate(),
       );
 
-      const dailyCalorieSamplesCombined = dailyCalorieSamples.reduce(
-        (acc, cur) => acc + cur.value,
-        0,
+      const dailyCalorieSamplesCombined = Math.round(
+        dailyCalorieSamples.reduce((acc, cur) => acc + cur.value, 0),
       );
 
       const higherDailyCalories = _.max([
@@ -354,9 +353,8 @@ export function* checkStepsCalories() {
         moment().toDate(),
       );
 
-      const weeklyCalorieSamplesCombined = weeklyCalorieSamples.reduce(
-        (acc, cur) => acc + cur.value,
-        0,
+      const weeklyCalorieSamplesCombined = Math.round(
+        weeklyCalorieSamples.reduce((acc, cur) => acc + cur.value, 0),
       );
 
       const higherWeeklyCalories = _.max([
