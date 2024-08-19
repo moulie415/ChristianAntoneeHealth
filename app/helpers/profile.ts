@@ -4,7 +4,9 @@ import Purchases from 'react-native-purchases';
 export const setUserAttributes = (attributes: {[key: string]: string}) => {
   Purchases.setAttributes(attributes);
   Object.keys(attributes).forEach(attribute => {
-    Sentry.setTag(attribute, attributes[attribute]);
+    if (attributes[attribute]) {
+      Sentry.setTag(attribute, attributes[attribute]);
+    }
   });
 };
 
