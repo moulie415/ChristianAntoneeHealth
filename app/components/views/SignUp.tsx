@@ -40,8 +40,9 @@ const SignUp: React.FC<{
       handleAuthAction(user);
     } catch (e) {
       setLoading(false);
-      // @ts-ignore
-      Alert.alert('Error', e.message);
+      if (e instanceof Error) {
+        Alert.alert('Error', e.message);
+      }
     }
   };
 

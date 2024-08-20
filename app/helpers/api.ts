@@ -245,6 +245,9 @@ export const createUser = async (
   extraData: object,
 ) => {
   const {user} = await auth().createUserWithEmailAndPassword(email, password);
+  if (!user.emailVerified) {
+    await user.sendEmailVerification();
+  }
   const reminderTime = new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
@@ -259,6 +262,7 @@ export const createUser = async (
     .set({
       uid: user.uid,
       email: user.email,
+      providerId: user.providerData[0]?.providerId || '',
       workoutReminders: true,
       workoutReminderTime: reminderTime,
       testReminderTime: reminderTime,
@@ -270,9 +274,6 @@ export const createUser = async (
       goalReminders: true,
       ...extraData,
     });
-  if (!user.emailVerified) {
-    await user.sendEmailVerification();
-  }
   return user;
 };
 
