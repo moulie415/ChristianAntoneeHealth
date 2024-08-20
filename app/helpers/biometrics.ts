@@ -86,12 +86,14 @@ export const initBiometrics = async () => {
   }
   const result = await GoogleFit.authorize(googleFitOptions);
   if (!result.success) {
-    throw Error('Error authorizing google fit');
   }
 };
 
 export const getHeight = async (): Promise<number | undefined> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<number | undefined>((resolve, reject) => {
         // @ts-ignore
@@ -129,6 +131,9 @@ export const getHeight = async (): Promise<number | undefined> => {
 
 export const getWeight = async (): Promise<number | undefined> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<number | undefined>((resolve, reject) => {
         // @ts-ignore
@@ -180,6 +185,9 @@ export const getStepSamples = async (
   endDate = moment().utc().endOf('day').toDate(),
 ): Promise<Sample[] | undefined> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
         AppleHealthKit.getDailyStepCountSamples(
@@ -229,6 +237,9 @@ export const getStepSamples = async (
 
 export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
         AppleHealthKit.getDailyStepCountSamples(
@@ -313,6 +324,9 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
 
 export const getSex = async (): Promise<Gender | undefined> => {
   if (Platform.OS === 'ios') {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     const promise = new Promise<Gender | undefined>((resolve, reject) => {
       // @ts-ignore
       AppleHealthKit.getBiologicalSex(null, (e, result) => {
@@ -334,6 +348,9 @@ export const getSex = async (): Promise<Gender | undefined> => {
 
 export const getDateOfBirth = async (): Promise<string | undefined> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<string | undefined>((resolve, reject) => {
         AppleHealthKit.getDateOfBirth(null, (e, result) => {
@@ -358,6 +375,9 @@ export const saveWeight = async (uid: string, value?: number) => {
       return;
     }
     await saveSample('weight', value, uid);
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     await new Promise((resolve, reject) => {
       if (Platform.OS === 'ios') {
         AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
@@ -395,6 +415,9 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     await saveSample('height', value, uid);
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     await new Promise((resolve, reject) => {
       if (Platform.OS === 'ios') {
         AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
@@ -430,6 +453,9 @@ export const getHeartRateSamples = async (
   endDate: Date,
 ): Promise<Sample[]> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return [];
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[]>((resolve, reject) => {
         AppleHealthKit.getHeartRateSamples(
@@ -466,6 +492,9 @@ export const getCalorieSamples = async (
   endDate: Date,
 ): Promise<Sample[]> => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return [];
+    }
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[]>((resolve, reject) => {
         AppleHealthKit.getActiveEnergyBurned(
@@ -515,6 +544,9 @@ export const saveWorkout = async (
   calories: number,
 ) => {
   try {
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     const startDate = moment().subtract(seconds, 'seconds').toISOString();
     const endDate = moment().toISOString();
     if (Platform.OS === 'ios') {
@@ -566,6 +598,9 @@ export const getBodyFatPercentageSamples = async (uid: string) => {
 export const saveBodyFatPercentage = async (value: number, uid: string) => {
   try {
     await saveSample('bodyFatPercentage', value, uid);
+    if (!(await isAvailable()) || !(await isEnabled())) {
+      return;
+    }
     if (Platform.OS === 'ios') {
       await new Promise((resolve, reject) => {
         AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
