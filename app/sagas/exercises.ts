@@ -19,6 +19,7 @@ import {
   getCalorieSamples,
   getStepSamples,
   getWeeklySteps,
+  initBiometrics,
 } from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {getGoalsData, sendGoalTargetNotification} from '../helpers/goals';
@@ -292,6 +293,7 @@ export function* checkStepsCalories() {
     let updatePayload: UpdateProfilePayload = {disableSnackbar: true};
 
     if (loggedIn) {
+      yield call(initBiometrics);
       const dailyStepsSamples: Sample[] = yield call(getStepSamples);
       if (dailyStepsSamples) {
         const steps = dailyStepsSamples.reduce(
