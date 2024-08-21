@@ -4593,7 +4593,6 @@ __metadata:
     react-native-device-info: "npm:^10.13.2"
     react-native-document-picker: "npm:^9.1.0"
     react-native-draggable-flatlist: "npm:^4.0.1"
-    react-native-dropdown-picker: "npm:^5.4.6"
     react-native-email-link: "npm:^1.15.0"
     react-native-fast-image: "npm:8.5.11"
     react-native-fbsdk-next: "npm:13.0.0"
@@ -11274,16 +11273,6 @@ __metadata:
     react-native-gesture-handler: ">=2.0.0"
     react-native-reanimated: ">=2.8.0"
   checksum: 10c0/914e4c1df1a0fed11da474499b78f6144644ab1e45cf22b8d6c3098f12f732d3f15ad26e932114016a80d99a39e9c16cb37357ea707333065dee9d2067639c0b
-  languageName: node
-  linkType: hard
-
-"react-native-dropdown-picker@npm:^5.4.6":
-  version: 5.4.6
-  resolution: "react-native-dropdown-picker@npm:5.4.6"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/29b29d6168dc71386a0fd9dc5dedebd23cbb7baa977e4f37f6ff6fd13a800628e73e6624d0563b7471cec9a5dd76e196aed0e41d2da4bac8abefacbd1f0eb347
   languageName: node
   linkType: hard
 
