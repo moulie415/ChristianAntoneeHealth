@@ -39,10 +39,6 @@ const Leaderboards = () => {
 
   const {profile, loading} = useAppSelector(state => state.profile);
 
-  const {loading: leaderboardsLoading} = useAppSelector(
-    state => state.leaderboards,
-  );
-
   const dispatch = useAppDispatch();
 
   const optIn = useThrottle(() => {
@@ -69,23 +65,11 @@ const Leaderboards = () => {
   const renderScene = ({route}: {route: {key: string}}) => {
     switch (route.key) {
       case 'daily':
-        return (
-          <Daily
-            tabIndex={tabIndex}
-            setTabIndex={setTabIndex}
-            loading={leaderboardsLoading}
-          />
-        );
+        return <Daily tabIndex={tabIndex} setTabIndex={setTabIndex} />;
       case 'weekly':
-        return (
-          <Weekly
-            tabIndex={tabIndex}
-            setTabIndex={setTabIndex}
-            loading={leaderboardsLoading}
-          />
-        );
+        return <Weekly tabIndex={tabIndex} setTabIndex={setTabIndex} />;
       default:
-        return <Ongoing loading={leaderboardsLoading} />;
+        return <Ongoing />;
     }
   };
   return (
