@@ -15,6 +15,7 @@ import {
   legsBack,
   legsFront,
   lowerBack,
+  midBack,
   midUpperBack,
   obliques,
   quads,
@@ -47,6 +48,7 @@ const getMuscle = (m: Muscle, gender?: Gender, back?: boolean) => {
     case 'lowBack':
       return lowerBack(gender);
     case 'midBack':
+      return midBack(gender);
     case 'upperBack':
       return midUpperBack(gender);
     case 'obliques':

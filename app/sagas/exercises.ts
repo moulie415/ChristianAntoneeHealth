@@ -366,7 +366,10 @@ export function* checkStepsCalories() {
       }
 
       if (Object.values(updatePayload).length > 1) {
-        yield put(updateProfile(updatePayload));
+        // do this check to avoid updating steps when on simulator
+        if (!__DEV__) {
+          yield put(updateProfile(updatePayload));
+        }
       }
     }
   } catch (e) {
