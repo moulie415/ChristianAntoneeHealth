@@ -30,27 +30,28 @@ const Leaderboard: React.FC<{
   const rank1 = podium.find(item => item.rank === 1);
   const rank2 = podium.find(item => item.rank === 2);
   const rank3 = podium.find(item => item.rank === 3);
-
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey, marginTop: 20}}>
-      {!!endTime && (
-        <View style={{position: 'absolute', right: 10, top: -20}}>
-          <LeaderboardTimeLeft endTime={endTime} />
-        </View>
-      )}
-
       {/* Leaderboard List */}
       <FlatList
         ListHeaderComponent={
-          <View
-            style={{
-              marginBottom: 20,
-              justifyContent: 'space-evenly',
-              flexDirection: 'row',
-            }}>
-            {rank2 && <PodiumItem item={rank2} suffix={suffix} />}
-            {rank1 && <PodiumItem item={rank1} suffix={suffix} />}
-            {rank3 && <PodiumItem item={rank3} suffix={suffix} />}
+          <View>
+            {!!endTime && (
+              <View style={{position: 'absolute', right: 10, top: -20}}>
+                <LeaderboardTimeLeft endTime={endTime} />
+              </View>
+            )}
+
+            <View
+              style={{
+                marginBottom: 20,
+                justifyContent: 'space-evenly',
+                flexDirection: 'row',
+              }}>
+              {rank2 && <PodiumItem item={rank2} suffix={suffix} />}
+              {rank1 && <PodiumItem item={rank1} suffix={suffix} />}
+              {rank3 && <PodiumItem item={rank3} suffix={suffix} />}
+            </View>
           </View>
         }
         data={remainingLeaderboard}

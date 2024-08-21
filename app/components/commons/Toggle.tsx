@@ -1,5 +1,5 @@
-import {SwitchProps, Switch} from 'react-native';
 import React from 'react';
+import {Switch, SwitchProps} from 'react-native';
 import colors from '../../constants/colors';
 
 const Toggle: React.FC<SwitchProps> = props => {

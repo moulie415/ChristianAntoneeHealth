@@ -38,8 +38,7 @@ const MyTabs: React.FC<{
                 borderWidth: 2,
                 borderRightWidth: index === 0 ? 1 : 2,
                 borderLeftWidth: index === tabs.length - 1 ? 1 : 2,
-                borderColor:
-                  tabIndex === index ? colors.borderColor : colors.borderColor,
+                borderColor: colors.borderColor,
               }}>
               <Text
                 style={{

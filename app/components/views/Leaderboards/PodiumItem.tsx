@@ -25,6 +25,7 @@ const PodiumItem: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
       style={{
         alignItems: 'center',
         paddingTop: item.rank !== 1 ? 65 : 0,
+        width: '33%',
       }}>
       <View>
         {item.rank === 1 && (
@@ -36,7 +37,7 @@ const PodiumItem: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
           />
         )}
         <Avatar
-          size={item.rank === 1 ? 60 : 45}
+          size={item.rank === 1 ? 60 : 50}
           src={item.user?.avatar}
           name={`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
           uid={item.userId}
@@ -76,7 +77,8 @@ const PodiumItem: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
         style={{
           color: colors.appWhite,
           marginTop: 20,
-          fontSize: 12,
+          fontSize: 14,
+          textAlign: 'center',
         }}>
         {`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
       </Text>
