@@ -28,10 +28,10 @@ const Weekly: React.FC<{
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <MyTabs tabs={tabs} tabIndex={tabIndex} setTabIndex={setTabIndex} />
         {endTime && <LeaderboardTimeLeft endTime={endTime} />}
-      </View>
+      </View> */}
 
       <Leaderboard
         leaderboardType={leaderboardType}

@@ -2276,6 +2276,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kolking/react-native-avatar@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@kolking/react-native-avatar@npm:2.1.1"
+  dependencies:
+    js-md5: "npm:^0.8.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/d458f8a596e3456050374a4f99c3a74f7cf7b15bd340e1cf4636c00249b00638d7d026496eb7f713f06507312ace199d5370c1c663c9c57033e5cb3798d18145
+  languageName: node
+  linkType: hard
+
 "@miblanchard/react-native-slider@npm:^2.3.1":
   version: 2.6.0
   resolution: "@miblanchard/react-native-slider@npm:2.6.0"
@@ -4499,6 +4511,7 @@ __metadata:
     "@gorhom/bottom-sheet": "npm:^4.6.0"
     "@invertase/react-native-apple-authentication": "npm:^2.3.0"
     "@kanelloc/react-native-animated-header-scroll-view": "npm:^1.0.0"
+    "@kolking/react-native-avatar": "npm:^2.1.1"
     "@miblanchard/react-native-slider": "npm:^2.3.1"
     "@react-native-async-storage/async-storage": "npm:^1.19.3"
     "@react-native-clipboard/clipboard": "npm:^1.11.2"
@@ -8946,6 +8959,13 @@ __metadata:
     "@sideway/formula": "npm:^3.0.1"
     "@sideway/pinpoint": "npm:^2.0.0"
   checksum: 10c0/9262aef1da3f1bec5b03caf50c46368899fe03b8ff26cbe3d53af4584dd1049079fc97230bbf1500b6149db7cc765b9ee45f0deb24bb6fc3fa06229d7148c17f
+  languageName: node
+  linkType: hard
+
+"js-md5@npm:^0.8.3":
+  version: 0.8.3
+  resolution: "js-md5@npm:0.8.3"
+  checksum: 10c0/f7e41e95f8e5eb5eeb43085bec3832ae3dfe0020c42fcca5a4efe571213391a9e9594db31bd34624b7280af4f1f12c751b6a50074a15346ecf40a0d54115d77f
   languageName: node
   linkType: hard
 

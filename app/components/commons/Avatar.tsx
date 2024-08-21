@@ -1,8 +1,8 @@
+import {Avatar as UserAvatar} from '@kolking/react-native-avatar';
 import React from 'react';
-import {View} from 'react-native';
-import Image from 'react-native-fast-image';
-// @ts-ignore
-import UserAvatar from 'react-native-user-avatar';
+import {ImageStyle, View} from 'react-native';
+import Image, {ImageStyle as FastImageStyle} from 'react-native-fast-image';
+
 import colors from '../../constants/colors';
 
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -33,7 +33,8 @@ const Avatar: React.FC<{
   name: string;
   uid: string;
   hideAdmin?: boolean;
-}> = ({src, size, name, uid, hideAdmin}) => {
+  style?: ImageStyle | FastImageStyle;
+}> = ({src, size, name, uid, hideAdmin, style}) => {
   const {admins} = useAppSelector(state => state.settings);
   const isAdmin = admins.includes(uid);
   if (src) {
@@ -41,11 +42,14 @@ const Avatar: React.FC<{
       <View>
         <Image
           source={{uri: src}}
-          style={{
-            width: size || 30,
-            height: size || 30,
-            borderRadius: size ? size / 2 : 15,
-          }}
+          style={[
+            {
+              width: size || 30,
+              height: size || 30,
+              borderRadius: size ? size / 2 : 15,
+            },
+            style as FastImageStyle,
+          ]}
         />
         {isAdmin && !hideAdmin && <AdminCheck size={size} />}
       </View>
@@ -53,7 +57,12 @@ const Avatar: React.FC<{
   }
   return (
     <View>
-      <UserAvatar size={size || 30} name={name} src={src} />
+      <UserAvatar
+        size={size || 30}
+        name={name}
+        colorize
+        style={style as ImageStyle}
+      />
       {isAdmin && !hideAdmin && <AdminCheck size={size} />}
     </View>
   );
