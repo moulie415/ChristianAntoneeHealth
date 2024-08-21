@@ -15,11 +15,7 @@ import {
 import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
-import {
-  getCalorieSamples,
-  getStepSamples,
-  getWeeklySteps,
-} from '../helpers/biometrics';
+import {getCalorieSamples, getStepSamples} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {getGoalsData, sendGoalTargetNotification} from '../helpers/goals';
 import {
@@ -304,7 +300,11 @@ export function* checkStepsCalories() {
         }
       }
 
-      const weeklyStepsSamples: Sample[] = yield call(getWeeklySteps);
+      const weeklyStepsSamples: Sample[] = yield call(
+        getStepSamples,
+        moment().utc().startOf('isoWeek').toDate(),
+        moment().utc().endOf('day').toDate(),
+      );
       if (weeklyStepsSamples) {
         const steps = weeklyStepsSamples.reduce(
           (acc, cur) => acc + cur.value,
