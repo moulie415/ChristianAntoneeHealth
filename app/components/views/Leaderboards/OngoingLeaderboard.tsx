@@ -23,6 +23,7 @@ const Ongoing: React.FC<{loading: boolean}> = ({loading}) => {
     <View style={{flex: 1}}>
       <FlatList
         contentContainerStyle={{marginTop: 20}}
+        keyExtractor={item => item.userId}
         data={workoutStreakLeaderboard?.leaderboard}
         ListEmptyComponent={
           workoutStreakLeaderboard?.leaderboard?.length === 0

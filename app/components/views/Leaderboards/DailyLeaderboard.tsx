@@ -47,6 +47,7 @@ const Daily: React.FC<{
       </View>
       <FlatList
         data={leaderboard}
+        keyExtractor={item => item.userId}
         refreshControl={
           <RefreshControl
             tintColor={colors.appWhite}

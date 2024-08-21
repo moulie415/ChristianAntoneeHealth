@@ -7,6 +7,7 @@ import {
   all,
   call,
   debounce,
+  delay,
   fork,
   put,
   select,
@@ -58,6 +59,7 @@ import {logError} from '../helpers/error';
 import {getGoalsData} from '../helpers/goals';
 import {PREMIUM_PLUS} from '../helpers/hasPremiumPlus';
 import {setUserAttributes} from '../helpers/profile';
+import {getLeaderboard} from '../reducers/leaderboards';
 import {
   GET_CONNECTIONS,
   GET_SAMPLES,
@@ -272,6 +274,40 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
     });
     if (!goalReminders) {
       PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+    }
+
+    yield put(setLoading(false));
+
+    if (profile.premium && profile.optedInToLeaderboards) {
+      const {
+        weeklyCalories,
+        weeklySteps,
+        dailyCalories,
+        dailySteps,
+        dailyWorkoutStreak,
+      } = action.payload;
+      if (weeklySteps) {
+        yield delay(3000);
+        yield put(getLeaderboard('weeklySteps'));
+      }
+      if (dailySteps) {
+        yield delay(3000);
+        yield put(getLeaderboard('dailySteps'));
+      }
+      if (weeklyCalories) {
+        yield delay(3000);
+        yield put(getLeaderboard('weeklyCalories'));
+      }
+
+      if (dailyCalories) {
+        yield delay(3000);
+        yield put(getLeaderboard('dailyCalories'));
+      }
+
+      if (dailyWorkoutStreak) {
+        yield delay(3000);
+        yield put(getLeaderboard('workoutStreak'));
+      }
     }
   } catch (e) {
     yield call(Snackbar.show, {text: 'Error updating profile'});

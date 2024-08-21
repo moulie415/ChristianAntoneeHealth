@@ -46,6 +46,7 @@ const Weekly: React.FC<{
       </View>
       <FlatList
         data={leaderboard}
+        keyExtractor={item => item.userId}
         ListEmptyComponent={
           leaderboard?.length === 0 ? LeaderboardEmpty : undefined
         }
