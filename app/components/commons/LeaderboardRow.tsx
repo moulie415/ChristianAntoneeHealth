@@ -6,23 +6,28 @@ import {LeaderboardItem} from '../../types/Shared';
 import Avatar from './Avatar';
 import Text from './Text';
 
-const LeaderboardRow: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
-  item,
-  suffix,
-}) => {
+const LeaderboardRow: React.FC<{
+  item: LeaderboardItem;
+  suffix?: string;
+  index: number;
+}> = ({item, suffix, index}) => {
   const {profile} = useAppSelector(state => state.profile);
   const isYou = profile.uid === item.userId;
   return (
     <View
       style={{
+        borderTopLeftRadius: index === 0 ? 30 : 0,
+        borderTopRightRadius: index === 0 ? 30 : 0,
+        marginTop: index === 0 ? -30 : 0,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: isYou ? colors.appBlue : undefined,
+        backgroundColor: isYou ? colors.appBlue : colors.appWhite,
+        paddingTop: index === 0 ? 20 : 10,
         padding: 10,
       }}>
       <Text
         style={{
-          color: colors.appWhite,
+          color: isYou ? colors.appWhite : colors.appGrey,
           fontWeight: 'bold',
           paddingRight: 10,
           fontSize: 16,
@@ -37,12 +42,20 @@ const LeaderboardRow: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
       />
       <Text
         numberOfLines={1}
-        style={{color: colors.appWhite, paddingHorizontal: 10, flex: 1}}>
+        style={{
+          color: isYou ? colors.appWhite : colors.appGrey,
+          paddingHorizontal: 10,
+          flex: 1,
+        }}>
         {item.user ? `${item.user.name} ${item.user.surname || ''}` : ''}
       </Text>
 
       <Text
-        style={{color: colors.appWhite, fontWeight: 'bold', marginRight: 10}}>
+        style={{
+          color: isYou ? colors.appWhite : colors.appGrey,
+          fontWeight: 'bold',
+          marginRight: 10,
+        }}>
         {`${item.score} ${suffix || ''}`}
       </Text>
     </View>

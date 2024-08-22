@@ -35,7 +35,7 @@ const Leaderboard: React.FC<{
       {/* Leaderboard List */}
       <FlatList
         ListHeaderComponent={
-          <View>
+          <View style={{backgroundColor: colors.appGrey}}>
             {!!endTime && (
               <View style={{position: 'absolute', right: 10, top: -20}}>
                 <LeaderboardTimeLeft endTime={endTime} />
@@ -44,20 +44,27 @@ const Leaderboard: React.FC<{
 
             <View
               style={{
-                marginBottom: 20,
+                paddingBottom: 50,
                 justifyContent: 'space-evenly',
                 flexDirection: 'row',
               }}>
-              {rank2 && <PodiumItem item={rank2} suffix={suffix} />}
-              {rank1 && <PodiumItem item={rank1} suffix={suffix} />}
-              {rank3 && <PodiumItem item={rank3} suffix={suffix} />}
+              <PodiumItem item={rank2} suffix={suffix} />
+              <PodiumItem item={rank1} suffix={suffix} />
+              <PodiumItem item={rank3} suffix={suffix} />
             </View>
           </View>
         }
         data={remainingLeaderboard}
+        contentContainerStyle={{
+          flex: 1,
+          backgroundColor: remainingLeaderboard.length
+            ? colors.appWhite
+            : colors.appGrey,
+        }}
         keyExtractor={item => item.userId}
         refreshControl={
           <RefreshControl
+            style={{backgroundColor: colors.appGrey}}
             tintColor={colors.appWhite}
             refreshing={loading}
             onRefresh={onRefresh}
@@ -66,8 +73,8 @@ const Leaderboard: React.FC<{
         ListEmptyComponent={
           leaderboard.length === 0 ? LeaderboardEmpty : undefined
         }
-        renderItem={({item}) => {
-          return <LeaderboardRow item={item} suffix={suffix} />;
+        renderItem={({item, index}) => {
+          return <LeaderboardRow item={item} index={index} suffix={suffix} />;
         }}
       />
     </View>

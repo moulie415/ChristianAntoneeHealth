@@ -16,7 +16,7 @@ const getRankColor = (rank: number) => {
   }
 };
 
-const PodiumItem: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
+const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
   item,
   suffix,
 }) => {
@@ -24,72 +24,76 @@ const PodiumItem: React.FC<{item: LeaderboardItem; suffix?: string}> = ({
     <View
       style={{
         alignItems: 'center',
-        paddingTop: item.rank !== 1 ? 65 : 0,
+        paddingTop: item?.rank !== 1 ? 65 : 0,
         width: '33%',
       }}>
-      <View>
-        {item.rank === 1 && (
-          <Icon
-            name="crown"
-            style={{alignSelf: 'center'}}
-            size={25}
-            color={getRankColor(1)}
-          />
-        )}
-        <Avatar
-          size={item.rank === 1 ? 60 : 50}
-          src={item.user?.avatar}
-          name={`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
-          uid={item.userId}
-          style={{borderWidth: 4, borderColor: getRankColor(item.rank)}}
-        />
+      {item && (
+        <>
+          <View>
+            {item.rank === 1 && (
+              <Icon
+                name="crown"
+                style={{alignSelf: 'center'}}
+                size={25}
+                color={getRankColor(1)}
+              />
+            )}
+            <Avatar
+              size={item.rank === 1 ? 60 : 50}
+              src={item.user?.avatar}
+              name={`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
+              uid={item.userId}
+              style={{borderWidth: 4, borderColor: getRankColor(item.rank)}}
+            />
 
-        <View
-          style={{
-            position: 'absolute',
-            alignSelf: 'center',
-            alignItems: 'center',
-            bottom: -10,
-            left: 0,
-            right: 0,
-          }}>
-          <View
-            style={{
-              backgroundColor: getRankColor(item.rank),
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-            }}>
-            <Text
+            <View
               style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: colors.appWhite,
-
-                textAlign: 'center',
+                position: 'absolute',
+                alignSelf: 'center',
+                alignItems: 'center',
+                bottom: -10,
+                left: 0,
+                right: 0,
               }}>
-              {item.rank}
-            </Text>
+              <View
+                style={{
+                  backgroundColor: getRankColor(item.rank),
+                  width: 20,
+                  height: 20,
+                  borderRadius: 10,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    color: colors.appWhite,
+                    lineHeight: 20,
+                    textAlign: 'center',
+                  }}>
+                  {item.rank}
+                </Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-      <Text
-        style={{
-          color: colors.appWhite,
-          marginTop: 20,
-          fontSize: 14,
-          textAlign: 'center',
-        }}>
-        {`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
-      </Text>
-      <Text
-        style={{
-          color: colors.appWhite,
-          fontWeight: 'bold',
-          marginTop: 5,
-        }}>
-        {`${item.score} ${suffix || ''}`}
-      </Text>
+          <Text
+            style={{
+              color: colors.appWhite,
+              marginTop: 20,
+              fontSize: 14,
+              textAlign: 'center',
+            }}>
+            {`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
+          </Text>
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontWeight: 'bold',
+              marginTop: 5,
+            }}>
+            {`${item.score} ${suffix || ''}`}
+          </Text>
+        </>
+      )}
     </View>
   );
 };
