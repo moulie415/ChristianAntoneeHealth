@@ -8,7 +8,7 @@ const stepsType: LeaderboardType = 'weeklySteps';
 const Weekly: React.FC<{
   tabIndex: number;
   setTabIndex: (index: number) => void;
-}> = ({tabIndex}) => {
+}> = ({tabIndex, setTabIndex}) => {
   const leaderboardType: LeaderboardType =
     tabIndex === 0 ? stepsType : caloriesType;
 
@@ -17,6 +17,8 @@ const Weekly: React.FC<{
       <Leaderboard
         leaderboardType={leaderboardType}
         suffix={tabIndex === 0 ? 'steps' : 'kcal'}
+        tabIndex={tabIndex}
+        setTabIndex={setTabIndex}
       />
     </View>
   );

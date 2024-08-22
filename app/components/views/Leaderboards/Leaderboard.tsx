@@ -1,9 +1,12 @@
 import React, {useCallback} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import Fire from '../../../images/fire.svg';
 import {getLeaderboard} from '../../../reducers/leaderboards';
 import {LeaderboardType} from '../../../types/Shared';
+import IconTabs from '../../commons/IconTabs';
 import LeaderboardEmpty from '../../commons/LeaderboardEmpty';
 import LeaderboardRow from '../../commons/LeaderboardRow';
 import LeaderboardTimeLeft from '../../commons/LeaderboardTimeLeft';
@@ -12,7 +15,9 @@ import PodiumItem from './PodiumItem';
 const Leaderboard: React.FC<{
   leaderboardType: LeaderboardType;
   suffix?: string;
-}> = ({leaderboardType, suffix}) => {
+  tabIndex?: number;
+  setTabIndex?: (index: number) => void;
+}> = ({leaderboardType, suffix, tabIndex, setTabIndex}) => {
   const {loading} = useAppSelector(state => state.leaderboards);
   const {leaderboards} = useAppSelector(state => state.leaderboards);
   const leaderboard = leaderboards[leaderboardType]?.leaderboard || [];
@@ -32,16 +37,9 @@ const Leaderboard: React.FC<{
   const rank3 = podium.find(item => item.rank === 3);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey, marginTop: 20}}>
-      {/* Leaderboard List */}
       <FlatList
         ListHeaderComponent={
           <View style={{backgroundColor: colors.appGrey}}>
-            {!!endTime && (
-              <View style={{position: 'absolute', right: 10, top: -20}}>
-                <LeaderboardTimeLeft endTime={endTime} />
-              </View>
-            )}
-
             <View
               style={{
                 paddingBottom: 50,
@@ -52,6 +50,34 @@ const Leaderboard: React.FC<{
               <PodiumItem item={rank1} suffix={suffix} />
               <PodiumItem item={rank3} suffix={suffix} />
             </View>
+
+            {tabIndex !== undefined && !!setTabIndex && (
+              <View style={{position: 'absolute', left: 20, top: 5}}>
+                <IconTabs
+                  setTabIndex={setTabIndex}
+                  tabIndex={tabIndex}
+                  icons={[
+                    {
+                      icon: (
+                        <Icon
+                          name="shoe-prints"
+                          size={15}
+                          color={colors.button}
+                        />
+                      ),
+                      key: 'steps',
+                    },
+                    {icon: <Fire width={30} />, key: 'calories'},
+                  ]}
+                />
+              </View>
+            )}
+
+            {!!endTime && (
+              <View style={{position: 'absolute', right: 10, top: -20}}>
+                <LeaderboardTimeLeft endTime={endTime} />
+              </View>
+            )}
           </View>
         }
         data={remainingLeaderboard}

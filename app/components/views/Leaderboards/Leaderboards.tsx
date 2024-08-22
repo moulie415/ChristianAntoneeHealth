@@ -8,12 +8,10 @@ import colors from '../../../constants/colors';
 import {useDebouncedEffect} from '../../../hooks/UseDebouncedEffect';
 import useThrottle from '../../../hooks/UseThrottle';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import Fire from '../../../images/fire.svg';
 import {getLeaderboard} from '../../../reducers/leaderboards';
 import {updateProfile} from '../../../reducers/profile';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
-import IconTabs from '../../commons/IconTabs';
 import Text from '../../commons/Text';
 import Daily from './DailyLeaderboard';
 import Ongoing from './OngoingLeaderboard';
@@ -77,33 +75,7 @@ const Leaderboards = () => {
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView style={{flex: 1}}>
-        <Header
-          showDrawerMenuButton
-          title="Leaderboards"
-          right={
-            (index === 0 || index === 1) && (
-              <View style={{marginTop: -5}}>
-                <IconTabs
-                  setTabIndex={setTabIndex}
-                  tabIndex={tabIndex}
-                  icons={[
-                    {
-                      icon: (
-                        <Icon
-                          name="shoe-prints"
-                          size={15}
-                          color={colors.button}
-                        />
-                      ),
-                      key: 'steps',
-                    },
-                    {icon: <Fire width={30} />, key: 'calories'},
-                  ]}
-                />
-              </View>
-            )
-          }
-        />
+        <Header showDrawerMenuButton title="Leaderboards" />
         {profile.optedInToLeaderboards ? (
           <TabView
             renderTabBar={p => {
