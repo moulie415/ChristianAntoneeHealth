@@ -1,10 +1,9 @@
-import React, {useCallback} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
+import React from 'react';
+import {FlatList, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {useAppSelector} from '../../../hooks/redux';
 import Fire from '../../../images/fire.svg';
-import {getLeaderboard} from '../../../reducers/leaderboards';
 import {LeaderboardType} from '../../../types/Shared';
 import IconTabs from '../../commons/IconTabs';
 import LeaderboardEmpty from '../../commons/LeaderboardEmpty';
@@ -18,19 +17,13 @@ const Leaderboard: React.FC<{
   tabIndex?: number;
   setTabIndex?: (index: number) => void;
 }> = ({leaderboardType, suffix, tabIndex, setTabIndex}) => {
-  const {loading} = useAppSelector(state => state.leaderboards);
   const {leaderboards} = useAppSelector(state => state.leaderboards);
   const leaderboard = leaderboards[leaderboardType]?.leaderboard || [];
   const endTime = leaderboards[leaderboardType]?.endTime;
-  const dispatch = useAppDispatch();
 
   // Extract top 3 ranks
   const podium = leaderboard.filter(item => item.rank <= 3);
   const remainingLeaderboard = leaderboard.filter(item => item.rank > 3);
-
-  const onRefresh = useCallback(() => {
-    dispatch(getLeaderboard(leaderboardType));
-  }, [dispatch, leaderboardType]);
 
   const rank1 = podium.find(item => item.rank === 1);
   const rank2 = podium.find(item => item.rank === 2);
@@ -88,14 +81,6 @@ const Leaderboard: React.FC<{
             : colors.appGrey,
         }}
         keyExtractor={item => item.userId}
-        refreshControl={
-          <RefreshControl
-            style={{backgroundColor: colors.appGrey}}
-            tintColor={colors.appWhite}
-            refreshing={loading}
-            onRefresh={onRefresh}
-          />
-        }
         ListEmptyComponent={
           leaderboard.length === 0 ? LeaderboardEmpty : undefined
         }
