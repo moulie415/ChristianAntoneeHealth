@@ -77,19 +77,18 @@ const Leaderboards = () => {
     }
   };
   return (
-    <View style={{backgroundColor: colors.appGrey, flex: 1}}>
-      <SafeAreaView>
-        <Header
-          absolute
-          showDrawerMenuButton
-          title="Leaderboards"
-          rightStyle={{margin: 0}}
-          right={leaderboardsLoading ? <Loader size={60} /> : null}
-        />
-      </SafeAreaView>
+    <SafeAreaView
+      edges={['top', 'right', 'left']}
+      style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <Header
+        showDrawerMenuButton
+        title="Leaderboards"
+        rightStyle={{margin: 0}}
+        right={leaderboardsLoading ? <Loader size={60} /> : null}
+      />
+
       {profile.optedInToLeaderboards ? (
         <TabView
-          style={{marginTop: 20}}
           renderTabBar={p => {
             return (
               <TabBar
@@ -221,7 +220,7 @@ const Leaderboards = () => {
           />
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
