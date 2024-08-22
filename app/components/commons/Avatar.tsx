@@ -13,16 +13,16 @@ const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
     <View
       style={{
         position: 'absolute',
-        top: -(size / 6),
-        right: -(size / 6),
+        top: -(size / 7),
+        right: -(size / 7),
         backgroundColor: colors.appBlue,
-        height: size / 1.75,
-        width: size / 1.75,
-        borderRadius: size / 3.5,
+        height: size / 2,
+        width: size / 2,
+        borderRadius: size / 4,
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Icon size={size / 3} name="shield-halved" color={colors.appWhite} />
+      <Icon size={size / 3.5} name="shield-halved" color={colors.appWhite} />
     </View>
   );
 };
