@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 import {LeaderboardType} from '../../../types/Shared';
 import Leaderboard from './Leaderboard';
 
@@ -13,12 +14,14 @@ const Daily: React.FC<{
     tabIndex === 0 ? stepsType : caloriesType;
 
   return (
-    <Leaderboard
-      leaderboardType={leaderboardType}
-      suffix={tabIndex === 0 ? 'steps' : 'kcal'}
-      tabIndex={tabIndex}
-      setTabIndex={setTabIndex}
-    />
+    <View style={{flex: 1}}>
+      <Leaderboard
+        leaderboardType={leaderboardType}
+        suffix={tabIndex === 0 ? 'steps' : 'kcal'}
+        tabIndex={tabIndex}
+        setTabIndex={setTabIndex}
+      />
+    </View>
   );
 };
 
