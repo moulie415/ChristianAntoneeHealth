@@ -10,6 +10,7 @@ import {alertPremiumFeature} from './app/helpers/exercises';
 import {setUnread} from './app/reducers/profile';
 import {
   CONNECTION_ID,
+  LEADERBOARD_CHANNEL_ID,
   MESSAGE_CHANNEL_ID,
   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
   PLAN_CHANNEL_ID,
@@ -109,6 +110,16 @@ PushNotification.configure({
         } else {
           handleMessageNotification();
         }
+      }
+    }
+
+    if (notification.data.channelId === LEADERBOARD_CHANNEL_ID) {
+      if (notification.foreground && !notification.userInteraction) {
+        PushNotification.localNotification({
+          ...notification,
+          message: notification.message || '',
+          title: notification.title || '',
+        });
       }
     }
 
