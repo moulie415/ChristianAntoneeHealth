@@ -29,7 +29,14 @@ const Leaderboard: React.FC<{
   const rank2 = podium.find(item => item.rank === 2);
   const rank3 = podium.find(item => item.rank === 3);
   return (
-    <View style={{marginTop: 20, flex: 1, backgroundColor: colors.tile}}>
+    <View
+      style={{
+        marginTop: 20,
+        flex: 1,
+        backgroundColor: remainingLeaderboard.length
+          ? colors.tile
+          : colors.appGrey,
+      }}>
       <FlatList
         bounces={false}
         ListHeaderComponent={
