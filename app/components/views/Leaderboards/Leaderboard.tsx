@@ -29,8 +29,9 @@ const Leaderboard: React.FC<{
   const rank2 = podium.find(item => item.rank === 2);
   const rank3 = podium.find(item => item.rank === 3);
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey, marginTop: 20}}>
+    <View style={{marginTop: 20, flex: 1}}>
       <FlatList
+        bounces={false}
         ListHeaderComponent={
           <View style={{backgroundColor: colors.appGrey}}>
             <View
@@ -75,10 +76,10 @@ const Leaderboard: React.FC<{
         }
         data={remainingLeaderboard}
         contentContainerStyle={{
-          flex: 1,
           backgroundColor: remainingLeaderboard.length
-            ? colors.appWhite
+            ? colors.tile
             : colors.appGrey,
+          flex: 1,
         }}
         keyExtractor={item => item.userId}
         ListEmptyComponent={

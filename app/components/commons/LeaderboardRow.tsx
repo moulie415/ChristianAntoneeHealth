@@ -21,13 +21,13 @@ const LeaderboardRow: React.FC<{
         marginTop: index === 0 ? -30 : 0,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: isYou ? colors.appBlue : colors.appWhite,
+        backgroundColor: isYou ? colors.appBlue : colors.tile,
         paddingTop: index === 0 ? 20 : 10,
         padding: 10,
       }}>
       <Text
         style={{
-          color: isYou ? colors.appWhite : colors.appGrey,
+          color: isYou ? colors.appWhite : colors.appWhite,
           fontWeight: 'bold',
           paddingRight: 10,
           fontSize: 16,
@@ -43,7 +43,7 @@ const LeaderboardRow: React.FC<{
       <Text
         numberOfLines={1}
         style={{
-          color: isYou ? colors.appWhite : colors.appGrey,
+          color: isYou ? colors.appWhite : colors.appWhite,
           paddingHorizontal: 10,
           flex: 1,
         }}>
@@ -52,7 +52,7 @@ const LeaderboardRow: React.FC<{
 
       <Text
         style={{
-          color: isYou ? colors.appWhite : colors.appGrey,
+          color: isYou ? colors.appWhite : colors.appWhite,
           fontWeight: 'bold',
           marginRight: 10,
         }}>

@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View, ViewStyle} from 'react-native';
 import {navigationRef} from '../../RootNavigation';
 import BackButton from './BackButton';
 
@@ -22,6 +22,7 @@ const Header: React.FC<{
   profile: Profile;
   showDrawerMenuButton?: boolean;
   children?: ReactNode;
+  rightStyle?: ViewStyle;
 }> = ({
   hasBack,
   title,
@@ -31,6 +32,7 @@ const Header: React.FC<{
   profile,
   showDrawerMenuButton,
   left,
+  rightStyle,
 }) => {
   const insets = useSafeAreaInsets();
   const count = Object.keys(profile.unread || {}).reduce((acc, cur) => {
@@ -121,7 +123,9 @@ const Header: React.FC<{
         </Text>
       )}
       {!!right && (
-        <View style={{alignItems: 'flex-end', margin: 20}}>{right}</View>
+        <View style={[{alignItems: 'flex-end', margin: 20}, rightStyle]}>
+          {right}
+        </View>
       )}
     </View>
   );
