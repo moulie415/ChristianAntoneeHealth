@@ -185,6 +185,8 @@ export const equipmentItemReadableString = (item: Equipment) => {
       return 'Medicine balls';
     case Equipment.EXERCISE_STEP:
       return 'Exercise step';
+    case Equipment.FOAM_ROLLER:
+      return 'Foam roller';
     default:
       return capitalizeFirstLetter(item);
   }

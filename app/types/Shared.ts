@@ -204,6 +204,7 @@ export enum Equipment {
   MEDICINE_BALLS = 'medicineBalls',
   LANDMINE = 'landmine',
   EXERCISE_STEP = 'exerciseStep',
+  FOAM_ROLLER = 'foamRoller',
 }
 
 export interface PlanExercise {
