@@ -18,7 +18,8 @@ import {
 } from '../reducers/quickRoutines';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine} from '../types/SavedItem';
-import {checkStepsCalories, incrementWorkoutStreak} from './exercises';
+import {incrementWorkoutStreak} from './exercises';
+import {checkStepsCalories} from './leaderboards';
 import {feedbackTrigger} from './profile';
 
 export function* getQuickRoutines() {

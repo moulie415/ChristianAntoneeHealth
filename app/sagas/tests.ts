@@ -16,7 +16,7 @@ import {
 import {SavedTest} from '../types/SavedItem';
 import {Profile} from '../types/Shared';
 import Test from '../types/Test';
-import {checkStepsCalories} from './exercises';
+import {checkStepsCalories} from './leaderboards';
 import {feedbackTrigger} from './profile';
 
 export function* getTests() {

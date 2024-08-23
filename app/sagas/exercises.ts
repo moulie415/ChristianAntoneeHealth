@@ -15,11 +15,9 @@ import {
 import {RootState} from '../App';
 import {navigate, resetToTabs} from '../RootNavigation';
 import * as api from '../helpers/api';
-import {getCalorieSamples, getStepSamples} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
-import {getGoalsData, sendGoalTargetNotification} from '../helpers/goals';
+import {sendGoalTargetNotification} from '../helpers/goals';
 import {
-  CHECK_STEPS_CALORIES,
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
   GET_SAVED_WORKOUTS,
@@ -34,15 +32,8 @@ import {ProfileState, updateProfile} from '../reducers/profile';
 import {QuickRoutinesState} from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
 import {SavedWorkout} from '../types/SavedItem';
-import {
-  CoolDown,
-  Goal,
-  Level,
-  Profile,
-  Sample,
-  UpdateProfilePayload,
-  WarmUp,
-} from '../types/Shared';
+import {CoolDown, Goal, Level, Profile, WarmUp} from '../types/Shared';
+import {checkStepsCalories} from './leaderboards';
 import {feedbackTrigger} from './profile';
 
 export function* getExercises(
@@ -271,112 +262,6 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
   }
 }
 
-export function* checkStepsCalories() {
-  try {
-    const profileState: ProfileState = yield select(
-      (state: RootState) => state.profile,
-    );
-
-    const {quickRoutines} = yield select(
-      (state: RootState) => state.quickRoutines,
-    );
-
-    const {loggedIn, weeklyItems} = profileState;
-    const {dailySteps, weeklySteps, targets, weeklyCalories, dailyCalories} =
-      profileState.profile;
-
-    let updatePayload: UpdateProfilePayload = {disableSnackbar: true};
-
-    if (loggedIn) {
-      const dailyStepsSamples: Sample[] = yield call(getStepSamples);
-      if (dailyStepsSamples) {
-        const steps = dailyStepsSamples.reduce(
-          (acc, cur) => acc + cur.value,
-          0,
-        );
-
-        if (steps !== dailySteps) {
-          updatePayload = {...updatePayload, dailySteps: steps};
-        }
-      }
-
-      const weeklyStepsSamples: Sample[] = yield call(
-        getStepSamples,
-        moment().utc().startOf('isoWeek').toDate(),
-        moment().utc().endOf('day').toDate(),
-      );
-      if (weeklyStepsSamples) {
-        const steps = weeklyStepsSamples.reduce(
-          (acc, cur) => acc + cur.value,
-          0,
-        );
-
-        if (steps !== weeklySteps) {
-          updatePayload = {...updatePayload, weeklySteps: steps};
-        }
-      }
-
-      const {calories, dailyCalories: dCalories} = getGoalsData(
-        weeklyItems,
-        quickRoutines,
-        targets,
-      );
-
-      // const activitySamples = yield call(
-      //   getActivitySamples,
-      //   moment().subtract(2, 'year').startOf('day').toDate(),
-      //   moment().toDate(),
-      // );
-
-      const higherDailyCalories = _.max([dCalories]);
-
-      if (
-        higherDailyCalories !== undefined &&
-        higherDailyCalories !== dailyCalories
-      ) {
-        updatePayload = {
-          ...updatePayload,
-          dailyCalories: higherDailyCalories,
-        };
-      }
-
-      const weeklyCalorieSamples: Sample[] = yield call(
-        getCalorieSamples,
-        moment().startOf('isoWeek').toDate(),
-        moment().toDate(),
-      );
-
-      const weeklyCalorieSamplesCombined = Math.round(
-        weeklyCalorieSamples.reduce((acc, cur) => acc + cur.value, 0),
-      );
-
-      const higherWeeklyCalories = _.max([
-        weeklyCalorieSamplesCombined,
-        calories,
-      ]);
-
-      if (
-        higherWeeklyCalories !== undefined &&
-        higherWeeklyCalories !== weeklyCalories
-      ) {
-        updatePayload = {
-          ...updatePayload,
-          weeklyCalories: higherWeeklyCalories,
-        };
-      }
-
-      if (Object.values(updatePayload).length > 1) {
-        // do this check to avoid updating steps when on simulator
-        if (!__DEV__) {
-          yield put(updateProfile(updatePayload));
-        }
-      }
-    }
-  } catch (e) {
-    logError(e);
-  }
-}
-
 export default function* exercisesSaga() {
   yield all([
     throttle(5000, GET_EXERCISES, getExercises),
@@ -384,6 +269,5 @@ export default function* exercisesSaga() {
     debounce(500, GET_SAVED_WORKOUTS, getSavedWorkouts),
     throttle(5000, GET_EXERCISES_BY_ID, getExercisesById),
     throttle(5000, VIEW_WORKOUT, viewWorkoutWatcher),
-    debounce(1000, CHECK_STEPS_CALORIES, checkStepsCalories),
   ]);
 }

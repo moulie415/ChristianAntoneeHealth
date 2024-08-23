@@ -109,11 +109,8 @@ import {
   SignUpPayload,
   UpdateProfilePayload,
 } from '../types/Shared';
-import {
-  checkStepsCalories,
-  checkWorkoutStreak,
-  getAllExercises,
-} from './exercises';
+import {checkWorkoutStreak, getAllExercises} from './exercises';
+import {checkStepsCalories} from './leaderboards';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {

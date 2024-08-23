@@ -11,3 +11,6 @@
 
 
 -keep class com.healthandmovement.BuildConfig { *; }
+
+# [react-native-background-fetch]
+-keep class com.transistorsoft.rnbackgroundfetch.HeadlessTask { *; }

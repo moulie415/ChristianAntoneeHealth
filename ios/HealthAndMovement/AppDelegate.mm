@@ -12,12 +12,15 @@
 #import "RCTAppleHealthKit.h"
 #import <React/RCTLinkingManager.h>
 #import "AVFoundation/AVFoundation.h"
-#import "RNFBAppCheckModule.h" 
+#import "RNFBAppCheckModule.h"
+#import <TSBackgroundFetch/TSBackgroundFetch.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  [[TSBackgroundFetch sharedInstance] didFinishLaunching];
   
   [RNFBAppCheckModule sharedInstance];
   if ([FIRApp defaultApp] == nil) {
@@ -38,6 +41,7 @@
     
   bool didFinish = [super application:application didFinishLaunchingWithOptions:launchOptions];
   [RNSplashScreen show];
+
   return didFinish;
 }
 
