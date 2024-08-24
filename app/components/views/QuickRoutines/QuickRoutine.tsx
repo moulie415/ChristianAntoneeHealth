@@ -63,10 +63,10 @@ const QuickRoutineView: React.FC<{
   }, [exercisesObj, routine.exerciseIds]);
 
   useEffect(() => {
-    if (workoutMusic) {
+    if (workoutMusic && !routine.disableWorkoutMusic) {
       playWorkoutSong();
     }
-  }, [workoutMusic]);
+  }, [workoutMusic, routine.disableWorkoutMusic]);
 
   const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(
     1000,
@@ -209,6 +209,7 @@ const QuickRoutineView: React.FC<{
                         i={i}
                         index={index}
                         workout={exercises}
+                        disableWorkoutMusic={routine.disableWorkoutMusic}
                         pagerRef={pagerRef}
                         timerPaused={timerPaused}
                         onTimerPaused={p => {
@@ -221,19 +222,6 @@ const QuickRoutineView: React.FC<{
                         }}
                       />
 
-                      {/* <WorkoutTabFooter
-                        onTimerPaused={paused =>
-                          setPauseEvents([
-                            ...pauseEvents,
-                            {time: new Date(), paused},
-                          ])
-                        }
-                        seconds={seconds}
-                        setTimerPaused={setTimerPaused}
-                        timerPaused={timerPaused}
-                        workout={exercises}
-                        index={index}
-                      /> */}
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index === 0 && (
                           <TouchableOpacity

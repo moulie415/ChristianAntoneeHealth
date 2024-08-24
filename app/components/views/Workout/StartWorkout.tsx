@@ -67,10 +67,10 @@ const StartWorkout: React.FC<{
   }, [ap, updateProfileAction, profile.autoPlay]);
 
   useEffect(() => {
-    if (profile.workoutMusic) {
+    if (profile.workoutMusic && !planWorkout.disableWorkoutMusic) {
       playWorkoutSong();
     }
-  }, [profile.workoutMusic]);
+  }, [profile.workoutMusic, planWorkout.disableWorkoutMusic]);
 
   const endWorkout = useThrottle(async () => {
     const response = await endWatchWorkout();
@@ -184,6 +184,7 @@ const StartWorkout: React.FC<{
                         profile={profile}
                         i={i}
                         index={index}
+                        disableWorkoutMusic={planWorkout.disableWorkoutMusic}
                         workout={workout}
                         pagerRef={pagerRef}
                         timerPaused={timerPaused}
@@ -197,19 +198,6 @@ const StartWorkout: React.FC<{
                         }}
                       />
 
-                      {/* <WorkoutTabFooter
-                        onTimerPaused={paused =>
-                          setPauseEvents([
-                            ...pauseEvents,
-                            {time: new Date(), paused},
-                          ])
-                        }
-                        seconds={seconds}
-                        setTimerPaused={setTimerPaused}
-                        timerPaused={timerPaused}
-                        workout={workout}
-                        index={index}
-                      /> */}
                       <View style={{flexDirection: 'row', flex: 1}}>
                         {index === 0 && (
                           <TouchableOpacity

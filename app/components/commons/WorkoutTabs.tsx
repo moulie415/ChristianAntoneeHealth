@@ -19,6 +19,7 @@ const WorkoutTabs: React.FC<{
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
   profile: Profile;
+  disableWorkoutMusic: boolean;
 }> = ({
   tabIndex,
   setTabIndex,
@@ -30,6 +31,7 @@ const WorkoutTabs: React.FC<{
   timerPaused,
   onTimerPaused,
   profile,
+  disableWorkoutMusic
 }) => {
   const tabs = useMemo(() => {
     const t = ['Timer', 'Muscles'];
@@ -53,6 +55,7 @@ const WorkoutTabs: React.FC<{
             pagerRef={pagerRef}
             timerPaused={timerPaused}
             onTimerPaused={onTimerPaused}
+            disableWorkoutMusic={disableWorkoutMusic}
           />
         )}
         {i !== index && tabIndex === 0 && <View style={{height: 200}} />}

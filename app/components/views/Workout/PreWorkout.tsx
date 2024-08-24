@@ -203,10 +203,15 @@ const PreWorkout: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite, flex: 1}}>Workout music</Text>
+          <Text style={{color: colors.appWhite, flex: 1}}>
+            {planWorkout.disableWorkoutMusic
+              ? 'Disabled for this workout'
+              : 'Workout music'}
+          </Text>
           <Toggle
             style={{marginRight: 20}}
-            value={wMusic}
+            value={planWorkout.disableWorkoutMusic ? false : wMusic}
+            disabled={planWorkout.disableWorkoutMusic}
             onValueChange={setWMusic}
           />
         </View>

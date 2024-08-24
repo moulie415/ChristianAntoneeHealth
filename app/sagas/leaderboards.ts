@@ -204,7 +204,12 @@ function createBackgroundFetchChannel() {
     };
 
     BackgroundFetch.configure(
-      {minimumFetchInterval: 15, enableHeadless: true, stopOnTerminate: false},
+      {
+        minimumFetchInterval: 15,
+        enableHeadless: true,
+        stopOnTerminate: false,
+        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY,
+      },
       onEvent,
       onTimeout,
     ).then(status => {

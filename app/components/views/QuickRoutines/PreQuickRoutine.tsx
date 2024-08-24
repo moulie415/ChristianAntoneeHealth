@@ -35,7 +35,16 @@ const PreQuickRoutine: React.FC<{
 
   const [loading, setLoading] = useState(false);
   const {
-    routine: {name, thumbnail, area, equipment, level, exerciseIds, preview},
+    routine: {
+      name,
+      thumbnail,
+      area,
+      equipment,
+      level,
+      exerciseIds,
+      preview,
+      disableWorkoutMusic,
+    },
   } = route.params;
   const exercises = useMemo(() => {
     return exerciseIds.map(id => {
@@ -239,10 +248,15 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite, flex: 1}}>Workout music</Text>
+          <Text style={{color: colors.appWhite, flex: 1}}>
+            {disableWorkoutMusic
+              ? 'Disabled for this workout'
+              : 'Workout music'}
+          </Text>
           <Toggle
             style={{marginRight: 20}}
-            value={wMusic}
+            value={disableWorkoutMusic ? false : wMusic}
+            disabled={disableWorkoutMusic}
             onValueChange={setWMusic}
           />
         </View>

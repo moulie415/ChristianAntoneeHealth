@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, {RefObject, useState} from 'react';
-import { View} from 'react-native';
+import {View} from 'react-native';
 import {
   ColorFormat,
   CountdownCircleTimer,
@@ -28,6 +28,7 @@ const ExerciseTimer: React.FC<{
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
   profile: Profile;
+  disableWorkoutMusic: boolean;
 }> = ({
   index,
   workout,
@@ -37,6 +38,7 @@ const ExerciseTimer: React.FC<{
   timerPaused,
   onTimerPaused,
   profile,
+  disableWorkoutMusic,
 }) => {
   const [key, setKey] = useState<'prep' | 'exercise'>('prep');
 
@@ -54,7 +56,7 @@ const ExerciseTimer: React.FC<{
 
   const onPress = () => {
     onTimerPaused(!timerPaused);
-    if (profile.workoutMusic) {
+    if (profile.workoutMusic && !disableWorkoutMusic) {
       if (timerPaused) {
         workoutSong.play();
       } else {

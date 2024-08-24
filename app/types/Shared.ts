@@ -222,6 +222,7 @@ export interface PlanWorkout {
   exercises: PlanExercise[];
   today?: boolean;
   level: Level;
+  disableWorkoutMusic: boolean;
 }
 
 export interface PlanNutrition {

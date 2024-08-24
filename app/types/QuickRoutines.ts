@@ -13,4 +13,5 @@ export default interface QuickRoutine {
   exerciseIds: string[];
   thumbnail?: {src: string; title: string};
   preview?: {src: string; title: string};
+  disableWorkoutMusic: boolean;
 }
