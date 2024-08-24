@@ -133,12 +133,10 @@ const Premium: React.FC<{
             onActivated();
           }
         }
-      } catch (e) {
+      } catch (e: any) {
         setLoading(false);
-        // @ts-ignore
         if (!e.userCancelled) {
           logError(e);
-          // @ts-ignore
           Alert.alert('Error', e.message);
         }
       }

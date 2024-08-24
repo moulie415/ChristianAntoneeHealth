@@ -2286,6 +2286,8 @@ PODS:
     - Yoga
   - react-native-in-app-review (4.3.3):
     - React-Core
+  - react-native-netinfo (11.3.2):
+    - React-Core
   - react-native-pager-view (6.3.0):
     - DoubleConversion
     - glog
@@ -2888,6 +2890,7 @@ DEPENDENCIES:
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-in-app-review (from `../node_modules/react-native-in-app-review`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
@@ -3095,6 +3098,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-in-app-review:
     :path: "../node_modules/react-native-in-app-review"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -3323,6 +3328,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk-next: 84746ea062dc3b1a422154d7674ba4c5836b6d82
   react-native-image-picker: 8b791a2bec6da84ca7d8cbcad30da159d6dd6da4
   react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
+  react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
   react-native-pager-view: b4ba00095f74ab430250cef2a119a5e2491b2c8d
   react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe

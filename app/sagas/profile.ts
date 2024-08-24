@@ -16,6 +16,7 @@ import {
   throttle,
 } from 'redux-saga/effects';
 
+import {NetInfoState, fetch} from '@react-native-community/netinfo';
 import db from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
@@ -113,6 +114,7 @@ import {checkWorkoutStreak, getAllExercises} from './exercises';
 import {checkStepsCalories} from './leaderboards';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
+
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
     console.log('failed to load the sound', error);
@@ -952,9 +954,15 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       return;
     }
     navigate('Login');
-    logError(e);
-    if (e instanceof Error) {
-      Alert.alert('Error', e.message);
+
+    const state: NetInfoState = yield call(fetch);
+    if (state.isConnected && state.isInternetReachable) {
+      logError(e);
+      if (e instanceof Error) {
+        Alert.alert('Error', e.message);
+      }
+    } else {
+      navigate('Offline');
     }
   }
 }

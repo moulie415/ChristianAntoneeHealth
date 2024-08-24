@@ -32,6 +32,7 @@ import ForgotPassword from './components/views/ForgotPassword';
 import Loading from './components/views/Loading';
 import Login from './components/views/Login';
 import LoginEmail from './components/views/LoginEmail';
+import Offline from './components/views/Offline';
 import MonthlyDayView from './components/views/Plan/MonthlyDayView';
 import PlanNutrition from './components/views/Plan/PlanNutrition';
 import PlanSleep from './components/views/Plan/PlanSleep';
@@ -170,6 +171,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
         <Stack.Screen name="ReportProblem" component={ReportProblem} />
         <Stack.Screen name="WorkoutBreakdown" component={WorkoutBreakdown} />
+        <Stack.Screen name="Offline" component={Offline} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
       </Stack.Group> */}
