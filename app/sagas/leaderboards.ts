@@ -16,7 +16,7 @@ import {
 } from 'redux-saga/effects';
 import {RootState} from '../App';
 import * as api from '../helpers/api';
-import {getCalorieSamples, getStepSamples} from '../helpers/biometrics';
+import {getStepSamples} from '../helpers/biometrics';
 import {logError} from '../helpers/error';
 import {getGoalsData} from '../helpers/goals';
 import {CHECK_STEPS_CALORIES} from '../reducers/exercises';
@@ -139,18 +139,18 @@ export function* checkStepsCalories() {
         };
       }
 
-      const weeklyCalorieSamples: Sample[] = yield call(
-        getCalorieSamples,
-        moment().startOf('isoWeek').toDate(),
-        moment().toDate(),
-      );
+      // const weeklyCalorieSamples: Sample[] = yield call(
+      //   getCalorieSamples,
+      //   moment().startOf('isoWeek').toDate(),
+      //   moment().toDate(),
+      // );
 
-      const weeklyCalorieSamplesCombined = Math.round(
-        weeklyCalorieSamples.reduce((acc, cur) => acc + cur.value, 0),
-      );
+      // const weeklyCalorieSamplesCombined = Math.round(
+      //   weeklyCalorieSamples.reduce((acc, cur) => acc + cur.value, 0),
+      // );
 
       const higherWeeklyCalories = _.max([
-        weeklyCalorieSamplesCombined,
+        // weeklyCalorieSamplesCombined,
         calories,
       ]);
 
@@ -204,7 +204,7 @@ function createBackgroundFetchChannel() {
     };
 
     BackgroundFetch.configure(
-      {minimumFetchInterval: 15},
+      {minimumFetchInterval: 15, enableHeadless: true, stopOnTerminate: false},
       onEvent,
       onTimeout,
     ).then(status => {
