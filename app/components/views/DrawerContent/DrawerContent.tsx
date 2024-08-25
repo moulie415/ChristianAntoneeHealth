@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import * as Sentry from '@sentry/react-native';
 import React, {ReactNode} from 'react';
 import {Alert, FlatList, Share, TouchableOpacity, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
@@ -87,6 +88,7 @@ const DrawerContent: React.FC<Props> = ({
             await messaging().deleteToken();
             await Purchases.logOut();
             await auth().signOut();
+            Sentry.setUser(null);
             try {
               if (
                 user?.providerData?.find(

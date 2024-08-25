@@ -1,28 +1,14 @@
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {EventChannel, eventChannel} from '@redux-saga/core';
-import moment from 'moment';
-import PushNotification from 'react-native-push-notification';
-import {
-  all,
-  call,
-  debounce,
-  delay,
-  fork,
-  put,
-  select,
-  take,
-  takeLatest,
-  throttle,
-} from 'redux-saga/effects';
-
 import {NetInfoState, fetch} from '@react-native-community/netinfo';
-import db from '@react-native-firebase/firestore';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
 import {statusCodes} from '@react-native-google-signin/google-signin';
+import {EventChannel, eventChannel} from '@redux-saga/core';
 import {PayloadAction} from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react-native';
 import _ from 'lodash';
+import moment from 'moment';
 import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 import {Audio, Image, Video} from 'react-native-compressor';
 import {
@@ -38,9 +24,22 @@ import {openInbox} from 'react-native-email-link';
 import RNFS from 'react-native-fs';
 import googleFit from 'react-native-google-fit';
 import Purchases from 'react-native-purchases';
+import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
 import Sound from 'react-native-sound';
 import {updateApplicationContext} from 'react-native-watch-connectivity';
+import {
+  all,
+  call,
+  debounce,
+  delay,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
+  throttle,
+} from 'redux-saga/effects';
 import {RootState, store} from '../App';
 import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
 import {scheduleLocalNotification} from '../helpers';
@@ -889,6 +888,14 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         uid: user.uid || '',
         name: doc.exists ? doc.data()?.name || '' : '',
         surname: doc.exists ? doc.data()?.surname || '' : '',
+      });
+
+      Sentry.setUser({
+        id: user.uid,
+        email: user.email || '',
+        username: doc.exists
+          ? `${doc.data()?.name} ${doc.data()?.surname || ''}`
+          : '',
       });
 
       yield fork(checkDeviceInfoChanged);
