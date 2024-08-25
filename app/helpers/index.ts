@@ -421,15 +421,14 @@ export const getTableCategory = (
   });
 };
 
-export const getTableMax = (table: Table, col: string) => {
+export const getTableMax = (table: Table, col: keyof Row) => {
   let max = 0;
-  Object.keys(table).forEach(key => {
+  (Object.keys(table) as (keyof Table)[]).forEach(key => {
     if (key !== 'age') {
-      // @ts-ignore
-      const values: Cell = table[key][col];
-      if (values.higher && Number(values.higher) > max) {
+      const values = table[key]?.[col];
+      if (values?.higher && Number(values.higher) > max) {
         max = Number(values.higher);
-      } else if (values.lower && Number(values.lower) > max) {
+      } else if (values?.lower && Number(values.lower) > max) {
         max = Number(values.lower);
       }
     }
@@ -444,8 +443,7 @@ export const getTableAverage = (table: Table, col: keyof Row) => {
 export const getPercentile = (table: PercentileTable, score: number) => {
   let prevPercentile = 'bottom';
   for (let i = 1; i < 10; i++) {
-    const percentile = `${i}0th`;
-    // @ts-ignore
+    const percentile = `${i}0th` as keyof PercentileTable;
     const val = table[percentile];
     if (score < val) {
       return prevPercentile;

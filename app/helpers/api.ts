@@ -73,11 +73,9 @@ export const appleSignIn = async (
     }
     return {credentials, appleAuthRequestResponse};
   } catch (e) {
-    if (e instanceof Error) {
+    if (e instanceof Error && 'code' in e) {
       if (
-        //@ts-ignore
         e.code !== appleAuth.Error.CANCELED &&
-        //@ts-ignore
         e.code !== appleAuth.Error.UNKNOWN
       ) {
         Alert.alert('Error', e.message);
@@ -173,8 +171,7 @@ export const googleSignIn = async (
       handleAuthAction(credentials.user);
     }
     return credentials;
-  } catch (e) {
-    // @ts-ignore
+  } catch (e: any) {
     if (e.code !== statusCodes.SIGN_IN_CANCELLED) {
       if (e instanceof Error) {
         Alert.alert('Error', e.message);

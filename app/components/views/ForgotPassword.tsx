@@ -38,8 +38,9 @@ const ForgotPassword: React.FC<{
             navigation.goBack();
             Alert.alert('Success', 'Please check your email');
           } catch (e) {
-            // @ts-ignore
-            Alert.alert('Error', e.message);
+            if (e instanceof Error) {
+              Alert.alert('Error', e.message);
+            }
           }
           setLoading(false);
         }}

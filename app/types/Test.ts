@@ -41,13 +41,13 @@ export interface Cell {
 }
 
 export interface PercentileTable {
-  '10th': string;
-  '20th': string;
-  '30th': string;
-  '40th': string;
-  '50th': string;
-  '60th': string;
-  '70th': string;
-  '80th': string;
-  '90th': string;
+  '10th': number;
+  '20th': number;
+  '30th': number;
+  '40th': number;
+  '50th': number;
+  '60th': number;
+  '70th': number;
+  '80th': number;
+  '90th': number;
 }

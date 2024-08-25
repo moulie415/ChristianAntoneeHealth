@@ -11,15 +11,11 @@ const Row: React.FC<{
   table: PercentileTableType;
   score: number;
 }> = ({row, table, score}) => {
-  const percentile = `${row}0th`;
-  const nextPercentile = `${row + 1}0th`;
+  const percentile = `${row}0th` as keyof PercentileTableType;
+  const nextPercentile = `${row + 1}0th` as keyof PercentileTableType;
   const highlight =
-    // @ts-ignore
     score > table[percentile] &&
-    // @ts-ignore
-    (!table[nextPercentile] ||
-      // @ts-ignore
-      score < table[nextPercentile]);
+    (!table[nextPercentile] || score < table[nextPercentile]);
 
   return (
     <View style={{flexDirection: 'row'}}>
@@ -50,7 +46,6 @@ const Row: React.FC<{
           borderColor: colors.appWhite,
           backgroundColor: highlight ? colors.appBlue : undefined,
         }}>
-        {/* @ts-ignore */}
         {table[percentile]}
       </Text>
     </View>
