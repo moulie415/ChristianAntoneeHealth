@@ -1,9 +1,8 @@
 import * as _ from 'lodash';
 import moment from 'moment';
-import {Alert, Share} from 'react-native';
+import {Share} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {capitalizeFirstLetter} from '.';
-import {navigate} from '../RootNavigation';
 import Exercise, {Muscle} from '../types/Exercise';
 import {Equipment, Gender, Level} from '../types/Shared';
 import {logError} from './error';
@@ -210,17 +209,6 @@ export const shareWorkout = async (workout: Exercise[], name: string) => {
     Snackbar.show({text: 'Error sharing workout'});
     logError(e);
   }
-};
-
-export const alertPremiumFeature = () => {
-  Alert.alert(
-    'Sorry',
-    'That feature requires premium, would you like to subscribe to premium?',
-    [
-      {text: 'No thanks'},
-      {text: 'Yes', onPress: () => navigate('Premium', {})},
-    ],
-  );
 };
 
 export const getEquipmentList = (exercises: Exercise[]) => {

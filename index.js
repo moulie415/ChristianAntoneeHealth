@@ -11,7 +11,6 @@ import {navigate, navigationRef} from './app/RootNavigation';
 import * as api from './app/helpers/api';
 import {getStepSamples} from './app/helpers/biometrics';
 import {logError} from './app/helpers/error';
-import {alertPremiumFeature} from './app/helpers/exercises';
 import {setUnread} from './app/reducers/profile';
 import {
   CONNECTION_ID,
@@ -134,8 +133,6 @@ PushNotification.configure({
         const premium = store.getState().profile.profile.premium;
         if (premium) {
           navigate('Connections');
-        } else {
-          alertPremiumFeature();
         }
       } else if (notification.foreground) {
         PushNotification.localNotification({
@@ -150,8 +147,6 @@ PushNotification.configure({
         const premium = store.getState().profile.profile.premium;
         if (premium) {
           navigate('Connections');
-        } else {
-          alertPremiumFeature();
         }
       } else if (notification.foreground) {
         const handleMessageNotification = () => {
