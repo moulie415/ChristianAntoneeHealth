@@ -14,7 +14,6 @@ import {logError} from './app/helpers/error';
 import {setUnread} from './app/reducers/profile';
 import {
   CONNECTION_ID,
-  LEADERBOARD_CHANNEL_ID,
   MESSAGE_CHANNEL_ID,
   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
   PLAN_CHANNEL_ID,
@@ -100,89 +99,62 @@ PushNotification.configure({
   // (required) Called when a remote or local notification is opened or received
   onNotification: notification => {
     console.log('NOTIFICATION:', notification);
+
+    const {unread, premium} = store.getState().profile.profile;
     if (notification.userInteraction) {
       if (notification.data.url) {
         Linking.openURL(notification.data.url);
-        return;
       }
       if (
-        notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID ||
-        notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID
+        (notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID ||
+          notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID ||
+          notification.data.channelId === PLAN_CHANNEL_ID) &&
+        navigationRef.current &&
+        premium
       ) {
         navigate('Plan');
       }
-    }
-    if (notification.data.channelId === PLAN_CHANNEL_ID) {
-      if (navigationRef.current && notification.userInteraction) {
-        navigate('Plan');
-      } else if (notification.foreground) {
-        PushNotification.localNotification({
-          ...notification,
-          message: notification.message || '',
-          title: notification.title || '',
-        });
-        const {unread, premium} = store.getState().profile.profile;
+
+      if (
+        (notification.data.channelId === CONNECTION_ID ||
+          notification.data.channelId === MESSAGE_CHANNEL_ID) &&
+        navigationRef.current &&
+        premium
+      ) {
+        navigate('Connections');
+      }
+    } else if (notification.foreground) {
+      if (notification.data.channelId === PLAN_CHANNEL_ID) {
         if (premium) {
           const newUnread = unread && unread.plan ? unread.plan + 1 : 1;
           store.dispatch(setUnread({...unread, ['plan']: newUnread}));
         }
       }
-    }
-    if (notification.data.channelId === CONNECTION_ID) {
-      if (navigationRef.current && notification.userInteraction) {
-        const premium = store.getState().profile.profile.premium;
-        if (premium) {
-          navigate('Connections');
-        }
-      } else if (notification.foreground) {
-        PushNotification.localNotification({
-          ...notification,
-          message: notification.message || '',
-          title: notification.title || '',
-        });
-      }
-    }
-    if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
-      if (navigationRef.current && notification.userInteraction) {
-        const premium = store.getState().profile.profile.premium;
-        if (premium) {
-          navigate('Connections');
-        }
-      } else if (notification.foreground) {
-        const handleMessageNotification = () => {
-          PushNotification.localNotification({
-            ...notification,
-            message: notification.message || '',
-            title: notification.title || '',
-          });
-          const {unread, premium} = store.getState().profile.profile;
-          if (premium) {
-            const {uid} = notification.data;
-            const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
-            store.dispatch(setUnread({...unread, [uid]: newUnread}));
-          }
-        };
-        if (
-          navigationRef.current &&
-          store.getState().profile.state === 'active'
-        ) {
-          const route = navigationRef.current.getCurrentRoute();
-          if (
-            !(
-              route.name === 'Chat' &&
-              route.params?.uid === notification.data.uid
-            )
-          ) {
-            handleMessageNotification();
-          }
-        } else {
-          handleMessageNotification();
-        }
-      }
-    }
 
-    if (notification.data.channelId === LEADERBOARD_CHANNEL_ID) {
-      if (notification.foreground && !notification.userInteraction) {
+      if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
+        if (premium) {
+          const {uid} = notification.data;
+          const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
+          store.dispatch(setUnread({...unread, [uid]: newUnread}));
+        }
+      }
+
+      let shouldShowNotification = true;
+
+      if (
+        navigationRef.current &&
+        store.getState().profile.state === 'active'
+      ) {
+        const route = navigationRef.current.getCurrentRoute();
+        if (
+          route.name === 'Chat' &&
+          route.params?.uid === notification.data.uid
+        ) {
+          shouldShowNotification = false;
+        }
+      }
+
+      if (shouldShowNotification) {
         PushNotification.localNotification({
           ...notification,
           message: notification.message || '',

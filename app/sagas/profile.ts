@@ -390,6 +390,7 @@ export const MESSAGE_CHANNEL_ID = 'MESSAGE_CHANNEL_ID';
 export const PLAN_CHANNEL_ID = 'PLAN_CHANNEL_ID';
 export const GOALS_CHANNEL_ID = 'GOALS_CHANNEL_ID';
 export const LEADERBOARD_CHANNEL_ID = 'LEADERBOARD_CHANNEL_ID';
+export const DEFAULT_CHANNEL_ID = 'DEFAULT_CHANNEL_ID';
 
 const channels: {
   channelId: string;
@@ -430,6 +431,12 @@ const channels: {
     channelId: LEADERBOARD_CHANNEL_ID,
     channelName: 'Leaderboards',
     channelDescription: 'Channel to give you updates about leaderboards',
+  },
+
+  {
+    channelId: DEFAULT_CHANNEL_ID,
+    channelName: 'Default channel',
+    channelDescription: 'Used for admin notifications',
   },
 ];
 
