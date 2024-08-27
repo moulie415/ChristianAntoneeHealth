@@ -100,6 +100,8 @@ PushNotification.configure({
   onNotification: notification => {
     console.log('NOTIFICATION:', notification);
 
+    let shouldShowNotification = true;
+
     const {unread, premium} = store.getState().profile.profile;
     if (notification.userInteraction) {
       if (notification.data.url) {
@@ -111,7 +113,10 @@ PushNotification.configure({
           notification.data.channelId === PLAN_CHANNEL_ID) &&
         navigationRef.current
       ) {
-        if (premium) {
+        const route = navigationRef.current.getCurrentRoute();
+        if (route.name === 'Plan') {
+          shouldShowNotification = false;
+        } else if (premium) {
           navigate('Plan');
         } else {
           navigate('Premium', {});
@@ -124,21 +129,19 @@ PushNotification.configure({
         navigationRef.current
       ) {
         if (premium) {
-          navigate('Connections');
+          if (
+            notification.data.channelId === MESSAGE_CHANNEL_ID &&
+            notification.data.uid
+          ) {
+            navigate('Chat', {uid: notification.data.uid});
+          } else {
+            navigate('Connections');
+          }
         } else {
           navigate('Premium', {});
         }
       }
     } else if (notification.foreground) {
-      if (notification.data.channelId === PLAN_CHANNEL_ID) {
-        if (premium) {
-          const newUnread = unread && unread.plan ? unread.plan + 1 : 1;
-          store.dispatch(setUnread({...unread, ['plan']: newUnread}));
-        }
-      }
-
-      let shouldShowNotification = true;
-
       if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
         if (
           navigationRef.current &&
@@ -152,12 +155,6 @@ PushNotification.configure({
             shouldShowNotification = false;
           }
         }
-
-        if (premium && shouldShowNotification) {
-          const {uid} = notification.data;
-          const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
-          store.dispatch(setUnread({...unread, [uid]: newUnread}));
-        }
       }
 
       if (shouldShowNotification) {
@@ -166,6 +163,19 @@ PushNotification.configure({
           message: notification.message || '',
           title: notification.title || '',
         });
+      }
+    }
+
+    if (!notification.userInteraction && shouldShowNotification && premium) {
+      if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
+        const {uid} = notification.data;
+        const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
+        store.dispatch(setUnread({...unread, [uid]: newUnread}));
+      }
+
+      if (notification.data.channelId === PLAN_CHANNEL_ID) {
+        const newUnread = unread && unread.plan ? unread.plan + 1 : 1;
+        store.dispatch(setUnread({...unread, ['plan']: newUnread}));
       }
     }
 
