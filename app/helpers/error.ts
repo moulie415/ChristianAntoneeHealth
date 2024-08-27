@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react-native';
-import DeviceInfo from 'react-native-device-info';
 
 export const ignoredErrors = [
   'firestore/permission-denied',
@@ -23,13 +22,6 @@ export const logError = async (e: Error | any) => {
   }
 
   try {
-    const isEmulator = await DeviceInfo.isEmulator();
-
-    if (isEmulator) {
-      console.warn(e);
-      return;
-    }
-
     if (__DEV__) {
       console.warn(e);
     }
