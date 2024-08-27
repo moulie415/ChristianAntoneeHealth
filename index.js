@@ -109,19 +109,25 @@ PushNotification.configure({
         (notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID ||
           notification.channelId === MONTHLY_TEST_REMINDERS_CHANNEL_ID ||
           notification.data.channelId === PLAN_CHANNEL_ID) &&
-        navigationRef.current &&
-        premium
+        navigationRef.current
       ) {
-        navigate('Plan');
+        if (premium) {
+          navigate('Plan');
+        } else {
+          navigate('Premium', {});
+        }
       }
 
       if (
         (notification.data.channelId === CONNECTION_ID ||
           notification.data.channelId === MESSAGE_CHANNEL_ID) &&
-        navigationRef.current &&
-        premium
+        navigationRef.current
       ) {
-        navigate('Connections');
+        if (premium) {
+          navigate('Connections');
+        } else {
+          navigate('Premium', {});
+        }
       }
     } else if (notification.foreground) {
       if (notification.data.channelId === PLAN_CHANNEL_ID) {
@@ -131,26 +137,26 @@ PushNotification.configure({
         }
       }
 
+      let shouldShowNotification = true;
+
       if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
-        if (premium) {
+        if (
+          navigationRef.current &&
+          store.getState().profile.state === 'active'
+        ) {
+          const route = navigationRef.current.getCurrentRoute();
+          if (
+            route.name === 'Chat' &&
+            route.params?.uid === notification.data.uid
+          ) {
+            shouldShowNotification = false;
+          }
+        }
+
+        if (premium && shouldShowNotification) {
           const {uid} = notification.data;
           const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
           store.dispatch(setUnread({...unread, [uid]: newUnread}));
-        }
-      }
-
-      let shouldShowNotification = true;
-
-      if (
-        navigationRef.current &&
-        store.getState().profile.state === 'active'
-      ) {
-        const route = navigationRef.current.getCurrentRoute();
-        if (
-          route.name === 'Chat' &&
-          route.params?.uid === notification.data.uid
-        ) {
-          shouldShowNotification = false;
         }
       }
 
