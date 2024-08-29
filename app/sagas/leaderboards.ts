@@ -88,8 +88,14 @@ export function* checkStepsCalories(background?: boolean) {
     );
 
     const {loggedIn, weeklyItems} = profileState;
-    const {dailySteps, weeklySteps, targets, weeklyCalories, dailyCalories} =
-      profileState.profile;
+    const {
+      dailySteps,
+      weeklySteps,
+      targets,
+      weeklyCalories,
+      dailyCalories,
+      uid,
+    } = profileState.profile;
 
     let updatePayload: UpdateProfilePayload = {disableSnackbar: true};
 
@@ -201,7 +207,7 @@ export function* checkStepsCalories(background?: boolean) {
           });
 
           if (background) {
-            yield call(api.updateUser, updatePayload, profileState.profile.uid);
+            yield call(api.updateUser, updatePayload, uid);
           } else {
             yield put(updateProfile(updatePayload));
           }
