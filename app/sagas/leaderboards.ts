@@ -199,7 +199,12 @@ export function* checkStepsCalories(background?: boolean) {
             data: updatePayload,
             level: 'info',
           });
-          yield put(updateProfile(updatePayload));
+
+          if (background) {
+            yield call(api.updateUser, updatePayload, profileState.profile.uid);
+          } else {
+            yield put(updateProfile(updatePayload));
+          }
         }
       }
     }
