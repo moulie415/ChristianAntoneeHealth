@@ -1,4 +1,5 @@
 import {PayloadAction} from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
 import BackgroundFetch from 'react-native-background-fetch';
@@ -70,8 +71,14 @@ export function* submitLeaderboardScore(
   }
 }
 
-export function* checkStepsCalories() {
+export function* checkStepsCalories(background?: boolean) {
   try {
+    if (background) {
+      Sentry.addBreadcrumb({
+        message: 'User opted into leaderboards, now fetching samples...',
+        level: 'info',
+      });
+    }
     const profileState: ProfileState = yield select(
       (state: RootState) => state.profile,
     );
@@ -87,6 +94,12 @@ export function* checkStepsCalories() {
     let updatePayload: UpdateProfilePayload = {disableSnackbar: true};
 
     if (loggedIn) {
+      if (background) {
+        Sentry.addBreadcrumb({
+          message: 'User logged into, continuing with fetching samples...',
+          level: 'info',
+        });
+      }
       const dailyStepsSamples: Sample[] = yield call(getStepSamples);
       if (dailyStepsSamples) {
         const steps = dailyStepsSamples.reduce(
@@ -98,12 +111,19 @@ export function* checkStepsCalories() {
           updatePayload = {...updatePayload, dailySteps: steps};
         }
       }
-
+      if (background) {
+        Sentry.addBreadcrumb({
+          message: 'User daily steps fetched',
+          data: updatePayload,
+          level: 'info',
+        });
+      }
       const weeklyStepsSamples: Sample[] = yield call(
         getStepSamples,
         moment().utc().startOf('isoWeek').toDate(),
         moment().utc().endOf('day').toDate(),
       );
+
       if (weeklyStepsSamples) {
         const steps = weeklyStepsSamples.reduce(
           (acc, cur) => acc + cur.value,
@@ -113,6 +133,13 @@ export function* checkStepsCalories() {
         if (steps !== weeklySteps) {
           updatePayload = {...updatePayload, weeklySteps: steps};
         }
+      }
+      if (background) {
+        Sentry.addBreadcrumb({
+          message: 'User weekly steps fetched',
+          data: updatePayload,
+          level: 'info',
+        });
       }
 
       const {calories, dailyCalories: dCalories} = getGoalsData(
@@ -167,6 +194,11 @@ export function* checkStepsCalories() {
       if (Object.values(updatePayload).length > 1) {
         // do this check to avoid updating steps when on simulator
         if (!__DEV__) {
+          Sentry.addBreadcrumb({
+            message: 'Update payload has items, updating user...',
+            data: updatePayload,
+            level: 'info',
+          });
           yield put(updateProfile(updatePayload));
         }
       }
@@ -187,7 +219,7 @@ function* handleBackgroundFetchEvent(action: {
   } else {
     const {profile} = yield select((state: RootState) => state.profile);
     if (profile.premium && profile.optedInToLeaderboards) {
-      yield call(checkStepsCalories);
+      yield call(checkStepsCalories, true);
     }
     BackgroundFetch.finish(taskId);
   }

@@ -1,6 +1,7 @@
 //import './wdyr';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
+import * as Sentry from '@sentry/react-native';
 import moment from 'moment';
 import {AppRegistry, Linking, Platform} from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
@@ -28,6 +29,7 @@ let MyHeadlessTask = async event => {
     // This task has exceeded its allowed running-time.
     // You must stop what you're doing immediately finish(taskId)
     console.log('[BackgroundFetch] Headless TIMEOUT:', taskId);
+    logError(new Error('Task timed out'));
     BackgroundFetch.finish(taskId);
     return;
   }
@@ -40,6 +42,11 @@ let MyHeadlessTask = async event => {
     let updatePayload = {};
 
     if (premium && optedInToLeaderboards) {
+      Sentry.addBreadcrumb({
+        message: 'User opted into leaderboards, now fetching samples...',
+        level: 'info',
+      });
+
       const dailyStepsSamples = await getStepSamples();
 
       if (dailyStepsSamples) {
@@ -52,6 +59,12 @@ let MyHeadlessTask = async event => {
           updatePayload = {...updatePayload, dailySteps: steps};
         }
       }
+
+      Sentry.addBreadcrumb({
+        message: 'User daily steps fetched',
+        data: updatePayload,
+        level: 'info',
+      });
 
       const weeklyStepsSamples = await getStepSamples(
         moment().utc().startOf('isoWeek').toDate(),
@@ -68,9 +81,20 @@ let MyHeadlessTask = async event => {
         }
       }
 
+      Sentry.addBreadcrumb({
+        message: 'User weekly steps fetched',
+        data: updatePayload,
+        level: 'info',
+      });
+
       if (Object.values(updatePayload).length > 0) {
         // do this check to avoid updating steps when on simulator
         if (!__DEV__) {
+          Sentry.addBreadcrumb({
+            message: 'Update payload has items, updating user...',
+            data: updatePayload,
+            level: 'info',
+          });
           await api.updateUser(updatePayload, profile.uid);
         }
       }
