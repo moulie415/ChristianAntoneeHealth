@@ -200,13 +200,12 @@ export function* checkStepsCalories(background?: boolean) {
       if (Object.values(updatePayload).length > 1) {
         // do this check to avoid updating steps when on simulator
         if (!__DEV__) {
-          Sentry.addBreadcrumb({
-            message: 'Update payload has items, updating user...',
-            data: updatePayload,
-            level: 'info',
-          });
-
           if (background) {
+            Sentry.addBreadcrumb({
+              message: 'Update payload has items, updating user...',
+              data: updatePayload,
+              level: 'info',
+            });
             yield call(api.updateUser, updatePayload, uid);
           } else {
             yield put(updateProfile(updatePayload));
