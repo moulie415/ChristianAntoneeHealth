@@ -55,6 +55,7 @@ import {
   saveHeight,
   saveWeight,
 } from '../helpers/biometrics';
+import {checkVersion} from '../helpers/checkVersion';
 import {logError} from '../helpers/error';
 import {getGoalsData} from '../helpers/goals';
 import {PREMIUM_PLUS} from '../helpers/hasPremiumPlus';
@@ -355,12 +356,6 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
     if (fromProfile) {
       goBack();
     } else {
-      PushNotification.localNotification({
-        title: 'Great start you’ve set your goal!',
-        message:
-          'Well done for setting your first goal! Make sure you stay on track to hit your weekly targets by checking your profile tab!',
-        channelId: GOALS_CHANNEL_ID,
-      });
       resetToTabs();
     }
 
@@ -914,6 +909,15 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         }
 
         resetToTabs();
+
+        if (settings.promptUpdate && !__DEV__) {
+          yield fork(
+            checkVersion,
+            Platform.OS === 'ios'
+              ? settings.latestIOSVersion
+              : settings.latestAndroidVersion,
+          );
+        }
 
         const {premium} = yield select(
           (state: RootState) => state.profile.profile,

@@ -13,7 +13,7 @@ export const goalItems: GoalItem[] = [
 
 export const STORE_LINK =
   Platform.OS === 'ios'
-    ? 'https://apps.apple.com/us/app/health-and-movement/id1506679389'
+    ? 'https://apps.apple.com/app/health-and-movement/id1506679389'
     : 'https://play.google.com/store/apps/details?id=com.healthandmovement';
 
 const getInterstitialId = () => {

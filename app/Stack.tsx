@@ -63,6 +63,7 @@ import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutBreakdown from './components/views/Workout/WorkoutBreakdown';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
+import UpdatePrompt from './components/views/UpdatePrompt';
 
 const Drawer = createDrawerNavigator();
 
@@ -173,8 +174,9 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="WorkoutBreakdown" component={WorkoutBreakdown} />
         <Stack.Screen name="Offline" component={Offline} />
       </Stack.Group>
-      {/* <Stack.Group screenOptions={{presentation: 'modal'}}>
-      </Stack.Group> */}
+      <Stack.Group screenOptions={{presentation: 'modal'}}>
+        <Stack.Screen name="UpdatePrompt" component={UpdatePrompt} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

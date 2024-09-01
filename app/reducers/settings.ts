@@ -18,6 +18,10 @@ export interface SettingsState {
   voiceNotesDisabled: boolean;
   chatMaxFileSizeMb: number;
   premiumPlusMaxSubscriptions?: number;
+  latestAndroidVersion?: string;
+  latestIOSVersion?: string;
+  promptUpdate?: boolean;
+  forceUpdate?: boolean;
 }
 
 const initialState: SettingsState = {
