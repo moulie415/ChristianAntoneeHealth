@@ -1,23 +1,28 @@
-import React from 'react';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {capitalizeFirstLetter} from '../../helpers';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
-import {Profile} from '../../types/Shared';
+import {setHasViewedTargets} from '../../reducers/profile';
 import Button from '../commons/Button';
-import Modal from '../commons/Modal';
+import ModalExitButton from '../commons/ModalExitButton';
 import Text from '../commons/Text';
 
-const ICON_SIZE = 100;
 const Goals: React.FC<{
-  profile: Profile;
-  visible: boolean;
-  onRequestClose: () => void;
-}> = ({profile, visible, onRequestClose}) => {
+  navigation: NativeStackNavigationProp<StackParamList, 'TargetModal'>;
+}> = ({navigation}) => {
+  const {profile} = useAppSelector(state => state.profile);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setHasViewedTargets());
+  }, [dispatch]);
   const goalData = profile.targets;
   const workoutGoal = goalData?.workouts.number;
   const minsGoal = goalData?.mins;
@@ -26,15 +31,9 @@ const Goals: React.FC<{
   );
   const caloriesGoal = goalData?.calories || 0;
   return (
-    <Modal visible={visible} onRequestClose={onRequestClose}>
-      <View
-        style={{
-          backgroundColor: colors.appGrey,
-          width: '90%',
-          borderRadius: 10,
-          //  height: '50%',
-          padding: 20,
-        }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+      <ModalExitButton />
+      <View style={{flex: 1, justifyContent: 'center', marginHorizontal: 20}}>
         <Text
           style={{
             color: colors.appWhite,
@@ -105,18 +104,10 @@ const Goals: React.FC<{
           }}>
           These targets can be viewed anytime from the profile tab
         </Text>
-        <Button
-          text="Close"
-          style={{marginVertical: 10}}
-          onPress={onRequestClose}
-        />
       </View>
-    </Modal>
+      <Button text="Close" style={{margin: 20}} onPress={navigation.goBack} />
+    </SafeAreaView>
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
-  profile: profile.profile,
-});
-
-export default connect(mapStateToProps)(Goals);
+export default Goals;

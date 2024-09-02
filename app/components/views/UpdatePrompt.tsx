@@ -1,34 +1,18 @@
 import React from 'react';
-import {Linking, Text, TouchableOpacity, View} from 'react-native';
+import {Linking, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {goBack} from '../../RootNavigation';
 import {STORE_LINK} from '../../constants';
 import colors from '../../constants/colors';
 import {useAppSelector} from '../../hooks/redux';
 import Button from '../commons/Button';
+import ModalExitButton from '../commons/ModalExitButton';
 
 const UpdatePrompt = () => {
   const {forceUpdate} = useAppSelector(state => state.settings);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      {!forceUpdate && (
-        <TouchableOpacity
-          onPress={goBack}
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.4)',
-            width: 40,
-            height: 40,
-            borderRadius: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-            top: 20,
-            right: 20,
-            position: 'absolute',
-          }}>
-          <Icon name="xmark" color={colors.appWhite} size={25} />
-        </TouchableOpacity>
-      )}
+      {!forceUpdate && <ModalExitButton />}
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View
           style={{

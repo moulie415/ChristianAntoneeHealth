@@ -46,9 +46,11 @@ import RecipeCategories from './components/views/Recipes/RecipeCategories';
 import Recipes from './components/views/Recipes/Recipes';
 import SignUp from './components/views/SignUp';
 import SignUpFlow from './components/views/SignUpFlow/SignUpFlow';
+import TargetModal from './components/views/TargetModal';
 import FitnessTesting from './components/views/Tests/FitnessTesting';
 import Test from './components/views/Tests/Test';
 import TestResults from './components/views/Tests/TestResults';
+import UpdatePrompt from './components/views/UpdatePrompt';
 import ViewProfile from './components/views/ViewProfile';
 import CustomizeExercise from './components/views/Workout/CustomizeExercise';
 import EndWorkout from './components/views/Workout/EndWorkout';
@@ -63,7 +65,6 @@ import WhatArea from './components/views/Workout/WhatArea';
 import WorkoutBreakdown from './components/views/Workout/WorkoutBreakdown';
 import WorkoutList from './components/views/Workout/WorkoutList';
 import WorkoutSummary from './components/views/Workout/WorkoutSummary';
-import UpdatePrompt from './components/views/UpdatePrompt';
 
 const Drawer = createDrawerNavigator();
 
@@ -176,6 +177,7 @@ const StackComponent: React.FC = () => {
       </Stack.Group>
       <Stack.Group screenOptions={{presentation: 'modal'}}>
         <Stack.Screen name="UpdatePrompt" component={UpdatePrompt} />
+        <Stack.Screen name="TargetModal" component={TargetModal} />
       </Stack.Group>
     </Stack.Navigator>
   );

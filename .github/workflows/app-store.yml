@@ -115,10 +115,11 @@ jobs:
       - name: Build app
         run: |
           cd ios
-          xcodebuild clean -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement
-          xcodebuild build -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -destination 'generic/platform=iOS'
-          xcodebuild archive -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -archivePath archive.xcarchive
-          xcodebuild -exportArchive -archivePath archive.xcarchive -exportPath . -exportOptionsPlist exportOptions.plist
+          gem install xcpretty
+          xcodebuild clean -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild build -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -destination 'generic/platform=iOS' | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild archive -workspace HealthAndMovement.xcworkspace -scheme HealthAndMovement -archivePath archive.xcarchive | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild -exportArchive -archivePath archive.xcarchive -exportPath . -exportOptionsPlist exportOptions.plist | xcpretty && exit ${PIPESTATUS[0]}
       - name: Upload app to App Store Connect
         env:
           APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}

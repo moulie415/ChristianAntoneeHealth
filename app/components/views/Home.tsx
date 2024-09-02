@@ -1,16 +1,14 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
-import {setHasViewedTargets} from '../../reducers/profile';
 import {Goal, Profile} from '../../types/Shared';
 import Header from '../commons/Header';
 import HomeCard from '../commons/HomeCard';
-import TargetModal from './TargetModal';
 
 const {height, width} = Dimensions.get('window');
 
@@ -23,22 +21,13 @@ type HomeNavigationProp = NativeStackNavigationProp<StackParamList, 'Home'>;
 const Home: React.FC<{
   navigation: HomeNavigationProp;
   hasViewedTargets: boolean;
-  setHasViewedTargets: () => void;
   profile: Profile;
-}> = ({
-  navigation,
-  hasViewedTargets,
-  setHasViewedTargets: setHasViewedTargetsAction,
-  profile,
-}) => {
-  const [targetModalVisible, setTargetModalVisible] = useState(false);
+}> = ({navigation, hasViewedTargets, profile}) => {
   useEffect(() => {
     if (!hasViewedTargets && profile.goal && profile.goal !== Goal.OTHER) {
-      setTimeout(() => {
-        setTargetModalVisible(true);
-      }, 500);
+      navigation.navigate('TargetModal');
     }
-  }, [hasViewedTargets, profile.goal]);
+  }, [hasViewedTargets, profile.goal, navigation]);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
@@ -110,13 +99,6 @@ const Home: React.FC<{
           />
         </ScrollView>
       </SafeAreaView>
-      <TargetModal
-        visible={targetModalVisible}
-        onRequestClose={() => {
-          setTargetModalVisible(false);
-          setHasViewedTargetsAction();
-        }}
-      />
     </View>
   );
 };
@@ -126,8 +108,4 @@ const mapStateToProps = ({profile}: RootState) => ({
   profile: profile.profile,
 });
 
-const mapDispatchToProps = {
-  setHasViewedTargets,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

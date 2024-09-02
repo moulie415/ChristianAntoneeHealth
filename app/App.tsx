@@ -154,6 +154,7 @@ export type StackParamList = {
   WorkoutBreakdown: {workout: SavedQuickRoutine | SavedWorkout};
   Offline: undefined;
   UpdatePrompt: undefined;
+  TargetModal: undefined;
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
