@@ -2796,11 +2796,29 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSentry (5.30.0):
+  - RNSentry (5.31.1):
+    - DoubleConversion
+    - glog
     - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
     - React-hermes
-    - Sentry/HybridSDK (= 8.34.0)
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Sentry/HybridSDK (= 8.36.0)
+    - Yoga
   - RNSha256 (1.4.10):
     - React-Core
   - RNSnackbar (2.7.1):
@@ -2843,7 +2861,7 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry/HybridSDK (8.34.0)
+  - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
 
@@ -3393,7 +3411,7 @@ SPEC CHECKSUMS:
   RNPurchases: 4305de02b902d3c1e56a50295dc0a6e758b73095
   RNReanimated: f6b214732ff303cb815ac81b26bbfd2070b69f43
   RNScreens: fd2722bcc59f36a629205af8cc7b48e4bc0d09f5
-  RNSentry: 038afe562a53fa0ec791e1cd9fb66239c77a2818
+  RNSentry: 09c5679c6b4e84f64f99ef14f6eb759eec5063a5
   RNSha256: e1bc64e9e50b293d5282bb4caa1b2043931f1c9d
   RNSnackbar: eb4e012514c60433cbe933be0846e8f2abb6d2b6
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
@@ -3403,7 +3421,7 @@ SPEC CHECKSUMS:
   RNWatch: fd30ca40a5b5ef58dcbc195638e68219bc455236
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 1183df2306eea74ff0564c4bb1c2577ccd15d054
+  Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: bd92064a0d558be92786820514d74fc4dddd1233
 
