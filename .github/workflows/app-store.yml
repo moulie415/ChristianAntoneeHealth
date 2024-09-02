@@ -32,6 +32,7 @@ jobs:
           key: ${{ hashFiles('yarn.lock') }}
       - name: Install npm dependencies
         run: |
+          df -h
           yarn
       - uses: actions/cache@v3
         id: pod-cache
