@@ -914,8 +914,8 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
           yield fork(
             checkVersion,
             Platform.OS === 'ios'
-              ? settings.latestIOSVersion
-              : settings.latestAndroidVersion,
+              ? settings.minIOSVersion
+              : settings.minAndroidVersion,
           );
         }
 

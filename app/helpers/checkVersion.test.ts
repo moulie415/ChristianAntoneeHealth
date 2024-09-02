@@ -39,8 +39,16 @@ describe('checkVersion', () => {
   });
 
   it('should navigate to UpdatePrompt if the current version is lower than the latestVersion', () => {
-    (getVersion as jest.Mock).mockReturnValue('1.1.0');
-    checkVersion('1.2.0');
+    (getVersion as jest.Mock).mockReturnValue('1.2.0');
+    checkVersion('1.2.1');
+    expect(navigate).toHaveBeenCalledWith('UpdatePrompt');
+
+    (getVersion as jest.Mock).mockReturnValue('0.1.1');
+    checkVersion('3.0.0');
+    expect(navigate).toHaveBeenCalledWith('UpdatePrompt');
+
+    (getVersion as jest.Mock).mockReturnValue('1.0.3');
+    checkVersion('2.0');
     expect(navigate).toHaveBeenCalledWith('UpdatePrompt');
   });
 

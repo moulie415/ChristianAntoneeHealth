@@ -2,21 +2,40 @@ import {getVersion} from 'react-native-device-info';
 import {navigate} from '../RootNavigation';
 import {logError} from './error';
 
-export const checkVersion = (latestVersion?: string) => {
+const compareVersions = (v1: string, v2: string) => {
+  const v1Parts = v1.split('.').map(Number);
+  const v2Parts = v2.split('.').map(Number);
+
+  for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
+    const v1Part = v1Parts[i] || 0;
+    const v2Part = v2Parts[i] || 0;
+    if (v1Part > v2Part) {
+      return 1;
+    }
+    if (v1Part < v2Part) {
+      return -1;
+    }
+  }
+  return 0;
+};
+
+export const checkVersion = (minVersion?: string) => {
   try {
-    if (!latestVersion) {
+    if (!minVersion) {
       return;
     }
-    const parsedLatestVersion = parseFloat(latestVersion);
-    if (!parsedLatestVersion) {
+
+    if (!parseFloat(minVersion)) {
       return;
     }
 
     const version = getVersion();
 
-    const parsedVersion = parseFloat(version);
+    if (!parseFloat(version)) {
+      return;
+    }
 
-    if (parsedVersion && parsedVersion < parsedLatestVersion) {
+    if (version && compareVersions(version, minVersion) < 0) {
       navigate('UpdatePrompt');
     }
   } catch (e) {
