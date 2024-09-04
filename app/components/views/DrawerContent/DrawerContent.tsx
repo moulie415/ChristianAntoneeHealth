@@ -116,7 +116,35 @@ const DrawerContent: React.FC<Props> = ({
       },
     ]);
   };
-  const listItems: ListItem[] = [
+
+  const messageItem =
+    profile.client || profile.admin
+      ? {
+          title: 'Messaging',
+          icon: 'comment',
+          onPress: () => {
+            navigation.closeDrawer();
+            if (profile.admin || hasPremiumPlus(profile.premium)) {
+              navigationRef.navigate('Connections');
+            } else {
+              navigationRef.navigate('Premium', {});
+            }
+          },
+          accessoryRight:
+            profile.admin || hasPremiumPlus(profile.premium) ? (
+              <UnreadRowCount />
+            ) : (
+              <Icon
+                name="lock"
+                size={20}
+                style={{marginRight: 10}}
+                color={colors.appWhite}
+              />
+            ),
+        }
+      : null;
+
+  const listItems: (ListItem | null)[] = [
     {
       title: 'Education',
       icon: 'book-open',
@@ -125,29 +153,7 @@ const DrawerContent: React.FC<Props> = ({
         navigation.closeDrawer();
       },
     },
-    {
-      title: 'Messaging',
-      icon: 'comment',
-      onPress: () => {
-        navigation.closeDrawer();
-        if (profile.admin || hasPremiumPlus(profile.premium)) {
-          navigationRef.navigate('Connections');
-        } else {
-          navigationRef.navigate('Premium', {});
-        }
-      },
-      accessoryRight:
-        profile.admin || hasPremiumPlus(profile.premium) ? (
-          <UnreadRowCount />
-        ) : (
-          <Icon
-            name="lock"
-            size={20}
-            style={{marginRight: 10}}
-            color={colors.appWhite}
-          />
-        ),
-    },
+    messageItem,
     {
       title: 'Recipes',
       icon: 'utensils',
@@ -224,6 +230,9 @@ const DrawerContent: React.FC<Props> = ({
         data={listItems}
         contentContainerStyle={{marginTop: 40, paddingBottom: 80}}
         renderItem={({item}) => {
+          if (!item) {
+            return null;
+          }
           return <MoreItem item={item} />;
         }}
       />

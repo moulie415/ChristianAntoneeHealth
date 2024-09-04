@@ -10,6 +10,8 @@ const monthlyPrice = (p: PurchasesPackage) => {
   switch (p.product.identifier) {
     case 'yearly':
     case 'yearly:p1y':
+    case 'premium_yearly':
+    case 'monthly:premium-yearly':
       return p.product.price / 12;
     default:
       return p.product.price;
@@ -20,10 +22,13 @@ const getPackageStrings = (p: PurchasesPackage) => {
   switch (p.product.identifier) {
     case 'monthly':
     case 'monthly:p1m':
-      return {title: 'Premium', alt: 'month'};
+      return {title: 'Premium', secondary: 'Monthly'};
+    case 'premium_yearly':
+    case 'monthly:premium-yearly':
+      return {title: 'Premium', secondary: 'Yearly'};
     case 'monthly_plus':
     case 'monthly:monthly-plus':
-      return {title: 'Premium Plus', alt: 'year'};
+      return {title: 'Premium Plus', secondary: 'Monthly'};
   }
 };
 
@@ -37,7 +42,7 @@ const PremiumProduct: React.FC<{
   return (
     <SelectableButton
       text={(title || '').toUpperCase()}
-      secondaryText="Monthly"
+      secondaryText={packageStrings?.secondary}
       selected={selected}
       style={{marginHorizontal: 20, marginTop: 10}}
       onPress={async () => setSelected(p.identifier)}

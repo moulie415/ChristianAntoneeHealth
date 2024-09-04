@@ -38,7 +38,6 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import HealthAndLifestyle from './HealthAndLifestyle';
 import PersonalDetails from './PersonalDetails';
-import PhysicalActivityReadiness from './PhysicalActivityReadiness';
 import SelectArea from './SelectArea';
 import SelectEquipment from './SelectEquipment';
 import SelectExperience from './SelectExperience';
@@ -289,35 +288,35 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-    {
-      key: 'readiness',
-      showNext:
-        confirmQuestionnaire && (!otherReason || otherReasonDescription),
-      component: (
-        <PhysicalActivityReadiness
-          heartCondition={heartCondition}
-          setHeartCondition={setHeartCondition}
-          activityChestPain={activityChestPain}
-          setActivityChestPain={setActivityChestPain}
-          chestPain={chestPain}
-          setChestPain={setChestPain}
-          loseBalanceConsciousness={loseBalanceConsciousness}
-          setLoseBalanceConsciousness={setLoseBalanceConsciousness}
-          boneProblems={boneProblems}
-          setBoneProblems={setBoneProblems}
-          boneProblemsDescription={boneProblemsDescription}
-          setBoneProblemsDescription={setBoneProblemsDescription}
-          drugPrescription={drugPrescription}
-          setDrugPrescription={setDrugPrescription}
-          otherReason={otherReason}
-          setOtherReason={setOtherReason}
-          otherReasonDescription={otherReasonDescription}
-          setOtherReasonDescription={setOtherReasonDescription}
-          confirmQuestionnaire={confirmQuestionnaire}
-          setConfirmQuestionnaire={setConfirmQuestionnaire}
-        />
-      ),
-    },
+    // {
+    //   key: 'readiness',
+    //   showNext:
+    //     confirmQuestionnaire && (!otherReason || otherReasonDescription),
+    //   component: (
+    //     <PhysicalActivityReadiness
+    //       heartCondition={heartCondition}
+    //       setHeartCondition={setHeartCondition}
+    //       activityChestPain={activityChestPain}
+    //       setActivityChestPain={setActivityChestPain}
+    //       chestPain={chestPain}
+    //       setChestPain={setChestPain}
+    //       loseBalanceConsciousness={loseBalanceConsciousness}
+    //       setLoseBalanceConsciousness={setLoseBalanceConsciousness}
+    //       boneProblems={boneProblems}
+    //       setBoneProblems={setBoneProblems}
+    //       boneProblemsDescription={boneProblemsDescription}
+    //       setBoneProblemsDescription={setBoneProblemsDescription}
+    //       drugPrescription={drugPrescription}
+    //       setDrugPrescription={setDrugPrescription}
+    //       otherReason={otherReason}
+    //       setOtherReason={setOtherReason}
+    //       otherReasonDescription={otherReasonDescription}
+    //       setOtherReasonDescription={setOtherReasonDescription}
+    //       confirmQuestionnaire={confirmQuestionnaire}
+    //       setConfirmQuestionnaire={setConfirmQuestionnaire}
+    //     />
+    //   ),
+    // },
   ];
 
   useBackHandler(() => true);

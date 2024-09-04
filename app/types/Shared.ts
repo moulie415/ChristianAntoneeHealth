@@ -132,6 +132,7 @@ export interface Profile {
   dontAskAgain?: boolean;
   deviceInfo?: DeviceInfo;
   optedInToLeaderboards?: boolean;
+  client?: boolean;
 }
 
 export enum Level {

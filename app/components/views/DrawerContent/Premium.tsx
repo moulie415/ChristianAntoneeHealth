@@ -15,19 +15,16 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
   CustomerInfo,
-  PurchasesEntitlementInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import * as api from '../../../helpers/api';
 import {logError} from '../../../helpers/error';
 import {PREMIUM_PLUS, hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {setPremium} from '../../../reducers/profile';
-import {Profile} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
@@ -38,32 +35,26 @@ const {height} = Dimensions.get('window');
 
 const MIN_CONTENT_HEIGHT = 670;
 
-const CONTENT_HEIGHT =
-  height * 0.7 > MIN_CONTENT_HEIGHT || MIN_CONTENT_HEIGHT > height
-    ? height * 0.7
-    : MIN_CONTENT_HEIGHT;
-
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
-  setPremiumAction: (
-    premium: false | {[key: string]: PurchasesEntitlementInfo},
-  ) => void;
   route: RouteProp<StackParamList, 'Premium'>;
-  profile: Profile;
-  premiumPlusMaxSubscriptions?: number;
-}> = ({
-  navigation,
-  setPremiumAction,
-  route,
-  profile,
-  premiumPlusMaxSubscriptions,
-}) => {
+}> = ({navigation, route}) => {
   const [selected, setSelected] = useState('');
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
   const [loading, setLoading] = useState(false);
-  const [premiumPlusUserCount, setPremiumPlusUserCount] = useState<number>();
   const onActivated = route.params?.onActivated;
+
+  const dispatch = useAppDispatch();
+
+  const {profile} = useAppSelector(state => state.profile);
+
+  const showPremiumPlus = profile.client || profile.admin;
+
+  const CONTENT_HEIGHT =
+    (height * 0.7 > MIN_CONTENT_HEIGHT || MIN_CONTENT_HEIGHT > height
+      ? height * 0.7
+      : MIN_CONTENT_HEIGHT) + (showPremiumPlus ? 50 : 0);
 
   const getOfferings = async () => {
     try {
@@ -101,21 +92,9 @@ const Premium: React.FC<{
     if (p) {
       try {
         setLoading(true);
-        if (premiumPlusStrings.includes(p.identifier)) {
-          const userCount =
-            premiumPlusUserCount !== undefined
-              ? premiumPlusUserCount
-              : (await api.getPremiumUserCount()).data;
+        // if (premiumPlusStrings.includes(p.identifier)) {
 
-          setPremiumPlusUserCount(userCount);
-          if (userCount >= (premiumPlusMaxSubscriptions || 0)) {
-            Alert.alert(
-              'Sorry',
-              'Due to high demand Premium Plus is no longer available',
-            );
-            return;
-          }
-        }
+        // }
         const {customerInfo, productIdentifier} =
           await Purchases.purchasePackage(p);
         if (
@@ -127,7 +106,7 @@ const Premium: React.FC<{
           setLoading(false);
           navigation.navigate('PremiumPurchased', {});
 
-          setPremiumAction(customerInfo.entitlements.active);
+          dispatch(setPremium(customerInfo.entitlements.active));
 
           if (onActivated) {
             onActivated();
@@ -273,6 +252,9 @@ const Premium: React.FC<{
               marginTop: 20,
             }}>
             {features.map(({feature, icon, available, solid}) => {
+              if (!showPremiumPlus && !available) {
+                return null;
+              }
               return (
                 <View
                   key={icon}
@@ -345,8 +327,14 @@ const Premium: React.FC<{
                   </TouchableOpacity>
                 </View>
               ) : (
-                <>
+                <View>
                   {packages.map(item => {
+                    const show =
+                      !premiumPlusStrings.includes(item.identifier) ||
+                      showPremiumPlus;
+                    if (!show) {
+                      return null;
+                    }
                     return (
                       <PremiumProduct
                         p={item}
@@ -365,7 +353,7 @@ const Premium: React.FC<{
                     disabled={!selected}
                     style={{margin: 20, marginBottom: 0}}
                   />
-                </>
+                </View>
               )}
 
               <View
@@ -410,7 +398,7 @@ const Premium: React.FC<{
                     ) {
                       await getOfferings();
                       setLoading(false);
-                      setPremiumAction(restore.entitlements.active);
+                      dispatch(setPremium(restore.entitlements.active));
                       navigation.navigate('PremiumPurchased', {restored: true});
                     } else {
                       setLoading(false);
@@ -446,13 +434,5 @@ const Premium: React.FC<{
     </>
   );
 };
-const mapStateToProps = ({profile, settings}: RootState) => ({
-  profile: profile.profile,
-  premiumPlusMaxSubscriptions: settings.premiumPlusMaxSubscriptions,
-});
 
-const mapDispatchToProps = {
-  setPremiumAction: setPremium,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Premium);
+export default Premium;

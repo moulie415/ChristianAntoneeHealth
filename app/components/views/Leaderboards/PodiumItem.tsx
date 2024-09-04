@@ -42,7 +42,6 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
               size={item.rank === 1 ? 60 : 50}
               src={item.user?.avatar}
               name={`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
-              uid={item.userId}
               style={{borderWidth: 4, borderColor: getRankColor(item.rank)}}
             />
 

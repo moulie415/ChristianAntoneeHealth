@@ -2,8 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Color from 'color';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from './App';
+import {StackParamList} from './App';
 import LeaderboardTabIcon from './LeaderboardTabIcon';
 import PlanTabIcon from './PlanTabIcon';
 import {navigate} from './RootNavigation';
@@ -15,15 +14,14 @@ import ProfileComponent from './components/views/Profile';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import colors from './constants/colors';
 import {hasPremiumPlus} from './helpers/hasPremiumPlus';
-import {Profile} from './types/Shared';
+import {useAppSelector} from './hooks/redux';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
 const color = new Color(colors.appWhite);
 
-const Tabs: React.FC<{
-  profile: Profile;
-}> = ({profile}) => {
+const Tabs: React.FC = () => {
+  const {profile} = useAppSelector(state => state.profile);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -57,7 +55,6 @@ const Tabs: React.FC<{
             <Avatar
               name={`${profile.name} ${profile.surname || ''}`}
               src={profile.avatar}
-              uid={profile.uid}
               size={28}
             />
           ),
@@ -105,33 +102,30 @@ const Tabs: React.FC<{
         }}
       />
 
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Plan',
-          tabBarIcon: ({color, size}) => (
-            <PlanTabIcon color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-        listeners={{
-          tabPress: e => {
-            if (!(profile.admin || hasPremiumPlus(profile.premium))) {
-              e.preventDefault();
-              navigate('Premium', {});
-            }
-          },
-        }}
-        name="Plan"
-        key="Plan"
-        component={Plan}
-      />
-      {/* )} */}
+      {(profile.client || profile.admin) && (
+        <Tab.Screen
+          options={{
+            tabBarLabel: 'Plan',
+            tabBarIcon: ({color, size}) => (
+              <PlanTabIcon color={color} size={size} />
+            ),
+            headerShown: false,
+          }}
+          listeners={{
+            tabPress: e => {
+              if (!(profile.admin || hasPremiumPlus(profile.premium))) {
+                e.preventDefault();
+                navigate('Premium', {});
+              }
+            },
+          }}
+          name="Plan"
+          key="Plan"
+          component={Plan}
+        />
+      )}
     </Tab.Navigator>
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
-  profile: profile.profile,
-});
-
-export default connect(mapStateToProps)(Tabs);
+export default Tabs;

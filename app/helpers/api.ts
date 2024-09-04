@@ -849,10 +849,6 @@ export const saveSample = (sample: string, value: number, uid: string) => {
     .add({value, createdate: new Date()});
 };
 
-export const getPremiumUserCount = async () => {
-  return functions().httpsCallable<{}, number>('getPremiumPlusUserCount')();
-};
-
 export const submitLeaderboardScore = async (
   score: number,
   leaderboard: LeaderboardType,

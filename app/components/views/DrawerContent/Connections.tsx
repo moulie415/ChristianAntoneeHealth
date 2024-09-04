@@ -151,7 +151,6 @@ const Connections: React.FC<{
                     src={item.avatar}
                     name={`${item.name} ${item.surname || ''}`}
                     size={40}
-                    uid={item.uid}
                   />
                 </View>
                 <View style={{justifyContent: 'center', margin: 10, flex: 1}}>

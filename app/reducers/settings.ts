@@ -17,7 +17,6 @@ export interface SettingsState {
   attachmentsDisabled: boolean;
   voiceNotesDisabled: boolean;
   chatMaxFileSizeMb: number;
-  premiumPlusMaxSubscriptions?: number;
   minAndroidVersion?: string;
   minIOSVersion?: string;
   latestAndroidVersion?: string;

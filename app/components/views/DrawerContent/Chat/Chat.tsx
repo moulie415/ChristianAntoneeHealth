@@ -269,7 +269,6 @@ const Chat: React.FC<ChatProps> = ({
         renderAvatar={(p: AvatarProps<Message>) =>
           p ? (
             <Avatar
-              uid={connection.uid}
               name={`${connection.name} ${connection.surname || ''}`}
               src={connection.avatar}
               size={28}
@@ -609,7 +608,6 @@ const Chat: React.FC<ChatProps> = ({
               <Avatar
                 src={connection.avatar}
                 name={`${connection.name} ${connection.surname || ''}`}
-                uid={connection.uid}
               />
             </TouchableOpacity>
           }
