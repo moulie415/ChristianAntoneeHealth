@@ -13,6 +13,7 @@ import ExerciseListHeaderRight from './components/commons/ExerciseListHeaderRigh
 import HeaderShareButton from './components/commons/HeaderShareButton';
 import PDFViewer from './components/commons/PDFViewer';
 import WebViewScreen from './components/commons/WebViewScreen';
+import ChangePassword from './components/views/ChangePassword';
 import DeleteAccount from './components/views/DeleteAccount';
 import About from './components/views/DrawerContent/About';
 import AddConnection from './components/views/DrawerContent/AddConnection';
@@ -104,6 +105,7 @@ const StackComponent: React.FC = () => {
         <Stack.Screen name="LoginEmail" component={LoginEmail} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="ChangePassword" component={ChangePassword} />
         <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
         <Stack.Screen name="SignUpFlow" component={SignUpFlow} />
         <Stack.Screen name="Tabs" component={Tabs} />

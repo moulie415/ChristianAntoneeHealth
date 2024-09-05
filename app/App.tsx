@@ -62,6 +62,7 @@ export type StackParamList = {
   LoginEmail: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
+  ChangePassword: undefined;
   DeleteAccount: undefined;
   SignUpFlow: {fromProfile?: boolean};
   Tabs: undefined;
@@ -155,6 +156,7 @@ export type StackParamList = {
   Offline: undefined;
   UpdatePrompt: undefined;
   TargetModal: undefined;
+  
 };
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React

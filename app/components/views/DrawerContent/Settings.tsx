@@ -1,9 +1,10 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import moment from 'moment';
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {
   Platform,
   ScrollView,
@@ -127,6 +128,8 @@ const Settings: React.FC<{
     profile.optedInToLeaderboards,
   );
 
+  const [showChangePassword, setShowChangePassword] = useState(false);
+
   const newProfile = {
     ...profile,
     goal,
@@ -170,6 +173,13 @@ const Settings: React.FC<{
       Snackbar.show({text: 'Error syncing calendar'});
     }
   };
+
+  useEffect(() => {
+    const user = auth().currentUser;
+    if (user?.providerData?.find(data => data.providerId === 'password')) {
+      setShowChangePassword(true);
+    }
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -392,6 +402,15 @@ const Settings: React.FC<{
                 }
               />
             </>
+          )}
+
+          {showChangePassword && (
+            <Button
+              variant="secondary"
+              text="Change password"
+              style={{margin: 10}}
+              onPress={() => navigation.navigate('ChangePassword')}
+            />
           )}
 
           <Button
