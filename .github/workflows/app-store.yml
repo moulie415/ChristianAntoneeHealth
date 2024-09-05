@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Free Disk Space
         run: |
-          df -h
+          df -hI /dev/disk3s1s1
           # Remove software and language runtimes we're not using
           sudo rm -rf \
             "$AGENT_TOOLSDIRECTORY" \
@@ -34,8 +34,13 @@ jobs:
             /usr/local/share/chromium \
             /usr/local/share/powershell \
             /usr/share/dotnet \
-            /usr/share/swift
-          df -h /
+            /usr/share/swift \
+            /Applications/Xcode_14.3.1.app \
+            /Applications/Xcode_15.0.1.app \
+            /Applications/Xcode_15.1.app \
+            /Applications/Xcode_15.2.app \
+            /Applications/Xcode_15.3.app
+          df -hI /dev/disk3s1s1 /
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.4'
