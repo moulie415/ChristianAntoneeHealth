@@ -56,6 +56,7 @@ const Tabs: React.FC = () => {
               name={`${profile.name} ${profile.surname || ''}`}
               src={profile.avatar}
               size={28}
+              uid={profile.uid}
             />
           ),
           headerShown: false,

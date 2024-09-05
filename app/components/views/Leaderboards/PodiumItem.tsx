@@ -43,6 +43,7 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
               src={item.user?.avatar}
               name={`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
               style={{borderWidth: 4, borderColor: getRankColor(item.rank)}}
+              uid={item.userId}
             />
 
             <View

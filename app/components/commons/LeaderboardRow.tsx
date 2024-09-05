@@ -38,6 +38,7 @@ const LeaderboardRow: React.FC<{
         size={40}
         src={item.user?.avatar}
         name={item.user ? `${item.user.name} ${item.user.surname || ''}` : ''}
+        uid={item.userId}
       />
       <Text
         numberOfLines={1}

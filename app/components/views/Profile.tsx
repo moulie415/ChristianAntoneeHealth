@@ -323,6 +323,7 @@ const ProfileComponent: React.FC<{
                 src={avatar}
                 size={80}
                 hideAdmin
+                uid={profile.uid}
               />
               <View
                 style={{

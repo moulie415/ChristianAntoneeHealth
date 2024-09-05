@@ -31,11 +31,12 @@ const Avatar: React.FC<{
   src?: string;
   size?: number;
   name: string;
+  uid: string;
   hideAdmin?: boolean;
   style?: ImageStyle | FastImageStyle;
-}> = ({src, size, name, hideAdmin, style}) => {
-  const {profile} = useAppSelector(state => state.profile);
-  const isAdmin = profile.admin;
+}> = ({src, size, name, uid, hideAdmin, style}) => {
+  const {admins} = useAppSelector(state => state.settings);
+  const isAdmin = admins.includes(uid);
   if (src) {
     return (
       <View>
