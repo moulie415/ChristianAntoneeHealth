@@ -48,8 +48,8 @@ struct CircularProgressView: View {
                 ProgressView(value: value, total: goal)
                 .tint(Color.blue)
                 .scaleEffect(1.8)
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .frame(width: 100, height: 100) // Adjust the size as needed
+                .progressViewStyle(CircularProgressViewStyle())
+                .frame(width: 100, height: 100) // Adjust the size as needed
 
                 Text("\(Int(value))/\(Int(goal))")
                     .font(.caption)
@@ -67,15 +67,11 @@ struct CaloriesView: View {
     @ObservedObject var instance = Singleton.instance
     
     var body: some View {
-        if let goalData = instance.goalData {
-            CircularProgressView(
-                value: Double(goalData.calories),
-                goal: Double(goalData.caloriesGoal),
-                label: "Calories burned"
-            )
-        } else {
-            ProgressView()
-        }
+          CircularProgressView(
+            value: Double(instance.goalData.calories),
+            goal: Double(instance.goalData.caloriesGoal),
+              label: "Calories burned"
+          )
     }
 }
 
@@ -83,15 +79,11 @@ struct MinutesView: View {
     @ObservedObject var instance = Singleton.instance
     
     var body: some View {
-        if let goalData = instance.goalData {
-            CircularProgressView(
-                value: Double(goalData.mins),
-                goal: Double(goalData.minsGoal),
-                label: "Active minutes"
-            )
-        } else {
-            ProgressView()
-        }
+          CircularProgressView(
+            value: Double(instance.goalData.mins),
+            goal: Double(instance.goalData.minsGoal),
+            label: "Active minutes"
+          )
     }
 }
 
@@ -99,15 +91,11 @@ struct WorkoutLevelScoreView: View {
     @ObservedObject var instance = Singleton.instance
     
     var body: some View {
-        if let goalData = instance.goalData, let workoutGoalInt = Int(goalData.workoutGoal) {
-            CircularProgressView(
-                value: Double(goalData.workoutLevelScore),
-                goal: Double(workoutGoalInt),
-                label: "\(goalData.workoutLevelTitleString) workouts"
-            )
-        } else {
-            ProgressView()
-        }
+          CircularProgressView(
+            value: Double(instance.goalData.workoutLevelScore),
+            goal: Double(instance.goalData.workoutGoal),
+            label: "\(instance.goalData.workoutLevelTitleString) Workouts"
+          )
     }
 }
 
