@@ -1,13 +1,13 @@
-import {View, Text, TouchableOpacity, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
-import colors from '../../constants/colors';
+import {Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import colors from '../../constants/colors';
 
 const SelectableButton: React.FC<{
   selected: boolean;
   onPress: () => void;
-  text: string;
-  secondaryText?: string;
+  text: string | ReactNode;
+  secondaryText?: string | ReactNode;
   style?: ViewStyle;
   customRight?: ReactNode;
 }> = ({selected, onPress, text, secondaryText, style, customRight}) => {
@@ -27,15 +27,19 @@ const SelectableButton: React.FC<{
         style,
       ]}>
       <View style={{flex: 1}}>
-        <Text
-          style={{
-            color: colors.appWhite,
-            fontSize: 14,
-            fontWeight: 'bold',
-          }}>
-          {text}
-        </Text>
-        {!!secondaryText && (
+        {typeof text === 'string' ? (
+          <Text
+            style={{
+              color: colors.appWhite,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            {text}
+          </Text>
+        ) : (
+          text
+        )}
+        {!!secondaryText && typeof secondaryText === 'string' && (
           <Text
             style={{
               color: colors.offWhite,
@@ -45,6 +49,8 @@ const SelectableButton: React.FC<{
             {secondaryText}
           </Text>
         )}
+
+        {!!secondaryText && typeof secondaryText !== 'string' && secondaryText}
       </View>
       {customRight
         ? customRight
