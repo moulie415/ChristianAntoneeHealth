@@ -29,9 +29,6 @@ export type SET_LEADERBOARDS_LOADING = typeof SET_LEADERBOARDS_LOADING;
 export const GET_LEADERBOARD = `${LEADERBOARDS}/getLeaderboard`;
 export type GET_LEADERBOARD = typeof GET_LEADERBOARD;
 
-export const SUBMIT_LEADERBOARD_SCORE = `${LEADERBOARDS}/submitLeaderboardScore`;
-export type SUBMIT_LEADERBOARD_SCORE = typeof SUBMIT_LEADERBOARD_SCORE;
-
 const LeaderboardsSlice = createSlice({
   name: LEADERBOARDS,
   initialState,
@@ -58,10 +55,6 @@ const LeaderboardsSlice = createSlice({
       _: LeaderboardsState,
       __: PayloadAction<LeaderboardType>,
     ) => {},
-    submitLeaderboardScore: (
-      _: LeaderboardsState,
-      __: PayloadAction<{score: number; type: LeaderboardType}>,
-    ) => {},
   },
   extraReducers: builder => {
     builder.addCase(setLoggedIn, (state, action) => {
@@ -72,11 +65,7 @@ const LeaderboardsSlice = createSlice({
   },
 });
 
-export const {
-  setLeaderboardsLoading,
-  setLeaderboard,
-  getLeaderboard,
-  submitLeaderboardScore,
-} = LeaderboardsSlice.actions;
+export const {setLeaderboardsLoading, setLeaderboard, getLeaderboard} =
+  LeaderboardsSlice.actions;
 
 export default LeaderboardsSlice.reducer;

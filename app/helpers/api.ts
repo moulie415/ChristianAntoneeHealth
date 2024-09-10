@@ -849,16 +849,6 @@ export const saveSample = (sample: string, value: number, uid: string) => {
     .add({value, createdate: new Date()});
 };
 
-export const submitLeaderboardScore = async (
-  score: number,
-  leaderboard: LeaderboardType,
-) => {
-  return functions().httpsCallable<{
-    score: number;
-    leaderboard: LeaderboardType;
-  }>('submitLeaderboardScore')({score, leaderboard});
-};
-
 export const getLeaderboardData = async (leaderboard: LeaderboardType) => {
   const response = await functions().httpsCallable<
     {leaderboard: LeaderboardType},

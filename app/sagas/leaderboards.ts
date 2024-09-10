@@ -5,16 +5,7 @@ import moment from 'moment';
 import BackgroundFetch from 'react-native-background-fetch';
 import Snackbar from 'react-native-snackbar';
 import {EventChannel, eventChannel} from 'redux-saga';
-import {
-  all,
-  call,
-  debounce,
-  fork,
-  put,
-  select,
-  take,
-  throttle,
-} from 'redux-saga/effects';
+import {all, call, debounce, fork, put, select, take} from 'redux-saga/effects';
 import {RootState} from '../App';
 import * as api from '../helpers/api';
 import {getStepSamples} from '../helpers/biometrics';
@@ -23,7 +14,6 @@ import {getGoalsData} from '../helpers/goals';
 import {CHECK_STEPS_CALORIES} from '../reducers/exercises';
 import {
   GET_LEADERBOARD,
-  SUBMIT_LEADERBOARD_SCORE,
   setLeaderboard,
   setLeaderboardsLoading,
 } from '../reducers/leaderboards';
@@ -58,17 +48,6 @@ export function* getLeaderboard(action: PayloadAction<LeaderboardType>) {
     logError(e);
   }
   yield put(setLeaderboardsLoading(false));
-}
-
-export function* submitLeaderboardScore(
-  action: PayloadAction<{score: number; type: LeaderboardType}>,
-) {
-  try {
-    const {score, type} = action.payload;
-    yield call(api.submitLeaderboardScore, score, type);
-  } catch (e) {
-    logError(e);
-  }
 }
 
 export function* checkStepsCalories(background?: boolean) {
@@ -267,7 +246,6 @@ function createBackgroundFetchChannel() {
 export default function* leaderboardsSaga() {
   yield all([
     debounce(1000, GET_LEADERBOARD, getLeaderboard),
-    throttle(3000, SUBMIT_LEADERBOARD_SCORE, submitLeaderboardScore),
     debounce(1000, CHECK_STEPS_CALORIES, checkStepsCalories),
   ]);
 
