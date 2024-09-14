@@ -1017,6 +1017,32 @@ export function* feedbackTrigger() {
   }
 }
 
+function* onTokenRefresh() {
+  return eventChannel(emitter => {
+    const unsubscribe = messaging().onTokenRefresh(token => {
+      emitter({token});
+    });
+
+    return unsubscribe;
+  });
+}
+
+function* tokenWatcher() {
+  const channel: EventChannel<{token: string}> = yield call(onTokenRefresh);
+
+  while (true) {
+    const {token} = yield take(channel);
+    try {
+      const {uid} = yield select((state: RootState) => state.profile.profile);
+      if (uid) {
+        api.setFCMToken(uid, token);
+      }
+    } catch (e) {
+      logError(e);
+    }
+  }
+}
+
 export default function* profileSaga() {
   yield all([
     throttle(3000, SIGN_UP, signUp),
@@ -1036,6 +1062,7 @@ export default function* profileSaga() {
       getWeeklyItemsForConnection,
     ),
     debounce(3000, SET_PREMIUM, premiumUpdatedWorker),
+    fork(tokenWatcher),
   ]);
 
   const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(

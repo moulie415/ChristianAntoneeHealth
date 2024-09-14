@@ -17,6 +17,7 @@ import {STORE_LINK} from '../../../constants';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
 import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
+import useThrottle from '../../../hooks/UseThrottle';
 import {setLoggedIn} from '../../../reducers/profile';
 import {Profile} from '../../../types/Shared';
 import Text from '../../commons/Text';
@@ -75,44 +76,42 @@ const DrawerContent: React.FC<Props> = ({
   profile,
   navigation,
 }) => {
+  const onLogOut = useThrottle(async () => {
+    try {
+      const user = auth().currentUser;
+      navigation.closeDrawer();
+      resetToWelcome();
+      await messaging().deleteToken();
+      await Purchases.logOut();
+      await auth().signOut();
+      Sentry.setUser(null);
+      try {
+        if (
+          user?.providerData?.find(data => data.providerId === 'google.com')
+        ) {
+          await GoogleSignin.signOut();
+        }
+
+        if (
+          user?.providerData?.find(data => data.providerId === 'facebook.com')
+        ) {
+          LoginManager.logOut();
+        }
+      } catch (e) {
+        logError(e);
+      }
+      setLoggedInAction(false);
+    } catch (e) {
+      logError(e);
+    }
+  }, 3000);
+
   const logOut = () => {
     Alert.alert('Are you sure?', '', [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'OK',
-        onPress: async () => {
-          try {
-            const user = auth().currentUser;
-            navigation.closeDrawer();
-            resetToWelcome();
-            await messaging().deleteToken();
-            await Purchases.logOut();
-            await auth().signOut();
-            Sentry.setUser(null);
-            try {
-              if (
-                user?.providerData?.find(
-                  data => data.providerId === 'google.com',
-                )
-              ) {
-                await GoogleSignin.signOut();
-              }
-
-              if (
-                user?.providerData?.find(
-                  data => data.providerId === 'facebook.com',
-                )
-              ) {
-                LoginManager.logOut();
-              }
-            } catch (e) {
-              logError(e);
-            }
-            setLoggedInAction(false);
-          } catch (e) {
-            logError(e);
-          }
-        },
+        onPress: onLogOut,
       },
     ]);
   };
