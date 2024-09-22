@@ -9,12 +9,7 @@
 		<string>Default</string>
 	</array>
 	<key>com.apple.developer.associated-domains</key>
-	<array>
-		<string>applinks:healthandmovement.page.link</string>
-		<string>applinks:healthandmovement/workout</string>
-		<string>applinks:healthandmovement/invite</string>
-		<string>applinks:healthandmovement</string>
-	</array>
+	<array/>
 	<key>com.apple.developer.devicecheck.appattest-environment</key>
 	<string>development</string>
 	<key>com.apple.developer.healthkit</key>

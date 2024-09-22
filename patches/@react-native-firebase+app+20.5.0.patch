@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-firebase/app/package.json b/node_modules/@react-native-firebase/app/package.json
+index 82607cf..926aecb 100644
+--- a/node_modules/@react-native-firebase/app/package.json
++++ b/node_modules/@react-native-firebase/app/package.json
+@@ -74,7 +74,7 @@
+   },
+   "sdkVersions": {
+     "ios": {
+-      "firebase": "10.29.0",
++      "firebase": "11.2.0",
+       "iosTarget": "11.0",
+       "macosTarget": "10.13"
+     },
