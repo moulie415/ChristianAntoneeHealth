@@ -195,6 +195,19 @@ const SignUpFlow: React.FC<{
 
   const slides = [
     {
+      key: 'client',
+      showNext: !client || clientCodeValid,
+      component: (
+        <SelectIsClient
+          client={client}
+          setIsClient={setClient}
+          clientCode={clientCode}
+          setClientCode={setClientCode}
+          onSubmitCode={onSubmitCode}
+        />
+      ),
+    },
+    {
       showNext:
         !!name &&
         !!surname &&
@@ -253,19 +266,7 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-    {
-      key: 'client',
-      showNext: !client || clientCodeValid,
-      component: (
-        <SelectIsClient
-          client={client}
-          setIsClient={setClient}
-          clientCode={clientCode}
-          setClientCode={setClientCode}
-          onSubmitCode={onSubmitCode}
-        />
-      ),
-    },
+
     {
       key: 'goal',
       showNext: !!goal,
