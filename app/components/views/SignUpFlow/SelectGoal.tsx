@@ -30,10 +30,11 @@ export const goalDetails: {goal: Goal; text: string; secondaryText: string}[] =
     },
   ];
 
-const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
-  goal,
-  setGoal,
-}) => {
+const SelectGoal: React.FC<{
+  goal: Goal;
+  setGoal: (goal: Goal) => void;
+  client: boolean;
+}> = ({goal, setGoal, client}) => {
   return (
     <View
       style={{
@@ -51,6 +52,9 @@ const SelectGoal: React.FC<{goal: Goal; setGoal: (goal: Goal) => void}> = ({
         What's your goal?
       </Text>
       {goalDetails.map(({text, secondaryText, goal: g}) => {
+        if (g === Goal.OTHER && !client) {
+          return null;
+        }
         return (
           <SelectableButton
             key={g}

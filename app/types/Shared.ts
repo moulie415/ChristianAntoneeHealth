@@ -281,16 +281,8 @@ export interface SignUpPayload {
   dietaryPreference: DietaryPreference | string;
   currentExercise: CurrentExercise;
   fitnessRating: number;
-  heartCondition: boolean;
-  activityChestPain: boolean;
-  chestPain: boolean;
-  loseBalanceConsciousness: boolean;
-  boneProblems: boolean;
-  boneProblemsDescription: string;
-  drugPrescription: boolean;
-  otherReason: boolean;
-  otherReasonDescription: string;
   fromProfile?: boolean;
+  client: boolean;
 }
 
 export interface UpdateProfilePayload {

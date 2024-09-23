@@ -2937,7 +2937,7 @@ PODS:
     - Yoga
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.17.1):
+  - RNGestureHandler (2.19.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2964,7 +2964,51 @@ PODS:
   - RNPurchases (7.28.1):
     - PurchasesHybridCommon (= 11.1.1)
     - React-Core
-  - RNReanimated (3.14.0):
+  - RNReanimated (3.15.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - RNReanimated/reanimated (= 3.15.3)
+    - RNReanimated/worklets (= 3.15.3)
+    - Yoga
+  - RNReanimated/reanimated (3.15.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - RNReanimated/worklets (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -3617,10 +3661,10 @@ SPEC CHECKSUMS:
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFlashList: 06ac066ee3c7adcecc5725c6be7cee41b3696347
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: 5538c370587d7e757667b9283ca867dd7635f154
+  RNGestureHandler: 1cc5930a64f5168977e5726b9c24777ecc8a8570
   RNGoogleSignin: 24d3b3261f78b0fae0aa013f8ab6f8d25e369b0c
   RNPurchases: 4305de02b902d3c1e56a50295dc0a6e758b73095
-  RNReanimated: f6b214732ff303cb815ac81b26bbfd2070b69f43
+  RNReanimated: e2b3ca09939e02ff62c1d8f408f0d93209c07717
   RNScreens: db442e7b8c7bc8befec2ce057927305ff8598cc8
   RNSentry: 09c5679c6b4e84f64f99ef14f6eb759eec5063a5
   RNSha256: e1bc64e9e50b293d5282bb4caa1b2043931f1c9d

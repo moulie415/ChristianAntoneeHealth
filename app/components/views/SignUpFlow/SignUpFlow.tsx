@@ -4,10 +4,12 @@ import moment from 'moment';
 import React, {useRef, useState} from 'react';
 import {Alert, Keyboard, Platform, SafeAreaView, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
+import Snackbar from 'react-native-snackbar';
 import StepIndicator from 'react-native-step-indicator';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
+import * as api from '../../../helpers/api';
 import {
   getDateOfBirth,
   getHeight,
@@ -22,6 +24,7 @@ import {useBackHandler} from '../../../hooks/UseBackHandler';
 import useInit from '../../../hooks/UseInit';
 import useThrottle from '../../../hooks/UseThrottle';
 import {LoginFullname, signUp} from '../../../reducers/profile';
+import {SettingsState} from '../../../reducers/settings';
 import {Area, Equipment} from '../../../types/QuickRoutines';
 import {
   CurrentExercise,
@@ -42,6 +45,7 @@ import SelectArea from './SelectArea';
 import SelectEquipment from './SelectEquipment';
 import SelectExperience from './SelectExperience';
 import SelectGoal from './SelectGoal';
+import SelectIsClient from './SelectIsClient';
 
 const SignUpFlow: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SignUpFlow'>;
@@ -88,31 +92,9 @@ const SignUpFlow: React.FC<{
     profile.fitnessRating || 5,
   );
 
-  const [heartCondition, setHeartCondition] = useState(
-    profile.heartCondition || false,
-  );
-  const [activityChestPain, setActivityChestPain] = useState(
-    profile.activityChestPain || false,
-  );
-  const [chestPain, setChestPain] = useState(profile.chestPain || false);
-  const [loseBalanceConsciousness, setLoseBalanceConsciousness] = useState(
-    profile.loseBalanceConsciousness || false,
-  );
-  const [boneProblems, setBoneProblems] = useState(
-    profile.boneProblems || false,
-  );
-  const [boneProblemsDescription, setBoneProblemsDescription] = useState(
-    profile.boneProblemsDescription || '',
-  );
-  const [drugPrescription, setDrugPrescription] = useState(
-    profile.drugPrescription || false,
-  );
-  const [otherReason, setOtherReason] = useState(profile.otherReason || false);
-  const [otherReasonDescription, setOtherReasonDescription] = useState(
-    profile.otherReasonDescription || '',
-  );
-
-  const [confirmQuestionnaire, setConfirmQuestionnaire] = useState(false);
+  const [client, setClient] = useState(profile.client || false);
+  const [clientCode, setClientCode] = useState('');
+  const [clientCodeValid, setClientCodeValid] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [privacy, setPrivacy] = useState(false);
@@ -180,15 +162,7 @@ const SignUpFlow: React.FC<{
       dietaryPreference,
       currentExercise,
       fitnessRating,
-      heartCondition,
-      activityChestPain,
-      chestPain,
-      loseBalanceConsciousness,
-      boneProblems,
-      boneProblemsDescription,
-      drugPrescription,
-      otherReason,
-      otherReasonDescription,
+      client,
       fromProfile: !!fromProfile,
     });
   }, 3000);
@@ -199,6 +173,25 @@ const SignUpFlow: React.FC<{
 
   const goNext = () => ref.current?.setPage(index + 1);
   const goBack = () => ref.current?.setPage(index - 1);
+
+  const onSubmitCode = useThrottle(async (code: string) => {
+    setLoading(true);
+    const settings = (await api.getSettings()) as SettingsState;
+    if (settings.clientCode === code) {
+      setClientCodeValid(true);
+      goNext();
+    } else {
+      setClientCodeValid(false);
+      Snackbar.show({text: 'Invalid client code'});
+    }
+    try {
+    } catch (e) {
+      if (e instanceof Error) {
+        Snackbar.show({text: 'Error validating client code'});
+      }
+    }
+    setLoading(false);
+  }, 3000);
 
   const slides = [
     {
@@ -261,9 +254,22 @@ const SignUpFlow: React.FC<{
       ),
     },
     {
+      key: 'client',
+      showNext: !client || clientCodeValid,
+      component: (
+        <SelectIsClient
+          client={client}
+          setIsClient={setClient}
+          clientCode={clientCode}
+          setClientCode={setClientCode}
+          onSubmitCode={onSubmitCode}
+        />
+      ),
+    },
+    {
       key: 'goal',
       showNext: !!goal,
-      component: <SelectGoal goal={goal} setGoal={setGoal} />,
+      component: <SelectGoal goal={goal} setGoal={setGoal} client={client} />,
     },
     {
       key: 'health',
@@ -288,35 +294,6 @@ const SignUpFlow: React.FC<{
         />
       ),
     },
-    // {
-    //   key: 'readiness',
-    //   showNext:
-    //     confirmQuestionnaire && (!otherReason || otherReasonDescription),
-    //   component: (
-    //     <PhysicalActivityReadiness
-    //       heartCondition={heartCondition}
-    //       setHeartCondition={setHeartCondition}
-    //       activityChestPain={activityChestPain}
-    //       setActivityChestPain={setActivityChestPain}
-    //       chestPain={chestPain}
-    //       setChestPain={setChestPain}
-    //       loseBalanceConsciousness={loseBalanceConsciousness}
-    //       setLoseBalanceConsciousness={setLoseBalanceConsciousness}
-    //       boneProblems={boneProblems}
-    //       setBoneProblems={setBoneProblems}
-    //       boneProblemsDescription={boneProblemsDescription}
-    //       setBoneProblemsDescription={setBoneProblemsDescription}
-    //       drugPrescription={drugPrescription}
-    //       setDrugPrescription={setDrugPrescription}
-    //       otherReason={otherReason}
-    //       setOtherReason={setOtherReason}
-    //       otherReasonDescription={otherReasonDescription}
-    //       setOtherReasonDescription={setOtherReasonDescription}
-    //       confirmQuestionnaire={confirmQuestionnaire}
-    //       setConfirmQuestionnaire={setConfirmQuestionnaire}
-    //     />
-    //   ),
-    // },
   ];
 
   useBackHandler(() => true);
@@ -380,6 +357,7 @@ const SignUpFlow: React.FC<{
                       marginLeft: index === 0 ? 0 : 10,
                     }}
                     disabled={!slide.showNext}
+                    loading={loading}
                     onPress={goNext}
                     text="Next"
                   />

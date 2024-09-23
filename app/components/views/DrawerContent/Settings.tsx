@@ -361,7 +361,7 @@ const Settings: React.FC<{
               Clipboard.setString(profile.uid);
               Snackbar.show({text: 'User ID copied to clipboard'});
             }}
-            text=" User ID"
+            text="User ID"
             right={
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={{color: colors.appWhite, fontSize: 12}}>
@@ -374,6 +374,26 @@ const Settings: React.FC<{
                   size={18}
                   solid
                 />
+              </View>
+            }
+          />
+
+          <SettingsItem
+            disabled
+            onPress={() => {}}
+            text="Email"
+            right={
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.appWhite, fontSize: 12}}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color: colors.appWhite,
+                      fontWeight: 'bold',
+                    }}>
+                    {profile.email}
+                  </Text>
+                </Text>
               </View>
             }
           />

@@ -23,6 +23,7 @@ export interface SettingsState {
   latestIOSVersion?: string;
   promptUpdate?: boolean;
   forceUpdate?: boolean;
+  clientCode?: string;
 }
 
 const initialState: SettingsState = {

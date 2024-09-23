@@ -39,7 +39,7 @@ const Input: React.FC<Props> = props => {
             color: colors.appWhite,
             padding: 15,
             paddingTop: 15,
-            backgroundColor: '#363944',
+            backgroundColor: colors.inputBackground,
             paddingLeft: props.secure || props.icon ? 40 : 15,
           },
           props.style,

@@ -1,9 +1,9 @@
-import {View} from 'react-native';
 import React from 'react';
-import {Level} from '../../../types/Shared';
-import Text from '../../commons/Text';
+import {View} from 'react-native';
 import colors from '../../../constants/colors';
+import {Level} from '../../../types/Shared';
 import SelectableButton from '../../commons/SelectableButton';
+import Text from '../../commons/Text';
 
 const experienceDetails: {
   experience: Level;
