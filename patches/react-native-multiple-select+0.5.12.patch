@@ -1,0 +1,94 @@
+diff --git a/node_modules/react-native-multiple-select/index.d.ts b/node_modules/react-native-multiple-select/index.d.ts
+index 07da82c..545fd6b 100644
+--- a/node_modules/react-native-multiple-select/index.d.ts
++++ b/node_modules/react-native-multiple-select/index.d.ts
+@@ -25,7 +25,7 @@ export interface MultiSelectProps {
+     selectText?: string;
+     styleDropdownMenu?: StyleProp<ViewStyle>;
+     styleDropdownMenuSubsection?: StyleProp<ViewStyle>;
+-    styleIndicator?: StyleProp<ViewStyle>;
++    styleIndicator?: StyleProp<TextStyle>;
+     styleInputGroup?: StyleProp<ViewStyle>;
+     styleItemsContainer?: StyleProp<ViewStyle>;
+     styleListContainer?: StyleProp<ViewStyle>;
+diff --git a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
+index 9b7a0d7..2acd665 100644
+--- a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
++++ b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
+@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
+ import reject from 'lodash/reject';
+ import find from 'lodash/find';
+ import get from 'lodash/get';
+-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
++import Icon from 'react-native-vector-icons/FontAwesome6';
+ 
+ import styles, { colorPack } from './styles';
+ import nodeTypes from './helpers/nodeTypes';
+@@ -25,7 +25,7 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
+ 
+ const defaultSearchIcon = (
+   <Icon
+-    name="magnify"
++    name="magnifying-glass"
+     size={20}
+     color={colorPack.placeholderTextColor}
+     style={{ marginRight: 10 }}
+@@ -65,7 +65,7 @@ export default class MultiSelect extends Component {
+     styleTextDropdown: TextPropTypes.style,
+     styleTextDropdownSelected: TextPropTypes.style,
+     styleTextTag: TextPropTypes.style,
+-    styleIndicator: ViewPropTypes.style,
++    styleIndicator: TextPropTypes.style,
+     altFontFamily: PropTypes.string,
+     hideSubmitButton: PropTypes.bool,
+     hideDropdown: PropTypes.bool,
+@@ -227,11 +227,12 @@ export default class MultiSelect extends Component {
+             }}
+           >
+             <Icon
+-              name="close-circle"
++              name="circle-xmark"
++              solid
+               style={{
+                 color: tagRemoveIconColor,
+                 fontSize: 22,
+-                marginLeft: 10
++                marginRight: 3
+               }}
+             />
+           </TouchableOpacity>
+@@ -614,7 +615,7 @@ export default class MultiSelect extends Component {
+               {hideSubmitButton && (
+                 <TouchableOpacity onPress={this._submitSelection}>
+                   <Icon
+-                    name="menu-down"
++                    name="chevron-down"
+                     style={[
+                       styles.indicator,
+                       { paddingLeft: 15, paddingRight: 15 },
+@@ -625,7 +626,7 @@ export default class MultiSelect extends Component {
+               )}
+               {!hideDropdown && (
+                 <Icon
+-                  name="arrow-left"
++                  name="chevron-left"
+                   size={20}
+                   onPress={this._clearSelectorCallback}
+                   color={colorPack.placeholderTextColor}
+@@ -636,7 +637,6 @@ export default class MultiSelect extends Component {
+             <View
+               style={{
+                 flexDirection: 'column',
+-                backgroundColor: '#fafafa'
+               }}
+             >
+               <View style={styleItemsContainer && styleItemsContainer}>
+@@ -718,7 +718,7 @@ export default class MultiSelect extends Component {
+                       {this._getSelectLabel()}
+                     </Text>
+                     <Icon
+-                      name={hideSubmitButton ? 'menu-right' : 'menu-down'}
++                      name={hideSubmitButton ? 'chevron-right' : 'chevron-down'}
+                       style={[
+                         styles.indicator,
+                         styleIndicator && styleIndicator,

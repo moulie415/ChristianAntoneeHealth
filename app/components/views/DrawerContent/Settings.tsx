@@ -19,9 +19,10 @@ import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
-import {PREP_TIME_SECS} from '../../../constants';
+import {EQUIPMENT_LIST, PREP_TIME_SECS} from '../../../constants';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
+import {equipmentItemReadableString} from '../../../helpers/exercises';
 import {getGoalReadableString} from '../../../helpers/goals';
 import {
   setCalendarId,
@@ -40,6 +41,7 @@ import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
 import ListItem from '../../commons/ListItem';
 import Modal from '../../commons/Modal';
+import MultiSelect from '../../commons/MultiSelect';
 import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
@@ -181,6 +183,8 @@ const Settings: React.FC<{
     }
   }, []);
 
+  const [equipmentItems, setEquipmentItems] = useState<string[]>([]);
+
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
       <SafeAreaView>
@@ -250,6 +254,14 @@ const Settings: React.FC<{
                 {getGoalReadableString(goal)}
               </Text>
             }
+          />
+          <MultiSelect
+            items={EQUIPMENT_LIST.map(item => {
+              return {id: item, name: equipmentItemReadableString(item)};
+            })}
+            selectedItems={equipmentItems}
+            onSelectedItemsChange={setEquipmentItems}
+            selectText="Equipment list"
           />
           <Text
             style={{

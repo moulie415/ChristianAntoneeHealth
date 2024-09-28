@@ -5400,6 +5400,7 @@ __metadata:
     react-native-keyboard-aware-scroll-view: "npm:^0.9.5"
     react-native-linear-gradient: "npm:^2.8.3"
     react-native-modal: "npm:^13.0.1"
+    react-native-multiple-select: "npm:^0.5.12"
     react-native-pager-view: "npm:6.3.0"
     react-native-pdf: "npm:^6.7.4"
     react-native-progress: "npm:^5.0.1"
@@ -12379,6 +12380,21 @@ __metadata:
     react: "*"
     react-native: ">=0.65.0"
   checksum: 10c0/8ec5728c2a27eb31c97451968b4ecefdf005afda51fab2fc864fc442122573c70f7bf3fa0c6e3bd1d6aab3565c684104d1d30df916c3f9a6c7c3223e4d3b9249
+  languageName: node
+  linkType: hard
+
+"react-native-multiple-select@npm:^0.5.12":
+  version: 0.5.12
+  resolution: "react-native-multiple-select@npm:0.5.12"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    deprecated-react-native-prop-types: ">2.0.0"
+    lodash: "*"
+    react: ">16.6.0"
+    react-native: ">0.57.0"
+    react-native-vector-icons: ">6.0.0"
+  checksum: 10c0/d24e513734d2921bd22a6efed952a3392139a7702820c0125663034a4967f04c75335c100759275f67267b53012daaca977babb14dde720cc8cbd80c316af8a1
   languageName: node
   linkType: hard
 

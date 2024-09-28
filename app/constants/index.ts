@@ -1,6 +1,6 @@
 import {Platform} from 'react-native';
 import {generateValues} from '../helpers/generateValues';
-import {Goal} from '../types/Shared';
+import {Equipment, Goal} from '../types/Shared';
 
 export interface GoalItem {
   title: string;
@@ -49,3 +49,22 @@ export const FONTS_SIZES = {
   MEDIUM_LARGE: 18,
   LARGE: 24,
 };
+
+export const EQUIPMENT_LIST: Equipment[] = [
+  Equipment.BARBELLS,
+  Equipment.DUMBBELLS,
+  Equipment.BENCHES,
+  Equipment.CABLE_MACHINES,
+  Equipment.KETTLEBELLS,
+  Equipment.PULL_UP_BAR,
+  Equipment.SQUAT_RACK,
+  Equipment.EXERCISE_BALL,
+  Equipment.BOSU_BALL,
+  Equipment.AGILITY_LADDER,
+  Equipment.PLYOMETRIC_BOX,
+  Equipment.TRX_SUSPENSION_TRAINER,
+  Equipment.MEDICINE_BALLS,
+  Equipment.LANDMINE,
+  Equipment.EXERCISE_STEP,
+  Equipment.FOAM_ROLLER,
+];
