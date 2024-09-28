@@ -89,7 +89,7 @@ const MetricExplained: React.FC<{
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Icon name="plus" color={colors.appWhite} size={16} />
+                <Icon name="pencil" color={colors.appWhite} size={16} />
               </TouchableOpacity>
             )}
           </View>
