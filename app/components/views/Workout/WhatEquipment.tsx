@@ -1,14 +1,14 @@
-import {View, TouchableOpacity, Dimensions} from 'react-native';
-import React, {MutableRefObject} from 'react';
+import React from 'react';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 
-import Text from '../../commons/Text';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StackParamList} from '../../../App';
 import FastImage from 'react-native-fast-image';
-import Header from '../../commons/Header';
 import LinearGradient from 'react-native-linear-gradient';
+import {StackParamList} from '../../../App';
+import Header from '../../commons/Header';
+import Text from '../../commons/Text';
 
 const TILE_HEIGHT = Dimensions.get('window').height / 5;
 

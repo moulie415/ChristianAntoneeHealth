@@ -12,7 +12,7 @@ index 07da82c..545fd6b 100644
      styleItemsContainer?: StyleProp<ViewStyle>;
      styleListContainer?: StyleProp<ViewStyle>;
 diff --git a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
-index 9b7a0d7..2acd665 100644
+index 9b7a0d7..09e9b09 100644
 --- a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
 +++ b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
 @@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
@@ -57,6 +57,15 @@ index 9b7a0d7..2acd665 100644
                }}
              />
            </TouchableOpacity>
+@@ -525,7 +526,7 @@ export default class MultiSelect extends Component {
+             style={[
+               {
+                 flex: 1,
+-                marginTop: 20,
++                marginVertical: 20,
+                 textAlign: 'center',
+                 color: colorPack.danger
+               },
 @@ -614,7 +615,7 @@ export default class MultiSelect extends Component {
                {hideSubmitButton && (
                  <TouchableOpacity onPress={this._submitSelection}>

@@ -1,5 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as _ from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -11,14 +12,15 @@ import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {getVideoHeight} from '../../../helpers';
 import {startWatchWorkout} from '../../../helpers/biometrics';
-import {getEquipmentList, getMusclesList} from '../../../helpers/exercises';
+import {getMusclesList} from '../../../helpers/exercises';
 import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {setWorkout} from '../../../reducers/exercises';
 import {updateProfile} from '../../../reducers/profile';
 import Exercise from '../../../types/Exercise';
-import {UpdateProfilePayload} from '../../../types/Shared';
+import {Equipment, UpdateProfilePayload} from '../../../types/Shared';
 import Button from '../../commons/Button';
+import EquipmentList from '../../commons/EquipmentList';
 import Header from '../../commons/Header';
 import Toggle from '../../commons/Toggle';
 
@@ -37,7 +39,14 @@ const PreWorkout: React.FC<{
 }) => {
   const {planWorkout, planId} = route.params;
 
-  const equipmentList = getEquipmentList(workout);
+  const equipmentList = _.uniq(
+    workout.reduce((acc: Equipment[], cur) => {
+      if (cur?.equipment) {
+        return [...acc, ...cur.equipment];
+      }
+      return acc;
+    }, []),
+  );
   const musclesList = getMusclesList(workout);
 
   const [wMusic, setWMusic] = useState(workoutMusic);
@@ -149,6 +158,7 @@ const PreWorkout: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
+            marginRight: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
             <Icon
@@ -162,8 +172,9 @@ const PreWorkout: React.FC<{
           </View>
           <Text style={{color: colors.appWhite, flex: 1}}>
             {equipmentList && equipmentList.length
-              ? equipmentList.join(', ')
+              ? 'Equipment needed '
               : 'No equipment needed'}
+            <EquipmentList equipment={equipmentList} />
           </Text>
         </View>
         <View
@@ -171,6 +182,7 @@ const PreWorkout: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
+            marginRight: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
             <Icon

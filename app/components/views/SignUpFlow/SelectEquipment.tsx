@@ -1,9 +1,13 @@
-import {View} from 'react-native';
 import React from 'react';
-import Text from '../../commons/Text';
+import {View} from 'react-native';
+import {EQUIPMENT_LIST} from '../../../constants';
 import colors from '../../../constants/colors';
-import SelectableButton from '../../commons/SelectableButton';
+import {equipmentItemReadableString} from '../../../helpers/exercises';
 import {Equipment} from '../../../types/QuickRoutines';
+import {Equipment as EquipmentItem} from '../../../types/Shared';
+import MultiSelect from '../../commons/MultiSelect';
+import SelectableButton from '../../commons/SelectableButton';
+import Text from '../../commons/Text';
 
 const equipmentDetails: {
   equipment: Equipment;
@@ -31,7 +35,9 @@ const equipmentDetails: {
 const SelectEquipment: React.FC<{
   equipment: Equipment;
   setEquipment: (equipment: Equipment) => void;
-}> = ({equipment, setEquipment}) => {
+  equipmentList: EquipmentItem[];
+  setEquipmentList: (list: EquipmentItem[]) => void;
+}> = ({equipment, setEquipment, equipmentList, setEquipmentList}) => {
   return (
     <View
       style={{
@@ -60,6 +66,16 @@ const SelectEquipment: React.FC<{
           />
         );
       })}
+      {!!equipment && equipment !== 'none' && (
+        <MultiSelect
+          items={EQUIPMENT_LIST.map(item => {
+            return {id: item, name: equipmentItemReadableString(item)};
+          })}
+          selectedItems={equipmentList}
+          onSelectedItemsChange={setEquipmentList}
+          selectText="Equipment list"
+        />
+      )}
     </View>
   );
 };

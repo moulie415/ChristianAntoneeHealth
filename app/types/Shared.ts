@@ -104,6 +104,7 @@ export interface Profile {
   goalReminders?: boolean;
   area?: Area;
   equipment?: EquipmentLevel;
+  equipmentList?: Equipment[];
   experience?: Level;
   favouriteRecipes?: string[];
   stressLevel?: StressLevel;
@@ -275,6 +276,7 @@ export interface SignUpPayload {
   goal: Goal;
   area: Area;
   equipment: EquipmentLevel;
+  equipmentList: Equipment[];
   experience: Level;
   stressLevel: StressLevel;
   sleep: Sleep;

@@ -9,9 +9,9 @@ export interface MultiSelectItem {
 
 const MultiSelect: React.FC<{
   items: MultiSelectItem[];
-  selectedItems: string[];
+  selectedItems?: string[];
   selectText: string;
-  onSelectedItemsChange: (items: string[]) => void;
+  onSelectedItemsChange: (items: any[]) => void;
 }> = ({items, selectedItems, onSelectedItemsChange, selectText}) => {
   return (
     <Multi
@@ -31,7 +31,7 @@ const MultiSelect: React.FC<{
       }}
       styleMainWrapper={{
         backgroundColor: colors.appGrey,
-        margin: 10,
+        // margin: 10,
       }}
       styleRowList={{
         paddingVertical: 10,
@@ -52,6 +52,7 @@ const MultiSelect: React.FC<{
       }}
       styleTextDropdownSelected={{fontWeight: 'bold', paddingHorizontal: 10}}
       styleTextDropdown={{fontWeight: 'bold', paddingHorizontal: 10}}
+      searchInputStyle={{color: colors.appWhite}}
       tagBorderColor={colors.borderColor}
       textColor={colors.appWhite}
       tagTextColor={colors.appWhite}

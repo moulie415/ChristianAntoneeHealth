@@ -76,6 +76,10 @@ const SignUpFlow: React.FC<{
     (profile.experience as Level) || null,
   );
 
+  const [equipmentList, setEquipmentList] = useState(
+    profile.equipmentList || [],
+  );
+
   const [stressLevel, setStressLevel] = useState<StressLevel>(
     (profile.stressLevel as StressLevel) || null,
   );
@@ -163,6 +167,7 @@ const SignUpFlow: React.FC<{
       currentExercise,
       fitnessRating,
       client,
+      equipmentList,
       fromProfile: !!fromProfile,
     });
   }, 3000);
@@ -253,7 +258,12 @@ const SignUpFlow: React.FC<{
       key: 'equipment',
       showNext: !!equipment,
       component: (
-        <SelectEquipment equipment={equipment} setEquipment={setEquipment} />
+        <SelectEquipment
+          equipment={equipment}
+          setEquipment={setEquipment}
+          equipmentList={equipmentList}
+          setEquipmentList={setEquipmentList}
+        />
       ),
     },
     {

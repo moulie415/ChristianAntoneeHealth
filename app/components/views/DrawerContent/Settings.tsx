@@ -132,6 +132,8 @@ const Settings: React.FC<{
 
   const [showChangePassword, setShowChangePassword] = useState(false);
 
+  const [equipmentList, setEquipmentList] = useState(profile.equipmentList);
+
   const newProfile = {
     ...profile,
     goal,
@@ -144,6 +146,7 @@ const Settings: React.FC<{
     workoutReminders,
     syncPlanWithCalendar: syncPlan,
     ...(optedInToLeaderboards !== undefined ? {optedInToLeaderboards} : {}),
+    ...(equipmentList !== undefined ? {equipmentList} : {}),
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -182,8 +185,6 @@ const Settings: React.FC<{
       setShowChangePassword(true);
     }
   }, []);
-
-  const [equipmentItems, setEquipmentItems] = useState<string[]>([]);
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
@@ -255,14 +256,16 @@ const Settings: React.FC<{
               </Text>
             }
           />
-          <MultiSelect
-            items={EQUIPMENT_LIST.map(item => {
-              return {id: item, name: equipmentItemReadableString(item)};
-            })}
-            selectedItems={equipmentItems}
-            onSelectedItemsChange={setEquipmentItems}
-            selectText="Equipment list"
-          />
+          <View style={{margin: 10}}>
+            <MultiSelect
+              items={EQUIPMENT_LIST.map(item => {
+                return {id: item, name: equipmentItemReadableString(item)};
+              })}
+              selectedItems={equipmentList}
+              onSelectedItemsChange={setEquipmentList}
+              selectText="Equipment list"
+            />
+          </View>
           <Text
             style={{
               margin: 10,

@@ -1,5 +1,6 @@
 import {RouteProp, useIsFocused} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as _ from 'lodash';
 import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -12,11 +13,12 @@ import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
 import {startWatchWorkout} from '../../../helpers/biometrics';
-import {getEquipmentList} from '../../../helpers/exercises';
 import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {updateProfile} from '../../../reducers/profile';
+import {Equipment} from '../../../types/Shared';
 import Button from '../../commons/Button';
+import EquipmentList from '../../commons/EquipmentList';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
@@ -54,7 +56,14 @@ const PreQuickRoutine: React.FC<{
 
   const duration = getWorkoutDurationRounded(exercises, prepTime);
 
-  const equipmentList = getEquipmentList(exercises);
+  const equipmentList = _.uniq(
+    exercises.reduce((acc: Equipment[], cur) => {
+      if (cur?.equipment) {
+        return [...acc, ...cur.equipment];
+      }
+      return acc;
+    }, []),
+  );
 
   const [paused, setPaused] = useState(false);
   const focused = useIsFocused();
@@ -204,10 +213,9 @@ const PreQuickRoutine: React.FC<{
           </View>
           <Text style={{color: colors.appWhite, flex: 1}}>
             {equipmentList && equipmentList.length
-              ? `${capitalizeFirstLetter(
-                  equipment,
-                )} equipment (${equipmentList.join(', ')})`
+              ? `${capitalizeFirstLetter(equipment)} equipment `
               : 'No equipment needed'}
+            <EquipmentList equipment={equipmentList} />
           </Text>
         </View>
         <View
