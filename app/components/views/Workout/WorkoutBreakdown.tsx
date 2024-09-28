@@ -57,7 +57,9 @@ const WorkoutBreakdown: React.FC<{
       ? quickRoutines[workout.quickRoutineId]?.exerciseIds
       : workout.workout;
 
-  const exerciseList = exerciseIds.map(id => exercises[id]).filter(e => e);
+  const exerciseList = exerciseIds
+    .map(id => (typeof id === 'string' ? exercises[id] : exercises[id.id]))
+    .filter(e => e);
 
   // Calculate cumulative calories
   const cumulativeCalories = useMemo(

@@ -58,7 +58,9 @@ const QuickRoutineView: React.FC<{
 
   const exercises = useMemo(() => {
     return routine.exerciseIds.map(id => {
-      return exercisesObj[id];
+      return typeof id === 'string'
+        ? exercisesObj[id]
+        : {...exercisesObj[id.id], ...id};
     });
   }, [exercisesObj, routine.exerciseIds]);
 

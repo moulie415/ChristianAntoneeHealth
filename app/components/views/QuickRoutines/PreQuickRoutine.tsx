@@ -50,7 +50,9 @@ const PreQuickRoutine: React.FC<{
   } = route.params;
   const exercises = useMemo(() => {
     return exerciseIds.map(id => {
-      return exercisesObj[id];
+      return typeof id === 'string'
+        ? exercisesObj[id]
+        : {...exercisesObj[id.id], ...id};
     });
   }, [exercisesObj, exerciseIds]);
 

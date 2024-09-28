@@ -43,7 +43,9 @@ const WorkoutCard: React.FC<{
   const exercises = useMemo(() => {
     if ('exerciseIds' in item) {
       return item.exerciseIds.map(id => {
-        return exercisesObj[id];
+        return typeof id === 'string'
+          ? exercisesObj[id]
+          : {...exercisesObj[id.id], ...id};
       });
     }
     if ('exercises' in item) {

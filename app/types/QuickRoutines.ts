@@ -10,7 +10,15 @@ export default interface QuickRoutine {
   equipment: Equipment;
   level: Level;
   premium: boolean;
-  exerciseIds: string[];
+  exerciseIds:
+    | string[]
+    | {
+        id: string;
+        prepTime?: number;
+        weight?: string;
+        notes?: string;
+        time?: number;
+      }[];
   thumbnail?: {src: string; title: string};
   preview?: {src: string; title: string};
   disableWorkoutMusic: boolean;
