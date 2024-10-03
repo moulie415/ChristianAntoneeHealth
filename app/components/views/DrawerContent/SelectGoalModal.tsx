@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import colors from '../../../constants/colors';
+import {useAppSelector} from '../../../hooks/redux';
 import {Goal} from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Modal from '../../commons/Modal';
@@ -14,6 +15,7 @@ const SelectGoalModal: React.FC<{
   goal: Goal;
   setGoal: (goal: Goal) => void;
 }> = ({goalModalVisible, setGoalModalVisible, goal, setGoal}) => {
+  const {profile} = useAppSelector(state => state.profile);
   return (
     <Modal
       visible={goalModalVisible}
@@ -38,6 +40,9 @@ const SelectGoalModal: React.FC<{
         </Text>
         <View style={{}}>
           {goalDetails.map(({text, secondaryText, goal: g}) => {
+            if (g === Goal.OTHER && !profile.client) {
+              return null;
+            }
             return (
               <SelectableButton
                 key={g}
