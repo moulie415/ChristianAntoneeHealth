@@ -77,6 +77,7 @@ export interface Profile {
   marketing?: boolean;
   dob?: string;
   signedUp?: boolean;
+  signUpDate?: number;
   admin?: boolean;
   premium?: Premium;
   unread?: {[key: string]: number};
