@@ -129,11 +129,12 @@ export const workoutSong = new Sound(
   error => {
     if (error) {
       console.log('failed to load the sound', error);
+      return;
     }
+
+    workoutSong.setNumberOfLoops(-1);
   },
 );
-
-workoutSong.setNumberOfLoops(-1);
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
