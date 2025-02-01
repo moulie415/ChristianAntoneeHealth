@@ -6,7 +6,7 @@ import {StackParamList} from '../../App';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
-import StarRating from 'react-native-star-rating';
+import StarRating from 'react-native-star-rating-widget';
 import colors from '../../constants/colors';
 import {rateApp} from '../../helpers';
 import * as api from '../../helpers/api';
@@ -20,7 +20,7 @@ import Input from '../commons/Input';
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
 }> = ({navigation}) => {
-  const [rating, setRating] = useState<number>();
+  const [rating, setRating] = useState<number>(0);
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -53,13 +53,12 @@ const Rating: React.FC<{
               height: 450,
             }}>
             <StarRating
-              containerStyle={{marginHorizontal: 40}}
-              fullStarColor="#FFC24C"
-              emptyStarColor="#6a4f1f"
+              color="#FFC24C"
+              emptyColor="#6a4f1f"
+              style={{alignSelf: 'center'}}
+              starSize={50}
               rating={rating}
-              selectedStar={star => {
-                setRating(star);
-              }}
+              onChange={setRating}
             />
             <Input
               placeholder="Give us feedback here (optional)"
