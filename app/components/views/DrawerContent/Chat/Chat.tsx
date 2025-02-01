@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {
   AvatarProps,
@@ -67,6 +66,7 @@ import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
 import DocumentMessage from './DocumentMessage';
 import VoiceNotePlayer from './VoiceNotePlayer';
+import {pick} from '@react-native-documents/picker';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -529,12 +529,13 @@ const Chat: React.FC<ChatProps> = ({
 
   const onPressDocument = async () => {
     try {
-      const result = await DocumentPicker.pickSingle({
+      const [result] = await pick({
         copyTo: 'cachesDirectory',
         ...(Platform.OS === 'android'
           ? {type: ['text/*', 'application/*']}
           : {}),
       });
+
       const message: Message = {
         user: {
           _id: profile.uid,
@@ -542,8 +543,7 @@ const Chat: React.FC<ChatProps> = ({
           avatar: profile.avatar,
         },
         _id: uuid.v4() as string,
-        document:
-          Platform.OS === 'ios' ? result.uri : result.fileCopyUri || result.uri,
+        document: result.uri,
         text: '',
         type: 'document',
         pending: true,

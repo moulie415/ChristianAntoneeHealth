@@ -12,7 +12,7 @@
     "update-navigation": "sh scripts/updateNavigation.sh",
     "clean": "react-native-clean-project",
     "postinstall": "patch-package",
-    "audit-deps": "yarn audit --groups dependencies --level high",
+    "audit-deps": "yarn npm audit --environment production --severity moderate",
     "audit-deps-fix": "npx yarn-audit-fix"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-native-community/push-notification-ios": "^1.11.0",
+    "@react-native-documents/picker": "^10.1.0",
     "@react-native-firebase/analytics": "^21.7.1",
     "@react-native-firebase/app": "^21.7.1",
     "@react-native-firebase/app-check": "^21.7.1",
@@ -72,7 +73,6 @@
     "react-native-confirmation-code-field": "^7.4.0",
     "react-native-countdown-circle-timer": "^3.2.1",
     "react-native-device-info": "^14.0.2",
-    "react-native-document-picker": "^9.3.1",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-email-link": "^1.16.1",
     "react-native-fast-image": "8.5.11",
@@ -168,5 +168,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "yarn@4.6.0"
 }
