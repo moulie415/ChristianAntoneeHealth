@@ -12,7 +12,7 @@
     "update-navigation": "sh scripts/updateNavigation.sh",
     "clean": "react-native-clean-project",
     "postinstall": "patch-package",
-    "audit-deps": "yarn audit --groups dependencies --level moderate",
+    "audit-deps": "yarn audit --groups dependencies --level high",
     "audit-deps-fix": "npx yarn-audit-fix"
   },
   "dependencies": {
