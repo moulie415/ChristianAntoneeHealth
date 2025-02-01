@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import colors from '../../constants/colors';
 import {equipmentItemReadableString} from '../../helpers/exercises';
 import {useAppSelector} from '../../hooks/redux';
@@ -18,7 +18,7 @@ const EquipmentList: React.FC<{equipment: Equipment[]}> = ({equipment}) => {
       (
       {equipment.map((item, index) => {
         return (
-          <>
+          <Fragment key={item}>
             <Text
               style={{
                 color: equipmentList.includes(item)
@@ -29,7 +29,7 @@ const EquipmentList: React.FC<{equipment: Equipment[]}> = ({equipment}) => {
               {equipmentItemReadableString(item)}
             </Text>
             {index + 1 === equipment.length ? '' : ', '}
-          </>
+          </Fragment>
         );
       })}
       )

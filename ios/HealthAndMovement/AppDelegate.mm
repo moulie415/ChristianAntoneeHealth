@@ -3,7 +3,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <Firebase.h>
 #import "RNSplashScreen.h"
-#import <RNGoogleSignin/RNGoogleSignin.h>
+#import <GoogleSignIn/GoogleSignIn.h>
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <SafariServices/SafariServices.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
@@ -40,14 +40,13 @@
   self.initialProps = @{};
     
   bool didFinish = [super application:application didFinishLaunchingWithOptions:launchOptions];
-  [RNSplashScreen show];
+  // [RNSplashScreen show];
 
   return didFinish;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
-  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] ||
-                                    [RNGoogleSignin application:application openURL:url options:options] ||
+  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [GIDSignIn.sharedInstance handleURL:url] ||
                                     [RCTLinkingManager application:application openURL:url options:options];
 }
 

@@ -141,10 +141,10 @@ const Plan: React.FC<{
                         </TouchableOpacity>
                       );
                     }}
-                    labelStyle={{
-                      textTransform: 'none',
-                      color: colors.appBlack,
-                    }}
+                    // labelStyle={{
+                    //   textTransform: 'none',
+                    //   color: colors.appBlack,
+                    // }}
                     style={{
                       backgroundColor: 'transparent',
                     }}

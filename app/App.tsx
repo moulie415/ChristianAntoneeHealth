@@ -156,21 +156,19 @@ export type StackParamList = {
   Offline: undefined;
   UpdatePrompt: undefined;
   TargetModal: undefined;
-  
+
 };
 
-// Construct a new instrumentation instance. This is needed to communicate between the integration and React
-const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
+const reactNavigationIntegration =  Sentry.reactNavigationIntegration();
+
 
 Sentry.init({
   environment: __DEV__ ? 'development' : 'production',
   dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
+  tracesSampleRate: 1.0,
+  enableUserInteractionTracing: true,
   integrations: [
-    new Sentry.ReactNativeTracing({
-      // Pass instrumentation to be used as `routingInstrumentation`
-      routingInstrumentation,
-      // ...
-    }),
+    reactNavigationIntegration,
   ],
 });
 
@@ -217,9 +215,8 @@ const App: React.FC = () => {
           onReady={() => {
             sagaMiddleware.run(rootSaga);
             SplashScreen.hide();
-
             // Register the navigation container with the instrumentation
-            routingInstrumentation.registerNavigationContainer(navigationRef);
+            reactNavigationIntegration.registerNavigationContainer(navigationRef);
           }}>
           <DrawerNavigator />
         </NavigationContainer>

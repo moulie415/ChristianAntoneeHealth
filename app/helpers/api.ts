@@ -160,9 +160,15 @@ export const googleSignIn = async (
 ) => {
   // Get the users ID token
   try {
-    const {idToken} = await GoogleSignin.signIn();
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
-    // Create a Google credential with the token
+    const signInResult = await GoogleSignin.signIn();
+
+    let idToken = signInResult.data?.idToken;
+    if (!idToken) {
+      throw new Error('No ID token found');
+    }
+
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // Sign-in the user with the credential
