@@ -155,10 +155,10 @@ export const facebookSignIn = async (
   }
 };
 
+const NO_ID_TOKEN_FOUND_ERROR = 'No ID token found';
 export const googleSignIn = async (
   handleAuthAction?: (user: FirebaseAuthTypes.User) => void,
 ) => {
-  // Get the users ID token
   try {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
@@ -166,7 +166,7 @@ export const googleSignIn = async (
 
     let idToken = signInResult.data?.idToken;
     if (!idToken) {
-      throw new Error('No ID token found');
+      throw new Error(NO_ID_TOKEN_FOUND_ERROR);
     }
 
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -178,7 +178,7 @@ export const googleSignIn = async (
     }
     return credentials;
   } catch (e: any) {
-    if (e.code !== statusCodes.SIGN_IN_CANCELLED) {
+    if (e.code !== statusCodes.SIGN_IN_CANCELLED && e.message !== NO_ID_TOKEN_FOUND_ERROR) {
       if (e instanceof Error) {
         Alert.alert('Error', e.message);
         logError(e);

@@ -2821,7 +2821,7 @@ PODS:
     - React-Core
   - react-native-safe-area-context (5.1.0):
     - React-Core
-  - react-native-skia (0.1.241):
+  - react-native-skia (1.11.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -4043,7 +4043,7 @@ SPEC CHECKSUMS:
   react-native-pdf: 70ec85fc764070ce9324f5aea504795e889e6ba0
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 04803a01f39f31cc6605a5531280b477b48f8a88
-  react-native-skia: 06dde6d1afe39c69759496e1b5e08844aabbd5c0
+  react-native-skia: 28b84d92260eabb0ba2d44618b22506863eb7061
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: 7f64502ca4166deca2be9da61d1a4d56567e99fa
@@ -4123,6 +4123,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: c34725819ab0a5962e85455b9e56679b306910ee
 
-PODFILE CHECKSUM: e9fe16e18c377317a18181ecce53ae7aeedf8a78
+PODFILE CHECKSUM: 024ef60f07b04b95dcd8cf94cfeaa40babd23105
 
 COCOAPODS: 1.15.2

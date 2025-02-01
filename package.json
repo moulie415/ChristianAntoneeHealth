@@ -46,7 +46,7 @@
     "@reduxjs/toolkit": "1.9.7",
     "@sentry/react-native": "^6.5.0",
     "@shopify/flash-list": "^1.7.3",
-    "@shopify/react-native-skia": "^0.1.230",
+    "@shopify/react-native-skia": "^1.11.3",
     "@types/react-native-wheel-pick": "^1.1.6",
     "@welldone-software/why-did-you-render": "^10.0.1",
     "@wuba/react-native-echarts": "^2.0.2",
