@@ -31,13 +31,12 @@
 		0AC9281226BEBEE20027F8AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC9281126BEBEE20027F8AD /* StoreKit.framework */; };
 		0ACBC0332C179A4C00044038 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACBC0312C179A4B00044038 /* Constants.swift */; };
 		0ACBC0342C179A4C00044038 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACBC0322C179A4C00044038 /* Singleton.swift */; };
+		0ADC01A82D52B2F600EC03F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADC01A72D52B2F600EC03F1 /* AppDelegate.swift */; };
 		0AF442592C4F0AC000E9E994 /* WatchWorkoutModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF442582C4F0AC000E9E994 /* WatchWorkoutModule.swift */; };
 		0AF4425B2C4F0E2C00E9E994 /* WatchWorkoutModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4425A2C4F0E2C00E9E994 /* WatchWorkoutModule.m */; };
 		0AF814E92436AD100056E3CD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF814E82436AD100056E3CD /* Launch Screen.storyboard */; };
 		0AFAEB4F2BD909CD00A2176B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAEB4E2BD909CD00A2176B /* PrivacyInfo.xcprivacy */; };
-		13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* appdelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,17 +122,15 @@
 		0AC9281126BEBEE20027F8AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0ACBC0312C179A4B00044038 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0ACBC0322C179A4C00044038 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		0ADC01A72D52B2F600EC03F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AF442582C4F0AC000E9E994 /* WatchWorkoutModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutModule.swift; sourceTree = "<group>"; };
 		0AF4425A2C4F0E2C00E9E994 /* WatchWorkoutModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchWorkoutModule.m; sourceTree = "<group>"; };
 		0AF814E82436AD100056E3CD /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		0AFA94C72438B073003ADDE3 /* Health and Movement.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Health and Movement.entitlements"; path = "HealthAndMovement/Health and Movement.entitlements"; sourceTree = "<group>"; };
 		0AFAEB4E2BD909CD00A2176B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = HealthAndMovement/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CA Health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CA Health.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = HealthAndMovement/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = appdelegate.mm; path = HealthAndMovement/appdelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HealthAndMovement/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HealthAndMovement/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HealthAndMovement/main.m; sourceTree = "<group>"; };
 		E670CA38C6E74B42A6E3CBE5 /* Pods-HealthAndMovement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthAndMovement.debug.xcconfig"; path = "Target Support Files/Pods-HealthAndMovement/Pods-HealthAndMovement.debug.xcconfig"; sourceTree = "<group>"; };
 		ECB439E87E38286B48A6A50B /* Pods_HealthAndMovement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthAndMovement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -224,16 +221,14 @@
 		13B07FAE1A68108700A75B9A /* HealthAndMovement */ = {
 			isa = PBXGroup;
 			children = (
+				0ADC01A72D52B2F600EC03F1 /* AppDelegate.swift */,
 				0A33190327D39ADF00C74CD6 /* logo.png */,
 				0A6FCF5C2760C6F70090931A /* HealthAndMovementDebug.entitlements */,
 				0AFA94C72438B073003ADDE3 /* Health and Movement.entitlements */,
 				0A3762D3242F929D00019FC6 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* appdelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB71A68108700A75B9A /* main.m */,
 				0AF814E82436AD100056E3CD /* Launch Screen.storyboard */,
 			);
 			name = HealthAndMovement;
@@ -745,9 +740,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* appdelegate.mm in Sources */,
+				0ADC01A82D52B2F600EC03F1 /* AppDelegate.swift in Sources */,
 				0ABF7D9A25FCF2D0008BB70F /* File.swift in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				0AF4425B2C4F0E2C00E9E994 /* WatchWorkoutModule.m in Sources */,
 				0AF442592C4F0AC000E9E994 /* WatchWorkoutModule.swift in Sources */,
 			);
@@ -1012,7 +1006,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = HealthAndMovement/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
@@ -1047,7 +1041,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 27RJG57PEM;
 				INFOPLIST_FILE = HealthAndMovement/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
