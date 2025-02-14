@@ -17,7 +17,6 @@ import {
   getWeight,
   initBiometrics,
   isAvailable,
-  linkToGoogleFit,
 } from '../../../helpers/biometrics';
 import {logError} from '../../../helpers/error';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
@@ -108,17 +107,7 @@ const SignUpFlow: React.FC<{
     const setup = async () => {
       setLoading(true);
       const available = await isAvailable();
-      if (!available && Platform.OS === 'android') {
-        Alert.alert(
-          'Google Fit not installed',
-          'While not required we recommend you install Google Fit to get the most out of CA Health',
-          [
-            {text: 'Cancel', style: 'cancel'},
-            {text: 'Install Google Fit', onPress: linkToGoogleFit},
-          ],
-        );
-        setLoading(false);
-      } else if (available) {
+      if (available) {
         const fetchData = async () => {
           try {
             await initBiometrics();

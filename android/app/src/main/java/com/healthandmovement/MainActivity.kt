@@ -8,6 +8,7 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import org.devio.rn.splashscreen.SplashScreen
+import dev.matinzd.healthconnect.permissions.HealthConnectPermissionDelegate
 
 
 class MainActivity : ReactActivity() {
@@ -26,6 +27,7 @@ class MainActivity : ReactActivity() {
        val patchWorker = OneTimeWorkRequest.Builder(PatchWorker::class.java).build()
        // Enqueue the worker
        WorkManager.getInstance(applicationContext).enqueue(patchWorker)
+       HealthConnectPermissionDelegate.setPermissionDelegate(this)
    }
 
 

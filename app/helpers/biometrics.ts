@@ -6,17 +6,26 @@ import {
   Platform,
 } from 'react-native';
 import {getApiLevel} from 'react-native-device-info';
-import GoogleFit, {ActivityType, BucketUnit} from 'react-native-google-fit';
 import AppleHealthKit from 'react-native-health';
 import {getIsPaired} from 'react-native-watch-connectivity';
-import {googleFitOptions, healthKitOptions} from '../constants/strings';
+import {healthConnectPermissions, healthKitOptions} from '../constants/strings';
 import {Gender, Sample, WatchWorkoutResponse} from '../types/Shared';
 import {getSamples, saveSample} from './api';
 import {logError} from './error';
+import {
+  getSdkStatus,
+  SdkAvailabilityStatus,
+  initialize,
+  readRecords,
+  insertRecords,
+  requestPermission,
+  RecordingMethod,
+} from 'react-native-health-connect';
+
 
 const {WatchWorkoutModule} = NativeModules;
 
-export const isAvailable = () => {
+export const isAvailable = async () => {
   if (Platform.OS === 'ios') {
     return new Promise((resolve, reject) => {
       AppleHealthKit.isAvailable((err, result) => {
@@ -28,39 +37,11 @@ export const isAvailable = () => {
       });
     });
   }
-  return new Promise(resolve => {
-    GoogleFit.isAvailable((isError, result) => {
-      resolve(result);
-    });
-  });
+  const status = await getSdkStatus();
+  return status === SdkAvailabilityStatus.SDK_AVAILABLE;
 };
 
-export const isEnabled = () => {
-  if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.isAvailable((err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  }
-  return new Promise((resolve, reject) => {
-    GoogleFit.isEnabled((err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
 
-export const linkToGoogleFit = () => {
-  return Linking.openURL('market://details?id=com.google.android.apps.fitness');
-};
 
 const round = (num: number) => {
   return Math.round(num * 100) / 100;
@@ -78,20 +59,13 @@ export const initBiometrics = async () => {
       });
     });
   }
-  const apiLevel = await getApiLevel();
-  if (apiLevel >= 10) {
-    await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION,
-    );
-  }
-  const result = await GoogleFit.authorize(googleFitOptions);
-  if (!result.success) {
-  }
+  await initialize();
+  await requestPermission(healthConnectPermissions);
 };
 
 export const getHeight = async (): Promise<number | undefined> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     if (Platform.OS === 'ios') {
@@ -115,15 +89,17 @@ export const getHeight = async (): Promise<number | undefined> => {
       return height;
     }
 
-    const response = await GoogleFit.getHeightSamples({
-      startDate: moment().subtract(30, 'days').startOf('day').toISOString(),
-      endDate: moment().endOf('day').toISOString(),
+    const {records} = await  readRecords('Height',{
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: moment().subtract(30, 'days').startOf('day').toISOString(),
+        endTime: moment().endOf('day').toISOString(),
+      },
     });
-    const latest = response[response.length - 1];
-    if (latest && latest.value && typeof latest.value === 'number') {
-      // value is in metres so need to convert to cm
-      return round(latest.value * 100);
-    }
+
+    const latest = records[records.length - 1];
+    // value is in metres so need to convert to cm
+    return round(latest.height.inMeters * 100);
   } catch (e) {
     logError(e);
   }
@@ -131,7 +107,7 @@ export const getHeight = async (): Promise<number | undefined> => {
 
 export const getWeight = async (): Promise<number | undefined> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     if (Platform.OS === 'ios') {
@@ -154,15 +130,17 @@ export const getWeight = async (): Promise<number | undefined> => {
       const weight = await promise;
       return weight;
     }
-    const response = await GoogleFit.getWeightSamples({
-      startDate: moment().subtract(1, 'year').startOf('day').toISOString(),
-      endDate: moment().endOf('day').toISOString(),
+
+    const {records} = await  readRecords('Weight',{
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: moment().subtract(30, 'days').startOf('day').toISOString(),
+        endTime: moment().endOf('day').toISOString(),
+      },
     });
-    const latest = response[response.length - 1];
-    if (latest && latest.value && typeof latest.value === 'number') {
-      // value is in kg so no need to convert
-      return round(latest.value);
-    }
+
+    const latest = records[records.length - 1];
+    return round(latest.weight.inKilograms);
   } catch (e) {
     logError(e);
   }
@@ -185,7 +163,7 @@ export const getStepSamples = async (
   endDate = moment().utc().endOf('day').toDate(),
 ): Promise<Sample[] | undefined> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     if (Platform.OS === 'ios') {
@@ -208,27 +186,24 @@ export const getStepSamples = async (
       const samples = await promise;
       return samples;
     }
-    const response = await GoogleFit.getDailyStepCountSamples({
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      bucketUnit: BucketUnit.DAY,
-      bucketInterval: 1,
+
+        const {records} = await  readRecords('Steps',{
+          timeRangeFilter: {
+            operator: 'between',
+            startTime: startDate.toISOString(),
+            endTime: endDate.toISOString(),
+          },
+        });
+
+
+    return records.filter(record => record.metadata?.clientRecordVersion !== RecordingMethod.RECORDING_METHOD_MANUAL_ENTRY).map(record => {
+            return {
+        value: record.count,
+        endDate: record.endTime,
+        startDate: record.startTime,
+      };
     });
 
-    // difference between steps and rawSteps?
-    return response.reduce((acc: Sample[], cur) => {
-      if (cur.source === 'com.google.android.gms:estimated_steps') {
-        return [
-          ...acc,
-          ...cur.steps.map(item => ({
-            endDate: item.date,
-            startDate: item.date,
-            value: item.value,
-          })),
-        ];
-      }
-      return acc;
-    }, []);
   } catch (e) {
     logError(e);
     return [];
@@ -237,15 +212,18 @@ export const getStepSamples = async (
 
 export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
+
+    const startDate = moment().utc().startOf('isoWeek').toISOString();
+    const endDate = moment().utc().endOf('day').toISOString();
     if (Platform.OS === 'ios') {
       const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
         AppleHealthKit.getDailyStepCountSamples(
           {
-            startDate: moment().utc().startOf('isoWeek').toISOString(),
-            endDate: moment().utc().endOf('day').toISOString(),
+            startDate,
+            endDate,
           },
           (err, results) => {
             if (err) {
@@ -268,17 +246,23 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       const samples = await promise;
       return samples;
     }
-    const response = await GoogleFit.getWeeklySteps(new Date(), 1);
-    return response.reduce((acc: Sample[], cur) => {
-      return [
-        ...acc,
-        ...cur.steps.map(steps => ({
-          startDate: steps.date,
-          endDate: steps.date,
-          value: steps.value,
-        })),
-      ];
-    }, []);
+
+    const {records} = await  readRecords('Steps',{
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: startDate,
+        endTime: endDate,
+      },
+    });
+
+    return records.map(record => {
+      return {
+        value: record.count,
+        endDate: record.endTime,
+        startDate: record.startTime,
+      };
+    });
+
   } catch (e) {
     logError(e);
     return [];
@@ -287,7 +271,7 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
 
 export const getActivitySamples = async (startDate: Date, endDate: Date) => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
 
@@ -310,12 +294,16 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
       const samples = await promise;
       return samples;
     }
-    const response = await GoogleFit.getActivitySamples({
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
+
+    const {records} = await  readRecords('ExerciseSession',{
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      },
     });
 
-    return response;
+    return records;
   } catch (e) {
     logError(e);
     return [];
@@ -324,7 +312,7 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
 
 export const getSex = async (): Promise<Gender | undefined> => {
   if (Platform.OS === 'ios') {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     const promise = new Promise<Gender | undefined>((resolve, reject) => {
@@ -348,7 +336,7 @@ export const getSex = async (): Promise<Gender | undefined> => {
 
 export const getDateOfBirth = async (): Promise<string | undefined> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     if (Platform.OS === 'ios') {
@@ -375,35 +363,24 @@ export const saveWeight = async (uid: string, value?: number) => {
       return;
     }
     await saveSample('weight', value, uid);
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
-    await new Promise((resolve, reject) => {
-      if (Platform.OS === 'ios') {
-        AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      } else {
-        GoogleFit.saveWeight(
-          {
-            value: value * 2.20462,
-            date: new Date().toISOString(),
-            unit: 'pound',
-          },
-          (err, res) => {
-            if (err) {
-              reject(err);
+
+    if (Platform.OS === 'ios') {
+      return new Promise((resolve, reject) => {
+          AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
+            if (e) {
+              reject(e);
             } else {
-              resolve(res);
+              resolve(result);
             }
-          },
-        );
-      }
-    });
+          });
+        });
+    }
+
+    await insertRecords([{recordType: 'Weight', weight: { value, unit: 'kilograms'}, time: new Date().toISOString() }]);
+
   } catch (e) {
     logError(e);
   }
@@ -415,34 +392,25 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     await saveSample('height', value, uid);
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
-    await new Promise((resolve, reject) => {
-      if (Platform.OS === 'ios') {
-        AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      } else {
-        GoogleFit.saveHeight(
-          {
-            value: value / 100,
-            date: new Date().toISOString(),
-          },
-          (err, res) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(res);
-            }
-          },
-        );
-      }
-    });
+    if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
+        if (e) {
+          reject(e);
+        } else {
+          resolve(result);
+        }
+      });
+      });
+
+    }
+
+    await insertRecords([{recordType: 'Height', height: { value: value / 100, unit: 'meters'}, time: new Date().toISOString() }]);
+
+
   } catch (e) {
     logError(e);
   }
@@ -453,7 +421,7 @@ export const getHeartRateSamples = async (
   endDate: Date,
 ): Promise<Sample[]> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return [];
     }
     if (Platform.OS === 'ios') {
@@ -475,12 +443,23 @@ export const getHeartRateSamples = async (
       const samples = await promise;
       return samples;
     }
-    const samples = await GoogleFit.getHeartRateSamples({
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      bucketUnit: BucketUnit.SECOND,
+
+    const {records} = await  readRecords('HeartRate',{
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      },
     });
-    return samples;
+
+
+    return records.reduce((acc: Sample[], cur) => {
+      return [...acc, ...cur.samples.map(sample => {
+        return { value: sample.beatsPerMinute, startDate: sample.time, endDate: sample.time};
+      })];
+    }, []);
+
+
   } catch (e) {
     logError(e);
     return [];
@@ -492,7 +471,7 @@ export const getCalorieSamples = async (
   endDate: Date,
 ): Promise<Sample[]> => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return [];
     }
     if (Platform.OS === 'ios') {
@@ -520,17 +499,25 @@ export const getCalorieSamples = async (
       const samples = await promise;
       return samples;
     }
-    const samples = await GoogleFit.getDailyCalorieSamples({
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      bucketUnit: BucketUnit.DAY,
+
+    const {records} = await  readRecords('ActiveCaloriesBurned',{
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      },
     });
 
-    return samples.map(sample => ({
-      startDate: sample.startDate,
-      endDate: sample.endDate,
-      value: sample.calorie,
-    }));
+
+    return records.map((record) => {
+      return {
+        startDate: record.startTime,
+        endDate: record.endTime,
+        value: record.energy.inKilocalories,
+
+      };
+    });
+
   } catch (e) {
     logError(e);
     return [];
@@ -544,7 +531,7 @@ export const saveWorkout = async (
   calories: number,
 ) => {
   try {
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     const startDate = moment().subtract(seconds, 'seconds').toISOString();
@@ -572,18 +559,6 @@ export const saveWorkout = async (
           },
         );
       });
-    } else {
-      await GoogleFit.saveWorkout({
-        startDate: moment(startDate).toISOString(),
-        endDate: moment(endDate).toISOString(),
-        activityType: ActivityType.Strength_training,
-        sessionName: name,
-        identifier: `workout:${moment(startDate).toISOString()} - ${moment(
-          endDate,
-        ).toISOString()}`,
-        calories,
-        description,
-      });
     }
   } catch (e) {
     logError(e);
@@ -598,7 +573,7 @@ export const getBodyFatPercentageSamples = async (uid: string) => {
 export const saveBodyFatPercentage = async (value: number, uid: string) => {
   try {
     await saveSample('bodyFatPercentage', value, uid);
-    if (!(await isAvailable()) || !(await isEnabled())) {
+    if (!(await isAvailable())) {
       return;
     }
     if (Platform.OS === 'ios') {

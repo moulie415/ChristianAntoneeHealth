@@ -22,7 +22,6 @@ import {
 } from 'react-native-device-info';
 import {openInbox} from 'react-native-email-link';
 import RNFS from 'react-native-fs';
-import googleFit from 'react-native-google-fit';
 import Purchases from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
@@ -50,7 +49,6 @@ import {
   getWeightSamples,
   initBiometrics,
   isAvailable,
-  isEnabled,
   saveBodyFatPercentage,
   saveHeight,
   saveWeight,
@@ -114,6 +112,7 @@ import {checkWorkoutStreak, getAllExercises} from './exercises';
 import {checkStepsCalories} from './leaderboards';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
+import { openHealthConnectSettings } from 'react-native-health-connect';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -213,8 +212,6 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
   try {
     try {
       const {uid} = yield select((state: RootState) => state.profile.profile);
-      const enabled: boolean = yield call(isEnabled);
-      if (enabled) {
         if (weight) {
           yield call(saveWeight, uid, weight);
         }
@@ -230,7 +227,6 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
         if (boneMass !== undefined) {
           yield call(api.saveSample, 'boneMass', boneMass, uid);
         }
-      }
     } catch (e) {
       Alert.alert(
         'Error saving body measurement',
@@ -239,13 +235,13 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
           {text: 'Cancel'},
           {
             text: `Open ${
-              Platform.OS === 'ios' ? 'Apple Health' : 'Google Fit'
+              Platform.OS === 'ios' ? 'Apple Health' : 'Health Connect'
             }`,
             onPress: () => {
               if (Platform.OS === 'ios') {
                 Linking.openURL('health://');
               } else {
-                googleFit.openFit();
+                openHealthConnectSettings();
               }
             },
           },
@@ -322,11 +318,8 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
   const {uid} = yield select((state: RootState) => state.profile.profile);
   try {
     try {
-      const enabled: boolean = yield call(isEnabled);
-      if (enabled) {
-        yield call(saveWeight, uid, weight);
-        yield call(saveHeight, uid, height);
-      }
+      yield call(saveWeight, uid, weight);
+      yield call(saveHeight, uid, height);
     } catch (e) {
       console.log(e);
     }
