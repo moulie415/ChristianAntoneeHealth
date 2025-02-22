@@ -33,6 +33,7 @@ const Recipes: React.FC<{
 
   const filtered = Object.values(recipes)
     .filter(recipe => recipe.category === category)
+    .filter(recipe => !recipe.hidden)
     .sort((a, b) => {
       if (profile.premium) {
         return 0;

@@ -1,11 +1,9 @@
 import moment from 'moment';
 import {
-  Linking,
   NativeModules,
-  PermissionsAndroid,
   Platform,
 } from 'react-native';
-import {getApiLevel} from 'react-native-device-info';
+// import {getApiLevel} from 'react-native-device-info';
 import AppleHealthKit from 'react-native-health';
 import {getIsPaired} from 'react-native-watch-connectivity';
 import {healthConnectPermissions, healthKitOptions} from '../constants/strings';
@@ -59,8 +57,10 @@ export const initBiometrics = async () => {
       });
     });
   }
-  await initialize();
-  await requestPermission(healthConnectPermissions);
+  const initialized = await initialize();
+  if (initialized) {
+    await requestPermission(healthConnectPermissions);
+  }
 };
 
 export const getHeight = async (): Promise<number | undefined> => {

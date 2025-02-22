@@ -328,6 +328,7 @@ export interface Recipe {
   image: {title: string; src: string};
   recipe: {title: string; src: string};
   premium: boolean;
+  hidden: boolean;
 }
 
 export enum RecipeCategory {

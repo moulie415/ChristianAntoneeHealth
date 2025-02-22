@@ -13,7 +13,7 @@ const Nutritional: React.FC<{
   const filtered = useMemo(() => {
     return Object.values(education).filter(
       e => e.category === Category.NUTRITIONAL,
-    );
+    ).filter(e => !e.hidden);
   }, [education]);
 
   return <ArticleList filtered={filtered} navigation={navigation} />;

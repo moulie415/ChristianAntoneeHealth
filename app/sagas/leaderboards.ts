@@ -24,6 +24,8 @@ import {
   Sample,
   UpdateProfilePayload,
 } from '../types/Shared';
+import { Platform } from 'react-native';
+import { getGrantedPermissions, initialize, Permission } from 'react-native-health-connect';
 
 export function* getLeaderboard(action: PayloadAction<LeaderboardType>) {
   try {
@@ -85,6 +87,19 @@ export function* checkStepsCalories(background?: boolean) {
           level: 'info',
         });
       }
+
+      if (Platform.OS === 'android') {
+        const initialized: boolean = yield call(initialize);
+        if (!initialized)  {
+          return;
+        }
+
+        const permissions: Permission[] = yield call(getGrantedPermissions);
+        if (!permissions.some(permission => permission.recordType === 'Steps')) {
+          return;
+        }
+      }
+
       const dailyStepsSamples: Sample[] = yield call(getStepSamples);
       if (dailyStepsSamples) {
         const steps = dailyStepsSamples.reduce(

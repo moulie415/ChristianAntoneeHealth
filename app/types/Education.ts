@@ -4,6 +4,7 @@ export default interface Education {
   title: string;
   body: string;
   premium: boolean;
+  hidden: boolean;
   category: Category;
   image: {
     src: string;
