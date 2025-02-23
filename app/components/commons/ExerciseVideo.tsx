@@ -39,9 +39,18 @@ const ExerciseVideo: React.FC<{
       }}>
       {/* <StatusBar hidden={fullscreen} /> */}
       <Video
-        source={{uri: convertToProxyURL(path)}}
+        source={{
+          uri: convertToProxyURL(path),
+          bufferConfig: {
+            minBufferMs: 2500,
+            maxBufferMs: 5000, // default is 50 000, 50 seconds
+            bufferForPlaybackMs: 2500,
+            bufferForPlaybackAfterRebufferMs: 2500,
+          },
+        }}
         style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
         resizeMode={ResizeMode.NONE}
+
         ref={ref}
         onError={e => console.error(e)}
         repeat
