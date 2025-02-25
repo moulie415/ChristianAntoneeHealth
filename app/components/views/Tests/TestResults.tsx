@@ -17,6 +17,9 @@ import Header from '../../commons/Header';
 import PercentileTable from '../../commons/PercentileTable';
 import Table from '../../commons/Table';
 import TestResultText from './TestResultText';
+import Text from '../../commons/Text';
+import Hyperlink from 'react-native-hyperlink';
+
 
 const TestResults: React.FC<{
   profile: Profile;
@@ -98,6 +101,9 @@ const TestResults: React.FC<{
             score={score}
           />
         )}
+        <View style={{marginHorizontal: 40, marginTop: 20}}>
+        {!!test.source && <Hyperlink linkDefault linkStyle={{color: colors.appBlue}}><Text style={{color: colors.appWhite, fontStyle: 'italic'}}>{test.source}</Text></Hyperlink>}
+        </View>
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end'}}>
         {profile.premium && (

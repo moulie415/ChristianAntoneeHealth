@@ -91,7 +91,7 @@ const TestResultText: React.FC<{
           fontSize: FONTS_SIZES.LARGE,
           marginTop: 10,
         }}>
-        {score}
+        {Math.floor(score)}
       </Text>
       <View
         style={{
