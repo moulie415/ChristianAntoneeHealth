@@ -5,13 +5,13 @@ import {
   ActivityIndicator,
   Alert,
   Dimensions,
+  Image,
   Linking,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Config from 'react-native-config';
-import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
   CustomerInfo,
@@ -201,7 +201,7 @@ const Premium: React.FC<{
 
   return (
     <>
-      <FastImage
+      <Image
         source={require('../../../images/premium-paywall.jpeg')}
         style={{
           flex: 1,

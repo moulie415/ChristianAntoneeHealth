@@ -19,7 +19,7 @@ import {SavedTest} from '../../../types/SavedItem';
 import {Profile} from '../../../types/Shared';
 import TestType from '../../../types/Test';
 import Button from '../../commons/Button';
-import FastImageAnimated from '../../commons/FastImageAnimated';
+import ImageAnimated from '../../commons/ImageAnimated';
 import Header from '../../commons/Header';
 import MyTabs from '../../commons/MyTabs';
 import TestTimer from '../../commons/TestTimer';
@@ -145,7 +145,7 @@ const Test: React.FC<{
           disableFocus
         />
       ) : (
-        <FastImageAnimated
+        <ImageAnimated
           source={{uri: test.thumbnail.src}}
           style={{
             height: getVideoHeight(),
@@ -157,7 +157,7 @@ const Test: React.FC<{
               opacity: 0.4,
             }}
           />
-        </FastImageAnimated>
+        </ImageAnimated>
       )}
       <Header hasBack absolute customBackPress={handleBackPress} />
 

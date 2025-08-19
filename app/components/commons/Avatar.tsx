@@ -1,7 +1,6 @@
 import {Avatar as UserAvatar} from '@kolking/react-native-avatar';
 import React from 'react';
-import {ImageStyle, View} from 'react-native';
-import Image, {ImageStyle as FastImageStyle} from 'react-native-fast-image';
+import {Image, ImageStyle, View} from 'react-native';
 
 import colors from '../../constants/colors';
 
@@ -33,7 +32,7 @@ const Avatar: React.FC<{
   name: string;
   uid: string;
   hideAdmin?: boolean;
-  style?: ImageStyle | FastImageStyle;
+  style?: ImageStyle;
 }> = ({src, size, name, uid, hideAdmin, style}) => {
   const {admins} = useAppSelector(state => state.settings);
   const isAdmin = admins.includes(uid);
@@ -48,7 +47,6 @@ const Avatar: React.FC<{
               height: size || 30,
               borderRadius: size ? size / 2 : 15,
             },
-            style as FastImageStyle,
           ]}
         />
         {isAdmin && !hideAdmin && <AdminCheck size={size} />}

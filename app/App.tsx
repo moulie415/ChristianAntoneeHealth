@@ -1,20 +1,20 @@
 import appCheck from '@react-native-firebase/app-check';
 import {NavigationContainer} from '@react-navigation/native';
-import createSagaMiddleware from '@redux-saga/core';
 import {configureStore} from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import React, {useEffect, useState} from 'react';
 import {Dimensions, Image, Platform, View} from 'react-native';
 import Config from 'react-native-config';
-import FastImage from 'react-native-fast-image';
 import 'react-native-gesture-handler';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {IMessage} from 'react-native-gifted-chat';
 import Purchases, {LOG_LEVEL} from 'react-native-purchases';
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
 import {persistStore} from 'redux-persist';
 import {PersistGate} from 'redux-persist/lib/integration/react';
+
+const createSagaMiddleware = require('redux-saga').default;
 import {navigationRef} from './RootNavigation';
 import {DrawerNavigator} from './Stack';
 import colors from './constants/colors';
@@ -41,6 +41,7 @@ import {
   WatchWorkoutResponse,
 } from './types/Shared';
 import Test from './types/Test';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const {height, width} = Dimensions.get('window');
 
@@ -173,6 +174,7 @@ Sentry.init({
 });
 
 const App: React.FC = () => {
+
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -208,56 +210,47 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <PersistGate persistor={persistor}>
-      <Provider store={store}>
-        <NavigationContainer
-          ref={navigationRef}
-          onReady={() => {
-            sagaMiddleware.run(rootSaga);
-            SplashScreen.hide();
-            // Register the navigation container with the instrumentation
-            reactNavigationIntegration.registerNavigationContainer(navigationRef);
-          }}>
-          <DrawerNavigator />
-        </NavigationContainer>
-        {showSplash && (
-          <View
-            style={{
-              backgroundColor: colors.appWhite,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-            }}>
-            {Platform.OS === 'ios' ? (
-              <Image
-                source={require('./images/splash.gif')}
+     <PersistGate persistor={persistor}>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <Provider store={store}>
+          <SafeAreaProvider>
+            <NavigationContainer
+              ref={navigationRef}
+              onReady={() => {
+                sagaMiddleware.run(rootSaga);
+                SplashScreen.hide();
+                // Register the navigation container with the instrumentation
+                reactNavigationIntegration.registerNavigationContainer(navigationRef);
+              }}>
+              <DrawerNavigator />
+            </NavigationContainer>
+            {showSplash && (
+              <View
                 style={{
-                  height,
-                  width: '75%',
                   backgroundColor: colors.appWhite,
-                  alignSelf: 'center',
-                }}
-                resizeMode="contain"
-              />
-            ) : (
-              <FastImage
-                source={require('./images/splash.gif')}
-                style={{
-                  height,
-                  width: '75%',
-                  backgroundColor: colors.appWhite,
-                  alignSelf: 'center',
-                }}
-                resizeMode="contain"
-              />
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }}>
+                  <Image
+                    source={require('./images/splash.gif')}
+                    style={{
+                      height,
+                      width: '75%',
+                      backgroundColor: colors.appWhite,
+                      alignSelf: 'center',
+                    }}
+                    resizeMode="contain"
+                  />
+              </View>
             )}
-          </View>
-        )}
-      </Provider>
+          </SafeAreaProvider>
+        </Provider>
+      </GestureHandlerRootView>
     </PersistGate>
   );
 };
 
-export default gestureHandlerRootHOC(Sentry.wrap(App));
+export default Sentry.wrap(App);

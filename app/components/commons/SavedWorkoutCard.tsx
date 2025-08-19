@@ -1,8 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {ImageBackground, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
@@ -59,7 +58,7 @@ const SavedWorkoutCard: React.FC<{
         }
       }}
       key={item.id}>
-      <FastImage
+      <ImageBackground
         style={{
           height: 120,
           marginHorizontal: 10,
@@ -186,7 +185,7 @@ const SavedWorkoutCard: React.FC<{
             )} */}
           </View>
         </View>
-      </FastImage>
+      </ImageBackground>
     </TouchableOpacity>
   );
 };

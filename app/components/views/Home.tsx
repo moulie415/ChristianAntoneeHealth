@@ -1,7 +1,6 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Dimensions, ScrollView, View, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
@@ -33,7 +32,7 @@ const Home: React.FC<{
       <SafeAreaView>
         <Header showDrawerMenuButton />
         <ScrollView contentContainerStyle={{paddingBottom: 60}}>
-          <FastImage
+          <Image
             source={require('../../images/logo.png')}
             style={{
               width: 95,

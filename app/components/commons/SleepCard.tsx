@@ -1,6 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {ImageBackground, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {navigationRef} from '../../RootNavigation';
@@ -11,7 +10,7 @@ import Text from './Text';
 const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
   return (
     <TouchableOpacity onPress={() => navigationRef.navigate('Sleep', {sleep})}>
-      <FastImage
+      <ImageBackground
         style={{
           height: 120,
           marginHorizontal: 10,
@@ -64,7 +63,7 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
             </View>
           </View>
         </LinearGradient>
-      </FastImage>
+      </ImageBackground>
     </TouchableOpacity>
   );
 };

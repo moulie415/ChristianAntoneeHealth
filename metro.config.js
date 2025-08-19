@@ -2,10 +2,8 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
 const {withSentryConfig} = require('@sentry/react-native/metro');
 
-const defaultSourceExts =
-  require('metro-config/src/defaults/defaults').sourceExts;
-const defaultAssetExts =
-  require('metro-config/src/defaults/defaults').assetExts;
+const defaultConfig = getDefaultConfig(__dirname);
+const { assetExts, sourceExts } = defaultConfig.resolver;
 
 /**
  * Metro configuration
@@ -15,9 +13,10 @@ const defaultAssetExts =
  */
 
 module.exports = withSentryConfig(
-  mergeConfig(getDefaultConfig(__dirname), {
+  mergeConfig(defaultConfig, {
+    resetCache: true,
     transformer: {
-      babelTransformerPath: require.resolve('react-native-svg-transformer'),
+      babelTransformerPath: require.resolve('react-native-svg-transformer/react-native'),
       getTransformOptions: async () => ({
         transform: {
           experimentalImportSupport: false,
@@ -26,8 +25,10 @@ module.exports = withSentryConfig(
       }),
     },
     resolver: {
-      assetExts: defaultAssetExts.filter(ext => ext !== 'svg'),
-      sourceExts: [...defaultSourceExts, 'svg'],
+      assetExts: assetExts.filter(ext => ext !== 'svg'),
+      sourceExts: [...sourceExts, 'svg'],
     },
   }),
 );
+
+

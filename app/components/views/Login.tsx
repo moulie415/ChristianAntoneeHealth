@@ -4,9 +4,8 @@ import appleAuth, {
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Image, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Image, ImageBackground, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
-import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
@@ -79,7 +78,7 @@ const Login: React.FC<{
   };
 
   return (
-    <FastImage
+    <ImageBackground
       source={require('../../images/login.jpeg')}
       blurRadius={5}
       style={{
@@ -199,7 +198,7 @@ const Login: React.FC<{
           {`v${getVersion()} (${getBuildNumber()})`}
         </Text>
       </View>
-    </FastImage>
+    </ImageBackground>
   );
 };
 

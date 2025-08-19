@@ -3,8 +3,7 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {generateLink} from '../../../helpers/api';
 
-import {Share, StyleSheet, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {ImageBackground, Share, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import {connect} from 'react-redux';
@@ -22,7 +21,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   const [loading, setLoading] = useState(false);
   const [link, setLink] = useState('');
   return (
-    <FastImage
+    <ImageBackground
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -100,7 +99,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
           }}
         />
       </SafeAreaView>
-    </FastImage>
+    </ImageBackground>
   );
 };
 

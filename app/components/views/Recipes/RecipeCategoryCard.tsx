@@ -1,21 +1,20 @@
 import React from 'react';
-import {Dimensions, Platform, TouchableOpacity} from 'react-native';
-import {Source} from 'react-native-fast-image';
+import {Dimensions, ImageSourcePropType, Platform, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constants/colors';
-import FastImageAnimated from '../../commons/FastImageAnimated';
+import ImageAnimated from '../../commons/ImageAnimated';
 import Text from '../../commons/Text';
 
 const {height} = Dimensions.get('window');
 
 const RecipeCategoryCard: React.FC<{
   name: string;
-  image: Source;
+  image: ImageSourcePropType;
   onPress: () => void;
 }> = ({onPress, name, image}) => {
   return (
     <TouchableOpacity onPress={onPress} key={name}>
-      <FastImageAnimated
+      <ImageAnimated
         style={{
           height: Platform.OS === 'ios' ? height / 5.5 : height / 5,
           marginHorizontal: 15,
@@ -50,7 +49,7 @@ const RecipeCategoryCard: React.FC<{
             {name}
           </Text>
         </LinearGradient>
-      </FastImageAnimated>
+      </ImageAnimated>
     </TouchableOpacity>
   );
 };

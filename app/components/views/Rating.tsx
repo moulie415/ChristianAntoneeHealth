@@ -1,9 +1,8 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import {StackParamList} from '../../App';
 
-import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import StarRating from 'react-native-star-rating-widget';
@@ -29,7 +28,7 @@ const Rating: React.FC<{
 
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <FastImage
+      <Image
         source={require('../../images/upper_body.jpeg')}
         style={{
           flex: 1,

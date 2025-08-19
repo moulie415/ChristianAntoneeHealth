@@ -8,12 +8,12 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Alert,
   FlatList,
+  Image,
   Platform,
   SafeAreaView,
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import {
   AvatarProps,
   Bubble,
@@ -373,7 +373,7 @@ const Chat: React.FC<ChatProps> = ({
           setImagesVisible(true);
         }}
         disabled={props.currentMessage?.pending}>
-        <FastImage
+        <Image
           style={{
             position: 'relative',
             height: 150,

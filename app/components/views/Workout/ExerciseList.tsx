@@ -1,8 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
-import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
-import Image from 'react-native-fast-image';
+import {Image, RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';

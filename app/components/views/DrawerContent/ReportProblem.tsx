@@ -1,8 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as Sentry from '@sentry/react-native';
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Image, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import {StackParamList} from '../../../App';
@@ -21,7 +20,7 @@ const ReportProblem: React.FC<{
   const {profile} = useAppSelector(state => state.profile);
   return (
     <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <FastImage
+      <Image
         source={require('../../../images/upper_body.jpeg')}
         style={{
           flex: 1,

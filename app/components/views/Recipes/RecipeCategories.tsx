@@ -1,6 +1,5 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import {Source} from 'react-native-fast-image';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
@@ -8,11 +7,12 @@ import colors from '../../../constants/colors';
 import {RecipeCategory} from '../../../types/Shared';
 import Header from '../../commons/Header';
 import RecipeCategoryCard from './RecipeCategoryCard';
+import { ImageSourcePropType } from 'react-native';
 
 export const recipeCategories: {
   category: RecipeCategory;
   name: string;
-  image: Source;
+  image: ImageSourcePropType;
 }[] = [
   {
     category: RecipeCategory.HIGH_PROTEIN,

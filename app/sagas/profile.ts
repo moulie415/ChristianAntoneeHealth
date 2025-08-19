@@ -823,7 +823,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       yield fork(getAllExercises);
       yield fork(getQuickRoutines);
 
-      if (doc.exists) {
+      if (doc.exists()) {
         yield put(setProfile(doc.data() as Profile));
       } else {
         const reminderTime = new Date(
@@ -882,21 +882,21 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         providerId: user.providerData[0].providerId,
         premium: customerInfo.entitlements.active.Premium ? 'true' : 'false',
         uid: user.uid || '',
-        name: doc.exists ? doc.data()?.name || '' : '',
-        surname: doc.exists ? doc.data()?.surname || '' : '',
+        name: doc.exists() ? doc.data()?.name || '' : '',
+        surname: doc.exists() ? doc.data()?.surname || '' : '',
       });
 
       Sentry.setUser({
         id: user.uid,
         email: user.email || '',
-        username: doc.exists
+        username: doc.exists()
           ? `${doc.data()?.name} ${doc.data()?.surname || ''}`
           : '',
       });
 
       yield fork(checkDeviceInfoChanged);
 
-      if (doc.exists && doc.data()?.signedUp) {
+      if (doc.exists() && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
         if (available) {
           yield call(initBiometrics);

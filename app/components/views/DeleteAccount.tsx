@@ -1,8 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
@@ -35,7 +34,7 @@ const DeleteAccount: React.FC<{
     }
   }, []);
   return (
-    <FastImage
+    <ImageBackground
       source={require('../../images/login.jpeg')}
       blurRadius={5}
       style={{flex: 1}}>
@@ -148,7 +147,7 @@ const DeleteAccount: React.FC<{
           }
         />
       </SafeAreaView>
-    </FastImage>
+    </ImageBackground>
   );
 };
 

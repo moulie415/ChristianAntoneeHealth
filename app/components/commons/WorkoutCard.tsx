@@ -7,7 +7,7 @@ import {getWorkoutDurationRounded} from '../../helpers/getWorkoutDurationRounded
 import {useAppSelector} from '../../hooks/redux';
 import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
 import {Level, PlanWorkout} from '../../types/Shared';
-import FastImageAnimated from './FastImageAnimated';
+import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
 export const getEquipmentString = (equipment: Equipment) => {
@@ -62,7 +62,7 @@ const WorkoutCard: React.FC<{
       onPress={onPress}
       disabled={disabled}
       key={'id' in item ? item.id : item.name}>
-      <FastImageAnimated
+      <ImageAnimated
         style={{
           height: 120,
           marginHorizontal: 10,
@@ -184,7 +184,7 @@ const WorkoutCard: React.FC<{
             <Icon name="lock" color="#fff" size={20} />
           </View>
         )}
-      </FastImageAnimated>
+      </ImageAnimated>
     </TouchableOpacity>
   );
 };

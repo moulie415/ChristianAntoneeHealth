@@ -1,10 +1,9 @@
 import React from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Dimensions, ImageBackground, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import {StackParamList} from '../../../App';
 import Header from '../../commons/Header';
@@ -41,7 +40,7 @@ const WhatEquipment: React.FC<{
               marginBottom: 10,
               width: Dimensions.get('window').width - 40,
             }}>
-            <FastImage
+            <ImageBackground
               style={{
                 height: TILE_HEIGHT,
                 justifyContent: 'flex-end',
@@ -79,7 +78,7 @@ const WhatEquipment: React.FC<{
                   (Dumbbells, exercise ball, exercise mat)
                 </Text> */}
               </LinearGradient>
-            </FastImage>
+            </ImageBackground>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
@@ -92,7 +91,7 @@ const WhatEquipment: React.FC<{
               marginBottom: 10,
               width: Dimensions.get('window').width - 40,
             }}>
-            <FastImage
+            <ImageBackground
               style={{
                 height: TILE_HEIGHT,
                 justifyContent: 'flex-end',
@@ -130,7 +129,7 @@ const WhatEquipment: React.FC<{
                   (Dumbbells, exercise ball, exercise mat)
                 </Text>
               </LinearGradient>
-            </FastImage>
+            </ImageBackground>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -140,7 +139,7 @@ const WhatEquipment: React.FC<{
               marginTop: 10,
               width: Dimensions.get('window').width - 40,
             }}>
-            <FastImage
+            <ImageBackground
               style={{
                 height: TILE_HEIGHT,
                 justifyContent: 'flex-end',
@@ -179,7 +178,7 @@ const WhatEquipment: React.FC<{
                   benches Kettlebell etc)
                 </Text>
               </LinearGradient>
-            </FastImage>
+            </ImageBackground>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

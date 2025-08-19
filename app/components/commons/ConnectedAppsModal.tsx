@@ -7,7 +7,7 @@ import Config from 'react-native-config';
 import {Profile} from '../../types/Shared';
 import Modal from './Modal';
 import colors from '../../constants/colors';
-import FastImageAnimated from './FastImageAnimated';
+import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
@@ -65,7 +65,7 @@ const ConnectedAppsModal: React.FC<{
               )
             }>
             <View>
-              <FastImageAnimated
+              <ImageAnimated
                 style={{
                   width: IMAGE_SIZE,
                   height: IMAGE_SIZE,
@@ -93,7 +93,7 @@ const ConnectedAppsModal: React.FC<{
               )
             }>
             <View>
-              <FastImageAnimated
+              <ImageAnimated
                 style={{
                   width: IMAGE_SIZE,
                   height: IMAGE_SIZE,
@@ -120,7 +120,7 @@ const ConnectedAppsModal: React.FC<{
               )
             }>
             <View>
-              <FastImageAnimated
+              <ImageAnimated
                 style={{
                   width: IMAGE_SIZE,
                   height: IMAGE_SIZE,

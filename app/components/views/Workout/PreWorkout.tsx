@@ -2,8 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -79,7 +78,7 @@ const PreWorkout: React.FC<{
 
   return (
     <>
-      <FastImage
+      <ImageBackground
         source={require('../../../images/new_workout.jpeg')}
         style={{height: getVideoHeight()}}>
         <View
@@ -92,7 +91,7 @@ const PreWorkout: React.FC<{
         <SafeAreaView>
           <Header hasBack />
         </SafeAreaView>
-      </FastImage>
+      </ImageBackground>
       <ScrollView
         style={{
           flex: 1,

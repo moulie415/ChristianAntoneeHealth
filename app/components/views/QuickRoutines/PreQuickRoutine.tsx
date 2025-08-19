@@ -2,8 +2,7 @@ import {RouteProp, useIsFocused} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import React, {useEffect, useMemo, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Image, ImageBackground, StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -101,7 +100,7 @@ const PreQuickRoutine: React.FC<{
           <Header absolute hasBack />
         </>
       ) : (
-        <FastImage
+        <ImageBackground
           source={{uri: thumbnail?.src}}
           style={{height: getVideoHeight()}}>
           <View
@@ -114,7 +113,7 @@ const PreQuickRoutine: React.FC<{
           <SafeAreaView>
             <Header hasBack />
           </SafeAreaView>
-        </FastImage>
+        </ImageBackground>
       )}
 
       <ScrollView

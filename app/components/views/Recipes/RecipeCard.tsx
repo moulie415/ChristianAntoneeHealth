@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 import {useAppSelector} from '../../../hooks/redux';
-import FastImageAnimated from '../../commons/FastImageAnimated';
+import ImageAnimated from '../../commons/ImageAnimated';
 import Text from '../../commons/Text';
 
 const {height} = Dimensions.get('window');
@@ -18,7 +18,7 @@ const RecipeCard: React.FC<{
   const {profile} = useAppSelector(state => state.profile);
   return (
     <TouchableOpacity onPress={onPress}>
-      <FastImageAnimated
+      <ImageAnimated
         style={{
           height: Platform.OS === 'ios' ? height / 5.5 : height / 5,
           marginHorizontal: 15,
@@ -64,7 +64,7 @@ const RecipeCard: React.FC<{
             <Icon name="lock" color={colors.appWhite} size={20} />
           </View>
         )}
-      </FastImageAnimated>
+      </ImageAnimated>
     </TouchableOpacity>
   );
 };

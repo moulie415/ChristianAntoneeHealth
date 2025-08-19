@@ -1,14 +1,12 @@
 import React from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Dimensions, ImageSourcePropType, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
-
-import {Source} from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import FastImageAnimated from './FastImageAnimated';
+import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
 const {height, width} = Dimensions.get('window');
@@ -19,7 +17,7 @@ const HomeCard: React.FC<{
   title: string;
   subtitle: string;
   onPress: () => void;
-  image: Source | number;
+  image: ImageSourcePropType | number;
   premium?: boolean;
   profile: Profile;
   delay?: number;
@@ -34,7 +32,7 @@ const HomeCard: React.FC<{
         overflow: 'hidden',
       }}
       onPress={onPress}>
-      <FastImageAnimated
+      <ImageAnimated
         delay={delay}
         duration={1000}
         style={{
@@ -89,7 +87,7 @@ const HomeCard: React.FC<{
             </View>
           )}
         </LinearGradient>
-      </FastImageAnimated>
+      </ImageAnimated>
     </TouchableOpacity>
   );
 };

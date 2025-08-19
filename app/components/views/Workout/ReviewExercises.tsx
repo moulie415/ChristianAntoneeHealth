@@ -1,9 +1,8 @@
 import React, {useCallback} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
-import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';

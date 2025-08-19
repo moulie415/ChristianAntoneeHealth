@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import FastImageAnimated from './FastImageAnimated';
+import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
 const SavedTestCard: React.FC<{
@@ -28,7 +28,7 @@ const SavedTestCard: React.FC<{
     <TouchableOpacity
       onPress={() => navigation.navigate('Test', {id: test.id})}
       key={test.name}>
-      <FastImageAnimated
+      <ImageAnimated
         style={{
           height: 120,
           marginHorizontal: 15,
@@ -98,7 +98,7 @@ const SavedTestCard: React.FC<{
             </Text>
           </View>
         </View>
-      </FastImageAnimated>
+      </ImageAnimated>
     </TouchableOpacity>
   );
 };

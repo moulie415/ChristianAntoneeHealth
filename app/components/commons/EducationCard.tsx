@@ -8,7 +8,7 @@ import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import Education from '../../types/Education';
 import {Profile} from '../../types/Shared';
-import FastImageAnimated from './FastImageAnimated';
+import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
 const {height, width} = Dimensions.get('window');
@@ -29,7 +29,7 @@ const EducationCard: React.FC<{
         overflow: 'hidden',
       }}
       onPress={() => onPress(item)}>
-      <FastImageAnimated
+      <ImageAnimated
         style={{
           height: 125,
           width: '100%',

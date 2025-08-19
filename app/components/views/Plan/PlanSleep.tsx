@@ -1,9 +1,8 @@
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
 
 const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
@@ -12,7 +11,7 @@ const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
   const {sleep} = route.params;
   return (
     <ScrollView bounces={false} style={{backgroundColor: colors.appGrey}}>
-      <FastImage
+      <ImageBackground
         style={{
           height: 350,
           marginBottom: 10,
@@ -25,7 +24,7 @@ const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
             opacity: 0.4,
           }}
         />
-      </FastImage>
+      </ImageBackground>
 
       <Header hasBack absolute title="Sleep" />
 

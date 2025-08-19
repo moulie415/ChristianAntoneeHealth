@@ -1,8 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Dimensions, ImageBackground, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -44,7 +43,7 @@ const WhatArea: React.FC<{
             borderRadius: 5,
             width: Dimensions.get('window').width - 40,
           }}>
-          <FastImage
+          <ImageBackground
             style={{
               height: TILE_HEIGHT,
               justifyContent: 'flex-end',
@@ -81,7 +80,7 @@ const WhatArea: React.FC<{
                 (Workouts for your chest, back, arms, shoulders and abs)
               </Text>
             </LinearGradient>
-          </FastImage>
+          </ImageBackground>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
@@ -93,7 +92,7 @@ const WhatArea: React.FC<{
             borderRadius: 5,
             width: Dimensions.get('window').width - 40,
           }}>
-          <FastImage
+          <ImageBackground
             style={{
               height: TILE_HEIGHT,
               justifyContent: 'flex-end',
@@ -130,7 +129,7 @@ const WhatArea: React.FC<{
                 (Train your glutes, quads, hamstrings and inner thigh)
               </Text>
             </LinearGradient>
-          </FastImage>
+          </ImageBackground>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
@@ -142,7 +141,7 @@ const WhatArea: React.FC<{
             borderRadius: 5,
             width: Dimensions.get('window').width - 40,
           }}>
-          <FastImage
+          <ImageBackground
             style={{
               height: TILE_HEIGHT,
               justifyContent: 'flex-end',
@@ -179,7 +178,7 @@ const WhatArea: React.FC<{
                 (Comprehensive workouts targeting all major muscle groups)
               </Text>
             </LinearGradient>
-          </FastImage>
+          </ImageBackground>
         </TouchableOpacity>
       </SafeAreaView>
     </View>

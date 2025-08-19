@@ -1,7 +1,6 @@
-import {View} from 'react-native';
+import {View, ImageBackground} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import FastImage from 'react-native-fast-image';
 import {navigationRef} from '../../RootNavigation';
 import {PlanNutrition} from '../../types/Shared';
 import Text from './Text';
@@ -13,7 +12,7 @@ const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
   return (
     <TouchableOpacity
       onPress={() => navigationRef.navigate('Nutrition', {nutrition})}>
-      <FastImage
+      <ImageBackground
         style={{
           height: 120,
           marginHorizontal: 10,
@@ -66,7 +65,7 @@ const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
             </View>
           </View>
         </LinearGradient>
-      </FastImage>
+      </ImageBackground>
     </TouchableOpacity>
   );
 };

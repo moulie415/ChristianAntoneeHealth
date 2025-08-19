@@ -92,7 +92,7 @@ export const DrawerNavigator: React.FC = () => {
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-const StackComponent: React.FC = () => {
+export const StackComponent: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName="Loading"

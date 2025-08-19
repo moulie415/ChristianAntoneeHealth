@@ -12,13 +12,12 @@ import AboutProps from '../../../types/views/About';
 import Text from '../../commons/Text';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
-import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const About: React.FC<AboutProps> = () => {
   return (
     <>
-      <FastImage
+      <ImageBackground
         source={require('../../../images/christian-welcome.jpg')}
         style={{height: 640}}>
         <View
@@ -31,7 +30,7 @@ const About: React.FC<AboutProps> = () => {
         <SafeAreaView>
           <Header hasBack title="" />
         </SafeAreaView>
-      </FastImage>
+      </ImageBackground>
       <View
         style={{
           flex: 1,

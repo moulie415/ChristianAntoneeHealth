@@ -7,7 +7,7 @@ import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
 import {RootState} from '../../App';
 import Test from '../../types/Test';
-import FastImageAnimated from './FastImageAnimated';
+import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
 const {height} = Dimensions.get('window');
@@ -26,7 +26,7 @@ const TestCard: React.FC<{
 
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress} key={item.name}>
-      <FastImageAnimated
+      <ImageAnimated
         style={{
           height: Platform.OS === 'ios' ? height / 5.5 : height / 5,
           marginHorizontal: 15,
@@ -101,7 +101,7 @@ const TestCard: React.FC<{
             <Icon name="lock" color="#fff" size={20} />
           </View>
         )}
-      </FastImageAnimated>
+      </ImageAnimated>
     </TouchableOpacity>
   );
 };

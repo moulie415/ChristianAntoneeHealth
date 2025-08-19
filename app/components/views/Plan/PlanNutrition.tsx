@@ -2,8 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import React, {useEffect, useMemo} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {ImageBackground, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -45,7 +44,7 @@ const PlanNutrition: React.FC<{
 
   return (
     <ScrollView bounces={false} style={{backgroundColor: colors.appGrey}}>
-      <FastImage
+      <ImageBackground
         style={{
           height: 350,
           marginBottom: 10,
@@ -58,7 +57,7 @@ const PlanNutrition: React.FC<{
             opacity: 0.4,
           }}
         />
-      </FastImage>
+      </ImageBackground>
 
       <Header hasBack absolute title="Nutrition" />
 
