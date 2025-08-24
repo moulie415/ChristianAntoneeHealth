@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
-import {View} from 'react-native';
-import RNModal from 'react-native-modal';
+import {View, Modal as RNModal} from 'react-native';
+// import RNModal from 'react-native-modal';
 
 const Modal: React.FC<{
   visible?: boolean;
@@ -10,11 +10,13 @@ const Modal: React.FC<{
 }> = ({children, visible, onRequestClose, disableBackDrop}) => {
   return (
     <RNModal
-      onBackButtonPress={() => onRequestClose && onRequestClose()}
-      onBackdropPress={() =>
+      animationType='fade'
+      backdropColor={'rgba(0,0,0,0.5)'}
+      onRequestClose={() => onRequestClose && onRequestClose()}
+      onDismiss={() =>
         !disableBackDrop && onRequestClose && onRequestClose()
       }
-      isVisible={visible}>
+      visible={visible}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {children}
       </View>

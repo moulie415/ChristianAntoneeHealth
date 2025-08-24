@@ -4881,16 +4881,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-vector-icons@npm:^6.4.18":
-  version: 6.4.18
-  resolution: "@types/react-native-vector-icons@npm:6.4.18"
-  dependencies:
-    "@types/react": "npm:*"
-    "@types/react-native": "npm:^0.70"
-  checksum: 10c0/b27f2295c5baaba9ce2ff9ade6e505e4d1fe4f40a628df13dc26d0e1b3ccee9775846f3613a443d91cfe86844703b81e9e64a10cc4b7fac1edfde96cb82c893b
-  languageName: node
-  linkType: hard
-
 "@types/react-native-video@npm:^5.0.20":
   version: 5.0.20
   resolution: "@types/react-native-video@npm:5.0.20"
@@ -4908,15 +4898,6 @@ __metadata:
     "@types/react": "npm:*"
     react-native: "npm:*"
   checksum: 10c0/04016a3af4c3ccc2767df36d073ee5f1e8a043fe98183f9fb78e45bb814b624b53b511730913e43689262e79389374c7a557c082cbb8e5c9d8624c7976050283
-  languageName: node
-  linkType: hard
-
-"@types/react-native@npm:^0.70":
-  version: 0.70.19
-  resolution: "@types/react-native@npm:0.70.19"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 10c0/09a5191dd0f3b85abfa8939df585860ba11a666d888846c7fd7d8d5d1cd72a39224e154403f90a5b82f1dc6c896fa3447e4f5061b2d3e102d0ce798e559d7f13
   languageName: node
   linkType: hard
 
@@ -5404,7 +5385,6 @@ __metadata:
     "@types/react-native-background-timer": "npm:^2.0.2"
     "@types/react-native-draggable-flatlist": "npm:^2.0.0"
     "@types/react-native-push-notification": "npm:^8.1.4"
-    "@types/react-native-vector-icons": "npm:^6.4.18"
     "@types/react-native-video": "npm:^5.0.20"
     "@types/react-native-wheel-pick": "npm:^1.1.6"
     "@types/react-redux": "npm:^7.1.34"
@@ -5458,7 +5438,6 @@ __metadata:
     react-native-keyboard-aware-scroll-view: "npm:^0.9.5"
     react-native-keyboard-controller: "npm:^1.18.5"
     react-native-linear-gradient: "npm:^2.8.3"
-    react-native-modal: "npm:^13.0.2"
     react-native-multiple-select: "npm:^0.5.12"
     react-native-nitro-modules: "npm:^0.28.1"
     react-native-pager-view: "npm:6.9.1"
@@ -5484,7 +5463,6 @@ __metadata:
     react-native-svg-transformer: "npm:^1.5.1"
     react-native-tab-view: "npm:^4.1.3"
     react-native-uuid: "npm:^2.0.3"
-    react-native-vector-icons: "npm:^10.3.0"
     react-native-video: "npm:6.16.1"
     react-native-video-cache: "npm:2.7.3"
     react-native-view-more-text: "npm:^2.2.0"
@@ -6413,17 +6391,6 @@ __metadata:
     strip-ansi: "npm:^6.0.0"
     wrap-ansi: "npm:^6.2.0"
   checksum: 10c0/35229b1bb48647e882104cac374c9a18e34bbf0bace0e2cf03000326b6ca3050d6b59545d91e17bfe3705f4a0e2988787aa5cde6331bf5cbbf0164732cef6492
-  languageName: node
-  linkType: hard
-
-"cliui@npm:^7.0.2":
-  version: 7.0.4
-  resolution: "cliui@npm:7.0.4"
-  dependencies:
-    string-width: "npm:^4.2.0"
-    strip-ansi: "npm:^6.0.0"
-    wrap-ansi: "npm:^7.0.0"
-  checksum: 10c0/6035f5daf7383470cef82b3d3db00bec70afb3423538c50394386ffbbab135e26c3689c41791f911fa71b62d13d3863c712fdd70f0fbdffd938a1e6fd09aac00
   languageName: node
   linkType: hard
 
@@ -11634,15 +11601,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-animatable@npm:1.4.0":
-  version: 1.4.0
-  resolution: "react-native-animatable@npm:1.4.0"
-  dependencies:
-    prop-types: "npm:^15.8.1"
-  checksum: 10c0/658f15aa3744c3d6a22a44ab4609afc4335ff06d0a200a1fba513e470ebb4bd561ab709204b3777ee53cad526f695e2b4290e057a50fcd461aca337e407fe2b1
-  languageName: node
-  linkType: hard
-
 "react-native-audio-recorder-player@npm:^4.3.0":
   version: 4.3.0
   resolution: "react-native-audio-recorder-player@npm:4.3.0"
@@ -12044,18 +12002,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-modal@npm:^13.0.2":
-  version: 13.0.2
-  resolution: "react-native-modal@npm:13.0.2"
-  dependencies:
-    react-native-animatable: "npm:1.4.0"
-  peerDependencies:
-    react: "*"
-    react-native: ">=0.70.0"
-  checksum: 10c0/12bedf7a5caafddf85422e928a99bf4465c050547c75dd15cfe668cc0895375aa39a0447a848c85bc75124c3652c4a81fe70b79f3c5df25ff8ccbb513a169d45
-  languageName: node
-  linkType: hard
-
 "react-native-multiple-select@npm:^0.5.12":
   version: 0.5.12
   resolution: "react-native-multiple-select@npm:0.5.12"
@@ -12392,21 +12338,6 @@ __metadata:
   version: 2.0.3
   resolution: "react-native-uuid@npm:2.0.3"
   checksum: 10c0/d94bccc28936c2dea081ab404f90b0c968092013af4d428b8e74bf407d6098ad5410914f77a903ad1296cce364fc85d27d8dfd70d22ec48d8cf1b7edc8803a8d
-  languageName: node
-  linkType: hard
-
-"react-native-vector-icons@npm:^10.3.0":
-  version: 10.3.0
-  resolution: "react-native-vector-icons@npm:10.3.0"
-  dependencies:
-    prop-types: "npm:^15.7.2"
-    yargs: "npm:^16.1.1"
-  bin:
-    fa-upgrade.sh: bin/fa-upgrade.sh
-    fa5-upgrade: bin/fa5-upgrade.sh
-    fa6-upgrade: bin/fa6-upgrade.sh
-    generate-icon: bin/generate-icon.js
-  checksum: 10c0/247804affcf74906062ed088d755c3d4632e3f2b62c38226ccb05e2a8dc42414c2378040a4acb474704bed09cd06cb285770c765ffff67fb2d3b896cd46e76ca
   languageName: node
   linkType: hard
 
@@ -14747,13 +14678,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^20.2.2":
-  version: 20.2.9
-  resolution: "yargs-parser@npm:20.2.9"
-  checksum: 10c0/0685a8e58bbfb57fab6aefe03c6da904a59769bd803a722bb098bd5b0f29d274a1357762c7258fb487512811b8063fb5d2824a3415a0a4540598335b3b086c72
-  languageName: node
-  linkType: hard
-
 "yargs-parser@npm:^21.1.1":
   version: 21.1.1
   resolution: "yargs-parser@npm:21.1.1"
@@ -14777,21 +14701,6 @@ __metadata:
     y18n: "npm:^4.0.0"
     yargs-parser: "npm:^18.1.2"
   checksum: 10c0/f1ca680c974333a5822732825cca7e95306c5a1e7750eb7b973ce6dc4f97a6b0a8837203c8b194f461969bfe1fb1176d1d423036635285f6010b392fa498ab2d
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^16.1.1":
-  version: 16.2.0
-  resolution: "yargs@npm:16.2.0"
-  dependencies:
-    cliui: "npm:^7.0.2"
-    escalade: "npm:^3.1.1"
-    get-caller-file: "npm:^2.0.5"
-    require-directory: "npm:^2.1.1"
-    string-width: "npm:^4.2.0"
-    y18n: "npm:^5.0.5"
-    yargs-parser: "npm:^20.2.2"
-  checksum: 10c0/b1dbfefa679848442454b60053a6c95d62f2d2e21dd28def92b647587f415969173c6e99a0f3bab4f1b67ee8283bf735ebe3544013f09491186ba9e8a9a2b651
   languageName: node
   linkType: hard
 

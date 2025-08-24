@@ -12,7 +12,7 @@ index 07da82c..545fd6b 100644
      styleItemsContainer?: StyleProp<ViewStyle>;
      styleListContainer?: StyleProp<ViewStyle>;
 diff --git a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
-index 9b7a0d7..a3b5e7c 100644
+index 9b7a0d7..c46431f 100644
 --- a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
 +++ b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
 @@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
@@ -24,7 +24,7 @@ index 9b7a0d7..a3b5e7c 100644
  
  import styles, { colorPack } from './styles';
  import nodeTypes from './helpers/nodeTypes';
-@@ -24,8 +24,8 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
+@@ -24,11 +24,12 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
  }
  
  const defaultSearchIcon = (
@@ -35,7 +35,11 @@ index 9b7a0d7..a3b5e7c 100644
      size={20}
      color={colorPack.placeholderTextColor}
      style={{ marginRight: 10 }}
-@@ -65,7 +65,7 @@ export default class MultiSelect extends Component {
++    iconStyle='solid'
+   />
+ );
+ 
+@@ -65,7 +66,7 @@ export default class MultiSelect extends Component {
      styleTextDropdown: TextPropTypes.style,
      styleTextDropdownSelected: TextPropTypes.style,
      styleTextTag: TextPropTypes.style,
@@ -44,15 +48,15 @@ index 9b7a0d7..a3b5e7c 100644
      altFontFamily: PropTypes.string,
      hideSubmitButton: PropTypes.bool,
      hideDropdown: PropTypes.bool,
-@@ -226,12 +226,13 @@ export default class MultiSelect extends Component {
+@@ -226,12 +227,13 @@ export default class MultiSelect extends Component {
                this._removeItem(item);
              }}
            >
 -            <Icon
 -              name="close-circle"
 +            <FontAwesome6
++              iconStyle='solid'
 +              name="circle-xmark"
-+              solid
                style={{
                  color: tagRemoveIconColor,
                  fontSize: 22,
@@ -61,16 +65,17 @@ index 9b7a0d7..a3b5e7c 100644
                }}
              />
            </TouchableOpacity>
-@@ -400,7 +401,7 @@ export default class MultiSelect extends Component {
+@@ -400,7 +402,8 @@ export default class MultiSelect extends Component {
                {item[displayKey]}
              </Text>
              {this._itemSelected(item) ? (
 -              <Icon
 +              <FontAwesome6
++                iconStyle='solid'
                  name="check"
                  style={{
                    fontSize: 20,
-@@ -525,7 +526,7 @@ export default class MultiSelect extends Component {
+@@ -525,7 +528,7 @@ export default class MultiSelect extends Component {
              style={[
                {
                  flex: 1,
@@ -79,18 +84,19 @@ index 9b7a0d7..a3b5e7c 100644
                  textAlign: 'center',
                  color: colorPack.danger
                },
-@@ -613,8 +614,8 @@ export default class MultiSelect extends Component {
+@@ -613,8 +616,9 @@ export default class MultiSelect extends Component {
                />
                {hideSubmitButton && (
                  <TouchableOpacity onPress={this._submitSelection}>
 -                  <Icon
 -                    name="menu-down"
 +                  <FontAwesome6
++                    iconStyle='solid'
 +                    name="chevron-down"
                      style={[
                        styles.indicator,
                        { paddingLeft: 15, paddingRight: 15 },
-@@ -624,8 +625,8 @@ export default class MultiSelect extends Component {
+@@ -624,8 +628,9 @@ export default class MultiSelect extends Component {
                  </TouchableOpacity>
                )}
                {!hideDropdown && (
@@ -98,10 +104,11 @@ index 9b7a0d7..a3b5e7c 100644
 -                  name="arrow-left"
 +                <FontAwesome6
 +                  name="chevron-left"
++                  iconStyle='solid'
                    size={20}
                    onPress={this._clearSelectorCallback}
                    color={colorPack.placeholderTextColor}
-@@ -636,7 +637,6 @@ export default class MultiSelect extends Component {
+@@ -636,7 +641,6 @@ export default class MultiSelect extends Component {
              <View
                style={{
                  flexDirection: 'column',
@@ -109,13 +116,14 @@ index 9b7a0d7..a3b5e7c 100644
                }}
              >
                <View style={styleItemsContainer && styleItemsContainer}>
-@@ -717,8 +717,8 @@ export default class MultiSelect extends Component {
+@@ -717,8 +721,9 @@ export default class MultiSelect extends Component {
                      >
                        {this._getSelectLabel()}
                      </Text>
 -                    <Icon
 -                      name={hideSubmitButton ? 'menu-right' : 'menu-down'}
 +                    <FontAwesome6
++                      iconStyle='solid'
 +                      name={hideSubmitButton ? 'chevron-right' : 'chevron-down'}
                        style={[
                          styles.indicator,

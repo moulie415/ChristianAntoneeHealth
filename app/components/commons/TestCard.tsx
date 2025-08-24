@@ -32,6 +32,7 @@ const TestCard: React.FC<{
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
+          overflow: 'hidden'
         }}
         source={{uri: item.thumbnail?.src}}>
         <LinearGradient

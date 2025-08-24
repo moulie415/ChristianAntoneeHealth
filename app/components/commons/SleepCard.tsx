@@ -16,6 +16,7 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
           marginHorizontal: 10,
           marginBottom: 10,
           borderRadius: 10,
+          overflow: 'hidden'
         }}
         source={require('../../images/sleep.jpg')}>
         <LinearGradient

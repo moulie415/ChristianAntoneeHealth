@@ -17,6 +17,7 @@ const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
           marginHorizontal: 10,
           marginBottom: 10,
           borderRadius: 10,
+          overflow: 'hidden'
         }}
         source={require('../../images/nutrition.jpg')}>
         <LinearGradient

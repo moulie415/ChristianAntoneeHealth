@@ -45,6 +45,7 @@ const WhatEquipment: React.FC<{
                 height: TILE_HEIGHT,
                 justifyContent: 'flex-end',
                 borderRadius: 10,
+                overflow: 'hidden'
               }}
               source={require('../../../images/Equipment-none.jpeg')}>
               <LinearGradient
@@ -96,6 +97,7 @@ const WhatEquipment: React.FC<{
                 height: TILE_HEIGHT,
                 justifyContent: 'flex-end',
                 borderRadius: 10,
+                overflow: 'hidden'
               }}
               source={require('../../../images/Equipment-minimal.jpeg')}>
               <LinearGradient
@@ -144,6 +146,7 @@ const WhatEquipment: React.FC<{
                 height: TILE_HEIGHT,
                 justifyContent: 'flex-end',
                 borderRadius: 10,
+                overflow: 'hidden'
               }}
               source={require('../../../images/Equipment-full.jpeg')}>
               <LinearGradient

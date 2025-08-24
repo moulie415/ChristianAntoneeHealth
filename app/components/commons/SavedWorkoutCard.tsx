@@ -64,6 +64,7 @@ const SavedWorkoutCard: React.FC<{
           marginHorizontal: 10,
           marginBottom: 10,
           borderRadius: 10,
+          overflow: 'hidden'
         }}
         source={
           quickRoutine

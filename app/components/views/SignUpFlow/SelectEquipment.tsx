@@ -8,6 +8,7 @@ import {Equipment as EquipmentItem} from '../../../types/Shared';
 import MultiSelect from '../../commons/MultiSelect';
 import SelectableButton from '../../commons/SelectableButton';
 import Text from '../../commons/Text';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 const equipmentDetails: {
   equipment: Equipment;
@@ -65,7 +66,7 @@ const SelectEquipment: React.FC<{
             style={{marginBottom: 15}}
           />
         );
-      })}
+      })}                                                                        
       {!!equipment && equipment !== 'none' && (
         <MultiSelect
           items={EQUIPMENT_LIST.map(item => {

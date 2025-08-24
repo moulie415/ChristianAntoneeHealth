@@ -48,6 +48,7 @@ const WhatArea: React.FC<{
               height: TILE_HEIGHT,
               justifyContent: 'flex-end',
               borderRadius: 10,
+              overflow: 'hidden'
             }}
             source={require('../../../images/upper_body.jpeg')}>
             <LinearGradient
@@ -97,6 +98,7 @@ const WhatArea: React.FC<{
               height: TILE_HEIGHT,
               justifyContent: 'flex-end',
               borderRadius: 10,
+              overflow: 'hidden'
             }}
             source={require('../../../images/lower_body.jpeg')}>
             <LinearGradient
@@ -146,6 +148,7 @@ const WhatArea: React.FC<{
               height: TILE_HEIGHT,
               justifyContent: 'flex-end',
               borderRadius: 10,
+              overflow: 'hidden'
             }}
             source={require('../../../images/full_body.jpeg')}>
             <LinearGradient
