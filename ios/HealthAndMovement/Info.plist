@@ -139,6 +139,8 @@
 	<string>So you can record audio when reporting a problem with the app</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>So you can upload a photo for your profile picture</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

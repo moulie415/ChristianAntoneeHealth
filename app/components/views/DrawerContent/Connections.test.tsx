@@ -21,6 +21,10 @@ jest.mock('react-native-in-app-review', () => {});
 jest.mock('react-native-purchases', () => {});
 jest.mock('@react-native-vector-icons/fontawesome6', () => {});
 jest.mock('@kolking/react-native-avatar', () => {});
+jest.mock('@react-navigation/core', () => {});
+jest.mock('@react-navigation/native', () => ({
+  createNavigationContainerRef: jest.fn()
+}));
 
 const profile1 = {
   uid: '1',
