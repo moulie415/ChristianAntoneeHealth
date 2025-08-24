@@ -12,7 +12,7 @@ index 07da82c..545fd6b 100644
      styleItemsContainer?: StyleProp<ViewStyle>;
      styleListContainer?: StyleProp<ViewStyle>;
 diff --git a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
-index 9b7a0d7..09e9b09 100644
+index 9b7a0d7..a3b5e7c 100644
 --- a/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
 +++ b/node_modules/react-native-multiple-select/lib/react-native-multi-select.js
 @@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
@@ -20,15 +20,17 @@ index 9b7a0d7..09e9b09 100644
  import find from 'lodash/find';
  import get from 'lodash/get';
 -import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-+import Icon from 'react-native-vector-icons/FontAwesome6';
++import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
  
  import styles, { colorPack } from './styles';
  import nodeTypes from './helpers/nodeTypes';
-@@ -25,7 +25,7 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
+@@ -24,8 +24,8 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
+ }
  
  const defaultSearchIcon = (
-   <Icon
+-  <Icon
 -    name="magnify"
++  <FontAwesome6
 +    name="magnifying-glass"
      size={20}
      color={colorPack.placeholderTextColor}
@@ -42,11 +44,13 @@ index 9b7a0d7..09e9b09 100644
      altFontFamily: PropTypes.string,
      hideSubmitButton: PropTypes.bool,
      hideDropdown: PropTypes.bool,
-@@ -227,11 +227,12 @@ export default class MultiSelect extends Component {
+@@ -226,12 +226,13 @@ export default class MultiSelect extends Component {
+               this._removeItem(item);
              }}
            >
-             <Icon
+-            <Icon
 -              name="close-circle"
++            <FontAwesome6
 +              name="circle-xmark"
 +              solid
                style={{
@@ -57,6 +61,15 @@ index 9b7a0d7..09e9b09 100644
                }}
              />
            </TouchableOpacity>
+@@ -400,7 +401,7 @@ export default class MultiSelect extends Component {
+               {item[displayKey]}
+             </Text>
+             {this._itemSelected(item) ? (
+-              <Icon
++              <FontAwesome6
+                 name="check"
+                 style={{
+                   fontSize: 20,
 @@ -525,7 +526,7 @@ export default class MultiSelect extends Component {
              style={[
                {
@@ -66,20 +79,24 @@ index 9b7a0d7..09e9b09 100644
                  textAlign: 'center',
                  color: colorPack.danger
                },
-@@ -614,7 +615,7 @@ export default class MultiSelect extends Component {
+@@ -613,8 +614,8 @@ export default class MultiSelect extends Component {
+               />
                {hideSubmitButton && (
                  <TouchableOpacity onPress={this._submitSelection}>
-                   <Icon
+-                  <Icon
 -                    name="menu-down"
++                  <FontAwesome6
 +                    name="chevron-down"
                      style={[
                        styles.indicator,
                        { paddingLeft: 15, paddingRight: 15 },
-@@ -625,7 +626,7 @@ export default class MultiSelect extends Component {
+@@ -624,8 +625,8 @@ export default class MultiSelect extends Component {
+                 </TouchableOpacity>
                )}
                {!hideDropdown && (
-                 <Icon
+-                <Icon
 -                  name="arrow-left"
++                <FontAwesome6
 +                  name="chevron-left"
                    size={20}
                    onPress={this._clearSelectorCallback}
@@ -92,11 +109,13 @@ index 9b7a0d7..09e9b09 100644
                }}
              >
                <View style={styleItemsContainer && styleItemsContainer}>
-@@ -718,7 +718,7 @@ export default class MultiSelect extends Component {
+@@ -717,8 +717,8 @@ export default class MultiSelect extends Component {
+                     >
                        {this._getSelectLabel()}
                      </Text>
-                     <Icon
+-                    <Icon
 -                      name={hideSubmitButton ? 'menu-right' : 'menu-down'}
++                    <FontAwesome6
 +                      name={hideSubmitButton ? 'chevron-right' : 'chevron-down'}
                        style={[
                          styles.indicator,

@@ -1,6 +1,6 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import React, {useRef, useState} from 'react';
-import {Alert, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
@@ -15,6 +15,7 @@ import Divider from '../../commons/Divider';
 import ImageLoader from '../../commons/ImageLoader';
 import Text from '../../commons/Text';
 import EquipmentMenu from './EquipmentMenu';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Workout: React.FC<WorkoutProps> = ({
   navigation,

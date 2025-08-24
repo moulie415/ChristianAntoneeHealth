@@ -1,7 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import React, {useEffect} from 'react';
-import {FlatList, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -15,6 +15,7 @@ import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const sortConnections = (
   profiles: Profile[],

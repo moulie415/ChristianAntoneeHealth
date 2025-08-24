@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Switch, TouchableOpacity, View} from 'react-native';
+import {Switch, TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
@@ -9,6 +9,7 @@ import Divider from '../../commons/Divider';
 import ImageLoader from '../../commons/ImageLoader';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WarmUpAndCoolDown: React.FC<{
   warmUp: WarmUp[];

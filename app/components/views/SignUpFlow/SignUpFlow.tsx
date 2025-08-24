@@ -2,7 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
 import React, {useRef, useState} from 'react';
-import {Alert, Keyboard, Platform, SafeAreaView, View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Snackbar from 'react-native-snackbar';
 import StepIndicator from 'react-native-step-indicator';
@@ -45,6 +45,7 @@ import SelectEquipment from './SelectEquipment';
 import SelectExperience from './SelectExperience';
 import SelectGoal from './SelectGoal';
 import SelectIsClient from './SelectIsClient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SignUpFlow: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SignUpFlow'>;

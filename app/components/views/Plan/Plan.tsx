@@ -3,7 +3,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
-  SafeAreaView,
   TouchableOpacity,
   View,
   useWindowDimensions,
@@ -26,6 +25,7 @@ import Text from '../../commons/Text';
 import Daily from './Daily';
 import Monthly from './Monthly';
 import Weekly from './Weekly';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const renderScene = SceneMap({
   daily: Daily,

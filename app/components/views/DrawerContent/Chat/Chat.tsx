@@ -9,7 +9,6 @@ import {
   Alert,
   FlatList,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -35,7 +34,7 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';

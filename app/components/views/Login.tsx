@@ -4,7 +4,7 @@ import appleAuth, {
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Image, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Image, Platform, StyleSheet, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -21,6 +21,7 @@ import {
 import AbsoluteSpinner from '../commons/AbsoluteSpinner';
 import Button from '../commons/Button';
 import Text from '../commons/Text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Login'>;

@@ -2,7 +2,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {Fragment} from 'react';
 import {
   ImageSourcePropType,
-  SafeAreaView,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -12,6 +11,7 @@ import {setFitnessGoal, setStrengthArea} from '../../../reducers/exercises';
 import {Goal} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import Text from '../../commons/Text';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const FitnessGoal: React.FC<{
   setFitnessGoalAction: (goal: Goal) => void;
