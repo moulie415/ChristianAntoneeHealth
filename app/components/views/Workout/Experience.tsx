@@ -2,7 +2,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -60,14 +60,14 @@ const Experience: React.FC<{
             right then this is a good place to start"
             accessoryLeft={
               level === Level.BEGINNER ? (
-                <Icon
-                  name="check-circle"
+                <FontAwesome6
+                  name="circle-check"
                   size={20}
-                  solid
+                  iconStyle="solid"
                   color={colors.appBlue}
                 />
               ) : (
-                <Icon name="circle" size={20} color={colors.appBlue} />
+                <FontAwesome6 name="circle" size={20} color={colors.appBlue} />
               )
             }
           />
@@ -105,14 +105,14 @@ const Experience: React.FC<{
             little more direction and guidance in structuring your workouts."
             accessoryLeft={
               level === Level.INTERMEDIATE ? (
-                <Icon
-                  name="check-circle"
+                <FontAwesome6
+                  name="circle-check"
                   size={20}
-                  solid
+                  iconStyle="solid"
                   color={colors.appBlue}
                 />
               ) : (
-                <Icon name="circle" size={20} color={colors.appBlue} />
+                <FontAwesome6 name="circle" size={20} color={colors.appBlue} />
               )
             }
           />
@@ -152,14 +152,14 @@ const Experience: React.FC<{
             your joints and muscles in creative ways."
             accessoryLeft={
               level === Level.ADVANCED ? (
-                <Icon
-                  name="check-circle"
+                <FontAwesome6
+                  name="circle-check"
                   size={20}
-                  solid
+                  iconStyle="solid"
                   color={colors.appBlue}
                 />
               ) : (
-                <Icon name="circle" size={20} color={colors.appBlue} />
+                <FontAwesome6 name="circle" size={20} color={colors.appBlue} />
               )
             }
           />

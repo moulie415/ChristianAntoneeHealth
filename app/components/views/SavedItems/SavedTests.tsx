@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, {FunctionComponent, useMemo} from 'react';
 import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {useAppSelector} from '../../../hooks/redux';
@@ -53,7 +53,8 @@ const SavedTests: FunctionComponent<{
                     }}>
                     No saved tests found
                   </Text>
-                  <Icon
+                  <FontAwesome6
+                    iconStyle="solid"
                     name="heart-pulse"
                     color={colors.appWhite}
                     size={30}

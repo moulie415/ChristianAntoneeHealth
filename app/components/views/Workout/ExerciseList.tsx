@@ -4,7 +4,7 @@ import React, {useMemo} from 'react';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {FlatList} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -116,7 +116,7 @@ const ExerciseList: React.FC<{
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Icon name="lock" size={30} />
+                      <FontAwesome6 iconStyle="solid" name="lock" size={30} />
                     </View>
                   )
                 }

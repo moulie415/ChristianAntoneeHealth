@@ -6,7 +6,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -120,7 +120,8 @@ const PreWorkout: React.FC<{
               marginVertical: 10,
             }}>
             <View style={{width: 55, alignItems: 'center'}}>
-              <Icon
+              <FontAwesome6
+                iconStyle="solid"
                 name="stopwatch"
                 size={25}
                 color={colors.appWhite}
@@ -140,7 +141,8 @@ const PreWorkout: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="person-running"
               size={25}
               color={colors.appWhite}
@@ -161,7 +163,8 @@ const PreWorkout: React.FC<{
             marginRight: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="dumbbell"
               size={20}
               color={colors.appWhite}
@@ -185,7 +188,8 @@ const PreWorkout: React.FC<{
             marginRight: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="child"
               size={25}
               color={colors.appWhite}
@@ -206,7 +210,8 @@ const PreWorkout: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="music"
               size={25}
               color={colors.appWhite}

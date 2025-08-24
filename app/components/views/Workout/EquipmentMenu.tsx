@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 
 import {equipmentItemReadableString} from '../../../helpers/exercises';
@@ -29,14 +29,14 @@ const EquipmentMenu: React.FC<{
               title={equipmentItemReadableString(item)}
               accessoryRight={
                 selected ? (
-                  <Icon
-                    name="check-circle"
+                  <FontAwesome6
+                    name="circle-check"
                     size={20}
-                    solid
+                    iconStyle="solid"
                     color={colors.appBlue}
                   />
                 ) : (
-                  <Icon name="circle" size={20} color={colors.appBlue} />
+                  <FontAwesome6 name="circle" size={20} color={colors.appBlue} />
                 )
               }
             />

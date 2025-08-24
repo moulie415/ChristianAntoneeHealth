@@ -6,7 +6,7 @@ import moment from 'moment';
 import {Platform, TouchableOpacity, View} from 'react-native';
 import Config from 'react-native-config';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from '../../../App';
 import {HEIGHTS} from '../../../constants';
 import colors from '../../../constants/colors';
@@ -130,7 +130,7 @@ const PersonalDetails: React.FC<{
             left: 0,
             width: 30,
           }}>
-          <Icon name="calendar" color={'#CECECE'} solid size={15} />
+          <FontAwesome6 name="calendar" color={'#CECECE'} iconStyle="solid" size={15} />
         </View>
         <Text
           style={{
@@ -162,7 +162,7 @@ const PersonalDetails: React.FC<{
             left: 0,
             width: 30,
           }}>
-          <Icon name="venus-mars" color={'#CECECE'} solid size={15} />
+          <FontAwesome6 name="venus-mars" color={'#CECECE'} iconStyle="solid" size={15} />
         </View>
         <Text
           style={{
@@ -208,7 +208,7 @@ const PersonalDetails: React.FC<{
               left: 0,
               width: 30,
             }}>
-            <Icon name="weight-hanging" color={'#CECECE'} solid size={15} />
+            <FontAwesome6 name="weight-hanging" color={'#CECECE'} iconStyle="solid" size={15} />
           </View>
           <Text
             style={{
@@ -241,7 +241,7 @@ const PersonalDetails: React.FC<{
               left: 0,
               width: 30,
             }}>
-            <Icon name="ruler-vertical" color={'#CECECE'} solid size={15} />
+            <FontAwesome6 name="ruler-vertical" color={'#CECECE'} iconStyle="solid" size={15} />
           </View>
           <Text
             style={{
