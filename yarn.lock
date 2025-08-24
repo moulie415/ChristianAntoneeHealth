@@ -1731,16 +1731,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@d11/react-native-fast-image@npm:^8.11.1":
-  version: 8.11.1
-  resolution: "@d11/react-native-fast-image@npm:8.11.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/b6f0d877e5ed6c447c0c144a24b4385e038bdc968cf1b29db8bfcb673e71b0302a3d2e4f97b7d850654c039a8150a59d9be1b2a6e5316926172f4213c9d1ad0d
-  languageName: node
-  linkType: hard
-
 "@egjs/hammerjs@npm:^2.0.17":
   version: 2.0.17
   resolution: "@egjs/hammerjs@npm:2.0.17"
@@ -5370,7 +5360,6 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
-    "@d11/react-native-fast-image": "npm:^8.11.1"
     "@gorhom/bottom-sheet": "npm:^5.1.8"
     "@invertase/react-native-apple-authentication": "npm:^2.4.1"
     "@kanelloc/react-native-animated-header-scroll-view": "npm:^1.0.0"

@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {configureStore} from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Image, Platform, View} from 'react-native';
+import {Dimensions, Platform, View, Image} from 'react-native';
 import Config from 'react-native-config';
 import 'react-native-gesture-handler';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -232,7 +232,7 @@ const App: React.FC = () => {
                   right: 0,
                   bottom: 0,
                 }}>
-                  <Image
+                  {Platform.OS === 'ios' ? <Image
                     source={require('./images/splash.gif')}
                     style={{
                       height,
@@ -241,7 +241,16 @@ const App: React.FC = () => {
                       alignSelf: 'center',
                     }}
                     resizeMode="contain"
-                  />
+                  /> : <Image
+                    source={require('./images/splash.png')}
+                    style={{
+                      height,
+                      width: '75%',
+                      backgroundColor: colors.appWhite,
+                      alignSelf: 'center',
+                    }}
+                    resizeMode="contain"
+                  />}
               </View>
             )}
           </SafeAreaProvider>

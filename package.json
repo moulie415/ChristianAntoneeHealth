@@ -16,7 +16,6 @@
     "audit-deps-fix": "npx yarn-audit-fix"
   },
   "dependencies": {
-    "@d11/react-native-fast-image": "^8.11.1",
     "@gorhom/bottom-sheet": "^5.1.8",
     "@invertase/react-native-apple-authentication": "^2.4.1",
     "@kanelloc/react-native-animated-header-scroll-view": "^1.0.0",
