@@ -64,7 +64,7 @@ const GoalCircle: React.FC<{
         arcSweepAngle={240}
         rotation={240}
         lineCap="round">
-        {fill => <Icon />}
+        {(fill: number) => <Icon />}
       </AnimatedCircularProgress>
       <Text
         style={{

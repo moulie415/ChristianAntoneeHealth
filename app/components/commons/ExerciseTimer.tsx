@@ -23,7 +23,7 @@ const ExerciseTimer: React.FC<{
   index: number;
   workout: Exercise[];
   exercise: Exercise;
-  pagerRef: RefObject<PagerView>;
+  pagerRef: RefObject<PagerView | null>;
   tabIndex: number;
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;

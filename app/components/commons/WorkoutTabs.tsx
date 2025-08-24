@@ -15,7 +15,7 @@ const WorkoutTabs: React.FC<{
   i: number;
   index: number;
   workout: Exercise[];
-  pagerRef: RefObject<PagerView>;
+  pagerRef: RefObject<PagerView | null>;
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
   profile: Profile;

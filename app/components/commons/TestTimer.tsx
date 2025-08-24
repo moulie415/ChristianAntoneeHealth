@@ -87,7 +87,7 @@ const TestTimer: React.FC<{
       arcSweepAngle={360}
       rotation={0}
       lineCap="round">
-      {fill => (
+      {(fill: number) => (
         <View style={{transform: [{scaleX}], alignItems: 'center'}}>
           {showTimer && (
             <Text

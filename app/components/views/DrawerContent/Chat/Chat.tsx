@@ -424,7 +424,8 @@ const Chat: React.FC<ChatProps> = ({
     setLoading(false);
   };
 
-  const ref = useRef<FlatList>(null);
+
+  const ref = useRef<FlatList<IMessage>>(null);
 
   const onPressAttachment = async () => {
     const options: ImageLibraryOptions = {
@@ -590,6 +591,7 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
+  
   return (
     <>
       <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
@@ -608,6 +610,7 @@ const Chat: React.FC<ChatProps> = ({
           }
         />
         <GiftedChat
+          // @ts-ignore
           messageContainerRef={ref}
           renderCustomView={renderCustomView}
           isLoadingEarlier={loading}

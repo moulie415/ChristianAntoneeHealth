@@ -16,7 +16,6 @@ import {recipeCategories} from './RecipeCategories';
 
 const {height} = Dimensions.get('screen');
 
-const estimatedSize = (Platform.OS === 'ios' ? height / 5.5 : height / 5) + 10;
 
 const Recipes: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Recipes'>;
@@ -56,7 +55,6 @@ const Recipes: React.FC<{
 
       <FlashList
         data={filtered}
-        estimatedItemSize={estimatedSize}
         ListEmptyComponent={() => (
           <SafeAreaView style={{height: height / 2}}>
             <AbsoluteSpinner

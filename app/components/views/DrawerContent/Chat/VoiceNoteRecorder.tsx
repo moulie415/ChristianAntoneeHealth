@@ -53,7 +53,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
     android: `${RNFS.CachesDirectoryPath}/${uuid.v4()}.mp3`,
   });
 
-  private audioRecorderPlayer: AudioRecorderPlayer;
 
   private stopped = false;
   private sending = false;
@@ -67,8 +66,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
       playing: false,
     };
 
-    this.audioRecorderPlayer = new AudioRecorderPlayer();
-    this.audioRecorderPlayer.setSubscriptionDuration(0.1); // optional. Default is 0.5
+    AudioRecorderPlayer.setSubscriptionDuration(0.1); // optional. Default is 0.5
   }
 
   componentDidMount(): void {
@@ -154,7 +152,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
                 }
                 trackStyle={{width: 150}}
                 onSlidingComplete={val => {
-                  this.audioRecorderPlayer.seekToPlayer(
+                  AudioRecorderPlayer.seekToPlayer(
                     this.state.currentDurationSec * val[0],
                   );
                 }}
@@ -251,17 +249,17 @@ class VoiceNoteRecorder extends Component<Props, State> {
       AudioSourceAndroid: AudioSourceAndroidType.MIC,
       AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
       AVNumberOfChannelsKeyIOS: 2,
-      AVFormatIDKeyIOS: AVEncodingOption.aac,
+      AVFormatIDKeyIOS: 'aac',
       OutputFormatAndroid: OutputFormatAndroidType.AAC_ADTS,
     };
 
-    const uri = await this.audioRecorderPlayer.startRecorder(
+    const uri = await AudioRecorderPlayer.startRecorder(
       this.path,
       audioSet,
       true,
     );
 
-    this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
+    AudioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
       this.setState({
         recordSecs: e.currentPosition / 1000,
         metering: e.currentMetering,
@@ -274,8 +272,8 @@ class VoiceNoteRecorder extends Component<Props, State> {
       return;
     }
     this.stopped = true;
-    const result = await this.audioRecorderPlayer.stopRecorder();
-    this.audioRecorderPlayer.removeRecordBackListener();
+    const result = await AudioRecorderPlayer.stopRecorder();
+    AudioRecorderPlayer.removeRecordBackListener();
     this.setState({
       recordSecs: 0,
       result,
@@ -284,13 +282,13 @@ class VoiceNoteRecorder extends Component<Props, State> {
 
   private onStartPlay = async (): Promise<void> => {
     try {
-      const msg = await this.audioRecorderPlayer.startPlayer(this.path);
+      const msg = await AudioRecorderPlayer.startPlayer(this.path);
 
       //? Default path
-      // const msg = await this.audioRecorderPlayer.startPlayer();
-      const volume = await this.audioRecorderPlayer.setVolume(1.0);
+      // const msg = await AudioRecorderPlayer.startPlayer();
+      const volume = await AudioRecorderPlayer.setVolume(1.0);
 
-      this.audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
+      AudioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
         this.setState({
           currentPositionSec: e.currentPosition,
           currentDurationSec: e.duration,
@@ -308,18 +306,18 @@ class VoiceNoteRecorder extends Component<Props, State> {
   };
 
   private onPausePlay = async (): Promise<void> => {
-    await this.audioRecorderPlayer.pausePlayer();
+    await AudioRecorderPlayer.pausePlayer();
     this.setState({playing: false});
   };
 
   private onResumePlay = async (): Promise<void> => {
-    await this.audioRecorderPlayer.resumePlayer();
+    await AudioRecorderPlayer.resumePlayer();
     this.setState({playing: true});
   };
 
   private onStopPlay = async (): Promise<void> => {
-    this.audioRecorderPlayer.stopPlayer();
-    this.audioRecorderPlayer.removePlayBackListener();
+    AudioRecorderPlayer.stopPlayer();
+    AudioRecorderPlayer.removePlayBackListener();
   };
 }
 

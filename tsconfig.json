@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "paths": {
       "react": ["./node_modules/@types/react"]
-    }
+    },
+    "types": ["node", "jest"]
   }
 }

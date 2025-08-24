@@ -4,11 +4,11 @@ import BackgroundTimer from 'react-native-background-timer';
 import {useAppState} from './UseAppState';
 
 const useWorkoutTimer = (delay: number, notStarted?: boolean) => {
-  const savedCallback = useRef<() => void>();
+  const savedCallback = useRef<() => void>(null);
   const [seconds, setSeconds] = useState(0);
   const [timerPaused, setTimerPaused] = useState(false);
 
-  const lastKnownTime = useRef<number>();
+  const lastKnownTime = useRef<number>(null);
   const appState = useAppState();
   const [currentState, setCurrentState] = useState(appState);
 

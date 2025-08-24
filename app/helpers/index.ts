@@ -492,13 +492,6 @@ export const getEducationCategoryString = (category: Category) => {
   }
 };
 
-function timeout(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-export async function waitMilliseconds(ms: number) {
-  await timeout(ms);
-}
-
 export const greetingMessage = () => {
   const currentHour = new Date().getHours();
 

@@ -118,7 +118,7 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
           arcSweepAngle={240}
           rotation={240}
           lineCap="round">
-          {fill => (
+          {(fill: number) => (
             <Text
               style={{
                 fontSize: 30,
