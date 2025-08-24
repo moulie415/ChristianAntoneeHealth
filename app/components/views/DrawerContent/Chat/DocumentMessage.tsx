@@ -115,7 +115,8 @@ const DocumentMessage: React.FC<Props> = ({
           borderWidth={0}
           color={isYou ? colors.appBlue : colors.appWhite}
           progress={progress}>
-          <Icon
+          <FontAwesome6
+            iconStyle="solid"
             name="download"
             size={10}
             style={{position: 'absolute'}}
