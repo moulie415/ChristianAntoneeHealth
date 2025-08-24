@@ -1,7 +1,7 @@
 import React from 'react';
 import {Linking, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 
 import Config from 'react-native-config';
@@ -20,7 +20,7 @@ const Policies = () => {
             alignItems: 'center',
             marginVertical: 20,
           }}>
-          <Icon
+          <FontAwesome6
             style={{marginLeft: 20}}
             name="file"
             color={colors.appWhite}

@@ -38,7 +38,7 @@ import ImageView from 'react-native-image-viewing';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
@@ -338,7 +338,8 @@ const Chat: React.FC<ChatProps> = ({
               backgroundColor: 'rgba(0,0,0,0.7)',
               borderRadius: 25,
             }}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               style={{marginLeft: 3}}
               name="play"
               color={colors.appWhite}
@@ -696,7 +697,7 @@ const Chat: React.FC<ChatProps> = ({
             />
           )}
           scrollToBottomComponent={() => (
-            <Icon name="chevron-down" size={20} color={colors.textGrey} />
+            <FontAwesome6 iconStyle="solid" name="chevron-down" size={20} color={colors.textGrey} />
           )}
           alwaysShowSend
         />

@@ -16,7 +16,7 @@ import RNCalendarEvents from 'react-native-calendar-events';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import {EQUIPMENT_LIST, PREP_TIME_SECS} from '../../../constants';
@@ -382,12 +382,12 @@ const Settings: React.FC<{
                 <Text style={{color: colors.appWhite, fontSize: 12}}>
                   {profile.uid}
                 </Text>
-                <Icon
+                <FontAwesome6
                   name="copy"
                   style={{marginLeft: 10}}
                   color={colors.appBlue}
                   size={18}
-                  solid
+                  iconStyle="solid"
                 />
               </View>
             }
@@ -525,8 +525,8 @@ const Settings: React.FC<{
                     syncPlanWithCalendarAction({plan, sync: true});
                   }}
                   accessoryLeft={
-                    <Icon
-                      name="calendar-alt"
+                    <FontAwesome6
+                      name="calendar-days"
                       size={20}
                       style={{margin: 5}}
                       color={colors.appBlue}

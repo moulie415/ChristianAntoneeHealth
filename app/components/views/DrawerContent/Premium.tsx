@@ -18,7 +18,7 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {logError} from '../../../helpers/error';
@@ -280,10 +280,10 @@ const Premium: React.FC<{
                     }}>
                     {feature}
                   </Text>
-                  <Icon
+                  <FontAwesome6
                     style={{width: 40, fontWeight: 'bold'}}
                     size={25}
-                    solid
+                    iconStyle="solid"
                     color={
                       available || premiumPlusActive
                         ? colors.appGreen

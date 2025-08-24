@@ -4,7 +4,7 @@ import ReactNativeBlobUtil from 'react-native-blob-util';
 import FileViewer from 'react-native-file-viewer';
 import * as Progress from 'react-native-progress';
 import Snackbar from 'react-native-snackbar';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../../App';
 import colors from '../../../../constants/colors';
@@ -87,10 +87,10 @@ const DocumentMessage: React.FC<Props> = ({
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-      <Icon
+      <FontAwesome6
         size={30}
         name="file"
-        solid
+        iconStyle="solid"
         style={{color: isYou ? colors.appBlue : colors.appWhite}}
       />
       {file ? (

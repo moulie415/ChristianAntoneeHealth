@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {generateLink} from '../../../helpers/api';
 
 import {Share, StyleSheet, View} from 'react-native';
@@ -60,7 +60,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
                     Clipboard.setString(link);
                     Snackbar.show({text: 'Link copied to clipboard!'});
                   }}>
-                  <Icon name="clipboard" />
+                  <FontAwesome6 name="clipboard" />
                 </IconButton>
                 <IconButton
                   icon="share-alt"
