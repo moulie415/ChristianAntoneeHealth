@@ -22,8 +22,7 @@ const PlanNutrition: React.FC<{
   useEffect(() => {
     const getMissingRecipes = () => {
       if (nutrition) {
-        const {generalRecipes} =
-          nutrition;
+        const {generalRecipes} = nutrition;
         if (generalRecipes?.length) {
           const ids = _.uniq((generalRecipes || []).map(r => r)).filter(
             r => !recipes[r],

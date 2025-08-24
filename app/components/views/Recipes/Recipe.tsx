@@ -1,3 +1,4 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {RouteProp} from '@react-navigation/native';
 import React, {useCallback, useEffect} from 'react';
 import {Platform} from 'react-native';
@@ -7,7 +8,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Pdf from 'react-native-pdf';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -72,9 +72,9 @@ const Recipe: React.FC<{
           <TouchableOpacity
             style={{}}
             onPress={() => favouriteRecipeAction(recipe.id)}>
-            <Icon
+            <FontAwesome6
               name="star"
-              solid={favourites?.includes(recipe.id)}
+              iconStyle={favourites?.includes(recipe.id) ? 'solid' : 'regular'}
               size={25}
               color={colors.secondaryLight}
             />
@@ -94,7 +94,7 @@ const Recipe: React.FC<{
       <TouchableOpacity
         style={{position: 'absolute', top: 60, right: 10, zIndex: 999}}
         onPress={() => favouriteRecipeAction(recipe.id)}>
-        <Icon name="star" size={40} color={colors.secondaryLight} />
+        <FontAwesome6 name="star" size={40} color={colors.secondaryLight} />
       </TouchableOpacity>
     </SafeAreaView>
   );

@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from './constants/colors';
 import {useAppSelector} from './hooks/redux';
 
@@ -11,9 +11,10 @@ const LeaderboardTabIcon: React.FC<{
   const {profile} = useAppSelector(state => state.profile);
   return (
     <View>
-      <Icon color={color} size={size} name="trophy" />
+      <FontAwesome6 iconStyle="solid" color={color} size={size} name="trophy" />
       {!profile.premium && (
-        <Icon
+        <FontAwesome6
+          iconStyle="solid"
           name="lock"
           color={colors.appBlue}
           size={15}

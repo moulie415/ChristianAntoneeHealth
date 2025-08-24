@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {ReactNode} from 'react';
 import {TextStyle, TouchableOpacity, TouchableOpacityProps} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import Spinner from './Spinner';
 import Text from './Text';
@@ -14,6 +14,7 @@ interface Props extends TouchableOpacityProps {
   icon?: string | ReactNode;
   iconSize?: number;
   iconColor?: string;
+  iconStyle?: string;
 }
 
 const Button: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const Button: React.FC<Props> = ({
   icon,
   iconSize,
   iconColor,
+  iconStyle,
   ...props
 }) => {
   return (
@@ -59,11 +61,12 @@ const Button: React.FC<Props> = ({
       {!!icon && !loading && (
         <>
           {typeof icon === 'string' ? (
-            <Icon
-              name={icon}
+            <FontAwesome6
+              name={icon as any}
               color={iconColor || colors.appWhite}
               size={iconSize || 20}
               style={{marginRight: 10}}
+              iconStyle={(iconStyle as any) || 'solid'}
             />
           ) : (
             icon

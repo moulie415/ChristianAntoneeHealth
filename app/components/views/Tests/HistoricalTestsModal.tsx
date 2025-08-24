@@ -81,7 +81,7 @@ const HistoricalTestsModal: React.FC<{
                     borderWidth: 1,
                     borderColor: colors.borderColor,
                     padding: 15,
-                    marginBottom: 10
+                    marginBottom: 10,
                   }}>
                   <Text
                     style={{

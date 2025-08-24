@@ -45,7 +45,7 @@ const ViewMore = ({
       numberOfLines={lines || 3}
       textStyle={{
         lineHeight: 25,
-        textAlign
+        textAlign,
       }}>
       <Text style={{color: colors.appWhite, textAlign}}>{text}</Text>
     </ViewMoreText>

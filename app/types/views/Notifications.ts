@@ -8,4 +8,4 @@ type NotificationsNavigationProp = NativeStackNavigationProp<
 
 export default interface NotificationsProps {
   navigation: NotificationsNavigationProp;
-};
+}

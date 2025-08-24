@@ -9,6 +9,7 @@ import 'react-native-gesture-handler';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {IMessage} from 'react-native-gifted-chat';
 import Purchases, {LOG_LEVEL} from 'react-native-purchases';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
 import {persistStore} from 'redux-persist';
@@ -41,7 +42,6 @@ import {
   WatchWorkoutResponse,
 } from './types/Shared';
 import Test from './types/Test';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const {height, width} = Dimensions.get('window');
 
@@ -157,20 +157,16 @@ export type StackParamList = {
   Offline: undefined;
   UpdatePrompt: undefined;
   TargetModal: undefined;
-
 };
 
-const reactNavigationIntegration =  Sentry.reactNavigationIntegration();
-
+const reactNavigationIntegration = Sentry.reactNavigationIntegration();
 
 Sentry.init({
   environment: __DEV__ ? 'development' : 'production',
   dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
   tracesSampleRate: 1.0,
   enableUserInteractionTracing: true,
-  integrations: [
-    reactNavigationIntegration,
-  ],
+  integrations: [reactNavigationIntegration],
 });
 
 const App: React.FC = () => {
@@ -208,6 +204,8 @@ const App: React.FC = () => {
       isTokenAutoRefreshEnabled: true,
     });
   }, []);
+
+  console.log('test');
 
   return (
      <PersistGate persistor={persistor}>

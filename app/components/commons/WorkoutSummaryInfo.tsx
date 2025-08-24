@@ -1,9 +1,9 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import Color from 'color';
 import moment from 'moment';
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import Text from './Text';
 import Tile from './Tile';
@@ -60,7 +60,8 @@ const WorkoutSummaryInfo: React.FC<{
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="fire"
               color={colors.appBlue}
               style={{marginRight: 10}}
@@ -95,7 +96,7 @@ const WorkoutSummaryInfo: React.FC<{
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Icon
+          <FontAwesome6
             name="clock"
             color={colors.appBlue}
             style={{marginRight: 10}}
@@ -122,7 +123,8 @@ const WorkoutSummaryInfo: React.FC<{
           Intensity
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
+          <FontAwesome6
+            iconStyle="solid"
             name="droplet"
             color={colors.appBlue}
             style={{marginRight: 10}}
@@ -151,7 +153,8 @@ const WorkoutSummaryInfo: React.FC<{
             Average heart rate
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="heart-pulse"
               color={colors.appBlue}
               style={{marginRight: 10}}

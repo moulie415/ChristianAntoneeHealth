@@ -4,4 +4,4 @@ export default interface GoalsProps {
   setGoal: (goal: Goal) => void;
   signUp: () => void;
   loading: boolean;
-};
+}

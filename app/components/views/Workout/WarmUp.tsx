@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Switch, TouchableOpacity, View} from 'react-native';
+import {Switch, TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
 import {setCoolDown, setWarmUp} from '../../../reducers/exercises';

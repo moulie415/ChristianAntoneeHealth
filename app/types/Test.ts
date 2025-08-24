@@ -13,7 +13,7 @@ export default interface Test {
   thumbnail: {src: string; title: string};
   video?: {src: string; title: string};
   formula?: 'vo2';
-};
+}
 
 export interface Table {
   age: Row;

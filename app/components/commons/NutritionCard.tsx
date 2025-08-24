@@ -1,12 +1,11 @@
-import {View, ImageBackground} from 'react-native';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View, ImageBackground} from 'react-native';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import LinearGradient from 'react-native-linear-gradient';
 import {navigationRef} from '../../RootNavigation';
+import colors from '../../constants/colors';
 import {PlanNutrition} from '../../types/Shared';
 import Text from './Text';
-import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import LinearGradient from 'react-native-linear-gradient';
 
 const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
   return (
@@ -37,7 +36,8 @@ const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
             left: 0,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="utensils"
               color={colors.appWhite}
               size={30}

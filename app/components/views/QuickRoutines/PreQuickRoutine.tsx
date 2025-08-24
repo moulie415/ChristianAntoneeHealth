@@ -1,3 +1,4 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {RouteProp, useIsFocused} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
@@ -5,7 +6,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Image, ImageBackground, StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {StackParamList} from '../../../App';
@@ -143,7 +143,8 @@ const PreQuickRoutine: React.FC<{
               marginVertical: 10,
             }}>
             <View style={{width: 55, alignItems: 'center'}}>
-              <Icon
+              <FontAwesome6
+                iconStyle="solid"
                 name="stopwatch"
                 size={25}
                 color={colors.appWhite}
@@ -163,7 +164,8 @@ const PreQuickRoutine: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="person-running"
               size={25}
               color={colors.appWhite}
@@ -183,7 +185,8 @@ const PreQuickRoutine: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="gauge-high"
               size={22}
               color={colors.appWhite}
@@ -203,7 +206,8 @@ const PreQuickRoutine: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="dumbbell"
               size={20}
               color={colors.appWhite}
@@ -226,7 +230,8 @@ const PreQuickRoutine: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="child"
               size={25}
               color={colors.appWhite}
@@ -248,7 +253,8 @@ const PreQuickRoutine: React.FC<{
             marginVertical: 10,
           }}>
           <View style={{width: 55, alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="music"
               size={25}
               color={colors.appWhite}

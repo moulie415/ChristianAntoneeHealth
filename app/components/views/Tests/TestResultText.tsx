@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
 import React from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
 import {FONTS_SIZES} from '../../../constants';
@@ -66,13 +66,13 @@ const TestResultText: React.FC<{
                 -
               </Text>
             ) : (
-              <Icon
+              <FontAwesome6
                 style={{
                   fontSize: 20,
                   marginRight: 10,
                   color: colors.appWhite,
                 }}
-                name={getScoreIcon((category || percentile) as string)}
+                name={getScoreIcon((category || percentile) as string) as any}
               />
             )}
           </>
@@ -100,7 +100,8 @@ const TestResultText: React.FC<{
           marginHorizontal: 10,
           marginTop: 10,
         }}>
-        <Icon
+        <FontAwesome6
+          iconStyle="solid"
           style={{
             fontSize: 20,
             marginHorizontal: 10,

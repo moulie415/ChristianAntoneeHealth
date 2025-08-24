@@ -19,7 +19,7 @@ jest.mock('@react-native-firebase/analytics', () => {});
 jest.mock('@sentry/react-native', () => {});
 jest.mock('react-native-in-app-review', () => {});
 jest.mock('react-native-purchases', () => {});
-jest.mock('react-native-vector-icons/FontAwesome6', () => {});
+jest.mock('@react-native-vector-icons/fontawesome6', () => {});
 jest.mock('@kolking/react-native-avatar', () => {});
 
 const profile1 = {

@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {ImageBackground, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {navigationRef} from '../../RootNavigation';
 import colors from '../../constants/colors';
 import {PlanSleep} from '../../types/Shared';
@@ -35,7 +35,8 @@ const SleepCard: React.FC<{sleep: PlanSleep}> = ({sleep}) => {
             left: 0,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="bed"
               color={colors.appWhite}
               size={20}

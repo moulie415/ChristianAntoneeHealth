@@ -10,9 +10,9 @@ const Exercise: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
 }> = ({education, navigation}) => {
   const filtered = useMemo(() => {
-    return Object.values(education).filter(
-      e => e.category === Category.EXERCISE,
-    ).filter(e => !e.hidden);
+    return Object.values(education)
+      .filter(e => e.category === Category.EXERCISE)
+      .filter(e => !e.hidden);
   }, [education]);
   return <ArticleList filtered={filtered} navigation={navigation} />;
 };

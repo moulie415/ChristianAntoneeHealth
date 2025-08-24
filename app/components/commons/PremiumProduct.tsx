@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {View} from 'react-native';
 import {PurchasesPackage} from 'react-native-purchases';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 import SelectableButton from './SelectableButton';
 import Text from './Text';
@@ -44,7 +44,12 @@ const PremiumProduct: React.FC<{
       text={(title || '').toUpperCase()}
       secondaryText={
         packageStrings?.bestValue ? (
-          <View style={{flexDirection: 'row', alignItems: 'flex-end', marginTop: 10}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-end',
+              marginTop: 10,
+            }}>
             <Text
               style={{
                 color: colors.offWhite,
@@ -63,7 +68,12 @@ const PremiumProduct: React.FC<{
                 justifyContent: 'center',
                 marginBottom: -4,
               }}>
-              <Icon name="star" size={10} solid color={colors.appWhite} />
+              <FontAwesome6
+                iconStyle="solid"
+                name="star"
+                size={10}
+                color={colors.appWhite}
+              />
               <Text
                 style={{
                   color: colors.appWhite,

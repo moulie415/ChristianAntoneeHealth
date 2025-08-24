@@ -1,6 +1,6 @@
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import colors from '../../constants/colors';
 
 const BackButton: React.FC<TouchableOpacityProps> = props => {
@@ -18,11 +18,12 @@ const BackButton: React.FC<TouchableOpacityProps> = props => {
         },
         props.style,
       ]}>
-      <Icon
+      <FontAwesome6
         name="chevron-left"
         color={colors.appWhite}
         size={25}
         style={{marginLeft: -3}}
+        iconStyle="solid"
       />
     </TouchableOpacity>
   );

@@ -2829,6 +2829,7 @@ PODS:
     - React
   - react-native-splash-screen (3.3.0):
     - React-Core
+  - react-native-vector-icons-fontawesome6 (12.2.0)
   - react-native-video (6.10.0):
     - DoubleConversion
     - glog
@@ -3463,27 +3464,6 @@ PODS:
     - React-Core
   - RNSVG (15.11.1):
     - React-Core
-  - RNVectorIcons (10.2.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - RNWatch (1.1.0):
     - React
   - SDWebImage (5.11.1):
@@ -3553,6 +3533,7 @@ DEPENDENCIES:
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
   - react-native-spinkit (from `../node_modules/react-native-spinkit`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - "react-native-vector-icons-fontawesome6 (from `../node_modules/@react-native-vector-icons/fontawesome6`)"
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-video-cache (from `../node_modules/react-native-video-cache`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -3620,7 +3601,6 @@ DEPENDENCIES:
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -3787,6 +3767,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-spinkit"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-vector-icons-fontawesome6:
+    :path: "../node_modules/@react-native-vector-icons/fontawesome6"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-video-cache:
@@ -3921,8 +3903,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sound-player"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   RNWatch:
     :path: "../node_modules/react-native-watch-connectivity"
   Yoga:
@@ -4027,6 +4007,7 @@ SPEC CHECKSUMS:
   react-native-skia: 2612b6dd4c9efa9af81053a5146497a1d5b3a639
   react-native-spinkit: 96a74c3519fab0eded2ab8c285f774aa3f4b7944
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
+  react-native-vector-icons-fontawesome6: 1b667969bef2f430d1d7515163b980b856f58670
   react-native-video: fb956b17c46dede92a6b55bd3a9de76a9b72248c
   react-native-video-cache: b695f59c41ff5b44ed806914f64fe4cd55371cc5
   react-native-webview: 1b840a1de0ce68dd998a956c917124d3a6bd362b
@@ -4096,7 +4077,6 @@ SPEC CHECKSUMS:
   RNSound: 314cc5226453ef4a3314a196c65e8a65e5106a7b
   RNSoundPlayer: 66e056f53b9e74d569b5a7c014bdb496c11d1268
   RNSVG: 4903d466c3a877644d5219dbc1d97f9ef9e4a3cc
-  RNVectorIcons: 68661e35101c98d574fa61a326d2043aec3e049a
   RNWatch: 28fe1f5e0c6410d45fd20925f4796fce05522e3f
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d

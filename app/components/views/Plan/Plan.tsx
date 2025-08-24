@@ -1,19 +1,14 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {useFocusEffect} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
-import {
-  Alert,
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import {Alert, TouchableOpacity, View, useWindowDimensions} from 'react-native';
 import Purchases, {
   CustomerInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -183,11 +178,10 @@ const Plan: React.FC<{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon
+              <FontAwesome6
                 style={{position: 'absolute'}}
                 name="calendar-days"
                 color={colors.appBlue}
-                solid
                 size={50}
               />
             </View>

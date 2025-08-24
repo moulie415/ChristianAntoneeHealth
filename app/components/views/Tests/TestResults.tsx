@@ -2,6 +2,7 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {View} from 'react-native';
+import Hyperlink from 'react-native-hyperlink';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
@@ -16,10 +17,8 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PercentileTable from '../../commons/PercentileTable';
 import Table from '../../commons/Table';
-import TestResultText from './TestResultText';
 import Text from '../../commons/Text';
-import Hyperlink from 'react-native-hyperlink';
-
+import TestResultText from './TestResultText';
 
 const TestResults: React.FC<{
   profile: Profile;
@@ -102,7 +101,13 @@ const TestResults: React.FC<{
           />
         )}
         <View style={{marginHorizontal: 40, marginTop: 20}}>
-        {!!test.source && <Hyperlink linkDefault linkStyle={{color: colors.appBlue}}><Text style={{color: colors.appWhite, fontStyle: 'italic'}}>{test.source}</Text></Hyperlink>}
+          {!!test.source && (
+            <Hyperlink linkDefault linkStyle={{color: colors.appBlue}}>
+              <Text style={{color: colors.appWhite, fontStyle: 'italic'}}>
+                {test.source}
+              </Text>
+            </Hyperlink>
+          )}
         </View>
       </View>
       <View style={{flex: 1, justifyContent: 'flex-end'}}>

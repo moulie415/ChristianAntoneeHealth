@@ -1,10 +1,10 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import FileViewer from 'react-native-file-viewer';
 import * as Progress from 'react-native-progress';
 import Snackbar from 'react-native-snackbar';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../../App';
 import colors from '../../../../constants/colors';
@@ -87,10 +87,10 @@ const DocumentMessage: React.FC<Props> = ({
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-      <Icon
+      <FontAwesome6
         size={30}
         name="file"
-        solid
+        iconStyle="solid"
         style={{color: isYou ? colors.appBlue : colors.appWhite}}
       />
       {file ? (
@@ -115,7 +115,8 @@ const DocumentMessage: React.FC<Props> = ({
           borderWidth={0}
           color={isYou ? colors.appBlue : colors.appWhite}
           progress={progress}>
-          <Icon
+          <FontAwesome6
+            iconStyle="solid"
             name="download"
             size={10}
             style={{position: 'absolute'}}

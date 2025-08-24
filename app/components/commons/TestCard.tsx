@@ -1,11 +1,11 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
-import {RootState} from '../../App';
 import Test from '../../types/Test';
 import ImageAnimated from './ImageAnimated';
 import Text from './Text';
@@ -54,7 +54,8 @@ const TestCard: React.FC<{
           }}>
           {plan ? (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon
+              <FontAwesome6
+                iconStyle="solid"
                 name="heart-pulse"
                 color={colors.appWhite}
                 size={30}
@@ -98,7 +99,12 @@ const TestCard: React.FC<{
               top: 15,
               right: 15,
             }}>
-            <Icon name="lock" color="#fff" size={20} />
+            <FontAwesome6
+              iconStyle="solid"
+              name="lock"
+              color="#fff"
+              size={20}
+            />
           </View>
         )}
       </ImageAnimated>

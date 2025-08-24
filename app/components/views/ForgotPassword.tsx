@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Alert, SafeAreaView} from 'react-native';
+import {Alert} from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import Button from '../commons/Button';

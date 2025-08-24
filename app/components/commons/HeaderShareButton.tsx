@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 
@@ -13,11 +13,12 @@ const HeaderShareButton: FunctionComponent<{
 }> = ({setShareModalVisibleAction, visible}) => {
   return (
     <TouchableOpacity onPress={() => setShareModalVisibleAction(!visible)}>
-      <Icon
+      <FontAwesome6
         color={colors.appBlue}
         size={20}
         style={{padding: 10}}
-        name="share-alt"
+        name="share"
+        iconStyle="solid"
       />
     </TouchableOpacity>
   );

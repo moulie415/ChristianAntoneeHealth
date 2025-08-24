@@ -1,5 +1,5 @@
 import AppleHealthKit, {HealthKitPermissions} from 'react-native-health';
-import { Permission } from 'react-native-health-connect';
+import {Permission} from 'react-native-health-connect';
 const PERMS = AppleHealthKit.Constants.Permissions;
 
 export default {
@@ -27,66 +27,64 @@ export const healthKitOptions: HealthKitPermissions = {
   },
 };
 
-export const healthConnectPermissions: Permission[] =
-  [
-    {
-      accessType: 'read',
-      recordType: 'ActiveCaloriesBurned',
-    },
-    {
-      accessType: 'read',
-      recordType: 'Steps',
-    },
-    {
-      accessType: 'read',
-      recordType: 'HeartRate',
-    },
-    {
-      accessType: 'read',
-      recordType: 'ActiveCaloriesBurned',
-    },
-    {
-      accessType: 'read',
-      recordType: 'ExerciseSession',
-    },
-    {
-      accessType: 'write',
-      recordType: 'ExerciseSession',
-    },
-    {
-      accessType: 'read',
-      recordType: 'Height',
-    },
-    {
-      accessType: 'write',
-      recordType: 'Height',
-    },
-    {
-      accessType: 'read',
-      recordType: 'Weight',
-    },
-    {
-      accessType: 'write',
-      recordType: 'Weight',
-    },
-    {
-      accessType: 'read',
-      recordType: 'BodyFat',
-    },
-    {
-      accessType: 'write',
-      recordType: 'BodyFat',
-    },
-    {
-      accessType: 'read',
-      recordType: 'BoneMass',
-    },
-    {
-      accessType: 'write',
-      recordType: 'BoneMass',
-    },
-  ];
-
+export const healthConnectPermissions: Permission[] = [
+  {
+    accessType: 'read',
+    recordType: 'ActiveCaloriesBurned',
+  },
+  {
+    accessType: 'read',
+    recordType: 'Steps',
+  },
+  {
+    accessType: 'read',
+    recordType: 'HeartRate',
+  },
+  {
+    accessType: 'read',
+    recordType: 'ActiveCaloriesBurned',
+  },
+  {
+    accessType: 'read',
+    recordType: 'ExerciseSession',
+  },
+  {
+    accessType: 'write',
+    recordType: 'ExerciseSession',
+  },
+  {
+    accessType: 'read',
+    recordType: 'Height',
+  },
+  {
+    accessType: 'write',
+    recordType: 'Height',
+  },
+  {
+    accessType: 'read',
+    recordType: 'Weight',
+  },
+  {
+    accessType: 'write',
+    recordType: 'Weight',
+  },
+  {
+    accessType: 'read',
+    recordType: 'BodyFat',
+  },
+  {
+    accessType: 'write',
+    recordType: 'BodyFat',
+  },
+  {
+    accessType: 'read',
+    recordType: 'BoneMass',
+  },
+  {
+    accessType: 'write',
+    recordType: 'BoneMass',
+  },
+];
 
 export const SAMPLE_VIDEO_LINK =
   'https://cdn.videvo.net/videvo_files/video/free/2014-08/large_watermarked/Earth_Zoom_In_preview.mp4';

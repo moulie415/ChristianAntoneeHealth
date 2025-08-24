@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {ReactNode} from 'react';
 import {Text, TouchableOpacity, View, ViewStyle} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../constants/colors';
 
 const SelectableButton: React.FC<{
@@ -56,7 +56,12 @@ const SelectableButton: React.FC<{
         ? customRight
         : selected && (
             <View style={{width: 30, alignItems: 'center'}}>
-              <Icon size={20} color={colors.appBlue} name="check" />
+              <FontAwesome6
+                iconStyle="solid"
+                size={20}
+                color={colors.appBlue}
+                name="check"
+              />
             </View>
           )}
     </TouchableOpacity>

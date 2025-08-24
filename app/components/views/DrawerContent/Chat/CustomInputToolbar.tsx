@@ -1,11 +1,11 @@
 import React from 'react';
+import {Platform} from 'react-native';
 import {
   IMessage,
   InputToolbar,
   InputToolbarProps,
 } from 'react-native-gifted-chat';
 import VoiceNoteRecorder from './VoiceNoteRecorder';
-import { Platform } from 'react-native';
 
 interface Props extends InputToolbarProps<IMessage> {
   text: string;

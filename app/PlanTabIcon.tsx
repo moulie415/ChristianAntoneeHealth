@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from './App';
 import Text from './components/commons/Text';
@@ -16,9 +16,15 @@ const PlanTabIcon: React.FC<{
   const count = profile.unread?.plan || 0;
   return (
     <View>
-      <Icon color={color} size={size} name="calendar-days" solid />
+      <FontAwesome6
+        color={color}
+        size={size}
+        name="calendar-days"
+        iconStyle="solid"
+      />
       {!(profile.admin || hasPremiumPlus(profile.premium)) && (
-        <Icon
+        <FontAwesome6
+          iconStyle="solid"
           name="lock"
           color={colors.appBlue}
           size={15}

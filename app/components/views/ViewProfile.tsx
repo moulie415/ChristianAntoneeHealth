@@ -142,14 +142,14 @@ const ViewProfile: React.FC<{
 
           <GoalSummaries connection={connection} navigation={navigation} />
 
-          <ProfileCharts
+          {/* <ProfileCharts
             weight={connection.weight || 0}
             height={connection.height || 0}
             bodyFatPercentage={connection.bodyFatPercentage}
             muscleMass={connection.muscleMass}
             boneMass={connection.boneMass}
             connection
-          />
+          /> */}
         </ScrollView>
       </SafeAreaView>
       <ImageView

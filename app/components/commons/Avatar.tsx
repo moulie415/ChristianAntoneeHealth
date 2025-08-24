@@ -2,9 +2,8 @@ import {Avatar as UserAvatar} from '@kolking/react-native-avatar';
 import React from 'react';
 import {Image, ImageStyle, View} from 'react-native';
 
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../constants/colors';
-
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {useAppSelector} from '../../hooks/redux';
 
 const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
@@ -21,7 +20,12 @@ const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Icon size={size / 3.5} name="shield-halved" color={colors.appWhite} />
+      <FontAwesome6
+        iconStyle="solid"
+        size={size / 3.5}
+        name="shield-halved"
+        color={colors.appWhite}
+      />
     </View>
   );
 };

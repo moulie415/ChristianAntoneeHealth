@@ -4,9 +4,10 @@ import appleAuth, {
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Image, ImageBackground, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Image, ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
@@ -150,6 +151,7 @@ const Login: React.FC<{
           <Button
             onPress={signInFacebook}
             disabled={disabled}
+            iconStyle="brand"
             icon="facebook"
             text="Continue with Facebook"
             overrideCasing

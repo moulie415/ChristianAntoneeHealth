@@ -7,7 +7,7 @@ import {TABLE_HEADER_KEYS} from '../components/commons/Table';
 import colors from '../constants/colors';
 import {Category} from '../types/Education';
 import {Gender, Sample} from '../types/Shared';
-import {Cell, PercentileTable, Row, Table} from '../types/Test';
+import {PercentileTable, Row, Table} from '../types/Test';
 import {logError} from './error';
 
 const {height, width} = Dimensions.get('window');

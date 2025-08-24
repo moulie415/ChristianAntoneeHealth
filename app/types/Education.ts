@@ -1,4 +1,3 @@
-
 export default interface Education {
   id: string;
   title: string;

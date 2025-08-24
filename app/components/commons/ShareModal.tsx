@@ -1,9 +1,10 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
@@ -120,14 +121,17 @@ const ShareModal: React.FC<{
               title={item.name}
               accessoryRight={
                 selected.includes(item.uid) ? (
-                  <Icon
+                  <FontAwesome6
                     size={20}
-                    name="check-circle"
-                    solid
+                    name="circle-check"
                     color={colors.appBlue}
                   />
                 ) : (
-                  <Icon size={20} name="circle" color={colors.appBlue} />
+                  <FontAwesome6
+                    size={20}
+                    name="circle"
+                    color={colors.appBlue}
+                  />
                 )
               }
             />

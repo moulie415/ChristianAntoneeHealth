@@ -1,15 +1,15 @@
-import {View, Linking, TouchableOpacity, Dimensions} from 'react-native';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import Button from './Button';
-import {RootState} from '../../App';
-import {connect} from 'react-redux';
+import {Dimensions, Linking, TouchableOpacity, View} from 'react-native';
 import Config from 'react-native-config';
-import {Profile} from '../../types/Shared';
-import Modal from './Modal';
+import {connect} from 'react-redux';
+import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import ImageAnimated from './ImageAnimated';
+import {Profile} from '../../types/Shared';
+import Button from './Button';
+import Modal from './Modal';
 import Text from './Text';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const ConnectedIcon: React.FC = () => {
   return (
@@ -25,7 +25,7 @@ const ConnectedIcon: React.FC = () => {
         height: 20,
         borderRadius: 10,
       }}>
-      <Icon name="check" color={colors.appWhite} />
+      <FontAwesome6 name="check" color={colors.appWhite} iconStyle="solid" />
     </View>
   );
 };

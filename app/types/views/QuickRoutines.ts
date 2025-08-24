@@ -9,4 +9,4 @@ type QuickRoutinesNavigationProp = NativeStackNavigationProp<
 export default interface QuickRoutinesProps {
   navigation: QuickRoutinesNavigationProp;
   getQuickRoutinesAction: () => void;
-};
+}

@@ -1,5 +1,5 @@
 import {RouteProp} from '@react-navigation/native';
-import {SvgChart, SVGRenderer} from '@wuba/react-native-echarts';
+import {SkiaRenderer, SkiaChart} from '@wuba/react-native-echarts';
 import {LineChart} from 'echarts/charts';
 import {
   DataZoomComponent,
@@ -28,7 +28,7 @@ echarts.use([
   TitleComponent,
   TooltipComponent,
   GridComponent,
-  SVGRenderer,
+  SkiaRenderer,
   LineChart,
   LegendComponent,
   MarkLineComponent,
@@ -46,7 +46,7 @@ interface LegendItem {
 const WorkoutBreakdown: React.FC<{
   route: RouteProp<StackParamList, 'WorkoutBreakdown'>;
 }> = ({route}) => {
-  const chartRef = useRef<typeof SvgChart>(null);
+  const chartRef = useRef<typeof SkiaChart>(null);
   const {workout} = route.params;
 
   const {quickRoutines} = useAppSelector(state => state.quickRoutines);
@@ -289,7 +289,7 @@ const WorkoutBreakdown: React.FC<{
     let chart: echarts.ECharts;
     if (chartRef.current) {
       chart = echarts.init(chartRef.current, 'light', {
-        renderer: 'svg',
+        renderer: 'canvas',
         width: Dimensions.get('window').width,
         height: E_HEIGHT,
       });
@@ -321,7 +321,7 @@ const WorkoutBreakdown: React.FC<{
   return (
     <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
       <Header hasBack title="Workout Breakdown" />
-      <SvgChart ref={chartRef} />
+      <SkiaChart ref={chartRef} />
       <View
         style={{
           flexDirection: 'row',

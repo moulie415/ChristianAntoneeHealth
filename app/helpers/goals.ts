@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PushNotification from 'react-native-push-notification';
 import {capitalizeFirstLetter} from '.';
 import {WeeklyItems} from '../reducers/profile';
@@ -5,7 +6,6 @@ import {GOALS_CHANNEL_ID} from '../sagas/profile';
 import QuickRoutine from '../types/QuickRoutines';
 import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
 import {Goal, Level, PlanWorkout, Profile, Targets} from '../types/Shared';
-import moment from 'moment';
 
 interface GenericWorkout {
   level: Level;

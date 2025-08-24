@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 
@@ -10,7 +10,8 @@ const AddConnectionButton: FunctionComponent<{
 }> = ({navigation}) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate('AddConnection')}>
-      <Icon
+      <FontAwesome6
+        iconStyle="solid"
         color={colors.appWhite}
         size={20}
         style={{padding: 10}}

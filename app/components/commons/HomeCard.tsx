@@ -1,8 +1,8 @@
 import React from 'react';
 import {Dimensions, ImageSourcePropType, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
@@ -83,7 +83,12 @@ const HomeCard: React.FC<{
                 bottom: 15,
                 right: 15,
               }}>
-              <Icon name="lock" size={20} color={colors.appWhite} />
+              <FontAwesome6
+                iconStyle="solid"
+                name="lock"
+                size={20}
+                color={colors.appWhite}
+              />
             </View>
           )}
         </LinearGradient>

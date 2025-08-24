@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import colors from '../../../../constants/colors';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import React, {useCallback, useEffect} from 'react';
+
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -9,8 +9,7 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
-
-const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+import colors from '../../../../constants/colors';
 
 const RecordingIcon: React.FC<{animate: boolean}> = ({
   animate: shouldAnimate,
@@ -40,12 +39,14 @@ const RecordingIcon: React.FC<{animate: boolean}> = ({
     };
   });
   return (
-    <AnimatedIcon
-      name="microphone"
-      style={style}
-      color={colors.appRed}
-      size={25}
-    />
+    <Animated.View style={style}>
+      <FontAwesome6
+        name="microphone"
+        iconStyle="solid"
+        color={colors.appRed}
+        size={25}
+      />
+    </Animated.View>
   );
 };
 

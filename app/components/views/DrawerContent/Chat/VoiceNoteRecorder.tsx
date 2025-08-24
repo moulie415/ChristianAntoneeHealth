@@ -1,3 +1,18 @@
+import {Slider} from '@miblanchard/react-native-slider';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import type {ReactElement} from 'react';
+import React, {Component} from 'react';
+import {
+  PermissionsAndroid,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import type {
+  AudioSet,
+  PlayBackType,
+  RecordBackType,
+} from 'react-native-audio-recorder-player';
 import AudioRecorderPlayer, {
   AVEncoderAudioQualityIOSType,
   AVEncodingOption,
@@ -5,30 +20,15 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
   OutputFormatAndroidType,
 } from 'react-native-audio-recorder-player';
-import type {
-  AudioSet,
-  PlayBackType,
-  RecordBackType,
-} from 'react-native-audio-recorder-player';
-import {
-  PermissionsAndroid,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {Component} from 'react';
-import type {ReactElement} from 'react';
+import RNFS from 'react-native-fs';
+import Snackbar from 'react-native-snackbar';
+import uuid from 'react-native-uuid';
 import colors from '../../../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {logError} from '../../../../helpers/error';
+import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';
 import RecordingIcon from './RecordingIcon';
 import RecordingIndicator from './RecordingIndicator';
-import RNFS from 'react-native-fs';
-import uuid from 'react-native-uuid';
-import {Slider} from '@miblanchard/react-native-slider';
-import mmss from '../../../../helpers/mmss';
-import {logError} from '../../../../helpers/error';
-import Snackbar from 'react-native-snackbar';
 
 interface State {
   recordSecs: number;
@@ -94,7 +94,8 @@ class VoiceNoteRecorder extends Component<Props, State> {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           {this.state.result ? (
             <TouchableOpacity onPress={() => this.props.onClose()}>
-              <Icon
+              <FontAwesome6
+                iconStyle="solid"
                 name="trash"
                 style={{padding: 10}}
                 size={20}
@@ -140,7 +141,8 @@ class VoiceNoteRecorder extends Component<Props, State> {
                     }
                   }
                 }}>
-                <Icon
+                <FontAwesome6
+                  iconStyle="solid"
                   name={this.state.playing ? 'pause' : 'play'}
                   size={25}
                   color={colors.appBlue}
@@ -188,7 +190,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
           <TouchableOpacity
             style={{alignSelf: 'flex-end', padding: 10}}
             onPress={() => this.onStopRecord()}>
-            <Icon name="circle-stop" size={25} color={colors.appRed} />
+            <FontAwesome6 name="circle-stop" size={25} color={colors.appRed} />
           </TouchableOpacity>
         )}
         {this.state.result && (

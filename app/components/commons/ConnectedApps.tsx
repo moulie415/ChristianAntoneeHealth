@@ -1,16 +1,14 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import React, {useMemo, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
-import {RootState} from '../../App';
 import {connect} from 'react-redux';
+import {RootState} from '../../App';
+import {navigate} from '../../RootNavigation';
+import colors from '../../constants/colors';
+import {setProfile} from '../../reducers/profile';
 import {Profile} from '../../types/Shared';
 import ConnectedAppsModal from './ConnectedAppsModal';
-import Button from './Button';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import colors from '../../constants/colors';
 import Text from './Text';
-import LinearGradient from 'react-native-linear-gradient';
-import {navigate} from '../../RootNavigation';
-import { setProfile } from '../../reducers/profile';
 
 const ConnectedApps: React.FC<{
   profile: Profile;
@@ -53,7 +51,8 @@ const ConnectedApps: React.FC<{
           marginBottom: 20,
         }}>
         <View style={{width: 55, alignItems: 'center'}}>
-          <Icon
+          <FontAwesome6
+            iconStyle="solid"
             name="mobile"
             size={25}
             color={colors.appWhite}
@@ -81,7 +80,13 @@ const ConnectedApps: React.FC<{
             alignItems: 'center',
             backgroundColor: colors.appBlue,
           }}>
-          <Icon name="gear" size={25} color={colors.appWhite} style={{}} />
+          <FontAwesome6
+            iconStyle="solid"
+            name="gear"
+            size={25}
+            color={colors.appWhite}
+            style={{}}
+          />
         </TouchableOpacity>
       </TouchableOpacity>
       <ConnectedAppsModal visible={showModal} setVisible={setShowModal} />

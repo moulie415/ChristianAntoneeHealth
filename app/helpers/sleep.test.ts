@@ -6,5 +6,4 @@ describe('sleep', () => {
     await sleep(1);
     expect(setTimeout).toHaveBeenCalled();
   });
-
 });

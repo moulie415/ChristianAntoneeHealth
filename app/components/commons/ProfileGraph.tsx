@@ -1,4 +1,4 @@
-import {SVGRenderer, SvgChart} from '@wuba/react-native-echarts';
+import {SVGRenderer, SvgChart, SkiaChart, SkiaRenderer} from '@wuba/react-native-echarts';
 import {LineChart} from 'echarts/charts';
 import {GridComponent} from 'echarts/components';
 import * as echarts from 'echarts/core';
@@ -12,7 +12,7 @@ import {setFilter} from '../../reducers/profile';
 import Button from './Button';
 import Text from './Text';
 
-echarts.use([SVGRenderer, LineChart, GridComponent]);
+echarts.use([SkiaRenderer, LineChart, GridComponent]);
 
 const ProfileGraph: React.FC<{
   setShowModal: (show: boolean) => void;
@@ -20,7 +20,7 @@ const ProfileGraph: React.FC<{
   setFilter: (filter: 6 | 30 | 365) => void;
   filter: 6 | 30 | 365;
 }> = ({setShowModal, data, setFilter: setFilterAction, filter}) => {
-  const svgRef = useRef<any>(null);
+  const skiaRef = useRef<any>(null);
   useEffect(() => {
     const option = {
       xAxis: {
@@ -44,9 +44,9 @@ const ProfileGraph: React.FC<{
       ],
     };
     let chart: any;
-    if (svgRef.current) {
-      chart = echarts.init(svgRef.current, 'light', {
-        renderer: 'svg',
+    if (skiaRef.current) {
+      chart = echarts.init(skiaRef.current, 'light', {
+        renderer: 'canvas',
         width: Dimensions.get('window').width * 0.9,
         height: 300,
       });
@@ -135,7 +135,7 @@ const ProfileGraph: React.FC<{
           </View>
         </TouchableOpacity>
       </View>
-      <SvgChart ref={svgRef} />
+      <SkiaChart ref={skiaRef} />
       <View style={{padding: 20}}>
         <Button text="Close" onPress={() => setShowModal(false)} />
       </View>

@@ -1,8 +1,8 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {IMessage, Send, SendProps} from 'react-native-gifted-chat';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../../App';
 import colors from '../../../../constants/colors';
@@ -36,7 +36,12 @@ const CustomSend: React.FC<Props> = props => {
             paddingTop: 10,
             paddingRight: 15,
           }}>
-          <Icon name="file" solid size={22} color={colors.appBlue} />
+          <FontAwesome6
+            name="file"
+            iconStyle="solid"
+            size={22}
+            color={colors.appBlue}
+          />
         </TouchableOpacity>
       )}
       {!props.attachmentsDisabled && (
@@ -48,7 +53,12 @@ const CustomSend: React.FC<Props> = props => {
             paddingRight: 13,
             alignSelf: 'center',
           }}>
-          <Icon name="image" solid size={25} color={colors.appBlue} />
+          <FontAwesome6
+            name="image"
+            iconStyle="solid"
+            size={25}
+            color={colors.appBlue}
+          />
         </TouchableOpacity>
       )}
       {!props.voiceNotesDisabled && (
@@ -60,7 +70,12 @@ const CustomSend: React.FC<Props> = props => {
             paddingRight: 15,
             alignSelf: 'center',
           }}>
-          <Icon name="microphone" size={25} color={colors.appBlue} />
+          <FontAwesome6
+            iconStyle="solid"
+            name="microphone"
+            size={25}
+            color={colors.appBlue}
+          />
         </TouchableOpacity>
       )}
     </View>

@@ -5,4 +5,4 @@ type TermsNavigationProp = NativeStackNavigationProp<StackParamList, 'Terms'>;
 
 export default interface TermsProps {
   navigation: TermsNavigationProp;
-};
+}

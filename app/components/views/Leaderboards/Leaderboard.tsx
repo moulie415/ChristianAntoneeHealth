@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {FlatList, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from '../../../constants/colors';
 import {useAppSelector} from '../../../hooks/redux';
 import Fire from '../../../images/fire.svg';
@@ -60,7 +60,8 @@ const Leaderboard: React.FC<{
                   icons={[
                     {
                       icon: (
-                        <Icon
+                        <FontAwesome6
+                          iconStyle="solid"
                           name="shoe-prints"
                           size={15}
                           color={colors.button}

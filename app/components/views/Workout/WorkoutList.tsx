@@ -112,5 +112,4 @@ const mapStateToProps = ({
   loading: exercises.loading,
 });
 
-
 export default connect(mapStateToProps)(WorkoutList);

@@ -1,19 +1,13 @@
 import Clipboard from '@react-native-clipboard/clipboard';
+import {pick} from '@react-native-documents/picker';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import _ from 'lodash';
 import moment from 'moment';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {
-  Alert,
-  FlatList,
-  Image,
-  Platform,
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, FlatList, Platform, TouchableOpacity, View, Image} from 'react-native';
 import {
   AvatarProps,
   Bubble,
@@ -35,10 +29,9 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import Video, {ResizeMode} from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {connect} from 'react-redux';
@@ -66,7 +59,6 @@ import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
 import DocumentMessage from './DocumentMessage';
 import VoiceNotePlayer from './VoiceNotePlayer';
-import {pick} from '@react-native-documents/picker';
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -338,7 +330,8 @@ const Chat: React.FC<ChatProps> = ({
               backgroundColor: 'rgba(0,0,0,0.7)',
               borderRadius: 25,
             }}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               style={{marginLeft: 3}}
               name="play"
               color={colors.appWhite}
@@ -696,7 +689,12 @@ const Chat: React.FC<ChatProps> = ({
             />
           )}
           scrollToBottomComponent={() => (
-            <Icon name="chevron-down" size={20} color={colors.textGrey} />
+            <FontAwesome6
+              iconStyle="solid"
+              name="chevron-down"
+              size={20}
+              color={colors.textGrey}
+            />
           )}
           alwaysShowSend
         />

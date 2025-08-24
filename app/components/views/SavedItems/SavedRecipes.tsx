@@ -1,8 +1,8 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FunctionComponent, useMemo} from 'react';
 import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -55,7 +55,8 @@ const SavedRecipes: FunctionComponent<{
                   }}>
                   No saved recipes found
                 </Text>
-                <Icon
+                <FontAwesome6
+                  iconStyle="solid"
                   name="utensils"
                   color={colors.appWhite}
                   size={30}

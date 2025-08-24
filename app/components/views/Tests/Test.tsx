@@ -300,7 +300,7 @@ const Test: React.FC<{
                     style={{
                       margin: 10,
                       marginRight: 20,
-                      marginLeft:  10,
+                      marginLeft: 10,
                       flex: 1,
                     }}
                   />

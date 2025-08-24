@@ -1,9 +1,9 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
 import React, {FunctionComponent, useMemo} from 'react';
 import {Dimensions, FlatList, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 import {useAppSelector} from '../../../hooks/redux';
@@ -61,7 +61,8 @@ const SavedWorkouts: FunctionComponent<{
                     }}>
                     No saved workouts found
                   </Text>
-                  <Icon
+                  <FontAwesome6
+                    iconStyle="solid"
                     name="dumbbell"
                     color={colors.appWhite}
                     size={30}

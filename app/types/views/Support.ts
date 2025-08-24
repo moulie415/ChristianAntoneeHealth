@@ -8,4 +8,4 @@ type SupportNavigationProp = NativeStackNavigationProp<
 
 export default interface SupportProps {
   navigation: SupportNavigationProp;
-};
+}

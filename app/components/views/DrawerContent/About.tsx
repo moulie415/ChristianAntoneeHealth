@@ -1,3 +1,4 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {
   ImageBackground,
@@ -7,12 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 import AboutProps from '../../../types/views/About';
-import Text from '../../commons/Text';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../commons/Header';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import Text from '../../commons/Text';
 
 const About: React.FC<AboutProps> = () => {
   return (
@@ -50,7 +50,12 @@ const About: React.FC<AboutProps> = () => {
             }}
             onPress={() => Linking.openURL('https://christianantonee.com')}>
             <View style={{width: 40}}>
-              <Icon name="globe" size={20} color="#fff" />
+              <FontAwesome6
+                iconStyle="solid"
+                name="globe"
+                size={20}
+                color="#fff"
+              />
             </View>
             <Text
               style={{
@@ -61,7 +66,8 @@ const About: React.FC<AboutProps> = () => {
               }}>
               Website
             </Text>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               style={{opacity: 0.8}}
               name="chevron-right"
               size={20}
@@ -79,7 +85,12 @@ const About: React.FC<AboutProps> = () => {
               Linking.openURL('https://www.instagram.com/christian_antonee/')
             }>
             <View style={{width: 40}}>
-              <Icon name="instagram" size={20} color="#fff" />
+              <FontAwesome6
+                iconStyle="brand"
+                name="instagram"
+                size={20}
+                color="#fff"
+              />
             </View>
             <Text
               style={{
@@ -90,7 +101,8 @@ const About: React.FC<AboutProps> = () => {
               }}>
               Instagram
             </Text>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               style={{opacity: 0.8}}
               name="chevron-right"
               size={20}
@@ -116,7 +128,7 @@ const About: React.FC<AboutProps> = () => {
               }
             }}>
             <View style={{width: 40}}>
-              <Icon name="envelope" size={20} color="#fff" />
+              <FontAwesome6 name="envelope" size={20} color="#fff" />
             </View>
             <Text
               style={{
@@ -127,7 +139,8 @@ const About: React.FC<AboutProps> = () => {
               }}>
               Contact us
             </Text>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               style={{opacity: 0.8}}
               name="chevron-right"
               size={20}
