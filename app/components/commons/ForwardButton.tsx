@@ -1,6 +1,7 @@
 import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+
 
 import colors from '../../constants/colors';
 
@@ -19,7 +20,8 @@ const ForwardButton: React.FC<TouchableOpacityProps> = props => {
         },
         props.style,
       ]}>
-      <Icon
+      <FontAwesome6
+        iconStyle="solid"
         name="chevron-right"
         color={colors.appWhite}
         size={25}

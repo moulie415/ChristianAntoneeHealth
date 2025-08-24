@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
 
@@ -19,7 +19,7 @@ const MoreIcon: React.FC<{
   );
   return (
     <>
-      <Icon name="ellipsis-h" size={size} color={color} />
+      <FontAwesome6 name="ellipsis" iconStyle="solid" size={size} color={color} />
       {profile.premium && count > 0 && (
         <View
           style={{

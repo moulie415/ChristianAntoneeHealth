@@ -2,7 +2,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import React, {useRef, useState} from 'react';
 import {Alert, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
@@ -115,7 +115,7 @@ const Workout: React.FC<WorkoutProps> = ({
               right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={20} />
+            <FontAwesome6 iconStyle="solid" name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -169,7 +169,7 @@ const Workout: React.FC<WorkoutProps> = ({
               right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={20} />
+            <FontAwesome6 iconStyle="solid" name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -224,7 +224,7 @@ const Workout: React.FC<WorkoutProps> = ({
               right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={20} />
+            <FontAwesome6 iconStyle="solid" name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -277,7 +277,7 @@ const Workout: React.FC<WorkoutProps> = ({
               right: 20,
               justifyContent: 'center',
             }}>
-            <Icon name="chevron-right" color="#fff" size={20} />
+            <FontAwesome6 iconStyle="solid" name="chevron-right" color="#fff" size={20} />
           </View>
         </TouchableOpacity>
         <Button

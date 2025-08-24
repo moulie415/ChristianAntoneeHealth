@@ -151,6 +151,7 @@ const Login: React.FC<{
           <Button
             onPress={signInFacebook}
             disabled={disabled}
+            iconStyle="brand"
             icon="facebook"
             text="Continue with Facebook"
             overrideCasing

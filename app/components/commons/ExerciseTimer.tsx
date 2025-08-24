@@ -8,7 +8,7 @@ import {
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import PagerView from 'react-native-pager-view';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
@@ -113,7 +113,7 @@ const ExerciseTimer: React.FC<{
                     justifyContent: 'center',
                     marginBottom: 5,
                   }}>
-                  <Icon color={colors.appWhite} size={15} name="dumbbell" />
+                  <FontAwesome6 iconStyle="solid" color={colors.appWhite} size={15} name="dumbbell" />
                   <Text
                     style={{
                       fontWeight: 'bold',
@@ -128,7 +128,8 @@ const ExerciseTimer: React.FC<{
               )}
 
               {!finished && !hideTimer && (
-                <Icon
+                <FontAwesome6
+                  iconStyle="solid"
                   name={timerPaused ? 'play' : 'pause'}
                   color={colors.appWhite}
                   size={25}

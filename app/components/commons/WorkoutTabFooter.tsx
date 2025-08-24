@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import colors from '../../constants/colors';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import Exercise from '../../types/Exercise';
 import moment from 'moment';
 
@@ -54,7 +54,8 @@ const WorkoutTabFooter: React.FC<{
             onTimerPaused && onTimerPaused(!timerPaused);
             setTimerPaused(!timerPaused);
           }}>
-          <Icon
+          <FontAwesome6
+            iconStyle="solid"
             name={timerPaused ? 'play' : 'pause'}
             size={20}
             color={colors.appWhite}

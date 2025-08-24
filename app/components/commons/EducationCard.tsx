@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import {Dimensions, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
@@ -55,7 +55,8 @@ const EducationCard: React.FC<{
             marginBottom: -1,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
+            <FontAwesome6
+              iconStyle="solid"
               name="book-open"
               color={colors.appWhite}
               size={30}
@@ -125,7 +126,7 @@ const EducationCard: React.FC<{
             top: 15,
             right: 15,
           }}>
-          <Icon name="lock" size={20} color={colors.appWhite} />
+          <FontAwesome6 iconStyle="solid" name="lock" size={20} color={colors.appWhite} />
         </View>
       )}
     </TouchableOpacity>

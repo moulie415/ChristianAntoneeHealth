@@ -207,6 +207,8 @@ const App: React.FC = () => {
     });
   }, []);
 
+  console.log('test');
+
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>

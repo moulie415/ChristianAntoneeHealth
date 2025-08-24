@@ -9,7 +9,8 @@ import Modal from './Modal';
 import colors from '../../constants/colors';
 import FastImageAnimated from './FastImageAnimated';
 import Text from './Text';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+
 
 const ConnectedIcon: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const ConnectedIcon: React.FC = () => {
         height: 20,
         borderRadius: 10,
       }}>
-      <Icon name="check" color={colors.appWhite} />
+      <FontAwesome6 name="check" color={colors.appWhite} iconStyle="solid" />
     </View>
   );
 };

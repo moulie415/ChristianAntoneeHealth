@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {goBack} from '../../RootNavigation';
 import colors from '../../constants/colors';
 
@@ -19,7 +19,7 @@ const ModalExitButton = () => {
         right: 20,
         position: 'absolute',
       }}>
-      <Icon name="xmark" color={colors.appWhite} size={25} />
+      <FontAwesome6 iconStyle="solid" name="xmark" color={colors.appWhite} size={25} />
     </TouchableOpacity>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 import {LeaderboardItem} from '../../../types/Shared';
 import Avatar from '../../commons/Avatar';
@@ -31,7 +31,8 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
         <>
           <View>
             {item.rank === 1 && (
-              <Icon
+              <FontAwesome6
+                iconStyle="solid"
                 name="crown"
                 style={{alignSelf: 'center'}}
                 size={25}

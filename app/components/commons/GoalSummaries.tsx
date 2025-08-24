@@ -5,7 +5,7 @@ import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import PagerView from 'react-native-pager-view';
 import {SvgProps} from 'react-native-svg';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
@@ -176,7 +176,8 @@ const GoalSummaries: React.FC<{
       title: `${workoutLevelTitleString} workouts`,
       key: 'workoutLevel',
       icon: () => (
-        <Icon
+        <FontAwesome6
+          iconStyle="solid"
           name="gauge-high"
           size={25}
           color={colors.button}
@@ -270,7 +271,8 @@ const GoalSummaries: React.FC<{
               <GoalCircle
                 title="Steps"
                 icon={() => (
-                  <Icon
+                  <FontAwesome6
+                    iconStyle="solid"
                     name="shoe-prints"
                     size={25}
                     color={colors.button}
@@ -291,7 +293,8 @@ const GoalSummaries: React.FC<{
               <GoalCircle
                 title="Workout streak"
                 icon={() => (
-                  <Icon
+                  <FontAwesome6
+                    iconStyle="solid"
                     name="bolt"
                     size={25}
                     color={colors.button}

@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Color from 'color';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from './App';
 import LeaderboardTabIcon from './LeaderboardTabIcon';
 import PlanTabIcon from './PlanTabIcon';
@@ -35,11 +35,12 @@ const Tabs: React.FC = () => {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
-            <Icon
+            <FontAwesome6
               style={{width: 35, alignSelf: 'center'}}
               color={color}
               size={size}
               name="house"
+              iconStyle="solid"
             />
           ),
           headerShown: false,
@@ -69,11 +70,12 @@ const Tabs: React.FC = () => {
         options={{
           tabBarLabel: 'Workout',
           tabBarIcon: ({color, size}) => (
-            <Icon
+            <FontAwesome6
               style={{width: 35, alignSelf: 'center'}}
               color={color}
               size={size}
               name="dumbbell"
+              iconStyle="solid"
             />
           ),
           headerShown: false,

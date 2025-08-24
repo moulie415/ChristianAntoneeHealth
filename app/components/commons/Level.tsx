@@ -1,4 +1,4 @@
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {View} from 'react-native';
 import {Level} from '../../types/Shared';
@@ -7,7 +7,7 @@ import LevelIconProps from '../../types/commons/LevelIcon';
 
 const LevelIcon: React.FC<LevelIconProps> = ({level, size}) => {
   const star = (
-    <Icon name="star" solid color={colors.appBlue} size={size || 12} />
+    <FontAwesome6 name="star" iconStyle="solid" color={colors.appBlue} size={size || 12} />
   );
   if (
     !level ||

@@ -2,8 +2,7 @@ import React, {ReactNode, useState} from 'react';
 import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {TextInputProps} from 'react-native';
 import colors from '../../constants/colors';
-
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 
 interface Props extends TextInputProps {
   secure?: boolean;
@@ -55,10 +54,10 @@ const Input: React.FC<Props> = props => {
             left: 0,
             width: 30,
           }}>
-          <Icon
-            name={props.icon}
+          <FontAwesome6
+            name={props.icon as any}
             color={'#CECECE'}
-            solid
+            iconStyle="solid"
             size={props.iconSize || 15}
           />
         </View>
@@ -81,7 +80,7 @@ const Input: React.FC<Props> = props => {
               left: 10,
             }}
             onPress={() => setSecure(!secure)}>
-            <Icon name="lock" color={'#CECECE'} size={15} />
+            <FontAwesome6 iconStyle="solid" name="lock" color={'#CECECE'} size={15} />
           </TouchableOpacity>
         </View>
       )}
@@ -103,7 +102,7 @@ const Input: React.FC<Props> = props => {
               left: 10,
             }}
             onPress={() => setSecure(!secure)}>
-            <Icon
+            <FontAwesome6
               name={secure ? 'eye' : 'eye-slash'}
               color={'#CECECE'}
               size={20}

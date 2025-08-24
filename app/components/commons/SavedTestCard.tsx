@@ -7,7 +7,7 @@ import Test from '../../types/Test';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
@@ -53,7 +53,7 @@ const SavedTestCard: React.FC<{
                 bottom: 0,
                 margin: 10,
               }}>
-              <Icon name="lock" color="#fff" size={30} />
+              <FontAwesome6 iconStyle="solid" name="lock" color="#fff" size={30} />
             </View>
           )}
 

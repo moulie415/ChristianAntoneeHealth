@@ -5,7 +5,7 @@ import BackButton from './BackButton';
 
 import {DrawerActions} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
@@ -78,7 +78,8 @@ const Header: React.FC<{
           }}
           onPress={() => navigationRef.dispatch(DrawerActions.openDrawer())}
           style={{padding: 20}}>
-          <Icon
+          <FontAwesome6
+            iconStyle="solid"
             name="bars"
             color={colors.appWhite}
             size={25}

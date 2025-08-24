@@ -4,7 +4,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, View, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TabBar, TabView} from 'react-native-tab-view';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from './App';
 import Header from './components/commons/Header';
 import Text from './components/commons/Text';
@@ -140,7 +140,8 @@ const SavedItemsTabs: React.FC<{
                           {props.route?.title}
                         </Text>
                         {needsPremium && (
-                          <Icon
+                          <FontAwesome6
+                            iconStyle="solid"
                             style={{marginLeft: 5}}
                             name="lock"
                             color={colors.appWhite}
