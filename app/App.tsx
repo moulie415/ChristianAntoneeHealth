@@ -242,7 +242,7 @@ const App: React.FC = () => {
                     }}
                     resizeMode="contain"
                   /> : <Image
-                    source={require('./images/splash.png')}
+                    source={require('./images/splash_fixed.png')}
                     style={{
                       height,
                       width: '75%',
