@@ -11,6 +11,7 @@ import 'react-native-gesture-handler';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {IMessage} from 'react-native-gifted-chat';
 import Purchases, {LOG_LEVEL} from 'react-native-purchases';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
 import {persistStore} from 'redux-persist';
@@ -156,20 +157,16 @@ export type StackParamList = {
   Offline: undefined;
   UpdatePrompt: undefined;
   TargetModal: undefined;
-
 };
 
-const reactNavigationIntegration =  Sentry.reactNavigationIntegration();
-
+const reactNavigationIntegration = Sentry.reactNavigationIntegration();
 
 Sentry.init({
   environment: __DEV__ ? 'development' : 'production',
   dsn: 'https://451fc54217394f32ae7fa2e15bc1280e@o982587.ingest.sentry.io/5937794',
   tracesSampleRate: 1.0,
   enableUserInteractionTracing: true,
-  integrations: [
-    reactNavigationIntegration,
-  ],
+  integrations: [reactNavigationIntegration],
 });
 
 const App: React.FC = () => {
@@ -212,51 +209,55 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <NavigationContainer
-          ref={navigationRef}
-          onReady={() => {
-            sagaMiddleware.run(rootSaga);
-            SplashScreen.hide();
-            // Register the navigation container with the instrumentation
-            reactNavigationIntegration.registerNavigationContainer(navigationRef);
-          }}>
-          <DrawerNavigator />
-        </NavigationContainer>
-        {showSplash && (
-          <View
-            style={{
-              backgroundColor: colors.appWhite,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+        <SafeAreaProvider>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              sagaMiddleware.run(rootSaga);
+              SplashScreen.hide();
+              // Register the navigation container with the instrumentation
+              reactNavigationIntegration.registerNavigationContainer(
+                navigationRef,
+              );
             }}>
-            {Platform.OS === 'ios' ? (
-              <Image
-                source={require('./images/splash.gif')}
-                style={{
-                  height,
-                  width: '75%',
-                  backgroundColor: colors.appWhite,
-                  alignSelf: 'center',
-                }}
-                resizeMode="contain"
-              />
-            ) : (
-              <FastImage
-                source={require('./images/splash.gif')}
-                style={{
-                  height,
-                  width: '75%',
-                  backgroundColor: colors.appWhite,
-                  alignSelf: 'center',
-                }}
-                resizeMode="contain"
-              />
-            )}
-          </View>
-        )}
+            <DrawerNavigator />
+          </NavigationContainer>
+          {showSplash && (
+            <View
+              style={{
+                backgroundColor: colors.appWhite,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}>
+              {Platform.OS === 'ios' ? (
+                <Image
+                  source={require('./images/splash.gif')}
+                  style={{
+                    height,
+                    width: '75%',
+                    backgroundColor: colors.appWhite,
+                    alignSelf: 'center',
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <FastImage
+                  source={require('./images/splash.gif')}
+                  style={{
+                    height,
+                    width: '75%',
+                    backgroundColor: colors.appWhite,
+                    alignSelf: 'center',
+                  }}
+                  resizeMode="contain"
+                />
+              )}
+            </View>
+          )}
+        </SafeAreaProvider>
       </Provider>
     </PersistGate>
   );

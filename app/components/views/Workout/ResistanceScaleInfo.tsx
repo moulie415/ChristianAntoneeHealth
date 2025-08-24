@@ -1,5 +1,5 @@
-import {View} from 'react-native';
 import React from 'react';
+import {View} from 'react-native';
 import Text from '../../commons/Text';
 
 import Color from 'color';

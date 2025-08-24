@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
 import React, {ReactNode} from 'react';
@@ -9,7 +10,6 @@ import {getBuildNumber, getVersion} from 'react-native-device-info';
 import {LoginManager} from 'react-native-fbsdk-next';
 import Purchases from 'react-native-purchases';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
 import {navigationRef, resetToWelcome} from '../../../RootNavigation';
@@ -41,7 +41,12 @@ export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
           justifyContent: 'center',
           borderRadius: 5,
         }}>
-        <FontAwesome6 size={20} color={colors.appWhite} iconStyle="solid" name={item.icon as any} />
+        <FontAwesome6
+          size={20}
+          color={colors.appWhite}
+          iconStyle="solid"
+          name={item.icon as any}
+        />
       </View>
       <Text
         style={{

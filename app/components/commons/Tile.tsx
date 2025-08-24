@@ -1,5 +1,5 @@
-import {TouchableOpacity, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
+import {TouchableOpacity, ViewStyle} from 'react-native';
 import colors from '../../constants/colors';
 
 const Tile: React.FC<{

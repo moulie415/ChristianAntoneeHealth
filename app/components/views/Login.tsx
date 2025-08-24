@@ -8,6 +8,7 @@ import {Image, Platform, StyleSheet, View} from 'react-native';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
@@ -21,7 +22,6 @@ import {
 import AbsoluteSpinner from '../commons/AbsoluteSpinner';
 import Button from '../commons/Button';
 import Text from '../commons/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Login'>;

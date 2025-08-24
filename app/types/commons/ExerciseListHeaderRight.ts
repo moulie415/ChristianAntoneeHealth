@@ -9,4 +9,4 @@ type ExerciseListNavigationProp = NativeStackNavigationProp<
 export default interface ExerciseListHeaderRightProps {
   workout: Exercise[];
   navigation: ExerciseListNavigationProp;
-};
+}

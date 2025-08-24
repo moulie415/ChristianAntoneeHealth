@@ -1,3 +1,18 @@
+import {Slider} from '@miblanchard/react-native-slider';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import type {ReactElement} from 'react';
+import React, {Component} from 'react';
+import {
+  PermissionsAndroid,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import type {
+  AudioSet,
+  PlayBackType,
+  RecordBackType,
+} from 'react-native-audio-recorder-player';
 import AudioRecorderPlayer, {
   AVEncoderAudioQualityIOSType,
   AVEncodingOption,
@@ -5,30 +20,15 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
   OutputFormatAndroidType,
 } from 'react-native-audio-recorder-player';
-import type {
-  AudioSet,
-  PlayBackType,
-  RecordBackType,
-} from 'react-native-audio-recorder-player';
-import {
-  PermissionsAndroid,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {Component} from 'react';
-import type {ReactElement} from 'react';
+import RNFS from 'react-native-fs';
+import Snackbar from 'react-native-snackbar';
+import uuid from 'react-native-uuid';
 import colors from '../../../../constants/colors';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import {logError} from '../../../../helpers/error';
+import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';
 import RecordingIcon from './RecordingIcon';
 import RecordingIndicator from './RecordingIndicator';
-import RNFS from 'react-native-fs';
-import uuid from 'react-native-uuid';
-import {Slider} from '@miblanchard/react-native-slider';
-import mmss from '../../../../helpers/mmss';
-import {logError} from '../../../../helpers/error';
-import Snackbar from 'react-native-snackbar';
 
 interface State {
   recordSecs: number;

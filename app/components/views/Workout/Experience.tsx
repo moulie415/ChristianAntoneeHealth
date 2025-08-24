@@ -1,8 +1,9 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
@@ -11,7 +12,6 @@ import {Level} from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Experience: React.FC<{
   setLevelAction: (level: Level) => void;

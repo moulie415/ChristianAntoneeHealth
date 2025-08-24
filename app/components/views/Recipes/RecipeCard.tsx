@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 import {useAppSelector} from '../../../hooks/redux';
 import FastImageAnimated from '../../commons/FastImageAnimated';
@@ -61,7 +61,12 @@ const RecipeCard: React.FC<{
               bottom: 15,
               right: 15,
             }}>
-            <FontAwesome6 iconStyle="solid" name="lock" color={colors.appWhite} size={20} />
+            <FontAwesome6
+              iconStyle="solid"
+              name="lock"
+              color={colors.appWhite}
+              size={20}
+            />
           </View>
         )}
       </FastImageAnimated>

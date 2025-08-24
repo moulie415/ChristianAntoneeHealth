@@ -1,5 +1,6 @@
 import DatePicker from '@react-native-community/datetimepicker';
 import storage from '@react-native-firebase/storage';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {useFocusEffect} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
@@ -26,7 +27,6 @@ import ImageView from 'react-native-image-viewing';
 import {ImageSource} from 'react-native-image-viewing/dist/@types';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import {
@@ -337,7 +337,12 @@ const ProfileComponent: React.FC<{
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <FontAwesome6 iconStyle="solid" size={15} name="pencil" color={colors.appBlue} />
+                <FontAwesome6
+                  iconStyle="solid"
+                  size={15}
+                  name="pencil"
+                  color={colors.appBlue}
+                />
               </View>
             </TouchableOpacity>
           </View>

@@ -3,8 +3,8 @@ import React from 'react';
 import {ImageStyle, View} from 'react-native';
 import Image, {ImageStyle as FastImageStyle} from 'react-native-fast-image';
 
-import colors from '../../constants/colors';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import colors from '../../constants/colors';
 import {useAppSelector} from '../../hooks/redux';
 
 const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
@@ -21,7 +21,12 @@ const AdminCheck: React.FC<{size?: number}> = ({size = 30}) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <FontAwesome6 iconStyle="solid" size={size / 3.5} name="shield-halved" color={colors.appWhite} />
+      <FontAwesome6
+        iconStyle="solid"
+        size={size / 3.5}
+        name="shield-halved"
+        color={colors.appWhite}
+      />
     </View>
   );
 };

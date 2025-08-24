@@ -7,10 +7,10 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
 
-import Header from '../../commons/Header';
-import Text from '../../commons/Text';
 import LinearGradient from 'react-native-linear-gradient';
 import {FONTS_SIZES} from '../../../constants';
+import Header from '../../commons/Header';
+import Text from '../../commons/Text';
 
 const TILE_HEIGHT = Dimensions.get('window').height / 5;
 

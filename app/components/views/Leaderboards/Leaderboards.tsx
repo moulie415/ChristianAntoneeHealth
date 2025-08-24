@@ -1,9 +1,9 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {useState} from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TabBar, TabView} from 'react-native-tab-view';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 import {useDebouncedEffect} from '../../../hooks/UseDebouncedEffect';
 import useThrottle from '../../../hooks/UseThrottle';
@@ -118,7 +118,11 @@ const Leaderboards = () => {
                               flexDirection: 'row',
                               alignItems: 'center',
                             }}>
-                            <FontAwesome6 iconStyle="solid" name="bolt" color={colors.appWhite} />
+                            <FontAwesome6
+                              iconStyle="solid"
+                              name="bolt"
+                              color={colors.appWhite}
+                            />
                             <Text
                               style={{
                                 color: colors.appWhite,

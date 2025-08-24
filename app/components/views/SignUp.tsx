@@ -3,6 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {Alert, Platform, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';
@@ -12,7 +13,6 @@ import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
 import Text from '../commons/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SignUp: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SignUp'>;

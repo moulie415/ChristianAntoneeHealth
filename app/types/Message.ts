@@ -15,4 +15,4 @@ export default interface Message extends IMessage {
   document?: string;
   mimeType?: string;
   filename?: string;
-};
+}

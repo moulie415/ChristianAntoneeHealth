@@ -1,10 +1,10 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {useCallback} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import Image from 'react-native-fast-image';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
 import colors from '../../../constants/colors';
@@ -77,7 +77,12 @@ const ReviewExercises: React.FC<{
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <FontAwesome6 iconStyle="solid" name="plus" color="#fff" size={25} />
+              <FontAwesome6
+                iconStyle="solid"
+                name="plus"
+                color="#fff"
+                size={25}
+              />
             </View>
             <Text
               style={{

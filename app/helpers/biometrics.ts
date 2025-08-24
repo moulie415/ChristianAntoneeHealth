@@ -1,25 +1,21 @@
 import moment from 'moment';
-import {
-  NativeModules,
-  Platform,
-} from 'react-native';
+import {NativeModules, Platform} from 'react-native';
 // import {getApiLevel} from 'react-native-device-info';
 import AppleHealthKit from 'react-native-health';
+import {
+  RecordingMethod,
+  SdkAvailabilityStatus,
+  getSdkStatus,
+  initialize,
+  insertRecords,
+  readRecords,
+  requestPermission,
+} from 'react-native-health-connect';
 import {getIsPaired} from 'react-native-watch-connectivity';
 import {healthConnectPermissions, healthKitOptions} from '../constants/strings';
 import {Gender, Sample, WatchWorkoutResponse} from '../types/Shared';
 import {getSamples, saveSample} from './api';
 import {logError} from './error';
-import {
-  getSdkStatus,
-  SdkAvailabilityStatus,
-  initialize,
-  readRecords,
-  insertRecords,
-  requestPermission,
-  RecordingMethod,
-} from 'react-native-health-connect';
-
 
 const {WatchWorkoutModule} = NativeModules;
 
@@ -38,8 +34,6 @@ export const isAvailable = async () => {
   const status = await getSdkStatus();
   return status === SdkAvailabilityStatus.SDK_AVAILABLE;
 };
-
-
 
 const round = (num: number) => {
   return Math.round(num * 100) / 100;
@@ -89,7 +83,7 @@ export const getHeight = async (): Promise<number | undefined> => {
       return height;
     }
 
-    const {records} = await  readRecords('Height',{
+    const {records} = await readRecords('Height', {
       timeRangeFilter: {
         operator: 'between',
         startTime: moment().subtract(30, 'days').startOf('day').toISOString(),
@@ -131,7 +125,7 @@ export const getWeight = async (): Promise<number | undefined> => {
       return weight;
     }
 
-    const {records} = await  readRecords('Weight',{
+    const {records} = await readRecords('Weight', {
       timeRangeFilter: {
         operator: 'between',
         startTime: moment().subtract(30, 'days').startOf('day').toISOString(),
@@ -187,23 +181,27 @@ export const getStepSamples = async (
       return samples;
     }
 
-        const {records} = await  readRecords('Steps',{
-          timeRangeFilter: {
-            operator: 'between',
-            startTime: startDate.toISOString(),
-            endTime: endDate.toISOString(),
-          },
-        });
-
-
-    return records.filter(record => record.metadata?.clientRecordVersion !== RecordingMethod.RECORDING_METHOD_MANUAL_ENTRY).map(record => {
-            return {
-        value: record.count,
-        endDate: record.endTime,
-        startDate: record.startTime,
-      };
+    const {records} = await readRecords('Steps', {
+      timeRangeFilter: {
+        operator: 'between',
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      },
     });
 
+    return records
+      .filter(
+        record =>
+          record.metadata?.clientRecordVersion !==
+          RecordingMethod.RECORDING_METHOD_MANUAL_ENTRY,
+      )
+      .map(record => {
+        return {
+          value: record.count,
+          endDate: record.endTime,
+          startDate: record.startTime,
+        };
+      });
   } catch (e) {
     logError(e);
     return [];
@@ -247,7 +245,7 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       return samples;
     }
 
-    const {records} = await  readRecords('Steps',{
+    const {records} = await readRecords('Steps', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate,
@@ -262,7 +260,6 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
         startDate: record.startTime,
       };
     });
-
   } catch (e) {
     logError(e);
     return [];
@@ -295,7 +292,7 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
       return samples;
     }
 
-    const {records} = await  readRecords('ExerciseSession',{
+    const {records} = await readRecords('ExerciseSession', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -369,18 +366,23 @@ export const saveWeight = async (uid: string, value?: number) => {
 
     if (Platform.OS === 'ios') {
       return new Promise((resolve, reject) => {
-          AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
-            if (e) {
-              reject(e);
-            } else {
-              resolve(result);
-            }
-          });
+        AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
+          if (e) {
+            reject(e);
+          } else {
+            resolve(result);
+          }
         });
+      });
     }
 
-    await insertRecords([{recordType: 'Weight', weight: { value, unit: 'kilograms'}, time: new Date().toISOString() }]);
-
+    await insertRecords([
+      {
+        recordType: 'Weight',
+        weight: {value, unit: 'kilograms'},
+        time: new Date().toISOString(),
+      },
+    ]);
   } catch (e) {
     logError(e);
   }
@@ -396,21 +398,24 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
-        if (e) {
-          reject(e);
-        } else {
-          resolve(result);
-        }
+      return new Promise((resolve, reject) => {
+        AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
+          if (e) {
+            reject(e);
+          } else {
+            resolve(result);
+          }
+        });
       });
-      });
-
     }
 
-    await insertRecords([{recordType: 'Height', height: { value: value / 100, unit: 'meters'}, time: new Date().toISOString() }]);
-
-
+    await insertRecords([
+      {
+        recordType: 'Height',
+        height: {value: value / 100, unit: 'meters'},
+        time: new Date().toISOString(),
+      },
+    ]);
   } catch (e) {
     logError(e);
   }
@@ -444,7 +449,7 @@ export const getHeartRateSamples = async (
       return samples;
     }
 
-    const {records} = await  readRecords('HeartRate',{
+    const {records} = await readRecords('HeartRate', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -452,14 +457,18 @@ export const getHeartRateSamples = async (
       },
     });
 
-
     return records.reduce((acc: Sample[], cur) => {
-      return [...acc, ...cur.samples.map(sample => {
-        return { value: sample.beatsPerMinute, startDate: sample.time, endDate: sample.time};
-      })];
+      return [
+        ...acc,
+        ...cur.samples.map(sample => {
+          return {
+            value: sample.beatsPerMinute,
+            startDate: sample.time,
+            endDate: sample.time,
+          };
+        }),
+      ];
     }, []);
-
-
   } catch (e) {
     logError(e);
     return [];
@@ -500,7 +509,7 @@ export const getCalorieSamples = async (
       return samples;
     }
 
-    const {records} = await  readRecords('ActiveCaloriesBurned',{
+    const {records} = await readRecords('ActiveCaloriesBurned', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -508,16 +517,13 @@ export const getCalorieSamples = async (
       },
     });
 
-
-    return records.map((record) => {
+    return records.map(record => {
       return {
         startDate: record.startTime,
         endDate: record.endTime,
         value: record.energy.inKilocalories,
-
       };
     });
-
   } catch (e) {
     logError(e);
     return [];

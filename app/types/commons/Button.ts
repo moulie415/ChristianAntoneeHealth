@@ -1,4 +1,4 @@
-import {StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export default interface ButtonProps {
   color?: string;

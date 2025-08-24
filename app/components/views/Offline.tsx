@@ -1,9 +1,9 @@
 import auth from '@react-native-firebase/auth';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {Alert, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {useAppDispatch} from '../../hooks/redux';

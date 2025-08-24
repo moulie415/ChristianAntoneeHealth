@@ -8,4 +8,4 @@ export default interface AccountDetailsProps {
   setConfirmPassword: (password: string) => void;
   name: string;
   setName: (name: string) => void;
-};
+}

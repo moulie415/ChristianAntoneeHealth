@@ -1,9 +1,9 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
 import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
@@ -127,7 +127,11 @@ const ShareModal: React.FC<{
                     color={colors.appBlue}
                   />
                 ) : (
-                  <FontAwesome6 size={20} name="circle" color={colors.appBlue} />
+                  <FontAwesome6
+                    size={20}
+                    name="circle"
+                    color={colors.appBlue}
+                  />
                 )
               }
             />

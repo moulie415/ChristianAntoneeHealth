@@ -1,8 +1,8 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {navigationRef} from '../../RootNavigation';
 import colors from '../../constants/colors';
 import {PlanSleep} from '../../types/Shared';

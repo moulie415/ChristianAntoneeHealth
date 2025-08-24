@@ -22,6 +22,7 @@ import {
 } from 'react-native-device-info';
 import {openInbox} from 'react-native-email-link';
 import RNFS from 'react-native-fs';
+import {openHealthConnectSettings} from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
@@ -112,7 +113,6 @@ import {checkWorkoutStreak, getAllExercises} from './exercises';
 import {checkStepsCalories} from './leaderboards';
 import {getQuickRoutines} from './quickRoutines';
 import {getSettings} from './settings';
-import { openHealthConnectSettings } from 'react-native-health-connect';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -212,21 +212,21 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
   try {
     try {
       const {uid} = yield select((state: RootState) => state.profile.profile);
-        if (weight) {
-          yield call(saveWeight, uid, weight);
-        }
-        if (height) {
-          yield call(saveHeight, uid, height);
-        }
-        if (bodyFatPercentage !== undefined) {
-          yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
-        }
-        if (muscleMass !== undefined) {
-          yield call(api.saveSample, 'muscleMass', muscleMass, uid);
-        }
-        if (boneMass !== undefined) {
-          yield call(api.saveSample, 'boneMass', boneMass, uid);
-        }
+      if (weight) {
+        yield call(saveWeight, uid, weight);
+      }
+      if (height) {
+        yield call(saveHeight, uid, height);
+      }
+      if (bodyFatPercentage !== undefined) {
+        yield call(saveBodyFatPercentage, bodyFatPercentage, uid);
+      }
+      if (muscleMass !== undefined) {
+        yield call(api.saveSample, 'muscleMass', muscleMass, uid);
+      }
+      if (boneMass !== undefined) {
+        yield call(api.saveSample, 'boneMass', boneMass, uid);
+      }
     } catch (e) {
       Alert.alert(
         'Error saving body measurement',

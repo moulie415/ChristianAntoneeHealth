@@ -1,16 +1,15 @@
-import {View, Linking, TouchableOpacity, Dimensions} from 'react-native';
-import React from 'react';
-import Button from './Button';
-import {RootState} from '../../App';
-import {connect} from 'react-redux';
-import Config from 'react-native-config';
-import {Profile} from '../../types/Shared';
-import Modal from './Modal';
-import colors from '../../constants/colors';
-import FastImageAnimated from './FastImageAnimated';
-import Text from './Text';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-
+import React from 'react';
+import {Dimensions, Linking, TouchableOpacity, View} from 'react-native';
+import Config from 'react-native-config';
+import {connect} from 'react-redux';
+import {RootState} from '../../App';
+import colors from '../../constants/colors';
+import {Profile} from '../../types/Shared';
+import Button from './Button';
+import FastImageAnimated from './FastImageAnimated';
+import Modal from './Modal';
+import Text from './Text';
 
 const ConnectedIcon: React.FC = () => {
   return (

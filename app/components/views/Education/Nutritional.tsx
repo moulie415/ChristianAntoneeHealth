@@ -1,9 +1,8 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
 import {connect} from 'react-redux';
-import {StackParamList} from '../../../App';
+import {RootState, StackParamList} from '../../../App';
 import Education, {Category} from '../../../types/Education';
-import {RootState} from '../../../App';
 import ArticleList from './ArticleList';
 
 const Nutritional: React.FC<{
@@ -11,9 +10,9 @@ const Nutritional: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
 }> = ({education, navigation}) => {
   const filtered = useMemo(() => {
-    return Object.values(education).filter(
-      e => e.category === Category.NUTRITIONAL,
-    ).filter(e => !e.hidden);
+    return Object.values(education)
+      .filter(e => e.category === Category.NUTRITIONAL)
+      .filter(e => !e.hidden);
   }, [education]);
 
   return <ArticleList filtered={filtered} navigation={navigation} />;

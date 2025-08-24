@@ -1,6 +1,6 @@
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
-import React from 'react';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import React from 'react';
+import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import colors from '../../constants/colors';
 
 const BackButton: React.FC<TouchableOpacityProps> = props => {

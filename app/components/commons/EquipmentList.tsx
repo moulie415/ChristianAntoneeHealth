@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import colors from '../../constants/colors';
 import {equipmentItemReadableString} from '../../helpers/exercises';
 import {useAppSelector} from '../../hooks/redux';

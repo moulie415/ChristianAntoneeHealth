@@ -1,8 +1,8 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
 import {capitalizeFirstLetter} from '../../helpers';

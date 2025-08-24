@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {ReactNode} from 'react';
 import {TextStyle, TouchableOpacity, TouchableOpacityProps} from 'react-native';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../constants/colors';
 import Spinner from './Spinner';
 import Text from './Text';
@@ -66,8 +66,7 @@ const Button: React.FC<Props> = ({
               color={iconColor || colors.appWhite}
               size={iconSize || 20}
               style={{marginRight: 10}}
-              iconStyle={iconStyle as any || 'solid'}
-
+              iconStyle={(iconStyle as any) || 'solid'}
             />
           ) : (
             icon

@@ -1,10 +1,10 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
 import {RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Image from 'react-native-fast-image';
 import {FlatList} from 'react-native-gesture-handler';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../../App';
 import colors from '../../../constants/colors';

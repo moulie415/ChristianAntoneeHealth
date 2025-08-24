@@ -2,9 +2,9 @@ import React from 'react';
 import {Dimensions, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {Source} from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';
 import {Profile} from '../../types/Shared';
@@ -85,7 +85,12 @@ const HomeCard: React.FC<{
                 bottom: 15,
                 right: 15,
               }}>
-              <FontAwesome6 iconStyle="solid" name="lock" size={20} color={colors.appWhite} />
+              <FontAwesome6
+                iconStyle="solid"
+                name="lock"
+                size={20}
+                color={colors.appWhite}
+              />
             </View>
           )}
         </LinearGradient>

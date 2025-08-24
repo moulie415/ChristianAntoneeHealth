@@ -15,9 +15,9 @@ const General: React.FC<{
     getEducationAction();
   }, [getEducationAction]);
   const filtered = useMemo(() => {
-    return Object.values(education).filter(
-      e => e.category === Category.GENERAL,
-    ).filter(e => !e.hidden);
+    return Object.values(education)
+      .filter(e => e.category === Category.GENERAL)
+      .filter(e => !e.hidden);
   }, [education]);
 
   return <ArticleList filtered={filtered} navigation={navigation} />;

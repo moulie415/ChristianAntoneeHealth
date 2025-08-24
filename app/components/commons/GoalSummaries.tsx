@@ -1,3 +1,4 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -5,7 +6,6 @@ import {View} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import PagerView from 'react-native-pager-view';
 import {SvgProps} from 'react-native-svg';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState, StackParamList} from '../../App';
 import colors from '../../constants/colors';

@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {Linking, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 
 import Config from 'react-native-config';

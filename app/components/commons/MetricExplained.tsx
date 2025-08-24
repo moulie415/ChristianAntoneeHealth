@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import * as _ from 'lodash';
 import React from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import {navigate} from '../../RootNavigation';
@@ -67,7 +67,12 @@ const MetricExplained: React.FC<{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <FontAwesome6 iconStyle="solid" name="chart-line" color={colors.appWhite} size={16} />
+              <FontAwesome6
+                iconStyle="solid"
+                name="chart-line"
+                color={colors.appWhite}
+                size={16}
+              />
             </TouchableOpacity>
             {onPress && (
               <TouchableOpacity
@@ -89,7 +94,12 @@ const MetricExplained: React.FC<{
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <FontAwesome6 iconStyle="solid" name="pencil" color={colors.appWhite} size={16} />
+                <FontAwesome6
+                  iconStyle="solid"
+                  name="pencil"
+                  color={colors.appWhite}
+                  size={16}
+                />
               </TouchableOpacity>
             )}
           </View>
@@ -203,7 +213,12 @@ const MetricExplained: React.FC<{
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <FontAwesome6 iconStyle="solid" name="lock" color={colors.appWhite} size={30} />
+          <FontAwesome6
+            iconStyle="solid"
+            name="lock"
+            color={colors.appWhite}
+            size={30}
+          />
         </TouchableOpacity>
       )}
     </Tile>

@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {Fragment} from 'react';
 import {View} from 'react-native';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../constants/colors';
 
 import {equipmentItemReadableString} from '../../../helpers/exercises';
@@ -36,7 +36,11 @@ const EquipmentMenu: React.FC<{
                     color={colors.appBlue}
                   />
                 ) : (
-                  <FontAwesome6 name="circle" size={20} color={colors.appBlue} />
+                  <FontAwesome6
+                    name="circle"
+                    size={20}
+                    color={colors.appBlue}
+                  />
                 )
               }
             />

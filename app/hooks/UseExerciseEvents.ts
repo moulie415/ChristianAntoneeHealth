@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {ExerciseEvent} from '../types/Shared';
 const useExerciseEvents = (index: number) => {
   const [exerciseEvents, setExerciseEvents] = useState<ExerciseEvent[]>([]);

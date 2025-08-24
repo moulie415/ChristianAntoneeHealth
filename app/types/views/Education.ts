@@ -8,4 +8,4 @@ type EducationNavigationProp = NativeStackNavigationProp<
 
 export default interface EducationProps {
   navigation: EducationNavigationProp;
-};
+}

@@ -1,10 +1,10 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, View, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TabBar, TabView} from 'react-native-tab-view';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {StackParamList} from './App';
 import Header from './components/commons/Header';
 import Text from './components/commons/Text';

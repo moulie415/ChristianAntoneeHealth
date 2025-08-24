@@ -3,9 +3,9 @@ import {TouchableOpacity, View, ViewStyle} from 'react-native';
 import {navigationRef} from '../../RootNavigation';
 import BackButton from './BackButton';
 
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {DrawerActions} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';

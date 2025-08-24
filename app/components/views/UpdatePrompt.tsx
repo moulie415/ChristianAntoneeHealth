@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {Linking, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {STORE_LINK} from '../../constants';
 import colors from '../../constants/colors';
 import {useAppSelector} from '../../hooks/redux';

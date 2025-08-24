@@ -160,7 +160,7 @@ export const googleSignIn = async (
   handleAuthAction?: (user: FirebaseAuthTypes.User) => void,
 ) => {
   try {
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
 
     const signInResult = await GoogleSignin.signIn();
 
@@ -178,7 +178,10 @@ export const googleSignIn = async (
     }
     return credentials;
   } catch (e: any) {
-    if (e.code !== statusCodes.SIGN_IN_CANCELLED && e.message !== NO_ID_TOKEN_FOUND_ERROR) {
+    if (
+      e.code !== statusCodes.SIGN_IN_CANCELLED &&
+      e.message !== NO_ID_TOKEN_FOUND_ERROR
+    ) {
       if (e instanceof Error) {
         Alert.alert('Error', e.message);
         logError(e);

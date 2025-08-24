@@ -44,7 +44,6 @@ const ArticleList: React.FC<{
     <FlatList
       data={filtered}
       renderItem={({item}) => {
-
         return <EducationCard item={item} onPress={onPress} />;
       }}
     />

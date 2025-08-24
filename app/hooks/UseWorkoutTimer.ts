@@ -1,7 +1,7 @@
-import {useEffect, useRef, useState} from 'react';
 import moment from 'moment';
-import {useAppState} from './UseAppState';
+import {useEffect, useRef, useState} from 'react';
 import BackgroundTimer from 'react-native-background-timer';
+import {useAppState} from './UseAppState';
 
 const useWorkoutTimer = (delay: number, notStarted?: boolean) => {
   const savedCallback = useRef<() => void>();

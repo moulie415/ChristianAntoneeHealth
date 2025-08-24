@@ -61,4 +61,3 @@ export interface GarminActivityDetail {
     startTimeInSeconds: number;
   }[];
 }
-

@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
-import React, {useState} from 'react';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import React, {useState} from 'react';
 import {generateLink} from '../../../helpers/api';
 
 import {Share, StyleSheet, View} from 'react-native';

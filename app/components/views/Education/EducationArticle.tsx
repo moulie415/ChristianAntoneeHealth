@@ -1,17 +1,15 @@
 import {RouteProp} from '@react-navigation/native';
-import RenderHtml from 'react-native-render-html';
-import Image from 'react-native-fast-image';
 import React from 'react';
-import {ScrollView, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {useWindowDimensions, View} from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import {StackParamList} from '../../../App';
 
-import moment from 'moment';
-import {getEducationCategoryString} from '../../../helpers';
-import Text from '../../commons/Text';
-import Header from '../../commons/Header';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import colors from '../../../constants/colors';
 import {AnimatedScrollView} from '@kanelloc/react-native-animated-header-scroll-view';
+import moment from 'moment';
+import colors from '../../../constants/colors';
+import {getEducationCategoryString} from '../../../helpers';
+import Header from '../../commons/Header';
+import Text from '../../commons/Text';
 
 const EducationArticle: React.FC<{
   route: RouteProp<StackParamList, 'EducationArticle'>;

@@ -1,10 +1,10 @@
 import {Slider} from '@miblanchard/react-native-slider';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {IMessage} from 'react-native-gifted-chat';
 import SoundPlayer from 'react-native-sound-player';
 import Spinner from 'react-native-spinkit';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../../../constants/colors';
 import mmss from '../../../../helpers/mmss';
 import useInterval from '../../../../hooks/UseInterval';

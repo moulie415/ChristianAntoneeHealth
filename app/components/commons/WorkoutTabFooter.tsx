@@ -1,9 +1,9 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
-import colors from '../../constants/colors';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import Exercise from '../../types/Exercise';
 import moment from 'moment';
+import React from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import colors from '../../constants/colors';
+import Exercise from '../../types/Exercise';
 
 const WorkoutTabFooter: React.FC<{
   index: number;

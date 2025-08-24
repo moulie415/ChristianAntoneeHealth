@@ -3,6 +3,7 @@ import {Alert, View} from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import {StackParamList} from '../../App';
 import colors from '../../constants/colors';
@@ -10,7 +11,6 @@ import {useAppSelector} from '../../hooks/redux';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ChangePassword: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ChangePassword'>;

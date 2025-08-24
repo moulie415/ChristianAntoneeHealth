@@ -1,5 +1,5 @@
-import React from 'react';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import React from 'react';
 import colors from '../../constants/colors';
 import Text from './Text';
 

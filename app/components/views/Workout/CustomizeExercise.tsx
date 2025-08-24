@@ -80,7 +80,7 @@ const CustomizeExercise: React.FC<{
         }}>
         {exercise.name}
       </Text>
-     
+
       <Button
         text={
           workout.find(e => e.id === exercise.id)

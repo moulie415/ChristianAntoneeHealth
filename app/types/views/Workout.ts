@@ -20,4 +20,4 @@ export default interface WorkoutProps {
   equipment: Equipment[];
   warmUp: WarmUp[];
   coolDown: CoolDown[];
-};
+}

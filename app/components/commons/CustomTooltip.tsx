@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {
-  View,
-  TouchableOpacity,
-  ViewStyle,
-  StyleSheet,
   StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
-import Text from './Text';
 import colors from '../../constants/colors';
+import Text from './Text';
 
 interface Props {
   wrapperStyle?: StyleProp<ViewStyle>;
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.appBlue,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   bottomBar: {
     marginTop: 10,

@@ -50,7 +50,6 @@ const ExerciseVideo: React.FC<{
         }}
         style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
         resizeMode={ResizeMode.NONE}
-
         ref={ref}
         onError={e => console.error(e)}
         repeat

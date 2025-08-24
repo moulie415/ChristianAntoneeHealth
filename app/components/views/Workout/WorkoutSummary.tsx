@@ -10,10 +10,10 @@ import colors from '../../../constants/colors';
 import {useBackHandler} from '../../../hooks/UseBackHandler';
 import Exercise from '../../../types/Exercise';
 import {Profile} from '../../../types/Shared';
-import Button from '../../commons/Button';
-import WorkoutSummaryInfo from '../../commons/WorkoutSummaryInfo';
 import BackButton from '../../commons/BackButton';
+import Button from '../../commons/Button';
 import Text from '../../commons/Text';
+import WorkoutSummaryInfo from '../../commons/WorkoutSummaryInfo';
 
 const WorkoutSummary: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'WorkoutSummary'>;

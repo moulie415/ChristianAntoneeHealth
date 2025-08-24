@@ -1,7 +1,7 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {useMemo} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from '../../constants/colors';
 import {getWorkoutDurationRounded} from '../../helpers/getWorkoutDurationRounded';
 import {useAppSelector} from '../../hooks/redux';
@@ -182,7 +182,12 @@ const WorkoutCard: React.FC<{
 
         {locked && (
           <View style={{position: 'absolute', top: 15, right: 15}}>
-            <FontAwesome6 iconStyle="solid" name="lock" color="#fff" size={20} />
+            <FontAwesome6
+              iconStyle="solid"
+              name="lock"
+              color="#fff"
+              size={20}
+            />
           </View>
         )}
       </FastImageAnimated>

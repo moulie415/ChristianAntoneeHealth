@@ -31,7 +31,7 @@ const WorkoutTabs: React.FC<{
   timerPaused,
   onTimerPaused,
   profile,
-  disableWorkoutMusic
+  disableWorkoutMusic,
 }) => {
   const tabs = useMemo(() => {
     const t = ['Timer', 'Muscles'];

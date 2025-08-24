@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {View} from 'react-native';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import colors from './constants/colors';
 import {useAppSelector} from './hooks/redux';
 

@@ -1,7 +1,7 @@
 import Color from 'color';
 import moment from 'moment';
 import React, {useMemo, useState} from 'react';
-import {Alert, View} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
 import {RootState} from '../../App';
 import colors from '../../constants/colors';

@@ -1,6 +1,6 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 

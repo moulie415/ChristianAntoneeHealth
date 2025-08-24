@@ -1,10 +1,10 @@
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import FileViewer from 'react-native-file-viewer';
 import * as Progress from 'react-native-progress';
 import Snackbar from 'react-native-snackbar';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import {connect} from 'react-redux';
 import {RootState} from '../../../../App';
 import colors from '../../../../constants/colors';

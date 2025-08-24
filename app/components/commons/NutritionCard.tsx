@@ -1,13 +1,12 @@
-import {View} from 'react-native';
+import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import {navigationRef} from '../../RootNavigation';
+import colors from '../../constants/colors';
 import {PlanNutrition} from '../../types/Shared';
 import Text from './Text';
-import colors from '../../constants/colors';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import LinearGradient from 'react-native-linear-gradient';
 
 const NutritionCard: React.FC<{nutrition: PlanNutrition}> = ({nutrition}) => {
   return (

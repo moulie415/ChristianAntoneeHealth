@@ -2,7 +2,13 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
+import {Platform} from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
+import {
+  Permission,
+  getGrantedPermissions,
+  initialize,
+} from 'react-native-health-connect';
 import Snackbar from 'react-native-snackbar';
 import {EventChannel, eventChannel} from 'redux-saga';
 import {all, call, debounce, fork, put, select, take} from 'redux-saga/effects';
@@ -24,8 +30,6 @@ import {
   Sample,
   UpdateProfilePayload,
 } from '../types/Shared';
-import { Platform } from 'react-native';
-import { getGrantedPermissions, initialize, Permission } from 'react-native-health-connect';
 
 export function* getLeaderboard(action: PayloadAction<LeaderboardType>) {
   try {
@@ -90,12 +94,14 @@ export function* checkStepsCalories(background?: boolean) {
 
       if (Platform.OS === 'android') {
         const initialized: boolean = yield call(initialize);
-        if (!initialized)  {
+        if (!initialized) {
           return;
         }
 
         const permissions: Permission[] = yield call(getGrantedPermissions);
-        if (!permissions.some(permission => permission.recordType === 'Steps')) {
+        if (
+          !permissions.some(permission => permission.recordType === 'Steps')
+        ) {
           return;
         }
       }

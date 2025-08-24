@@ -2,10 +2,10 @@ import React, {ReactElement} from 'react';
 import {
   Dimensions,
   ImageBackground,
-  StyleSheet,
-  View,
   ImageSourcePropType,
+  StyleSheet,
   TextStyle,
+  View,
   ViewStyle,
 } from 'react-native';
 

@@ -1,8 +1,13 @@
-import React, {ReactNode, useState} from 'react';
-import {TextInput, TouchableOpacity, View, ViewStyle} from 'react-native';
-import {TextInputProps} from 'react-native';
-import colors from '../../constants/colors';
 import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import React, {ReactNode, useState} from 'react';
+import {
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
+import colors from '../../constants/colors';
 
 interface Props extends TextInputProps {
   secure?: boolean;
@@ -80,7 +85,12 @@ const Input: React.FC<Props> = props => {
               left: 10,
             }}
             onPress={() => setSecure(!secure)}>
-            <FontAwesome6 iconStyle="solid" name="lock" color={'#CECECE'} size={15} />
+            <FontAwesome6
+              iconStyle="solid"
+              name="lock"
+              color={'#CECECE'}
+              size={15}
+            />
           </TouchableOpacity>
         </View>
       )}

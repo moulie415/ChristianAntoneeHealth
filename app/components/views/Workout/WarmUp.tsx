@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Switch, TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import {RootState} from '../../../App';
 import {setCoolDown, setWarmUp} from '../../../reducers/exercises';
@@ -9,7 +10,6 @@ import Divider from '../../commons/Divider';
 import ImageLoader from '../../commons/ImageLoader';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WarmUpAndCoolDown: React.FC<{
   warmUp: WarmUp[];

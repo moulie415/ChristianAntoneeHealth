@@ -1,9 +1,9 @@
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import React from 'react';
 import {RouteProp} from '@react-navigation/native';
+import React from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {StackParamList} from '../../../App';
 import colors from '../../../constants/colors';
-import FastImage from 'react-native-fast-image';
 import Header from '../../commons/Header';
 
 const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
