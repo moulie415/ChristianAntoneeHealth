@@ -128,7 +128,6 @@ jobs:
           xcodebuild build \
             -workspace HealthAndMovement.xcworkspace \
             -scheme HealthAndMovement \
-            -sdk iphoneos \
             -destination "generic/platform=iOS" \
             | xcpretty
 
@@ -136,7 +135,6 @@ jobs:
           xcodebuild archive \
             -workspace HealthAndMovement.xcworkspace \
             -scheme HealthAndMovement \
-            -sdk iphoneos \
             -destination "generic/platform=iOS" \
             -archivePath archive.xcarchive \
             | xcpretty
