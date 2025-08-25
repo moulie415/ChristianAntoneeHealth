@@ -116,6 +116,7 @@ import { checkWorkoutStreak, getAllExercises } from './exercises';
 import { checkStepsCalories } from './leaderboards';
 import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
+import { initBiometrics, isAvailable } from '../helpers/biometrics';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -906,10 +907,10 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       yield fork(checkDeviceInfoChanged);
 
       if (doc.exists() && doc.data()?.signedUp) {
-        // const available: boolean = yield call(isAvailable);
-        // if (available) {
-        // yield call(initBiometrics);
-        // }
+        const available: boolean = yield call(isAvailable);
+        if (available) {
+        yield call(initBiometrics);
+        }
 
         resetToTabs();
 
