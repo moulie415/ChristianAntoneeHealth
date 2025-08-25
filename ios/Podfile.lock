@@ -4820,34 +4820,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNVectorIcons (10.3.0):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - RNWatch (1.1.0):
     - React
   - RNWorklets (0.4.1):
@@ -5069,7 +5041,6 @@ DEPENDENCIES:
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
   - RNWorklets (from `../node_modules/react-native-worklets`)
   - SocketRocket (~> 0.7.1)
@@ -5381,8 +5352,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sound-player"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   RNWatch:
     :path: "../node_modules/react-native-watch-connectivity"
   RNWorklets:
@@ -5394,7 +5363,7 @@ SPEC CHECKSUMS:
   abseil: a05cc83bf02079535e17169a73c5be5ba47f714b
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  AudioRecorderPlayer: 43df5b449ddc5b5b19a889281427ab6c46f4a82c
+  AudioRecorderPlayer: 5a1fb9be3ae7cfe797d44983260a672fb4d7812e
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BoringSSL-GRPC: dded2a44897e45f28f08ae87a55ee4bcd19bc508
   BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
@@ -5440,9 +5409,9 @@ SPEC CHECKSUMS:
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
   leveldb-library: cc8b8f8e013647a295ad3f8cd2ddf49a6f19be19
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
-  lottie-react-native: 2c8ee8cfb126eb47baeeba5a1aa509dd2e9b5d83
+  lottie-react-native: 5dae2e15340deda71ee6bc2eb7853b9b5c1d5695
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  NitroModules: 9f23da23933dd9e8a595a54d556d458c365707e7
+  NitroModules: 3ae386167426568412e69a268a2d40eff926c6e1
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PurchasesHybridCommon: 62f852419aae7041792217593998f7ac3f8b567d
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
@@ -5479,26 +5448,26 @@ SPEC CHECKSUMS:
   React-Mapbuffer: ed316571f8a6368a044c166dd62db3ff9a19ade9
   React-microtasksnativemodule: 7349a9210ff1fe97f54025fbda2496ed9a2d43cd
   react-native-background-timer: 4638ae3bee00320753647900b21260b10587b6f7
-  react-native-blob-util: 5d27aa5157f3540f87ce36f61edc1e982a165775
-  react-native-compressor: 7ae9ef7d61ee54732da5bdf040b9d6dac82e6d12
+  react-native-blob-util: 7f71e0af02279ef38a2ba43e8c2fcb79cf927732
+  react-native-compressor: 1c5a2509013935de0ab776ad50616968b589653e
   react-native-config: f1dde39f8468ad922fc7e8bd4308c8e6223d5ee8
-  react-native-document-picker: 58cd32d73da9e92a8ac583356766e2a504138cf9
+  react-native-document-picker: 18ec993bda9ff9c6cf711d8e2592cb43dae35dfc
   react-native-fbsdk-next: 52f81e60eb3e8e0e06cf9728b4572d3509ca9d01
-  react-native-image-picker: d97e9884fd5b7e8834ab923f10e2a2820e5ad2ee
+  react-native-image-picker: 6051cfd030121b880a58f1cc0e5e33e9887804e4
   react-native-in-app-review: 668f4c80d7f95945e0ad7833e98c466cb40d6808
-  react-native-keyboard-controller: 65d4afbddfc9fc4a10bf78007b238375858e9803
+  react-native-keyboard-controller: c4ca61f44d66c2f8987a7e67e9b78e80dc965c45
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
-  react-native-pager-view: b97abe2c73400895faabd87425a088ea0f1cc04d
-  react-native-pdf: 79833e19767dcb42a8847c3631c85b290a8d29a5
+  react-native-pager-view: 0e228ec2dfdd87807d125c7bbfb83299edede19c
+  react-native-pdf: 5869d2bb85d52782282a349a3fdd49b962847dee
   react-native-render-html: 5afc4751f1a98621b3009432ef84c47019dcb2bd
-  react-native-safe-area-context: 0ef3fd18fd5822fa1a58516b3f11a7927f91376e
-  react-native-skia: a927d98913b64effa3eb05d8c42d3125b59882b6
+  react-native-safe-area-context: 4e673529158bdc17e8af4da63b3eaf99486d8c73
+  react-native-skia: 460f8b0ca6b31f7e3de766445d08a7e014b1d4e9
   react-native-spinkit: 96a74c3519fab0eded2ab8c285f774aa3f4b7944
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-vector-icons-fontawesome6: 1b667969bef2f430d1d7515163b980b856f58670
-  react-native-video: d4812a9167b86d58a02fc621a21b926f51533e0d
+  react-native-video: 6ed94120c73e29c8fbea89ec4e3cedf3528751d6
   react-native-video-cache: b695f59c41ff5b44ed806914f64fe4cd55371cc5
-  react-native-webview: c4b62395e56d719ce3a5da35a246b37ae1c3e821
+  react-native-webview: d73728424a0e24989d71ffdc6fcf15d5f74ff4a2
   React-NativeModulesApple: 9c2ece8c6e423b2a13c9c50d2ed25953379cbe4e
   React-oscompat: 34f3d3c06cadcbc470bc4509c717fb9b919eaa8b
   React-perflogger: a1edb025fd5d44f61bf09307e248f7608d7b2dcf
@@ -5527,7 +5496,7 @@ SPEC CHECKSUMS:
   React-timing: 0b2e20e7842a85e33d2456986137a99b95a31421
   React-utils: 6cf54d288bcbd10d5cbf1c09eae7ff024c508f77
   ReactAppDependencyProvider: c91900fa724baee992f01c05eeb4c9e01a807f78
-  ReactCodegen: 8f2a63b11f0625a7b36d4c8c588d7c89a3086cda
+  ReactCodegen: 403972eb8814073cb9b7930a5416cf771c488002
   ReactCommon: 5ee89f5eec706805c432ed5b598adcd4e5aaa088
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RevenueCat: eb2aa042789d9c99ad5172bd96e28b96286d6ada
@@ -5535,12 +5504,12 @@ SPEC CHECKSUMS:
   RNAppleHealthKit: 86ef7ab70f762b802f5c5289372de360cca701f9
   RNBackgroundFetch: e44c9e85d7fb3122c37d8a806278f62c7682d7ea
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
-  RNCAsyncStorage: e3ac284ded8c3883e6099c652cbd0527bb4416c8
-  RNCClipboard: 61e0926e5199803936630af0fba91da692274fe4
-  RNCMaskedView: 0a7d798694b3735e488140d22ae186fc882baf93
-  RNCPicker: 182cd65183ac228fe9e1364ce572e6379540be39
+  RNCAsyncStorage: fd44f4b03e007e642e98df6726737bc66e9ba609
+  RNCClipboard: e560338bf6cc4656a09ff90610b62ddc0dbdad65
+  RNCMaskedView: d707a83784c67099b54b37d056ababb2767ce15e
+  RNCPicker: 70fd0622147f0ca1b9c5e1be2069a4fb2e8ec461
   RNCPushNotificationIOS: 6c4ca3388c7434e4a662b92e4dfeeee858e6f440
-  RNDateTimePicker: 4f0c63a200ecc75a72defef40b86d6f4abb2faaa
+  RNDateTimePicker: ca1dc7e24d0b4839877f0ab619e7bca5db715289
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFBAnalytics: 25b027ec32f499b4bc75366a6ffc2ac6c81a8dfb
   RNFBApp: 8579526ddddaa6f93669d7393a7e9d090990c259
@@ -5552,24 +5521,23 @@ SPEC CHECKSUMS:
   RNFBStorage: 7fdeae93e111e90fedcae5aefd7f5e92bef28c06
   RNFileViewer: 4b5d83358214347e4ab2d4ca8d5c1c90d869e251
   RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
-  RNGestureHandler: 0ea32a0d377cd9ebfb1f41bb6b285c26334ce739
-  RNGoogleSignin: 4c2c293ff588321c819c3cdff3fba61de3723f99
+  RNGestureHandler: b8d2e75c2e88fc2a1f6be3b3beeeed80b88fa37d
+  RNGoogleSignin: 39750df541b62de6de41396e63b3ec0b546927e9
   RNPurchases: 7993b33416e67d5863140b5c62c682b34719f475
-  RNReanimated: f75fdae5d6b8d975164d8b25ba9bc49277c6e039
-  RNScreens: b2b0f7202446a9ccb7fbf7acdf33fa9612998097
-  RNSentry: efa46c14e342709753ea98b695db0b19f2e7eb83
+  RNReanimated: 614345d319aaf706e61a8984472b370919daadec
+  RNScreens: c5be77a6d6758e892b7f87fc0bb9324a08be47ac
+  RNSentry: 4e6b61861cb375e465fec31911428a40793a58cf
   RNSha256: 4d35f112e967f58273d625a19376f4eafc72bd5c
   RNSnackbar: c1b235eb606b03938c693ce769ed3059c31dff9b
-  RNSound: 6826ad5c345254b130807aa14fc7ee893ce9d250
+  RNSound: 9a20f42f674d5cf0aba1dc3c4ac6c4bbf16552e7
   RNSoundPlayer: 7961678d02c7339d9e9cfb78b9f3e8fde17f9df2
-  RNSVG: cb0941a452db697635e0b13d74fece27a8df20fc
-  RNVectorIcons: 97ebd95d88690c69a80c6cbcd5ea9c00eb01d5c0
+  RNSVG: 94a1be05fab4043354bcf7104f0f9b0e2231ef05
   RNWatch: 28fe1f5e0c6410d45fd20925f4796fce05522e3f
   RNWorklets: e8335dff9d27004709f58316985769040cd1e8f2
   Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: be78ddad0c56d06a5e41eaef4bfbbd49b86a4d07
 
-PODFILE CHECKSUM: 9b2a3bc0eb27653afb2b685a778998a5c43a32bb
+PODFILE CHECKSUM: 6c89cc372fcf9d577bd45d94b68c73766bef9fae
 
 COCOAPODS: 1.16.2
