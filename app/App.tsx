@@ -204,9 +204,7 @@ const App: React.FC = () => {
       isTokenAutoRefreshEnabled: true,
     });
   }, []);
-
-  console.log('test');
-
+  
   return (
      <PersistGate persistor={persistor}>
       <GestureHandlerRootView style={{flex: 1}}>
