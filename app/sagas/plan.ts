@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import Snackbar from 'react-native-snackbar';
-import {eventChannel, EventChannel} from 'redux-saga';
+import { eventChannel, EventChannel } from 'redux-saga';
 import {
   all,
   call,
@@ -12,15 +12,15 @@ import {
 } from 'redux-saga/effects';
 
 import db from '@react-native-firebase/firestore';
-import {PayloadAction} from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
 import PushNotification from 'react-native-push-notification';
-import {RootState} from '../App';
-import {scheduleLocalNotification} from '../helpers';
-import {logError} from '../helpers/error';
+import { RootState } from '../App';
+import { scheduleLocalNotification } from '../helpers';
+import { logError } from '../helpers/error';
 import {
   GET_PLAN,
   ProfileState,
@@ -31,18 +31,18 @@ import {
   UPDATE_PROFILE,
   updateProfile,
 } from '../reducers/profile';
-import {Plan} from '../types/Shared';
+import { Plan } from '../types/Shared';
 import {
   scheduleGoalReminderNotification,
   WORKOUT_REMINDERS_CHANNEL_ID,
 } from './profile';
 function* syncPlanWithCalendarWorker(
-  action: PayloadAction<{plan: Plan; sync: boolean}>,
+  action: PayloadAction<{ plan: Plan; sync: boolean }>,
 ) {
   try {
-    const {plan, sync} = action.payload;
+    const { plan, sync } = action.payload;
     if (sync) {
-      const {calendarId} = yield select((state: RootState) => state.profile);
+      const { calendarId } = yield select((state: RootState) => state.profile);
       if (!calendarId) {
         throw new Error('No valid calendar found');
       }
@@ -53,7 +53,7 @@ function* syncPlanWithCalendarWorker(
 
       const keys: string[] = [];
 
-      const {syncedPlanEvents, profile}: ProfileState = yield select(
+      const { syncedPlanEvents, profile }: ProfileState = yield select(
         (state: RootState) => state.profile,
       );
 
@@ -68,7 +68,7 @@ function* syncPlanWithCalendarWorker(
           } = {
             title,
             details: {
-              ...(currentId ? {id: currentId} : {}),
+              ...(currentId ? { id: currentId } : {}),
               startDate: moment(date)
                 .set('hours', moment(profile.workoutReminderTime).hours())
                 .set('minutes', moment(profile.workoutReminderTime).minutes())
@@ -103,13 +103,13 @@ function* syncPlanWithCalendarWorker(
             _.omit(event.details, ['id']),
           );
         }
-        yield put(setSyncedPlanEvent({key, id}));
+        yield put(setSyncedPlanEvent({ key, id }));
       }
     }
   } catch (e) {
     logError(e);
-    Snackbar.show({text: 'Error syncing calendar'});
-    yield put(updateProfile({syncPlanWithCalendar: false}));
+    Snackbar.show({ text: 'Error syncing calendar' });
+    yield put(updateProfile({ syncPlanWithCalendar: false }));
   }
 }
 
@@ -118,7 +118,7 @@ export function* schedulePlanReminders() {
   const plan: Plan | undefined = yield select(
     (state: RootState) => state.profile.plan,
   );
-  const {calendarId, profile}: ProfileState = yield select(
+  const { calendarId, profile }: ProfileState = yield select(
     (state: RootState) => state.profile,
   );
   if (plan) {
@@ -142,7 +142,7 @@ export function* schedulePlanReminders() {
     if (profile.syncPlanWithCalendar && calendarId) {
       const p = plan as Plan;
       yield put(
-        syncPlanWithCalendar({plan: p, sync: profile.syncPlanWithCalendar}),
+        syncPlanWithCalendar({ plan: p, sync: profile.syncPlanWithCalendar }),
       );
     }
 
@@ -249,7 +249,7 @@ function onPlanChanged(uid: string) {
 
 function* planWatcher() {
   try {
-    const {uid} = yield select((state: RootState) => state.profile.profile);
+    const { uid } = yield select((state: RootState) => state.profile.profile);
 
     const channel: EventChannel<Plan> = yield call(onPlanChanged, uid);
 
@@ -268,15 +268,15 @@ function* planWatcher() {
             _.omit(plan, ['lastupdate', 'createdate']),
           )
         ) {
-          Snackbar.show({text: 'Your plan has been updated'});
+          Snackbar.show({ text: 'Your plan has been updated' });
         }
         yield put(setPlan(plan as Plan));
-        const {syncPlanWithCalendar: sync, calendarId} = yield select(
+        const { syncPlanWithCalendar: sync, calendarId } = yield select(
           (state: RootState) => state.profile,
         );
         if (sync && calendarId) {
           const p = plan as Plan;
-          yield put(syncPlanWithCalendar({plan: p, sync}));
+          yield put(syncPlanWithCalendar({ plan: p, sync }));
         }
       }
       yield call(schedulePlanReminders);

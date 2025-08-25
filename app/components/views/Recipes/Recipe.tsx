@@ -1,17 +1,17 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {RouteProp} from '@react-navigation/native';
-import React, {useCallback, useEffect} from 'react';
-import {Platform} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { RouteProp } from '@react-navigation/native';
+import React, { useCallback, useEffect } from 'react';
+import { Platform } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import RNFS from 'react-native-fs';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Pdf from 'react-native-pdf';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {logError} from '../../../helpers/error';
+import { logError } from '../../../helpers/error';
 import {
   favouriteRecipe,
   setDownloadedDocument,
@@ -23,8 +23,8 @@ const Recipe: React.FC<{
   route: RouteProp<StackParamList, 'Recipe'>;
   favourites?: string[];
   favouriteRecipe: (recipe: string) => void;
-  setDownloadedDocument: (payload: {id: string; path: string}) => void;
-  downloadedDocuments: {[key: string]: string};
+  setDownloadedDocument: (payload: { id: string; path: string }) => void;
+  downloadedDocuments: { [key: string]: string };
 }> = ({
   route,
   favourites,
@@ -32,7 +32,7 @@ const Recipe: React.FC<{
   setDownloadedDocument: setDownloadedDocumentAction,
   downloadedDocuments,
 }) => {
-  const {recipe} = route.params;
+  const { recipe } = route.params;
 
   const downloadFile = useCallback(async () => {
     try {
@@ -44,11 +44,11 @@ const Recipe: React.FC<{
           fileCache: true,
         }).fetch('GET', recipe.recipe.src);
 
-        setDownloadedDocumentAction({id: recipe.id, path: result.path()});
+        setDownloadedDocumentAction({ id: recipe.id, path: result.path() });
       }
     } catch (e) {
       logError(e);
-      Snackbar.show({text: 'Error downloading recipe'});
+      Snackbar.show({ text: 'Error downloading recipe' });
     }
   }, [
     recipe.id,
@@ -64,14 +64,15 @@ const Recipe: React.FC<{
   }, [downloadFile]);
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <Header
         hasBack
         title={recipe.name}
         right={
           <TouchableOpacity
             style={{}}
-            onPress={() => favouriteRecipeAction(recipe.id)}>
+            onPress={() => favouriteRecipeAction(recipe.id)}
+          >
             <FontAwesome6
               name="star"
               iconStyle={favourites?.includes(recipe.id) ? 'solid' : 'regular'}
@@ -86,21 +87,22 @@ const Recipe: React.FC<{
         renderActivityIndicator={() => <Spinner />}
         source={
           Platform.OS === 'ios'
-            ? {uri: recipe.recipe.src, cache: true}
-            : {uri: downloadedDocuments[recipe.id]}
+            ? { uri: recipe.recipe.src, cache: true }
+            : { uri: downloadedDocuments[recipe.id] }
         }
-        style={{flex: 1}}
+        style={{ flex: 1 }}
       />
       <TouchableOpacity
-        style={{position: 'absolute', top: 60, right: 10, zIndex: 999}}
-        onPress={() => favouriteRecipeAction(recipe.id)}>
+        style={{ position: 'absolute', top: 60, right: 10, zIndex: 999 }}
+        onPress={() => favouriteRecipeAction(recipe.id)}
+      >
         <FontAwesome6 name="star" size={40} color={colors.secondaryLight} />
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   favourites: profile.profile.favouriteRecipes,
   downloadedDocuments: profile.downloadedDocuments,
 });

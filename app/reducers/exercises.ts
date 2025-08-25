@@ -1,12 +1,12 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import Exercise from '../types/Exercise';
-import {Area} from '../types/QuickRoutines';
-import {SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Equipment, Goal, Level, WarmUp} from '../types/Shared';
-import {setLoggedIn} from './profile';
+import { Area } from '../types/QuickRoutines';
+import { SavedWorkout } from '../types/SavedItem';
+import { CoolDown, Equipment, Goal, Level, WarmUp } from '../types/Shared';
+import { setLoggedIn } from './profile';
 
 export interface ExercisesState {
-  exercises: {[key: string]: Exercise};
+  exercises: { [key: string]: Exercise };
   loading: boolean;
   workout: Exercise[];
   fitnessGoal: Goal;
@@ -15,11 +15,11 @@ export interface ExercisesState {
   equipment: Equipment[];
   warmUp: WarmUp[];
   coolDown: CoolDown[];
-  exerciseNotes: {[key: string]: string};
-  workoutNotes: {[key: string]: string};
-  videos: {[key: string]: {src: string; path: string}};
+  exerciseNotes: { [key: string]: string };
+  workoutNotes: { [key: string]: string };
+  videos: { [key: string]: { src: string; path: string } };
   videoLoading: boolean;
-  savedWorkouts: {[key: string]: SavedWorkout};
+  savedWorkouts: { [key: string]: SavedWorkout };
   shareModalVisible: boolean;
 }
 
@@ -101,55 +101,64 @@ const exerciseSlice = createSlice({
   reducers: {
     setExercises: (
       state: ExercisesState,
-      {payload}: PayloadAction<{[key: string]: Exercise}>,
+      { payload }: PayloadAction<{ [key: string]: Exercise }>,
     ) => {
-      state.exercises = {...state.exercises, ...payload};
+      state.exercises = { ...state.exercises, ...payload };
     },
-    setLoading: (state: ExercisesState, {payload}: PayloadAction<boolean>) => {
+    setLoading: (
+      state: ExercisesState,
+      { payload }: PayloadAction<boolean>,
+    ) => {
       state.loading = payload;
     },
     setWorkout: (
       state: ExercisesState,
-      {payload}: PayloadAction<Exercise[]>,
+      { payload }: PayloadAction<Exercise[]>,
     ) => {
       state.workout = payload;
     },
     setSavedWorkouts: (
       state: ExercisesState,
-      {payload}: PayloadAction<{[key: string]: SavedWorkout}>,
+      { payload }: PayloadAction<{ [key: string]: SavedWorkout }>,
     ) => {
-      state.savedWorkouts = {...state.savedWorkouts, ...payload};
+      state.savedWorkouts = { ...state.savedWorkouts, ...payload };
     },
-    setFitnessGoal: (state: ExercisesState, {payload}: PayloadAction<Goal>) => {
+    setFitnessGoal: (
+      state: ExercisesState,
+      { payload }: PayloadAction<Goal>,
+    ) => {
       state.fitnessGoal = payload;
     },
     setStrengthArea: (
       state: ExercisesState,
-      {payload}: PayloadAction<Area>,
+      { payload }: PayloadAction<Area>,
     ) => {
       state.strengthArea = payload;
     },
-    setLevel: (state: ExercisesState, {payload}: PayloadAction<Level>) => {
+    setLevel: (state: ExercisesState, { payload }: PayloadAction<Level>) => {
       state.level = payload;
     },
     setEquipment: (
       state: ExercisesState,
-      {payload}: PayloadAction<Equipment[]>,
+      { payload }: PayloadAction<Equipment[]>,
     ) => {
       state.equipment = payload;
     },
-    setWarmUp: (state: ExercisesState, {payload}: PayloadAction<WarmUp[]>) => {
+    setWarmUp: (
+      state: ExercisesState,
+      { payload }: PayloadAction<WarmUp[]>,
+    ) => {
       state.warmUp = payload;
     },
     setCoolDown: (
       state: ExercisesState,
-      {payload}: PayloadAction<CoolDown[]>,
+      { payload }: PayloadAction<CoolDown[]>,
     ) => {
       state.coolDown = payload;
     },
     setShareModalVisible: (
       state: ExercisesState,
-      {payload}: PayloadAction<boolean>,
+      { payload }: PayloadAction<boolean>,
     ) => {
       state.shareModalVisible = payload;
     },

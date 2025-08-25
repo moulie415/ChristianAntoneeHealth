@@ -1,18 +1,18 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from './App';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from './App';
 import Text from './components/commons/Text';
 import colors from './constants/colors';
-import {hasPremiumPlus} from './helpers/hasPremiumPlus';
-import {Profile} from './types/Shared';
+import { hasPremiumPlus } from './helpers/hasPremiumPlus';
+import { Profile } from './types/Shared';
 
 const PlanTabIcon: React.FC<{
   color: string;
   size: number;
   profile: Profile;
-}> = ({color, size, profile}) => {
+}> = ({ color, size, profile }) => {
   const count = profile.unread?.plan || 0;
   return (
     <View>
@@ -28,7 +28,7 @@ const PlanTabIcon: React.FC<{
           name="lock"
           color={colors.appBlue}
           size={15}
-          style={{position: 'absolute', top: -5, right: -5}}
+          style={{ position: 'absolute', top: -5, right: -5 }}
         />
       )}
       {profile.premium && count > 0 && (
@@ -43,13 +43,15 @@ const PlanTabIcon: React.FC<{
             top: -5,
             right: -10,
             backgroundColor: colors.appRed,
-          }}>
+          }}
+        >
           <Text
             style={{
               fontSize: 12,
               fontWeight: 'bold',
               color: colors.appWhite,
-            }}>
+            }}
+          >
             {count > 9 ? '9+' : count}
           </Text>
         </View>
@@ -58,7 +60,7 @@ const PlanTabIcon: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

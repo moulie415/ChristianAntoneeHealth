@@ -1,17 +1,17 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {Fragment} from 'react';
-import {View} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { Fragment } from 'react';
+import { View } from 'react-native';
 import colors from '../../../constants/colors';
 
-import {equipmentItemReadableString} from '../../../helpers/exercises';
-import {Equipment} from '../../../types/Shared';
+import { equipmentItemReadableString } from '../../../helpers/exercises';
+import { Equipment } from '../../../types/Shared';
 import Divider from '../../commons/Divider';
 import ListItem from '../../commons/ListItem';
 
 const EquipmentMenu: React.FC<{
   selectedEquipment: Equipment[];
   setSelectedEquipment: (equipment: Equipment[]) => void;
-}> = ({selectedEquipment, setSelectedEquipment}) => {
+}> = ({ selectedEquipment, setSelectedEquipment }) => {
   return (
     <View>
       {Object.values(Equipment).map(item => {

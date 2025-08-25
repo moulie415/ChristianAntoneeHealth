@@ -1,12 +1,12 @@
 import Color from 'color';
 import moment from 'moment';
-import React, {useMemo, useState} from 'react';
-import {View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import React, { useMemo, useState } from 'react';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {getBMIItems, getBMRItems, getSampleItems} from '../../helpers';
-import {Profile, Sample} from '../../types/Shared';
+import { getBMIItems, getBMRItems, getSampleItems } from '../../helpers';
+import { Profile, Sample } from '../../types/Shared';
 import MetricExplained from './MetricExplained';
 import Modal from './Modal';
 import ProfileGraph from './ProfileGraph';
@@ -20,7 +20,7 @@ const Chart: React.FC<{
   ranges: number[];
   colors: string[];
   labels: string[];
-  data: {x: Date; y: number}[];
+  data: { x: Date; y: number }[];
   onPress?: () => void;
   connection?: boolean;
   premium?: boolean;
@@ -42,7 +42,7 @@ const Chart: React.FC<{
 
   return (
     <>
-      <View style={{alignItems: 'center'}}>
+      <View style={{ alignItems: 'center' }}>
         <MetricExplained
           connection={connection}
           onPressHistorical={() => setShowModal(true)}
@@ -118,7 +118,7 @@ const ProfileCharts: React.FC<{
   filter,
 }) => {
   const bmiItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
@@ -126,31 +126,31 @@ const ProfileCharts: React.FC<{
   }, [weightSamples, weight, height, heightSamples, filter]);
 
   const bodyFatItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(bodyFatPercentage, filter, bodyFatPercentageSamples);
   }, [bodyFatPercentageSamples, filter, bodyFatPercentage]);
 
   const muscleMassItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(muscleMass, filter, muscleMassSamples);
   }, [muscleMassSamples, filter, muscleMass]);
 
   const boneMassItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(boneMass, filter, boneMassSamples);
   }, [boneMassSamples, filter, boneMass]);
 
   const visceralFatItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(visceralFat, filter, visceralFatSamples);
   }, [filter, visceralFatSamples, visceralFat]);
 
   const bmrItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
     lowest: number;
     highest: number;
   } = useMemo(() => {
@@ -174,7 +174,7 @@ const ProfileCharts: React.FC<{
   ]);
 
   const metabolicAgeItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(metabolicAge, filter, metabolicAgeSamples);
   }, [filter, metabolicAge, metabolicAgeSamples]);
@@ -325,7 +325,7 @@ const ProfileCharts: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   weightSamples: profile.weightSamples,
   heightSamples: profile.heightSamples,
   bodyFatPercentageSamples: profile.bodyFatPercentageSamples,

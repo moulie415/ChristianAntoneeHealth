@@ -1,7 +1,7 @@
-import React, {useRef} from 'react';
-import {View} from 'react-native';
-import Video, {ResizeMode, VideoRef} from 'react-native-video';
-import {getVideoHeight} from '../../helpers';
+import React, { useRef } from 'react';
+import { View } from 'react-native';
+import Video, { ResizeMode, VideoRef } from 'react-native-video';
+import { getVideoHeight } from '../../helpers';
 
 import convertToProxyURL from 'react-native-video-cache';
 import colors from '../../constants/colors';
@@ -36,7 +36,8 @@ const ExerciseVideo: React.FC<{
         left: 0,
         right: 0,
         bottom: 0,
-      }}>
+      }}
+    >
       {/* <StatusBar hidden={fullscreen} /> */}
       <Video
         source={{
@@ -48,7 +49,10 @@ const ExerciseVideo: React.FC<{
             bufferForPlaybackAfterRebufferMs: 2500,
           },
         }}
-        style={{height: fullscreen ? '100%' : getVideoHeight(), width: '100%'}}
+        style={{
+          height: fullscreen ? '100%' : getVideoHeight(),
+          width: '100%',
+        }}
         resizeMode={ResizeMode.NONE}
         ref={ref}
         onError={e => console.error(e)}

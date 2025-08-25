@@ -1,18 +1,18 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {Fragment} from 'react';
-import {ImageSourcePropType, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {setFitnessGoal, setStrengthArea} from '../../../reducers/exercises';
-import {Goal} from '../../../types/Shared';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { Fragment } from 'react';
+import { ImageSourcePropType, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { setFitnessGoal, setStrengthArea } from '../../../reducers/exercises';
+import { Goal } from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import Text from '../../commons/Text';
 
 const FitnessGoal: React.FC<{
   setFitnessGoalAction: (goal: Goal) => void;
   navigation: NativeStackNavigationProp<StackParamList, 'FitnessGoal'>;
-}> = ({setFitnessGoalAction, navigation}) => {
+}> = ({ setFitnessGoalAction, navigation }) => {
   const sections: {
     title: string;
     key: Goal;
@@ -28,9 +28,9 @@ const FitnessGoal: React.FC<{
   ];
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        {sections.map(({title, image, action, key}) => {
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        {sections.map(({ title, image, action, key }) => {
           return (
             <Fragment key={key}>
               <TouchableOpacity
@@ -39,11 +39,12 @@ const FitnessGoal: React.FC<{
                   navigation.goBack();
                 }}
                 key={title}
-                style={{flex: 1, marginBottom: 5}}>
+                style={{ flex: 1, marginBottom: 5 }}
+              >
                 <ImageLoader
                   source={image}
                   overlay
-                  style={{width: '100%', flex: 1}}
+                  style={{ width: '100%', flex: 1 }}
                 />
 
                 <View
@@ -53,8 +54,9 @@ const FitnessGoal: React.FC<{
                     top: 0,
                     left: 20,
                     justifyContent: 'center',
-                  }}>
-                  <Text style={[{color: '#fff'}]}>{title}</Text>
+                  }}
+                >
+                  <Text style={[{ color: '#fff' }]}>{title}</Text>
                 </View>
               </TouchableOpacity>
             </Fragment>
@@ -65,7 +67,7 @@ const FitnessGoal: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: RootState) => ({
+const mapStateToProps = ({ exercises }: RootState) => ({
   fitnessGoal: exercises.fitnessGoal,
   strengthArea: exercises.strengthArea,
 });

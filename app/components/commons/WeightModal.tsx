@@ -1,13 +1,13 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {Dimensions, Platform, Text, View} from 'react-native';
-import {RulerPicker} from 'react-native-ruler-picker';
-import {Picker} from 'react-native-wheel-pick';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
-import {DECIMAL_PLACES, WEIGHTS} from '../../constants';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Dimensions, Platform, Text, View } from 'react-native';
+import { RulerPicker } from 'react-native-ruler-picker';
+import { Picker } from 'react-native-wheel-pick';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
+import { DECIMAL_PLACES, WEIGHTS } from '../../constants';
 import colors from '../../constants/colors';
-import {getSampleItems} from '../../helpers';
-import {Sample} from '../../types/Shared';
+import { getSampleItems } from '../../helpers';
+import { Sample } from '../../types/Shared';
 import Button from './Button';
 import Modal from './Modal';
 import ProfileGraph from './ProfileGraph';
@@ -32,7 +32,7 @@ const WeightModal: React.FC<{
   const [showWeightHistorical, setShowWeightHistorical] = useState(false);
 
   const weightItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(weight, filter, weightSamples);
   }, [weight, weightSamples, filter]);
@@ -46,7 +46,8 @@ const WeightModal: React.FC<{
             width: windowWidth * 0.9,
             alignSelf: 'center',
             borderRadius: 10,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: colors.appWhite,
@@ -55,7 +56,8 @@ const WeightModal: React.FC<{
               fontSize: 20,
               textAlign: 'center',
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Set weight
           </Text>
           <RulerPicker
@@ -66,15 +68,15 @@ const WeightModal: React.FC<{
             fractionDigits={1}
             width={windowWidth * 0.9}
             initialValue={weight ? weight : 80}
-            unitTextStyle={{color: colors.appWhite}}
-            valueTextStyle={{color: colors.appWhite}}
+            unitTextStyle={{ color: colors.appWhite }}
+            valueTextStyle={{ color: colors.appWhite }}
             onValueChangeEnd={number => setWeight(Number(number))}
             unit="kg"
             indicatorColor={colors.appBlue}
           />
           <Button
             text="View historical"
-            style={{margin: 10, marginTop: 0}}
+            style={{ margin: 10, marginTop: 0 }}
             onPress={() => {
               setShowWeightModal(false);
               setTimeout(() => {
@@ -85,14 +87,15 @@ const WeightModal: React.FC<{
           <Button
             variant="secondary"
             text="Close"
-            style={{margin: 10}}
+            style={{ margin: 10 }}
             onPress={() => setShowWeightModal(false)}
           />
         </View>
       </Modal>
       <Modal
         visible={showWeightHistorical}
-        onRequestClose={() => setShowWeightHistorical(false)}>
+        onRequestClose={() => setShowWeightHistorical(false)}
+      >
         <ProfileGraph
           data={weightItems.data}
           setShowModal={setShowWeightHistorical}
@@ -128,7 +131,7 @@ const WeightModalAndroid: React.FC<{
   }, [decimalPart, wholeNumber, setWeight]);
 
   const weightItems: {
-    data: {x: Date; y: number}[];
+    data: { x: Date; y: number }[];
   } = useMemo(() => {
     return getSampleItems(weight, filter, weightSamples);
   }, [weight, weightSamples, filter]);
@@ -142,7 +145,8 @@ const WeightModalAndroid: React.FC<{
             width: '90%',
             alignSelf: 'center',
             borderRadius: 10,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: colors.appWhite,
@@ -151,7 +155,8 @@ const WeightModalAndroid: React.FC<{
               fontSize: 20,
               textAlign: 'center',
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Set weight
           </Text>
           <View
@@ -159,7 +164,8 @@ const WeightModalAndroid: React.FC<{
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
+            }}
+          >
             <Picker
               style={{
                 height: 200,
@@ -169,7 +175,7 @@ const WeightModalAndroid: React.FC<{
               }}
               selectedValue={String(wholeNumber)}
               textColor={colors.appWhite}
-              itemStyle={{color: colors.appWhite}}
+              itemStyle={{ color: colors.appWhite }}
               pickerData={WEIGHTS.map(value => {
                 return {
                   label: value.toString(),
@@ -184,7 +190,8 @@ const WeightModalAndroid: React.FC<{
                 fontWeight: 'bold',
                 fontSize: 18,
                 marginTop: 5,
-              }}>
+              }}
+            >
               .
             </Text>
             <Picker
@@ -196,7 +203,7 @@ const WeightModalAndroid: React.FC<{
               }}
               selectedValue={String(decimalPart)}
               textColor={colors.appWhite}
-              itemStyle={{color: colors.appWhite}}
+              itemStyle={{ color: colors.appWhite }}
               pickerData={DECIMAL_PLACES.map(value => {
                 return {
                   label: value.toString(),
@@ -212,13 +219,14 @@ const WeightModalAndroid: React.FC<{
                 fontSize: 18,
                 marginTop: 15,
                 marginLeft: 5,
-              }}>
+              }}
+            >
               kg
             </Text>
           </View>
           <Button
             text="View historical"
-            style={{margin: 10, marginTop: 0}}
+            style={{ margin: 10, marginTop: 0 }}
             onPress={() => {
               setShowWeightModal(false);
               setTimeout(() => {
@@ -229,14 +237,15 @@ const WeightModalAndroid: React.FC<{
           <Button
             variant="secondary"
             text="Close"
-            style={{margin: 10}}
+            style={{ margin: 10 }}
             onPress={() => setShowWeightModal(false)}
           />
         </View>
       </Modal>
       <Modal
         visible={showWeightHistorical}
-        onRequestClose={() => setShowWeightHistorical(false)}>
+        onRequestClose={() => setShowWeightHistorical(false)}
+      >
         <ProfileGraph
           data={weightItems.data}
           setShowModal={setShowWeightHistorical}
@@ -246,7 +255,7 @@ const WeightModalAndroid: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   weightSamples: profile.weightSamples,
   filter: profile.filter,
 });

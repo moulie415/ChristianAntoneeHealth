@@ -1,18 +1,18 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import React, {FunctionComponent, useMemo} from 'react';
-import {Dimensions, FlatList, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackParamList} from '../../../App';
+import React, { FunctionComponent, useMemo } from 'react';
+import { Dimensions, FlatList, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
-import {SavedQuickRoutine, SavedWorkout} from '../../../types/SavedItem';
+import { useAppSelector } from '../../../hooks/redux';
+import { SavedQuickRoutine, SavedWorkout } from '../../../types/SavedItem';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import SavedWorkoutCard from '../../commons/SavedWorkoutCard';
 import Text from '../../commons/Text';
 
-const {height} = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -22,9 +22,9 @@ type SavedItemsNavigationProp = NativeStackNavigationProp<
 const SavedWorkouts: FunctionComponent<{
   navigation: SavedItemsNavigationProp;
   loadEarlier: (saved: (SavedQuickRoutine | SavedWorkout)[]) => void;
-}> = ({navigation, loadEarlier}) => {
-  const {loading, savedWorkouts} = useAppSelector(state => state.exercises);
-  const {savedQuickRoutines} = useAppSelector(state => state.quickRoutines);
+}> = ({ navigation, loadEarlier }) => {
+  const { loading, savedWorkouts } = useAppSelector(state => state.exercises);
+  const { savedQuickRoutines } = useAppSelector(state => state.quickRoutines);
 
   const saved = useMemo(
     () =>
@@ -45,11 +45,11 @@ const SavedWorkouts: FunctionComponent<{
           data={saved}
           onEndReached={() => loadEarlier(saved)}
           ListEmptyComponent={
-            <SafeAreaView style={{height: height / 2}}>
+            <SafeAreaView style={{ height: height / 2 }}>
               {loading ? (
                 <AbsoluteSpinner
                   loading
-                  style={{backgroundColor: colors.appGrey}}
+                  style={{ backgroundColor: colors.appGrey }}
                 />
               ) : (
                 <>
@@ -58,7 +58,8 @@ const SavedWorkouts: FunctionComponent<{
                       textAlign: 'center',
                       color: colors.appWhite,
                       fontSize: 16,
-                    }}>
+                    }}
+                  >
                     No saved workouts found
                   </Text>
                   <FontAwesome6
@@ -66,14 +67,14 @@ const SavedWorkouts: FunctionComponent<{
                     name="dumbbell"
                     color={colors.appWhite}
                     size={30}
-                    style={{textAlign: 'center', marginTop: 15}}
+                    style={{ textAlign: 'center', marginTop: 15 }}
                   />
                 </>
               )}
             </SafeAreaView>
           }
           keyExtractor={item => item.id || ''}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return <SavedWorkoutCard item={item} navigation={navigation} />;
           }}
         />

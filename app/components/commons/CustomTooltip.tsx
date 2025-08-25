@@ -15,12 +15,13 @@ interface Props {
   children?: any;
 }
 
-const Button = ({wrapperStyle, style, children, ...rest}: Props) => (
+const Button = ({ wrapperStyle, style, children, ...rest }: Props) => (
   <View style={[styles.button, wrapperStyle]}>
     <Text
       style={[styles.buttonText, style]}
       testID={'TourGuideButtonText'}
-      {...rest}>
+      {...rest}
+    >
       {children}
     </Text>
   </View>
@@ -89,7 +90,8 @@ const CustomTooltip = ({
       paddingBottom: 16,
       width: '80%',
       backgroundColor: '#ffffffef',
-    }}>
+    }}
+  >
     <View style={styles.tooltipContainer}>
       <Text testID="stepDescription" style={styles.tooltipText}>
         {currentStep && currentStep.text}

@@ -1,8 +1,8 @@
-import {PayloadAction} from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
 import {
   Permission,
@@ -10,20 +10,28 @@ import {
   initialize,
 } from 'react-native-health-connect';
 import Snackbar from 'react-native-snackbar';
-import {EventChannel, eventChannel} from 'redux-saga';
-import {all, call, debounce, fork, put, select, take} from 'redux-saga/effects';
-import {RootState} from '../App';
+import { EventChannel, eventChannel } from 'redux-saga';
+import {
+  all,
+  call,
+  debounce,
+  fork,
+  put,
+  select,
+  take,
+} from 'redux-saga/effects';
+import { RootState } from '../App';
 import * as api from '../helpers/api';
-import {getStepSamples} from '../helpers/biometrics';
-import {logError} from '../helpers/error';
-import {getGoalsData} from '../helpers/goals';
-import {CHECK_STEPS_CALORIES} from '../reducers/exercises';
+import { getStepSamples } from '../helpers/biometrics';
+import { logError } from '../helpers/error';
+import { getGoalsData } from '../helpers/goals';
+import { CHECK_STEPS_CALORIES } from '../reducers/exercises';
 import {
   GET_LEADERBOARD,
   setLeaderboard,
   setLeaderboardsLoading,
 } from '../reducers/leaderboards';
-import {ProfileState, updateProfile} from '../reducers/profile';
+import { ProfileState, updateProfile } from '../reducers/profile';
 import {
   LeaderboardItem,
   LeaderboardType,
@@ -34,11 +42,11 @@ import {
 export function* getLeaderboard(action: PayloadAction<LeaderboardType>) {
   try {
     yield put(setLeaderboardsLoading(true));
-    const {payload} = action;
-    const {profile} = yield select((state: RootState) => state.profile);
+    const { payload } = action;
+    const { profile } = yield select((state: RootState) => state.profile);
 
     if (profile.premium && profile.optedInToLeaderboards) {
-      const data: {leaderboard: LeaderboardItem[]; endTime: number} =
+      const data: { leaderboard: LeaderboardItem[]; endTime: number } =
         yield call(api.getLeaderboardData, payload);
 
       yield put(
@@ -50,7 +58,7 @@ export function* getLeaderboard(action: PayloadAction<LeaderboardType>) {
       );
     }
   } catch (e) {
-    Snackbar.show({text: 'Error fetching leaderboard'});
+    Snackbar.show({ text: 'Error fetching leaderboard' });
     logError(e);
   }
   yield put(setLeaderboardsLoading(false));
@@ -68,11 +76,11 @@ export function* checkStepsCalories(background?: boolean) {
       (state: RootState) => state.profile,
     );
 
-    const {quickRoutines} = yield select(
+    const { quickRoutines } = yield select(
       (state: RootState) => state.quickRoutines,
     );
 
-    const {loggedIn, weeklyItems} = profileState;
+    const { loggedIn, weeklyItems } = profileState;
     const {
       dailySteps,
       weeklySteps,
@@ -82,7 +90,7 @@ export function* checkStepsCalories(background?: boolean) {
       uid,
     } = profileState.profile;
 
-    let updatePayload: UpdateProfilePayload = {disableSnackbar: true};
+    let updatePayload: UpdateProfilePayload = { disableSnackbar: true };
 
     if (loggedIn) {
       if (background) {
@@ -114,7 +122,7 @@ export function* checkStepsCalories(background?: boolean) {
         );
 
         if (steps !== dailySteps) {
-          updatePayload = {...updatePayload, dailySteps: steps};
+          updatePayload = { ...updatePayload, dailySteps: steps };
         }
       }
       if (background) {
@@ -137,7 +145,7 @@ export function* checkStepsCalories(background?: boolean) {
         );
 
         if (steps !== weeklySteps) {
-          updatePayload = {...updatePayload, weeklySteps: steps};
+          updatePayload = { ...updatePayload, weeklySteps: steps };
         }
       }
       if (background) {
@@ -148,7 +156,7 @@ export function* checkStepsCalories(background?: boolean) {
         });
       }
 
-      const {calories, dailyCalories: dCalories} = getGoalsData(
+      const { calories, dailyCalories: dCalories } = getGoalsData(
         weeklyItems,
         quickRoutines,
         targets,
@@ -222,12 +230,12 @@ function* handleBackgroundFetchEvent(action: {
   taskId: string;
   timeout?: boolean;
 }) {
-  const {taskId, timeout} = action;
+  const { taskId, timeout } = action;
   if (timeout) {
     BackgroundFetch.finish(taskId);
     logError(new Error('Task timed out'));
   } else {
-    const {profile} = yield select((state: RootState) => state.profile);
+    const { profile } = yield select((state: RootState) => state.profile);
     if (profile.premium && profile.optedInToLeaderboards) {
       yield call(checkStepsCalories, true);
     }
@@ -238,11 +246,11 @@ function* handleBackgroundFetchEvent(action: {
 function createBackgroundFetchChannel() {
   return eventChannel(emitter => {
     const onEvent = async (taskId: string) => {
-      emitter({taskId});
+      emitter({ taskId });
     };
 
     const onTimeout = async (taskId: string) => {
-      emitter({taskId, timeout: true});
+      emitter({ taskId, timeout: true });
     };
 
     BackgroundFetch.configure(
@@ -275,7 +283,7 @@ export default function* leaderboardsSaga() {
     timeout?: boolean;
   }> = yield call(createBackgroundFetchChannel);
   while (true) {
-    const {taskId, timeout} = yield take(backgroundFetchChannel);
-    yield fork(handleBackgroundFetchEvent, {taskId, timeout});
+    const { taskId, timeout } = yield take(backgroundFetchChannel);
+    yield fork(handleBackgroundFetchEvent, { taskId, timeout });
   }
 }

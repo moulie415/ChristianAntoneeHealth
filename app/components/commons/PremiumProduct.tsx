@@ -1,7 +1,7 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {View} from 'react-native';
-import {PurchasesPackage} from 'react-native-purchases';
+import { View } from 'react-native';
+import { PurchasesPackage } from 'react-native-purchases';
 import colors from '../../constants/colors';
 import SelectableButton from './SelectableButton';
 import Text from './Text';
@@ -22,13 +22,13 @@ const getPackageStrings = (p: PurchasesPackage) => {
   switch (p.product.identifier) {
     case 'monthly':
     case 'monthly:p1m':
-      return {title: 'Premium', secondary: 'Monthly'};
+      return { title: 'Premium', secondary: 'Monthly' };
     case 'premium_yearly':
     case 'monthly:premium-yearly':
-      return {title: 'Premium', secondary: 'Yearly', bestValue: true};
+      return { title: 'Premium', secondary: 'Yearly', bestValue: true };
     case 'monthly_plus':
     case 'monthly:monthly-plus':
-      return {title: 'Premium Plus', secondary: 'Monthly'};
+      return { title: 'Premium Plus', secondary: 'Monthly' };
   }
 };
 
@@ -36,7 +36,7 @@ const PremiumProduct: React.FC<{
   p: PurchasesPackage;
   selected: boolean;
   setSelected: (id: string) => void;
-}> = ({p, selected, setSelected}) => {
+}> = ({ p, selected, setSelected }) => {
   const packageStrings = getPackageStrings(p);
   const title = packageStrings?.title;
   return (
@@ -49,12 +49,14 @@ const PremiumProduct: React.FC<{
               flexDirection: 'row',
               alignItems: 'flex-end',
               marginTop: 10,
-            }}>
+            }}
+          >
             <Text
               style={{
                 color: colors.offWhite,
                 fontSize: 12,
-              }}>
+              }}
+            >
               {packageStrings?.secondary}
             </Text>
             <View
@@ -67,7 +69,8 @@ const PremiumProduct: React.FC<{
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: -4,
-              }}>
+              }}
+            >
               <FontAwesome6
                 iconStyle="solid"
                 name="star"
@@ -80,7 +83,8 @@ const PremiumProduct: React.FC<{
                   fontSize: 10,
                   marginLeft: 3,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 BEST VALUE
               </Text>
             </View>
@@ -90,7 +94,7 @@ const PremiumProduct: React.FC<{
         )
       }
       selected={selected}
-      style={{marginHorizontal: 20, marginTop: 10}}
+      style={{ marginHorizontal: 20, marginTop: 10 }}
       onPress={async () => setSelected(p.identifier)}
       customRight={
         <View>
@@ -100,7 +104,8 @@ const PremiumProduct: React.FC<{
               fontSize: 14,
               fontWeight: 'bold',
               textAlign: 'right',
-            }}>
+            }}
+          >
             {p.product.priceString}
           </Text>
           <Text
@@ -109,7 +114,8 @@ const PremiumProduct: React.FC<{
               marginTop: 10,
               fontSize: 12,
               textAlign: 'right',
-            }}>{`${p.product.priceString[0]}${monthlyPrice(p).toFixed(
+            }}
+          >{`${p.product.priceString[0]}${monthlyPrice(p).toFixed(
             2,
           )} / month`}</Text>
         </View>

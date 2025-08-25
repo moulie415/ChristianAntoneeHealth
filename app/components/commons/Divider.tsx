@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, ViewStyle} from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import colors from '../../constants/colors';
 
-const Divider: React.FC<{style?: ViewStyle}> = ({style}) => {
+const Divider: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   return (
     <View
       style={[

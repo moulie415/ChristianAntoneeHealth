@@ -1,15 +1,15 @@
-import React, {ReactNode} from 'react';
-import {TouchableOpacity, View, ViewStyle} from 'react-native';
-import {navigationRef} from '../../RootNavigation';
+import React, { ReactNode } from 'react';
+import { TouchableOpacity, View, ViewStyle } from 'react-native';
+import { navigationRef } from '../../RootNavigation';
 import BackButton from './BackButton';
 
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {DrawerActions} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { DrawerActions } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import Text from './Text';
 
 const Header: React.FC<{
@@ -54,16 +54,17 @@ const Header: React.FC<{
         top: absolute ? insets.top : undefined,
         left: absolute ? 0 : undefined,
         zIndex: 1,
-      }}>
+      }}
+    >
       {hasBack && (
         <BackButton
-          style={{margin: 20}}
+          style={{ margin: 20 }}
           onPress={customBackPress || navigationRef?.goBack}
         />
       )}
 
       {!!left && (
-        <View style={{flex: 1, alignItems: 'flex-start', margin: 20}}>
+        <View style={{ flex: 1, alignItems: 'flex-start', margin: 20 }}>
           {left}
         </View>
       )}
@@ -77,13 +78,14 @@ const Header: React.FC<{
             left: 10,
           }}
           onPress={() => navigationRef.dispatch(DrawerActions.openDrawer())}
-          style={{padding: 20}}>
+          style={{ padding: 20 }}
+        >
           <FontAwesome6
             iconStyle="solid"
             name="bars"
             color={colors.appWhite}
             size={25}
-            style={{marginLeft: -3}}
+            style={{ marginLeft: -3 }}
           />
           {profile.premium && count > 0 && (
             <View
@@ -97,13 +99,15 @@ const Header: React.FC<{
                 top: 7,
                 right: 7,
                 backgroundColor: colors.appRed,
-              }}>
+              }}
+            >
               <Text
                 style={{
                   fontSize: 12,
                   fontWeight: 'bold',
                   color: colors.appWhite,
-                }}>
+                }}
+              >
                 {count > 9 ? '9+' : count}
               </Text>
             </View>
@@ -119,12 +123,13 @@ const Header: React.FC<{
             fontSize: 25,
             fontWeight: 'bold',
             flex: 1,
-          }}>
+          }}
+        >
           {title}
         </Text>
       )}
       {!!right && (
-        <View style={[{alignItems: 'flex-end', margin: 20}, rightStyle]}>
+        <View style={[{ alignItems: 'flex-end', margin: 20 }, rightStyle]}>
           {right}
         </View>
       )}
@@ -132,7 +137,7 @@ const Header: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

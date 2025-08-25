@@ -1,9 +1,9 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {Recipe} from '../types/Shared';
-import {setLoggedIn} from './profile';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Recipe } from '../types/Shared';
+import { setLoggedIn } from './profile';
 
 export interface RecipesState {
-  recipes: {[key: string]: Recipe};
+  recipes: { [key: string]: Recipe };
   loading: boolean;
 }
 
@@ -37,13 +37,13 @@ const recipesSlice = createSlice({
   reducers: {
     setRecipes: (
       state: RecipesState,
-      {payload}: PayloadAction<{[key: string]: Recipe}>,
+      { payload }: PayloadAction<{ [key: string]: Recipe }>,
     ) => {
       state.recipes = payload;
     },
     setRecipesLoading: (
       state: RecipesState,
-      {payload}: PayloadAction<boolean>,
+      { payload }: PayloadAction<boolean>,
     ) => {
       state.loading = payload;
     },
@@ -51,7 +51,7 @@ const recipesSlice = createSlice({
     getSavedRecipes: () => {},
     getRecipesById: (
       state: RecipesState,
-      {payload}: PayloadAction<string[]>,
+      { payload }: PayloadAction<string[]>,
     ) => {},
   },
   extraReducers: builder => {

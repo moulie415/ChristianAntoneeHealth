@@ -1,8 +1,8 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import colors from '../../../constants/colors';
-import {LeaderboardItem} from '../../../types/Shared';
+import { LeaderboardItem } from '../../../types/Shared';
 import Avatar from '../../commons/Avatar';
 
 const getRankColor = (rank: number) => {
@@ -16,7 +16,7 @@ const getRankColor = (rank: number) => {
   }
 };
 
-const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
+const PodiumItem: React.FC<{ item?: LeaderboardItem; suffix?: string }> = ({
   item,
   suffix,
 }) => {
@@ -26,7 +26,8 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
         alignItems: 'center',
         paddingTop: item?.rank !== 1 ? 65 : 0,
         width: '33%',
-      }}>
+      }}
+    >
       {item && (
         <>
           <View>
@@ -34,7 +35,7 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
               <FontAwesome6
                 iconStyle="solid"
                 name="crown"
-                style={{alignSelf: 'center'}}
+                style={{ alignSelf: 'center' }}
                 size={25}
                 color={getRankColor(1)}
               />
@@ -43,7 +44,7 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
               size={item.rank === 1 ? 60 : 50}
               src={item.user?.avatar}
               name={`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
-              style={{borderWidth: 4, borderColor: getRankColor(item.rank)}}
+              style={{ borderWidth: 4, borderColor: getRankColor(item.rank) }}
               uid={item.userId}
             />
 
@@ -55,14 +56,16 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
                 bottom: -10,
                 left: 0,
                 right: 0,
-              }}>
+              }}
+            >
               <View
                 style={{
                   backgroundColor: getRankColor(item.rank),
                   width: 20,
                   height: 20,
                   borderRadius: 10,
-                }}>
+                }}
+              >
                 <Text
                   style={{
                     fontSize: 16,
@@ -70,7 +73,8 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
                     color: colors.appWhite,
                     lineHeight: 20,
                     textAlign: 'center',
-                  }}>
+                  }}
+                >
                   {item.rank}
                 </Text>
               </View>
@@ -82,7 +86,8 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
               marginTop: 20,
               fontSize: 14,
               textAlign: 'center',
-            }}>
+            }}
+          >
             {`${item?.user?.name || ''} ${item?.user?.surname || ''}`}
           </Text>
           <Text
@@ -90,7 +95,8 @@ const PodiumItem: React.FC<{item?: LeaderboardItem; suffix?: string}> = ({
               color: colors.appWhite,
               fontWeight: 'bold',
               marginTop: 5,
-            }}>
+            }}
+          >
             {`${item.score} ${suffix || ''}`}
           </Text>
         </>

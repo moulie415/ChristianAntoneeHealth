@@ -1,25 +1,25 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
+import { Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import Test from '../../types/Test';
 import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const TestCard: React.FC<{
   item: Test;
   onPress: () => void;
   profile: Profile;
-  tests: {[key: string]: Test};
+  tests: { [key: string]: Test };
   disabled?: boolean;
   plan?: boolean;
-}> = ({item, onPress, profile, tests, disabled, plan}) => {
+}> = ({ item, onPress, profile, tests, disabled, plan }) => {
   if (!item) {
     return null;
   }
@@ -32,9 +32,10 @@ const TestCard: React.FC<{
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
-        source={{uri: item.thumbnail?.src}}>
+        source={{ uri: item.thumbnail?.src }}
+      >
         <LinearGradient
           colors={[
             'rgba(54, 57, 68,0)',
@@ -44,7 +45,6 @@ const TestCard: React.FC<{
           style={{
             height: plan ? 100 : 75,
             justifyContent: 'flex-end',
-            padding: 10,
             borderRadius: 10,
             right: 0,
             left: 0,
@@ -52,15 +52,22 @@ const TestCard: React.FC<{
             position: 'absolute',
             alignSelf: 'flex-end',
             marginBottom: -1,
-          }}>
+          }}
+        >
           {plan ? (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 10,
+              }}
+            >
               <FontAwesome6
                 iconStyle="solid"
                 name="heart-pulse"
                 color={colors.appWhite}
                 size={30}
-                style={{marginHorizontal: 10}}
+                style={{ marginHorizontal: 10 }}
               />
               <View>
                 <Text
@@ -68,7 +75,8 @@ const TestCard: React.FC<{
                     color: colors.appWhite,
                     fontSize: 25,
                     fontWeight: 'bold',
-                  }}>
+                  }}
+                >
                   Test
                 </Text>
                 <Text
@@ -77,7 +85,8 @@ const TestCard: React.FC<{
                     fontSize: 16,
                     marginTop: 5,
                     fontWeight: 'bold',
-                  }}>
+                  }}
+                >
                   {item.name}
                 </Text>
               </View>
@@ -86,9 +95,11 @@ const TestCard: React.FC<{
             <Text
               style={{
                 color: colors.appWhite,
+                padding: 10,
                 fontSize: 16,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {item.name}
             </Text>
           )}
@@ -99,7 +110,8 @@ const TestCard: React.FC<{
               position: 'absolute',
               top: 15,
               right: 15,
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="lock"
@@ -112,7 +124,7 @@ const TestCard: React.FC<{
     </TouchableOpacity>
   );
 };
-const mapStateToProps = ({profile, tests}: RootState) => ({
+const mapStateToProps = ({ profile, tests }: RootState) => ({
   profile: profile.profile,
   tests: tests.tests,
 });

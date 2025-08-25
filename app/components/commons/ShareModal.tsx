@@ -1,21 +1,21 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
-import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {sendMessage} from '../../helpers/api';
-import {shareWorkout} from '../../helpers/exercises';
-import {setShareModalVisible} from '../../reducers/exercises';
-import {getConnections} from '../../reducers/profile';
+import { sendMessage } from '../../helpers/api';
+import { shareWorkout } from '../../helpers/exercises';
+import { setShareModalVisible } from '../../reducers/exercises';
+import { getConnections } from '../../reducers/profile';
 import Chat from '../../types/Chat';
 import Exercise from '../../types/Exercise';
-import Message, {MessageType} from '../../types/Message';
-import {Profile} from '../../types/Shared';
+import Message, { MessageType } from '../../types/Message';
+import { Profile } from '../../types/Shared';
 import AbsoluteSpinner from './AbsoluteSpinner';
 import Avatar from './Avatar';
 import Button from './Button';
@@ -27,13 +27,13 @@ import Text from './Text';
 const ShareModal: React.FC<{
   visible: boolean;
   setVisible: (visible: boolean) => void;
-  connections: {[key: string]: Profile};
+  connections: { [key: string]: Profile };
   type: MessageType;
   workout?: Exercise[];
   title: string;
   profile: Profile;
   getConnectionsAction: () => void;
-  chats: {[key: string]: Chat};
+  chats: { [key: string]: Chat };
 }> = ({
   visible,
   setVisible,
@@ -78,7 +78,11 @@ const ShareModal: React.FC<{
           text: `${profile.name} shared a workout with you`,
           type: 'workout',
           workout: workout?.map(exercise => exercise.id || ''),
-          user: {_id: profile.uid, name: profile.name, avatar: profile.avatar},
+          user: {
+            _id: profile.uid,
+            name: profile.name,
+            avatar: profile.avatar,
+          },
           pending: true,
           createdAt: moment().valueOf(),
         };
@@ -92,17 +96,18 @@ const ShareModal: React.FC<{
           backgroundColor: '#fff',
           paddingVertical: 10,
           borderRadius: 10,
-        }}>
-        <Text style={{textAlign: 'center'}}>{title}</Text>
-        <Text style={{textAlign: 'center', marginBottom: 10}}>
+        }}
+      >
+        <Text style={{ textAlign: 'center' }}>{title}</Text>
+        <Text style={{ textAlign: 'center', marginBottom: 10 }}>
           (Send message to friends)
         </Text>
         <Divider />
         <FlatList
-          style={{height: 200}}
+          style={{ height: 200 }}
           data={Object.values(connections)}
           ItemSeparatorComponent={Divider}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <ListItem
               accessoryLeft={
                 <Avatar
@@ -138,16 +143,16 @@ const ShareModal: React.FC<{
           )}
         />
 
-        <View style={{flexDirection: 'row', paddingHorizontal: 10}}>
+        <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
           <Button
             text="Cancel"
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
             onPress={() => setVisible(false)}
           />
           <Button text="Share external" onPress={shareExternal} />
           <Button
             text="Send"
-            style={{marginLeft: 10}}
+            style={{ marginLeft: 10 }}
             disabled={!selected.length || loading}
             onPress={async () => {
               try {
@@ -180,7 +185,7 @@ const ShareModal: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: RootState) => ({
+const mapStateToProps = ({ profile, exercises }: RootState) => ({
   connections: profile.connections,
   profile: profile.profile,
   visible: exercises.shareModalVisible,

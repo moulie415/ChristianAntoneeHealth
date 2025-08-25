@@ -1,16 +1,16 @@
-import {NetInfoState, fetch} from '@react-native-community/netinfo';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import { NetInfoState, fetch } from '@react-native-community/netinfo';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import db, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
-import {statusCodes} from '@react-native-google-signin/google-signin';
-import {EventChannel, eventChannel} from '@redux-saga/core';
-import {PayloadAction} from '@reduxjs/toolkit';
+import { statusCodes } from '@react-native-google-signin/google-signin';
+import { EventChannel, eventChannel } from '@redux-saga/core';
+import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import _ from 'lodash';
 import moment from 'moment';
-import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
-import {Audio, Image, Video} from 'react-native-compressor';
+import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native';
+import { Audio, Image, Video } from 'react-native-compressor';
 import {
   getBrand,
   getBuildNumber,
@@ -20,14 +20,14 @@ import {
   getVersion,
   isTablet,
 } from 'react-native-device-info';
-import {openInbox} from 'react-native-email-link';
+import { openInbox } from 'react-native-email-link';
 import RNFS from 'react-native-fs';
-import {openHealthConnectSettings} from 'react-native-health-connect';
+import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
 import Sound from 'react-native-sound';
-import {updateApplicationContext} from 'react-native-watch-connectivity';
+import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
   call,
@@ -40,26 +40,29 @@ import {
   takeLatest,
   throttle,
 } from 'redux-saga/effects';
-import {RootState, store} from '../App';
-import {goBack, navigate, navigationRef, resetToTabs} from '../RootNavigation';
-import {scheduleLocalNotification} from '../helpers';
+import { RootState, store } from '../App';
+import {
+  goBack,
+  navigate,
+  navigationRef,
+  resetToTabs,
+} from '../RootNavigation';
+import { scheduleLocalNotification } from '../helpers';
 import * as api from '../helpers/api';
 import {
   getBodyFatPercentageSamples,
   getHeightSamples,
   getWeightSamples,
-  initBiometrics,
-  isAvailable,
   saveBodyFatPercentage,
   saveHeight,
   saveWeight,
 } from '../helpers/biometrics';
-import {checkVersion} from '../helpers/checkVersion';
-import {logError} from '../helpers/error';
-import {getGoalsData} from '../helpers/goals';
-import {PREMIUM_PLUS} from '../helpers/hasPremiumPlus';
-import {setUserAttributes} from '../helpers/profile';
-import {getLeaderboard} from '../reducers/leaderboards';
+import { checkVersion } from '../helpers/checkVersion';
+import { logError } from '../helpers/error';
+import { getGoalsData } from '../helpers/goals';
+import { PREMIUM_PLUS } from '../helpers/hasPremiumPlus';
+import { setUserAttributes } from '../helpers/profile';
+import { getLeaderboard } from '../reducers/leaderboards';
 import {
   GET_CONNECTIONS,
   GET_SAMPLES,
@@ -99,8 +102,8 @@ import {
   setWeightSamples,
   updateProfile as updateProfileAction,
 } from '../reducers/profile';
-import {getQuickRoutinesById} from '../reducers/quickRoutines';
-import {SettingsState} from '../reducers/settings';
+import { getQuickRoutinesById } from '../reducers/quickRoutines';
+import { SettingsState } from '../reducers/settings';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import {
@@ -109,10 +112,10 @@ import {
   SignUpPayload,
   UpdateProfilePayload,
 } from '../types/Shared';
-import {checkWorkoutStreak, getAllExercises} from './exercises';
-import {checkStepsCalories} from './leaderboards';
-import {getQuickRoutines} from './quickRoutines';
-import {getSettings} from './settings';
+import { checkWorkoutStreak, getAllExercises } from './exercises';
+import { checkStepsCalories } from './leaderboards';
+import { getQuickRoutines } from './quickRoutines';
+import { getSettings } from './settings';
 
 const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
@@ -139,7 +142,7 @@ type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
 function* getSamplesWorker() {
-  const {uid, premium, freeBiometrics} = yield select(
+  const { uid, premium, freeBiometrics } = yield select(
     (state: RootState) => state.profile.profile,
   );
   const weightSamples: Sample[] = yield call(getWeightSamples, uid);
@@ -188,7 +191,7 @@ function* getSamplesWorker() {
 function onAuthStateChanged() {
   return eventChannel(emitter => {
     const subscriber = auth().onAuthStateChanged(user => {
-      emitter({user});
+      emitter({ user });
     });
     return subscriber;
   });
@@ -211,7 +214,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
   yield put(setLoading(true));
   try {
     try {
-      const {uid} = yield select((state: RootState) => state.profile.profile);
+      const { uid } = yield select((state: RootState) => state.profile.profile);
       if (weight) {
         yield call(saveWeight, uid, weight);
       }
@@ -232,7 +235,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
         'Error saving body measurement',
         "Please make sure you've given CA Health sufficient permissions",
         [
-          {text: 'Cancel'},
+          { text: 'Cancel' },
           {
             text: `Open ${
               Platform.OS === 'ios' ? 'Apple Health' : 'Health Connect'
@@ -250,7 +253,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
 
       logError(e);
     }
-    const {profile} = yield select((state: RootState) => state.profile);
+    const { profile } = yield select((state: RootState) => state.profile);
     const updateObj: Profile = {
       ...profile,
       ...action.payload,
@@ -258,7 +261,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
     yield call(api.updateUser, updateObj, profile.uid);
     yield put(setProfile(updateObj));
     if (!disableSnackbar) {
-      yield call(Snackbar.show, {text: 'Profile updated'});
+      yield call(Snackbar.show, { text: 'Profile updated' });
     }
     setUserAttributes({
       birthday: dob || '',
@@ -306,16 +309,16 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       }
     }
   } catch (e) {
-    yield call(Snackbar.show, {text: 'Error updating profile'});
+    yield call(Snackbar.show, { text: 'Error updating profile' });
     logError(e);
   }
   yield put(setLoading(false));
 }
 
 function* signUp(action: PayloadAction<SignUpPayload>) {
-  const {name, surname, dob, weight, height, gender, goal, fromProfile} =
+  const { name, surname, dob, weight, height, gender, goal, fromProfile } =
     action.payload;
-  const {uid} = yield select((state: RootState) => state.profile.profile);
+  const { uid } = yield select((state: RootState) => state.profile.profile);
   try {
     try {
       yield call(saveWeight, uid, weight);
@@ -328,7 +331,7 @@ function* signUp(action: PayloadAction<SignUpPayload>) {
       (state: RootState) => state.settings,
     );
     const targets = settings.workoutGoals[goal] || null;
-    const {profile} = yield select((state: RootState) => state.profile);
+    const { profile } = yield select((state: RootState) => state.profile);
     yield call(
       api.updateUser,
       {
@@ -430,7 +433,7 @@ const channels: {
 ];
 
 function* createChannels() {
-  channels.forEach(({channelId, channelName, channelDescription}) => {
+  channels.forEach(({ channelId, channelName, channelDescription }) => {
     PushNotification.createChannel(
       {
         channelId,
@@ -445,12 +448,12 @@ function* createChannels() {
 function* getWeeklyItems() {
   try {
     yield put(setLoading(true));
-    const {profile} = yield select((state: RootState) => state.profile);
+    const { profile } = yield select((state: RootState) => state.profile);
     const weeklyItems: WeeklyItems = yield call(
       api.getWeeklyItems,
       profile.uid,
     );
-    const {quickRoutines} = yield select(
+    const { quickRoutines } = yield select(
       (state: RootState) => state.quickRoutines,
     );
     const missingRoutines = Object.values(weeklyItems.quickRoutines)
@@ -463,25 +466,29 @@ function* getWeeklyItems() {
 
     const goalData = getGoalsData(weeklyItems, quickRoutines, profile.targets);
     if (Platform.OS === 'ios') {
-      updateApplicationContext({goalData});
+      updateApplicationContext({ goalData });
     }
   } catch (e) {
     yield put(setLoading(false));
     logError(e);
-    Snackbar.show({text: 'Error fetching weekly data'});
+    Snackbar.show({ text: 'Error fetching weekly data' });
   }
 }
 
 export const GOAL_REMINDER_KEY = Platform.OS === 'ios' ? 'goalReminder' : 1;
 
 export function* scheduleGoalReminderNotification() {
-  const {profile, weeklyItems}: {profile: Profile; weeklyItems: WeeklyItems} =
-    yield select((state: RootState) => state.profile);
-  const {quickRoutines} = yield select(
+  const {
+    profile,
+    weeklyItems,
+  }: { profile: Profile; weeklyItems: WeeklyItems } = yield select(
+    (state: RootState) => state.profile,
+  );
+  const { quickRoutines } = yield select(
     (state: RootState) => state.quickRoutines,
   );
   if (profile.goal) {
-    const {completed} = getGoalsData(
+    const { completed } = getGoalsData(
       weeklyItems,
       quickRoutines,
       profile.targets,
@@ -510,41 +517,41 @@ function* getWeeklyItemsForConnection(action: PayloadAction<string>) {
     yield put(setLoading(true));
     const uid = action.payload;
     const weeklyItems: WeeklyItems = yield call(api.getWeeklyItems, uid);
-    const {quickRoutines} = yield select(
+    const { quickRoutines } = yield select(
       (state: RootState) => state.quickRoutines,
     );
     const missingRoutines = Object.values(weeklyItems.quickRoutines)
       .filter(item => !quickRoutines[item.quickRoutineId])
       .map(routine => routine.quickRoutineId);
     yield put(getQuickRoutinesById(missingRoutines));
-    yield put(setWeeklyItemsForConnection({uid, items: weeklyItems}));
+    yield put(setWeeklyItemsForConnection({ uid, items: weeklyItems }));
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
     logError(e);
-    Snackbar.show({text: 'Error fetching weekly data'});
+    Snackbar.show({ text: 'Error fetching weekly data' });
   }
 }
 
 function* getConnections() {
   try {
-    const {uid} = yield select((state: RootState) => state.profile.profile);
+    const { uid } = yield select((state: RootState) => state.profile.profile);
     yield put(setLoading(true));
-    const connections: {[key: string]: Profile} = yield call(
+    const connections: { [key: string]: Profile } = yield call(
       api.getConnections,
       uid,
     );
-    const currentUnread: {[key: string]: number} = yield select(
+    const currentUnread: { [key: string]: number } = yield select(
       (state: RootState) => state.profile.profile.unread,
     );
     if (currentUnread) {
       // in case a friend had deleted their account we want to set unread back to 0
       const newUnread = Object.keys(currentUnread).reduce((acc, cur) => {
         if (connections[cur]) {
-          return {...acc, [cur]: currentUnread[cur]};
+          return { ...acc, [cur]: currentUnread[cur] };
         }
         if (cur === 'plan') {
-          return {...acc, [cur]: currentUnread[cur]};
+          return { ...acc, [cur]: currentUnread[cur] };
         }
         return acc;
       }, {});
@@ -553,12 +560,12 @@ function* getConnections() {
         yield put(setUnread(newUnread));
       }
     }
-    const chats: {[key: string]: Chat} = yield call(api.getChats, uid);
+    const chats: { [key: string]: Chat } = yield call(api.getChats, uid);
     yield put(setChats(chats));
     yield put(setConnections(connections));
     yield put(setLoading(false));
   } catch (e) {
-    Snackbar.show({text: 'Error fetching connections'});
+    Snackbar.show({ text: 'Error fetching connections' });
     logError(e);
     yield put(setLoading(false));
   }
@@ -585,23 +592,25 @@ function onChatMessage(id: string) {
   });
 }
 
-function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
+function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
   const channel: EventChannel<Snapshot> = yield call(
     onChatMessage,
     chatsObj[uid].id,
   );
   while (true) {
     const snapshot: Snapshot = yield take(channel);
-    yield put(setMessages({uid, snapshot}));
+    yield put(setMessages({ uid, snapshot }));
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') {
-        yield put(deleteMessage({message: change.doc.data() as Message, uid}));
+        yield put(
+          deleteMessage({ message: change.doc.data() as Message, uid }),
+        );
       }
     }
 
     if (navigationRef.current) {
       const route: any = navigationRef.current.getCurrentRoute();
-      const {state} = yield select((state: RootState) => state.profile);
+      const { state } = yield select((state: RootState) => state.profile);
       if (
         route.name === 'Chat' &&
         route.params?.uid === uid &&
@@ -613,7 +622,7 @@ function* chatWatcher(uid: string, chatsObj: {[key: string]: Chat}) {
   }
 }
 
-function* chatsWatcher(action: PayloadAction<{[key: string]: Chat}>) {
+function* chatsWatcher(action: PayloadAction<{ [key: string]: Chat }>) {
   const chatsObj = action.payload;
   const uids = Object.keys(chatsObj);
   for (const uid of uids) {
@@ -629,11 +638,11 @@ function* sendMessage(
     size?: number | null;
   }>,
 ) {
-  const {chatId, uid} = action.payload;
+  const { chatId, uid } = action.payload;
   let message = action.payload.message;
   const fileSizeExceededMessage = 'File size limit exceeded';
   try {
-    yield put(setMessage({uid, message}));
+    yield put(setMessage({ uid, message }));
     if (
       message.type === 'audio' ||
       message.type === 'image' ||
@@ -670,7 +679,7 @@ function* sendMessage(
 
       // file size comes back in bytes so need to divide by 1000000 to get mb
       if (size && size / 1000000 < maxFileSize) {
-        const {profile} = yield select((state: RootState) => state.profile);
+        const { profile } = yield select((state: RootState) => state.profile);
         const imageRef = storage()
           .ref(`chats/${profile.uid}`)
           .child(message._id as string);
@@ -700,9 +709,9 @@ function* sendMessage(
     notif.play();
   } catch (e) {
     if (e instanceof Error) {
-      Snackbar.show({text: e.message});
+      Snackbar.show({ text: e.message });
     }
-    yield put(deleteMessage({uid, message}));
+    yield put(deleteMessage({ uid, message }));
 
     logError(e);
   }
@@ -716,12 +725,12 @@ function* requestMessageDeletionWorker(
     uid: string;
   }>,
 ) {
-  const {chatId, messageId, message, uid} = action.payload;
+  const { chatId, messageId, message, uid } = action.payload;
   try {
     yield call(api.deleteMessage, message, chatId, messageId);
-    yield put(deleteMessage({message, uid}));
+    yield put(deleteMessage({ message, uid }));
   } catch (e) {
-    Snackbar.show({text: 'Error deleting message'});
+    Snackbar.show({ text: 'Error deleting message' });
     logError(e);
   }
 }
@@ -729,12 +738,12 @@ function* requestMessageDeletionWorker(
 function* setRead(action: PayloadAction<string>) {
   try {
     const otherUid = action.payload;
-    const {uid} = yield select((state: RootState) => state.profile.profile);
-    const current: {[key: string]: number} = yield select(
+    const { uid } = yield select((state: RootState) => state.profile.profile);
+    const current: { [key: string]: number } = yield select(
       (state: RootState) => state.profile.profile.unread,
     );
     if (current) {
-      const unread = {...current, [otherUid]: 0};
+      const unread = { ...current, [otherUid]: 0 };
       yield call(api.setUnread, uid, unread);
       yield put(setUnread(unread));
     }
@@ -744,23 +753,23 @@ function* setRead(action: PayloadAction<string>) {
 }
 
 function* loadEarlierMessages(
-  action: PayloadAction<{chatId: string; uid: string; startAfter: number}>,
+  action: PayloadAction<{ chatId: string; uid: string; startAfter: number }>,
 ) {
   try {
-    const {chatId, uid, startAfter} = action.payload;
-    const {messages} = yield select((state: RootState) => state.profile);
+    const { chatId, uid, startAfter } = action.payload;
+    const { messages } = yield select((state: RootState) => state.profile);
     const current = messages[uid];
     yield put(setLoading(true));
-    const earlier: {[key: string]: Message} = yield call(
+    const earlier: { [key: string]: Message } = yield call(
       api.getMessages,
       chatId,
       startAfter,
     );
-    yield put(setMessagesObj({uid, messages: {...current, ...earlier}}));
+    yield put(setMessagesObj({ uid, messages: { ...current, ...earlier } }));
     yield put(setLoading(false));
   } catch (e) {
     yield put(setLoading(false));
-    Snackbar.show({text: 'Error loading earlier messages'});
+    Snackbar.show({ text: 'Error loading earlier messages' });
     logError(e);
   }
 }
@@ -771,11 +780,11 @@ function* premiumUpdatedWorker() {
       (state: RootState) => state.profile.profile.premium,
     );
     yield take(SET_PREMIUM);
-    const {premium, uid} = yield select(
+    const { premium, uid } = yield select(
       (state: RootState) => state.profile.profile,
     );
     if (!_.isEqual(oldPremium, premium)) {
-      yield call(api.updateUser, {premium}, uid);
+      yield call(api.updateUser, { premium }, uid);
     }
   }
 }
@@ -799,7 +808,7 @@ function* checkDeviceInfoChanged() {
     );
 
     if (!_.isEqual(deviceInfo, profile.deviceInfo)) {
-      yield call(api.updateUser, {deviceInfo}, profile.uid);
+      yield call(api.updateUser, { deviceInfo }, profile.uid);
     }
   } catch (e) {
     logError(e);
@@ -856,7 +865,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
 
       yield fork(checkWorkoutStreak);
       yield fork(premiumUpdatedWorker);
-      const {customerInfo, created} = yield call(Purchases.logIn, user.uid);
+      const { customerInfo, created } = yield call(Purchases.logIn, user.uid);
       yield call(getSettings);
       const settings: SettingsState = yield select(
         (state: RootState) => state.settings,
@@ -897,10 +906,10 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       yield fork(checkDeviceInfoChanged);
 
       if (doc.exists() && doc.data()?.signedUp) {
-        const available: boolean = yield call(isAvailable);
-        if (available) {
-          yield call(initBiometrics);
-        }
+        // const available: boolean = yield call(isAvailable);
+        // if (available) {
+        // yield call(initBiometrics);
+        // }
 
         resetToTabs();
 
@@ -913,7 +922,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
           );
         }
 
-        const {premium} = yield select(
+        const { premium } = yield select(
           (state: RootState) => state.profile.profile,
         );
         if (doc.data()?.unread && premium) {
@@ -952,8 +961,8 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         'Account not verified',
         'Please verify your account using the link we sent to your email address, please also check your spam folder',
         [
-          {text: 'Open email app', onPress: () => openInbox()},
-          {text: 'Cancel', style: 'cancel'},
+          { text: 'Open email app', onPress: () => openInbox() },
+          { text: 'Cancel', style: 'cancel' },
         ],
       );
       navigate('LoginEmail');
@@ -962,6 +971,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       navigate('Login');
     }
   } catch (e: any) {
+    console.log(e);
     if (e.code === statusCodes.SIGN_IN_CANCELLED) {
       return;
     }
@@ -980,7 +990,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
 }
 
 export function* feedbackTrigger() {
-  const {premium, hasLeftFeedback, dontAskAgain} = yield select(
+  const { premium, hasLeftFeedback, dontAskAgain } = yield select(
     (state: RootState) => state.profile.profile,
   );
 
@@ -990,13 +1000,16 @@ export function* feedbackTrigger() {
       'Enjoying the app?',
       "We'd appreciated it if you'd take some time to leave some feedback?",
       [
-        {text: 'Maybe later'},
+        { text: 'Maybe later' },
         {
           text: "Don't ask me again",
           style: 'destructive',
           onPress: () => {
             store.dispatch(
-              updateProfileAction({disableSnackbar: true, dontAskAgain: true}),
+              updateProfileAction({
+                disableSnackbar: true,
+                dontAskAgain: true,
+              }),
             );
           },
         },
@@ -1014,7 +1027,7 @@ export function* feedbackTrigger() {
 function* onTokenRefresh() {
   return eventChannel(emitter => {
     const unsubscribe = messaging().onTokenRefresh(token => {
-      emitter({token});
+      emitter({ token });
     });
 
     return unsubscribe;
@@ -1022,12 +1035,12 @@ function* onTokenRefresh() {
 }
 
 function* tokenWatcher() {
-  const channel: EventChannel<{token: string}> = yield call(onTokenRefresh);
+  const channel: EventChannel<{ token: string }> = yield call(onTokenRefresh);
 
   while (true) {
-    const {token} = yield take(channel);
+    const { token } = yield take(channel);
     try {
-      const {uid} = yield select((state: RootState) => state.profile.profile);
+      const { uid } = yield select((state: RootState) => state.profile.profile);
       if (uid) {
         api.setFCMToken(uid, token);
       }
@@ -1059,11 +1072,11 @@ export default function* profileSaga() {
     fork(tokenWatcher),
   ]);
 
-  const channel: EventChannel<{user: FirebaseAuthTypes.User}> = yield call(
+  const channel: EventChannel<{ user: FirebaseAuthTypes.User }> = yield call(
     onAuthStateChanged,
   );
   while (true) {
-    const {user}: {user: FirebaseAuthTypes.User} = yield take(channel);
+    const { user }: { user: FirebaseAuthTypes.User } = yield take(channel);
     yield put(handleAuth(user));
   }
 }

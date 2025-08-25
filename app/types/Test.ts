@@ -10,8 +10,8 @@ export default interface Test {
   premium?: boolean;
   source?: string;
   disabled?: boolean;
-  thumbnail: {src: string; title: string};
-  video?: {src: string; title: string};
+  thumbnail: { src: string; title: string };
+  video?: { src: string; title: string };
   formula?: 'vo2';
 }
 

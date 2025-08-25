@@ -1,5 +1,5 @@
 import React from 'react';
-import {LeaderboardType} from '../../../types/Shared';
+import { LeaderboardType } from '../../../types/Shared';
 import Leaderboard from './Leaderboard';
 
 const workoutStreakType: LeaderboardType = 'workoutStreak';

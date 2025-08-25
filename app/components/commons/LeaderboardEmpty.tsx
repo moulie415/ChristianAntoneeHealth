@@ -1,4 +1,4 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import colors from '../../constants/colors';
 import Text from './Text';
@@ -12,7 +12,8 @@ const LeaderboardEmpty = () => {
           color: colors.appWhite,
           fontSize: 16,
           marginTop: 20,
-        }}>
+        }}
+      >
         No leaderboard entries yet
       </Text>
       <FontAwesome6
@@ -20,7 +21,7 @@ const LeaderboardEmpty = () => {
         color={colors.appWhite}
         size={30}
         iconStyle="solid"
-        style={{textAlign: 'center', marginTop: 15}}
+        style={{ textAlign: 'center', marginTop: 15 }}
       />
     </>
   );

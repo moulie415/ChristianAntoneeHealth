@@ -1,12 +1,12 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import * as _ from 'lodash';
 import React from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
-import {navigate} from '../../RootNavigation';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
+import { navigate } from '../../RootNavigation';
 import colors from '../../constants/colors';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import Text from './Text';
 import Tile from './Tile';
 
@@ -41,8 +41,9 @@ const MetricExplained: React.FC<{
       style={{
         width: Dimensions.get('window').width - 40,
         marginBottom: 20,
-      }}>
-      <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+      }}
+    >
+      <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
         <Text
           style={{
             textAlign: 'left',
@@ -50,11 +51,12 @@ const MetricExplained: React.FC<{
             fontSize: 18,
             color: colors.appWhite,
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           {title}
         </Text>
         {!connection && (
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
               onPress={onPressHistorical}
               style={{
@@ -66,7 +68,8 @@ const MetricExplained: React.FC<{
                 borderRadius: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               <FontAwesome6
                 iconStyle="solid"
                 name="chart-line"
@@ -93,7 +96,8 @@ const MetricExplained: React.FC<{
                   borderRadius: 5,
                   justifyContent: 'center',
                   alignItems: 'center',
-                }}>
+                }}
+              >
                 <FontAwesome6
                   iconStyle="solid"
                   name="pencil"
@@ -110,7 +114,8 @@ const MetricExplained: React.FC<{
           flexDirection: 'row',
           marginHorizontal: 10,
           marginBottom: 20,
-        }}>
+        }}
+      >
         {!!colorsArr.length &&
           !!ranges.length &&
           colorsArr.map((color, index) => {
@@ -129,14 +134,16 @@ const MetricExplained: React.FC<{
             return (
               <View
                 key={color + ranges[index]}
-                style={{flex: 1, zIndex: -index}}>
+                style={{ flex: 1, zIndex: -index }}
+              >
                 <Text
                   style={{
                     textAlign: 'left',
                     color: colors.appWhite,
                     marginLeft: -10,
                     height: 23,
-                  }}>
+                  }}
+                >
                   {isFirst
                     ? ''
                     : `${ranges[index] + ((suffix || '') as string) || ''}`}
@@ -157,7 +164,8 @@ const MetricExplained: React.FC<{
                       position: 'absolute',
                       left: `${percentage}%`,
                       marginTop: -7,
-                    }}>
+                    }}
+                  >
                     <View
                       style={{
                         height: 15,
@@ -178,7 +186,8 @@ const MetricExplained: React.FC<{
                         fontWeight: 'bold',
                         position: 'absolute',
                         bottom: 10,
-                      }}>
+                      }}
+                    >
                       {current}
                     </Text>
                   </View>
@@ -191,7 +200,8 @@ const MetricExplained: React.FC<{
                     color: colors.appWhite,
                     textAlign: 'center',
                     fontWeight: 'bold',
-                  }}>
+                  }}
+                >
                   {labels[index]}
                 </Text>
               </View>
@@ -212,7 +222,8 @@ const MetricExplained: React.FC<{
             borderRadius: 15,
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <FontAwesome6
             iconStyle="solid"
             name="lock"
@@ -225,7 +236,7 @@ const MetricExplained: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

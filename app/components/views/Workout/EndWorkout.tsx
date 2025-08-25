@@ -1,23 +1,23 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {Alert} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
-import {saveWorkout} from '../../../helpers/biometrics';
-import {logError} from '../../../helpers/error';
-import {getWorkoutData} from '../../../helpers/getWorkoutData';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
+import { saveWorkout } from '../../../helpers/biometrics';
+import { logError } from '../../../helpers/error';
+import { getWorkoutData } from '../../../helpers/getWorkoutData';
+import { useBackHandler } from '../../../hooks/UseBackHandler';
 import useThrottle from '../../../hooks/UseThrottle';
-import {saveWorkout as saveWorkoutAction} from '../../../reducers/exercises';
+import { saveWorkout as saveWorkoutAction } from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
-import {SavedWorkout} from '../../../types/SavedItem';
-import {Profile} from '../../../types/Shared';
+import { SavedWorkout } from '../../../types/SavedItem';
+import { Profile } from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import RPESlider from '../../commons/RPESlider';
@@ -29,7 +29,13 @@ const EndWorkout: React.FC<{
   profile: Profile;
   workout: Exercise[];
   saveWorkoutAction: (workout: SavedWorkout) => void;
-}> = ({route, navigation, profile, workout, saveWorkoutAction: saveAction}) => {
+}> = ({
+  route,
+  navigation,
+  profile,
+  workout,
+  saveWorkoutAction: saveAction,
+}) => {
   const [difficulty, setDifficulty] = useState(1);
   const [loading, setLoading] = useState(false);
   const {
@@ -95,7 +101,7 @@ const EndWorkout: React.FC<{
         savedWorkout,
       });
     } catch (e) {
-      Snackbar.show({text: 'Error fetching workout data'});
+      Snackbar.show({ text: 'Error fetching workout data' });
       logError(e);
       setLoading(false);
     }
@@ -132,8 +138,8 @@ const EndWorkout: React.FC<{
   };
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView style={{flex: 1}}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.appGrey }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Text
           style={{
             color: colors.appWhite,
@@ -142,7 +148,8 @@ const EndWorkout: React.FC<{
             marginBottom: 10,
             marginTop: 20,
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           Workout complete!
         </Text>
         <RPESlider rpe={difficulty} setRpe={setDifficulty} />
@@ -159,7 +166,7 @@ const EndWorkout: React.FC<{
         <Button
           text="Save & Continue"
           disabled={loading}
-          style={{margin: 10}}
+          style={{ margin: 10 }}
           onPress={saveAndContinue}
         />
       </SafeAreaView>
@@ -172,7 +179,7 @@ const mapDispatchToProps = {
   saveWorkoutAction,
 };
 
-const mapStateToProps = ({profile, exercises}: RootState) => ({
+const mapStateToProps = ({ profile, exercises }: RootState) => ({
   profile: profile.profile,
   workout: exercises.workout,
 });

@@ -1,17 +1,17 @@
 import moment from 'moment';
-import React, {useEffect, useMemo} from 'react';
-import {ScrollView, View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
-import {navigate} from '../../../RootNavigation';
+import React, { useEffect, useMemo } from 'react';
+import { ScrollView, View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
+import { navigate } from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {objectHasNonEmptyValues} from '../../../helpers';
-import {getEducationById} from '../../../reducers/education';
-import {setWorkout} from '../../../reducers/exercises';
-import {getTestsById} from '../../../reducers/tests';
+import { objectHasNonEmptyValues } from '../../../helpers';
+import { getEducationById } from '../../../reducers/education';
+import { setWorkout } from '../../../reducers/exercises';
+import { getTestsById } from '../../../reducers/tests';
 import Education from '../../../types/Education';
 import Exercise from '../../../types/Exercise';
-import {Plan} from '../../../types/Shared';
+import { Plan } from '../../../types/Shared';
 import Test from '../../../types/Test';
 import EducationCard from '../../commons/EducationCard';
 import NutritionCard from '../../commons/NutritionCard';
@@ -22,12 +22,12 @@ import WorkoutCard from '../../commons/WorkoutCard';
 
 const Daily: React.FC<{
   plan?: Plan;
-  exercises: {[key: string]: Exercise};
-  tests: {[key: string]: Test};
+  exercises: { [key: string]: Exercise };
+  tests: { [key: string]: Test };
   getTestsById: (ids: string[]) => void;
   loading: boolean;
   setWorkout: (workout: Exercise[]) => void;
-  education: {[key: string]: Education};
+  education: { [key: string]: Education };
   getEducationById: (ids: string[]) => void;
   educationLoading: boolean;
 }> = ({
@@ -80,7 +80,8 @@ const Daily: React.FC<{
           fontSize: 25,
           textAlign: 'center',
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         Today's Plan
       </Text>
       {workouts?.length ? (
@@ -113,14 +114,15 @@ const Daily: React.FC<{
           })}
         </>
       ) : (
-        <View style={{padding: 10}}>
+        <View style={{ padding: 10 }}>
           <Text
             style={{
               textAlign: 'center',
               color: colors.appWhite,
               fontSize: 20,
               marginBottom: 10,
-            }}>
+            }}
+          >
             No workouts scheduled for today
           </Text>
         </View>
@@ -137,7 +139,7 @@ const Daily: React.FC<{
                   item={item}
                   disabled={loading}
                   onPress={() => {
-                    navigate('Test', {id: item.id});
+                    navigate('Test', { id: item.id });
                   }}
                 />
               );
@@ -168,7 +170,7 @@ const Daily: React.FC<{
                   key={item.id}
                   plan
                   onPress={() =>
-                    navigate('EducationArticle', {education: item})
+                    navigate('EducationArticle', { education: item })
                   }
                   item={item}
                 />

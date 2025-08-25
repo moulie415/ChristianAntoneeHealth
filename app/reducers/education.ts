@@ -1,9 +1,9 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import Education from '../types/Education';
-import {setLoggedIn} from './profile';
+import { setLoggedIn } from './profile';
 
 export interface EducationState {
-  education: {[key: string]: Education};
+  education: { [key: string]: Education };
   loading: boolean;
 }
 
@@ -34,20 +34,20 @@ const educationSlice = createSlice({
   reducers: {
     setEducation: (
       state: EducationState,
-      {payload}: PayloadAction<{[key: string]: Education}>,
+      { payload }: PayloadAction<{ [key: string]: Education }>,
     ) => {
       state.education = payload;
     },
     setEducationLoading: (
       state: EducationState,
-      {payload}: PayloadAction<boolean>,
+      { payload }: PayloadAction<boolean>,
     ) => {
       state.loading = payload;
     },
     getEducation: () => {},
     getEducationById: (
       state: EducationState,
-      {payload}: PayloadAction<string[]>,
+      { payload }: PayloadAction<string[]>,
     ) => {},
   },
   extraReducers: builder => {

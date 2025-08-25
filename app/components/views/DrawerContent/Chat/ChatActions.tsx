@@ -1,7 +1,7 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import {ActionsProps} from 'react-native-gifted-chat';
+import { TouchableOpacity } from 'react-native';
+import { ActionsProps } from 'react-native-gifted-chat';
 
 import colors from '../../../../constants/colors';
 
@@ -27,7 +27,8 @@ const ChatActions: React.FC<Props> = props => {
         backgroundColor: colors.appBlue,
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
+      }}
+    >
       <FontAwesome6
         iconStyle="solid"
         name="camera"

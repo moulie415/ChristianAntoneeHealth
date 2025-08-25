@@ -1,8 +1,8 @@
 import moment from 'moment';
 import Config from 'react-native-config';
 import Snackbar from 'react-native-snackbar';
-import {Sample} from '../types/Shared';
-import {logError} from './error';
+import { Sample } from '../types/Shared';
+import { logError } from './error';
 
 export interface FitbitHeartRateResponse {
   'activities-heart': ActivitiesHeart[];
@@ -65,7 +65,7 @@ export const refreshToken = async (
       fitbitTokenTimestamp,
     };
   } catch (e) {
-    Snackbar.show({text: 'Error authenticating with Fitbit'});
+    Snackbar.show({ text: 'Error authenticating with Fitbit' });
     logError(e);
   }
 };
@@ -75,7 +75,7 @@ export const getHeartRateTimeSeriesByDate = async (
   fitbitUserId: string,
   from: Date,
   to: Date,
-): Promise<{samples: Sample[]; data: ActivitiesHeart[]}> => {
+): Promise<{ samples: Sample[]; data: ActivitiesHeart[] }> => {
   try {
     const data = await fetch(
       `https://api.fitbit.com/1/user/${fitbitUserId}/activities/heart/date/today/1d.json`,
@@ -104,10 +104,10 @@ export const getHeartRateTimeSeriesByDate = async (
         });
       }
     });
-    return {samples, data: activities};
+    return { samples, data: activities };
   } catch (e) {
-    Snackbar.show({text: 'Error fetching Fitbit heart rate samples'});
+    Snackbar.show({ text: 'Error fetching Fitbit heart rate samples' });
     logError(e);
-    return {samples: [], data: []};
+    return { samples: [], data: [] };
   }
 };

@@ -12,7 +12,7 @@ const MultiSelect: React.FC<{
   selectedItems?: string[];
   selectText: string;
   onSelectedItemsChange: (items: any[]) => void;
-}> = ({items, selectedItems, onSelectedItemsChange, selectText}) => {
+}> = ({ items, selectedItems, onSelectedItemsChange, selectText }) => {
   return (
     <Multi
       items={items}
@@ -22,8 +22,8 @@ const MultiSelect: React.FC<{
       fixedHeight
       onSelectedItemsChange={onSelectedItemsChange}
       selectedItems={selectedItems}
-      styleDropdownMenu={{marginVertical: 10, marginBottom: 20}}
-      styleIndicator={{fontSize: 18}}
+      styleDropdownMenu={{ marginVertical: 10, marginBottom: 20 }}
+      styleIndicator={{ fontSize: 18 }}
       styleInputGroup={{
         backgroundColor: colors.tile,
         height: 60,
@@ -50,9 +50,9 @@ const MultiSelect: React.FC<{
         height: 60,
         borderRadius: 12,
       }}
-      styleTextDropdownSelected={{fontWeight: 'bold', paddingHorizontal: 10}}
-      styleTextDropdown={{fontWeight: 'bold', paddingHorizontal: 10}}
-      searchInputStyle={{color: colors.appWhite}}
+      styleTextDropdownSelected={{ fontWeight: 'bold', paddingHorizontal: 10 }}
+      styleTextDropdown={{ fontWeight: 'bold', paddingHorizontal: 10 }}
+      searchInputStyle={{ color: colors.appWhite }}
       tagBorderColor={colors.borderColor}
       textColor={colors.appWhite}
       tagTextColor={colors.appWhite}

@@ -1,15 +1,20 @@
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Dimensions, ImageSourcePropType, TouchableOpacity, View} from 'react-native';
-import {connect} from 'react-redux';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import {
+  Dimensions,
+  ImageSourcePropType,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {RootState} from '../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const CARD_HEIGHT = 125;
 
@@ -21,7 +26,7 @@ const HomeCard: React.FC<{
   premium?: boolean;
   profile: Profile;
   delay?: number;
-}> = ({title, subtitle, onPress, image, profile, premium, delay}) => {
+}> = ({ title, subtitle, onPress, image, profile, premium, delay }) => {
   return (
     <TouchableOpacity
       style={{
@@ -31,7 +36,8 @@ const HomeCard: React.FC<{
         borderRadius: 10,
         overflow: 'hidden',
       }}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <ImageAnimated
         delay={delay}
         duration={1000}
@@ -40,7 +46,8 @@ const HomeCard: React.FC<{
           height: CARD_HEIGHT,
           width: '100%',
         }}
-        source={image}>
+        source={image}
+      >
         <LinearGradient
           colors={[
             'rgba(54, 57, 68,0)',
@@ -56,25 +63,31 @@ const HomeCard: React.FC<{
             left: 0,
             bottom: -1,
             width: width,
-            padding: 10,
             height: 100,
             justifyContent: 'flex-end',
-          }}>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            {title}
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={{color: colors.appWhite, flex: 3}}>{subtitle}</Text>
+          }}
+        >
+          <View style={{ padding: 10 }}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}
+            >
+              {title}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text style={{ color: colors.appWhite, flex: 3 }}>
+                {subtitle}
+              </Text>
+            </View>
           </View>
           {premium && !profile.premium && (
             <View
@@ -82,7 +95,8 @@ const HomeCard: React.FC<{
                 position: 'absolute',
                 bottom: 15,
                 right: 15,
-              }}>
+              }}
+            >
               <FontAwesome6
                 iconStyle="solid"
                 name="lock"
@@ -97,7 +111,7 @@ const HomeCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Picker} from 'react-native-wheel-pick';
+import { View } from 'react-native';
+import { Picker } from 'react-native-wheel-pick';
 import colors from '../../constants/colors';
-import {Gender} from '../../types/Shared';
+import { Gender } from '../../types/Shared';
 import Button from './Button';
 import Modal from './Modal';
 import Text from './Text';
@@ -30,7 +30,8 @@ const PickerModal: React.FC<{
           width: '90%',
           alignSelf: 'center',
           borderRadius: 10,
-        }}>
+        }}
+      >
         {!!title && (
           <Text
             style={{
@@ -40,7 +41,8 @@ const PickerModal: React.FC<{
               fontSize: 20,
               textAlign: 'center',
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             {title}
           </Text>
         )}
@@ -53,11 +55,11 @@ const PickerModal: React.FC<{
           }}
           selectedValue={selectedValue}
           textColor={colors.appWhite}
-          itemStyle={{color: colors.appWhite}}
+          itemStyle={{ color: colors.appWhite }}
           pickerData={pickerData}
           onValueChange={onValueChange}
         />
-        <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
+        <Button text="Close" style={{ margin: 10 }} onPress={onRequestClose} />
       </View>
     </Modal>
   );

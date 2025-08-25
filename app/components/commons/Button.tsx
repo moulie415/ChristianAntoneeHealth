@@ -1,6 +1,10 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {ReactNode} from 'react';
-import {TextStyle, TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { ReactNode } from 'react';
+import {
+  TextStyle,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
 import colors from '../../constants/colors';
 import Spinner from './Spinner';
 import Text from './Text';
@@ -57,7 +61,8 @@ const Button: React.FC<Props> = ({
           alignItems: 'center',
         },
         props.style,
-      ]}>
+      ]}
+    >
       {!!icon && !loading && (
         <>
           {typeof icon === 'string' ? (
@@ -65,7 +70,7 @@ const Button: React.FC<Props> = ({
               name={icon as any}
               color={iconColor || colors.appWhite}
               size={iconSize || 20}
-              style={{marginRight: 10}}
+              style={{ marginRight: 10 }}
               iconStyle={(iconStyle as any) || 'solid'}
             />
           ) : (
@@ -86,7 +91,8 @@ const Button: React.FC<Props> = ({
               fontWeight: 'bold',
             },
             textStyle,
-          ]}>
+          ]}
+        >
           {text}
         </Text>
       )}

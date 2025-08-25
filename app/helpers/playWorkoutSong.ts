@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {workoutSong} from '../sagas/profile';
+import { workoutSong } from '../sagas/profile';
 import sleep from './sleep';
 
 const playWorkoutSong = async () => {

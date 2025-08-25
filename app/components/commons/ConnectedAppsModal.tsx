@@ -1,13 +1,13 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Dimensions, Linking, TouchableOpacity, View} from 'react-native';
+import { Dimensions, Linking, TouchableOpacity, View } from 'react-native';
 import Config from 'react-native-config';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import ImageAnimated from './ImageAnimated';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import Button from './Button';
+import ImageAnimated from './ImageAnimated';
 import Modal from './Modal';
 import Text from './Text';
 
@@ -24,7 +24,8 @@ const ConnectedIcon: React.FC = () => {
         width: 20,
         height: 20,
         borderRadius: 10,
-      }}>
+      }}
+    >
       <FontAwesome6 name="check" color={colors.appWhite} iconStyle="solid" />
     </View>
   );
@@ -36,7 +37,7 @@ const ConnectedAppsModal: React.FC<{
   profile: Profile;
   visible: boolean;
   setVisible: (visible: boolean) => void;
-}> = ({profile, visible, setVisible}) => {
+}> = ({ profile, visible, setVisible }) => {
   return (
     <Modal visible={visible} onRequestClose={() => setVisible(false)}>
       <View
@@ -46,7 +47,8 @@ const ConnectedAppsModal: React.FC<{
           borderRadius: 10,
           height: '50%',
           padding: 20,
-        }}>
+        }}
+      >
         <Text
           style={{
             color: colors.appWhite,
@@ -54,16 +56,18 @@ const ConnectedAppsModal: React.FC<{
             fontSize: 20,
             fontWeight: 'bold',
             marginBottom: 20,
-          }}>
+          }}
+        >
           Manage connected apps
         </Text>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
                 `${Config.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
               )
-            }>
+            }
+          >
             <View>
               <ImageAnimated
                 style={{
@@ -82,7 +86,8 @@ const ConnectedAppsModal: React.FC<{
                 textAlign: 'center',
                 marginTop: 10,
                 fontSize: 16,
-              }}>
+              }}
+            >
               {'Garmin\nConnect'}
             </Text>
           </TouchableOpacity>
@@ -91,7 +96,8 @@ const ConnectedAppsModal: React.FC<{
               Linking.openURL(
                 `${Config.ROOT_API_URL}auth/polar?uid=${profile.uid}`,
               )
-            }>
+            }
+          >
             <View>
               <ImageAnimated
                 style={{
@@ -109,7 +115,8 @@ const ConnectedAppsModal: React.FC<{
                 textAlign: 'center',
                 marginTop: 10,
                 fontSize: 16,
-              }}>
+              }}
+            >
               {'Polar'}
             </Text>
           </TouchableOpacity>
@@ -118,7 +125,8 @@ const ConnectedAppsModal: React.FC<{
               Linking.openURL(
                 `${Config.ROOT_API_URL}auth/fitbit?uid=${profile.uid}`,
               )
-            }>
+            }
+          >
             <View>
               <ImageAnimated
                 style={{
@@ -138,12 +146,13 @@ const ConnectedAppsModal: React.FC<{
                 textAlign: 'center',
                 marginTop: 10,
                 fontSize: 16,
-              }}>
+              }}
+            >
               {'Fitbit'}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <Button onPress={() => setVisible(false)} text="Close" />
         </View>
       </View>
@@ -151,7 +160,7 @@ const ConnectedAppsModal: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

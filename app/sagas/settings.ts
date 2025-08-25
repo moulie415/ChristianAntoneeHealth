@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
-import {call, put} from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import * as api from '../helpers/api';
-import {logError} from '../helpers/error';
-import {SettingsState, setSettings} from '../reducers/settings';
+import { logError } from '../helpers/error';
+import { SettingsState, setSettings } from '../reducers/settings';
 
 export function* getSettings() {
   try {

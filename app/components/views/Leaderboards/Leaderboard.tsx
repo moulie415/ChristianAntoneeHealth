@@ -1,10 +1,10 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {FlatList, View} from 'react-native';
+import { FlatList, View } from 'react-native';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import Fire from '../../../images/fire.svg';
-import {LeaderboardType} from '../../../types/Shared';
+import { LeaderboardType } from '../../../types/Shared';
 import IconTabs from '../../commons/IconTabs';
 import LeaderboardEmpty from '../../commons/LeaderboardEmpty';
 import LeaderboardRow from '../../commons/LeaderboardRow';
@@ -16,8 +16,8 @@ const Leaderboard: React.FC<{
   suffix?: string;
   tabIndex?: number;
   setTabIndex?: (index: number) => void;
-}> = ({leaderboardType, suffix, tabIndex, setTabIndex}) => {
-  const {leaderboards} = useAppSelector(state => state.leaderboards);
+}> = ({ leaderboardType, suffix, tabIndex, setTabIndex }) => {
+  const { leaderboards } = useAppSelector(state => state.leaderboards);
   const leaderboard = leaderboards[leaderboardType]?.leaderboard || [];
   const endTime = leaderboards[leaderboardType]?.endTime;
 
@@ -36,24 +36,26 @@ const Leaderboard: React.FC<{
         backgroundColor: remainingLeaderboard.length
           ? colors.tile
           : colors.appGrey,
-      }}>
+      }}
+    >
       <FlatList
         bounces={false}
         ListHeaderComponent={
-          <View style={{backgroundColor: colors.appGrey}}>
+          <View style={{ backgroundColor: colors.appGrey }}>
             <View
               style={{
                 paddingBottom: 50,
                 justifyContent: 'space-evenly',
                 flexDirection: 'row',
-              }}>
+              }}
+            >
               <PodiumItem item={rank2} suffix={suffix} />
               <PodiumItem item={rank1} suffix={suffix} />
               <PodiumItem item={rank3} suffix={suffix} />
             </View>
 
             {tabIndex !== undefined && !!setTabIndex && (
-              <View style={{position: 'absolute', left: 20, top: 5}}>
+              <View style={{ position: 'absolute', left: 20, top: 5 }}>
                 <IconTabs
                   setTabIndex={setTabIndex}
                   tabIndex={tabIndex}
@@ -69,14 +71,14 @@ const Leaderboard: React.FC<{
                       ),
                       key: 'steps',
                     },
-                    {icon: <Fire width={30} />, key: 'calories'},
+                    { icon: <Fire width={30} />, key: 'calories' },
                   ]}
                 />
               </View>
             )}
 
             {!!endTime && (
-              <View style={{position: 'absolute', right: 10, top: -20}}>
+              <View style={{ position: 'absolute', right: 10, top: -20 }}>
                 <LeaderboardTimeLeft endTime={endTime} />
               </View>
             )}
@@ -92,7 +94,7 @@ const Leaderboard: React.FC<{
         ListEmptyComponent={
           leaderboard.length === 0 ? LeaderboardEmpty : undefined
         }
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return <LeaderboardRow item={item} index={index} suffix={suffix} />;
         }}
       />

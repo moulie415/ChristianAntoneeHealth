@@ -1,7 +1,7 @@
-import {Slider} from '@miblanchard/react-native-slider';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import type {ReactElement} from 'react';
-import React, {Component} from 'react';
+import { Slider } from '@miblanchard/react-native-slider';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import type { ReactElement } from 'react';
+import React, { Component } from 'react';
 import {
   PermissionsAndroid,
   Platform,
@@ -15,7 +15,6 @@ import type {
 } from 'react-native-audio-recorder-player';
 import AudioRecorderPlayer, {
   AVEncoderAudioQualityIOSType,
-  AVEncodingOption,
   AudioEncoderAndroidType,
   AudioSourceAndroidType,
   OutputFormatAndroidType,
@@ -24,7 +23,7 @@ import RNFS from 'react-native-fs';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import colors from '../../../../constants/colors';
-import {logError} from '../../../../helpers/error';
+import { logError } from '../../../../helpers/error';
 import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';
 import RecordingIcon from './RecordingIcon';
@@ -52,7 +51,6 @@ class VoiceNoteRecorder extends Component<Props, State> {
     ios: `${uuid.v4()}.m4a`,
     android: `${RNFS.CachesDirectoryPath}/${uuid.v4()}.mp3`,
   });
-
 
   private stopped = false;
   private sending = false;
@@ -88,14 +86,15 @@ class VoiceNoteRecorder extends Component<Props, State> {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-        }}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {this.state.result ? (
             <TouchableOpacity onPress={() => this.props.onClose()}>
               <FontAwesome6
                 iconStyle="solid"
                 name="trash"
-                style={{padding: 10}}
+                style={{ padding: 10 }}
                 size={20}
                 color={colors.appRed}
               />
@@ -116,7 +115,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
             <RecordingIndicator metering={this.state.metering} />
           )}
           {this.state.result && (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity
                 style={{
                   alignSelf: 'flex-end',
@@ -138,7 +137,8 @@ class VoiceNoteRecorder extends Component<Props, State> {
                       this.onStartPlay();
                     }
                   }
-                }}>
+                }}
+              >
                 <FontAwesome6
                   iconStyle="solid"
                   name={this.state.playing ? 'pause' : 'play'}
@@ -150,7 +150,7 @@ class VoiceNoteRecorder extends Component<Props, State> {
                 value={
                   this.state.currentPositionSec / this.state.currentDurationSec
                 }
-                trackStyle={{width: 150}}
+                trackStyle={{ width: 150 }}
                 onSlidingComplete={val => {
                   AudioRecorderPlayer.seekToPlayer(
                     this.state.currentDurationSec * val[0],
@@ -166,7 +166,8 @@ class VoiceNoteRecorder extends Component<Props, State> {
                         borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
-                      }}>
+                      }}
+                    >
                       <View
                         style={{
                           height: 18,
@@ -186,8 +187,9 @@ class VoiceNoteRecorder extends Component<Props, State> {
         </View>
         {!this.state.result && (
           <TouchableOpacity
-            style={{alignSelf: 'flex-end', padding: 10}}
-            onPress={() => this.onStopRecord()}>
+            style={{ alignSelf: 'flex-end', padding: 10 }}
+            onPress={() => this.onStopRecord()}
+          >
             <FontAwesome6 name="circle-stop" size={25} color={colors.appRed} />
           </TouchableOpacity>
         )}
@@ -200,14 +202,16 @@ class VoiceNoteRecorder extends Component<Props, State> {
               this.sending = true;
               this.props.onSend(this.state.result || '');
               this.props.onClose();
-            }}>
+            }}
+          >
             <Text
               style={{
                 color: colors.appBlue,
                 padding: 10,
                 fontWeight: 'bold',
                 fontSize: 17,
-              }}>
+              }}
+            >
               Send
             </Text>
           </TouchableOpacity>
@@ -294,25 +298,25 @@ class VoiceNoteRecorder extends Component<Props, State> {
           currentDurationSec: e.duration,
         });
         if (e.currentPosition === e.duration) {
-          this.setState({playing: false});
+          this.setState({ playing: false });
         }
       });
-      this.setState({playing: true});
+      this.setState({ playing: true });
     } catch (err) {
       this.props.onClose();
-      Snackbar.show({text: 'Error starting player'});
+      Snackbar.show({ text: 'Error starting player' });
       logError(err);
     }
   };
 
   private onPausePlay = async (): Promise<void> => {
     await AudioRecorderPlayer.pausePlayer();
-    this.setState({playing: false});
+    this.setState({ playing: false });
   };
 
   private onResumePlay = async (): Promise<void> => {
     await AudioRecorderPlayer.resumePlayer();
-    this.setState({playing: true});
+    this.setState({ playing: true });
   };
 
   private onStopPlay = async (): Promise<void> => {

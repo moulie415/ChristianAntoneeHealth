@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import Text from '../../commons/Text';
 
 import Color from 'color';
@@ -64,7 +64,7 @@ const items: {
 
 const ResistanceScaleInfo = () => {
   return (
-    <View style={{margin: 20}}>
+    <View style={{ margin: 20 }}>
       {items.map((item, index) => {
         return (
           <View
@@ -79,21 +79,23 @@ const ResistanceScaleInfo = () => {
               borderTopRightRadius: index === 0 ? 12 : 0,
               borderBottomLeftRadius: index === items.length - 1 ? 12 : 0,
               borderBottomRightRadius: index === items.length - 1 ? 12 : 0,
-            }}>
+            }}
+          >
             <Text
               style={{
                 width: 30,
                 textAlign: 'center',
                 color: item.textColor,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {item.value}
             </Text>
-            <View style={{flex: 1}}>
-              <Text style={{color: item.textColor, fontWeight: 'bold'}}>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: item.textColor, fontWeight: 'bold' }}>
                 {item.title}
               </Text>
-              <Text style={{color: item.textColor, fontSize: 10}}>
+              <Text style={{ color: item.textColor, fontSize: 10 }}>
                 {item.description}
               </Text>
             </View>

@@ -1,31 +1,32 @@
 import Clipboard from '@react-native-clipboard/clipboard';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {useState} from 'react';
-import {generateLink} from '../../../helpers/api';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useState } from 'react';
+import { generateLink } from '../../../helpers/api';
 
-import {ImageBackground, Share, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { ImageBackground, Share, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
 import colors from '../../../constants/colors';
-import {logError} from '../../../helpers/error';
-import {Profile} from '../../../types/Shared';
+import { logError } from '../../../helpers/error';
+import { Profile } from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import IconButton from '../../commons/IconButton';
 import Input from '../../commons/Input';
 import Text from '../../commons/Text';
 
-const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
+const AddConnection: React.FC<{ profile: Profile }> = ({ profile }) => {
   const [loading, setLoading] = useState(false);
   const [link, setLink] = useState('');
   return (
     <ImageBackground
       source={require('../../../images/login.jpeg')}
       blurRadius={5}
-      style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
         <Header title="Add friend" hasBack />
         <View
           style={{
@@ -39,14 +40,15 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
             color: colors.appWhite,
             margin: 10,
             marginTop: 0,
-          }}>
+          }}
+        >
           Send an invite link to someone you want to connect with, this link
           will only work once, please only send it to someone you wish to
           connect with
         </Text>
         <Input
           disabled
-          containerStyle={{margin: 10}}
+          containerStyle={{ margin: 10 }}
           value={link}
           placeholder="Press button to generate link"
           accessoryRight={
@@ -54,27 +56,28 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
               <>
                 <IconButton
                   icon="clipboard"
-                  style={{marginRight: 5}}
+                  style={{ marginRight: 5 }}
                   onPress={() => {
                     Clipboard.setString(link);
-                    Snackbar.show({text: 'Link copied to clipboard!'});
-                  }}>
+                    Snackbar.show({ text: 'Link copied to clipboard!' });
+                  }}
+                >
                   <FontAwesome6 name="clipboard" />
                 </IconButton>
                 <IconButton
                   icon="share-alt"
                   onPress={async () => {
                     try {
-                      const {action} = await Share.share({
+                      const { action } = await Share.share({
                         title: 'CA Health',
                         url: link,
                         message: `${profile.name} has invited you to connect on CA Health, click the link to connect: ${link}`,
                       });
                       if (action === 'sharedAction') {
-                        Snackbar.show({text: 'Link shared successfully'});
+                        Snackbar.show({ text: 'Link shared successfully' });
                       }
                     } catch (e) {
-                      Snackbar.show({text: 'Error sharing link'});
+                      Snackbar.show({ text: 'Error sharing link' });
                       logError(e);
                     }
                   }}
@@ -85,7 +88,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
         />
         <Button
           text="Generate"
-          style={{margin: 10}}
+          style={{ margin: 10 }}
           disabled={!!link || loading}
           loading={loading}
           onPress={async () => {
@@ -103,7 +106,7 @@ const AddConnection: React.FC<{profile: Profile}> = ({profile}) => {
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

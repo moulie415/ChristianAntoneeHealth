@@ -1,11 +1,11 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import QuickRoutine from '../types/QuickRoutines';
-import {SavedQuickRoutine} from '../types/SavedItem';
-import {setLoggedIn} from './profile';
+import { SavedQuickRoutine } from '../types/SavedItem';
+import { setLoggedIn } from './profile';
 
 export interface QuickRoutinesState {
-  quickRoutines: {[key: string]: QuickRoutine};
-  savedQuickRoutines: {[key: string]: SavedQuickRoutine};
+  quickRoutines: { [key: string]: QuickRoutine };
+  savedQuickRoutines: { [key: string]: SavedQuickRoutine };
 }
 
 const initialState: QuickRoutinesState = {
@@ -41,28 +41,28 @@ const quickRoutineSlice = createSlice({
   reducers: {
     setQuickRoutines: (
       state: QuickRoutinesState,
-      {payload}: PayloadAction<{[key: string]: QuickRoutine}>,
+      { payload }: PayloadAction<{ [key: string]: QuickRoutine }>,
     ) => {
-      state.quickRoutines = {...state.quickRoutines, ...payload};
+      state.quickRoutines = { ...state.quickRoutines, ...payload };
     },
     setSavedQuickRoutines: (
       state: QuickRoutinesState,
-      {payload}: PayloadAction<{[key: string]: SavedQuickRoutine}>,
+      { payload }: PayloadAction<{ [key: string]: SavedQuickRoutine }>,
     ) => {
-      state.savedQuickRoutines = {...state.savedQuickRoutines, ...payload};
+      state.savedQuickRoutines = { ...state.savedQuickRoutines, ...payload };
     },
     saveQuickRoutine: (
       state: QuickRoutinesState,
-      {payload}: PayloadAction<SavedQuickRoutine>,
+      { payload }: PayloadAction<SavedQuickRoutine>,
     ) => {},
     getQuickRoutinesById: (
       state: QuickRoutinesState,
-      {payload}: PayloadAction<string[]>,
+      { payload }: PayloadAction<string[]>,
     ) => {},
     getQuickRoutines: () => {},
     getSavedQuickRoutines: (
       state: QuickRoutinesState,
-      {payload}: PayloadAction<Date | undefined>,
+      { payload }: PayloadAction<Date | undefined>,
     ) => {},
   },
   extraReducers: builder => {

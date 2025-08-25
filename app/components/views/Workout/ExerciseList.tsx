@@ -1,21 +1,27 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useMemo} from 'react';
-import {Image, RefreshControl, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useMemo } from 'react';
+import {
+  Image,
+  RefreshControl,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {truncate} from '../../../helpers';
-import {setWorkout} from '../../../reducers/exercises';
+import { truncate } from '../../../helpers';
+import { setWorkout } from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
-import {Equipment, Profile} from '../../../types/Shared';
+import { Equipment, Profile } from '../../../types/Shared';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
 
 const ExerciseList: React.FC<{
-  exercises: {[key: string]: Exercise};
+  exercises: { [key: string]: Exercise };
   navigation: NativeStackNavigationProp<StackParamList, 'ExerciseList'>;
   route: RouteProp<StackParamList, 'ExerciseList'>;
   workout: Exercise[];
@@ -31,13 +37,13 @@ const ExerciseList: React.FC<{
   loading,
   profile,
 }) => {
-  const {level, goal, equipment, warmUp, coolDown} = route.params;
+  const { level, goal, equipment, warmUp, coolDown } = route.params;
 
   const selectExercise = (exercise: Exercise) => {
     if (workout.find(e => e.id === exercise.id)) {
       setWorkoutAction(workout.filter(e => e.id !== exercise.id));
     } else {
-      setWorkoutAction([...workout, {...exercise, reps: '15', sets: '3'}]);
+      setWorkoutAction([...workout, { ...exercise, reps: '15', sets: '3' }]);
     }
   };
 
@@ -58,9 +64,9 @@ const ExerciseList: React.FC<{
     [exercises, goal, level, warmUp, coolDown, equipment],
   );
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {!loading && !filtered.length && (
-        <Text style={{textAlign: 'center', margin: 20}}>
+        <Text style={{ textAlign: 'center', margin: 20 }}>
           Sorry, no exercises found based on your filter, please try altering
           your settings like adding any equipment you might have
         </Text>
@@ -70,7 +76,7 @@ const ExerciseList: React.FC<{
         data={filtered}
         refreshControl={<RefreshControl refreshing={loading} />}
         keyExtractor={(item: Exercise) => item.id || ''}
-        renderItem={({item}: {item: Exercise}) => {
+        renderItem={({ item }: { item: Exercise }) => {
           const selected = workout.find(e => e.id === item.id);
           return (
             <>
@@ -79,7 +85,9 @@ const ExerciseList: React.FC<{
                   if (item.premium && !profile.premium) {
                     navigation.navigate('Premium', {});
                   } else {
-                    navigation.navigate('CustomizeExercise', {exercise: item});
+                    navigation.navigate('CustomizeExercise', {
+                      exercise: item,
+                    });
                   }
                 }}
                 onLongPress={() => {
@@ -103,7 +111,7 @@ const ExerciseList: React.FC<{
                       }}
                       source={
                         item.thumbnail
-                          ? {uri: item.thumbnail.src}
+                          ? { uri: item.thumbnail.src }
                           : require('../../../images/old_man_stretching.jpeg')
                       }
                     />
@@ -114,7 +122,8 @@ const ExerciseList: React.FC<{
                         width: 75,
                         alignItems: 'center',
                         justifyContent: 'center',
-                      }}>
+                      }}
+                    >
                       <FontAwesome6 iconStyle="solid" name="lock" size={30} />
                     </View>
                   )
@@ -138,7 +147,7 @@ const ExerciseList: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: RootState) => ({
+const mapStateToProps = ({ exercises, profile }: RootState) => ({
   exercises: exercises.exercises,
   workout: exercises.workout,
   loading: exercises.loading,

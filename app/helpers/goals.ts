@@ -1,11 +1,11 @@
 import moment from 'moment';
 import PushNotification from 'react-native-push-notification';
-import {capitalizeFirstLetter} from '.';
-import {WeeklyItems} from '../reducers/profile';
-import {GOALS_CHANNEL_ID} from '../sagas/profile';
+import { capitalizeFirstLetter } from '.';
+import { WeeklyItems } from '../reducers/profile';
+import { GOALS_CHANNEL_ID } from '../sagas/profile';
 import QuickRoutine from '../types/QuickRoutines';
-import {SavedQuickRoutine, SavedWorkout} from '../types/SavedItem';
-import {Goal, Level, PlanWorkout, Profile, Targets} from '../types/Shared';
+import { SavedQuickRoutine, SavedWorkout } from '../types/SavedItem';
+import { Goal, Level, PlanWorkout, Profile, Targets } from '../types/Shared';
 
 interface GenericWorkout {
   level: Level;
@@ -33,7 +33,7 @@ export const contributesToScore = <Type extends GenericWorkout>(
 
 export const getGoalsData = (
   weeklyItems: WeeklyItems,
-  quickRoutinesObj: {[key: string]: QuickRoutine},
+  quickRoutinesObj: { [key: string]: QuickRoutine },
   goalData?: Targets,
 ) => {
   const workoutGoal = goalData?.workouts.number || 0;
@@ -54,7 +54,7 @@ export const getGoalsData = (
   const quickRoutines =
     savedQuickRoutines &&
     savedQuickRoutines
-      .map(({quickRoutineId}) => {
+      .map(({ quickRoutineId }) => {
         return quickRoutinesObj[quickRoutineId];
       })
       .filter(x => x);
@@ -118,7 +118,7 @@ export const getGoalsData = (
 export const sendGoalTargetNotification = (
   payload: SavedWorkout | SavedQuickRoutine,
   weeklyItems: WeeklyItems,
-  quickRoutines: {[key: string]: QuickRoutine},
+  quickRoutines: { [key: string]: QuickRoutine },
   profile: Profile,
 ) => {
   const {

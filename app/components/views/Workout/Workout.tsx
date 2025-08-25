@@ -1,15 +1,15 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {useRef, useState} from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useRef, useState } from 'react';
+import { Alert, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
 import colors from '../../../constants/colors';
-import {capitalizeFirstLetter} from '../../../helpers';
-import {setEquipment, setWorkout} from '../../../reducers/exercises';
-import {Equipment, Goal} from '../../../types/Shared';
+import { capitalizeFirstLetter } from '../../../helpers';
+import { setEquipment, setWorkout } from '../../../reducers/exercises';
+import { Equipment, Goal } from '../../../types/Shared';
 import WorkoutProps from '../../../types/views/Workout';
 import Button from '../../commons/Button';
 import Divider from '../../commons/Divider';
@@ -63,8 +63,8 @@ const Workout: React.FC<WorkoutProps> = ({
   };
 
   return (
-    <View style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('FitnessGoal');
@@ -72,9 +72,10 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{
             flex: 1,
             marginBottom: 5,
-          }}>
+          }}
+        >
           <ImageLoader
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
             delay={200}
             resizeMode="cover"
             source={require('../../../images/3rd_carousel_image_fitness_testing.jpeg')}
@@ -87,8 +88,9 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Goal</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Goal</Text>
           </View>
           <View
             style={{
@@ -97,14 +99,16 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text
               style={{
                 right: 0,
                 color: '#fff',
                 marginRight: 20,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {getGoalString(fitnessGoal)}
             </Text>
           </View>
@@ -115,7 +119,8 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="chevron-right"
@@ -131,9 +136,10 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{
             flex: 1,
             marginBottom: 5,
-          }}>
+          }}
+        >
           <ImageLoader
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
             delay={400}
             resizeMode="cover"
             source={require('../../../images/Fitness_testing_plank.jpeg')}
@@ -146,8 +152,9 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Exercise experience</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Exercise experience</Text>
           </View>
           <View
             style={{
@@ -156,14 +163,16 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text
               style={{
                 right: 0,
                 color: '#fff',
                 marginRight: 20,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {capitalizeFirstLetter(level)}
             </Text>
           </View>
@@ -174,7 +183,8 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="chevron-right"
@@ -191,9 +201,10 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{
             flex: 1,
             marginBottom: 5,
-          }}>
+          }}
+        >
           <ImageLoader
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
             delay={600}
             resizeMode="cover"
             source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
@@ -206,8 +217,9 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Available Equipment</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Available Equipment</Text>
           </View>
           <View
             style={{
@@ -216,14 +228,16 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text
               style={{
                 right: 0,
                 color: '#fff',
                 marginRight: 20,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {availableEquipmentString()}
             </Text>
           </View>
@@ -234,7 +248,8 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="chevron-right"
@@ -249,9 +264,10 @@ const Workout: React.FC<WorkoutProps> = ({
           }}
           style={{
             flex: 1,
-          }}>
+          }}
+        >
           <ImageLoader
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
             delay={800}
             resizeMode="cover"
             source={require('../../../images/Rate_the_app.jpeg')}
@@ -264,8 +280,9 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Warm-up & Cool-down</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Warm-up & Cool-down</Text>
           </View>
           <View
             style={{
@@ -274,14 +291,16 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text
               style={{
                 right: 0,
                 color: '#fff',
                 marginRight: 20,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {warmUp.length + coolDown.length + ' selected'}
             </Text>
           </View>
@@ -292,7 +311,8 @@ const Workout: React.FC<WorkoutProps> = ({
               top: 0,
               right: 20,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="chevron-right"
@@ -317,14 +337,15 @@ const Workout: React.FC<WorkoutProps> = ({
               Alert.alert('Sorry', 'Please specify equipment first');
             }
           }}
-          style={{margin: 10}}
+          style={{ margin: 10 }}
         />
       </SafeAreaView>
       <BottomSheet
         ref={sheetRef}
         enablePanDownToClose
         snapPoints={['80%']}
-        index={-1}>
+        index={-1}
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -333,14 +354,16 @@ const Workout: React.FC<WorkoutProps> = ({
             alignItems: 'center',
             borderTopLeftRadius: 5,
             borderTopRightRadius: 5,
-          }}>
+          }}
+        >
           <TouchableOpacity onPress={onCancel}>
             <Text
               style={{
                 color: colors.appBlue,
                 padding: 10,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               CANCEL
             </Text>
           </TouchableOpacity>
@@ -353,7 +376,8 @@ const Workout: React.FC<WorkoutProps> = ({
                 color: colors.appBlue,
                 padding: 10,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               SAVE
             </Text>
           </TouchableOpacity>
@@ -362,21 +386,24 @@ const Workout: React.FC<WorkoutProps> = ({
           <View
             style={{
               backgroundColor: '#fff',
-            }}>
+            }}
+          >
             <TouchableOpacity
-              style={{padding: 10}}
+              style={{ padding: 10 }}
               onPress={() => {
                 selectedEquipment.length === Object.keys(Equipment).length
                   ? setSelectedEquipment([])
                   : setSelectedEquipment(Object.values(Equipment));
-              }}>
+              }}
+            >
               <Text
                 style={{
                   textAlign: 'right',
                   fontWeight: 'bold',
                   // fontSize: 20,
                   color: colors.appBlue,
-                }}>
+                }}
+              >
                 {selectedEquipment.length === Object.keys(Equipment).length
                   ? 'Clear all'
                   : 'Select all'}
@@ -389,7 +416,8 @@ const Workout: React.FC<WorkoutProps> = ({
           style={{
             backgroundColor: 'white',
             height: '100%',
-          }}>
+          }}
+        >
           {settings === 'equipment' && (
             <EquipmentMenu
               selectedEquipment={selectedEquipment}
@@ -402,7 +430,7 @@ const Workout: React.FC<WorkoutProps> = ({
   );
 };
 
-const mapStateToProps = ({profile, exercises}: RootState) => ({
+const mapStateToProps = ({ profile, exercises }: RootState) => ({
   profile: profile.profile,
   fitnessGoal: exercises.fitnessGoal,
   level: exercises.level,

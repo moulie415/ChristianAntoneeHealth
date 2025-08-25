@@ -1,7 +1,7 @@
-import {PayloadAction} from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, put, select, throttle} from 'redux-saga/effects';
-import {RootState} from '../App';
+import { call, put, select, throttle } from 'redux-saga/effects';
+import { RootState } from '../App';
 import * as api from '../helpers/api';
 import {
   GET_EDUCATION,
@@ -14,10 +14,12 @@ import Education from '../types/Education';
 function* getEducation() {
   try {
     yield put(setEducationLoading(true));
-    const education: {[key: string]: Education} = yield call(api.getEducation);
+    const education: { [key: string]: Education } = yield call(
+      api.getEducation,
+    );
     yield put(setEducation(education));
   } catch (e) {
-    Snackbar.show({text: 'Error fetching education'});
+    Snackbar.show({ text: 'Error fetching education' });
   }
   yield put(setEducationLoading(false));
 }
@@ -27,19 +29,19 @@ function* getEducationById(action: PayloadAction<string[]>) {
     const ids = action.payload;
     yield put(setEducationLoading(true));
     if (ids.length) {
-      const education: {[key: string]: Education} = yield call(
+      const education: { [key: string]: Education } = yield call(
         api.getEducationById,
         ids,
       );
-      const current: {[key: string]: Education} = yield select(
+      const current: { [key: string]: Education } = yield select(
         (state: RootState) => state.education.education,
       );
-      yield put(setEducation({...current, ...education}));
+      yield put(setEducation({ ...current, ...education }));
     }
     yield put(setEducationLoading(false));
   } catch (e) {
     yield put(setEducationLoading(false));
-    Snackbar.show({text: 'Error fetching education'});
+    Snackbar.show({ text: 'Error fetching education' });
   }
 }
 

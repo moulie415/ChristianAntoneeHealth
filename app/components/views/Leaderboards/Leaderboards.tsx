@@ -1,15 +1,15 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {useState} from 'react';
-import {View, useWindowDimensions} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {TabBar, TabView} from 'react-native-tab-view';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useState } from 'react';
+import { View, useWindowDimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { TabBar, TabView } from 'react-native-tab-view';
 import colors from '../../../constants/colors';
-import {useDebouncedEffect} from '../../../hooks/UseDebouncedEffect';
+import { useDebouncedEffect } from '../../../hooks/UseDebouncedEffect';
 import useThrottle from '../../../hooks/UseThrottle';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {getLeaderboard} from '../../../reducers/leaderboards';
-import {updateProfile} from '../../../reducers/profile';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { getLeaderboard } from '../../../reducers/leaderboards';
+import { updateProfile } from '../../../reducers/profile';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Loader from '../../commons/Loader';
@@ -33,13 +33,13 @@ const Leaderboards = () => {
   );
 
   const [routes] = useState([
-    {key: 'daily', title: 'Daily'},
-    {key: 'weekly', title: 'Weekly'},
-    {key: 'ongoing', title: 'Ongoing'},
+    { key: 'daily', title: 'Daily' },
+    { key: 'weekly', title: 'Weekly' },
+    { key: 'ongoing', title: 'Ongoing' },
   ]);
 
-  const {profile, loading} = useAppSelector(state => state.profile);
-  const {loading: leaderboardsLoading} = useAppSelector(
+  const { profile, loading } = useAppSelector(state => state.profile);
+  const { loading: leaderboardsLoading } = useAppSelector(
     state => state.leaderboards,
   );
 
@@ -47,7 +47,7 @@ const Leaderboards = () => {
 
   const optIn = useThrottle(() => {
     dispatch(
-      updateProfile({disableSnackbar: true, optedInToLeaderboards: true}),
+      updateProfile({ disableSnackbar: true, optedInToLeaderboards: true }),
     );
   }, 3000);
 
@@ -66,7 +66,7 @@ const Leaderboards = () => {
     }
   };
 
-  const renderScene = ({route}: {route: {key: string}}) => {
+  const renderScene = ({ route }: { route: { key: string } }) => {
     switch (route.key) {
       case 'daily':
         return <Daily tabIndex={tabIndex} setTabIndex={setTabIndex} />;
@@ -79,11 +79,12 @@ const Leaderboards = () => {
   return (
     <SafeAreaView
       edges={['top', 'right', 'left']}
-      style={{flex: 1, backgroundColor: colors.appGrey}}>
+      style={{ flex: 1, backgroundColor: colors.appGrey }}
+    >
       <Header
         showDrawerMenuButton
         title="Leaderboards"
-        rightStyle={{margin: 0}}
+        rightStyle={{ margin: 0 }}
         right={leaderboardsLoading ? <Loader size={60} /> : null}
       />
 
@@ -111,13 +112,15 @@ const Leaderboards = () => {
                           borderWidth: props.key === routes[index].key ? 0 : 1,
                           borderColor: colors.borderColor,
                           flexDirection: 'row',
-                        }}>
+                        }}
+                      >
                         {props.key === 'ongoing' ? (
                           <View
                             style={{
                               flexDirection: 'row',
                               alignItems: 'center',
-                            }}>
+                            }}
+                          >
                             <FontAwesome6
                               iconStyle="solid"
                               name="bolt"
@@ -128,7 +131,8 @@ const Leaderboards = () => {
                                 color: colors.appWhite,
                                 fontWeight: 'bold',
                                 marginLeft: 5,
-                              }}>
+                              }}
+                            >
                               Streak
                             </Text>
                           </View>
@@ -138,7 +142,8 @@ const Leaderboards = () => {
                               fontWeight: 'bold',
                               color: '#fff',
                               textAlign: 'center',
-                            }}>
+                            }}
+                          >
                             {props.route?.title}
                           </Text>
                         )}
@@ -153,24 +158,25 @@ const Leaderboards = () => {
                 contentContainerStyle={{
                   justifyContent: 'space-evenly',
                 }}
-                indicatorStyle={{backgroundColor: 'transparent'}}
+                indicatorStyle={{ backgroundColor: 'transparent' }}
               />
             );
           }}
           lazy
-          navigationState={{index, routes}}
+          navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
+          initialLayout={{ width: layout.width }}
         />
       ) : (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
+            }}
+          >
             <View
               style={{
                 width: 100,
@@ -179,9 +185,10 @@ const Leaderboards = () => {
                 borderRadius: 20,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               <FontAwesome6
-                style={{position: 'absolute'}}
+                style={{ position: 'absolute' }}
                 name="trophy"
                 color={colors.appBlue}
                 iconStyle="solid"
@@ -195,18 +202,20 @@ const Leaderboards = () => {
                 fontSize: 25,
                 fontWeight: 'bold',
                 color: colors.appWhite,
-              }}>
+              }}
+            >
               Leaderboards
             </Text>
 
-            <View style={{marginHorizontal: 20, width: 275}}>
+            <View style={{ marginHorizontal: 20, width: 275 }}>
               <Text
                 style={{
                   color: colors.offWhite,
                   fontSize: 12,
                   lineHeight: 20,
                   textAlign: 'center',
-                }}>
+                }}
+              >
                 Leaderboards are an optional feature designed for those who are
                 extra competitive. If you'd like to participate, simply press
                 the button below to opt in. Please note that by joining, your
@@ -220,7 +229,7 @@ const Leaderboards = () => {
             loading={loading}
             onPress={optIn}
             text="opt in"
-            style={{marginHorizontal: 20}}
+            style={{ marginHorizontal: 20 }}
           />
         </View>
       )}

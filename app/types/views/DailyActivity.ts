@@ -1,4 +1,4 @@
-import {StepSample} from '../Shared';
+import { StepSample } from '../Shared';
 
 export default interface DailyActivityProps {
   getSamplesAction: () => void;

@@ -1,7 +1,7 @@
 import moment from 'moment';
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BackgroundTimer from 'react-native-background-timer';
-import {useAppState} from './UseAppState';
+import { useAppState } from './UseAppState';
 
 const useWorkoutTimer = (delay: number, notStarted?: boolean) => {
   const savedCallback = useRef<() => void>(null);
@@ -43,7 +43,7 @@ const useWorkoutTimer = (delay: number, notStarted?: boolean) => {
     return () => BackgroundTimer.clearInterval(id);
   }, [delay]);
 
-  return {seconds, setTimerPaused, timerPaused};
+  return { seconds, setTimerPaused, timerPaused };
 };
 
 export default useWorkoutTimer;

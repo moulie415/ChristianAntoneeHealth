@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, Platform, View} from 'react-native';
-import {RulerPicker} from 'react-native-ruler-picker';
-import {Picker} from 'react-native-wheel-pick';
-import {DECIMAL_PLACES, WEIGHTS} from '../../../constants';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Platform, View } from 'react-native';
+import { RulerPicker } from 'react-native-ruler-picker';
+import { Picker } from 'react-native-wheel-pick';
+import { DECIMAL_PLACES, WEIGHTS } from '../../../constants';
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
 import Modal from '../../commons/Modal';
@@ -15,7 +15,7 @@ const SignUpWeightModal: React.FC<{
   onRequestClose: () => void;
   weight: number;
   setWeight: (val: number) => void;
-}> = ({visible, onRequestClose, weight, setWeight}) => {
+}> = ({ visible, onRequestClose, weight, setWeight }) => {
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
       <View
@@ -24,7 +24,8 @@ const SignUpWeightModal: React.FC<{
           width: windowWidth * 0.9,
           alignSelf: 'center',
           borderRadius: 10,
-        }}>
+        }}
+      >
         <Text
           style={{
             color: colors.appWhite,
@@ -33,7 +34,8 @@ const SignUpWeightModal: React.FC<{
             fontSize: 20,
             textAlign: 'center',
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           Select weight
         </Text>
 
@@ -45,13 +47,13 @@ const SignUpWeightModal: React.FC<{
           fractionDigits={1}
           width={windowWidth * 0.9}
           initialValue={weight ? weight + 0.1 : 80}
-          unitTextStyle={{color: colors.appWhite}}
-          valueTextStyle={{color: colors.appWhite}}
+          unitTextStyle={{ color: colors.appWhite }}
+          valueTextStyle={{ color: colors.appWhite }}
           onValueChangeEnd={number => setWeight(Number(number))}
           unit="kg"
           indicatorColor={colors.appBlue}
         />
-        <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
+        <Button text="Close" style={{ margin: 10 }} onPress={onRequestClose} />
       </View>
     </Modal>
   );
@@ -62,7 +64,7 @@ const SignUpWeightModalAndroid: React.FC<{
   onRequestClose: () => void;
   weight: number;
   setWeight: (val: number) => void;
-}> = ({visible, onRequestClose, weight, setWeight}) => {
+}> = ({ visible, onRequestClose, weight, setWeight }) => {
   const [wholeNumber, setWholeNumber] = useState(Math.floor(weight));
   const [decimalPart, setDecimalPart] = useState(
     Number(String(weight).split('.')[1] || 0),
@@ -80,7 +82,8 @@ const SignUpWeightModalAndroid: React.FC<{
           width: '90%',
           alignSelf: 'center',
           borderRadius: 10,
-        }}>
+        }}
+      >
         <Text
           style={{
             color: colors.appWhite,
@@ -89,7 +92,8 @@ const SignUpWeightModalAndroid: React.FC<{
             fontSize: 20,
             textAlign: 'center',
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           Select weight
         </Text>
 
@@ -98,7 +102,8 @@ const SignUpWeightModalAndroid: React.FC<{
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <Picker
             style={{
               height: 200,
@@ -108,7 +113,7 @@ const SignUpWeightModalAndroid: React.FC<{
             }}
             selectedValue={String(wholeNumber)}
             textColor={colors.appWhite}
-            itemStyle={{color: colors.appWhite}}
+            itemStyle={{ color: colors.appWhite }}
             pickerData={WEIGHTS.map(value => {
               return {
                 label: value.toString(),
@@ -123,7 +128,8 @@ const SignUpWeightModalAndroid: React.FC<{
               fontWeight: 'bold',
               fontSize: 18,
               marginTop: 5,
-            }}>
+            }}
+          >
             .
           </Text>
           <Picker
@@ -135,7 +141,7 @@ const SignUpWeightModalAndroid: React.FC<{
             }}
             selectedValue={String(decimalPart)}
             textColor={colors.appWhite}
-            itemStyle={{color: colors.appWhite}}
+            itemStyle={{ color: colors.appWhite }}
             pickerData={DECIMAL_PLACES.map(value => {
               return {
                 label: value.toString(),
@@ -150,11 +156,12 @@ const SignUpWeightModalAndroid: React.FC<{
               fontWeight: 'bold',
               fontSize: 18,
               marginTop: 15,
-            }}>
+            }}
+          >
             kg
           </Text>
         </View>
-        <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
+        <Button text="Close" style={{ margin: 10 }} onPress={onRequestClose} />
       </View>
     </Modal>
   );

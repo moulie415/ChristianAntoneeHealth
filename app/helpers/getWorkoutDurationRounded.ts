@@ -1,5 +1,5 @@
 import Exercise from '../types/Exercise';
-import {PlanExercise} from '../types/Shared';
+import { PlanExercise } from '../types/Shared';
 
 function round5(x: number) {
   return Math.ceil(x / 5) * 5;

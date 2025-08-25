@@ -1,6 +1,6 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {ReactNode} from 'react';
-import {Text, TouchableOpacity, View, ViewStyle} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { ReactNode } from 'react';
+import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import colors from '../../constants/colors';
 
 const SelectableButton: React.FC<{
@@ -10,7 +10,7 @@ const SelectableButton: React.FC<{
   secondaryText?: string | ReactNode;
   style?: ViewStyle;
   customRight?: ReactNode;
-}> = ({selected, onPress, text, secondaryText, style, customRight}) => {
+}> = ({ selected, onPress, text, secondaryText, style, customRight }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -25,15 +25,17 @@ const SelectableButton: React.FC<{
           flexDirection: 'row',
         },
         style,
-      ]}>
-      <View style={{flex: 1}}>
+      ]}
+    >
+      <View style={{ flex: 1 }}>
         {typeof text === 'string' ? (
           <Text
             style={{
               color: colors.appWhite,
               fontSize: 14,
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             {text}
           </Text>
         ) : (
@@ -45,7 +47,8 @@ const SelectableButton: React.FC<{
               color: colors.offWhite,
               marginTop: 10,
               fontSize: 12,
-            }}>
+            }}
+          >
             {secondaryText}
           </Text>
         )}
@@ -55,7 +58,7 @@ const SelectableButton: React.FC<{
       {customRight
         ? customRight
         : selected && (
-            <View style={{width: 30, alignItems: 'center'}}>
+            <View style={{ width: 30, alignItems: 'center' }}>
               <FontAwesome6
                 iconStyle="solid"
                 size={20}

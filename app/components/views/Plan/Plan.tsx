@@ -1,21 +1,26 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {useFocusEffect} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
-import {Alert, TouchableOpacity, View, useWindowDimensions} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import Purchases, {
   CustomerInfo,
   PurchasesPackage,
 } from 'react-native-purchases';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {logError} from '../../../helpers/error';
-import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
-import {getPlan, setRead} from '../../../reducers/profile';
-import {Plan as PlanType, Profile} from '../../../types/Shared';
+import { logError } from '../../../helpers/error';
+import { hasPremiumPlus } from '../../../helpers/hasPremiumPlus';
+import { getPlan, setRead } from '../../../reducers/profile';
+import { Plan as PlanType, Profile } from '../../../types/Shared';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import Daily from './Daily';
@@ -79,9 +84,9 @@ const Plan: React.FC<{
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    {key: 'daily', title: 'Daily'},
-    {key: 'weekly', title: 'Weekly'},
-    {key: 'monthly', title: 'Monthly'},
+    { key: 'daily', title: 'Daily' },
+    { key: 'weekly', title: 'Weekly' },
+    { key: 'monthly', title: 'Monthly' },
   ]);
 
   useFocusEffect(() => {
@@ -95,8 +100,8 @@ const Plan: React.FC<{
   return (
     <>
       {plan && hasPremium ? (
-        <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-          <SafeAreaView style={{flex: 1}}>
+        <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
+          <SafeAreaView style={{ flex: 1 }}>
             <Header showDrawerMenuButton />
             <TabView
               renderTabBar={props => {
@@ -107,7 +112,8 @@ const Plan: React.FC<{
                       return (
                         <TouchableOpacity
                           key={props.key}
-                          onPress={props.onPress}>
+                          onPress={props.onPress}
+                        >
                           <View
                             style={{
                               height: 40,
@@ -123,13 +129,15 @@ const Plan: React.FC<{
                               borderWidth:
                                 props.key === routes[index].key ? 0 : 1,
                               borderColor: colors.borderColor,
-                            }}>
+                            }}
+                          >
                             <Text
                               style={{
                                 fontWeight: 'bold',
                                 color: '#fff',
                                 textAlign: 'center',
-                              }}>
+                              }}
+                            >
                               {props.route?.title}
                             </Text>
                           </View>
@@ -147,20 +155,20 @@ const Plan: React.FC<{
                       marginVertical: 0,
                       justifyContent: 'space-evenly',
                     }}
-                    indicatorStyle={{backgroundColor: 'transparent'}}
+                    indicatorStyle={{ backgroundColor: 'transparent' }}
                   />
                 );
               }}
               lazy
-              navigationState={{index, routes}}
+              navigationState={{ index, routes }}
               renderScene={renderScene}
               onIndexChange={setIndex}
-              initialLayout={{width: layout.width}}
+              initialLayout={{ width: layout.width }}
             />
           </SafeAreaView>
         </View>
       ) : (
-        <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.appGrey }}>
           <Header showDrawerMenuButton />
           <View
             style={{
@@ -168,7 +176,8 @@ const Plan: React.FC<{
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: -100,
-            }}>
+            }}
+          >
             <View
               style={{
                 width: 100,
@@ -177,9 +186,10 @@ const Plan: React.FC<{
                 borderRadius: 20,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               <FontAwesome6
-                style={{position: 'absolute'}}
+                style={{ position: 'absolute' }}
                 name="calendar-days"
                 color={colors.appBlue}
                 size={50}
@@ -192,18 +202,20 @@ const Plan: React.FC<{
                 fontSize: 25,
                 fontWeight: 'bold',
                 color: colors.appWhite,
-              }}>
+              }}
+            >
               My workout plan
             </Text>
 
-            <View style={{marginHorizontal: 20, width: 275}}>
+            <View style={{ marginHorizontal: 20, width: 275 }}>
               <Text
                 style={{
                   color: colors.offWhite,
                   fontSize: 12,
                   lineHeight: 20,
                   textAlign: 'center',
-                }}>
+                }}
+              >
                 This is your the screen for your personal customized plan, when
                 Christian creates your plan it will appear here.{' '}
                 {hasPremium ? (
@@ -226,7 +238,7 @@ const Plan: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
   loading: profile.loading,
   plan: profile.plan,

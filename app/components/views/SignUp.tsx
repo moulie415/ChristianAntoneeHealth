@@ -1,14 +1,14 @@
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
-import {Alert, Platform, TouchableOpacity} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { Alert, Platform, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../App';
 import colors from '../../constants/colors';
-import {createUser} from '../../helpers/api';
-import {handleAuth, setLoginEmail} from '../../reducers/profile';
+import { createUser } from '../../helpers/api';
+import { handleAuth, setLoginEmail } from '../../reducers/profile';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
@@ -19,7 +19,7 @@ const SignUp: React.FC<{
   handleAuth: (user: FirebaseAuthTypes.User) => void;
   email: string;
   setEmail: (email: string) => void;
-}> = ({navigation, handleAuth: handleAuthAction, email, setEmail}) => {
+}> = ({ navigation, handleAuth: handleAuthAction, email, setEmail }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -37,7 +37,7 @@ const SignUp: React.FC<{
         return;
       }
       setLoading(true);
-      const user = await createUser(email, password, {name, surname});
+      const user = await createUser(email, password, { name, surname });
       handleAuthAction(user);
     } catch (e) {
       setLoading(false);
@@ -55,17 +55,19 @@ const SignUp: React.FC<{
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <KeyboardAwareScrollView
         enableOnAndroid
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps="always"
+      >
         <Header title="Registration" hasBack />
         <Text
           style={{
             color: colors.appWhite,
             margin: 20,
             marginTop: 0,
-          }}>
+          }}
+        >
           Please enter your personal details, then we will send you a
           verification email (please remember to check your junk/spam folder).
         </Text>
@@ -146,27 +148,30 @@ const SignUp: React.FC<{
         />
 
         <TouchableOpacity
-          style={{marginTop: 10}}
+          style={{ marginTop: 10 }}
           onPress={() => navigation.navigate('Login')}
           hitSlop={{
             top: 10,
             bottom: 10,
             right: 10,
             left: 10,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: '#fff',
               marginHorizontal: 20,
               textAlign: 'center',
-            }}>
+            }}
+          >
             Already have an account or want to use {getAuthString()}
             {'  '}
             <Text
               style={{
                 color: '#fff',
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               Log in
             </Text>
           </Text>
@@ -176,7 +181,7 @@ const SignUp: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   email: profile.loginEmail,
 });
 

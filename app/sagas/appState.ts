@@ -1,7 +1,7 @@
-import {AppState, AppStateStatus} from 'react-native';
-import {EventChannel, eventChannel} from 'redux-saga';
-import {call, put, take} from 'redux-saga/effects';
-import {setAppState} from '../reducers/profile';
+import { AppState, AppStateStatus } from 'react-native';
+import { EventChannel, eventChannel } from 'redux-saga';
+import { call, put, take } from 'redux-saga/effects';
+import { setAppState } from '../reducers/profile';
 
 function onAppStateChanged() {
   return eventChannel(emitter => {

@@ -1,9 +1,9 @@
-import React, {memo} from 'react';
-import {View} from 'react-native';
+import React, { memo } from 'react';
+import { View } from 'react-native';
 import Svg from 'react-native-svg';
-import {backMuscles, frontMuscles} from '../../helpers/exercises';
-import {Muscle} from '../../types/Exercise';
-import {Gender} from '../../types/Shared';
+import { backMuscles, frontMuscles } from '../../helpers/exercises';
+import { Muscle } from '../../types/Exercise';
+import { Gender } from '../../types/Shared';
 import MuscleFill from './MuscleFill';
 import MusclesFemaleBack from './MusclesFemaleBack';
 import MusclesFemaleFront from './MusclesFemaleFront';
@@ -14,7 +14,7 @@ const MusclesDiagram: React.FC<{
   primary?: Muscle[];
   secondary?: Muscle[];
   gender?: Gender;
-}> = ({primary, secondary, gender}) => {
+}> = ({ primary, secondary, gender }) => {
   const front = (primary || []).filter(m => frontMuscles.includes(m));
 
   const frontSecondary = (secondary || []).filter(m =>
@@ -38,7 +38,8 @@ const MusclesDiagram: React.FC<{
           paddingVertical: 10,
           flexDirection: 'row',
           borderRadius: 10,
-        }}>
+        }}
+      >
         {hasFront && (
           <Svg width="50%" height={200} viewBox="0 0 12.62 47.06">
             {front.map(m => (

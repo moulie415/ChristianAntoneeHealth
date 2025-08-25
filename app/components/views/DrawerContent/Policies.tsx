@@ -1,7 +1,7 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Linking, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Linking, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 
 import Config from 'react-native-config';
@@ -10,7 +10,7 @@ import Text from '../../commons/Text';
 
 const Policies = () => {
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <SafeAreaView>
         <Header hasBack title="Policies and Terms" />
         <TouchableOpacity
@@ -19,9 +19,10 @@ const Policies = () => {
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 20,
-          }}>
+          }}
+        >
           <FontAwesome6
-            style={{marginLeft: 20}}
+            style={{ marginLeft: 20 }}
             name="file"
             color={colors.appWhite}
             size={30}
@@ -32,7 +33,8 @@ const Policies = () => {
               fontWeight: 'bold',
               marginLeft: 10,
               textDecorationLine: 'underline',
-            }}>
+            }}
+          >
             Privacy Policy
           </Text>
         </TouchableOpacity>

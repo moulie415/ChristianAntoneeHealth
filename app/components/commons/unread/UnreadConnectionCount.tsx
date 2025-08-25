@@ -1,15 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
-import {connect} from 'react-redux';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
 import colors from '../../../constants/colors';
 
-import {RootState} from '../../../App';
+import { RootState } from '../../../App';
 import Text from '../Text';
 
 const UnreadConnectionCount: React.FC<{
-  unread: {[key: string]: number} | undefined;
+  unread: { [key: string]: number } | undefined;
   uid: string;
-}> = ({unread, uid}) => {
+}> = ({ unread, uid }) => {
   if (!unread) {
     return null;
   }
@@ -24,13 +24,15 @@ const UnreadConnectionCount: React.FC<{
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
-        }}>
+        }}
+      >
         <Text
           style={{
             fontSize: 10,
             fontWeight: 'bold',
             color: '#fff',
-          }}>
+          }}
+        >
           {count > 9 ? '9+' : count}
         </Text>
       </View>
@@ -39,7 +41,7 @@ const UnreadConnectionCount: React.FC<{
   return null;
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   unread: profile.profile.unread,
 });
 

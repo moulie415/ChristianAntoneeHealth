@@ -1,29 +1,29 @@
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
-import React, {ReactNode} from 'react';
-import {Alert, FlatList, Share, TouchableOpacity, View} from 'react-native';
-import {getBuildNumber, getVersion} from 'react-native-device-info';
-import {LoginManager} from 'react-native-fbsdk-next';
+import React, { ReactNode } from 'react';
+import { Alert, FlatList, Share, TouchableOpacity, View } from 'react-native';
+import { getBuildNumber, getVersion } from 'react-native-device-info';
+import { LoginManager } from 'react-native-fbsdk-next';
 import Purchases from 'react-native-purchases';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
-import {navigationRef, resetToWelcome} from '../../../RootNavigation';
-import {STORE_LINK} from '../../../constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
+import { navigationRef, resetToWelcome } from '../../../RootNavigation';
+import { STORE_LINK } from '../../../constants';
 import colors from '../../../constants/colors';
-import {logError} from '../../../helpers/error';
-import {hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
+import { logError } from '../../../helpers/error';
+import { hasPremiumPlus } from '../../../helpers/hasPremiumPlus';
 import useThrottle from '../../../hooks/UseThrottle';
-import {setLoggedIn} from '../../../reducers/profile';
-import {Profile} from '../../../types/Shared';
+import { setLoggedIn } from '../../../reducers/profile';
+import { Profile } from '../../../types/Shared';
 import Text from '../../commons/Text';
 import UnreadRowCount from '../../commons/unread/UnreadRowCount';
 
-export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
+export const MoreItem: React.FC<{ item: ListItem }> = ({ item }) => {
   return (
     <TouchableOpacity
       onPress={item.onPress}
@@ -31,7 +31,8 @@ export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
-      }}>
+      }}
+    >
       <View
         style={{
           height: 35,
@@ -40,7 +41,8 @@ export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 5,
-        }}>
+        }}
+      >
         <FontAwesome6
           size={20}
           color={colors.appWhite}
@@ -54,10 +56,11 @@ export const MoreItem: React.FC<{item: ListItem}> = ({item}) => {
           fontSize: 18,
           fontWeight: 'bold',
           marginLeft: 15,
-        }}>
+        }}
+      >
         {item.title}
       </Text>
-      <View style={{alignItems: 'flex-end', flex: 1}}>
+      <View style={{ alignItems: 'flex-end', flex: 1 }}>
         {item.accessoryRight}
       </View>
     </TouchableOpacity>
@@ -113,7 +116,7 @@ const DrawerContent: React.FC<Props> = ({
 
   const logOut = () => {
     Alert.alert('Are you sure?', '', [
-      {text: 'Cancel', style: 'cancel'},
+      { text: 'Cancel', style: 'cancel' },
       {
         text: 'OK',
         onPress: onLogOut,
@@ -142,7 +145,7 @@ const DrawerContent: React.FC<Props> = ({
                 iconStyle="solid"
                 name="lock"
                 size={20}
-                style={{marginRight: 10}}
+                style={{ marginRight: 10 }}
                 color={colors.appWhite}
               />
             ),
@@ -226,15 +229,15 @@ const DrawerContent: React.FC<Props> = ({
         navigation.closeDrawer();
       },
     },
-    {title: 'Log out', icon: 'right-from-bracket', onPress: logOut},
+    { title: 'Log out', icon: 'right-from-bracket', onPress: logOut },
   ];
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <FlatList
         data={listItems}
-        contentContainerStyle={{marginTop: 40, paddingBottom: 80}}
-        renderItem={({item}) => {
+        contentContainerStyle={{ marginTop: 40, paddingBottom: 80 }}
+        renderItem={({ item }) => {
           if (!item) {
             return null;
           }
@@ -247,14 +250,15 @@ const DrawerContent: React.FC<Props> = ({
           fontSize: 18,
           textAlign: 'center',
           margin: 10,
-        }}>
+        }}
+      >
         {`v${getVersion()} (${getBuildNumber()})`}
       </Text>
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

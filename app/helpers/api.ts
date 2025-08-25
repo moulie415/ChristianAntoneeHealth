@@ -1,29 +1,29 @@
 import appleAuth from '@invertase/react-native-apple-authentication';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import db, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import db, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import moment from 'moment';
-import {Alert, Platform} from 'react-native';
-import {openInbox} from 'react-native-email-link';
+import { Alert, Platform } from 'react-native';
+import { openInbox } from 'react-native-email-link';
 import {
   AccessToken,
   AuthenticationToken,
   LoginManager,
 } from 'react-native-fbsdk-next';
-import {sha256} from 'react-native-sha256';
+import { sha256 } from 'react-native-sha256';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import {WeeklyItems} from '../reducers/profile';
+import { WeeklyItems } from '../reducers/profile';
 import Chat from '../types/Chat';
 import Education from '../types/Education';
 import Exercise from '../types/Exercise';
 import Message from '../types/Message';
 import QuickRoutine from '../types/QuickRoutines';
-import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
+import { SavedQuickRoutine, SavedTest, SavedWorkout } from '../types/SavedItem';
 import {
   CoolDown,
   Goal,
@@ -37,7 +37,7 @@ import {
 } from '../types/Shared';
 import Test from '../types/Test';
 import chunkArrayInGroups from './chunkArrayIntoGroups';
-import {logError} from './error';
+import { logError } from './error';
 
 GoogleSignin.configure({
   webClientId:
@@ -60,7 +60,7 @@ export const appleSignIn = async (
     }
 
     // Create a Firebase credential from the response
-    const {identityToken, nonce} = appleAuthRequestResponse;
+    const { identityToken, nonce } = appleAuthRequestResponse;
     const appleCredential = auth.AppleAuthProvider.credential(
       identityToken,
       nonce,
@@ -71,7 +71,7 @@ export const appleSignIn = async (
     if (handleAuthAction) {
       handleAuthAction(credentials.user);
     }
-    return {credentials, appleAuthRequestResponse};
+    return { credentials, appleAuthRequestResponse };
   } catch (e) {
     if (e instanceof Error && 'code' in e) {
       if (
@@ -160,7 +160,7 @@ export const googleSignIn = async (
   handleAuthAction?: (user: FirebaseAuthTypes.User) => void,
 ) => {
   try {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
     const signInResult = await GoogleSignin.signIn();
 
@@ -200,7 +200,7 @@ export const signIn = async (
     'You must first verify your email using the link we sent you before logging in, please also check your spam folder';
   try {
     if (username && pass) {
-      const {user} = await auth().signInWithEmailAndPassword(username, pass);
+      const { user } = await auth().signInWithEmailAndPassword(username, pass);
       if (!user.emailVerified) {
         throw Error(verifyMessage);
       } else {
@@ -216,8 +216,8 @@ export const signIn = async (
         e.message,
         e.message === verifyMessage
           ? [
-              {text: 'Open email app', onPress: () => openInbox()},
-              {text: 'Cancel', style: 'cancel'},
+              { text: 'Open email app', onPress: () => openInbox() },
+              { text: 'Cancel', style: 'cancel' },
             ]
           : undefined,
       );
@@ -250,7 +250,7 @@ export const createUser = async (
   password: string,
   extraData: object,
 ) => {
-  const {user} = await auth().createUserWithEmailAndPassword(email, password);
+  const { user } = await auth().createUserWithEmailAndPassword(email, password);
   if (!user.emailVerified) {
     await user.sendEmailVerification();
   }
@@ -332,7 +332,7 @@ export const getExercises = async (
   coolDown: CoolDown[],
 ) => {
   const docs = await getExercisesQuery(level, goal, warmUp, coolDown);
-  return docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+  return docs.reduce((acc: { [id: string]: Exercise }, cur) => {
     const exercise: any = cur.data();
     acc[cur.id] = {
       ...exercise,
@@ -346,7 +346,7 @@ export const getExercises = async (
 
 export const getAllExercises = async () => {
   const snapshot = await db().collection('exercises').get();
-  return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+  return snapshot.docs.reduce((acc: { [id: string]: Exercise }, cur) => {
     const exercise: any = cur.data();
     acc[cur.id] = {
       ...exercise,
@@ -369,7 +369,7 @@ export const getExercisesById = async (ids: string[]) => {
     const snapshot = await db().collection('exercises').get();
     return snapshot.docs
       .filter(doc => validIds.includes(doc.id))
-      .reduce((acc: {[id: string]: Exercise}, cur) => {
+      .reduce((acc: { [id: string]: Exercise }, cur) => {
         const exercise: any = cur.data();
         acc[cur.id] = {
           ...exercise,
@@ -384,7 +384,7 @@ export const getExercisesById = async (ids: string[]) => {
       .collection('exercises')
       .where(db.FieldPath.documentId(), 'in', validIds)
       .get();
-    return snapshot.docs.reduce((acc: {[id: string]: Exercise}, cur) => {
+    return snapshot.docs.reduce((acc: { [id: string]: Exercise }, cur) => {
       const exercise: any = cur.data();
       acc[cur.id] = {
         ...exercise,
@@ -399,7 +399,7 @@ export const getExercisesById = async (ids: string[]) => {
 
 export const getTests = async () => {
   const snapshot = await db().collection('tests').get();
-  return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
+  return snapshot.docs.reduce((acc: { [id: string]: Test }, cur) => {
     const test: any = cur.data();
     acc[cur.id] = {
       ...test,
@@ -421,7 +421,7 @@ export const getTestsById = async (ids: string[]) => {
     const snapshot = await db().collection('tests').get();
     return snapshot.docs
       .filter(doc => ids.includes(doc.id))
-      .reduce((acc: {[id: string]: Test}, cur) => {
+      .reduce((acc: { [id: string]: Test }, cur) => {
         const test: any = cur.data();
         acc[cur.id] = {
           ...test,
@@ -436,7 +436,7 @@ export const getTestsById = async (ids: string[]) => {
       .collection('tests')
       .where(db.FieldPath.documentId(), 'in', validIds)
       .get();
-    return snapshot.docs.reduce((acc: {[id: string]: Test}, cur) => {
+    return snapshot.docs.reduce((acc: { [id: string]: Test }, cur) => {
       const test: any = cur.data();
       acc[cur.id] = {
         ...test,
@@ -451,7 +451,7 @@ export const getTestsById = async (ids: string[]) => {
 
 export const getQuickRoutines = async () => {
   const snapshot = await db().collection('quickRoutines').get();
-  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
+  return snapshot.docs.reduce((acc: { [id: string]: QuickRoutine }, cur) => {
     const quickRoutine: any = cur.data();
     acc[cur.id] = {
       ...quickRoutine,
@@ -473,7 +473,7 @@ export const getQuickRoutinesById = async (ids: string[]) => {
     const snapshot = await db().collection('quickRoutines').get();
     return snapshot.docs
       .filter(doc => ids.includes(doc.id))
-      .reduce((acc: {[id: string]: QuickRoutine}, cur) => {
+      .reduce((acc: { [id: string]: QuickRoutine }, cur) => {
         const quickRoutine: any = cur.data();
         acc[cur.id] = {
           ...quickRoutine,
@@ -488,7 +488,7 @@ export const getQuickRoutinesById = async (ids: string[]) => {
       .collection('quickRoutines')
       .where(db.FieldPath.documentId(), 'in', validIds)
       .get();
-    return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
+    return snapshot.docs.reduce((acc: { [id: string]: QuickRoutine }, cur) => {
       const quickRoutine: any = cur.data();
       acc[cur.id] = {
         ...quickRoutine,
@@ -536,15 +536,18 @@ export const getSavedWorkouts = async (uid: string, startAfter?: Date) => {
     .where('createdate', '<', startAfter || new Date())
     .limitToLast(10)
     .get();
-  return savedWorkouts.docs.reduce((acc: {[id: string]: SavedWorkout}, cur) => {
-    const workout: any = cur.data();
-    acc[cur.id] = {
-      ...workout,
-      id: cur.id,
-      createdate: workout.createdate.toDate(),
-    };
-    return acc;
-  }, {});
+  return savedWorkouts.docs.reduce(
+    (acc: { [id: string]: SavedWorkout }, cur) => {
+      const workout: any = cur.data();
+      acc[cur.id] = {
+        ...workout,
+        id: cur.id,
+        createdate: workout.createdate.toDate(),
+      };
+      return acc;
+    },
+    {},
+  );
 };
 
 export const getSavedTests = async (uid: string, startAfter?: Date) => {
@@ -557,9 +560,9 @@ export const getSavedTests = async (uid: string, startAfter?: Date) => {
     .where('createdate', '<', startAfter || new Date())
     .limitToLast(20)
     .get();
-  return savedTests.docs.reduce((acc: {[id: string]: SavedTest}, cur) => {
+  return savedTests.docs.reduce((acc: { [id: string]: SavedTest }, cur) => {
     const test: any = cur.data();
-    acc[cur.id] = {...test, id: cur.id, createdate: test.createdate.toDate()};
+    acc[cur.id] = { ...test, id: cur.id, createdate: test.createdate.toDate() };
     return acc;
   }, {});
 };
@@ -575,7 +578,7 @@ export const getSavedQuickRoutines = async (uid: string, startAfter?: Date) => {
     .limitToLast(10)
     .get();
   return savedQuickRoutines.docs.reduce(
-    (acc: {[id: string]: SavedQuickRoutine}, cur) => {
+    (acc: { [id: string]: SavedQuickRoutine }, cur) => {
       const routine: any = cur.data();
       acc[cur.id] = {
         ...routine,
@@ -591,22 +594,22 @@ export const getSavedQuickRoutines = async (uid: string, startAfter?: Date) => {
 export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
   try {
     const response = await functions().httpsCallable<
-      {uid: string},
+      { uid: string },
       WeeklyItems
-    >('getWeeklyItems')({uid});
-    const {quickRoutines, tests, workouts} = response.data;
-    return {quickRoutines, tests, workouts};
+    >('getWeeklyItems')({ uid });
+    const { quickRoutines, tests, workouts } = response.data;
+    return { quickRoutines, tests, workouts };
   } catch (e) {
-    Snackbar.show({text: 'Error fetching weekly items'});
-    return {quickRoutines: {}, tests: {}, workouts: {}};
+    Snackbar.show({ text: 'Error fetching weekly items' });
+    return { quickRoutines: {}, tests: {}, workouts: {} };
   }
 };
 
 export const getEducation = async () => {
   const education = await db().collection('education').get();
-  return education.docs.reduce((acc: {[id: string]: Education}, cur) => {
+  return education.docs.reduce((acc: { [id: string]: Education }, cur) => {
     const edu: any = cur.data();
-    acc[cur.id] = {...edu, id: cur.id, createdate: edu.createdate.toDate()};
+    acc[cur.id] = { ...edu, id: cur.id, createdate: edu.createdate.toDate() };
     return acc;
   }, {});
 };
@@ -621,7 +624,7 @@ export const getEducationById = async (ids: string[]) => {
     const snapshot = await db().collection('education').get();
     return snapshot.docs
       .filter(doc => ids.includes(doc.id))
-      .reduce((acc: {[id: string]: Education}, cur) => {
+      .reduce((acc: { [id: string]: Education }, cur) => {
         const test: any = cur.data();
         acc[cur.id] = {
           ...test,
@@ -635,9 +638,13 @@ export const getEducationById = async (ids: string[]) => {
       .collection('education')
       .where(db.FieldPath.documentId(), 'in', validIds)
       .get();
-    return snapshot.docs.reduce((acc: {[id: string]: Education}, cur) => {
+    return snapshot.docs.reduce((acc: { [id: string]: Education }, cur) => {
       const test: any = cur.data();
-      acc[cur.id] = {...test, id: cur.id, createdate: test.createdate.toDate()};
+      acc[cur.id] = {
+        ...test,
+        id: cur.id,
+        createdate: test.createdate.toDate(),
+      };
       return acc;
     }, {});
   }
@@ -645,7 +652,7 @@ export const getEducationById = async (ids: string[]) => {
 
 export const getRecipes = async () => {
   const recipes = await db().collection('recipes').get();
-  return recipes.docs.reduce((acc: {[id: string]: Recipe}, cur) => {
+  return recipes.docs.reduce((acc: { [id: string]: Recipe }, cur) => {
     const recipe: any = cur.data();
     acc[cur.id] = {
       ...recipe,
@@ -666,7 +673,7 @@ export const getRecipesById = async (ids: string[]) => {
     const snapshot = await db().collection('recipes').get();
     return snapshot.docs
       .filter(doc => ids.includes(doc.id))
-      .reduce((acc: {[id: string]: Recipe}, cur) => {
+      .reduce((acc: { [id: string]: Recipe }, cur) => {
         const recipe: any = cur.data();
         acc[cur.id] = {
           ...recipe,
@@ -680,7 +687,7 @@ export const getRecipesById = async (ids: string[]) => {
       .collection('recipes')
       .where(db.FieldPath.documentId(), 'in', validIds)
       .get();
-    return snapshot.docs.reduce((acc: {[id: string]: Recipe}, cur) => {
+    return snapshot.docs.reduce((acc: { [id: string]: Recipe }, cur) => {
       const recipe: any = cur.data();
       acc[cur.id] = {
         ...recipe,
@@ -694,17 +701,17 @@ export const getRecipesById = async (ids: string[]) => {
 
 export const generateLink = async () => {
   try {
-    const response = await functions().httpsCallable<{}, {link: string}>(
+    const response = await functions().httpsCallable<{}, { link: string }>(
       'generateLink',
     )();
     return response.data.link;
   } catch (e) {
-    Snackbar.show({text: 'Error generating link'});
+    Snackbar.show({ text: 'Error generating link' });
   }
 };
 
 export const acceptInviteLink = async (value: string) => {
-  const response = await functions().httpsCallable<{}, {user: Profile}>(
+  const response = await functions().httpsCallable<{}, { user: Profile }>(
     'acceptInviteLink',
   )({
     value,
@@ -713,7 +720,7 @@ export const acceptInviteLink = async (value: string) => {
 };
 
 export const setFCMToken = (uid: string, FCMToken: string) => {
-  return db().collection('users').doc(uid).update({FCMToken});
+  return db().collection('users').doc(uid).update({ FCMToken });
 };
 
 export const getConnections = async (uid: string) => {
@@ -726,7 +733,7 @@ export const getConnections = async (uid: string) => {
     .get();
   const uids = connections.docs.map(doc => doc.data().uid);
   if (uids.length) {
-    const users: {[uid: string]: Profile} = {};
+    const users: { [uid: string]: Profile } = {};
     const uidArrays = chunkArrayInGroups(uids, 10);
     for (let i = 0; i < uidArrays.length; i++) {
       const arr = uidArrays[i];
@@ -754,7 +761,7 @@ export const getChats = async (uid: string) => {
   const ids = idQuery.docs.map(chat => chat.data().id);
   if (ids.length) {
     const idArrays = chunkArrayInGroups(ids, 10);
-    const chats: {[key: string]: Chat} = {};
+    const chats: { [key: string]: Chat } = {};
     for (let i = 0; i < idArrays.length; i++) {
       const arr = idArrays[i];
       const chatsData = await db()
@@ -763,7 +770,7 @@ export const getChats = async (uid: string) => {
         .get();
       chatsData.docs.forEach(doc => {
         const otherUid = doc.data().users.find((id: string) => id !== uid);
-        const chat: any = {id: doc.id, ...doc.data()};
+        const chat: any = { id: doc.id, ...doc.data() };
         chats[otherUid] = chat;
       }, {});
     }
@@ -782,9 +789,9 @@ export const getMessages = async (chatId: string, startAfter: number) => {
     .where('createdAt', '<', startAfter)
     .limitToLast(20)
     .get();
-  return query.docs.reduce((acc: {[id: string]: Message}, cur) => {
+  return query.docs.reduce((acc: { [id: string]: Message }, cur) => {
     const message: any = cur.data();
-    acc[message ? message._id : cur.id] = {...message, id: cur.id};
+    acc[message ? message._id : cur.id] = { ...message, id: cur.id };
     return acc;
   }, {});
 };
@@ -794,7 +801,7 @@ export const sendMessage = (
   chatId: string,
   userId: string,
 ) => {
-  return functions().httpsCallable('sendMessage')({message, chatId, userId});
+  return functions().httpsCallable('sendMessage')({ message, chatId, userId });
 };
 
 export const deleteMessage = (
@@ -809,8 +816,8 @@ export const deleteMessage = (
   });
 };
 
-export const setUnread = (uid: string, unread: {[key: string]: number}) => {
-  return db().collection('users').doc(uid).update({unread});
+export const setUnread = (uid: string, unread: { [key: string]: number }) => {
+  return db().collection('users').doc(uid).update({ unread });
 };
 
 export const getSettings = async () => {
@@ -826,7 +833,7 @@ export const sendFeedback = async (
   return db()
     .collection('feedback')
     .doc(uid)
-    .set({feedback, rating, createdate: new Date()});
+    .set({ feedback, rating, createdate: new Date() });
 };
 
 export const getSamples = async (
@@ -855,13 +862,13 @@ export const saveSample = (sample: string, value: number, uid: string) => {
     .collection('users')
     .doc(uid)
     .collection(sample)
-    .add({value, createdate: new Date()});
+    .add({ value, createdate: new Date() });
 };
 
 export const getLeaderboardData = async (leaderboard: LeaderboardType) => {
   const response = await functions().httpsCallable<
-    {leaderboard: LeaderboardType},
-    {leaderboard: LeaderboardItem[]; endTime: number}
-  >('getLeaderboard')({leaderboard});
+    { leaderboard: LeaderboardType },
+    { leaderboard: LeaderboardItem[]; endTime: number }
+  >('getLeaderboard')({ leaderboard });
   return response.data;
 };

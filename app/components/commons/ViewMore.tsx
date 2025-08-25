@@ -20,7 +20,8 @@ const ViewMore = ({
           color: colors.appBlue,
           fontWeight: 'bold',
         }}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         View more
       </Text>
     );
@@ -33,7 +34,8 @@ const ViewMore = ({
           color: colors.appBlue,
           fontWeight: 'bold',
         }}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         View less
       </Text>
     );
@@ -46,8 +48,9 @@ const ViewMore = ({
       textStyle={{
         lineHeight: 25,
         textAlign,
-      }}>
-      <Text style={{color: colors.appWhite, textAlign}}>{text}</Text>
+      }}
+    >
+      <Text style={{ color: colors.appWhite, textAlign }}>{text}</Text>
     </ViewMoreText>
   );
 };

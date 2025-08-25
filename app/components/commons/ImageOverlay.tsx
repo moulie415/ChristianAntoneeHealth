@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -11,7 +11,7 @@ import {
 
 import Text from './Text';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 interface ImageOverlayProps {
   rounded?: number;
@@ -65,7 +65,8 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({
         },
         containerStyle,
       ]}
-      blurRadius={blurRadius}>
+      blurRadius={blurRadius}
+    >
       <View
         style={{
           ...StyleSheet.absoluteFillObject,

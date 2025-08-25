@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import DatePicker from '@react-native-community/datetimepicker';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import {Platform, TouchableOpacity, View} from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import Config from 'react-native-config';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {StackParamList} from '../../../App';
-import {HEIGHTS} from '../../../constants';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { StackParamList } from '../../../App';
+import { HEIGHTS } from '../../../constants';
 import colors from '../../../constants/colors';
-import {capitalizeFirstLetter} from '../../../helpers';
-import {Gender} from '../../../types/Shared';
+import { capitalizeFirstLetter } from '../../../helpers';
+import { Gender } from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Checkbox from '../../commons/Checkbox';
 import HeightModal from '../../commons/HeightModal';
@@ -79,14 +79,16 @@ const PersonalDetails: React.FC<{
         marginTop: 20,
         paddingBottom: 150,
       }}
-      style={{flex: 1}}>
+      style={{ flex: 1 }}
+    >
       <Text
         style={{
           marginBottom: 20,
           fontSize: 24,
           color: colors.appWhite,
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         Personal Details
       </Text>
       <Input
@@ -120,7 +122,8 @@ const PersonalDetails: React.FC<{
           backgroundColor: '#363944',
           paddingLeft: 40,
           marginTop: 20,
-        }}>
+        }}
+      >
         <View
           style={{
             position: 'absolute',
@@ -129,7 +132,8 @@ const PersonalDetails: React.FC<{
             alignItems: 'flex-end',
             left: 0,
             width: 30,
-          }}>
+          }}
+        >
           <FontAwesome6
             name="calendar"
             color={'#CECECE'}
@@ -140,7 +144,8 @@ const PersonalDetails: React.FC<{
         <Text
           style={{
             color: showDob ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
-          }}>
+          }}
+        >
           {showDob ? moment(dob).format('DD-MM-YYYY') : 'Date of birth*'}
         </Text>
       </TouchableOpacity>
@@ -157,7 +162,8 @@ const PersonalDetails: React.FC<{
           backgroundColor: '#363944',
           paddingLeft: 40,
           marginTop: 20,
-        }}>
+        }}
+      >
         <View
           style={{
             position: 'absolute',
@@ -166,7 +172,8 @@ const PersonalDetails: React.FC<{
             alignItems: 'flex-end',
             left: 0,
             width: 30,
-          }}>
+          }}
+        >
           <FontAwesome6
             name="venus-mars"
             color={'#CECECE'}
@@ -178,7 +185,8 @@ const PersonalDetails: React.FC<{
           style={{
             color:
               gender !== 'none' ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
-          }}>
+          }}
+        >
           {gender !== 'none' ? capitalizeFirstLetter(gender) : 'Sex'}
         </Text>
       </TouchableOpacity>
@@ -189,11 +197,12 @@ const PersonalDetails: React.FC<{
           marginTop: 5,
           marginHorizontal: 5,
           fontStyle: 'italic',
-        }}>
+        }}
+      >
         While not mandatory, not specifying sex may limit some of the features
         of the app.
       </Text>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
           onPress={() => setShowWeightModal(true)}
           style={{
@@ -208,7 +217,8 @@ const PersonalDetails: React.FC<{
             marginTop: 20,
             flex: 1,
             marginRight: 10,
-          }}>
+          }}
+        >
           <View
             style={{
               position: 'absolute',
@@ -217,7 +227,8 @@ const PersonalDetails: React.FC<{
               alignItems: 'flex-end',
               left: 0,
               width: 30,
-            }}>
+            }}
+          >
             <FontAwesome6
               name="weight-hanging"
               color={'#CECECE'}
@@ -228,7 +239,8 @@ const PersonalDetails: React.FC<{
           <Text
             style={{
               color: weight ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
-            }}>
+            }}
+          >
             {weight ? `${weight} kg` : 'Weight*'}
           </Text>
         </TouchableOpacity>
@@ -246,7 +258,8 @@ const PersonalDetails: React.FC<{
             marginTop: 20,
             marginLeft: 10,
             flex: 1,
-          }}>
+          }}
+        >
           <View
             style={{
               position: 'absolute',
@@ -255,7 +268,8 @@ const PersonalDetails: React.FC<{
               alignItems: 'flex-end',
               left: 0,
               width: 30,
-            }}>
+            }}
+          >
             <FontAwesome6
               name="ruler-vertical"
               color={'#CECECE'}
@@ -266,25 +280,27 @@ const PersonalDetails: React.FC<{
           <Text
             style={{
               color: height ? colors.appWhite : 'rgba(255, 255, 255, 0.50)',
-            }}>
+            }}
+          >
             {height ? `${height} cm` : 'Height*'}
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{marginTop: 20, marginLeft: 10}}>
+      <View style={{ marginTop: 20, marginLeft: 10 }}>
         <TouchableOpacity
           style={{
             flexDirection: 'row',
             marginBottom: 10,
             alignItems: 'center',
           }}
-          onPress={() => setTerms(!terms)}>
+          onPress={() => setTerms(!terms)}
+        >
           <Checkbox
             checked={terms}
             onPress={() => setTerms(!terms)}
-            iconStyle={{color: colors.appWhite}}
+            iconStyle={{ color: colors.appWhite }}
           />
-          <Text style={{marginHorizontal: 10, color: colors.appWhite}}>
+          <Text style={{ marginHorizontal: 10, color: colors.appWhite }}>
             By ticking this box you confirm and agree that you have read our{' '}
             <Text
               onPress={() =>
@@ -297,7 +313,8 @@ const PersonalDetails: React.FC<{
                 textDecorationLine: 'underline',
                 fontWeight: 'bold',
                 color: colors.appWhite,
-              }}>
+              }}
+            >
               Terms of Service
             </Text>
             *
@@ -309,13 +326,14 @@ const PersonalDetails: React.FC<{
             marginBottom: 10,
             alignItems: 'center',
           }}
-          onPress={() => setPrivacy(!privacy)}>
+          onPress={() => setPrivacy(!privacy)}
+        >
           <Checkbox
             checked={privacy}
             onPress={() => setPrivacy(!privacy)}
-            iconStyle={{color: colors.appWhite}}
+            iconStyle={{ color: colors.appWhite }}
           />
-          <Text style={{marginHorizontal: 10, color: colors.appWhite}}>
+          <Text style={{ marginHorizontal: 10, color: colors.appWhite }}>
             By ticking this box you consent to the processing of your personal
             data.{' '}
             <Text
@@ -329,10 +347,11 @@ const PersonalDetails: React.FC<{
                 textDecorationLine: 'underline',
                 fontWeight: 'bold',
                 color: colors.appWhite,
-              }}>
+              }}
+            >
               Privacy Policy
             </Text>
-            <Text style={{fontWeight: 'bold'}}>*</Text>
+            <Text style={{ fontWeight: 'bold' }}>*</Text>
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -341,13 +360,14 @@ const PersonalDetails: React.FC<{
             flexDirection: 'row',
             marginBottom: 20,
             alignItems: 'center',
-          }}>
+          }}
+        >
           <Checkbox
             checked={marketing}
             onPress={() => setMarketing(!marketing)}
-            iconStyle={{color: colors.appWhite}}
+            iconStyle={{ color: colors.appWhite }}
           />
-          <Text style={{marginLeft: 10, color: colors.appWhite, flex: 1}}>
+          <Text style={{ marginLeft: 10, color: colors.appWhite, flex: 1 }}>
             I want to join the CA Health mailing list and receive relevant
             articles offers and promotions
           </Text>
@@ -355,14 +375,16 @@ const PersonalDetails: React.FC<{
       </View>
       <Modal
         visible={showDobModal && Platform.OS === 'ios'}
-        onRequestClose={() => setShowDobModal(false)}>
+        onRequestClose={() => setShowDobModal(false)}
+      >
         <View
           style={{
             backgroundColor: colors.appGrey,
             width: '90%',
             alignSelf: 'center',
             borderRadius: 10,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: colors.appWhite,
@@ -371,10 +393,11 @@ const PersonalDetails: React.FC<{
               fontSize: 20,
               textAlign: 'center',
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Select date
           </Text>
-          <View style={{paddingHorizontal: 20}}>
+          <View style={{ paddingHorizontal: 20 }}>
             <DatePicker
               mode="date"
               textColor={colors.appWhite}
@@ -390,7 +413,7 @@ const PersonalDetails: React.FC<{
 
           <Button
             text="Close"
-            style={{margin: 10}}
+            style={{ margin: 10 }}
             onPress={() => setShowDobModal(false)}
           />
         </View>

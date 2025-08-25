@@ -1,12 +1,12 @@
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {AppState, AppStateStatus} from 'react-native';
-import {PurchasesEntitlementInfo} from 'react-native-purchases';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { AppState, AppStateStatus } from 'react-native';
+import { PurchasesEntitlementInfo } from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
-import {SavedQuickRoutine, SavedTest, SavedWorkout} from '../types/SavedItem';
+import { SavedQuickRoutine, SavedTest, SavedWorkout } from '../types/SavedItem';
 import {
   Plan,
   Profile,
@@ -16,9 +16,9 @@ import {
   UpdateProfilePayload,
 } from '../types/Shared';
 export interface WeeklyItems {
-  quickRoutines: {[key: string]: SavedQuickRoutine};
-  tests: {[key: string]: SavedTest};
-  workouts: {[key: string]: SavedWorkout};
+  quickRoutines: { [key: string]: SavedQuickRoutine };
+  tests: { [key: string]: SavedTest };
+  workouts: { [key: string]: SavedWorkout };
 }
 
 export interface LoginFullname {
@@ -38,21 +38,21 @@ export interface ProfileState {
   metabolicAgeSamples: Sample[];
   stepSamples: StepSample[];
   weeklySteps: StepSample[];
-  connections: {[key: string]: Profile};
-  connectionWeeklyItems: {[key: string]: WeeklyItems};
+  connections: { [key: string]: Profile };
+  connectionWeeklyItems: { [key: string]: WeeklyItems };
   loading: boolean;
-  messages: {[key: string]: {[key: string]: Message}};
-  chats: {[key: string]: Chat};
-  chatMessages: {[key: string]: string};
+  messages: { [key: string]: { [key: string]: Message } };
+  chats: { [key: string]: Chat };
+  chatMessages: { [key: string]: string };
   state: AppStateStatus;
   weeklyItems: WeeklyItems;
   plan?: Plan;
   hasViewedTargets: boolean;
-  syncedPlanEvents: {[key: string]: string};
+  syncedPlanEvents: { [key: string]: string };
   calendarId?: string;
   loginEmail: string;
   loginFullname?: LoginFullname;
-  downloadedDocuments: {[key: string]: string};
+  downloadedDocuments: { [key: string]: string };
   filter: 6 | 30 | 365;
 }
 
@@ -268,68 +268,68 @@ const profileSlice = createSlice({
   name: PROFILE,
   initialState,
   reducers: {
-    setProfile: (state: ProfileState, {payload}: PayloadAction<Profile>) => {
+    setProfile: (state: ProfileState, { payload }: PayloadAction<Profile>) => {
       state.profile = payload;
     },
-    setLoggedIn: (state: ProfileState, {payload}: PayloadAction<boolean>) => {
+    setLoggedIn: (state: ProfileState, { payload }: PayloadAction<boolean>) => {
       if (payload) {
         state.loggedIn = payload;
       } else {
         const loginEmail = state.loginEmail;
-        return {...initialState, loginEmail};
+        return { ...initialState, loginEmail };
       }
     },
     setWeightSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.weightSamples = payload;
     },
     setHeightSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.heightSamples = payload;
     },
     setBodyFatPercentageSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.bodyFatPercentageSamples = payload;
     },
     setMuscleMassSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.muscleMassSamples = payload;
     },
     setBoneMassSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.boneMassSamples = payload;
     },
     setVisceralFatSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.visceralFatSamples = payload;
     },
     setMetabolicAgeSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<Sample[]>,
+      { payload }: PayloadAction<Sample[]>,
     ) => {
       state.metabolicAgeSamples = payload;
     },
     setStepSamples: (
       state: ProfileState,
-      {payload}: PayloadAction<StepSample[]>,
+      { payload }: PayloadAction<StepSample[]>,
     ) => {
       state.stepSamples = payload;
     },
     setWeeklySteps: (
       state: ProfileState,
-      {payload}: PayloadAction<StepSample[]>,
+      { payload }: PayloadAction<StepSample[]>,
     ) => {
       state.weeklySteps = payload;
     },
@@ -337,20 +337,20 @@ const profileSlice = createSlice({
       state: ProfileState,
       {
         payload,
-      }: PayloadAction<false | {[key: string]: PurchasesEntitlementInfo}>,
+      }: PayloadAction<false | { [key: string]: PurchasesEntitlementInfo }>,
     ) => {
-      state.profile = {...state.profile, premium: payload};
+      state.profile = { ...state.profile, premium: payload };
     },
-    setAdmin: (state: ProfileState, {payload}: PayloadAction<boolean>) => {
-      state.profile = {...state.profile, admin: payload};
+    setAdmin: (state: ProfileState, { payload }: PayloadAction<boolean>) => {
+      state.profile = { ...state.profile, admin: payload };
     },
     setConnections: (
       state: ProfileState,
-      {payload}: PayloadAction<{[key: string]: Profile}>,
+      { payload }: PayloadAction<{ [key: string]: Profile }>,
     ) => {
       state.connections = payload;
     },
-    setLoading: (state: ProfileState, {payload}: PayloadAction<boolean>) => {
+    setLoading: (state: ProfileState, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
     },
     setMessages: (
@@ -363,9 +363,9 @@ const profileSlice = createSlice({
       }>,
     ) => {
       const messages = payload.snapshot.docs.reduce(
-        (acc: {[id: string]: Message}, cur) => {
+        (acc: { [id: string]: Message }, cur) => {
           const message: any = cur.data();
-          acc[message ? message._id : cur.id] = {...message, id: cur.id};
+          acc[message ? message._id : cur.id] = { ...message, id: cur.id };
           return acc;
         },
         {},
@@ -382,7 +382,7 @@ const profileSlice = createSlice({
       state: ProfileState,
       {
         payload,
-      }: PayloadAction<{uid: string; messages: {[key: string]: Message}}>,
+      }: PayloadAction<{ uid: string; messages: { [key: string]: Message } }>,
     ) => {
       state.messages = {
         ...state.messages,
@@ -394,14 +394,14 @@ const profileSlice = createSlice({
     },
     setChats: (
       state: ProfileState,
-      {payload}: PayloadAction<{[key: string]: Chat}>,
+      { payload }: PayloadAction<{ [key: string]: Chat }>,
     ) => {
-      state.chats = {...state.chats, ...payload};
+      state.chats = { ...state.chats, ...payload };
     },
 
     setMessage: (
       state: ProfileState,
-      {payload}: PayloadAction<{uid: string; message: Message}>,
+      { payload }: PayloadAction<{ uid: string; message: Message }>,
     ) => {
       state.messages = {
         ...state.messages,
@@ -413,7 +413,7 @@ const profileSlice = createSlice({
     },
     deleteMessage: (
       state: ProfileState,
-      {payload}: PayloadAction<{uid: string; message: Message}>,
+      { payload }: PayloadAction<{ uid: string; message: Message }>,
     ) => {
       delete state.messages[payload.uid][payload.message._id];
     },
@@ -430,33 +430,33 @@ const profileSlice = createSlice({
     ) => {},
     setUnread: (
       state: ProfileState,
-      {payload}: PayloadAction<{[key: string]: number}>,
+      { payload }: PayloadAction<{ [key: string]: number }>,
     ) => {
       const count = Object.values(payload).reduce((acc, cur) => acc + cur, 0);
       PushNotification.setApplicationIconBadgeNumber(count);
-      state.profile = {...state.profile, unread: payload};
+      state.profile = { ...state.profile, unread: payload };
     },
-    setRead: (state: ProfileState, {payload}: PayloadAction<string>) => {
+    setRead: (state: ProfileState, { payload }: PayloadAction<string>) => {
       state.profile = {
         ...state.profile,
-        unread: {...state.profile.unread, [payload]: 0},
+        unread: { ...state.profile.unread, [payload]: 0 },
       };
     },
     setAppState: (
       state: ProfileState,
-      {payload}: PayloadAction<AppStateStatus>,
+      { payload }: PayloadAction<AppStateStatus>,
     ) => {
       state.state = payload;
     },
     setWeeklyItems: (
       state: ProfileState,
-      {payload}: PayloadAction<WeeklyItems>,
+      { payload }: PayloadAction<WeeklyItems>,
     ) => {
       state.weeklyItems = payload;
     },
     setWeeklyItemsForConnection: (
       state: ProfileState,
-      {payload}: PayloadAction<{items: WeeklyItems; uid: string}>,
+      { payload }: PayloadAction<{ items: WeeklyItems; uid: string }>,
     ) => {
       state.connectionWeeklyItems = {
         ...state.connectionWeeklyItems,
@@ -465,7 +465,7 @@ const profileSlice = createSlice({
     },
     setPlan: (
       state: ProfileState,
-      {payload}: PayloadAction<Plan | undefined>,
+      { payload }: PayloadAction<Plan | undefined>,
     ) => {
       state.plan = payload;
     },
@@ -474,44 +474,50 @@ const profileSlice = createSlice({
     },
     setSyncedPlanEvent: (
       state: ProfileState,
-      {payload}: PayloadAction<{key: string; id: string}>,
+      { payload }: PayloadAction<{ key: string; id: string }>,
     ) => {
       state.syncedPlanEvents = {
         ...state.syncedPlanEvents,
         [payload.key]: payload.id,
       };
     },
-    setCalendarId: (state: ProfileState, {payload}: PayloadAction<string>) => {
+    setCalendarId: (
+      state: ProfileState,
+      { payload }: PayloadAction<string>,
+    ) => {
       state.calendarId = payload;
     },
     setChatMessage: (
       state: ProfileState,
-      {payload}: PayloadAction<{uid: string; message: string}>,
+      { payload }: PayloadAction<{ uid: string; message: string }>,
     ) => {
       state.chatMessages = {
         ...state.chatMessages,
         [payload.uid]: payload.message,
       };
     },
-    setLoginEmail: (state: ProfileState, {payload}: PayloadAction<string>) => {
+    setLoginEmail: (
+      state: ProfileState,
+      { payload }: PayloadAction<string>,
+    ) => {
       state.loginEmail = payload;
     },
     setLoginFullname: (
       state: ProfileState,
-      {payload}: PayloadAction<LoginFullname>,
+      { payload }: PayloadAction<LoginFullname>,
     ) => {
       state.loginFullname = payload;
     },
     getWeeklyItems: () => {},
     getWeeklyItemsForConnection: (
       state: ProfileState,
-      {payload}: PayloadAction<string>,
+      { payload }: PayloadAction<string>,
     ) => {},
     loadEarlierMessages: (
       state: ProfileState,
       {
         payload,
-      }: PayloadAction<{chatId: string; uid: string; startAfter: number}>,
+      }: PayloadAction<{ chatId: string; uid: string; startAfter: number }>,
     ) => {},
     sendMessage: (
       state: ProfileState,
@@ -527,25 +533,25 @@ const profileSlice = createSlice({
     getConnections: () => {},
     handleAuth: (
       state: ProfileState,
-      {payload}: PayloadAction<FirebaseAuthTypes.User>,
+      { payload }: PayloadAction<FirebaseAuthTypes.User>,
     ) => {},
     getSamples: () => {},
     signUp: (
       state: ProfileState,
-      {payload}: PayloadAction<SignUpPayload>,
+      { payload }: PayloadAction<SignUpPayload>,
     ) => {},
     updateProfile: (
       state: ProfileState,
-      {payload}: PayloadAction<UpdateProfilePayload>,
+      { payload }: PayloadAction<UpdateProfilePayload>,
     ) => {},
     getPlan: () => {},
     syncPlanWithCalendar: (
       state: ProfileState,
-      {payload}: PayloadAction<{plan: Plan; sync: boolean}>,
+      { payload }: PayloadAction<{ plan: Plan; sync: boolean }>,
     ) => {},
     setDownloadedDocument: (
       state: ProfileState,
-      {payload}: PayloadAction<{id: string; path: string}>,
+      { payload }: PayloadAction<{ id: string; path: string }>,
     ) => {
       state.downloadedDocuments = {
         ...state.downloadedDocuments,
@@ -554,7 +560,7 @@ const profileSlice = createSlice({
     },
     favouriteRecipe: (
       state: ProfileState,
-      {payload}: PayloadAction<string>,
+      { payload }: PayloadAction<string>,
     ) => {
       if (state.profile.favouriteRecipes?.some(recipe => recipe === payload)) {
         state.profile.favouriteRecipes = state.profile.favouriteRecipes.filter(
@@ -569,7 +575,7 @@ const profileSlice = createSlice({
     },
     setFilter: (
       state: ProfileState,
-      {payload}: PayloadAction<6 | 30 | 365>,
+      { payload }: PayloadAction<6 | 30 | 365>,
     ) => {
       state.filter = payload;
     },

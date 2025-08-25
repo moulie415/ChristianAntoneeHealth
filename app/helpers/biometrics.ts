@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {NativeModules, Platform} from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 // import {getApiLevel} from 'react-native-device-info';
 import AppleHealthKit from 'react-native-health';
 import {
@@ -11,13 +11,16 @@ import {
   readRecords,
   requestPermission,
 } from 'react-native-health-connect';
-import {getIsPaired} from 'react-native-watch-connectivity';
-import {healthConnectPermissions, healthKitOptions} from '../constants/strings';
-import {Gender, Sample, WatchWorkoutResponse} from '../types/Shared';
-import {getSamples, saveSample} from './api';
-import {logError} from './error';
+import { getIsPaired } from 'react-native-watch-connectivity';
+import {
+  healthConnectPermissions,
+  healthKitOptions,
+} from '../constants/strings';
+import { Gender, Sample, WatchWorkoutResponse } from '../types/Shared';
+import { getSamples, saveSample } from './api';
+import { logError } from './error';
 
-const {WatchWorkoutModule} = NativeModules;
+const { WatchWorkoutModule } = NativeModules;
 
 export const isAvailable = async () => {
   if (Platform.OS === 'ios') {
@@ -83,7 +86,7 @@ export const getHeight = async (): Promise<number | undefined> => {
       return height;
     }
 
-    const {records} = await readRecords('Height', {
+    const { records } = await readRecords('Height', {
       timeRangeFilter: {
         operator: 'between',
         startTime: moment().subtract(30, 'days').startOf('day').toISOString(),
@@ -125,7 +128,7 @@ export const getWeight = async (): Promise<number | undefined> => {
       return weight;
     }
 
-    const {records} = await readRecords('Weight', {
+    const { records } = await readRecords('Weight', {
       timeRangeFilter: {
         operator: 'between',
         startTime: moment().subtract(30, 'days').startOf('day').toISOString(),
@@ -181,7 +184,7 @@ export const getStepSamples = async (
       return samples;
     }
 
-    const {records} = await readRecords('Steps', {
+    const { records } = await readRecords('Steps', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -245,7 +248,7 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       return samples;
     }
 
-    const {records} = await readRecords('Steps', {
+    const { records } = await readRecords('Steps', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate,
@@ -292,7 +295,7 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
       return samples;
     }
 
-    const {records} = await readRecords('ExerciseSession', {
+    const { records } = await readRecords('ExerciseSession', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -366,7 +369,7 @@ export const saveWeight = async (uid: string, value?: number) => {
 
     if (Platform.OS === 'ios') {
       return new Promise((resolve, reject) => {
-        AppleHealthKit.saveWeight({value: value * 2.20462}, (e, result) => {
+        AppleHealthKit.saveWeight({ value: value * 2.20462 }, (e, result) => {
           if (e) {
             reject(e);
           } else {
@@ -379,7 +382,7 @@ export const saveWeight = async (uid: string, value?: number) => {
     await insertRecords([
       {
         recordType: 'Weight',
-        weight: {value, unit: 'kilograms'},
+        weight: { value, unit: 'kilograms' },
         time: new Date().toISOString(),
       },
     ]);
@@ -399,7 +402,7 @@ export const saveHeight = async (uid: string, value?: number) => {
     }
     if (Platform.OS === 'ios') {
       return new Promise((resolve, reject) => {
-        AppleHealthKit.saveHeight({value: value * 0.393701}, (e, result) => {
+        AppleHealthKit.saveHeight({ value: value * 0.393701 }, (e, result) => {
           if (e) {
             reject(e);
           } else {
@@ -412,7 +415,7 @@ export const saveHeight = async (uid: string, value?: number) => {
     await insertRecords([
       {
         recordType: 'Height',
-        height: {value: value / 100, unit: 'meters'},
+        height: { value: value / 100, unit: 'meters' },
         time: new Date().toISOString(),
       },
     ]);
@@ -449,7 +452,7 @@ export const getHeartRateSamples = async (
       return samples;
     }
 
-    const {records} = await readRecords('HeartRate', {
+    const { records } = await readRecords('HeartRate', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -509,7 +512,7 @@ export const getCalorieSamples = async (
       return samples;
     }
 
-    const {records} = await readRecords('ActiveCaloriesBurned', {
+    const { records } = await readRecords('ActiveCaloriesBurned', {
       timeRangeFilter: {
         operator: 'between',
         startTime: startDate.toISOString(),
@@ -584,7 +587,7 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
     }
     if (Platform.OS === 'ios') {
       await new Promise((resolve, reject) => {
-        AppleHealthKit.saveBodyFatPercentage({value}, (e, result) => {
+        AppleHealthKit.saveBodyFatPercentage({ value }, (e, result) => {
           if (e) {
             reject(e);
           } else {

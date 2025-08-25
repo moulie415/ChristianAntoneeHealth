@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {getCalorieSamples, getHeartRateSamples} from '../helpers/biometrics';
+import { getCalorieSamples, getHeartRateSamples } from '../helpers/biometrics';
 import {
   getCaloriesBurned,
   getCaloriesBurnedFromAverageHeartRate,

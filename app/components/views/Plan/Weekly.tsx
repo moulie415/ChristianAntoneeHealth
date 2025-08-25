@@ -1,14 +1,14 @@
 import moment from 'moment';
-import React, {useMemo} from 'react';
-import {Alert, SectionList, View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
-import {navigate} from '../../../RootNavigation';
+import React, { useMemo } from 'react';
+import { Alert, SectionList, View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
+import { navigate } from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {setWorkout} from '../../../reducers/exercises';
-import {getTestsById} from '../../../reducers/tests';
+import { setWorkout } from '../../../reducers/exercises';
+import { getTestsById } from '../../../reducers/tests';
 import Exercise from '../../../types/Exercise';
-import {Plan, PlanWorkout} from '../../../types/Shared';
+import { Plan, PlanWorkout } from '../../../types/Shared';
 import Test from '../../../types/Test';
 import Text from '../../commons/Text';
 import WorkoutCard from '../../commons/WorkoutCard';
@@ -16,8 +16,8 @@ import WorkoutCard from '../../commons/WorkoutCard';
 const Weekly: React.FC<{
   plan?: Plan;
   loading: boolean;
-  exercises: {[key: string]: Exercise};
-  tests: {[key: string]: Test};
+  exercises: { [key: string]: Exercise };
+  tests: { [key: string]: Test };
   getTestsById: (ids: string[]) => void;
   setWorkout: (workout: Exercise[]) => void;
 }> = ({
@@ -43,7 +43,7 @@ const Weekly: React.FC<{
     }
   }, [plan]);
 
-  const sections: {title: string; data: PlanWorkout[]}[] = [];
+  const sections: { title: string; data: PlanWorkout[] }[] = [];
 
   for (let i = 0; i < 7; i++) {
     if (workouts) {
@@ -53,7 +53,7 @@ const Weekly: React.FC<{
           return item.dates.some(date => moment(date).isSame(day, 'day'));
         })
         .map(item => {
-          return {...item, today: i === 0};
+          return { ...item, today: i === 0 };
         });
       if (data.length) {
         sections.push({
@@ -68,31 +68,33 @@ const Weekly: React.FC<{
     <View>
       <SectionList
         sections={sections}
-        renderSectionHeader={({section: {title}}) => (
+        renderSectionHeader={({ section: { title } }) => (
           <Text
             style={{
               padding: 5,
               marginLeft: 10,
               color: colors.appWhite,
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             {title}
           </Text>
         )}
         ListEmptyComponent={
-          <View style={{padding: 10}}>
+          <View style={{ padding: 10 }}>
             <Text
               style={{
                 textAlign: 'center',
                 color: colors.appWhite,
                 fontSize: 20,
                 marginVertical: 10,
-              }}>
+              }}
+            >
               No workouts scheduled for this week
             </Text>
           </View>
         }
-        renderItem={({item}) => {
+        renderItem={({ item }) => {
           if ('name' in item) {
             return (
               <WorkoutCard
@@ -117,7 +119,7 @@ const Weekly: React.FC<{
                     }
                   } else {
                     Alert.alert('Workout not due today', 'View early?', [
-                      {text: 'Cancel'},
+                      { text: 'Cancel' },
                       {
                         text: 'Yes',
                         onPress: () => {
@@ -150,7 +152,7 @@ const Weekly: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises, tests}: RootState) => ({
+const mapStateToProps = ({ profile, exercises, tests }: RootState) => ({
   plan: profile.plan,
   loading: profile.loading,
   exercises: exercises.exercises,

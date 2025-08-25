@@ -1,25 +1,26 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
-import {Goal} from '../../../types/Shared';
+import { useAppSelector } from '../../../hooks/redux';
+import { Goal } from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Modal from '../../commons/Modal';
 import SelectableButton from '../../commons/SelectableButton';
 import Text from '../../commons/Text';
-import {goalDetails} from '../SignUpFlow/SelectGoal';
+import { goalDetails } from '../SignUpFlow/SelectGoal';
 
 const SelectGoalModal: React.FC<{
   goalModalVisible: boolean;
   setGoalModalVisible: (visible: boolean) => void;
   goal: Goal;
   setGoal: (goal: Goal) => void;
-}> = ({goalModalVisible, setGoalModalVisible, goal, setGoal}) => {
-  const {profile} = useAppSelector(state => state.profile);
+}> = ({ goalModalVisible, setGoalModalVisible, goal, setGoal }) => {
+  const { profile } = useAppSelector(state => state.profile);
   return (
     <Modal
       visible={goalModalVisible}
-      onRequestClose={() => setGoalModalVisible(false)}>
+      onRequestClose={() => setGoalModalVisible(false)}
+    >
       <View
         style={{
           backgroundColor: colors.appGrey,
@@ -27,7 +28,8 @@ const SelectGoalModal: React.FC<{
           borderRadius: 10,
           width: '95%',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         <Text
           style={{
             textAlign: 'center',
@@ -35,11 +37,12 @@ const SelectGoalModal: React.FC<{
             fontSize: 20,
             color: colors.appWhite,
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           Select Goal
         </Text>
         <View style={{}}>
-          {goalDetails.map(({text, secondaryText, goal: g}) => {
+          {goalDetails.map(({ text, secondaryText, goal: g }) => {
             if (g === Goal.OTHER && !profile.client) {
               return null;
             }
@@ -50,14 +53,14 @@ const SelectGoalModal: React.FC<{
                 secondaryText={secondaryText}
                 selected={g === goal}
                 onPress={() => setGoal(g)}
-                style={{marginBottom: 15}}
+                style={{ marginBottom: 15 }}
               />
             );
           })}
         </View>
         <Button
           text="Close"
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           onPress={() => setGoalModalVisible(false)}
         />
       </View>

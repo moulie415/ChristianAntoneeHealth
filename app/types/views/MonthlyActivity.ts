@@ -1,5 +1,5 @@
-import {Sample, StepSample} from '../Shared';
+import { Sample, StepSample } from '../Shared';
 export default interface MonthlyActivityProps {
-  weightSamples: {[key: number]: Sample[]};
-  stepSamples: {[key: number]: StepSample[]};
+  weightSamples: { [key: number]: Sample[] };
+  stepSamples: { [key: number]: StepSample[] };
 }

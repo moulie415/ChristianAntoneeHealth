@@ -1,4 +1,4 @@
-import {Goal} from '../Shared';
+import { Goal } from '../Shared';
 export default interface GoalsProps {
   goal?: Goal;
   setGoal: (goal: Goal) => void;

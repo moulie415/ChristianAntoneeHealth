@@ -1,5 +1,5 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {useCallback, useEffect} from 'react';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useCallback, useEffect } from 'react';
 
 import Animated, {
   Easing,
@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import colors from '../../../../constants/colors';
 
-const RecordingIcon: React.FC<{animate: boolean}> = ({
+const RecordingIcon: React.FC<{ animate: boolean }> = ({
   animate: shouldAnimate,
 }) => {
   const fadeInOpacity = useSharedValue(1);
@@ -19,8 +19,8 @@ const RecordingIcon: React.FC<{animate: boolean}> = ({
   const animate = useCallback(() => {
     fadeInOpacity.value = withRepeat(
       withSequence(
-        withTiming(0, {duration: 500, easing: Easing.ease}),
-        withTiming(1, {duration: 500, easing: Easing.ease}),
+        withTiming(0, { duration: 500, easing: Easing.ease }),
+        withTiming(1, { duration: 500, easing: Easing.ease }),
       ),
       -1,
     );

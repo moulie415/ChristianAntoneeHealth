@@ -1,11 +1,11 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {SavedTest} from '../types/SavedItem';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { SavedTest } from '../types/SavedItem';
 import Test from '../types/Test';
-import {setLoggedIn} from './profile';
+import { setLoggedIn } from './profile';
 
 export interface TestsState {
-  tests: {[key: string]: Test};
-  savedTests: {[key: string]: SavedTest};
+  tests: { [key: string]: Test };
+  savedTests: { [key: string]: SavedTest };
 }
 
 const initialState: TestsState = {
@@ -41,23 +41,26 @@ const testSlice = createSlice({
   reducers: {
     setTests: (
       state: TestsState,
-      {payload}: PayloadAction<{[key: string]: Test}>,
+      { payload }: PayloadAction<{ [key: string]: Test }>,
     ) => {
-      state.tests = {...state.tests, ...payload};
+      state.tests = { ...state.tests, ...payload };
     },
 
     setSavedTests: (
       state: TestsState,
-      {payload}: PayloadAction<{[key: string]: SavedTest}>,
+      { payload }: PayloadAction<{ [key: string]: SavedTest }>,
     ) => {
-      state.savedTests = {...state.savedTests, ...payload};
+      state.savedTests = { ...state.savedTests, ...payload };
     },
-    saveTest: (state: TestsState, {payload}: PayloadAction<SavedTest>) => {},
+    saveTest: (state: TestsState, { payload }: PayloadAction<SavedTest>) => {},
     getTests: () => {},
-    getTestsById: (state: TestsState, {payload}: PayloadAction<string[]>) => {},
+    getTestsById: (
+      state: TestsState,
+      { payload }: PayloadAction<string[]>,
+    ) => {},
     getSavedTests: (
       state: TestsState,
-      {payload}: PayloadAction<Date | undefined>,
+      { payload }: PayloadAction<Date | undefined>,
     ) => {},
   },
   extraReducers: builder => {

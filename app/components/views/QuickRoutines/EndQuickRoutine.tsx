@@ -1,23 +1,23 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {Alert} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
-import {saveWorkout} from '../../../helpers/biometrics';
-import {logError} from '../../../helpers/error';
-import {getWorkoutData} from '../../../helpers/getWorkoutData';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
+import { saveWorkout } from '../../../helpers/biometrics';
+import { logError } from '../../../helpers/error';
+import { getWorkoutData } from '../../../helpers/getWorkoutData';
+import { useBackHandler } from '../../../hooks/UseBackHandler';
 import useThrottle from '../../../hooks/UseThrottle';
-import {saveQuickRoutine} from '../../../reducers/quickRoutines';
+import { saveQuickRoutine } from '../../../reducers/quickRoutines';
 import Exercise from '../../../types/Exercise';
-import {SavedQuickRoutine} from '../../../types/SavedItem';
-import {Profile} from '../../../types/Shared';
+import { SavedQuickRoutine } from '../../../types/SavedItem';
+import { Profile } from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import RPESlider from '../../commons/RPESlider';
@@ -103,7 +103,7 @@ const EndQuickRoutine: React.FC<{
       });
     } catch (e) {
       logError(e);
-      Snackbar.show({text: 'Error fetching workout data'});
+      Snackbar.show({ text: 'Error fetching workout data' });
     }
     setLoading(false);
   }, 3000);
@@ -139,8 +139,8 @@ const EndQuickRoutine: React.FC<{
   };
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView style={{flex: 1}}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.appGrey }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Text
           style={{
             color: colors.appWhite,
@@ -149,7 +149,8 @@ const EndQuickRoutine: React.FC<{
             marginBottom: 10,
             marginTop: 20,
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           Workout complete!
         </Text>
         <RPESlider setRpe={setDifficulty} rpe={difficulty} />
@@ -158,7 +159,7 @@ const EndQuickRoutine: React.FC<{
           text="Save & Continue"
           disabled={loading}
           loading={loading}
-          style={{marginHorizontal: 20, marginBottom: 20}}
+          style={{ marginHorizontal: 20, marginBottom: 20 }}
           onPress={saveAndContinue}
         />
       </SafeAreaView>
@@ -167,7 +168,7 @@ const EndQuickRoutine: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: RootState) => ({
+const mapStateToProps = ({ profile, exercises }: RootState) => ({
   profile: profile.profile,
   workout: exercises.workout,
 });

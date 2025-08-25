@@ -1,4 +1,4 @@
-import {Area} from './QuickRoutines';
+import { Area } from './QuickRoutines';
 import {
   CoolDown,
   Equipment as EquipmentItem,

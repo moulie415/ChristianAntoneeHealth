@@ -1,6 +1,6 @@
-import {RouteProp} from '@react-navigation/native';
-import {SkiaRenderer, SkiaChart} from '@wuba/react-native-echarts';
-import {LineChart} from 'echarts/charts';
+import { RouteProp } from '@react-navigation/native';
+import { SkiaChart, SkiaRenderer } from '@wuba/react-native-echarts';
+import { LineChart } from 'echarts/charts';
 import {
   DataZoomComponent,
   GridComponent,
@@ -10,16 +10,16 @@ import {
   TooltipComponent,
 } from 'echarts/components';
 import * as echarts from 'echarts/core';
-import {ECBasicOption} from 'echarts/types/dist/shared';
+import { ECBasicOption } from 'echarts/types/dist/shared';
 import moment from 'moment';
-import React, {useEffect, useMemo, useRef} from 'react';
-import {Dimensions, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackParamList} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { Dimensions, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackParamList } from '../../../App';
+import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import Dumbbell from '../../../images/dumbbell.svg';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
@@ -45,12 +45,12 @@ interface LegendItem {
 
 const WorkoutBreakdown: React.FC<{
   route: RouteProp<StackParamList, 'WorkoutBreakdown'>;
-}> = ({route}) => {
+}> = ({ route }) => {
   const chartRef = useRef<typeof SkiaChart>(null);
-  const {workout} = route.params;
+  const { workout } = route.params;
 
-  const {quickRoutines} = useAppSelector(state => state.quickRoutines);
-  const {exercises} = useAppSelector(state => state.exercises);
+  const { quickRoutines } = useAppSelector(state => state.quickRoutines);
+  const { exercises } = useAppSelector(state => state.exercises);
 
   const exerciseIds =
     'quickRoutineId' in workout
@@ -65,7 +65,7 @@ const WorkoutBreakdown: React.FC<{
   const cumulativeCalories = useMemo(
     () =>
       workout.calorieSamples?.reduce(
-        (acc: {startDate: string; value: number}[], sample, index) => {
+        (acc: { startDate: string; value: number }[], sample, index) => {
           const previousValue = index === 0 ? 0 : acc[index - 1].value;
           const cumulativeValue = previousValue + sample.value;
           return [
@@ -314,12 +314,12 @@ const WorkoutBreakdown: React.FC<{
       label: 'Next exercise',
       items: workout.exerciseEvents,
     },
-    {color: colors.appWhite, label: 'Pause events', items: pauseEventLines},
-    {color: colors.appGreen, label: 'Resume events', items: resumeEventLines},
+    { color: colors.appWhite, label: 'Pause events', items: pauseEventLines },
+    { color: colors.appGreen, label: 'Resume events', items: resumeEventLines },
   ];
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <Header hasBack title="Workout Breakdown" />
       <SkiaChart ref={chartRef} />
       <View
@@ -328,9 +328,10 @@ const WorkoutBreakdown: React.FC<{
           paddingHorizontal: 5,
           justifyContent: 'space-evenly',
           flexWrap: 'wrap',
-        }}>
+        }}
+      >
         {legendItems
-          .filter(({items}) => items?.length)
+          .filter(({ items }) => items?.length)
           .map(item => (
             <View
               key={item.label}
@@ -338,7 +339,8 @@ const WorkoutBreakdown: React.FC<{
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginBottom: 10,
-              }}>
+              }}
+            >
               <View
                 style={{
                   width: 10,
@@ -347,7 +349,7 @@ const WorkoutBreakdown: React.FC<{
                 }}
               />
 
-              <Text style={{color: colors.appWhite, marginHorizontal: 10}}>
+              <Text style={{ color: colors.appWhite, marginHorizontal: 10 }}>
                 {item.label}
               </Text>
             </View>
@@ -355,7 +357,7 @@ const WorkoutBreakdown: React.FC<{
       </View>
       <ScrollView>
         {exerciseList && (
-          <View style={{marginHorizontal: 20}}>
+          <View style={{ marginHorizontal: 20 }}>
             <Text
               style={{
                 color: colors.appWhite,
@@ -363,10 +365,11 @@ const WorkoutBreakdown: React.FC<{
                 fontWeight: 'bold',
                 marginTop: 20,
                 marginBottom: 10,
-              }}>
+              }}
+            >
               Exercises
             </Text>
-            {exerciseList.map(({name, thumbnail, time, weight}) => {
+            {exerciseList.map(({ name, thumbnail, time, weight }) => {
               return (
                 <View
                   style={{
@@ -376,32 +379,35 @@ const WorkoutBreakdown: React.FC<{
                     marginBottom: 10,
                     flexDirection: 'row',
                     borderRadius: 15,
-                  }}>
+                  }}
+                >
                   <Dumbbell width={50} height={50} />
                   <View
-                    style={{marginHorizontal: 10, justifyContent: 'center'}}>
+                    style={{ marginHorizontal: 10, justifyContent: 'center' }}
+                  >
                     <Text
                       style={{
                         fontSize: 14,
                         fontWeight: 'bold',
                         color: colors.appWhite,
                         marginBottom: 2,
-                      }}>
+                      }}
+                    >
                       {name}
                     </Text>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row' }}>
                       {time && (
-                        <Text style={{color: colors.offWhite, marginTop: 2}}>
+                        <Text style={{ color: colors.offWhite, marginTop: 2 }}>
                           {`${time} seconds`}
                         </Text>
                       )}
                       {time && weight && (
-                        <Text style={{color: colors.offWhite, marginTop: 2}}>
+                        <Text style={{ color: colors.offWhite, marginTop: 2 }}>
                           {' / '}
                         </Text>
                       )}
                       {weight && (
-                        <Text style={{color: colors.offWhite, marginTop: 2}}>
+                        <Text style={{ color: colors.offWhite, marginTop: 2 }}>
                           {weight}
                         </Text>
                       )}

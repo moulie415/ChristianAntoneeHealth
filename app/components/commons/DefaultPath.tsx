@@ -1,8 +1,8 @@
 import React from 'react';
-import {Path} from 'react-native-svg';
+import { Path } from 'react-native-svg';
 import colors from '../../constants/colors';
 
-const DefaultPath: React.FC<{d: string}> = ({d}) => {
+const DefaultPath: React.FC<{ d: string }> = ({ d }) => {
   return (
     <Path
       fill="none"

@@ -1,14 +1,14 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
 import colors from '../../../constants/colors';
 
-import {View} from 'react-native';
+import { View } from 'react-native';
 import Text from '../Text';
 
 const UnreadRowCount: React.FC<{
-  unread: {[key: string]: number} | undefined;
-}> = ({unread}) => {
+  unread: { [key: string]: number } | undefined;
+}> = ({ unread }) => {
   const count = Object.keys(unread || {}).reduce((acc, cur) => {
     if (cur !== 'plan') {
       const num = unread?.[cur];
@@ -29,13 +29,15 @@ const UnreadRowCount: React.FC<{
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.appRed,
-        }}>
+        }}
+      >
         <Text
           style={{
             fontSize: 16,
             fontWeight: 'bold',
             color: colors.appWhite,
-          }}>
+          }}
+        >
           {count > 9 ? '9+' : count}
         </Text>
       </View>
@@ -44,7 +46,7 @@ const UnreadRowCount: React.FC<{
   return null;
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   unread: profile.profile.unread,
 });
 

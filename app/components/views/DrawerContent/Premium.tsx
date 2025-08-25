@@ -1,7 +1,7 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {ReactNode, useEffect, useState} from 'react';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { ReactNode, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -19,26 +19,26 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
-import {StackParamList} from '../../../App';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {logError} from '../../../helpers/error';
-import {PREMIUM_PLUS, hasPremiumPlus} from '../../../helpers/hasPremiumPlus';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {setPremium} from '../../../reducers/profile';
+import { logError } from '../../../helpers/error';
+import { PREMIUM_PLUS, hasPremiumPlus } from '../../../helpers/hasPremiumPlus';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { setPremium } from '../../../reducers/profile';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const MIN_CONTENT_HEIGHT = 670;
 
 const Premium: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Premium'>;
   route: RouteProp<StackParamList, 'Premium'>;
-}> = ({navigation, route}) => {
+}> = ({ navigation, route }) => {
   const [selected, setSelected] = useState('');
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [info, setInfo] = useState<CustomerInfo>();
@@ -47,7 +47,7 @@ const Premium: React.FC<{
 
   const dispatch = useAppDispatch();
 
-  const {profile} = useAppSelector(state => state.profile);
+  const { profile } = useAppSelector(state => state.profile);
 
   const showPremiumPlus = profile.client || profile.admin;
 
@@ -95,7 +95,7 @@ const Premium: React.FC<{
         // if (premiumPlusStrings.includes(p.identifier)) {
 
         // }
-        const {customerInfo, productIdentifier} =
+        const { customerInfo, productIdentifier } =
           await Purchases.purchasePackage(p);
         if (
           typeof customerInfo.entitlements.active.Premium !== 'undefined' ||
@@ -134,7 +134,7 @@ const Premium: React.FC<{
       icon: 'dumbbell',
       feature: (
         <>
-          Unlock <Text style={{fontWeight: 'bold'}}>ALL </Text>
+          Unlock <Text style={{ fontWeight: 'bold' }}>ALL </Text>
           workouts & fitness tests
         </>
       ),
@@ -144,7 +144,7 @@ const Premium: React.FC<{
       icon: 'book-open',
       feature: (
         <>
-          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> educational
+          Unlock <Text style={{ fontWeight: 'bold' }}>ALL</Text> educational
           content
         </>
       ),
@@ -154,7 +154,7 @@ const Premium: React.FC<{
       icon: 'utensils',
       feature: (
         <>
-          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> recipes
+          Unlock <Text style={{ fontWeight: 'bold' }}>ALL</Text> recipes
         </>
       ),
       available: true,
@@ -164,7 +164,7 @@ const Premium: React.FC<{
       icon: 'heart',
       feature: (
         <>
-          Unlock <Text style={{fontWeight: 'bold'}}>ALL</Text> biometric
+          Unlock <Text style={{ fontWeight: 'bold' }}>ALL</Text> biometric
           tracking
         </>
       ),
@@ -232,7 +232,8 @@ const Premium: React.FC<{
           left: 0,
           height: CONTENT_HEIGHT,
           backgroundColor: colors.appGrey,
-        }}>
+        }}
+      >
         <ScrollView>
           <Text
             style={{
@@ -242,7 +243,8 @@ const Premium: React.FC<{
               color: colors.appWhite,
               fontWeight: 'bold',
               textAlign: 'center',
-            }}>
+            }}
+          >
             FIT FOR LIFE!
           </Text>
           <View
@@ -250,8 +252,9 @@ const Premium: React.FC<{
               marginLeft: 20,
 
               marginTop: 20,
-            }}>
-            {features.map(({feature, icon, available, solid}) => {
+            }}
+          >
+            {features.map(({ feature, icon, available, solid }) => {
               if (!showPremiumPlus && !available) {
                 return null;
               }
@@ -262,7 +265,8 @@ const Premium: React.FC<{
                     flexDirection: 'row',
                     marginBottom: 10,
                     alignItems: 'center',
-                  }}>
+                  }}
+                >
                   {/* <View style={{justifyContent: 'center'}}>
                     <Icon
                       style={{width: 40}}
@@ -277,11 +281,12 @@ const Premium: React.FC<{
                       fontSize: 14,
                       color: colors.appWhite,
                       flex: 1,
-                    }}>
+                    }}
+                  >
                     {feature}
                   </Text>
                   <FontAwesome6
-                    style={{width: 40, fontWeight: 'bold'}}
+                    style={{ width: 40, fontWeight: 'bold' }}
                     size={25}
                     iconStyle="solid"
                     color={
@@ -302,26 +307,30 @@ const Premium: React.FC<{
                   style={{
                     alignItems: 'center',
                     marginVertical: 40,
-                  }}>
+                  }}
+                >
                   <Text
                     style={{
                       textAlign: 'center',
                       color: colors.appWhite,
                       fontWeight: 'bold',
                       fontSize: 20,
-                    }}>
+                    }}
+                  >
                     {`🎉  Premium ${
                       premiumPlusActive ? 'Plus' : ''
                     } active  🎉`}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => Linking.openURL(info.managementURL || '')}>
+                    onPress={() => Linking.openURL(info.managementURL || '')}
+                  >
                     <Text
                       style={{
                         textAlign: 'center',
                         color: colors.appWhite,
                         textDecorationLine: 'underline',
-                      }}>
+                      }}
+                    >
                       Manage subscription
                     </Text>
                   </TouchableOpacity>
@@ -351,7 +360,7 @@ const Premium: React.FC<{
                       onPurchase(packages.find(p => p.identifier === selected))
                     }
                     disabled={!selected}
-                    style={{margin: 20, marginBottom: 0}}
+                    style={{ margin: 20, marginBottom: 0 }}
                   />
                 </View>
               )}
@@ -360,7 +369,8 @@ const Premium: React.FC<{
                 style={{
                   flexDirection: 'row',
                   margin: 20,
-                }}>
+                }}
+              >
                 <Button
                   variant="secondary"
                   text="Terms of Service"
@@ -370,7 +380,7 @@ const Premium: React.FC<{
                       title: 'Terms of Service',
                     })
                   }
-                  style={{flex: 1, marginRight: 5}}
+                  style={{ flex: 1, marginRight: 5 }}
                 />
 
                 <Button
@@ -382,7 +392,7 @@ const Premium: React.FC<{
                       title: 'Privacy Policy',
                     })
                   }
-                  style={{flex: 1, marginLeft: 5}}
+                  style={{ flex: 1, marginLeft: 5 }}
                 />
               </View>
               <TouchableOpacity
@@ -399,7 +409,9 @@ const Premium: React.FC<{
                       await getOfferings();
                       setLoading(false);
                       dispatch(setPremium(restore.entitlements.active));
-                      navigation.navigate('PremiumPurchased', {restored: true});
+                      navigation.navigate('PremiumPurchased', {
+                        restored: true,
+                      });
                     } else {
                       setLoading(false);
                       Snackbar.show({
@@ -410,7 +422,8 @@ const Premium: React.FC<{
                     logError(e);
                     setLoading(false);
                   }
-                }}>
+                }}
+              >
                 <Text
                   style={{
                     textAlign: 'center',
@@ -419,7 +432,8 @@ const Premium: React.FC<{
                     color: colors.appWhite,
                     fontWeight: 'bold',
                     textDecorationLine: 'underline',
-                  }}>
+                  }}
+                >
                   Restore purchases
                 </Text>
               </TouchableOpacity>

@@ -1,4 +1,4 @@
-import {ImageProps} from 'react-native';
+import { ImageProps } from 'react-native';
 
 export default interface ImageLoaderProps extends ImageProps {
   delay?: number;

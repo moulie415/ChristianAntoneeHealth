@@ -1,26 +1,26 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {Alert, Platform, StyleSheet, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Video, {ResizeMode} from 'react-native-video';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Alert, Platform, StyleSheet, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Video, { ResizeMode } from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {resetToTabs} from '../../../RootNavigation';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { resetToTabs } from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {getVideoHeight} from '../../../helpers';
-import {calculateVO2Max} from '../../../helpers/tests';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
+import { getVideoHeight } from '../../../helpers';
+import { calculateVO2Max } from '../../../helpers/tests';
+import { useBackHandler } from '../../../hooks/UseBackHandler';
 import useInterval from '../../../hooks/UseInterval';
 import useThrottle from '../../../hooks/UseThrottle';
-import {saveTest} from '../../../reducers/tests';
-import {SavedTest} from '../../../types/SavedItem';
-import {Profile} from '../../../types/Shared';
+import { saveTest } from '../../../reducers/tests';
+import { SavedTest } from '../../../types/SavedItem';
+import { Profile } from '../../../types/Shared';
 import TestType from '../../../types/Test';
 import Button from '../../commons/Button';
-import ImageAnimated from '../../commons/ImageAnimated';
 import Header from '../../commons/Header';
+import ImageAnimated from '../../commons/ImageAnimated';
 import MyTabs from '../../commons/MyTabs';
 import TestTimer from '../../commons/TestTimer';
 import Text from '../../commons/Text';
@@ -32,13 +32,13 @@ export const PREP_TIME = 5;
 const INTERVAL = 100;
 
 const Test: React.FC<{
-  tests: {[key: string]: TestType};
+  tests: { [key: string]: TestType };
   route: RouteProp<StackParamList, 'Test'>;
   navigation: NativeStackNavigationProp<StackParamList, 'Test'>;
   profile: Profile;
   saveTestAction: (test: SavedTest) => void;
-}> = ({route, tests, profile, saveTestAction, navigation}) => {
-  const {id} = route.params;
+}> = ({ route, tests, profile, saveTestAction, navigation }) => {
+  const { id } = route.params;
   const test = tests[id];
   const [testStarted, setTestStarted] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -111,7 +111,7 @@ const Test: React.FC<{
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } else {
     }
@@ -135,21 +135,22 @@ const Test: React.FC<{
     testStarted && test.type !== 'untimed' && !complete && !isPrepping;
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {test.video?.src ? (
         <Video
-          source={{uri: convertToProxyURL(test.video?.src)}}
-          style={{height: getVideoHeight(), width: '100%'}}
+          source={{ uri: convertToProxyURL(test.video?.src) }}
+          style={{ height: getVideoHeight(), width: '100%' }}
           resizeMode={ResizeMode.COVER}
           repeat
           disableFocus
         />
       ) : (
         <ImageAnimated
-          source={{uri: test.thumbnail.src}}
+          source={{ uri: test.thumbnail.src }}
           style={{
             height: getVideoHeight(),
-          }}>
+          }}
+        >
           <View
             style={{
               ...StyleSheet.absoluteFillObject,
@@ -168,12 +169,14 @@ const Test: React.FC<{
           borderTopRightRadius: 30,
           backgroundColor: colors.appGrey,
           top: -30,
-        }}>
+        }}
+      >
         {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
         <KeyboardAwareScrollView
           enableOnAndroid
           extraScrollHeight={Platform.OS === 'ios' ? 150 : 0}
-          contentContainerStyle={{paddingBottom: 220}}>
+          contentContainerStyle={{ paddingBottom: 220 }}
+        >
           <Text
             style={{
               marginTop: 20,
@@ -182,7 +185,8 @@ const Test: React.FC<{
               marginHorizontal: 40,
               fontWeight: 'bold',
               textAlign: 'center',
-            }}>
+            }}
+          >
             {test.name}
           </Text>
           <MyTabs tabs={tabs} tabIndex={tabIndex} setTabIndex={setTabIndex} />
@@ -210,7 +214,8 @@ const Test: React.FC<{
                   fontWeight: 'bold',
                   textAlign: 'center',
                   marginBottom: 20,
-                }}>
+                }}
+              >
                 {`VO2 max = ${calculateVO2Max(
                   profile,
                   testTime,
@@ -223,7 +228,8 @@ const Test: React.FC<{
               style={{
                 marginHorizontal: 20,
                 marginVertical: 10,
-              }}>
+              }}
+            >
               <ViewMore
                 textAlign="justify"
                 text={test.summary || ''}
@@ -232,7 +238,7 @@ const Test: React.FC<{
             </View>
           )}
 
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             {showRestart && (
               <Button
                 variant={test.type === 'countdown' ? 'primary' : 'secondary'}
@@ -308,7 +314,7 @@ const Test: React.FC<{
               )}
           </View>
           {complete && (
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Button
                 text="Return Home"
                 variant="secondary"
@@ -318,7 +324,7 @@ const Test: React.FC<{
                   }
                   resetToTabs();
                 }}
-                style={{marginRight: 10, marginLeft: 20, margin: 10, flex: 1}}
+                style={{ marginRight: 10, marginLeft: 20, margin: 10, flex: 1 }}
               />
               <Button
                 text="Compare result"
@@ -332,7 +338,7 @@ const Test: React.FC<{
                         : testResult,
                   })
                 }
-                style={{marginLeft: 10, marginRight: 20, margin: 10, flex: 1}}
+                style={{ marginLeft: 10, marginRight: 20, margin: 10, flex: 1 }}
                 disabled={
                   (!testResult && test.type !== 'countup') ||
                   (test.formula === 'vo2' && !heartRate)
@@ -352,7 +358,7 @@ const Test: React.FC<{
   );
 };
 
-const mapStateToProps = ({tests, profile}: RootState) => ({
+const mapStateToProps = ({ tests, profile }: RootState) => ({
   tests: tests.tests,
   profile: profile.profile,
 });

@@ -1,11 +1,11 @@
 import moment from 'moment';
-import React, {useState} from 'react';
-import {View} from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import colors from '../../constants/colors';
 import useInterval from '../../hooks/UseInterval';
 import Text from './Text';
 
-const LeaderboardTimeLeft: React.FC<{endTime: number}> = ({endTime}) => {
+const LeaderboardTimeLeft: React.FC<{ endTime: number }> = ({ endTime }) => {
   const [timeLeft, setTimeLeft] = useState<number>(endTime - moment().unix());
 
   useInterval(() => {
@@ -38,8 +38,9 @@ const LeaderboardTimeLeft: React.FC<{endTime: number}> = ({endTime}) => {
         alignItems: 'center',
         height: 50,
         marginTop: 15,
-      }}>
-      <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+      }}
+    >
+      <Text style={{ color: colors.appWhite, textAlign: 'center' }}>
         Time left
       </Text>
 
@@ -50,7 +51,8 @@ const LeaderboardTimeLeft: React.FC<{endTime: number}> = ({endTime}) => {
           width: 75,
           marginLeft: 5,
           textAlign: 'center',
-        }}>
+        }}
+      >
         {formatTimeLeft()}
       </Text>
     </View>

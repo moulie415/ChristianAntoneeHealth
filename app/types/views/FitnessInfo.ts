@@ -1,4 +1,4 @@
-import {Gender, Unit} from '../Shared';
+import { Gender, Unit } from '../Shared';
 
 export default interface FitnessInfoProps {
   height?: number;

@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
+import React, { ReactNode } from 'react';
+import { TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Text from './Text';
 
 import colors from '../../constants/colors';
@@ -39,18 +39,19 @@ const ListItem: React.FC<{
           padding: 5,
         },
         style,
-      ]}>
+      ]}
+    >
       {!!accessoryLeft && accessoryLeft}
-      <View style={{justifyContent: 'center', padding: 5}}>
-        <Text style={[{color: colors.appWhite}, titleStyle]}>{title}</Text>
+      <View style={{ justifyContent: 'center', padding: 5 }}>
+        <Text style={[{ color: colors.appWhite }, titleStyle]}>{title}</Text>
         {!!description && (
-          <Text style={[{color: colors.textGrey}, descriptionStyle]}>
+          <Text style={[{ color: colors.textGrey }, descriptionStyle]}>
             {description}
           </Text>
         )}
       </View>
       {!!accessoryRight && (
-        <View style={{alignItems: 'flex-end', flex: 1, padding: 5}}>
+        <View style={{ alignItems: 'flex-end', flex: 1, padding: 5 }}>
           {accessoryRight}
         </View>
       )}

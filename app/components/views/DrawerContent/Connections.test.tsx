@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Message from '../../../types/Message';
-import {Profile} from '../../../types/Shared';
-import {sortConnections} from './Connections';
+import { Profile } from '../../../types/Shared';
+import { sortConnections } from './Connections';
 
 jest.mock('react-redux', () => {
   return {
@@ -23,7 +23,7 @@ jest.mock('@react-native-vector-icons/fontawesome6', () => {});
 jest.mock('@kolking/react-native-avatar', () => {});
 jest.mock('@react-navigation/core', () => {});
 jest.mock('@react-navigation/native', () => ({
-  createNavigationContainerRef: jest.fn()
+  createNavigationContainerRef: jest.fn(),
 }));
 
 const profile1 = {
@@ -38,23 +38,23 @@ const profile3 = {
   uid: '3',
 } as Profile;
 
-const unread: {[key: string]: number} = {
+const unread: { [key: string]: number } = {
   '1': 3,
   '2': 7,
   '3': 3,
 };
 
-const messages: {[key: string]: {[key: string]: Message}} = {
+const messages: { [key: string]: { [key: string]: Message } } = {
   '1': {
-    a: {createdAt: moment().subtract(5, 'minutes').unix()} as Message,
-    b: {createdAt: moment().subtract(1, 'days').unix()} as Message,
+    a: { createdAt: moment().subtract(5, 'minutes').unix() } as Message,
+    b: { createdAt: moment().subtract(1, 'days').unix() } as Message,
   },
   '2': {
-    a: {createdAt: moment().unix()} as Message,
+    a: { createdAt: moment().unix() } as Message,
   },
   '3': {
-    a: {createdAt: moment().subtract(2, 'days').unix()} as Message,
-    b: {createdAt: moment().subtract(3, 'minutes').unix()} as Message,
+    a: { createdAt: moment().subtract(2, 'days').unix() } as Message,
+    b: { createdAt: moment().subtract(3, 'minutes').unix() } as Message,
   },
 };
 

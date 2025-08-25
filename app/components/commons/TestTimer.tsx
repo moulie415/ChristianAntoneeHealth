@@ -1,13 +1,13 @@
 import moment from 'moment';
 import React from 'react';
-import {View} from 'react-native';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { View } from 'react-native';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import Test from '../../types/Test';
-import {PREP_TIME} from '../views/Tests/Test';
+import { PREP_TIME } from '../views/Tests/Test';
 import Input from './Input';
 import Text from './Text';
 
@@ -66,7 +66,7 @@ const TestTimer: React.FC<{
         zIndex: -1,
         display: tabIndex === 0 ? 'flex' : 'none',
         alignSelf: 'center',
-        transform: [{scaleX}],
+        transform: [{ scaleX }],
         backgroundColor: finished ? colors.appBlue : 'transparent',
         borderRadius: 100,
         marginVertical: 10,
@@ -86,9 +86,10 @@ const TestTimer: React.FC<{
       backgroundColor={colors.borderColor}
       arcSweepAngle={360}
       rotation={0}
-      lineCap="round">
+      lineCap="round"
+    >
       {(fill: number) => (
-        <View style={{transform: [{scaleX}], alignItems: 'center'}}>
+        <View style={{ transform: [{ scaleX }], alignItems: 'center' }}>
           {showTimer && (
             <Text
               style={{
@@ -96,11 +97,12 @@ const TestTimer: React.FC<{
                 color: colors.appWhite,
                 fontSize: 40,
                 textAlign: 'center',
-              }}>
+              }}
+            >
               {moment()
                 .utc()
                 .startOf('day')
-                .add({seconds: Math.ceil(prepTime || testTime)})
+                .add({ seconds: Math.ceil(prepTime || testTime) })
                 .format('mm:ss')}
             </Text>
           )}
@@ -112,7 +114,8 @@ const TestTimer: React.FC<{
                 fontSize: 16,
                 textAlign: 'center',
                 paddingHorizontal: 10,
-              }}>
+              }}
+            >
               {isPrepping
                 ? 'GET READY!'
                 : finished
@@ -125,7 +128,7 @@ const TestTimer: React.FC<{
           {complete && (
             <View style={{}}>
               {test.type !== 'countup' ? (
-                <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+                <Text style={{ color: colors.appWhite, textAlign: 'center' }}>
                   Enter result
                 </Text>
               ) : test.formula === 'vo2' ? (
@@ -133,11 +136,13 @@ const TestTimer: React.FC<{
                   <View
                     style={{
                       alignItems: 'center',
-                    }}>
+                    }}
+                  >
                     <Text
                       style={{
                         color: colors.appWhite,
-                      }}>
+                      }}
+                    >
                       Enter heart rate
                     </Text>
                     <Input
@@ -146,7 +151,7 @@ const TestTimer: React.FC<{
                         setHeartRate(Number(val.replace(/[^0-9]/g, '')))
                       }
                       keyboardType="numeric"
-                      style={{width: 100, marginVertical: 5}}
+                      style={{ width: 100, marginVertical: 5 }}
                     />
                   </View>
                 </View>
@@ -157,11 +162,12 @@ const TestTimer: React.FC<{
                     fontSize: 20,
                     color: colors.appWhite,
                     textAlign: 'center',
-                  }}>
+                  }}
+                >
                   {moment()
                     .utc()
                     .startOf('day')
-                    .add({seconds: testTime})
+                    .add({ seconds: testTime })
                     .format('mm:ss')}
                 </Text>
               )}
@@ -172,7 +178,7 @@ const TestTimer: React.FC<{
                     setTestResult(Number(val.replace(/[^0-9]/g, '')))
                   }
                   keyboardType="numeric"
-                  style={{width: 100, marginVertical: 5}}
+                  style={{ width: 100, marginVertical: 5 }}
                 />
               )}
             </View>
@@ -183,7 +189,7 @@ const TestTimer: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

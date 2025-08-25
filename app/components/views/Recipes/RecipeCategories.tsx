@@ -1,13 +1,13 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import {FlatList} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackParamList} from '../../../App';
+import { ImageSourcePropType } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {RecipeCategory} from '../../../types/Shared';
+import { RecipeCategory } from '../../../types/Shared';
 import Header from '../../commons/Header';
 import RecipeCategoryCard from './RecipeCategoryCard';
-import { ImageSourcePropType } from 'react-native';
 
 export const recipeCategories: {
   category: RecipeCategory;
@@ -53,19 +53,19 @@ export const recipeCategories: {
 
 const RecipeCategories: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Recipes'>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <Header hasBack title="Categories" />
       <FlatList
         data={recipeCategories}
-        renderItem={({item}) => {
+        renderItem={({ item }) => {
           return (
             <RecipeCategoryCard
               name={item.name}
               image={item.image}
               onPress={() =>
-                navigation.navigate('Recipes', {category: item.category})
+                navigation.navigate('Recipes', { category: item.category })
               }
             />
           );

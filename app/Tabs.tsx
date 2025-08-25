@@ -1,11 +1,11 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Color from 'color';
 import React from 'react';
-import {StackParamList} from './App';
+import { StackParamList } from './App';
 import LeaderboardTabIcon from './LeaderboardTabIcon';
 import PlanTabIcon from './PlanTabIcon';
-import {navigate} from './RootNavigation';
+import { navigate } from './RootNavigation';
 import Avatar from './components/commons/Avatar';
 import Home from './components/views/Home';
 import Leaderboards from './components/views/Leaderboards/Leaderboards';
@@ -13,30 +13,31 @@ import Plan from './components/views/Plan/Plan';
 import ProfileComponent from './components/views/Profile';
 import WhatEquipment from './components/views/Workout/WhatEquipment';
 import colors from './constants/colors';
-import {hasPremiumPlus} from './helpers/hasPremiumPlus';
-import {useAppSelector} from './hooks/redux';
+import { hasPremiumPlus } from './helpers/hasPremiumPlus';
+import { useAppSelector } from './hooks/redux';
 
 const Tab = createBottomTabNavigator<StackParamList>();
 
 const color = new Color(colors.appWhite);
 
 const Tabs: React.FC = () => {
-  const {profile} = useAppSelector(state => state.profile);
+  const { profile } = useAppSelector(state => state.profile);
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.appWhite,
         tabBarInactiveTintColor: color.darken(0.4).toString(),
-        tabBarStyle: {borderTopWidth: 0, backgroundColor: colors.appGrey},
+        tabBarStyle: { borderTopWidth: 0, backgroundColor: colors.appGrey },
         lazy: false,
-      }}>
+      }}
+    >
       <Tab.Screen
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <FontAwesome6
-              style={{width: 35, alignSelf: 'center'}}
+              style={{ width: 35, alignSelf: 'center' }}
               color={color}
               size={size}
               name="house"
@@ -52,7 +53,7 @@ const Tabs: React.FC = () => {
       <Tab.Screen
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Avatar
               name={`${profile.name} ${profile.surname || ''}`}
               src={profile.avatar}
@@ -69,9 +70,9 @@ const Tabs: React.FC = () => {
       <Tab.Screen
         options={{
           tabBarLabel: 'Workout',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <FontAwesome6
-              style={{width: 35, alignSelf: 'center'}}
+              style={{ width: 35, alignSelf: 'center' }}
               color={color}
               size={size}
               name="dumbbell"
@@ -87,7 +88,7 @@ const Tabs: React.FC = () => {
       <Tab.Screen
         options={{
           tabBarLabel: 'Leaderboards',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <LeaderboardTabIcon color={color} size={size} />
           ),
           headerShown: false,
@@ -109,7 +110,7 @@ const Tabs: React.FC = () => {
         <Tab.Screen
           options={{
             tabBarLabel: 'Plan',
-            tabBarIcon: ({color, size}) => (
+            tabBarIcon: ({ color, size }) => (
               <PlanTabIcon color={color} size={size} />
             ),
             headerShown: false,

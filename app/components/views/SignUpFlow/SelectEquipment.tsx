@@ -1,14 +1,13 @@
 import React from 'react';
-import {View} from 'react-native';
-import {EQUIPMENT_LIST} from '../../../constants';
+import { View } from 'react-native';
+import { EQUIPMENT_LIST } from '../../../constants';
 import colors from '../../../constants/colors';
-import {equipmentItemReadableString} from '../../../helpers/exercises';
-import {Equipment} from '../../../types/QuickRoutines';
-import {Equipment as EquipmentItem} from '../../../types/Shared';
+import { equipmentItemReadableString } from '../../../helpers/exercises';
+import { Equipment } from '../../../types/QuickRoutines';
+import { Equipment as EquipmentItem } from '../../../types/Shared';
 import MultiSelect from '../../commons/MultiSelect';
 import SelectableButton from '../../commons/SelectableButton';
 import Text from '../../commons/Text';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 const equipmentDetails: {
   equipment: Equipment;
@@ -38,24 +37,26 @@ const SelectEquipment: React.FC<{
   setEquipment: (equipment: Equipment) => void;
   equipmentList: EquipmentItem[];
   setEquipmentList: (list: EquipmentItem[]) => void;
-}> = ({equipment, setEquipment, equipmentList, setEquipmentList}) => {
+}> = ({ equipment, setEquipment, equipmentList, setEquipmentList }) => {
   return (
     <View
       style={{
         flex: 1,
         marginHorizontal: 20,
         marginTop: 20,
-      }}>
+      }}
+    >
       <Text
         style={{
           marginBottom: 20,
           fontSize: 24,
           color: colors.appWhite,
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         What equipment do you have?
       </Text>
-      {equipmentDetails.map(({text, secondaryText, equipment: e}) => {
+      {equipmentDetails.map(({ text, secondaryText, equipment: e }) => {
         return (
           <SelectableButton
             key={e}
@@ -63,14 +64,14 @@ const SelectEquipment: React.FC<{
             secondaryText={secondaryText}
             selected={e === equipment}
             onPress={() => setEquipment(e)}
-            style={{marginBottom: 15}}
+            style={{ marginBottom: 15 }}
           />
         );
-      })}                                                                        
+      })}
       {!!equipment && equipment !== 'none' && (
         <MultiSelect
           items={EQUIPMENT_LIST.map(item => {
-            return {id: item, name: equipmentItemReadableString(item)};
+            return { id: item, name: equipmentItemReadableString(item) };
           })}
           selectedItems={equipmentList}
           onSelectedItemsChange={setEquipmentList}

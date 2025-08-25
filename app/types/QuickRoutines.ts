@@ -1,4 +1,4 @@
-import {Level} from './Shared';
+import { Level } from './Shared';
 
 export type Area = 'upper' | 'lower' | 'full';
 export type Equipment = 'full' | 'minimal' | 'none';
@@ -19,7 +19,7 @@ export default interface QuickRoutine {
         notes?: string;
         time?: number;
       }[];
-  thumbnail?: {src: string; title: string};
-  preview?: {src: string; title: string};
+  thumbnail?: { src: string; title: string };
+  preview?: { src: string; title: string };
   disableWorkoutMusic: boolean;
 }

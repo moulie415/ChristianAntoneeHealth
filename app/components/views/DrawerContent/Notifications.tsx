@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import NotificationsProps from '../../../types/views/Notifications';
 import Text from '../../commons/Text';
 

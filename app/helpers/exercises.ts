@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import moment from 'moment';
-import {Share} from 'react-native';
+import { Share } from 'react-native';
 import Snackbar from 'react-native-snackbar';
-import {capitalizeFirstLetter} from '.';
-import Exercise, {Muscle} from '../types/Exercise';
-import {Equipment, Gender, Level} from '../types/Shared';
-import {logError} from './error';
+import { capitalizeFirstLetter } from '.';
+import Exercise, { Muscle } from '../types/Exercise';
+import { Equipment, Gender, Level } from '../types/Shared';
+import { logError } from './error';
 
 const levelMapping = {
   null: 0,
@@ -197,16 +197,16 @@ export const shareWorkout = async (workout: Exercise[], name: string) => {
   )}&apn=com.healthandmovement&isi=1506679389&ibi=com.HealthAndMovement`;
 
   try {
-    const {action} = await Share.share({
+    const { action } = await Share.share({
       title: `${name} has shared a CA Health workout with you`,
       url,
       message: `${name} has shared a CA Health workout with you, click the link to view the workout: ${url}`,
     });
     if (action === 'sharedAction') {
-      Snackbar.show({text: 'Workout shared successfully'});
+      Snackbar.show({ text: 'Workout shared successfully' });
     }
   } catch (e) {
-    Snackbar.show({text: 'Error sharing workout'});
+    Snackbar.show({ text: 'Error sharing workout' });
     logError(e);
   }
 };

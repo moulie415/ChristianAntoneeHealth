@@ -1,20 +1,20 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
-import React, {RefObject, useState} from 'react';
-import {View} from 'react-native';
+import React, { RefObject, useState } from 'react';
+import { View } from 'react-native';
 import {
   ColorFormat,
   CountdownCircleTimer,
 } from 'react-native-countdown-circle-timer';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import PagerView from 'react-native-pager-view';
-import Animated, {FadeIn} from 'react-native-reanimated';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import Animated, { FadeIn } from 'react-native-reanimated';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {workoutSong} from '../../sagas/profile';
+import { workoutSong } from '../../sagas/profile';
 import Exercise from '../../types/Exercise';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import Text from './Text';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
@@ -77,7 +77,8 @@ const ExerciseTimer: React.FC<{
         display: tabIndex === 0 ? 'flex' : 'none',
         backgroundColor: finished ? colors.appBlue : 'transparent',
         borderRadius: 100,
-      }}>
+      }}
+    >
       <CountdownCircleTimer
         key={key}
         isPlaying={!timerPaused}
@@ -100,8 +101,9 @@ const ExerciseTimer: React.FC<{
           colors.appBlue as `#${string}`,
           colors.appRed as `#${string}`,
         ]}
-        colorsTime={[7, 5, 2, 0]}>
-        {({remainingTime}) => {
+        colorsTime={[7, 5, 2, 0]}
+      >
+        {({ remainingTime }) => {
           const hideTimer = isPrepping && remainingTime >= 10 && index === 0;
           return (
             <View>
@@ -112,7 +114,8 @@ const ExerciseTimer: React.FC<{
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginBottom: 5,
-                  }}>
+                  }}
+                >
                   <FontAwesome6
                     iconStyle="solid"
                     color={colors.appWhite}
@@ -126,7 +129,8 @@ const ExerciseTimer: React.FC<{
                       fontSize: 16,
                       textAlign: 'center',
                       marginLeft: 5,
-                    }}>
+                    }}
+                  >
                     {exercise.weight}
                   </Text>
                 </View>
@@ -153,7 +157,8 @@ const ExerciseTimer: React.FC<{
                     color: colors.appWhite,
                     fontSize: 40,
                     textAlign: 'center',
-                  }}>
+                  }}
+                >
                   {moment()
                     .utc()
                     .startOf('day')
@@ -170,7 +175,8 @@ const ExerciseTimer: React.FC<{
                   fontSize: hideTimer || finished ? 30 : 16,
                   textAlign: 'center',
                   paddingHorizontal: 20,
-                }}>
+                }}
+              >
                 {isPrepping
                   ? 'GET READY!'
                   : finished
@@ -185,7 +191,7 @@ const ExerciseTimer: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

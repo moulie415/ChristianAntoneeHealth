@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {Switch, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { Switch, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
-import {setCoolDown, setWarmUp} from '../../../reducers/exercises';
-import {CoolDown, WarmUp} from '../../../types/Shared';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
+import { setCoolDown, setWarmUp } from '../../../reducers/exercises';
+import { CoolDown, WarmUp } from '../../../types/Shared';
 import Divider from '../../commons/Divider';
 import ImageLoader from '../../commons/ImageLoader';
 import ListItem from '../../commons/ListItem';
@@ -16,7 +16,7 @@ const WarmUpAndCoolDown: React.FC<{
   coolDown: CoolDown[];
   setWarmUpAction: (warmUp: WarmUp[]) => void;
   setCoolDownAction: (coolDown: CoolDown[]) => void;
-}> = ({warmUp, coolDown, setWarmUpAction, setCoolDownAction}) => {
+}> = ({ warmUp, coolDown, setWarmUpAction, setCoolDownAction }) => {
   const [itemsCollapsed, setItemsCollapsed] = useState<{
     [key: number]: boolean;
   }>({
@@ -40,17 +40,18 @@ const WarmUpAndCoolDown: React.FC<{
     );
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            setItemsCollapsed({0: !itemsCollapsed[0], 1: true});
+            setItemsCollapsed({ 0: !itemsCollapsed[0], 1: true });
           }}
-          style={{flex: 1, marginBottom: 5}}>
+          style={{ flex: 1, marginBottom: 5 }}
+        >
           <ImageLoader
             source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
             overlay
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
           />
           <View
             style={{
@@ -59,8 +60,9 @@ const WarmUpAndCoolDown: React.FC<{
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Warm-up</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Warm-up</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[0]}>
@@ -111,13 +113,14 @@ const WarmUpAndCoolDown: React.FC<{
         </Collapsible>
         <TouchableOpacity
           onPress={() => {
-            setItemsCollapsed({0: true, 1: !itemsCollapsed[1], 2: true});
+            setItemsCollapsed({ 0: true, 1: !itemsCollapsed[1], 2: true });
           }}
-          style={{flex: 1, marginBottom: 5}}>
+          style={{ flex: 1, marginBottom: 5 }}
+        >
           <ImageLoader
             source={require('../../../images/2nd_carousel_image_fitness_tracking.jpeg')}
             overlay
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
           />
           <View
             style={{
@@ -126,8 +129,9 @@ const WarmUpAndCoolDown: React.FC<{
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Cool-down</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Cool-down</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[1]}>
@@ -167,7 +171,7 @@ const WarmUpAndCoolDown: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: RootState) => ({
+const mapStateToProps = ({ exercises }: RootState) => ({
   warmUp: exercises.warmUp,
   coolDown: exercises.coolDown,
 });

@@ -1,10 +1,10 @@
-import {Platform} from 'react-native';
-import {WatchPayload, watchEvents} from 'react-native-watch-connectivity';
-import {EventChannel, eventChannel} from 'redux-saga';
-import {call, take} from 'redux-saga/effects';
+import { Platform } from 'react-native';
+import { WatchPayload, watchEvents } from 'react-native-watch-connectivity';
+import { EventChannel, eventChannel } from 'redux-saga';
+import { call, take } from 'redux-saga/effects';
 
 interface MessageEvent {
-  message: {[key: string]: any};
+  message: { [key: string]: any };
   reply: (resp: WatchPayload) => void;
 }
 
@@ -13,7 +13,7 @@ function* messageHandler(event: MessageEvent) {}
 function onMessage() {
   return eventChannel(emitter => {
     const unsubscribe = watchEvents.addListener('message', (message, reply) => {
-      emitter({message, reply});
+      emitter({ message, reply });
     });
     return unsubscribe;
   });

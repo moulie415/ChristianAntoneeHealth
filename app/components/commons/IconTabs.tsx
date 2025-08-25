@@ -1,25 +1,27 @@
-import React, {ReactNode} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import React, { ReactNode } from 'react';
+import { TouchableOpacity, View } from 'react-native';
 import colors from '../../constants/colors';
 
 const IconTabs: React.FC<{
-  icons: {icon: ReactNode; key: string}[];
+  icons: { icon: ReactNode; key: string }[];
   setTabIndex: (index: number) => void;
   tabIndex: number;
-}> = ({icons, setTabIndex, tabIndex}) => {
+}> = ({ icons, setTabIndex, tabIndex }) => {
   return (
     <View
       style={{
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
-      {icons.map(({icon, key}, index) => {
+      }}
+    >
+      {icons.map(({ icon, key }, index) => {
         return (
           <TouchableOpacity
             key={key}
             style={{}}
-            onPress={() => setTabIndex(index)}>
+            onPress={() => setTabIndex(index)}
+          >
             <View
               style={{
                 height: 30,
@@ -36,7 +38,8 @@ const IconTabs: React.FC<{
                 borderRightWidth: index === 0 ? 1 : 2,
                 borderLeftWidth: index === icons.length - 1 ? 1 : 2,
                 borderColor: colors.appBlue,
-              }}>
+              }}
+            >
               {icon}
             </View>
           </TouchableOpacity>

@@ -1,30 +1,28 @@
 import appCheck from '@react-native-firebase/app-check';
-import {NavigationContainer} from '@react-navigation/native';
-import {configureStore} from '@reduxjs/toolkit';
+import { NavigationContainer } from '@react-navigation/native';
+import { configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
-import React, {useEffect, useState} from 'react';
-import {Dimensions, Platform, View, Image} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Image, Platform, View } from 'react-native';
 import Config from 'react-native-config';
 import 'react-native-gesture-handler';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {IMessage} from 'react-native-gifted-chat';
-import Purchases, {LOG_LEVEL} from 'react-native-purchases';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { IMessage } from 'react-native-gifted-chat';
+import Purchases, { LOG_LEVEL } from 'react-native-purchases';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import {Provider} from 'react-redux';
-import {persistStore} from 'redux-persist';
-import {PersistGate} from 'redux-persist/lib/integration/react';
-
-const createSagaMiddleware = require('redux-saga').default;
-import {navigationRef} from './RootNavigation';
-import {DrawerNavigator} from './Stack';
+import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { navigationRef } from './RootNavigation';
+import { DrawerNavigator } from './Stack';
 import colors from './constants/colors';
 import reducer from './reducers';
 import rootSaga from './sagas';
 import Education from './types/Education';
 import ExerciseType from './types/Exercise';
-import QuickRoutine, {Area, Equipment} from './types/QuickRoutines';
-import {SavedQuickRoutine, SavedWorkout} from './types/SavedItem';
+import QuickRoutine, { Area, Equipment } from './types/QuickRoutines';
+import { SavedQuickRoutine, SavedWorkout } from './types/SavedItem';
 import {
   CoolDown,
   Equipment as EquipmentItem,
@@ -43,7 +41,9 @@ import {
 } from './types/Shared';
 import Test from './types/Test';
 
-const {height, width} = Dimensions.get('window');
+const createSagaMiddleware = require('redux-saga').default;
+
+const { height, width } = Dimensions.get('window');
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -65,15 +65,15 @@ export type StackParamList = {
   ForgotPassword: undefined;
   ChangePassword: undefined;
   DeleteAccount: undefined;
-  SignUpFlow: {fromProfile?: boolean};
+  SignUpFlow: { fromProfile?: boolean };
   Tabs: undefined;
   Home: undefined;
   Leaderboards: undefined;
-  Exercise: {id: string};
+  Exercise: { id: string };
   Fitness: undefined;
   Goals: undefined;
-  Test: {id: string};
-  TestResults: {test: Test; testResult?: number; seconds: number};
+  Test: { id: string };
+  TestResults: { test: Test; testResult?: number; seconds: number };
   FitnessGoal: undefined;
   Experience: undefined;
   WarmUp: undefined;
@@ -84,10 +84,10 @@ export type StackParamList = {
     warmUp: WarmUp[];
     coolDown: CoolDown[];
   };
-  CustomizeExercise: {exercise: ExerciseType};
+  CustomizeExercise: { exercise: ExerciseType };
   ReviewExercises: undefined;
-  PreWorkout: {planWorkout: PlanWorkout; planId: string};
-  StartWorkout: {planWorkout: PlanWorkout; startTime: Date; planId: string};
+  PreWorkout: { planWorkout: PlanWorkout; planId: string };
+  StartWorkout: { planWorkout: PlanWorkout; startTime: Date; planId: string };
   EndWorkout: {
     seconds: number;
     planWorkout: PlanWorkout;
@@ -103,13 +103,13 @@ export type StackParamList = {
     saved?: boolean;
   };
   Education: undefined;
-  EducationArticle: {education: Education};
+  EducationArticle: { education: Education };
   Settings: undefined;
   Profile: undefined;
   History: undefined;
   Notifications: undefined;
-  Premium: {onActivated?: () => void};
-  PremiumPurchased: {restored?: boolean};
+  Premium: { onActivated?: () => void };
+  PremiumPurchased: { restored?: boolean };
   Support: undefined;
   Terms: undefined;
   Workout: undefined;
@@ -117,8 +117,8 @@ export type StackParamList = {
   Policies: undefined;
   Loading: undefined;
   QuickRoutines: undefined;
-  PreQuickRoutine: {routine: QuickRoutine};
-  QuickRoutine: {routine: QuickRoutine; startTime: Date};
+  PreQuickRoutine: { routine: QuickRoutine };
+  QuickRoutine: { routine: QuickRoutine; startTime: Date };
   EndQuickRoutine: {
     routine: QuickRoutine;
     seconds: number;
@@ -136,24 +136,24 @@ export type StackParamList = {
   SavedItems: undefined;
   Connections: undefined;
   AddConnection: undefined;
-  Chat: {uid: string};
-  VideoView: {message: IMessage};
+  Chat: { uid: string };
+  VideoView: { message: IMessage };
   Plan: undefined;
-  WhatArea: {equipment: Equipment};
-  WorkoutList: {area: Area; equipment: Equipment};
+  WhatArea: { equipment: Equipment };
+  WorkoutList: { area: Area; equipment: Equipment };
   Rating: undefined;
   Stack: undefined;
-  Nutrition: {nutrition: PlanNutrition};
-  Sleep: {sleep: PlanSleep};
-  MonthlyDayView: {workouts: PlanWorkout[]; date: string; planId: string};
-  ViewProfile: {connection: Profile};
-  Recipes: {category: RecipeCategory};
-  Recipe: {recipe: Recipe};
+  Nutrition: { nutrition: PlanNutrition };
+  Sleep: { sleep: PlanSleep };
+  MonthlyDayView: { workouts: PlanWorkout[]; date: string; planId: string };
+  ViewProfile: { connection: Profile };
+  Recipes: { category: RecipeCategory };
+  Recipe: { recipe: Recipe };
   RecipeCategories: undefined;
-  PDFViewer: {uri: string; title?: string};
-  WebViewScreen: {uri: string; title?: string};
+  PDFViewer: { uri: string; title?: string };
+  WebViewScreen: { uri: string; title?: string };
   ReportProblem: undefined;
-  WorkoutBreakdown: {workout: SavedQuickRoutine | SavedWorkout};
+  WorkoutBreakdown: { workout: SavedQuickRoutine | SavedWorkout };
   Offline: undefined;
   UpdatePrompt: undefined;
   TargetModal: undefined;
@@ -170,7 +170,6 @@ Sentry.init({
 });
 
 const App: React.FC = () => {
-
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -204,10 +203,10 @@ const App: React.FC = () => {
       isTokenAutoRefreshEnabled: true,
     });
   }, []);
-  
+
   return (
-     <PersistGate persistor={persistor}>
-      <GestureHandlerRootView style={{flex: 1}}>
+    <PersistGate persistor={persistor}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
           <SafeAreaProvider>
             <NavigationContainer
@@ -216,8 +215,11 @@ const App: React.FC = () => {
                 sagaMiddleware.run(rootSaga);
                 SplashScreen.hide();
                 // Register the navigation container with the instrumentation
-                reactNavigationIntegration.registerNavigationContainer(navigationRef);
-              }}>
+                reactNavigationIntegration.registerNavigationContainer(
+                  navigationRef,
+                );
+              }}
+            >
               <DrawerNavigator />
             </NavigationContainer>
             {showSplash && (
@@ -229,8 +231,10 @@ const App: React.FC = () => {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                }}>
-                  {Platform.OS === 'ios' ? <Image
+                }}
+              >
+                {Platform.OS === 'ios' ? (
+                  <Image
                     source={require('./images/splash.gif')}
                     style={{
                       height,
@@ -239,7 +243,9 @@ const App: React.FC = () => {
                       alignSelf: 'center',
                     }}
                     resizeMode="contain"
-                  /> : <Image
+                  />
+                ) : (
+                  <Image
                     source={require('./images/splash_fixed.png')}
                     style={{
                       height,
@@ -248,7 +254,8 @@ const App: React.FC = () => {
                       alignSelf: 'center',
                     }}
                     resizeMode="contain"
-                  />}
+                  />
+                )}
               </View>
             )}
           </SafeAreaProvider>

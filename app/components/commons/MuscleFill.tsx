@@ -1,5 +1,5 @@
 import React from 'react';
-import {Path} from 'react-native-svg';
+import { Path } from 'react-native-svg';
 import colors from '../../constants/colors';
 import {
   abdominals,
@@ -24,8 +24,8 @@ import {
   upperBodyBack,
   upperBodyFront,
 } from '../../constants/musclePaths';
-import {Muscle} from '../../types/Exercise';
-import {Gender} from '../../types/Shared';
+import { Muscle } from '../../types/Exercise';
+import { Gender } from '../../types/Shared';
 
 const getMuscle = (m: Muscle, gender?: Gender, back?: boolean) => {
   switch (m) {
@@ -75,7 +75,7 @@ const MuscleFill: React.FC<{
   secondary?: boolean;
   back?: boolean;
   gender?: Gender;
-}> = ({muscle, back, secondary, gender}) => {
+}> = ({ muscle, back, secondary, gender }) => {
   return (
     <>
       {getMuscle(muscle, gender, back)?.map(d => {

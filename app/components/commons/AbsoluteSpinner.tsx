@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ViewStyle} from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import colors from '../../constants/colors';
 import globalStyles from '../../styles/globalStyles';
 import Spinner from './Spinner';
@@ -9,12 +9,12 @@ const AbsoluteSpinner: React.FC<{
   loading: boolean;
   text?: string;
   style?: ViewStyle;
-}> = ({loading, text, style}) => {
+}> = ({ loading, text, style }) => {
   if (loading) {
     return (
       <View style={[globalStyles.spinner, style]}>
         <Spinner />
-        {!!text && <Text style={{color: colors.appWhite}}>{text}</Text>}
+        {!!text && <Text style={{ color: colors.appWhite }}>{text}</Text>}
       </View>
     );
   }

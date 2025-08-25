@@ -1,21 +1,21 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Dimensions, Platform, TouchableOpacity, View} from 'react-native';
+import { Dimensions, Platform, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import ImageAnimated from '../../commons/ImageAnimated';
 import Text from '../../commons/Text';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const RecipeCard: React.FC<{
   name: string;
   image: string;
   onPress: () => void;
   premium?: boolean;
-}> = ({onPress, name, image, premium}) => {
-  const {profile} = useAppSelector(state => state.profile);
+}> = ({ onPress, name, image, premium }) => {
+  const { profile } = useAppSelector(state => state.profile);
   return (
     <TouchableOpacity onPress={onPress}>
       <ImageAnimated
@@ -24,9 +24,10 @@ const RecipeCard: React.FC<{
           marginHorizontal: 15,
           marginBottom: 10,
           borderRadius: 10,
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
-        source={{uri: image}}>
+        source={{ uri: image }}
+      >
         <LinearGradient
           colors={[
             'rgba(54, 57, 68,0)',
@@ -36,7 +37,6 @@ const RecipeCard: React.FC<{
           style={{
             height: 75,
             justifyContent: 'flex-end',
-            padding: 10,
             borderRadius: 10,
             right: 0,
             left: 0,
@@ -44,14 +44,17 @@ const RecipeCard: React.FC<{
             position: 'absolute',
             alignSelf: 'flex-end',
             marginBottom: -1,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: colors.appWhite,
               fontSize: 20,
               fontWeight: 'bold',
               maxWidth: 300,
-            }}>
+              padding: 10,
+            }}
+          >
             {name}
           </Text>
         </LinearGradient>
@@ -61,7 +64,8 @@ const RecipeCard: React.FC<{
               position: 'absolute',
               bottom: 15,
               right: 15,
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="lock"

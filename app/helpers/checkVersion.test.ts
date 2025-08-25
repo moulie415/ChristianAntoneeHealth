@@ -1,7 +1,7 @@
-import {getVersion} from 'react-native-device-info';
-import {navigate} from '../RootNavigation';
-import {checkVersion} from './checkVersion';
-import {logError} from './error';
+import { getVersion } from 'react-native-device-info';
+import { navigate } from '../RootNavigation';
+import { checkVersion } from './checkVersion';
+import { logError } from './error';
 
 jest.mock('react-native-device-info', () => ({
   getVersion: jest.fn(),

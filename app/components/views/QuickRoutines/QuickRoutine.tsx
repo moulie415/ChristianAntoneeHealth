@@ -1,22 +1,26 @@
-import {RouteProp} from '@react-navigation/core';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
+import { RouteProp } from '@react-navigation/core';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
-import {getVideoHeight} from '../../../helpers';
-import {endWatchWorkout} from '../../../helpers/biometrics';
+import { getVideoHeight } from '../../../helpers';
+import { endWatchWorkout } from '../../../helpers/biometrics';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
-import {updateProfile} from '../../../reducers/profile';
-import {workoutSong} from '../../../sagas/profile';
+import { updateProfile } from '../../../reducers/profile';
+import { workoutSong } from '../../../sagas/profile';
 import Exercise from '../../../types/Exercise';
-import {PauseEvent, Profile, UpdateProfilePayload} from '../../../types/Shared';
+import {
+  PauseEvent,
+  Profile,
+  UpdateProfilePayload,
+} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
@@ -27,12 +31,12 @@ import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
 
 const QuickRoutineView: React.FC<{
-  videos: {[key: string]: {src: string; path: string}};
+  videos: { [key: string]: { src: string; path: string } };
   loading: boolean;
   route: RouteProp<StackParamList, 'QuickRoutine'>;
   navigation: NativeStackNavigationProp<StackParamList, 'QuickRoutine'>;
-  exerciseNotes: {[key: string]: string};
-  exercisesObj: {[key: string]: Exercise};
+  exerciseNotes: { [key: string]: string };
+  exercisesObj: { [key: string]: Exercise };
   autoPlay?: boolean;
   workoutMusic?: boolean;
   updateProfile: (payload: UpdateProfilePayload) => void;
@@ -47,7 +51,7 @@ const QuickRoutineView: React.FC<{
   updateProfile: updateProfileAction,
   profile,
 }) => {
-  const {routine, startTime} = route.params;
+  const { routine, startTime } = route.params;
   const [tabIndex, setTabIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<PagerView>(null);
@@ -60,7 +64,7 @@ const QuickRoutineView: React.FC<{
     return routine.exerciseIds.map(id => {
       return typeof id === 'string'
         ? exercisesObj[id]
-        : {...exercisesObj[id.id], ...id};
+        : { ...exercisesObj[id.id], ...id };
     });
   }, [exercisesObj, routine.exerciseIds]);
 
@@ -70,12 +74,12 @@ const QuickRoutineView: React.FC<{
     }
   }, [workoutMusic, routine.disableWorkoutMusic]);
 
-  const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(
+  const { seconds, setTimerPaused, timerPaused } = useWorkoutTimer(
     1000,
     !routineStarted,
   );
 
-  const {exerciseEvents} = useExerciseEvents(index);
+  const { exerciseEvents } = useExerciseEvents(index);
 
   const loadingExercises = !exercises || exercises.some(e => e === undefined);
 
@@ -87,7 +91,7 @@ const QuickRoutineView: React.FC<{
 
   useEffect(() => {
     if (exercises && exercises[index]) {
-      navigation.setOptions({headerTitle: exercises[index].name});
+      navigation.setOptions({ headerTitle: exercises[index].name });
     }
   }, [exercises, index, navigation]);
 
@@ -95,7 +99,7 @@ const QuickRoutineView: React.FC<{
 
   useEffect(() => {
     if (ap !== autoPlay) {
-      updateProfileAction({autoPlay: ap, disableSnackbar: true});
+      updateProfileAction({ autoPlay: ap, disableSnackbar: true });
     }
   }, [ap, updateProfileAction, autoPlay]);
 
@@ -116,7 +120,7 @@ const QuickRoutineView: React.FC<{
   }, 3000);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header
         hasBack
         absolute
@@ -149,7 +153,8 @@ const QuickRoutineView: React.FC<{
           }}
           offscreenPageLimit={1}
           scrollEnabled={!fullscreen}
-          style={{flex: 1, paddingHorizontal: 0}}>
+          style={{ flex: 1, paddingHorizontal: 0 }}
+        >
           {exercises.map((exercise, i) => {
             const next = exercises[index + 1];
             return (
@@ -172,7 +177,8 @@ const QuickRoutineView: React.FC<{
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor: 'rgba(0,0,0,0.2)',
-                    }}>
+                    }}
+                  >
                     <Spinner color={colors.appBlue} />
                   </View>
                 )}
@@ -188,10 +194,12 @@ const QuickRoutineView: React.FC<{
                       borderTopRightRadius: 30,
                       overflow: 'hidden',
                       backgroundColor: colors.appGrey,
-                    }}>
+                    }}
+                  >
                     <ScrollView
-                      contentContainerStyle={{paddingBottom: 20}}
-                      keyboardShouldPersistTaps="always">
+                      contentContainerStyle={{ paddingBottom: 20 }}
+                      keyboardShouldPersistTaps="always"
+                    >
                       <Text
                         style={{
                           marginTop: 20,
@@ -200,7 +208,8 @@ const QuickRoutineView: React.FC<{
                           marginHorizontal: 40,
                           fontWeight: 'bold',
                           textAlign: 'center',
-                        }}>
+                        }}
+                      >
                         {exercise.name}
                       </Text>
                       <WorkoutTabs
@@ -218,13 +227,13 @@ const QuickRoutineView: React.FC<{
                           setTimerPaused(p);
                           setPauseEvents([
                             ...pauseEvents,
-                            {time: new Date(), paused: p},
+                            { time: new Date(), paused: p },
                           ]);
                           setPaused(p);
                         }}
                       />
 
-                      <View style={{flexDirection: 'row', flex: 1}}>
+                      <View style={{ flexDirection: 'row', flex: 1 }}>
                         {index === 0 && (
                           <TouchableOpacity
                             onPress={() => setAp(!ap)}
@@ -237,13 +246,15 @@ const QuickRoutineView: React.FC<{
                               marginLeft: 20,
                               justifyContent: 'space-evenly',
                               height: 50,
-                            }}>
+                            }}
+                          >
                             <Text
                               style={{
                                 color: colors.appWhite,
                                 fontSize: FONTS_SIZES.SMALL,
                                 fontWeight: 'bold',
-                              }}>
+                              }}
+                            >
                               AUTO-PLAY
                             </Text>
                             <Toggle value={ap} onValueChange={setAp} />
@@ -278,7 +289,7 @@ const QuickRoutineView: React.FC<{
                             text="End Workout"
                             onPress={() => {
                               Alert.alert('End workout', 'Are you sure?', [
-                                {text: 'No', style: 'cancel'},
+                                { text: 'No', style: 'cancel' },
                                 {
                                   text: 'Yes',
                                   onPress: endWorkout,
@@ -305,7 +316,7 @@ const QuickRoutineView: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: RootState) => ({
+const mapStateToProps = ({ exercises, profile }: RootState) => ({
   videos: exercises.videos,
   loading: exercises.videoLoading,
   exerciseNotes: exercises.exerciseNotes,

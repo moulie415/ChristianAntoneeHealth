@@ -1,17 +1,23 @@
 import appleAuth, {
   AppleButton,
 } from '@invertase/react-native-apple-authentication';
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {Image, ImageBackground, Platform, StyleSheet, View} from 'react-native';
-import {getBuildNumber, getVersion} from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {StackParamList} from '../../App';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import {
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { getBuildNumber, getVersion } from 'react-native-device-info';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { StackParamList } from '../../App';
 import colors from '../../constants/colors';
-import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
+import { appleSignIn, facebookSignIn, googleSignIn } from '../../helpers/api';
 import GoogleIcon from '../../images/google.svg';
 import {
   LoginFullname,
@@ -68,7 +74,7 @@ const Login: React.FC<{
     if (!disabled) {
       const response = await signInApple();
       if (response?.appleAuthRequestResponse?.fullName) {
-        const {givenName, familyName} =
+        const { givenName, familyName } =
           response.appleAuthRequestResponse.fullName;
         setFullname({
           name: givenName || '',
@@ -84,7 +90,8 @@ const Login: React.FC<{
       blurRadius={5}
       style={{
         flex: 1,
-      }}>
+      }}
+    >
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
@@ -95,7 +102,8 @@ const Login: React.FC<{
       <SafeAreaView>
         <KeyboardAwareScrollView
           enableOnAndroid
-          keyboardShouldPersistTaps="always">
+          keyboardShouldPersistTaps="always"
+        >
           <View
             style={{
               width: 175,
@@ -106,7 +114,8 @@ const Login: React.FC<{
               alignSelf: 'center',
               alignItems: 'center',
               marginTop: 60,
-            }}>
+            }}
+          >
             <View
               style={{
                 width: 150,
@@ -115,10 +124,11 @@ const Login: React.FC<{
                 backgroundColor: colors.appWhite,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}>
+              }}
+            >
               <Image
                 source={require('../../images/logo.png')}
-                style={{width: 90, height: 79}}
+                style={{ width: 90, height: 79 }}
               />
             </View>
           </View>
@@ -136,7 +146,8 @@ const Login: React.FC<{
               color: '#fff',
               textAlign: 'center',
               paddingVertical: 10,
-            }}>
+            }}
+          >
             OR
           </Text>
           {Platform.OS === 'ios' && appleAuth.isSupported && (
@@ -144,7 +155,7 @@ const Login: React.FC<{
               buttonStyle={AppleButton.Style.WHITE}
               buttonType={AppleButton.Type.CONTINUE}
               onPress={onPressAppleButton}
-              style={{height: 50, marginHorizontal: 20}}
+              style={{ height: 50, marginHorizontal: 20 }}
             />
           )}
 
@@ -156,7 +167,7 @@ const Login: React.FC<{
             text="Continue with Facebook"
             overrideCasing
             iconColor="#1877F2"
-            textStyle={{fontSize: 18, color: '#1877F2'}}
+            textStyle={{ fontSize: 18, color: '#1877F2' }}
             style={{
               marginTop: Platform.OS === 'ios' ? 20 : 0,
               marginHorizontal: 20,
@@ -170,12 +181,12 @@ const Login: React.FC<{
           <Button
             onPress={signInGoogle}
             icon={
-              <GoogleIcon style={{marginRight: 10}} height={20} width={20} />
+              <GoogleIcon style={{ marginRight: 10 }} height={20} width={20} />
             }
             disabled={disabled}
             text="Continue with Google"
             overrideCasing
-            textStyle={{color: '#1F1F1F', fontSize: 18}}
+            textStyle={{ color: '#1F1F1F', fontSize: 18 }}
             style={{
               marginTop: 20,
               marginHorizontal: 20,
@@ -189,14 +200,15 @@ const Login: React.FC<{
       </SafeAreaView>
 
       <AbsoluteSpinner loading={disabled} />
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <Text
           style={{
             color: colors.appWhite,
             fontSize: 14,
             textAlign: 'center',
             margin: 10,
-          }}>
+          }}
+        >
           {`v${getVersion()} (${getBuildNumber()})`}
         </Text>
       </View>

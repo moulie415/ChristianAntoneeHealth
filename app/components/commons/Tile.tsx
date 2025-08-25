@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {TouchableOpacity, ViewStyle} from 'react-native';
+import React, { ReactNode } from 'react';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import colors from '../../constants/colors';
 
 const Tile: React.FC<{
@@ -7,12 +7,13 @@ const Tile: React.FC<{
   children?: ReactNode;
   backgroundColor?: string;
   style?: ViewStyle;
-}> = ({onPress, children, backgroundColor = colors.tile, style}) => {
+}> = ({ onPress, children, backgroundColor = colors.tile, style }) => {
   return (
     <TouchableOpacity
-      style={[{backgroundColor, borderRadius: 15}, style]}
+      style={[{ backgroundColor, borderRadius: 15 }, style]}
       onPress={onPress}
-      disabled={!onPress}>
+      disabled={!onPress}
+    >
       {children}
     </TouchableOpacity>
   );

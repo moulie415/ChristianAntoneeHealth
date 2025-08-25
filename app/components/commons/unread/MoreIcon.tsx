@@ -1,18 +1,18 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
 import colors from '../../../constants/colors';
 
-import {View} from 'react-native';
-import {Profile} from '../../../types/Shared';
+import { View } from 'react-native';
+import { Profile } from '../../../types/Shared';
 import Text from '../Text';
 
 const MoreIcon: React.FC<{
   profile: Profile;
   size: number;
   color: string;
-}> = ({size, color, profile}) => {
+}> = ({ size, color, profile }) => {
   const count = Object.values(profile.unread || {}).reduce(
     (acc, cur) => acc + cur,
     0,
@@ -37,13 +37,15 @@ const MoreIcon: React.FC<{
             top: 3,
             right: 17,
             backgroundColor: colors.appRed,
-          }}>
+          }}
+        >
           <Text
             style={{
               fontSize: 10,
               fontWeight: 'bold',
               color: '#fff',
-            }}>
+            }}
+          >
             {count > 9 ? '9+' : count}
           </Text>
         </View>
@@ -52,7 +54,7 @@ const MoreIcon: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

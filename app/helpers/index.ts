@@ -1,16 +1,16 @@
 import analytics from '@react-native-firebase/analytics';
-import moment, {Moment} from 'moment';
-import {Dimensions} from 'react-native';
+import moment, { Moment } from 'moment';
+import { Dimensions } from 'react-native';
 import InAppReview from 'react-native-in-app-review';
 import PushNotification from 'react-native-push-notification';
-import {TABLE_HEADER_KEYS} from '../components/commons/Table';
+import { TABLE_HEADER_KEYS } from '../components/commons/Table';
 import colors from '../constants/colors';
-import {Category} from '../types/Education';
-import {Gender, Sample} from '../types/Shared';
-import {PercentileTable, Row, Table} from '../types/Test';
-import {logError} from './error';
+import { Category } from '../types/Education';
+import { Gender, Sample } from '../types/Shared';
+import { PercentileTable, Row, Table } from '../types/Test';
+import { logError } from './error';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 export const truncate = (str: string, n: number) => {
   if (!str) {
@@ -68,11 +68,11 @@ export const getSampleItems = (
   samples: Sample[],
 ) => {
   if (profileVal === undefined || profileVal === null) {
-    return {data: [] as {x: Date; y: number}[], highest: 0, lowest: 0};
+    return { data: [] as { x: Date; y: number }[], highest: 0, lowest: 0 };
   }
 
   const minDate = moment().subtract(filter, 'days');
-  const validSamples = samples.filter(({startDate}) =>
+  const validSamples = samples.filter(({ startDate }) =>
     moment(startDate).isSameOrAfter(minDate),
   );
   const data = [];
@@ -90,7 +90,7 @@ export const getSampleItems = (
       if (profileVal < lowest) {
         lowest = profileVal;
       }
-      data.push({y: profileVal, x: day.toDate()});
+      data.push({ y: profileVal, x: day.toDate() });
     } else if (
       i === filter ||
       filter === 6 ||
@@ -107,11 +107,11 @@ export const getSampleItems = (
       if (sample < lowest) {
         lowest = sample;
       }
-      data.push({y: sample, x: day.toDate()});
+      data.push({ y: sample, x: day.toDate() });
     }
   }
 
-  return {data, highest, lowest};
+  return { data, highest, lowest };
 };
 
 export const getBMIItems = (
@@ -123,17 +123,17 @@ export const getBMIItems = (
 ) => {
   const data = [];
   if (!height || !weight) {
-    return {data: [], lowest: 0, highest: 0};
+    return { data: [], lowest: 0, highest: 0 };
   }
   let lowest = weight && height ? getBMI(height, weight) : 0;
   let highest = weight && height ? getBMI(height, weight) : 0;
 
   const minDate = moment().subtract(filter, 'days');
-  const validHeightSamples = heightSamples.filter(({startDate}) =>
+  const validHeightSamples = heightSamples.filter(({ startDate }) =>
     moment(startDate).isSameOrAfter(minDate),
   );
 
-  const validWeightSamples = weightSamples.filter(({startDate}) =>
+  const validWeightSamples = weightSamples.filter(({ startDate }) =>
     moment(startDate).isSameOrAfter(minDate),
   );
 
@@ -148,7 +148,7 @@ export const getBMIItems = (
       if (bmi < lowest) {
         lowest = bmi;
       }
-      data.push({y: bmi, x: day.toDate()});
+      data.push({ y: bmi, x: day.toDate() });
     } else if (
       i === filter ||
       filter === 6 ||
@@ -171,10 +171,10 @@ export const getBMIItems = (
       if (bmi < lowest) {
         lowest = bmi;
       }
-      data.push({y: bmi, x: day.toDate()});
+      data.push({ y: bmi, x: day.toDate() });
     }
   }
-  return {data, lowest, highest};
+  return { data, lowest, highest };
 };
 
 export const getBMRItems = (
@@ -188,16 +188,16 @@ export const getBMRItems = (
 ) => {
   const data = [];
   if (!height || !weight || !dob || !gender) {
-    return {data: [], lowest: 0, highest: 0};
+    return { data: [], lowest: 0, highest: 0 };
   }
   const currentAge = moment().diff(dob, 'years');
 
   const minDate = moment().subtract(filter, 'days');
-  const validHeightSamples = heightSamples.filter(({startDate}) =>
+  const validHeightSamples = heightSamples.filter(({ startDate }) =>
     moment(startDate).isSameOrAfter(minDate),
   );
 
-  const validWeightSamples = weightSamples.filter(({startDate}) =>
+  const validWeightSamples = weightSamples.filter(({ startDate }) =>
     moment(startDate).isSameOrAfter(minDate),
   );
 
@@ -223,7 +223,7 @@ export const getBMRItems = (
       if (bmr < lowest) {
         lowest = bmr;
       }
-      data.push({y: bmr, x: day.toDate()});
+      data.push({ y: bmr, x: day.toDate() });
     } else if (
       i === filter ||
       filter === 6 ||
@@ -246,10 +246,10 @@ export const getBMRItems = (
       if (bmr < lowest) {
         lowest = bmr;
       }
-      data.push({y: bmr, x: day.toDate()});
+      data.push({ y: bmr, x: day.toDate() });
     }
   }
-  return {data, lowest, highest};
+  return { data, lowest, highest };
 };
 
 const getBMI = (h: number, w: number) => {
@@ -271,7 +271,7 @@ const getBMR = (gender: Gender, w: number, h: number, age: number) => {
 export const rateApp = async () => {
   try {
     const success = await InAppReview.RequestInAppReview();
-    analytics().logEvent('user_rating', {success});
+    analytics().logEvent('user_rating', { success });
   } catch (e) {
     logError(e);
   }

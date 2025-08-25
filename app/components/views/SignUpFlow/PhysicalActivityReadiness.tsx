@@ -1,6 +1,6 @@
-import React, {Fragment, ReactNode, useEffect} from 'react';
-import {Platform, TouchableOpacity, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import React, { Fragment, ReactNode, useEffect } from 'react';
+import { Platform, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import colors from '../../../constants/colors';
 import Checkbox from '../../commons/Checkbox';
 import Divider from '../../commons/Divider';
@@ -135,11 +135,12 @@ const PhysicalActivityReadiness: React.FC<{
     <KeyboardAwareScrollView
       enableOnAndroid
       extraScrollHeight={Platform.OS === 'ios' ? 50 : 75}
-      contentContainerStyle={{paddingBottom: 100}}
+      contentContainerStyle={{ paddingBottom: 100 }}
       style={{
         flex: 1,
         paddingHorizontal: 20,
-      }}>
+      }}
+    >
       <Text
         style={{
           margin: 20,
@@ -147,7 +148,8 @@ const PhysicalActivityReadiness: React.FC<{
           fontSize: 24,
           color: colors.appWhite,
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         Physical activity readiness questionnaire
       </Text>
       {questions.map(
@@ -162,14 +164,15 @@ const PhysicalActivityReadiness: React.FC<{
         }) => {
           return (
             <Fragment key={key}>
-              <View style={{marginVertical: 15, paddingHorizontal: 20}}>
+              <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
                 <Text
                   style={{
                     fontSize: 16,
                     color: colors.appWhite,
                     lineHeight: 20,
                     flex: 1,
-                  }}>
+                  }}
+                >
                   {question}
                 </Text>
                 <View
@@ -178,22 +181,23 @@ const PhysicalActivityReadiness: React.FC<{
                     // justifyContent: 'center',
                     alignItems: 'center',
                     marginTop: 10,
-                  }}>
-                  <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  }}
+                >
+                  <Text style={{ color: colors.appWhite, fontWeight: 'bold' }}>
                     No
                   </Text>
                   <Toggle
                     onValueChange={onChange}
                     value={value}
-                    style={{marginHorizontal: 5}}
+                    style={{ marginHorizontal: 5 }}
                   />
-                  <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                  <Text style={{ color: colors.appWhite, fontWeight: 'bold' }}>
                     Yes
                   </Text>
                 </View>
                 {setDescription && value && (
                   <Input
-                    containerStyle={{marginTop: 15}}
+                    containerStyle={{ marginTop: 15 }}
                     value={description}
                     multiline
                     onChangeText={setDescription}
@@ -213,13 +217,14 @@ const PhysicalActivityReadiness: React.FC<{
           flexDirection: 'row',
           padding: 20,
           alignItems: 'center',
-        }}>
+        }}
+      >
         <Checkbox
           checked={confirmQuestionnaire}
           onPress={() => setConfirmQuestionnaire(!confirmQuestionnaire)}
-          iconStyle={{color: colors.appWhite}}
+          iconStyle={{ color: colors.appWhite }}
         />
-        <Text style={{color: colors.appWhite, flex: 1, marginLeft: 10}}>
+        <Text style={{ color: colors.appWhite, flex: 1, marginLeft: 10 }}>
           I have read, understood and accurately completed this questionnaire. I
           confirm that I am voluntarily engaging in an acceptable level of
           exercise and my participation involves a risk of injury. If I have

@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, StyleSheet } from 'react-native';
 import ImageLoaderProps from '../../types/commons/ImageLoader';
 
 const ImageLoader: React.FC<ImageLoaderProps> = props => {

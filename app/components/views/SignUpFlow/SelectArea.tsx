@@ -1,7 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import colors from '../../../constants/colors';
-import {Area} from '../../../types/QuickRoutines';
+import { Area } from '../../../types/QuickRoutines';
 import SelectableButton from '../../commons/SelectableButton';
 import Text from '../../commons/Text';
 
@@ -30,24 +30,26 @@ const areaDetails: {
 const SelectArea: React.FC<{
   area: Area;
   setArea: (area: Area) => void;
-}> = ({area, setArea}) => {
+}> = ({ area, setArea }) => {
   return (
     <View
       style={{
         flex: 1,
         marginHorizontal: 20,
         marginTop: 20,
-      }}>
+      }}
+    >
       <Text
         style={{
           marginBottom: 20,
           fontSize: 24,
           color: colors.appWhite,
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         What area do you want to focus on?
       </Text>
-      {areaDetails.map(({text, secondaryText, area: a}) => {
+      {areaDetails.map(({ text, secondaryText, area: a }) => {
         return (
           <SelectableButton
             key={a}
@@ -55,7 +57,7 @@ const SelectArea: React.FC<{
             secondaryText={secondaryText}
             selected={a === area}
             onPress={() => setArea(a)}
-            style={{marginBottom: 15}}
+            style={{ marginBottom: 15 }}
           />
         );
       })}

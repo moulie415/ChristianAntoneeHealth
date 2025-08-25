@@ -1,6 +1,6 @@
 import React from 'react';
-import {Dimensions, View} from 'react-native';
-import {RulerPicker} from 'react-native-ruler-picker';
+import { Dimensions, View } from 'react-native';
+import { RulerPicker } from 'react-native-ruler-picker';
 import colors from '../../constants/colors';
 import Button from './Button';
 import Modal from './Modal';
@@ -13,7 +13,7 @@ const HeightModal: React.FC<{
   onRequestClose: () => void;
   height: number;
   setHeight: (height: number) => void;
-}> = ({visible, onRequestClose, height, setHeight}) => {
+}> = ({ visible, onRequestClose, height, setHeight }) => {
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
       <View
@@ -22,7 +22,8 @@ const HeightModal: React.FC<{
           width: windowWidth * 0.9,
           alignSelf: 'center',
           borderRadius: 10,
-        }}>
+        }}
+      >
         <Text
           style={{
             color: colors.appWhite,
@@ -31,7 +32,8 @@ const HeightModal: React.FC<{
             fontSize: 20,
             textAlign: 'center',
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           Select height
         </Text>
 
@@ -43,13 +45,13 @@ const HeightModal: React.FC<{
           fractionDigits={0}
           width={windowWidth * 0.9}
           initialValue={height || 178}
-          unitTextStyle={{color: colors.appWhite}}
-          valueTextStyle={{color: colors.appWhite}}
+          unitTextStyle={{ color: colors.appWhite }}
+          valueTextStyle={{ color: colors.appWhite }}
           onValueChangeEnd={number => setHeight(Number(number))}
           unit="cm"
           indicatorColor={colors.appBlue}
         />
-        <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
+        <Button text="Close" style={{ margin: 10 }} onPress={onRequestClose} />
       </View>
     </Modal>
   );

@@ -1,30 +1,30 @@
-import React, {useState} from 'react';
-import {Alert, View} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, View } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {StackParamList} from '../../App';
+import { StackParamList } from '../../App';
 import colors from '../../constants/colors';
-import {useAppSelector} from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
 
 const ChangePassword: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ChangePassword'>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
   const [current, setCurrent] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const {email} = useAppSelector(state => state.profile.profile);
+  const { email } = useAppSelector(state => state.profile.profile);
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <Header hasBack title="Change password" />
-      <View style={{marginHorizontal: 20}}>
+      <View style={{ marginHorizontal: 20 }}>
         <Input
           style={{
             marginBottom: 20,
@@ -62,7 +62,7 @@ const ChangePassword: React.FC<{
           secure
         />
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <Button
           onPress={async () => {
             setLoading(true);
@@ -70,7 +70,7 @@ const ChangePassword: React.FC<{
               await auth().signInWithEmailAndPassword(email, current);
               await auth().currentUser?.updatePassword(confirmPassword);
               navigation.goBack();
-              Snackbar.show({text: 'Password changed successfully'});
+              Snackbar.show({ text: 'Password changed successfully' });
             } catch (e) {
               if (e instanceof Error) {
                 Alert.alert('Error', e.message);

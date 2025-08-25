@@ -1,8 +1,8 @@
-import React, {RefObject, useMemo} from 'react';
-import {View} from 'react-native';
+import React, { RefObject, useMemo } from 'react';
+import { View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Exercise from '../../types/Exercise';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import ExerciseTimer from './ExerciseTimer';
 import MusclesDiagram from './MusclesDiagram';
 import MyTabs from './MyTabs';
@@ -45,7 +45,8 @@ const WorkoutTabs: React.FC<{
     <>
       <MyTabs tabs={tabs} setTabIndex={setTabIndex} tabIndex={tabIndex} />
       <View
-        style={{marginHorizontal: 20, marginVertical: 15, marginBottom: 20}}>
+        style={{ marginHorizontal: 20, marginVertical: 15, marginBottom: 20 }}
+      >
         {i === index && (
           <ExerciseTimer
             index={index}
@@ -58,7 +59,7 @@ const WorkoutTabs: React.FC<{
             disableWorkoutMusic={disableWorkoutMusic}
           />
         )}
-        {i !== index && tabIndex === 0 && <View style={{height: 200}} />}
+        {i !== index && tabIndex === 0 && <View style={{ height: 200 }} />}
 
         {tabIndex === 1 && i === index && (
           <MusclesDiagram
@@ -69,7 +70,7 @@ const WorkoutTabs: React.FC<{
         )}
 
         {tabIndex === 2 && i === index && (
-          <View style={{minHeight: 200}}>
+          <View style={{ minHeight: 200 }}>
             <ViewMore
               textAlign="justify"
               text={exercise.notes || ''}

@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react-native';
 import Purchases from 'react-native-purchases';
 
-export const setUserAttributes = (attributes: {[key: string]: string}) => {
+export const setUserAttributes = (attributes: { [key: string]: string }) => {
   Purchases.setAttributes(attributes);
   Object.keys(attributes).forEach(attribute => {
     if (attributes[attribute]) {

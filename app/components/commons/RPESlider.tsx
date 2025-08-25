@@ -1,9 +1,9 @@
-import {Slider} from '@miblanchard/react-native-slider';
+import { Slider } from '@miblanchard/react-native-slider';
 import Color from 'color';
 import React from 'react';
-import {View} from 'react-native';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {FONTS_SIZES} from '../../constants';
+import { View } from 'react-native';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { FONTS_SIZES } from '../../constants';
 import colors from '../../constants/colors';
 import ResistanceScaleInfo from '../views/Workout/ResistanceScaleInfo';
 import Text from './Text';
@@ -89,13 +89,13 @@ export const rpeSliderScale: {
   },
 ];
 
-const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
+const RPESlider: React.FC<{ rpe: number; setRpe: (val: number) => void }> = ({
   rpe,
   setRpe,
 }) => {
   return (
     <View>
-      <Tile style={{margin: 20, marginVertical: 10, paddingTop: 10}}>
+      <Tile style={{ margin: 20, marginVertical: 10, paddingTop: 10 }}>
         <Text
           style={{
             margin: 10,
@@ -103,11 +103,12 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
             color: colors.appWhite,
             textAlign: 'center',
             fontSize: FONTS_SIZES.MEDIUM_LARGE,
-          }}>
+          }}
+        >
           How hard did you find that workout?
         </Text>
         <AnimatedCircularProgress
-          style={{alignSelf: 'center'}}
+          style={{ alignSelf: 'center' }}
           size={120}
           width={10}
           backgroundWidth={10}
@@ -117,7 +118,8 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
           backgroundColor={colors.appWhite}
           arcSweepAngle={240}
           rotation={240}
-          lineCap="round">
+          lineCap="round"
+        >
           {(fill: number) => (
             <Text
               style={{
@@ -125,7 +127,8 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
                 color: colors.appWhite,
                 fontWeight: 'bold',
                 textAlign: 'center',
-              }}>
+              }}
+            >
               {rpe}
             </Text>
           )}
@@ -146,7 +149,8 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
                   borderRadius: 15,
                   alignItems: 'center',
                   justifyContent: 'center',
-                }}>
+                }}
+              >
                 <View
                   style={{
                     height: 26,
@@ -160,7 +164,7 @@ const RPESlider: React.FC<{rpe: number; setRpe: (val: number) => void}> = ({
           }}
           minimumTrackTintColor={colors.appBlue}
           maximumTrackTintColor={colors.appWhite}
-          containerStyle={{marginHorizontal: 20}}
+          containerStyle={{ marginHorizontal: 20 }}
           onValueChange={val => typeof val === 'object' && setRpe(val[0])}
         />
         <ResistanceScaleInfo />

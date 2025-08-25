@@ -1,11 +1,11 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import colors from '../../constants/colors';
-import {Level} from '../../types/Shared';
+import { Level } from '../../types/Shared';
 import LevelIconProps from '../../types/commons/LevelIcon';
 
-const LevelIcon: React.FC<LevelIconProps> = ({level, size}) => {
+const LevelIcon: React.FC<LevelIconProps> = ({ level, size }) => {
   const star = (
     <FontAwesome6
       name="star"
@@ -24,19 +24,19 @@ const LevelIcon: React.FC<LevelIconProps> = ({level, size}) => {
   }
   if (level === Level.BEGINNER) {
     return (
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}>{star}</View>
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>{star}</View>
     );
   }
   if (level === Level.INTERMEDIATE) {
     return (
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
         {star}
         {star}
       </View>
     );
   }
   return (
-    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
       {star}
       {star}
       {star}

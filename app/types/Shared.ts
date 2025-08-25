@@ -1,6 +1,6 @@
-import {Timestamp} from '@react-native-firebase/firestore';
-import {PurchasesEntitlementInfo} from 'react-native-purchases';
-import {Area, Equipment as EquipmentLevel} from './QuickRoutines';
+import { Timestamp } from '@react-native-firebase/firestore';
+import { PurchasesEntitlementInfo } from 'react-native-purchases';
+import { Area, Equipment as EquipmentLevel } from './QuickRoutines';
 
 export interface Targets {
   calories: number;
@@ -14,7 +14,7 @@ export interface Targets {
 export type Premium =
   | undefined
   | false
-  | {[key: string]: PurchasesEntitlementInfo};
+  | { [key: string]: PurchasesEntitlementInfo };
 
 export type Gender = 'male' | 'female' | 'none';
 
@@ -80,7 +80,7 @@ export interface Profile {
   signUpDate?: number;
   admin?: boolean;
   premium?: Premium;
-  unread?: {[key: string]: number};
+  unread?: { [key: string]: number };
   bodyFatPercentage?: number;
   muscleMass?: number;
   boneMass?: number;
@@ -325,8 +325,8 @@ export interface Recipe {
   id: string;
   name: string;
   category: RecipeCategory;
-  image: {title: string; src: string};
-  recipe: {title: string; src: string};
+  image: { title: string; src: string };
+  recipe: { title: string; src: string };
   premium: boolean;
   hidden: boolean;
 }

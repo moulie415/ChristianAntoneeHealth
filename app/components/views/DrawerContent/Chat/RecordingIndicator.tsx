@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {View} from 'react-native';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -10,7 +10,7 @@ import colors from '../../../../constants/colors';
 
 const waves = [...Array(20).keys()];
 
-const Wave: React.FC<{metering: number | undefined; index: number}> = ({
+const Wave: React.FC<{ metering: number | undefined; index: number }> = ({
   metering,
   index,
 }) => {
@@ -37,7 +37,7 @@ const Wave: React.FC<{metering: number | undefined; index: number}> = ({
   return <Animated.View style={style} />;
 };
 
-const RecordingIndicator: React.FC<{metering: number | undefined}> = ({
+const RecordingIndicator: React.FC<{ metering: number | undefined }> = ({
   metering,
 }) => {
   return (
@@ -47,7 +47,8 @@ const RecordingIndicator: React.FC<{metering: number | undefined}> = ({
         height: 30,
         alignItems: 'flex-end',
         marginLeft: 10,
-      }}>
+      }}
+    >
       {waves.map((wave, index) => (
         <Wave index={index + 1} metering={metering} key={wave} />
       ))}

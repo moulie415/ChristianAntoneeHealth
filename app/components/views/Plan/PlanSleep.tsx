@@ -1,22 +1,29 @@
-import {View, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native';
+import { RouteProp } from '@react-navigation/native';
 import React from 'react';
-import {RouteProp} from '@react-navigation/native';
-import {StackParamList} from '../../../App';
+import {
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
 import Header from '../../commons/Header';
 
-const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
+const PlanSleep: React.FC<{ route: RouteProp<StackParamList, 'Sleep'> }> = ({
   route,
 }) => {
-  const {sleep} = route.params;
+  const { sleep } = route.params;
   return (
-    <ScrollView bounces={false} style={{backgroundColor: colors.appGrey}}>
+    <ScrollView bounces={false} style={{ backgroundColor: colors.appGrey }}>
       <ImageBackground
         style={{
           height: 350,
           marginBottom: 10,
         }}
-        source={require('../../../images/sleep.jpg')}>
+        source={require('../../../images/sleep.jpg')}
+      >
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -35,7 +42,8 @@ const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
           borderTopRightRadius: 30,
           marginTop: -100,
           backgroundColor: colors.appGrey,
-        }}>
+        }}
+      >
         {!!sleep.general && (
           <>
             <Text
@@ -45,7 +53,8 @@ const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
 
                 fontFamily: 'Helvetica',
                 color: colors.appWhite,
-              }}>
+              }}
+            >
               General
             </Text>
             <Text
@@ -53,7 +62,8 @@ const PlanSleep: React.FC<{route: RouteProp<StackParamList, 'Sleep'>}> = ({
                 color: colors.appWhite,
 
                 lineHeight: 30,
-              }}>
+              }}
+            >
               {sleep.general}
             </Text>
           </>

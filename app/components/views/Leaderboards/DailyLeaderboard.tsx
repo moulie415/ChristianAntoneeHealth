@@ -1,5 +1,5 @@
 import React from 'react';
-import {LeaderboardType} from '../../../types/Shared';
+import { LeaderboardType } from '../../../types/Shared';
 import Leaderboard from './Leaderboard';
 
 const caloriesType: LeaderboardType = 'dailyCalories';
@@ -8,7 +8,7 @@ const stepsType: LeaderboardType = 'dailySteps';
 const Daily: React.FC<{
   tabIndex: number;
   setTabIndex: (index: number) => void;
-}> = ({tabIndex, setTabIndex}) => {
+}> = ({ tabIndex, setTabIndex }) => {
   const leaderboardType: LeaderboardType =
     tabIndex === 0 ? stepsType : caloriesType;
 

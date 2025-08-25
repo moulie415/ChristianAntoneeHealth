@@ -1,8 +1,8 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {goBack} from '../../RootNavigation';
+import { TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { goBack } from '../../RootNavigation';
 import colors from '../../constants/colors';
 
 const ModalExitButton = () => {
@@ -12,7 +12,8 @@ const ModalExitButton = () => {
         top: 20,
         right: 20,
         position: 'absolute',
-      }}>
+      }}
+    >
       <TouchableOpacity
         onPress={goBack}
         style={{
@@ -22,7 +23,8 @@ const ModalExitButton = () => {
           borderRadius: 20,
           alignItems: 'center',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         <FontAwesome6
           iconStyle="solid"
           name="xmark"

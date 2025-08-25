@@ -1,6 +1,6 @@
 import React from 'react';
-import {Dimensions, View} from 'react-native';
-import {RulerPicker} from 'react-native-ruler-picker';
+import { Dimensions, View } from 'react-native';
+import { RulerPicker } from 'react-native-ruler-picker';
 import colors from '../../constants/colors';
 import Button from './Button';
 import Modal from './Modal';
@@ -39,7 +39,8 @@ const MetricModal: React.FC<{
           width: windowWidth * 0.9,
           alignSelf: 'center',
           borderRadius: 10,
-        }}>
+        }}
+      >
         {!!title && (
           <Text
             style={{
@@ -49,7 +50,8 @@ const MetricModal: React.FC<{
               fontSize: 20,
               textAlign: 'center',
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             {title}
           </Text>
         )}
@@ -61,13 +63,13 @@ const MetricModal: React.FC<{
           fractionDigits={fractionDigits || 0}
           width={windowWidth * 0.9}
           initialValue={selectedValue || 0}
-          unitTextStyle={{color: colors.appWhite}}
-          valueTextStyle={{color: colors.appWhite}}
+          unitTextStyle={{ color: colors.appWhite }}
+          valueTextStyle={{ color: colors.appWhite }}
           onValueChangeEnd={number => onValueChange(Number(number))}
           unit={unit || ''}
           indicatorColor={colors.appBlue}
         />
-        <Button text="Close" style={{margin: 10}} onPress={onRequestClose} />
+        <Button text="Close" style={{ margin: 10 }} onPress={onRequestClose} />
       </View>
     </Modal>
   );

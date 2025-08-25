@@ -1,5 +1,5 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
+import { ViewStyle } from 'react-native';
 import colors from '../../constants/colors';
 import Loader from './Loader';
 
@@ -8,7 +8,7 @@ const Spinner: React.FC<{
   size?: number;
   visible?: boolean;
   style?: ViewStyle;
-}> = ({color = colors.appWhite, size = 35, visible = true, style}) => {
+}> = ({ color = colors.appWhite, size = 35, visible = true, style }) => {
   if (!visible) {
     return null;
   }

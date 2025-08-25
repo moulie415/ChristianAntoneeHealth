@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import colors from '../../constants/colors';
 import Loader from '../commons/Loader';
 
@@ -13,7 +13,8 @@ const Loading = () => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.appGrey,
-      }}>
+      }}
+    >
       <Loader />
     </View>
   );

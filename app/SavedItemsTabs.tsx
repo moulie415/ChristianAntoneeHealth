@@ -1,30 +1,30 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as _ from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {TouchableOpacity, View, useWindowDimensions} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {TabBar, TabView} from 'react-native-tab-view';
-import {StackParamList} from './App';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { TabBar, TabView } from 'react-native-tab-view';
+import { StackParamList } from './App';
 import Header from './components/commons/Header';
 import Text from './components/commons/Text';
 import SavedRecipes from './components/views/SavedItems/SavedRecipes';
 import SavedTests from './components/views/SavedItems/SavedTests';
 import SavedWorkouts from './components/views/SavedItems/SavedWorkouts';
 import colors from './constants/colors';
-import {useAppDispatch, useAppSelector} from './hooks/redux';
-import {getSavedWorkouts} from './reducers/exercises';
-import {getSavedQuickRoutines} from './reducers/quickRoutines';
-import {getSavedRecipes} from './reducers/recipes';
-import {getSavedTests} from './reducers/tests';
-import {SavedQuickRoutine, SavedTest, SavedWorkout} from './types/SavedItem';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { getSavedWorkouts } from './reducers/exercises';
+import { getSavedQuickRoutines } from './reducers/quickRoutines';
+import { getSavedRecipes } from './reducers/recipes';
+import { getSavedTests } from './reducers/tests';
+import { SavedQuickRoutine, SavedTest, SavedWorkout } from './types/SavedItem';
 
 const SavedItemsTabs: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'SavedItems'>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
   const layout = useWindowDimensions();
 
-  const {profile} = useAppSelector(state => state.profile);
+  const { profile } = useAppSelector(state => state.profile);
 
   const dispatch = useAppDispatch();
 
@@ -61,7 +61,7 @@ const SavedItemsTabs: React.FC<{
     [dispatch],
   );
 
-  const renderScene = ({route}: {route: {key: string}}) => {
+  const renderScene = ({ route }: { route: { key: string } }) => {
     switch (route.key) {
       case 'savedWorkouts':
         return (
@@ -81,9 +81,9 @@ const SavedItemsTabs: React.FC<{
 
   const [index, setIndex] = useState(profile.premium ? 0 : 2);
   const [routes] = useState([
-    {key: 'savedWorkouts', title: 'Workouts'},
-    {key: 'savedTests', title: 'Tests'},
-    {key: 'savedRecipes', title: 'Recipes'},
+    { key: 'savedWorkouts', title: 'Workouts' },
+    { key: 'savedTests', title: 'Tests' },
+    { key: 'savedRecipes', title: 'Recipes' },
   ]);
 
   useEffect(() => {
@@ -93,8 +93,8 @@ const SavedItemsTabs: React.FC<{
     dispatch(getSavedTests());
   }, [dispatch]);
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView style={{flex: 1}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header hasBack title="Saved" />
         <TabView
           renderTabBar={p => {
@@ -114,7 +114,8 @@ const SavedItemsTabs: React.FC<{
                         needsPremium
                           ? () => navigation.navigate('Premium', {})
                           : props.onPress
-                      }>
+                      }
+                    >
                       <View
                         style={{
                           height: 45,
@@ -130,19 +131,21 @@ const SavedItemsTabs: React.FC<{
                           borderWidth: props.key === routes[index].key ? 0 : 1,
                           borderColor: colors.borderColor,
                           flexDirection: 'row',
-                        }}>
+                        }}
+                      >
                         <Text
                           style={{
                             fontWeight: 'bold',
                             color: '#fff',
                             textAlign: 'center',
-                          }}>
+                          }}
+                        >
                           {props.route?.title}
                         </Text>
                         {needsPremium && (
                           <FontAwesome6
                             iconStyle="solid"
-                            style={{marginLeft: 5}}
+                            style={{ marginLeft: 5 }}
                             name="lock"
                             color={colors.appWhite}
                           />
@@ -159,16 +162,16 @@ const SavedItemsTabs: React.FC<{
                   marginBottom: 20,
                   justifyContent: 'space-evenly',
                 }}
-                indicatorStyle={{backgroundColor: 'transparent'}}
+                indicatorStyle={{ backgroundColor: 'transparent' }}
               />
               // </ScrollView>
             );
           }}
           lazy
-          navigationState={{index, routes}}
+          navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
+          initialLayout={{ width: layout.width }}
         />
       </SafeAreaView>
     </View>

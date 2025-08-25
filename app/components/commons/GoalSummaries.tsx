@@ -1,16 +1,16 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as _ from 'lodash';
-import React, {useEffect, useMemo, useState} from 'react';
-import {View} from 'react-native';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import React, { useEffect, useMemo, useState } from 'react';
+import { View } from 'react-native';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import PagerView from 'react-native-pager-view';
-import {SvgProps} from 'react-native-svg';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
+import { SvgProps } from 'react-native-svg';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../App';
 import colors from '../../constants/colors';
-import {getGoalsData} from '../../helpers/goals';
-import {kFormatter} from '../../helpers/kFormatter';
+import { getGoalsData } from '../../helpers/goals';
+import { kFormatter } from '../../helpers/kFormatter';
 import Fire from '../../images/fire.svg';
 import Time from '../../images/time.svg';
 import {
@@ -18,8 +18,8 @@ import {
   getWeeklyItems,
   getWeeklyItemsForConnection,
 } from '../../reducers/profile';
-import QuickRoutine, {Equipment} from '../../types/QuickRoutines';
-import {Profile} from '../../types/Shared';
+import QuickRoutine, { Equipment } from '../../types/QuickRoutines';
+import { Profile } from '../../types/Shared';
 import Text from './Text';
 import Tile from './Tile';
 import WorkoutCard from './WorkoutCard';
@@ -38,7 +38,7 @@ const GoalCircle: React.FC<{
   score: number;
   hideGoal?: boolean;
   icon: React.FC<SvgProps>;
-}> = ({title, goal, score, icon: Icon, hideGoal}) => {
+}> = ({ title, goal, score, icon: Icon, hideGoal }) => {
   const [fill, setFill] = useState(0);
 
   useEffect(() => {
@@ -51,9 +51,10 @@ const GoalCircle: React.FC<{
         flex: 1,
         flexBasis: '33%',
         marginBottom: 10,
-      }}>
+      }}
+    >
       <AnimatedCircularProgress
-        style={{alignSelf: 'center'}}
+        style={{ alignSelf: 'center' }}
         size={80}
         width={9}
         backgroundWidth={7}
@@ -63,7 +64,8 @@ const GoalCircle: React.FC<{
         backgroundColor={colors.textGrey}
         arcSweepAngle={240}
         rotation={240}
-        lineCap="round">
+        lineCap="round"
+      >
         {(fill: number) => <Icon />}
       </AnimatedCircularProgress>
       <Text
@@ -74,7 +76,8 @@ const GoalCircle: React.FC<{
           textAlign: 'center',
           alignSelf: 'center',
           marginTop: -10,
-        }}>
+        }}
+      >
         {!hideGoal ? `${kFormatter(score)}/${kFormatter(goal)}` : score}
       </Text>
       <Text
@@ -88,7 +91,8 @@ const GoalCircle: React.FC<{
           alignSelf: 'center',
           marginBottom: 5,
           marginTop: 5,
-        }}>
+        }}
+      >
         {title}
       </Text>
     </View>
@@ -100,9 +104,9 @@ const GoalSummaries: React.FC<{
   getWeeklyItemsAction: () => void;
   getWeeklyItemsForConnectionAction: (uid: string) => void;
   weeklyItems: WeeklyItems;
-  quickRoutinesObj: {[key: string]: QuickRoutine};
+  quickRoutinesObj: { [key: string]: QuickRoutine };
   connection?: Profile;
-  connectionWeeklyItems: {[key: string]: WeeklyItems};
+  connectionWeeklyItems: { [key: string]: WeeklyItems };
   navigation: NativeStackNavigationProp<
     StackParamList,
     'Profile' | 'ViewProfile'
@@ -162,7 +166,7 @@ const GoalSummaries: React.FC<{
     connection ? connection.targets : profile.targets,
   );
 
-  const {dailyCalories, dailySteps, dailyWorkoutStreak} = profile;
+  const { dailyCalories, dailySteps, dailyWorkoutStreak } = profile;
 
   const goals: GoalSet[] = [
     {
@@ -206,7 +210,8 @@ const GoalSummaries: React.FC<{
         }}
         style={{
           height: 215,
-        }}>
+        }}
+      >
         <Tile
           key="goals"
           style={{
@@ -215,7 +220,8 @@ const GoalSummaries: React.FC<{
             alignSelf: 'center',
             padding: 10,
             marginHorizontal: 20,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: colors.appWhite,
@@ -223,12 +229,13 @@ const GoalSummaries: React.FC<{
               fontSize: 16,
               textAlign: 'center',
               marginVertical: 10,
-            }}>
+            }}
+          >
             Weekly Targets
           </Text>
-          <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
+          <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap' }}>
             {connection || profile.targets ? (
-              goals.map(({goal, score, title, key, icon}) => {
+              goals.map(({ goal, score, title, key, icon }) => {
                 return (
                   <GoalCircle
                     title={title}
@@ -240,7 +247,7 @@ const GoalSummaries: React.FC<{
                 );
               })
             ) : (
-              <Text style={{color: colors.appWhite, textAlign: 'center'}}>
+              <Text style={{ color: colors.appWhite, textAlign: 'center' }}>
                 Weekly targets will show up here once they have been set by
                 Christian
               </Text>
@@ -256,7 +263,8 @@ const GoalSummaries: React.FC<{
               alignSelf: 'center',
               padding: 10,
               marginHorizontal: 20,
-            }}>
+            }}
+          >
             <Text
               style={{
                 color: colors.appWhite,
@@ -264,10 +272,11 @@ const GoalSummaries: React.FC<{
                 fontSize: 16,
                 textAlign: 'center',
                 marginVertical: 10,
-              }}>
+              }}
+            >
               Daily Challenges
             </Text>
-            <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap'}}>
+            <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap' }}>
               <GoalCircle
                 title="Steps"
                 icon={() => (
@@ -316,7 +325,8 @@ const GoalSummaries: React.FC<{
               paddingTop: 10,
               marginHorizontal: 20,
               marginBottom: 10,
-            }}>
+            }}
+          >
             <Text
               style={{
                 color: colors.appWhite,
@@ -325,7 +335,8 @@ const GoalSummaries: React.FC<{
                 textAlign: 'center',
                 marginTop: 10,
                 marginBottom: 20,
-              }}>
+              }}
+            >
               Recommended workout
             </Text>
             {recommendedWorkout && (
@@ -346,7 +357,8 @@ const GoalSummaries: React.FC<{
           flexDirection: 'row',
           justifyContent: 'center',
           marginBottom: 20,
-        }}>
+        }}
+      >
         {(connection ? [0] : [0, 1, 2]).map(i => {
           return (
             <View
@@ -367,7 +379,7 @@ const GoalSummaries: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, quickRoutines}: RootState) => ({
+const mapStateToProps = ({ profile, quickRoutines }: RootState) => ({
   profile: profile.profile,
   weeklyItems: profile.weeklyItems,
   connectionWeeklyItems: profile.connectionWeeklyItems,

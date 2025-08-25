@@ -1,25 +1,25 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Sentry from '@sentry/react-native';
-import React, {useState} from 'react';
-import {Image, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import React, { useState } from 'react';
+import { Image, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
-import {StackParamList} from '../../../App';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import Input from '../../commons/Input';
 
 const ReportProblem: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ReportProblem'>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [problem, setProblem] = useState('');
 
-  const {profile} = useAppSelector(state => state.profile);
+  const { profile } = useAppSelector(state => state.profile);
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <Image
         source={require('../../../images/upper_body.jpeg')}
         style={{
@@ -32,8 +32,8 @@ const ReportProblem: React.FC<{
         }}
       />
       <Header hasBack absolute />
-      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
               padding: 20,
@@ -42,7 +42,8 @@ const ReportProblem: React.FC<{
               borderTopRightRadius: 30,
               backgroundColor: colors.appGrey,
               height: 450,
-            }}>
+            }}
+          >
             <Input
               placeholder="Title"
               value={title}
@@ -62,7 +63,7 @@ const ReportProblem: React.FC<{
               }}
             />
             <Button
-              style={{margin: 10}}
+              style={{ margin: 10 }}
               onPress={async () => {
                 const sentryId =
                   Sentry.lastEventId() || Sentry.captureMessage(title);
@@ -73,7 +74,7 @@ const ReportProblem: React.FC<{
                   event_id: sentryId,
                 });
                 navigation.goBack();
-                Snackbar.show({text: 'Report sent'});
+                Snackbar.show({ text: 'Report sent' });
               }}
               text="Submit"
               disabled={!problem || !title}

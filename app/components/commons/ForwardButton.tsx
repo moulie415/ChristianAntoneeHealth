@@ -1,6 +1,6 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 import colors from '../../constants/colors';
 
@@ -18,13 +18,14 @@ const ForwardButton: React.FC<TouchableOpacityProps> = props => {
           justifyContent: 'center',
         },
         props.style,
-      ]}>
+      ]}
+    >
       <FontAwesome6
         iconStyle="solid"
         name="chevron-right"
         color={colors.appWhite}
         size={25}
-        style={{marginRight: -3}}
+        style={{ marginRight: -3 }}
       />
     </TouchableOpacity>
   );

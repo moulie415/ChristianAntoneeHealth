@@ -1,11 +1,11 @@
 import DatePicker from '@react-native-community/datetimepicker';
 import storage from '@react-native-firebase/storage';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {useFocusEffect} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import moment from 'moment';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
   AlertButton,
@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Image} from 'react-native-compressor';
+import { Image } from 'react-native-compressor';
 import RNFS from 'react-native-fs';
 import {
   CameraOptions,
@@ -24,11 +24,11 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
-import {ImageSource} from 'react-native-image-viewing/dist/@types';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { ImageSource } from 'react-native-image-viewing/dist/@types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../App';
 import {
   BONE_DENSITIES,
   HEIGHTS,
@@ -38,12 +38,12 @@ import {
   VISCERAL_FAT_VALUES,
 } from '../../constants';
 import colors from '../../constants/colors';
-import {logError} from '../../helpers/error';
-import {useAppDispatch} from '../../hooks/redux';
-import {checkStepsCalories} from '../../reducers/exercises';
-import {getSamples, updateProfile} from '../../reducers/profile';
-import {SettingsState} from '../../reducers/settings';
-import {Gender, Profile, UpdateProfilePayload} from '../../types/Shared';
+import { logError } from '../../helpers/error';
+import { useAppDispatch } from '../../hooks/redux';
+import { checkStepsCalories } from '../../reducers/exercises';
+import { getSamples, updateProfile } from '../../reducers/profile';
+import { SettingsState } from '../../reducers/settings';
+import { Gender, Profile, UpdateProfilePayload } from '../../types/Shared';
 import Avatar from '../commons/Avatar';
 import Button from '../commons/Button';
 import GoalSummaries from '../commons/GoalSummaries';
@@ -112,12 +112,12 @@ const ProfileComponent: React.FC<{
     weight,
     dob,
     height,
-    ...(avatar !== undefined ? {avatar} : {}),
-    ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
-    ...(muscleMass !== undefined ? {muscleMass} : {}),
-    ...(boneMass !== undefined ? {boneMass} : {}),
-    ...(visceralFat !== undefined ? {visceralFat} : {}),
-    ...(metabolicAge !== undefined ? {metabolicAge} : {}),
+    ...(avatar !== undefined ? { avatar } : {}),
+    ...(bodyFatPercentage !== undefined ? { bodyFatPercentage } : {}),
+    ...(muscleMass !== undefined ? { muscleMass } : {}),
+    ...(boneMass !== undefined ? { boneMass } : {}),
+    ...(visceralFat !== undefined ? { visceralFat } : {}),
+    ...(metabolicAge !== undefined ? { metabolicAge } : {}),
   });
 
   const equal = _.isEqual(newProfile, profile);
@@ -146,12 +146,12 @@ const ProfileComponent: React.FC<{
       weight,
       dob,
       height,
-      ...(avatar !== undefined ? {avatar} : {}),
-      ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
-      ...(muscleMass !== undefined ? {muscleMass} : {}),
-      ...(boneMass !== undefined ? {boneMass} : {}),
-      ...(visceralFat !== undefined ? {visceralFat} : {}),
-      ...(metabolicAge !== undefined ? {metabolicAge} : {}),
+      ...(avatar !== undefined ? { avatar } : {}),
+      ...(bodyFatPercentage !== undefined ? { bodyFatPercentage } : {}),
+      ...(muscleMass !== undefined ? { muscleMass } : {}),
+      ...(boneMass !== undefined ? { boneMass } : {}),
+      ...(visceralFat !== undefined ? { visceralFat } : {}),
+      ...(metabolicAge !== undefined ? { metabolicAge } : {}),
     });
   }, [
     profile,
@@ -192,16 +192,16 @@ const ProfileComponent: React.FC<{
         dob,
         height,
         weight,
-        ...(newAvatar !== undefined ? {avatar: newAvatar} : {}),
-        ...(bodyFatPercentage !== undefined ? {bodyFatPercentage} : {}),
-        ...(muscleMass !== undefined ? {muscleMass} : {}),
-        ...(boneMass !== undefined ? {boneMass} : {}),
-        ...(visceralFat !== undefined ? {visceralFat} : {}),
-        ...(metabolicAge !== undefined ? {metabolicAge} : {}),
+        ...(newAvatar !== undefined ? { avatar: newAvatar } : {}),
+        ...(bodyFatPercentage !== undefined ? { bodyFatPercentage } : {}),
+        ...(muscleMass !== undefined ? { muscleMass } : {}),
+        ...(boneMass !== undefined ? { boneMass } : {}),
+        ...(visceralFat !== undefined ? { visceralFat } : {}),
+        ...(metabolicAge !== undefined ? { metabolicAge } : {}),
       });
     } catch (e) {
       logError(e);
-      Snackbar.show({text: 'Error updating profile'});
+      Snackbar.show({ text: 'Error updating profile' });
     }
     setLoading(false);
   };
@@ -212,14 +212,14 @@ const ProfileComponent: React.FC<{
 
   useEffect(() => {
     if (profile.avatar) {
-      setImages([{uri: profile.avatar}]);
+      setImages([{ uri: profile.avatar }]);
     }
   }, [profile.avatar]);
 
   const saveDisabled = !dob || equal || pLoading || loading;
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <SafeAreaView>
         <Header
           left={
@@ -235,13 +235,15 @@ const ProfileComponent: React.FC<{
                 setDob(profile.dob);
                 setVisceralFat(profile.visceralFat);
                 setMetabolicAge(profile.metabolicAge);
-              }}>
+              }}
+            >
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
                   opacity: equal ? 0.5 : 1,
-                }}>
+                }}
+              >
                 UNDO
               </Text>
             </TouchableOpacity>
@@ -251,13 +253,15 @@ const ProfileComponent: React.FC<{
               disabled={saveDisabled}
               onPress={() => {
                 onSave();
-              }}>
+              }}
+            >
               <Text
                 style={{
                   color: colors.appWhite,
                   fontWeight: 'bold',
                   opacity: saveDisabled ? 0.5 : 1,
-                }}>
+                }}
+              >
                 SAVE
               </Text>
             </TouchableOpacity>
@@ -265,12 +269,14 @@ const ProfileComponent: React.FC<{
         />
         <ScrollView
           keyboardShouldPersistTaps="always"
-          contentContainerStyle={{paddingBottom: 100}}>
+          contentContainerStyle={{ paddingBottom: 100 }}
+        >
           <View
             style={{
               marginBottom: 10,
               alignItems: 'center',
-            }}>
+            }}
+          >
             <TouchableOpacity
               onPress={() => {
                 const MAX_SIZE = 500;
@@ -317,7 +323,8 @@ const ProfileComponent: React.FC<{
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginRight: 10,
-              }}>
+              }}
+            >
               <Avatar
                 name={`${profile.name} ${profile.surname || ''}`}
                 src={avatar}
@@ -336,7 +343,8 @@ const ProfileComponent: React.FC<{
                   borderRadius: 15,
                   alignItems: 'center',
                   justifyContent: 'center',
-                }}>
+                }}
+              >
                 <FontAwesome6
                   iconStyle="solid"
                   size={15}
@@ -346,14 +354,15 @@ const ProfileComponent: React.FC<{
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: 'center' }}>
             <Text
               style={{
                 fontSize: 20,
                 fontWeight: 'bold',
                 color: colors.appWhite,
                 textAlign: 'center',
-              }}>
+              }}
+            >
               {`${profile.name} ${profile.surname || ''}`}
             </Text>
           </View>
@@ -362,7 +371,8 @@ const ProfileComponent: React.FC<{
               flexDirection: 'row',
               justifyContent: 'space-between',
               margin: 20,
-            }}>
+            }}
+          >
             <Tile
               style={{
                 width: 100,
@@ -370,18 +380,22 @@ const ProfileComponent: React.FC<{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => setShowWeightModal(true)}>
+              onPress={() => setShowWeightModal(true)}
+            >
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: colors.appWhite,
                   textAlign: 'center',
-                }}>
+                }}
+              >
                 {weight}
-                <Text style={{fontSize: 12}}> kg</Text>
+                <Text style={{ fontSize: 12 }}> kg</Text>
               </Text>
-              <Text style={{fontSize: 12, color: colors.appWhite}}>Weight</Text>
+              <Text style={{ fontSize: 12, color: colors.appWhite }}>
+                Weight
+              </Text>
             </Tile>
             <Tile
               style={{
@@ -390,18 +404,22 @@ const ProfileComponent: React.FC<{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => setShowHeightModal(true)}>
+              onPress={() => setShowHeightModal(true)}
+            >
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: colors.appWhite,
                   textAlign: 'center',
-                }}>
+                }}
+              >
                 {height}
-                <Text style={{fontSize: 12}}> cm</Text>
+                <Text style={{ fontSize: 12 }}> cm</Text>
               </Text>
-              <Text style={{fontSize: 12, color: colors.appWhite}}>Height</Text>
+              <Text style={{ fontSize: 12, color: colors.appWhite }}>
+                Height
+              </Text>
             </Tile>
             <Tile
               style={{
@@ -410,18 +428,20 @@ const ProfileComponent: React.FC<{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => setShowDobModal(true)}>
+              onPress={() => setShowDobModal(true)}
+            >
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: colors.appWhite,
                   textAlign: 'center',
-                }}>
+                }}
+              >
                 {moment().diff(dob, 'years')}
-                <Text style={{fontSize: 12}}> y.o</Text>
+                <Text style={{ fontSize: 12 }}> y.o</Text>
               </Text>
-              <Text style={{fontSize: 12, color: colors.appWhite}}>Age</Text>
+              <Text style={{ fontSize: 12, color: colors.appWhite }}>Age</Text>
             </Tile>
           </View>
 
@@ -447,7 +467,7 @@ const ProfileComponent: React.FC<{
           <Button
             variant="danger"
             text=" Delete my account"
-            style={{margin: 20}}
+            style={{ margin: 20 }}
             onPress={() => navigation.navigate('DeleteAccount')}
           />
         </ScrollView>
@@ -613,14 +633,16 @@ const ProfileComponent: React.FC<{
 
         <Modal
           visible={showDobModal && Platform.OS === 'ios'}
-          onRequestClose={() => setShowDobModal(false)}>
+          onRequestClose={() => setShowDobModal(false)}
+        >
           <View
             style={{
               backgroundColor: colors.appGrey,
               width: '90%',
               alignSelf: 'center',
               borderRadius: 10,
-            }}>
+            }}
+          >
             <Text
               style={{
                 color: colors.appWhite,
@@ -629,10 +651,11 @@ const ProfileComponent: React.FC<{
                 fontSize: 20,
                 textAlign: 'center',
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               Select date
             </Text>
-            <View style={{paddingHorizontal: 20}}>
+            <View style={{ paddingHorizontal: 20 }}>
               <DatePicker
                 mode="date"
                 textColor={colors.appWhite}
@@ -648,7 +671,7 @@ const ProfileComponent: React.FC<{
 
             <Button
               text="Close"
-              style={{margin: 10}}
+              style={{ margin: 10 }}
               onPress={() => setShowDobModal(false)}
             />
           </View>
@@ -678,7 +701,7 @@ const ProfileComponent: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, settings}: RootState) => ({
+const mapStateToProps = ({ profile, settings }: RootState) => ({
   profile: profile.profile,
   loading: profile.loading,
   settings,

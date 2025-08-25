@@ -1,14 +1,14 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {setLevel} from '../../../reducers/exercises';
-import {Level} from '../../../types/Shared';
+import { setLevel } from '../../../reducers/exercises';
+import { Level } from '../../../types/Shared';
 import ImageLoader from '../../commons/ImageLoader';
 import ListItem from '../../commons/ListItem';
 import Text from '../../commons/Text';
@@ -17,7 +17,7 @@ const Experience: React.FC<{
   setLevelAction: (level: Level) => void;
   navigation: NativeStackNavigationProp<StackParamList, 'Experience'>;
   level: Level;
-}> = ({setLevelAction, navigation, level}) => {
+}> = ({ setLevelAction, navigation, level }) => {
   const [itemsCollapsed, setItemsCollapsed] = useState<{
     [key: number]: boolean;
   }>({
@@ -26,17 +26,18 @@ const Experience: React.FC<{
     2: true,
   });
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            setItemsCollapsed({0: !itemsCollapsed[0], 1: true, 2: true});
+            setItemsCollapsed({ 0: !itemsCollapsed[0], 1: true, 2: true });
           }}
-          style={{flex: 1, marginBottom: 5}}>
+          style={{ flex: 1, marginBottom: 5 }}
+        >
           <ImageLoader
             source={require('../../../images/1st_Carousel_image_targeted_workouts.jpeg')}
             overlay
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
           />
           <View
             style={{
@@ -45,8 +46,9 @@ const Experience: React.FC<{
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Beginner</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Beginner</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[0]}>
@@ -75,13 +77,14 @@ const Experience: React.FC<{
         </Collapsible>
         <TouchableOpacity
           onPress={() => {
-            setItemsCollapsed({0: true, 1: !itemsCollapsed[1], 2: true});
+            setItemsCollapsed({ 0: true, 1: !itemsCollapsed[1], 2: true });
           }}
-          style={{flex: 1, marginBottom: 5}}>
+          style={{ flex: 1, marginBottom: 5 }}
+        >
           <ImageLoader
             source={require('../../../images/2nd_carousel_image_fitness_tracking.jpeg')}
             overlay
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
           />
           <View
             style={{
@@ -90,8 +93,9 @@ const Experience: React.FC<{
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Intermediate</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Intermediate</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[1]}>
@@ -120,13 +124,14 @@ const Experience: React.FC<{
         </Collapsible>
         <TouchableOpacity
           onPress={() => {
-            setItemsCollapsed({0: true, 1: true, 2: !itemsCollapsed[2]});
+            setItemsCollapsed({ 0: true, 1: true, 2: !itemsCollapsed[2] });
           }}
-          style={{flex: 1, marginBottom: 5}}>
+          style={{ flex: 1, marginBottom: 5 }}
+        >
           <ImageLoader
             source={require('../../../images/3rd_carousel_image_fitness_testing.jpeg')}
             overlay
-            style={{width: '100%', flex: 1}}
+            style={{ width: '100%', flex: 1 }}
           />
 
           <View
@@ -136,8 +141,9 @@ const Experience: React.FC<{
               top: 0,
               left: 20,
               justifyContent: 'center',
-            }}>
-            <Text style={[{color: '#fff'}]}>Advanced</Text>
+            }}
+          >
+            <Text style={[{ color: '#fff' }]}>Advanced</Text>
           </View>
         </TouchableOpacity>
         <Collapsible collapsed={itemsCollapsed[2]}>
@@ -170,7 +176,7 @@ const Experience: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises}: RootState) => ({
+const mapStateToProps = ({ exercises }: RootState) => ({
   level: exercises.level,
 });
 

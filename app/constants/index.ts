@@ -1,6 +1,6 @@
-import {Platform} from 'react-native';
-import {generateValues} from '../helpers/generateValues';
-import {Equipment, Goal} from '../types/Shared';
+import { Platform } from 'react-native';
+import { generateValues } from '../helpers/generateValues';
+import { Equipment, Goal } from '../types/Shared';
 
 export interface GoalItem {
   title: string;
@@ -8,7 +8,7 @@ export interface GoalItem {
 }
 
 export const goalItems: GoalItem[] = [
-  {title: 'Improve my strength', goal: Goal.STRENGTH},
+  { title: 'Improve my strength', goal: Goal.STRENGTH },
 ];
 
 export const STORE_LINK =

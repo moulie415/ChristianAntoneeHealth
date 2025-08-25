@@ -1,13 +1,26 @@
 import Clipboard from '@react-native-clipboard/clipboard';
-import {pick} from '@react-native-documents/picker';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { pick } from '@react-native-documents/picker';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import _ from 'lodash';
 import moment from 'moment';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, FlatList, Platform, TouchableOpacity, View, Image} from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Alert,
+  FlatList,
+  Image,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   AvatarProps,
   Bubble,
@@ -29,17 +42,20 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
-import Video, {ResizeMode} from 'react-native-video';
+import Video, { ResizeMode } from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../../App';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
-import {logError} from '../../../../helpers/error';
+import { logError } from '../../../../helpers/error';
 import useInit from '../../../../hooks/UseInit';
-import {viewWorkout} from '../../../../reducers/exercises';
+import { viewWorkout } from '../../../../reducers/exercises';
 import {
   loadEarlierMessages,
   requestMessageDeletion,
@@ -48,9 +64,9 @@ import {
   setMessages,
   setRead,
 } from '../../../../reducers/profile';
-import {SettingsState} from '../../../../reducers/settings';
-import Message, {MessageType} from '../../../../types/Message';
-import {Profile} from '../../../../types/Shared';
+import { SettingsState } from '../../../../reducers/settings';
+import Message, { MessageType } from '../../../../types/Message';
+import { Profile } from '../../../../types/Shared';
 import AbsoluteSpinner from '../../../commons/AbsoluteSpinner';
 import Avatar from '../../../commons/Avatar';
 import Header from '../../../commons/Header';
@@ -71,7 +87,7 @@ interface ChatProps {
     uid: string;
     snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
   }) => void;
-  messagesObj: {[key: string]: Message};
+  messagesObj: { [key: string]: Message };
   connection: Profile;
   chatId: string;
   sendMessageAction: ({
@@ -98,8 +114,8 @@ interface ChatProps {
     startAfter: number;
   }) => void;
   loading: boolean;
-  chatMessages: {[key: string]: string};
-  setChatMessage: ({uid, message}: {uid: string; message: string}) => void;
+  chatMessages: { [key: string]: string };
+  setChatMessage: ({ uid, message }: { uid: string; message: string }) => void;
   requestMessageDeletion: ({
     chatId,
     messageId,
@@ -132,7 +148,7 @@ const Chat: React.FC<ChatProps> = ({
   requestMessageDeletion,
   settings,
 }) => {
-  const {uid} = route.params;
+  const { uid } = route.params;
   const [text, setText] = useState('');
   const [initialized, setInitialized] = useState(false);
 
@@ -143,7 +159,7 @@ const Chat: React.FC<ChatProps> = ({
   const persistChat = useMemo(
     () =>
       _.debounce(t => {
-        setChatMessageAction({uid, message: t});
+        setChatMessageAction({ uid, message: t });
       }, 1000),
     [setChatMessageAction, uid],
   );
@@ -178,14 +194,14 @@ const Chat: React.FC<ChatProps> = ({
       .map(message => {
         return {
           ...message,
-          user: {...message.user, avatar: message.user?.avatar || undefined},
+          user: { ...message.user, avatar: message.user?.avatar || undefined },
         };
       });
   }, [messagesObj]);
 
-  const images: {uri: string}[] = sorted
+  const images: { uri: string }[] = sorted
     .filter(msg => msg.image)
-    .map(msg => ({uri: msg.image || ''}))
+    .map(msg => ({ uri: msg.image || '' }))
     .reverse();
 
   const [imageIndex, setImageIndex] = useState(0);
@@ -199,7 +215,7 @@ const Chat: React.FC<ChatProps> = ({
       return;
     }
     cursor.current = startAfter as number;
-    loadEarlierMessagesAction({chatId, uid, startAfter: Number(startAfter)});
+    loadEarlierMessagesAction({ chatId, uid, startAfter: Number(startAfter) });
   }, [sorted, chatId, uid, loadEarlierMessagesAction]);
 
   const insets = useSafeAreaInsets();
@@ -240,8 +256,8 @@ const Chat: React.FC<ChatProps> = ({
           <MessageText
             {...newProps}
             textStyle={{
-              left: {fontStyle: 'italic', fontFamily: 'normal'},
-              right: {fontStyle: 'italic', fontFamily: 'normal'},
+              left: { fontStyle: 'italic', fontFamily: 'normal' },
+              right: { fontStyle: 'italic', fontFamily: 'normal' },
             }}
           />
         );
@@ -284,7 +300,7 @@ const Chat: React.FC<ChatProps> = ({
         disabled={props.currentMessage?.pending}
         onPress={() => {
           if (props.currentMessage) {
-            navigation.navigate('VideoView', {message: props.currentMessage});
+            navigation.navigate('VideoView', { message: props.currentMessage });
           }
         }}
         style={{
@@ -294,7 +310,8 @@ const Chat: React.FC<ChatProps> = ({
           margin: 3,
           borderRadius: 15,
           overflow: 'hidden',
-        }}>
+        }}
+      >
         <Video
           style={{
             position: 'absolute',
@@ -320,7 +337,8 @@ const Chat: React.FC<ChatProps> = ({
             bottom: 0,
             alignItems: 'center',
             justifyContent: 'center',
-          }}>
+          }}
+        >
           <View
             style={{
               width: 50,
@@ -329,10 +347,11 @@ const Chat: React.FC<ChatProps> = ({
               alignItems: 'center',
               backgroundColor: 'rgba(0,0,0,0.7)',
               borderRadius: 25,
-            }}>
+            }}
+          >
             <FontAwesome6
               iconStyle="solid"
-              style={{marginLeft: 3}}
+              style={{ marginLeft: 3 }}
               name="play"
               color={colors.appWhite}
               size={25}
@@ -365,7 +384,8 @@ const Chat: React.FC<ChatProps> = ({
           );
           setImagesVisible(true);
         }}
-        disabled={props.currentMessage?.pending}>
+        disabled={props.currentMessage?.pending}
+      >
         <Image
           style={{
             position: 'relative',
@@ -374,7 +394,7 @@ const Chat: React.FC<ChatProps> = ({
             margin: 3,
             borderRadius: 15,
           }}
-          source={{uri: props.currentMessage?.image}}
+          source={{ uri: props.currentMessage?.image }}
         />
       </TouchableOpacity>
     );
@@ -402,15 +422,15 @@ const Chat: React.FC<ChatProps> = ({
             avatar: profile.avatar,
           },
           _id: uuid.v4() as string,
-          ...(type === 'image' ? {image: asset.uri} : {}),
-          ...(type === 'video' ? {video: asset.uri} : {}),
+          ...(type === 'image' ? { image: asset.uri } : {}),
+          ...(type === 'video' ? { video: asset.uri } : {}),
           text: '',
           type,
           pending: true,
           createdAt: moment().valueOf(),
           mimeType: asset.type,
         };
-        sendMessageAction({message, chatId, uid});
+        sendMessageAction({ message, chatId, uid });
       } else if (response.errorMessage || response.errorCode) {
         logError(new Error(response.errorMessage || response.errorCode));
         Snackbar.show({
@@ -419,11 +439,10 @@ const Chat: React.FC<ChatProps> = ({
       }
     } catch (e) {
       logError(e);
-      Snackbar.show({text: 'Error sending message'});
+      Snackbar.show({ text: 'Error sending message' });
     }
     setLoading(false);
   };
-
 
   const ref = useRef<FlatList<IMessage>>(null);
 
@@ -460,7 +479,7 @@ const Chat: React.FC<ChatProps> = ({
             handleResponse(result);
           },
         },
-        {text: 'Cancel', style: 'cancel'},
+        { text: 'Cancel', style: 'cancel' },
       ]);
     }
   };
@@ -499,7 +518,7 @@ const Chat: React.FC<ChatProps> = ({
             handleResponse(result);
           },
         },
-        {text: 'Cancel', style: 'cancel'},
+        { text: 'Cancel', style: 'cancel' },
       ]);
     }
   };
@@ -518,7 +537,7 @@ const Chat: React.FC<ChatProps> = ({
       pending: true,
       createdAt: moment().valueOf(),
     };
-    sendMessageAction({message, chatId, uid});
+    sendMessageAction({ message, chatId, uid });
   };
 
   const onPressDocument = async () => {
@@ -526,7 +545,7 @@ const Chat: React.FC<ChatProps> = ({
       const [result] = await pick({
         copyTo: 'cachesDirectory',
         ...(Platform.OS === 'android'
-          ? {type: ['text/*', 'application/*']}
+          ? { type: ['text/*', 'application/*'] }
           : {}),
       });
 
@@ -546,7 +565,7 @@ const Chat: React.FC<ChatProps> = ({
         filename: result.name || '',
       };
 
-      sendMessageAction({message, chatId, uid, size: result.size});
+      sendMessageAction({ message, chatId, uid, size: result.size });
     } catch (e: any) {
       if (e?.code !== 'DOCUMENT_PICKER_CANCELED') {
         logError(e);
@@ -583,24 +602,24 @@ const Chat: React.FC<ChatProps> = ({
       (buttonIndex: number) => {
         if (options[buttonIndex] === copyText) {
           Clipboard.setString(message.text);
-          Snackbar.show({text: 'Text copied to clipboard'});
+          Snackbar.show({ text: 'Text copied to clipboard' });
         } else if (options[buttonIndex] === deleteMessage && msg && messageId) {
-          requestMessageDeletion({chatId, message: msg, uid, messageId});
+          requestMessageDeletion({ chatId, message: msg, uid, messageId });
         }
       },
     );
   };
 
-  
   return (
     <>
-      <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+      <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
         <Header
           title={connection.name}
           hasBack
           right={
             <TouchableOpacity
-              onPress={() => navigation.navigate('ViewProfile', {connection})}>
+              onPress={() => navigation.navigate('ViewProfile', { connection })}
+            >
               <Avatar
                 src={connection.avatar}
                 name={`${connection.name} ${connection.surname || ''}`}
@@ -618,8 +637,8 @@ const Chat: React.FC<ChatProps> = ({
           renderMessageText={renderMessageText}
           bottomOffset={insets.bottom - 10}
           messages={sorted}
-          messagesContainerStyle={{marginBottom: 10}}
-          textInputProps={{lineHeight: null}}
+          messagesContainerStyle={{ marginBottom: 10 }}
+          textInputProps={{ lineHeight: null }}
           listViewProps={{
             marginBottom: 10,
             onEndReached: loadEarlier,
@@ -668,7 +687,7 @@ const Chat: React.FC<ChatProps> = ({
               pending: true,
               createdAt: moment().valueOf(),
             };
-            sendMessageAction({message, chatId, uid});
+            sendMessageAction({ message, chatId, uid });
           }}
           onInputTextChanged={onInputTextChanged}
           text={text}
@@ -702,7 +721,7 @@ const Chat: React.FC<ChatProps> = ({
           alwaysShowSend
         />
       </SafeAreaView>
-      <SafeAreaView style={{flex: 0, backgroundColor: colors.appGrey}} />
+      <SafeAreaView style={{ flex: 0, backgroundColor: colors.appGrey }} />
       <ImageView
         images={images}
         imageIndex={imageIndex}
@@ -715,7 +734,7 @@ const Chat: React.FC<ChatProps> = ({
 };
 
 const mapStateToProps = (
-  {profile, exercises, settings}: RootState,
+  { profile, exercises, settings }: RootState,
   props: {
     route: RouteProp<StackParamList, 'Chat'>;
   },

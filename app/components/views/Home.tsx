@@ -1,15 +1,15 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect} from 'react';
-import {Dimensions, ScrollView, View, Image} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect } from 'react';
+import { Dimensions, Image, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../App';
 import colors from '../../constants/colors';
-import {Goal, Profile} from '../../types/Shared';
+import { Goal, Profile } from '../../types/Shared';
 import Header from '../commons/Header';
 import HomeCard from '../commons/HomeCard';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const RATIO = height / width;
 
@@ -21,17 +21,17 @@ const Home: React.FC<{
   navigation: HomeNavigationProp;
   hasViewedTargets: boolean;
   profile: Profile;
-}> = ({navigation, hasViewedTargets, profile}) => {
+}> = ({ navigation, hasViewedTargets, profile }) => {
   useEffect(() => {
     if (!hasViewedTargets && profile.goal && profile.goal !== Goal.OTHER) {
       navigation.navigate('TargetModal');
     }
   }, [hasViewedTargets, profile.goal, navigation]);
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <SafeAreaView>
         <Header showDrawerMenuButton />
-        <ScrollView contentContainerStyle={{paddingBottom: 60}}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
           <Image
             source={require('../../images/logo.png')}
             style={{
@@ -102,7 +102,7 @@ const Home: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   hasViewedTargets: profile.hasViewedTargets,
   profile: profile.profile,
 });

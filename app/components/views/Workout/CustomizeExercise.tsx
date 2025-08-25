@@ -1,15 +1,15 @@
-import {RouteProp} from '@react-navigation/core';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import { RouteProp } from '@react-navigation/core';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Dimensions, ScrollView, View } from 'react-native';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {REPS} from '../../../constants';
-import {getVideoHeight} from '../../../helpers';
-import {setWorkout} from '../../../reducers/exercises';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { REPS } from '../../../constants';
+import { getVideoHeight } from '../../../helpers';
+import { setWorkout } from '../../../reducers/exercises';
 import Exercise from '../../../types/Exercise';
-import {Profile} from '../../../types/Shared';
+import { Profile } from '../../../types/Shared';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
 import Spinner from '../../commons/Spinner';
@@ -17,7 +17,7 @@ import Text from '../../commons/Text';
 
 REPS.shift();
 
-const {width, height} = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
 const CustomizeExercise: React.FC<{
   route: RouteProp<StackParamList, 'CustomizeExercise'>;
@@ -26,8 +26,8 @@ const CustomizeExercise: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'CustomizeExercise'>;
   loading: boolean;
   profile: Profile;
-}> = ({route, workout, setWorkoutAction, navigation, loading, profile}) => {
-  const {exercise} = route.params;
+}> = ({ route, workout, setWorkoutAction, navigation, loading, profile }) => {
+  const { exercise } = route.params;
   const current = workout.find(e => e.id === exercise.id);
   const [reps, setReps] = useState(current?.reps || 15);
   const [sets, setSets] = useState(current?.sets || 3);
@@ -36,7 +36,7 @@ const CustomizeExercise: React.FC<{
   const selectExercise = () => {
     if (workout.find(e => e.id === exercise.id)) {
       setWorkoutAction(workout.filter(e => e.id !== exercise.id));
-      Snackbar.show({text: 'Exercise removed'});
+      Snackbar.show({ text: 'Exercise removed' });
     } else {
       setWorkoutAction([
         ...workout,
@@ -46,13 +46,13 @@ const CustomizeExercise: React.FC<{
           sets: String(sets),
         },
       ]);
-      Snackbar.show({text: 'Exercise added'});
+      Snackbar.show({ text: 'Exercise added' });
     }
     navigation.goBack();
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{ flex: 1 }}>
       {!loading && exercise.video && exercise.video.src ? (
         <ExerciseVideo
           paused
@@ -68,7 +68,8 @@ const CustomizeExercise: React.FC<{
             marginBottom: 10,
             alignItems: 'center',
             justifyContent: 'center',
-          }}>
+          }}
+        >
           <Spinner />
         </View>
       )}
@@ -77,7 +78,8 @@ const CustomizeExercise: React.FC<{
           textAlign: 'center',
           margin: 10,
           marginBottom: 0,
-        }}>
+        }}
+      >
         {exercise.name}
       </Text>
 
@@ -87,14 +89,14 @@ const CustomizeExercise: React.FC<{
             ? 'Remove exercise'
             : 'Add exercise'
         }
-        style={{margin: 10}}
+        style={{ margin: 10 }}
         onPress={selectExercise}
       />
     </ScrollView>
   );
 };
 
-const mapStateToProps = ({exercises, profile}: RootState) => ({
+const mapStateToProps = ({ exercises, profile }: RootState) => ({
   workout: exercises.workout,
   loading: exercises.videoLoading,
   profile: profile.profile,

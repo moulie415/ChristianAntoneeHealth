@@ -1,11 +1,11 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import auth from '@react-native-firebase/auth';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as _ from 'lodash';
 import moment from 'moment';
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import {
   Platform,
   ScrollView,
@@ -14,16 +14,16 @@ import {
   View,
 } from 'react-native';
 import RNCalendarEvents from 'react-native-calendar-events';
-import {FlatList} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { FlatList } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {EQUIPMENT_LIST, PREP_TIME_SECS} from '../../../constants';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { EQUIPMENT_LIST, PREP_TIME_SECS } from '../../../constants';
 import colors from '../../../constants/colors';
-import {logError} from '../../../helpers/error';
-import {equipmentItemReadableString} from '../../../helpers/exercises';
-import {getGoalReadableString} from '../../../helpers/goals';
+import { logError } from '../../../helpers/error';
+import { equipmentItemReadableString } from '../../../helpers/exercises';
+import { getGoalReadableString } from '../../../helpers/goals';
 import {
   setCalendarId,
   syncPlanWithCalendar,
@@ -52,7 +52,7 @@ const SettingsItem: React.FC<{
   text: string;
   right?: ReactNode;
   disabled?: boolean;
-}> = ({onPress, text, right, disabled}) => {
+}> = ({ onPress, text, right, disabled }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -67,13 +67,15 @@ const SettingsItem: React.FC<{
         paddingHorizontal: 10,
         borderRadius: 12,
         overflow: 'hidden',
-      }}>
+      }}
+    >
       <Text
         style={{
           color: colors.appWhite,
           fontSize: 13,
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         {text}
       </Text>
       {right}
@@ -145,8 +147,8 @@ const Settings: React.FC<{
     goalReminders,
     workoutReminders,
     syncPlanWithCalendar: syncPlan,
-    ...(optedInToLeaderboards !== undefined ? {optedInToLeaderboards} : {}),
-    ...(equipmentList !== undefined ? {equipmentList} : {}),
+    ...(optedInToLeaderboards !== undefined ? { optedInToLeaderboards } : {}),
+    ...(equipmentList !== undefined ? { equipmentList } : {}),
   };
 
   const equal = _.isEqual(newProfile, profile);
@@ -164,18 +166,18 @@ const Settings: React.FC<{
               setModalVisible(true);
             } else {
               setCalendarIdAction(list[0].id);
-              syncPlanWithCalendarAction({plan, sync});
+              syncPlanWithCalendarAction({ plan, sync });
               setSyncPlanWithCalendar(sync);
             }
           }
         } else {
-          syncPlanWithCalendarAction({plan, sync});
+          syncPlanWithCalendarAction({ plan, sync });
           setSyncPlanWithCalendar(sync);
         }
       }
     } catch (e) {
       logError(e);
-      Snackbar.show({text: 'Error syncing calendar'});
+      Snackbar.show({ text: 'Error syncing calendar' });
     }
   };
 
@@ -187,19 +189,21 @@ const Settings: React.FC<{
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <SafeAreaView>
         <Header hasBack title="Settings" />
         <ScrollView
           keyboardShouldPersistTaps="always"
-          contentContainerStyle={{paddingBottom: 200}}>
+          contentContainerStyle={{ paddingBottom: 200 }}
+        >
           <Text
             style={{
               margin: 10,
               fontSize: 18,
               color: colors.appWhite,
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Workouts
           </Text>
           <SettingsItem
@@ -216,7 +220,8 @@ const Settings: React.FC<{
                   fontSize: 13,
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 {`${prepTime} secs`}
               </Text>
             }
@@ -251,15 +256,16 @@ const Settings: React.FC<{
                   fontSize: 13,
                   color: colors.appWhite,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 {getGoalReadableString(goal)}
               </Text>
             }
           />
-          <View style={{margin: 10}}>
+          <View style={{ margin: 10 }}>
             <MultiSelect
               items={EQUIPMENT_LIST.map(item => {
-                return {id: item, name: equipmentItemReadableString(item)};
+                return { id: item, name: equipmentItemReadableString(item) };
               })}
               selectedItems={equipmentList}
               onSelectedItemsChange={setEquipmentList}
@@ -273,7 +279,8 @@ const Settings: React.FC<{
               fontSize: 18,
               color: colors.appWhite,
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Notifications
           </Text>
 
@@ -297,7 +304,7 @@ const Settings: React.FC<{
                 {(showWorkoutDate || Platform.OS === 'ios') && (
                   <DateTimePicker
                     disabled={!workoutReminders}
-                    style={{width: 150}}
+                    style={{ width: 150 }}
                     testID="time"
                     value={new Date(workoutReminderTime || '')}
                     textColor={colors.appWhite}
@@ -316,8 +323,11 @@ const Settings: React.FC<{
                 {Platform.OS === 'android' && (
                   <TouchableOpacity
                     disabled={!workoutReminders}
-                    onPress={() => setShowWorkoutDate(true)}>
-                    <Text style={{color: colors.appWhite, fontWeight: 'bold'}}>
+                    onPress={() => setShowWorkoutDate(true)}
+                  >
+                    <Text
+                      style={{ color: colors.appWhite, fontWeight: 'bold' }}
+                    >
                       {moment(workoutReminderTime).format('HH:mm')}
                     </Text>
                   </TouchableOpacity>
@@ -332,7 +342,8 @@ const Settings: React.FC<{
               fontSize: 12,
               color: colors.appWhite,
               marginLeft: 10,
-            }}>
+            }}
+          >
             Please note the above reminders are for custom plans only
           </Text>
 
@@ -351,7 +362,8 @@ const Settings: React.FC<{
               color: colors.appWhite,
               fontWeight: 'bold',
               fontSize: 18,
-            }}>
+            }}
+          >
             Emails
           </Text>
 
@@ -367,24 +379,25 @@ const Settings: React.FC<{
               color: colors.appWhite,
               fontWeight: 'bold',
               fontSize: 18,
-            }}>
+            }}
+          >
             Account
           </Text>
 
           <SettingsItem
             onPress={() => {
               Clipboard.setString(profile.uid);
-              Snackbar.show({text: 'User ID copied to clipboard'});
+              Snackbar.show({ text: 'User ID copied to clipboard' });
             }}
             text="User ID"
             right={
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{color: colors.appWhite, fontSize: 12}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: colors.appWhite, fontSize: 12 }}>
                   {profile.uid}
                 </Text>
                 <FontAwesome6
                   name="copy"
-                  style={{marginLeft: 10}}
+                  style={{ marginLeft: 10 }}
                   color={colors.appBlue}
                   size={18}
                   iconStyle="solid"
@@ -398,14 +411,15 @@ const Settings: React.FC<{
             onPress={() => {}}
             text="Email"
             right={
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{color: colors.appWhite, fontSize: 12}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: colors.appWhite, fontSize: 12 }}>
                   <Text
                     style={{
                       fontSize: 13,
                       color: colors.appWhite,
                       fontWeight: 'bold',
-                    }}>
+                    }}
+                  >
                     {profile.email}
                   </Text>
                 </Text>
@@ -422,7 +436,8 @@ const Settings: React.FC<{
                   color: colors.appWhite,
                   fontWeight: 'bold',
                   fontSize: 18,
-                }}>
+                }}
+              >
                 Leaderboards
               </Text>
 
@@ -443,7 +458,7 @@ const Settings: React.FC<{
             <Button
               variant="secondary"
               text="Change password"
-              style={{margin: 10}}
+              style={{ margin: 10 }}
               onPress={() => navigation.navigate('ChangePassword')}
             />
           )}
@@ -451,7 +466,7 @@ const Settings: React.FC<{
           <Button
             variant="danger"
             text=" Delete my account"
-            style={{margin: 10}}
+            style={{ margin: 10 }}
             onPress={() => navigation.navigate('DeleteAccount')}
           />
         </ScrollView>
@@ -487,14 +502,16 @@ const Settings: React.FC<{
       />
       <Modal
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
+        onRequestClose={() => setModalVisible(false)}
+      >
         <View
           style={{
             backgroundColor: colors.appGrey,
             paddingBottom: 10,
             borderRadius: 10,
             height: 300,
-          }}>
+          }}
+        >
           <Text
             style={{
               textAlign: 'center',
@@ -502,7 +519,8 @@ const Settings: React.FC<{
               fontSize: 20,
               color: colors.appWhite,
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Select a calendar to sync with
           </Text>
 
@@ -510,7 +528,7 @@ const Settings: React.FC<{
             <FlatList
               data={calendarList}
               keyExtractor={item => item.id}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <ListItem
                   style={{
                     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -522,13 +540,13 @@ const Settings: React.FC<{
                   onPress={() => {
                     setModalVisible(false);
                     setCalendarIdAction(item.id);
-                    syncPlanWithCalendarAction({plan, sync: true});
+                    syncPlanWithCalendarAction({ plan, sync: true });
                   }}
                   accessoryLeft={
                     <FontAwesome6
                       name="calendar-days"
                       size={20}
-                      style={{margin: 5}}
+                      style={{ margin: 5 }}
                       color={colors.appBlue}
                     />
                   }
@@ -551,7 +569,7 @@ const Settings: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
   syncedPlanEvents: profile.syncedPlanEvents,
   plan: profile.plan,

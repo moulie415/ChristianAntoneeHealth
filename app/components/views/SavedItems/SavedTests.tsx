@@ -1,18 +1,18 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import React, {FunctionComponent, useMemo} from 'react';
-import {Dimensions, FlatList, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackParamList} from '../../../App';
+import React, { FunctionComponent, useMemo } from 'react';
+import { Dimensions, FlatList, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {useAppSelector} from '../../../hooks/redux';
-import {SavedTest} from '../../../types/SavedItem';
+import { useAppSelector } from '../../../hooks/redux';
+import { SavedTest } from '../../../types/SavedItem';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import SavedTestCard from '../../commons/SavedTestCard';
 import Text from '../../commons/Text';
 
-const {height} = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 
 type SavedItemsNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -22,9 +22,9 @@ type SavedItemsNavigationProp = NativeStackNavigationProp<
 const SavedTests: FunctionComponent<{
   navigation: SavedItemsNavigationProp;
   loadEarlier: (saved: SavedTest[]) => void;
-}> = ({navigation, loadEarlier}) => {
-  const {savedTests} = useAppSelector(state => state.tests);
-  const {loading} = useAppSelector(state => state.exercises);
+}> = ({ navigation, loadEarlier }) => {
+  const { savedTests } = useAppSelector(state => state.tests);
+  const { loading } = useAppSelector(state => state.exercises);
   const saved = useMemo(
     () =>
       Object.values(savedTests).sort(
@@ -37,11 +37,11 @@ const SavedTests: FunctionComponent<{
       <View>
         <FlatList
           ListEmptyComponent={
-            <SafeAreaView style={{height: height / 2}}>
+            <SafeAreaView style={{ height: height / 2 }}>
               {loading ? (
                 <AbsoluteSpinner
                   loading
-                  style={{backgroundColor: colors.appGrey}}
+                  style={{ backgroundColor: colors.appGrey }}
                 />
               ) : (
                 <>
@@ -50,7 +50,8 @@ const SavedTests: FunctionComponent<{
                       textAlign: 'center',
                       color: colors.appWhite,
                       fontSize: 16,
-                    }}>
+                    }}
+                  >
                     No saved tests found
                   </Text>
                   <FontAwesome6
@@ -58,7 +59,7 @@ const SavedTests: FunctionComponent<{
                     name="heart-pulse"
                     color={colors.appWhite}
                     size={30}
-                    style={{textAlign: 'center', marginTop: 15}}
+                    style={{ textAlign: 'center', marginTop: 15 }}
                   />
                 </>
               )}
@@ -67,7 +68,7 @@ const SavedTests: FunctionComponent<{
           data={saved}
           onEndReached={() => loadEarlier(saved)}
           keyExtractor={item => item.id || ''}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return <SavedTestCard item={item} navigation={navigation} />;
           }}
         />

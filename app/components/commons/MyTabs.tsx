@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import colors from '../../constants/colors';
 import Text from './Text';
 
@@ -7,7 +7,7 @@ const MyTabs: React.FC<{
   tabs: string[];
   setTabIndex: (index: number) => void;
   tabIndex: number;
-}> = ({tabs, setTabIndex, tabIndex}) => {
+}> = ({ tabs, setTabIndex, tabIndex }) => {
   return (
     <View
       style={{
@@ -16,13 +16,15 @@ const MyTabs: React.FC<{
         alignItems: 'center',
         marginVertical: 10,
         marginTop: 20,
-      }}>
+      }}
+    >
       {tabs.map((tab, index) => {
         return (
           <TouchableOpacity
             key={tab}
             style={{}}
-            onPress={() => setTabIndex(index)}>
+            onPress={() => setTabIndex(index)}
+          >
             <View
               style={{
                 height: 40,
@@ -39,13 +41,15 @@ const MyTabs: React.FC<{
                 borderRightWidth: index === 0 ? 1 : 2,
                 borderLeftWidth: index === tabs.length - 1 ? 1 : 2,
                 borderColor: colors.borderColor,
-              }}>
+              }}
+            >
               <Text
                 style={{
                   fontWeight: 'bold',
                   color: tabIndex === index ? colors.appWhite : colors.button,
                   textAlign: 'center',
-                }}>
+                }}
+              >
                 {tab}
               </Text>
             </View>

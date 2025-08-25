@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {Alert} from 'react-native';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackParamList} from '../../App';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackParamList } from '../../App';
 import colors from '../../constants/colors';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
@@ -12,11 +12,11 @@ import Input from '../commons/Input';
 
 const ForgotPassword: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'ForgotPassword'>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <Header hasBack title="Forgot password" />
       <Input
         style={{

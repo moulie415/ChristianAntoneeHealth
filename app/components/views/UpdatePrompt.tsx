@@ -1,19 +1,19 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {Linking, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {STORE_LINK} from '../../constants';
+import { Linking, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { STORE_LINK } from '../../constants';
 import colors from '../../constants/colors';
-import {useAppSelector} from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import Button from '../commons/Button';
 import ModalExitButton from '../commons/ModalExitButton';
 
 const UpdatePrompt = () => {
-  const {forceUpdate} = useAppSelector(state => state.settings);
+  const { forceUpdate } = useAppSelector(state => state.settings);
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.appGrey }}>
       {!forceUpdate && <ModalExitButton />}
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View
           style={{
             width: 100,
@@ -22,9 +22,10 @@ const UpdatePrompt = () => {
             borderRadius: 20,
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <FontAwesome6
-            style={{position: 'absolute'}}
+            style={{ position: 'absolute' }}
             name="rotate"
             color={colors.appBlue}
             iconStyle="solid"
@@ -38,7 +39,8 @@ const UpdatePrompt = () => {
             fontSize: 25,
             fontWeight: 'bold',
             color: colors.appWhite,
-          }}>
+          }}
+        >
           Update available
         </Text>
 
@@ -50,13 +52,14 @@ const UpdatePrompt = () => {
             textAlign: 'center',
             marginHorizontal: 20,
             width: 275,
-          }}>
+          }}
+        >
           Please update to the latest version of CA Health
         </Text>
       </View>
       <Button
         onPress={() => Linking.openURL(STORE_LINK)}
-        style={{margin: 20}}
+        style={{ margin: 20 }}
         text="Update Now"
       />
     </SafeAreaView>

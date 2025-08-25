@@ -1,4 +1,4 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import {
   ImageBackground,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 import AboutProps from '../../../types/views/About';
 import Header from '../../commons/Header';
@@ -19,7 +19,8 @@ const About: React.FC<AboutProps> = () => {
     <>
       <ImageBackground
         source={require('../../../images/christian-welcome.jpg')}
-        style={{height: 640}}>
+        style={{ height: 640 }}
+      >
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -38,7 +39,8 @@ const About: React.FC<AboutProps> = () => {
           borderTopRightRadius: 30,
           backgroundColor: colors.appGrey,
           marginTop: -300,
-        }}>
+        }}
+      >
         <ScrollView>
           <TouchableOpacity
             style={{
@@ -48,8 +50,9 @@ const About: React.FC<AboutProps> = () => {
               paddingHorizontal: 20,
               marginTop: 20,
             }}
-            onPress={() => Linking.openURL('https://christianantonee.com')}>
-            <View style={{width: 40}}>
+            onPress={() => Linking.openURL('https://christianantonee.com')}
+          >
+            <View style={{ width: 40 }}>
               <FontAwesome6
                 iconStyle="solid"
                 name="globe"
@@ -63,12 +66,13 @@ const About: React.FC<AboutProps> = () => {
                 fontWeight: 'bold',
                 fontSize: 16,
                 flex: 1,
-              }}>
+              }}
+            >
               Website
             </Text>
             <FontAwesome6
               iconStyle="solid"
-              style={{opacity: 0.8}}
+              style={{ opacity: 0.8 }}
               name="chevron-right"
               size={20}
               color="#fff"
@@ -83,8 +87,9 @@ const About: React.FC<AboutProps> = () => {
             }}
             onPress={() =>
               Linking.openURL('https://www.instagram.com/christian_antonee/')
-            }>
-            <View style={{width: 40}}>
+            }
+          >
+            <View style={{ width: 40 }}>
               <FontAwesome6
                 iconStyle="brand"
                 name="instagram"
@@ -98,12 +103,13 @@ const About: React.FC<AboutProps> = () => {
                 fontWeight: 'bold',
                 fontSize: 16,
                 flex: 1,
-              }}>
+              }}
+            >
               Instagram
             </Text>
             <FontAwesome6
               iconStyle="solid"
-              style={{opacity: 0.8}}
+              style={{ opacity: 0.8 }}
               name="chevron-right"
               size={20}
               color="#fff"
@@ -126,8 +132,9 @@ const About: React.FC<AboutProps> = () => {
               } catch (e) {
                 Linking.openURL('https://christianantonee.com/contact');
               }
-            }}>
-            <View style={{width: 40}}>
+            }}
+          >
+            <View style={{ width: 40 }}>
               <FontAwesome6 name="envelope" size={20} color="#fff" />
             </View>
             <Text
@@ -136,12 +143,13 @@ const About: React.FC<AboutProps> = () => {
                 fontWeight: 'bold',
                 fontSize: 16,
                 flex: 1,
-              }}>
+              }}
+            >
               Contact us
             </Text>
             <FontAwesome6
               iconStyle="solid"
-              style={{opacity: 0.8}}
+              style={{ opacity: 0.8 }}
               name="chevron-right"
               size={20}
               color="#fff"
@@ -155,7 +163,8 @@ const About: React.FC<AboutProps> = () => {
               marginHorizontal: 20,
               fontSize: 13,
               textAlign: 'justify',
-            }}>
+            }}
+          >
             My name is Christian Antonee and I work as a Personal Trainer and
             Osteopath in London, England. My brother-in-law Henry and I
             developed this app together to help people stay fit and strong in

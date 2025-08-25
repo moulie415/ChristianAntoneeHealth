@@ -1,13 +1,13 @@
 import auth from '@react-native-firebase/auth';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
-import {Alert, ImageBackground, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
-import {appleSignIn, facebookSignIn, googleSignIn} from '../../helpers/api';
-import {setLoggedIn} from '../../reducers/profile';
-import {Profile} from '../../types/Shared';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { Alert, ImageBackground, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../App';
+import { appleSignIn, facebookSignIn, googleSignIn } from '../../helpers/api';
+import { setLoggedIn } from '../../reducers/profile';
+import { Profile } from '../../types/Shared';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
@@ -17,7 +17,7 @@ const DeleteAccount: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'DeleteAccount'>;
   profile: Profile;
   setLoggedIn: (loggedIn: boolean) => void;
-}> = ({profile, setLoggedIn: setLoggedInAction}) => {
+}> = ({ profile, setLoggedIn: setLoggedInAction }) => {
   const [email, setEmail] = useState('');
   const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +37,8 @@ const DeleteAccount: React.FC<{
     <ImageBackground
       source={require('../../images/login.jpeg')}
       blurRadius={5}
-      style={{flex: 1}}>
+      style={{ flex: 1 }}
+    >
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
@@ -53,7 +54,8 @@ const DeleteAccount: React.FC<{
             margin: 10,
             fontWeight: 'bold',
             lineHeight: 20,
-          }}>
+          }}
+        >
           {`We're sad to see you go, please enter your ${
             isApple ? 'full name' : 'email'
           } ${
@@ -63,7 +65,8 @@ const DeleteAccount: React.FC<{
         <View
           style={{
             margin: 10,
-          }}>
+          }}
+        >
           <Input
             placeholder={isApple ? 'Full name' : 'Email'}
             onChangeText={e => (isApple ? setFullname(e) : setEmail(e))}
@@ -76,7 +79,7 @@ const DeleteAccount: React.FC<{
           />
         </View>
         {requiresPassword && (
-          <View style={{margin: 10}}>
+          <View style={{ margin: 10 }}>
             <Input
               placeholder="Password"
               onChangeText={p => setPassword(p)}
@@ -151,7 +154,7 @@ const DeleteAccount: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

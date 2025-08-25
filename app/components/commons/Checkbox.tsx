@@ -1,6 +1,6 @@
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {TouchableOpacity, ViewStyle} from 'react-native';
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6'
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import colors from '../../constants/colors';
 
 const Checkbox: React.FC<{
@@ -8,11 +8,11 @@ const Checkbox: React.FC<{
   onPress: () => void;
   containerStyle?: ViewStyle;
   iconStyle?: any;
-}> = ({checked, onPress, containerStyle, iconStyle}) => {
+}> = ({ checked, onPress, containerStyle, iconStyle }) => {
   return (
     <TouchableOpacity onPress={onPress} style={containerStyle}>
       <FontAwesome6
-        style={[{color: colors.appBlue, fontSize: 20}, iconStyle]}
+        style={[{ color: colors.appBlue, fontSize: 20 }, iconStyle]}
         name={checked ? 'square-check' : 'square'}
         iconStyle={checked ? 'solid' : 'regular'}
       />

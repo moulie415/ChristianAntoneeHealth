@@ -1,5 +1,5 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {Goal, Level} from '../types/Shared';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Goal, Level } from '../types/Shared';
 
 export interface SettingsWorkoutGoal {
   mins: number;
@@ -13,7 +13,7 @@ export interface SettingsWorkoutGoal {
 export interface SettingsState {
   ads: boolean;
   admins: string[];
-  workoutGoals: {[key in Goal]?: SettingsWorkoutGoal};
+  workoutGoals: { [key in Goal]?: SettingsWorkoutGoal };
   attachmentsDisabled: boolean;
   voiceNotesDisabled: boolean;
   chatMaxFileSizeMb: number;
@@ -74,13 +74,13 @@ export const settingSlice = createSlice({
   reducers: {
     setSettings: (
       state: SettingsState,
-      {payload}: PayloadAction<SettingsState>,
+      { payload }: PayloadAction<SettingsState>,
     ) => {
       return payload;
     },
   },
 });
 
-export const {setSettings} = settingSlice.actions;
+export const { setSettings } = settingSlice.actions;
 
 export default settingSlice.reducer;

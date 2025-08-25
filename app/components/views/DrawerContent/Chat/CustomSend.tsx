@@ -1,10 +1,10 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {IMessage, Send, SendProps} from 'react-native-gifted-chat';
-import {connect} from 'react-redux';
-import {RootState} from '../../../../App';
+import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { IMessage, Send, SendProps } from 'react-native-gifted-chat';
+import { connect } from 'react-redux';
+import { RootState } from '../../../../App';
 import colors from '../../../../constants/colors';
 
 interface Props extends SendProps<IMessage> {
@@ -20,14 +20,15 @@ const CustomSend: React.FC<Props> = props => {
     return (
       <Send
         {...props}
-        containerStyle={{marginHorizontal: 10, alignSelf: 'center'}}
-        textStyle={[props.textStyle, {color: colors.appBlue}]}
+        containerStyle={{ marginHorizontal: 10, alignSelf: 'center' }}
+        textStyle={[props.textStyle, { color: colors.appBlue }]}
       />
     );
   }
   return (
     <View
-      style={{flexDirection: 'row', justifyContent: 'center', height: '100%'}}>
+      style={{ flexDirection: 'row', justifyContent: 'center', height: '100%' }}
+    >
       {!props.attachmentsDisabled && (
         <TouchableOpacity
           onPress={props.onPressDocument}
@@ -35,7 +36,8 @@ const CustomSend: React.FC<Props> = props => {
             paddingVertical: 8,
             paddingTop: 10,
             paddingRight: 15,
-          }}>
+          }}
+        >
           <FontAwesome6
             name="file"
             iconStyle="solid"
@@ -52,7 +54,8 @@ const CustomSend: React.FC<Props> = props => {
             paddingVertical: 8,
             paddingRight: 13,
             alignSelf: 'center',
-          }}>
+          }}
+        >
           <FontAwesome6
             name="image"
             iconStyle="solid"
@@ -69,7 +72,8 @@ const CustomSend: React.FC<Props> = props => {
             paddingVertical: 8,
             paddingRight: 15,
             alignSelf: 'center',
-          }}>
+          }}
+        >
           <FontAwesome6
             iconStyle="solid"
             name="microphone"
@@ -82,7 +86,7 @@ const CustomSend: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = ({settings}: RootState) => ({
+const mapStateToProps = ({ settings }: RootState) => ({
   attachmentsDisabled: settings.attachmentsDisabled,
   voiceNotesDisabled: settings.voiceNotesDisabled,
 });

@@ -1,6 +1,6 @@
-import {CommonActions} from '@react-navigation/core';
-import {createNavigationContainerRef} from '@react-navigation/native';
-import {StackParamList} from './App';
+import { CommonActions } from '@react-navigation/core';
+import { createNavigationContainerRef } from '@react-navigation/native';
+import { StackParamList } from './App';
 
 export const navigationRef = createNavigationContainerRef<StackParamList>();
 
@@ -17,7 +17,7 @@ export function resetToTabs() {
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{name: 'Tabs'}],
+      routes: [{ name: 'Tabs' }],
     }),
   );
 }
@@ -29,7 +29,7 @@ export function resetToWelcome() {
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{name: 'Login'}],
+      routes: [{ name: 'Login' }],
     }),
   );
 }

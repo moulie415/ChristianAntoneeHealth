@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Animated, ImageBackground, ImageBackgroundProps} from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, ImageBackground, ImageBackgroundProps } from 'react-native';
 
 interface Props extends ImageBackgroundProps {
   delay?: number;
@@ -19,7 +19,7 @@ const ImageAnimated: React.FC<Props> = props => {
   };
 
   return (
-    <Animated.View style={{opacity: imageScaleValue.current}}>
+    <Animated.View style={{ opacity: imageScaleValue.current }}>
       <ImageBackground onLoadEnd={onImageLoadEnd} {...props} />
     </Animated.View>
   );

@@ -1,33 +1,33 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {Image, View} from 'react-native';
-import {StackParamList} from '../../App';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Image, View } from 'react-native';
+import { StackParamList } from '../../App';
 
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import StarRating from 'react-native-star-rating-widget';
 import colors from '../../constants/colors';
-import {rateApp} from '../../helpers';
+import { rateApp } from '../../helpers';
 import * as api from '../../helpers/api';
-import {logError} from '../../helpers/error';
-import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import {updateProfile} from '../../reducers/profile';
+import { logError } from '../../helpers/error';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { updateProfile } from '../../reducers/profile';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
 
 const Rating: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Rating'>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
   const [rating, setRating] = useState<number>(0);
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const {profile} = useAppSelector(state => state.profile);
+  const { profile } = useAppSelector(state => state.profile);
   const dispatch = useAppDispatch();
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <Image
         source={require('../../images/upper_body.jpeg')}
         style={{
@@ -40,8 +40,8 @@ const Rating: React.FC<{
         }}
       />
       <Header hasBack absolute />
-      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
               padding: 20,
@@ -50,11 +50,12 @@ const Rating: React.FC<{
               borderTopRightRadius: 30,
               backgroundColor: colors.appGrey,
               height: 450,
-            }}>
+            }}
+          >
             <StarRating
               color="#FFC24C"
               emptyColor="#6a4f1f"
-              style={{alignSelf: 'center'}}
+              style={{ alignSelf: 'center' }}
               starSize={50}
               rating={rating}
               onChange={setRating}
@@ -71,7 +72,7 @@ const Rating: React.FC<{
               }}
             />
             <Button
-              style={{margin: 10}}
+              style={{ margin: 10 }}
               onPress={async () => {
                 setLoading(true);
                 if (rating && rating > 3) {
@@ -79,7 +80,7 @@ const Rating: React.FC<{
                 } else {
                 }
                 navigation.goBack();
-                Snackbar.show({text: 'Thank you!'});
+                Snackbar.show({ text: 'Thank you!' });
                 try {
                   if (rating) {
                     await api.sendFeedback(profile.uid, feedback, rating);

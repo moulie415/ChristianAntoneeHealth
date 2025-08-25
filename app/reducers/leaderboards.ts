@@ -1,12 +1,12 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {LeaderboardItem, LeaderboardType} from '../types/Shared';
-import {setLoggedIn} from './profile';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { LeaderboardItem, LeaderboardType } from '../types/Shared';
+import { setLoggedIn } from './profile';
 
 export interface LeaderboardsState {
   loading: boolean;
   leaderboards: {
     [leaderboard: string]:
-      | {leaderboard: LeaderboardItem[]; endTime: number}
+      | { leaderboard: LeaderboardItem[]; endTime: number }
       | undefined;
   };
 }
@@ -36,18 +36,18 @@ const LeaderboardsSlice = createSlice({
     setLeaderboard: (
       state: LeaderboardsState,
       {
-        payload: {leaderboard, type, endTime},
+        payload: { leaderboard, type, endTime },
       }: PayloadAction<{
         type: LeaderboardType;
         leaderboard: LeaderboardItem[];
         endTime: number;
       }>,
     ) => {
-      state.leaderboards[type] = {leaderboard, endTime};
+      state.leaderboards[type] = { leaderboard, endTime };
     },
     setLeaderboardsLoading: (
       state: LeaderboardsState,
-      {payload}: PayloadAction<boolean>,
+      { payload }: PayloadAction<boolean>,
     ) => {
       state.loading = payload;
     },
@@ -65,7 +65,7 @@ const LeaderboardsSlice = createSlice({
   },
 });
 
-export const {setLeaderboardsLoading, setLeaderboard, getLeaderboard} =
+export const { setLeaderboardsLoading, setLeaderboard, getLeaderboard } =
   LeaderboardsSlice.actions;
 
 export default LeaderboardsSlice.reducer;

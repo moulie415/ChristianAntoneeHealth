@@ -1,10 +1,10 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useCallback} from 'react';
-import {FlatList} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useCallback } from 'react';
+import { FlatList } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import Education from '../../../types/Education';
-import {Profile} from '../../../types/Shared';
+import { Profile } from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import EducationCard from '../../commons/EducationCard';
 
@@ -12,14 +12,14 @@ const ArticleList: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Education'>;
   profile: Profile;
   filtered: Education[];
-}> = ({navigation, profile, filtered}) => {
+}> = ({ navigation, profile, filtered }) => {
   const onPress = useCallback(
     (item?: Education) => {
       if (item) {
         if (!profile.premium && item.premium) {
           navigation.navigate('Premium', {});
         } else {
-          navigation.navigate('EducationArticle', {education: item});
+          navigation.navigate('EducationArticle', { education: item });
         }
       }
     },
@@ -43,7 +43,7 @@ const ArticleList: React.FC<{
   return sorted.length ? (
     <FlatList
       data={filtered}
-      renderItem={({item}) => {
+      renderItem={({ item }) => {
         return <EducationCard item={item} onPress={onPress} />;
       }}
     />
@@ -52,7 +52,7 @@ const ArticleList: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import colors from '../../../constants/colors';
-import {Level} from '../../../types/Shared';
+import { Level } from '../../../types/Shared';
 import SelectableButton from '../../commons/SelectableButton';
 import Text from '../../commons/Text';
 
@@ -30,24 +30,26 @@ const experienceDetails: {
 const SelectExperience: React.FC<{
   experience: Level;
   setExperience: (experience: Level) => void;
-}> = ({experience, setExperience}) => {
+}> = ({ experience, setExperience }) => {
   return (
     <View
       style={{
         flex: 1,
         marginHorizontal: 20,
         marginTop: 20,
-      }}>
+      }}
+    >
       <Text
         style={{
           marginBottom: 20,
           fontSize: 24,
           color: colors.appWhite,
           fontWeight: 'bold',
-        }}>
+        }}
+      >
         What's your level of experience?
       </Text>
-      {experienceDetails.map(({text, secondaryText, experience: e}) => {
+      {experienceDetails.map(({ text, secondaryText, experience: e }) => {
         return (
           <SelectableButton
             key={e}
@@ -55,7 +57,7 @@ const SelectExperience: React.FC<{
             secondaryText={secondaryText}
             selected={e === experience}
             onPress={() => setExperience(e)}
-            style={{marginBottom: 15}}
+            style={{ marginBottom: 15 }}
           />
         );
       })}

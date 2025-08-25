@@ -1,14 +1,14 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import {View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {resetToTabs} from '../../../RootNavigation';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { resetToTabs } from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
-import {Profile} from '../../../types/Shared';
+import { useBackHandler } from '../../../hooks/UseBackHandler';
+import { Profile } from '../../../types/Shared';
 import BackButton from '../../commons/BackButton';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
@@ -18,8 +18,8 @@ const QuickRoutineSummary: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'QuickRoutineSummary'>;
   route: RouteProp<StackParamList, 'QuickRoutineSummary'>;
   profile: Profile;
-}> = ({route, navigation, profile}) => {
-  const {savedQuickRoutine, routine, saved} = route.params;
+}> = ({ route, navigation, profile }) => {
+  const { savedQuickRoutine, routine, saved } = route.params;
 
   const showBreakdown =
     savedQuickRoutine &&
@@ -27,17 +27,18 @@ const QuickRoutineSummary: React.FC<{
       !!savedQuickRoutine.calorieSamples?.length);
   useBackHandler(() => true);
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           zIndex: 1,
-        }}>
+        }}
+      >
         {saved ? (
-          <BackButton style={{margin: 20}} onPress={navigation.goBack} />
+          <BackButton style={{ margin: 20 }} onPress={navigation.goBack} />
         ) : (
-          <View style={{height: 40, marginVertical: 20}} />
+          <View style={{ height: 40, marginVertical: 20 }} />
         )}
         <Text
           numberOfLines={1}
@@ -47,7 +48,8 @@ const QuickRoutineSummary: React.FC<{
             fontWeight: 'bold',
             flex: 1,
             textAlign: saved ? 'left' : 'center',
-          }}>
+          }}
+        >
           Workout Summary
         </Text>
       </View>
@@ -58,7 +60,7 @@ const QuickRoutineSummary: React.FC<{
         averageHeartRate={savedQuickRoutine.averageHeartRate}
       />
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         {saved && (
           <Button
             variant={showBreakdown ? 'secondary' : 'primary'}
@@ -90,7 +92,7 @@ const QuickRoutineSummary: React.FC<{
         )}
         {showBreakdown && (
           <Button
-            style={{margin: 20, marginLeft: showBreakdown ? 10 : 20, flex: 1}}
+            style={{ margin: 20, marginLeft: showBreakdown ? 10 : 20, flex: 1 }}
             onPress={() =>
               navigation.navigate('WorkoutBreakdown', {
                 workout: savedQuickRoutine,
@@ -104,7 +106,7 @@ const QuickRoutineSummary: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

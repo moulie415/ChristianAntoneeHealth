@@ -1,18 +1,18 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {resetToTabs} from '../../../RootNavigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { resetToTabs } from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {keyHasValue} from '../../../helpers/table';
+import { keyHasValue } from '../../../helpers/table';
 import useThrottle from '../../../hooks/UseThrottle';
-import {saveTest} from '../../../reducers/tests';
-import {SavedTest} from '../../../types/SavedItem';
-import {Profile} from '../../../types/Shared';
+import { saveTest } from '../../../reducers/tests';
+import { SavedTest } from '../../../types/SavedItem';
+import { Profile } from '../../../types/Shared';
 import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PercentileTable from '../../commons/PercentileTable';
@@ -25,8 +25,8 @@ const TestResults: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'TestResults'>;
   route: RouteProp<StackParamList, 'TestResults'>;
   saveTest: (test: SavedTest) => void;
-}> = ({profile, route, saveTest: saveTestAction}) => {
-  const {testResult, seconds, test} = route.params;
+}> = ({ profile, route, saveTest: saveTestAction }) => {
+  const { testResult, seconds, test } = route.params;
 
   const gender = profile.gender;
 
@@ -50,7 +50,7 @@ const TestResults: React.FC<{
   }, 5000);
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <Header hasBack title="Compare result" />
 
       <View>
@@ -100,20 +100,20 @@ const TestResults: React.FC<{
             score={score}
           />
         )}
-        <View style={{marginHorizontal: 40, marginTop: 20}}>
+        <View style={{ marginHorizontal: 40, marginTop: 20 }}>
           {!!test.source && (
-            <Hyperlink linkDefault linkStyle={{color: colors.appBlue}}>
-              <Text style={{color: colors.appWhite, fontStyle: 'italic'}}>
+            <Hyperlink linkDefault linkStyle={{ color: colors.appBlue }}>
+              <Text style={{ color: colors.appWhite, fontStyle: 'italic' }}>
                 {test.source}
               </Text>
             </Hyperlink>
           )}
         </View>
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         {profile.premium && (
           <Button
-            style={{margin: 20}}
+            style={{ margin: 20 }}
             text="Save result"
             onPress={() => saveThrottled(true)}
           />

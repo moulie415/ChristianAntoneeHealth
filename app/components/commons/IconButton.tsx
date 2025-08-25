@@ -1,12 +1,12 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import colors from '../../constants/colors';
 
 interface Props extends TouchableOpacityProps {
   icon: string;
 }
-const IconButton: React.FC<Props> = ({icon, ...props}) => {
+const IconButton: React.FC<Props> = ({ icon, ...props }) => {
   return (
     <TouchableOpacity
       {...props}
@@ -20,7 +20,8 @@ const IconButton: React.FC<Props> = ({icon, ...props}) => {
           width: 40,
         },
         props.style,
-      ]}>
+      ]}
+    >
       <FontAwesome6
         iconStyle="solid"
         name={icon as any}

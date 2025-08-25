@@ -1,10 +1,10 @@
-import {PayloadAction} from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, debounce, put, select, throttle} from 'redux-saga/effects';
-import {RootState} from '../App';
+import { call, debounce, put, select, throttle } from 'redux-saga/effects';
+import { RootState } from '../App';
 import * as api from '../helpers/api';
-import {logError} from '../helpers/error';
-import {FAVOURITE_RECIPE} from '../reducers/profile';
+import { logError } from '../helpers/error';
+import { FAVOURITE_RECIPE } from '../reducers/profile';
 import {
   GET_RECIPES,
   GET_RECIPES_BY_ID,
@@ -12,15 +12,15 @@ import {
   setRecipes,
   setRecipesLoading,
 } from '../reducers/recipes';
-import {Recipe} from '../types/Shared';
+import { Recipe } from '../types/Shared';
 
 function* getRecipes() {
   try {
     yield put(setRecipesLoading(true));
-    const recipes: {[key: string]: Recipe} = yield call(api.getRecipes);
+    const recipes: { [key: string]: Recipe } = yield call(api.getRecipes);
     yield put(setRecipes(recipes));
   } catch (e) {
-    Snackbar.show({text: 'Error fetching recipes'});
+    Snackbar.show({ text: 'Error fetching recipes' });
   }
   yield put(setRecipesLoading(false));
 }
@@ -30,19 +30,19 @@ function* getRecipesById(action: PayloadAction<string[]>) {
     const ids = action.payload;
     if (ids.length) {
       yield put(setRecipesLoading(true));
-      const recipes: {[key: string]: Recipe} = yield call(
+      const recipes: { [key: string]: Recipe } = yield call(
         api.getRecipesById,
         ids,
       );
-      const current: {[key: string]: Recipe} = yield select(
+      const current: { [key: string]: Recipe } = yield select(
         (state: RootState) => state.recipes.recipes,
       );
-      yield put(setRecipes({...current, ...recipes}));
+      yield put(setRecipes({ ...current, ...recipes }));
     }
     yield put(setRecipesLoading(false));
   } catch (e) {
     yield put(setRecipesLoading(false));
-    Snackbar.show({text: 'Error fetching recipes'});
+    Snackbar.show({ text: 'Error fetching recipes' });
   }
 }
 
@@ -51,7 +51,7 @@ function* favouriteRecipe(action: PayloadAction<string>) {
     const favouriteRecipes: string[] = yield select(
       (state: RootState) => state.profile.profile.favouriteRecipes,
     );
-    const {profile} = yield select((state: RootState) => state.profile);
+    const { profile } = yield select((state: RootState) => state.profile);
     const updateObj = {
       ...profile,
       favouriteRecipes,
@@ -65,11 +65,11 @@ function* favouriteRecipe(action: PayloadAction<string>) {
 function* getSavedRecipes() {
   try {
     yield put(setRecipesLoading(true));
-    const {favouriteRecipes} = yield select(
+    const { favouriteRecipes } = yield select(
       (state: RootState) => state.profile.profile,
     );
     if (favouriteRecipes) {
-      const recipes: {[key: string]: Recipe} = yield select(
+      const recipes: { [key: string]: Recipe } = yield select(
         (state: RootState) => state.recipes.recipes,
       );
       const missingRecipes = favouriteRecipes.filter(
@@ -86,7 +86,7 @@ function* getSavedRecipes() {
   } catch (e) {
     logError(e);
     yield put(setRecipesLoading(false));
-    Snackbar.show({text: 'Error getting saved recipes'});
+    Snackbar.show({ text: 'Error getting saved recipes' });
   }
 }
 

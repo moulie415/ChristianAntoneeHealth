@@ -1,5 +1,5 @@
-import AppleHealthKit, {HealthKitPermissions} from 'react-native-health';
-import {Permission} from 'react-native-health-connect';
+import AppleHealthKit, { HealthKitPermissions } from 'react-native-health';
+import { Permission } from 'react-native-health-connect';
 const PERMS = AppleHealthKit.Constants.Permissions;
 
 export default {

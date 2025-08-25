@@ -1,12 +1,12 @@
 import moment from 'moment';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import {keyHasValue} from '../../helpers/table';
-import {Profile} from '../../types/Shared';
-import {Cell, Row, Table as TableType} from '../../types/Test';
+import { keyHasValue } from '../../helpers/table';
+import { Profile } from '../../types/Shared';
+import { Cell, Row, Table as TableType } from '../../types/Test';
 import Text from './Text';
 
 const CELL_WIDTH = 50;
@@ -49,7 +49,7 @@ export const TABLE_HEADER_KEYS: (keyof TableType)[] = [
   'excellent',
 ];
 
-const headerKeyMapping: {[key: string]: string} = {
+const headerKeyMapping: { [key: string]: string } = {
   veryPoor: 'Very Poor',
   poor: 'Poor',
   belowAverage: 'Below Average',
@@ -65,7 +65,7 @@ const Table: React.FC<{
   metric?: string;
   profile: Profile;
   score: number;
-}> = ({table, title, metric, profile, score}) => {
+}> = ({ table, title, metric, profile, score }) => {
   const colHasValue = (col?: Cell) => {
     return col && (col.lower || col.higher);
   };
@@ -121,12 +121,13 @@ const Table: React.FC<{
           fontWeight: 'bold',
           fontSize: 15,
           marginBottom: 10,
-        }}>
+        }}
+      >
         {title}
       </Text>
 
-      <View style={{alignItems: 'center'}}>
-        <View style={{flexDirection: 'row'}}>
+      <View style={{ alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row' }}>
           <Text
             style={[
               styles.cell,
@@ -134,7 +135,8 @@ const Table: React.FC<{
               {
                 width: CELL_WIDTH + 20,
               },
-            ]}>
+            ]}
+          >
             Age
           </Text>
           {ageHeaders.map(header => {
@@ -147,13 +149,14 @@ const Table: React.FC<{
         </View>
         {validHeaderKeys.slice(1).map(key => {
           return (
-            <View key={key} style={{flexDirection: 'row'}}>
+            <View key={key} style={{ flexDirection: 'row' }}>
               <Text
                 style={[
                   styles.cell,
                   styles.cellHeader,
-                  {width: CELL_WIDTH + 20},
-                ]}>
+                  { width: CELL_WIDTH + 20 },
+                ]}
+              >
                 {headerKeyMapping[key]}
               </Text>
               {cols.map(col => {
@@ -169,7 +172,8 @@ const Table: React.FC<{
                               backgroundColor: colors.appBlue,
                             }
                           : {},
-                      ]}>
+                      ]}
+                    >
                       {getCellValue(key, table[key]?.[col])}
                     </Text>
                   );
@@ -184,7 +188,7 @@ const Table: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

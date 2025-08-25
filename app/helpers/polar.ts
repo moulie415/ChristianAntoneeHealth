@@ -1,13 +1,13 @@
 import moment from 'moment';
 import Snackbar from 'react-native-snackbar';
-import {Sample} from '../types/Shared';
-import {logError} from './error';
+import { Sample } from '../types/Shared';
+import { logError } from './error';
 
 interface PolarHeartRateResponse {
   heart_rates: {
     polar_user: string;
     date: string;
-    heart_rate_samples: {heart_rate: number; sample_time: string}[];
+    heart_rate_samples: { heart_rate: number; sample_time: string }[];
   }[];
 }
 
@@ -18,11 +18,11 @@ export const registerUser = async (uid: string, token: string) => {
       body: JSON.stringify({
         'member-id': uid,
       }),
-      headers: {Accept: 'application/json', Authorization: `Bearer ${token}`},
+      headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
     });
   } catch (e) {
     logError(e);
-    Snackbar.show({text: 'Error registering with Polar'});
+    Snackbar.show({ text: 'Error registering with Polar' });
   }
 };
 
@@ -37,7 +37,10 @@ export const getHeartRateSamples = async (
         from,
       ).format('YYYY-MM-DD')}`,
       {
-        headers: {Accept: 'application/json', Authorization: `Bearer ${token}`},
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         // params: {
         //   date: moment(from).format('YYYY-MM-DD'),
         // },
@@ -64,7 +67,7 @@ export const getHeartRateSamples = async (
       return [];
     }
     logError(e);
-    Snackbar.show({text: 'Error fetching Polar heart rate samples'});
+    Snackbar.show({ text: 'Error fetching Polar heart rate samples' });
     return [];
   }
 };

@@ -1,7 +1,7 @@
-import {PayloadAction} from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import * as _ from 'lodash';
 import moment from 'moment';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {
   all,
@@ -12,11 +12,11 @@ import {
   select,
   throttle,
 } from 'redux-saga/effects';
-import {RootState} from '../App';
-import {navigate, resetToTabs} from '../RootNavigation';
+import { RootState } from '../App';
+import { navigate, resetToTabs } from '../RootNavigation';
 import * as api from '../helpers/api';
-import {logError} from '../helpers/error';
-import {sendGoalTargetNotification} from '../helpers/goals';
+import { logError } from '../helpers/error';
+import { sendGoalTargetNotification } from '../helpers/goals';
 import {
   GET_EXERCISES,
   GET_EXERCISES_BY_ID,
@@ -28,13 +28,13 @@ import {
   setSavedWorkouts,
   setWorkout,
 } from '../reducers/exercises';
-import {ProfileState, updateProfile} from '../reducers/profile';
-import {QuickRoutinesState} from '../reducers/quickRoutines';
+import { ProfileState, updateProfile } from '../reducers/profile';
+import { QuickRoutinesState } from '../reducers/quickRoutines';
 import Exercise from '../types/Exercise';
-import {SavedWorkout} from '../types/SavedItem';
-import {CoolDown, Goal, Level, Profile, WarmUp} from '../types/Shared';
-import {checkStepsCalories} from './leaderboards';
-import {feedbackTrigger} from './profile';
+import { SavedWorkout } from '../types/SavedItem';
+import { CoolDown, Goal, Level, Profile, WarmUp } from '../types/Shared';
+import { checkStepsCalories } from './leaderboards';
+import { feedbackTrigger } from './profile';
 
 export function* getExercises(
   action: PayloadAction<{
@@ -44,9 +44,9 @@ export function* getExercises(
     coolDown: CoolDown[];
   }>,
 ) {
-  const {level, goal, warmUp, coolDown} = action.payload;
+  const { level, goal, warmUp, coolDown } = action.payload;
   yield put(setLoading(true));
-  const exercises: {[key: string]: Exercise} = yield call(
+  const exercises: { [key: string]: Exercise } = yield call(
     api.getExercises,
     level,
     goal,
@@ -59,17 +59,17 @@ export function* getExercises(
 
 export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
   try {
-    const {profile, weeklyItems}: ProfileState = yield select(
+    const { profile, weeklyItems }: ProfileState = yield select(
       (state: RootState) => state.profile,
     );
 
     yield call(api.saveWorkout, action.payload, profile.uid);
     if (action.payload.saved) {
-      yield call(Snackbar.show, {text: 'Workout saved'});
+      yield call(Snackbar.show, { text: 'Workout saved' });
     }
 
     if (profile.goal) {
-      const {quickRoutines}: QuickRoutinesState = yield select(
+      const { quickRoutines }: QuickRoutinesState = yield select(
         (state: RootState) => state.quickRoutines,
       );
 
@@ -86,13 +86,13 @@ export function* saveWorkout(action: PayloadAction<SavedWorkout>) {
     yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
-    yield call(Snackbar.show, {text: 'Error saving workout'});
+    yield call(Snackbar.show, { text: 'Error saving workout' });
   }
 }
 
 export function* incrementWorkoutStreak() {
   try {
-    const {dailyWorkoutStreak, lastWorkoutDate}: Profile = yield select(
+    const { dailyWorkoutStreak, lastWorkoutDate }: Profile = yield select(
       (state: RootState) => state.profile.profile,
     );
     if (!lastWorkoutDate || !moment(lastWorkoutDate).isSame(moment(), 'day')) {
@@ -111,7 +111,7 @@ export function* incrementWorkoutStreak() {
 
 export function* checkWorkoutStreak() {
   try {
-    const {dailyWorkoutStreak, lastWorkoutDate}: Profile = yield select(
+    const { dailyWorkoutStreak, lastWorkoutDate }: Profile = yield select(
       (state: RootState) => state.profile.profile,
     );
     if (
@@ -131,20 +131,20 @@ export function* checkWorkoutStreak() {
 }
 
 function* getSavedWorkouts(action: PayloadAction<Date | undefined>) {
-  const {profile}: ProfileState = yield select(
+  const { profile }: ProfileState = yield select(
     (state: RootState) => state.profile,
   );
   if (profile.premium) {
     try {
       yield put(setLoading(true));
-      const {uid} = yield select((state: RootState) => state.profile.profile);
-      const workouts: {[key: string]: SavedWorkout} = yield call(
+      const { uid } = yield select((state: RootState) => state.profile.profile);
+      const workouts: { [key: string]: SavedWorkout } = yield call(
         api.getSavedWorkouts,
         uid,
         action.payload,
       );
       yield put(setSavedWorkouts(workouts));
-      const exercises: {[key: string]: Exercise} = yield select(
+      const exercises: { [key: string]: Exercise } = yield select(
         (state: RootState) => state.exercises.exercises,
       );
       const missingExercises = Object.values(workouts).reduce(
@@ -166,7 +166,7 @@ function* getSavedWorkouts(action: PayloadAction<Date | undefined>) {
     } catch (e) {
       logError(e);
       yield put(setLoading(false));
-      Snackbar.show({text: 'Error getting saved workouts'});
+      Snackbar.show({ text: 'Error getting saved workouts' });
     }
   }
 }
@@ -177,12 +177,12 @@ export function* getExercisesById(action: PayloadAction<string[]>) {
     yield put(setLoading(true));
     if (ids.length) {
       if (ids.length > 10) {
-        const exercises: {[key: string]: Exercise} = yield call(
+        const exercises: { [key: string]: Exercise } = yield call(
           api.getAllExercises,
         );
         yield put(setExercises(exercises));
       } else {
-        const exercises: {[key: string]: Exercise} = yield call(
+        const exercises: { [key: string]: Exercise } = yield call(
           api.getExercisesById,
           ids,
         );
@@ -193,20 +193,20 @@ export function* getExercisesById(action: PayloadAction<string[]>) {
   } catch (e) {
     yield put(setLoading(false));
     logError(e);
-    Snackbar.show({text: 'Error fetching exercises'});
+    Snackbar.show({ text: 'Error fetching exercises' });
   }
 }
 
 export function* getAllExercises() {
   try {
     yield put(setLoading(true));
-    const exercises: {[key: string]: Exercise} = yield call(
+    const exercises: { [key: string]: Exercise } = yield call(
       api.getAllExercises,
     );
     yield put(setExercises(exercises));
   } catch (e) {
     logError(e);
-    Snackbar.show({text: 'Error fetching exercises'});
+    Snackbar.show({ text: 'Error fetching exercises' });
   }
   yield put(setLoading(false));
 }
@@ -215,10 +215,10 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
   try {
     yield put(setLoading(true));
     const ids = action.payload;
-    const exercises: {[key: string]: Exercise} = yield select(
+    const exercises: { [key: string]: Exercise } = yield select(
       (state: RootState) => state.exercises.exercises,
     );
-    const {premium, admin} = yield select(
+    const { premium, admin } = yield select(
       (state: RootState) => state.profile.profile,
     );
     const missing = ids.filter(id => {
@@ -230,7 +230,7 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
         payload: missing,
       });
     }
-    const updatedExercises: {[key: string]: Exercise} = yield select(
+    const updatedExercises: { [key: string]: Exercise } = yield select(
       (state: RootState) => state.exercises.exercises,
     );
     const filtered = Object.values(updatedExercises).filter(exercise =>
@@ -244,8 +244,8 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
         'Sorry',
         'That workout link includes premium exercises, would you like to subscribe to premium?',
         [
-          {text: 'No thanks'},
-          {text: 'Yes', onPress: () => navigate('Premium', {})},
+          { text: 'No thanks' },
+          { text: 'Yes', onPress: () => navigate('Premium', {}) },
         ],
       );
     } else {
@@ -256,7 +256,7 @@ export function* viewWorkoutWatcher(action: PayloadAction<string[]>) {
     }
   } catch (e) {
     resetToTabs();
-    Snackbar.show({text: 'Error fetching exercises'});
+    Snackbar.show({ text: 'Error fetching exercises' });
     yield put(setLoading(false));
     logError(e);
   }

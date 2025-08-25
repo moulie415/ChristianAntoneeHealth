@@ -1,24 +1,24 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
 import React from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
 import colors from '../../constants/colors';
 import Education from '../../types/Education';
-import {Profile} from '../../types/Shared';
+import { Profile } from '../../types/Shared';
 import ImageAnimated from './ImageAnimated';
 import Text from './Text';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const EducationCard: React.FC<{
   item: Education;
   onPress: (item?: Education) => void;
   profile: Profile;
   plan?: boolean;
-}> = ({item, onPress, profile, plan}) => {
+}> = ({ item, onPress, profile, plan }) => {
   return (
     <TouchableOpacity
       style={{
@@ -28,13 +28,14 @@ const EducationCard: React.FC<{
         borderRadius: 10,
         overflow: 'hidden',
       }}
-      onPress={() => onPress(item)}>
+      onPress={() => onPress(item)}
+    >
       <ImageAnimated
         style={{
           height: 125,
           width: '100%',
         }}
-        source={{uri: item.image.src}}
+        source={{ uri: item.image.src }}
       />
       {plan ? (
         <LinearGradient
@@ -46,29 +47,32 @@ const EducationCard: React.FC<{
           style={{
             height: 100,
             justifyContent: 'flex-end',
-            padding: 10,
             borderRadius: 10,
             position: 'absolute',
             bottom: 0,
             right: 0,
             left: 0,
             marginBottom: -1,
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          }}
+        >
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="book-open"
               color={colors.appWhite}
               size={30}
-              style={{marginHorizontal: 10}}
+              style={{ marginHorizontal: 10 }}
             />
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Text
                 style={{
                   color: colors.appWhite,
                   fontSize: 25,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 Education
               </Text>
               <Text
@@ -77,7 +81,8 @@ const EducationCard: React.FC<{
                   fontSize: 16,
                   marginTop: 5,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 {item.title}
               </Text>
             </View>
@@ -97,25 +102,29 @@ const EducationCard: React.FC<{
             right: 0,
             bottom: 0,
             left: 0,
-            padding: 10,
             height: 100,
             marginBottom: -1,
-          }}>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 10,
-            }}>
-            {moment(item.createdate).format('DD MMMM YYYY')}
-          </Text>
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontSize: 16,
-              fontWeight: 'bold',
-            }}>
-            {item.title}
-          </Text>
+          }}
+        >
+          <View style={{ padding: 10 }}>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: 10,
+              }}
+            >
+              {moment(item.createdate).format('DD MMMM YYYY')}
+            </Text>
+            <Text
+              style={{
+                color: colors.appWhite,
+                fontSize: 16,
+                fontWeight: 'bold',
+              }}
+            >
+              {item.title}
+            </Text>
+          </View>
         </LinearGradient>
       )}
 
@@ -125,7 +134,8 @@ const EducationCard: React.FC<{
             position: 'absolute',
             top: 15,
             right: 15,
-          }}>
+          }}
+        >
           <FontAwesome6
             iconStyle="solid"
             name="lock"
@@ -138,7 +148,7 @@ const EducationCard: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

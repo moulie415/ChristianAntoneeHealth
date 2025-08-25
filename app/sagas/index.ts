@@ -1,4 +1,4 @@
-import {all, fork} from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 import appStateSaga from './appState';
 import educationSaga from './education';
 import exercisesSaga from './exercises';

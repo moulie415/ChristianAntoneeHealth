@@ -2,10 +2,10 @@ import {
   DrawerContentComponentProps,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {Dimensions} from 'react-native';
-import {StackParamList} from './App';
+import { Dimensions } from 'react-native';
+import { StackParamList } from './App';
 import EducationTabs from './EducationTabs';
 import SavedItemsTabs from './SavedItemsTabs';
 import Tabs from './Tabs';
@@ -84,7 +84,8 @@ export const DrawerNavigator: React.FC = () => {
         },
         swipeEnabled: false,
       }}
-      drawerContent={DContent}>
+      drawerContent={DContent}
+    >
       <Drawer.Screen name="Stack" component={StackComponent} />
     </Drawer.Navigator>
   );
@@ -96,9 +97,10 @@ export const StackComponent: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName="Loading"
-      screenOptions={({route, navigation}) => ({
+      screenOptions={({ route, navigation }) => ({
         headerShown: false,
-      })}>
+      })}
+    >
       <Stack.Group>
         <Stack.Screen name="Loading" component={Loading} />
         <Stack.Screen name="Login" component={Login} />
@@ -116,7 +118,7 @@ export const StackComponent: React.FC = () => {
         <Stack.Screen
           name="ExerciseList"
           component={ExerciseList}
-          options={({navigation}) => ({
+          options={({ navigation }) => ({
             headerTitle: 'Workout',
             headerRight: () => (
               <ExerciseListHeaderRight navigation={navigation} />
@@ -126,7 +128,7 @@ export const StackComponent: React.FC = () => {
         <Stack.Screen
           name="ReviewExercises"
           component={ReviewExercises}
-          options={({navigation}) => ({
+          options={({ navigation }) => ({
             headerTitle: 'Workout',
             headerRight: () => <HeaderShareButton />,
           })}
@@ -177,7 +179,7 @@ export const StackComponent: React.FC = () => {
         <Stack.Screen name="WorkoutBreakdown" component={WorkoutBreakdown} />
         <Stack.Screen name="Offline" component={Offline} />
       </Stack.Group>
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="UpdatePrompt" component={UpdatePrompt} />
         <Stack.Screen name="TargetModal" component={TargetModal} />
       </Stack.Group>

@@ -1,21 +1,21 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import {RouteProp, useIsFocused} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { RouteProp, useIsFocused } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as _ from 'lodash';
-import React, {useEffect, useMemo, useState} from 'react';
-import {Image, ImageBackground, StyleSheet, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Video, {ResizeMode} from 'react-native-video';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ImageBackground, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Video, { ResizeMode } from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
-import {StackParamList} from '../../../App';
+import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {capitalizeFirstLetter, getVideoHeight} from '../../../helpers';
-import {startWatchWorkout} from '../../../helpers/biometrics';
-import {getWorkoutDurationRounded} from '../../../helpers/getWorkoutDurationRounded';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {updateProfile} from '../../../reducers/profile';
-import {Equipment} from '../../../types/Shared';
+import { capitalizeFirstLetter, getVideoHeight } from '../../../helpers';
+import { startWatchWorkout } from '../../../helpers/biometrics';
+import { getWorkoutDurationRounded } from '../../../helpers/getWorkoutDurationRounded';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { updateProfile } from '../../../reducers/profile';
+import { Equipment } from '../../../types/Shared';
 import Button from '../../commons/Button';
 import EquipmentList from '../../commons/EquipmentList';
 import Header from '../../commons/Header';
@@ -25,8 +25,8 @@ import Toggle from '../../commons/Toggle';
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
   route: RouteProp<StackParamList, 'PreQuickRoutine'>;
-}> = ({route, navigation}) => {
-  const {prepTime, workoutMusic} = useAppSelector(
+}> = ({ route, navigation }) => {
+  const { prepTime, workoutMusic } = useAppSelector(
     state => state.profile.profile,
   );
 
@@ -51,7 +51,7 @@ const PreQuickRoutine: React.FC<{
     return exerciseIds.map(id => {
       return typeof id === 'string'
         ? exercisesObj[id]
-        : {...exercisesObj[id.id], ...id};
+        : { ...exercisesObj[id.id], ...id };
     });
   }, [exercisesObj, exerciseIds]);
 
@@ -73,7 +73,7 @@ const PreQuickRoutine: React.FC<{
 
   useEffect(() => {
     if (wMusic !== workoutMusic) {
-      dispatch(updateProfile({workoutMusic: wMusic, disableSnackbar: true}));
+      dispatch(updateProfile({ workoutMusic: wMusic, disableSnackbar: true }));
     }
   }, [wMusic, workoutMusic, dispatch]);
 
@@ -90,8 +90,8 @@ const PreQuickRoutine: React.FC<{
       {preview?.src ? (
         <>
           <Video
-            source={{uri: convertToProxyURL(preview.src)}}
-            style={{height: getVideoHeight(), width: '100%'}}
+            source={{ uri: convertToProxyURL(preview.src) }}
+            style={{ height: getVideoHeight(), width: '100%' }}
             resizeMode={ResizeMode.COVER}
             repeat
             disableFocus
@@ -101,8 +101,9 @@ const PreQuickRoutine: React.FC<{
         </>
       ) : (
         <ImageBackground
-          source={{uri: thumbnail?.src}}
-          style={{height: getVideoHeight()}}>
+          source={{ uri: thumbnail?.src }}
+          style={{ height: getVideoHeight() }}
+        >
           <View
             style={{
               ...StyleSheet.absoluteFillObject,
@@ -123,7 +124,8 @@ const PreQuickRoutine: React.FC<{
           borderTopRightRadius: 30,
           marginTop: -30,
           backgroundColor: colors.appGrey,
-        }}>
+        }}
+      >
         <Text
           style={{
             fontWeight: 'bold',
@@ -132,7 +134,8 @@ const PreQuickRoutine: React.FC<{
             marginTop: 30,
             marginBottom: 10,
             fontSize: 20,
-          }}>
+          }}
+        >
           {name}
         </Text>
         {!!duration && (
@@ -141,8 +144,9 @@ const PreQuickRoutine: React.FC<{
               flexDirection: 'row',
               alignItems: 'center',
               marginVertical: 10,
-            }}>
-            <View style={{width: 55, alignItems: 'center'}}>
+            }}
+          >
+            <View style={{ width: 55, alignItems: 'center' }}>
               <FontAwesome6
                 iconStyle="solid"
                 name="stopwatch"
@@ -154,7 +158,8 @@ const PreQuickRoutine: React.FC<{
               />
             </View>
             <Text
-              style={{color: colors.appWhite}}>{`Under ${duration} mins`}</Text>
+              style={{ color: colors.appWhite }}
+            >{`Under ${duration} mins`}</Text>
           </View>
         )}
         <View
@@ -162,8 +167,9 @@ const PreQuickRoutine: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
+          }}
+        >
+          <View style={{ width: 55, alignItems: 'center' }}>
             <FontAwesome6
               iconStyle="solid"
               name="person-running"
@@ -174,7 +180,7 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite, flex: 1}}>{`${
+          <Text style={{ color: colors.appWhite, flex: 1 }}>{`${
             exerciseIds.length
           } ${exerciseIds.length > 1 ? 'exercises' : 'exercise'} `}</Text>
         </View>
@@ -183,8 +189,9 @@ const PreQuickRoutine: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
+          }}
+        >
+          <View style={{ width: 55, alignItems: 'center' }}>
             <FontAwesome6
               iconStyle="solid"
               name="gauge-high"
@@ -195,7 +202,7 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite, flex: 1}}>
+          <Text style={{ color: colors.appWhite, flex: 1 }}>
             {capitalizeFirstLetter(level)}
           </Text>
         </View>
@@ -204,8 +211,9 @@ const PreQuickRoutine: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
+          }}
+        >
+          <View style={{ width: 55, alignItems: 'center' }}>
             <FontAwesome6
               iconStyle="solid"
               name="dumbbell"
@@ -216,7 +224,7 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite, flex: 1}}>
+          <Text style={{ color: colors.appWhite, flex: 1 }}>
             {equipmentList && equipmentList.length
               ? `${capitalizeFirstLetter(equipment)} equipment `
               : 'No equipment needed'}
@@ -228,8 +236,9 @@ const PreQuickRoutine: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
+          }}
+        >
+          <View style={{ width: 55, alignItems: 'center' }}>
             <FontAwesome6
               iconStyle="solid"
               name="child"
@@ -241,9 +250,8 @@ const PreQuickRoutine: React.FC<{
             />
           </View>
           <Text
-            style={{color: colors.appWhite, flex: 1}}>{`${capitalizeFirstLetter(
-            area,
-          )} body`}</Text>
+            style={{ color: colors.appWhite, flex: 1 }}
+          >{`${capitalizeFirstLetter(area)} body`}</Text>
         </View>
         {/* <ConnectedApps /> */}
         <View
@@ -251,8 +259,9 @@ const PreQuickRoutine: React.FC<{
             flexDirection: 'row',
             alignItems: 'center',
             marginVertical: 10,
-          }}>
-          <View style={{width: 55, alignItems: 'center'}}>
+          }}
+        >
+          <View style={{ width: 55, alignItems: 'center' }}>
             <FontAwesome6
               iconStyle="solid"
               name="music"
@@ -263,13 +272,13 @@ const PreQuickRoutine: React.FC<{
               }}
             />
           </View>
-          <Text style={{color: colors.appWhite, flex: 1}}>
+          <Text style={{ color: colors.appWhite, flex: 1 }}>
             {disableWorkoutMusic
               ? 'Disabled for this workout'
               : 'Workout music'}
           </Text>
           <Toggle
-            style={{marginRight: 20}}
+            style={{ marginRight: 20 }}
             value={disableWorkoutMusic ? false : wMusic}
             disabled={disableWorkoutMusic}
             onValueChange={setWMusic}
@@ -277,7 +286,7 @@ const PreQuickRoutine: React.FC<{
         </View>
 
         <Button
-          style={{margin: 15}}
+          style={{ margin: 15 }}
           text="Let's go!"
           onPress={() => {
             navigation.navigate('QuickRoutine', {

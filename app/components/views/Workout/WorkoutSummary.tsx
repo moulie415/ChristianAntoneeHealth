@@ -1,15 +1,15 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import {View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {resetToTabs} from '../../../RootNavigation';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { resetToTabs } from '../../../RootNavigation';
 import colors from '../../../constants/colors';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
+import { useBackHandler } from '../../../hooks/UseBackHandler';
 import Exercise from '../../../types/Exercise';
-import {Profile} from '../../../types/Shared';
+import { Profile } from '../../../types/Shared';
 import BackButton from '../../commons/BackButton';
 import Button from '../../commons/Button';
 import Text from '../../commons/Text';
@@ -20,25 +20,26 @@ const WorkoutSummary: React.FC<{
   route: RouteProp<StackParamList, 'WorkoutSummary'>;
   profile: Profile;
   workout: Exercise[];
-}> = ({route, navigation}) => {
-  const {savedWorkout, saved} = route.params;
+}> = ({ route, navigation }) => {
+  const { savedWorkout, saved } = route.params;
   useBackHandler(() => true);
   const showBreakdown =
     savedWorkout &&
     (!!savedWorkout.heartRateSamples?.length ||
       !!savedWorkout.calorieSamples?.length);
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.appGrey }}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           zIndex: 1,
-        }}>
+        }}
+      >
         {saved ? (
-          <BackButton style={{margin: 20}} onPress={navigation.goBack} />
+          <BackButton style={{ margin: 20 }} onPress={navigation.goBack} />
         ) : (
-          <View style={{height: 40, marginVertical: 20}} />
+          <View style={{ height: 40, marginVertical: 20 }} />
         )}
         <Text
           numberOfLines={1}
@@ -48,7 +49,8 @@ const WorkoutSummary: React.FC<{
             fontWeight: 'bold',
             flex: 1,
             textAlign: saved ? 'left' : 'center',
-          }}>
+          }}
+        >
           Workout Summary
         </Text>
       </View>
@@ -59,7 +61,7 @@ const WorkoutSummary: React.FC<{
         averageHeartRate={savedWorkout.averageHeartRate}
       />
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         {savedWorkout.planWorkout && saved && (
           <Button
             variant={showBreakdown ? 'secondary' : 'primary'}
@@ -94,7 +96,7 @@ const WorkoutSummary: React.FC<{
         )}
         {showBreakdown && (
           <Button
-            style={{margin: 20, marginLeft: showBreakdown ? 10 : 20, flex: 1}}
+            style={{ margin: 20, marginLeft: showBreakdown ? 10 : 20, flex: 1 }}
             onPress={() =>
               navigation.navigate('WorkoutBreakdown', {
                 workout: savedWorkout,
@@ -108,7 +110,7 @@ const WorkoutSummary: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile, exercises}: RootState) => ({
+const mapStateToProps = ({ profile, exercises }: RootState) => ({
   profile: profile.profile,
   workout: exercises.workout,
 });

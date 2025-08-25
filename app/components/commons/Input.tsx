@@ -1,5 +1,5 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {ReactNode, useState} from 'react';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { ReactNode, useState } from 'react';
 import {
   TextInput,
   TextInputProps,
@@ -58,7 +58,8 @@ const Input: React.FC<Props> = props => {
             alignItems: 'flex-end',
             left: 0,
             width: 30,
-          }}>
+          }}
+        >
           <FontAwesome6
             name={props.icon as any}
             color={'#CECECE'}
@@ -76,7 +77,8 @@ const Input: React.FC<Props> = props => {
             alignItems: 'flex-end',
             left: 0,
             width: 30,
-          }}>
+          }}
+        >
           <TouchableOpacity
             hitSlop={{
               top: 10,
@@ -84,7 +86,8 @@ const Input: React.FC<Props> = props => {
               right: 10,
               left: 10,
             }}
-            onPress={() => setSecure(!secure)}>
+            onPress={() => setSecure(!secure)}
+          >
             <FontAwesome6
               iconStyle="solid"
               name="lock"
@@ -103,7 +106,8 @@ const Input: React.FC<Props> = props => {
             alignItems: 'flex-end',
             right: 20,
             width: 30,
-          }}>
+          }}
+        >
           <TouchableOpacity
             hitSlop={{
               top: 10,
@@ -111,7 +115,8 @@ const Input: React.FC<Props> = props => {
               right: 10,
               left: 10,
             }}
-            onPress={() => setSecure(!secure)}>
+            onPress={() => setSecure(!secure)}
+          >
             <FontAwesome6
               name={secure ? 'eye' : 'eye-slash'}
               color={'#CECECE'}
@@ -131,7 +136,8 @@ const Input: React.FC<Props> = props => {
             justifyContent: 'flex-end',
             alignItems: 'center',
             right: 20,
-          }}>
+          }}
+        >
           {props.accessoryRight}
         </View>
       )}

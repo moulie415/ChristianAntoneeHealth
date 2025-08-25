@@ -1,10 +1,10 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import moment from 'moment';
 import React from 'react';
-import {View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../../App';
+import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
 import {
   capitalizeFirstLetter,
@@ -15,16 +15,16 @@ import {
   getTableCategory,
   getTableColumn,
 } from '../../../helpers';
-import {keyHasValue} from '../../../helpers/table';
-import {Profile} from '../../../types/Shared';
-import {PercentileTable, Table} from '../../../types/Test';
+import { keyHasValue } from '../../../helpers/table';
+import { Profile } from '../../../types/Shared';
+import { PercentileTable, Table } from '../../../types/Test';
 import Text from '../../commons/Text';
 
 const TestResultText: React.FC<{
   profile: Profile;
   score: number;
   table: Table | PercentileTable;
-}> = ({profile, table, score}) => {
+}> = ({ profile, table, score }) => {
   if (!profile.gender || !profile.dob) {
     return null;
   }
@@ -47,13 +47,14 @@ const TestResultText: React.FC<{
     column &&
     getTableAverage(table, column);
   return (
-    <View style={{marginTop: 20}}>
+    <View style={{ marginTop: 20 }}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         {!percentile && (
           <>
             {getScoreIcon(category || (percentile as string)) === '-' ? (
@@ -62,7 +63,8 @@ const TestResultText: React.FC<{
                   fontSize: 30,
                   marginRight: 10,
                   color: colors.appWhite,
-                }}>
+                }}
+              >
                 -
               </Text>
             ) : (
@@ -77,7 +79,7 @@ const TestResultText: React.FC<{
             )}
           </>
         )}
-        <Text style={{color: colors.appWhite, fontSize: 18}}>
+        <Text style={{ color: colors.appWhite, fontSize: 18 }}>
           {category
             ? `${getCategoryString(category)} score`
             : `${capitalizeFirstLetter(percentile as string)} percentile`}
@@ -90,7 +92,8 @@ const TestResultText: React.FC<{
           color: colors.appWhite,
           fontSize: FONTS_SIZES.LARGE,
           marginTop: 10,
-        }}>
+        }}
+      >
         {Math.floor(score)}
       </Text>
       <View
@@ -99,7 +102,8 @@ const TestResultText: React.FC<{
           alignItems: 'center',
           marginHorizontal: 10,
           marginTop: 10,
-        }}>
+        }}
+      >
         <FontAwesome6
           iconStyle="solid"
           style={{
@@ -114,9 +118,10 @@ const TestResultText: React.FC<{
             fontSize: 16,
             flex: 1,
             color: colors.appWhite,
-          }}>
+          }}
+        >
           {category ? 'You score is ' : 'You scored in the '}
-          <Text style={{fontWeight: 'bold'}}>
+          <Text style={{ fontWeight: 'bold' }}>
             {category ? getCategoryString(category) : `${[percentile]}`}
           </Text>
           {category

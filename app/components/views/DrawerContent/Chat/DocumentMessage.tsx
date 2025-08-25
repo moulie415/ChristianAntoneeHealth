@@ -1,23 +1,23 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import FileViewer from 'react-native-file-viewer';
 import * as Progress from 'react-native-progress';
 import Snackbar from 'react-native-snackbar';
-import {connect} from 'react-redux';
-import {RootState} from '../../../../App';
+import { connect } from 'react-redux';
+import { RootState } from '../../../../App';
 import colors from '../../../../constants/colors';
-import {logError} from '../../../../helpers/error';
-import {setDownloadedDocument} from '../../../../reducers/profile';
+import { logError } from '../../../../helpers/error';
+import { setDownloadedDocument } from '../../../../reducers/profile';
 import Message from '../../../../types/Message';
-import {Profile} from '../../../../types/Shared';
+import { Profile } from '../../../../types/Shared';
 import Text from '../../../commons/Text';
 
 interface Props extends Message {
   profile: Profile;
-  setDownloadedDocument: (payload: {id: string; path: string}) => void;
-  downloadedDocuments: {[key: string]: string};
+  setDownloadedDocument: (payload: { id: string; path: string }) => void;
+  downloadedDocuments: { [key: string]: string };
   onLongPress: () => void;
 }
 
@@ -48,10 +48,10 @@ const DocumentMessage: React.FC<Props> = ({
           setProgress(percentage);
         });
       await FileViewer.open(result.path());
-      setDownloadedDocumentAction({id: id || '', path: result.path()});
+      setDownloadedDocumentAction({ id: id || '', path: result.path() });
     } catch (e) {
       logError(e);
-      Snackbar.show({text: 'File download failed'});
+      Snackbar.show({ text: 'File download failed' });
     }
   };
 
@@ -63,7 +63,7 @@ const DocumentMessage: React.FC<Props> = ({
       try {
         await FileViewer.open(file);
       } catch (e) {
-        setDownloadedDocumentAction({id: id || '', path: ''});
+        setDownloadedDocumentAction({ id: id || '', path: '' });
         await downloadFile();
       }
     } else {
@@ -86,19 +86,21 @@ const DocumentMessage: React.FC<Props> = ({
         justifyContent: 'space-evenly',
         flexDirection: 'row',
         alignItems: 'center',
-      }}>
+      }}
+    >
       <FontAwesome6
         size={30}
         name="file"
         iconStyle="solid"
-        style={{color: isYou ? colors.appBlue : colors.appWhite}}
+        style={{ color: isYou ? colors.appBlue : colors.appWhite }}
       />
       {file ? (
         <Text
           style={{
             color: isYou ? colors.appBlue : colors.appWhite,
             marginLeft: 10,
-          }}>
+          }}
+        >
           {filename}
         </Text>
       ) : (
@@ -114,12 +116,13 @@ const DocumentMessage: React.FC<Props> = ({
           unfilledColor={colors.offWhite}
           borderWidth={0}
           color={isYou ? colors.appBlue : colors.appWhite}
-          progress={progress}>
+          progress={progress}
+        >
           <FontAwesome6
             iconStyle="solid"
             name="download"
             size={10}
-            style={{position: 'absolute'}}
+            style={{ position: 'absolute' }}
             color={isYou ? colors.appBlue : colors.appWhite}
           />
         </Progress.Circle>
@@ -128,7 +131,7 @@ const DocumentMessage: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
   downloadedDocuments: profile.downloadedDocuments,
 });

@@ -1,22 +1,26 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {FONTS_SIZES} from '../../../constants';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
-import {getVideoHeight} from '../../../helpers';
-import {endWatchWorkout} from '../../../helpers/biometrics';
+import { getVideoHeight } from '../../../helpers';
+import { endWatchWorkout } from '../../../helpers/biometrics';
 import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
-import {updateProfile} from '../../../reducers/profile';
-import {workoutSong} from '../../../sagas/profile';
+import { updateProfile } from '../../../reducers/profile';
+import { workoutSong } from '../../../sagas/profile';
 import Exercise from '../../../types/Exercise';
-import {PauseEvent, Profile, UpdateProfilePayload} from '../../../types/Shared';
+import {
+  PauseEvent,
+  Profile,
+  UpdateProfilePayload,
+} from '../../../types/Shared';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import Button from '../../commons/Button';
 import ExerciseVideo from '../../commons/ExerciseVideo';
@@ -28,10 +32,10 @@ import WorkoutTabs from '../../commons/WorkoutTabs';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
-  exerciseNotes: {[key: string]: string};
+  exerciseNotes: { [key: string]: string };
   navigation: NativeStackNavigationProp<StackParamList, 'StartWorkout'>;
   route: RouteProp<StackParamList, 'StartWorkout'>;
-  videos: {[key: string]: {src: string; path: string}};
+  videos: { [key: string]: { src: string; path: string } };
   loading: boolean;
   profile: Profile;
   updateProfile: (payload: UpdateProfilePayload) => void;
@@ -53,8 +57,8 @@ const StartWorkout: React.FC<{
   const [pauseEvents, setPauseEvents] = useState<PauseEvent[]>([]);
   const [paused, setPaused] = useState(false);
 
-  const {seconds, setTimerPaused, timerPaused} = useWorkoutTimer(1000);
-  const {exerciseEvents} = useExerciseEvents(index);
+  const { seconds, setTimerPaused, timerPaused } = useWorkoutTimer(1000);
+  const { exerciseEvents } = useExerciseEvents(index);
 
   const loadingExercises = !workout || workout.some(e => e === undefined);
 
@@ -62,7 +66,7 @@ const StartWorkout: React.FC<{
 
   useEffect(() => {
     if (ap !== profile.autoPlay) {
-      updateProfileAction({autoPlay: ap, disableSnackbar: true});
+      updateProfileAction({ autoPlay: ap, disableSnackbar: true });
     }
   }, [ap, updateProfileAction, profile.autoPlay]);
 
@@ -90,7 +94,7 @@ const StartWorkout: React.FC<{
   }, 3000);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header
         hasBack
         absolute
@@ -123,7 +127,8 @@ const StartWorkout: React.FC<{
           }}
           offscreenPageLimit={1}
           scrollEnabled={!fullscreen}
-          style={{flex: 1, paddingHorizontal: 0}}>
+          style={{ flex: 1, paddingHorizontal: 0 }}
+        >
           {workout.map((exercise, i) => {
             const next = workout[index + 1];
             return (
@@ -146,7 +151,8 @@ const StartWorkout: React.FC<{
                       alignItems: 'center',
                       justifyContent: 'center',
                       backgroundColor: 'rgba(0,0,0,0.2)',
-                    }}>
+                    }}
+                  >
                     <Spinner color={colors.appBlue} />
                   </View>
                 )}
@@ -162,10 +168,12 @@ const StartWorkout: React.FC<{
                       borderTopRightRadius: 30,
                       overflow: 'hidden',
                       backgroundColor: colors.appGrey,
-                    }}>
+                    }}
+                  >
                     <ScrollView
-                      contentContainerStyle={{paddingBottom: 20}}
-                      keyboardShouldPersistTaps="always">
+                      contentContainerStyle={{ paddingBottom: 20 }}
+                      keyboardShouldPersistTaps="always"
+                    >
                       <Text
                         style={{
                           marginTop: 20,
@@ -174,7 +182,8 @@ const StartWorkout: React.FC<{
                           marginHorizontal: 40,
                           fontWeight: 'bold',
                           textAlign: 'center',
-                        }}>
+                        }}
+                      >
                         {exercise.name}
                       </Text>
                       <WorkoutTabs
@@ -192,13 +201,13 @@ const StartWorkout: React.FC<{
                           setTimerPaused(p);
                           setPauseEvents([
                             ...pauseEvents,
-                            {time: new Date(), paused: p},
+                            { time: new Date(), paused: p },
                           ]);
                           setPaused(p);
                         }}
                       />
 
-                      <View style={{flexDirection: 'row', flex: 1}}>
+                      <View style={{ flexDirection: 'row', flex: 1 }}>
                         {index === 0 && (
                           <TouchableOpacity
                             onPress={() => setAp(!ap)}
@@ -211,13 +220,15 @@ const StartWorkout: React.FC<{
                               marginLeft: 20,
                               justifyContent: 'space-evenly',
                               height: 50,
-                            }}>
+                            }}
+                          >
                             <Text
                               style={{
                                 color: colors.appWhite,
                                 fontSize: FONTS_SIZES.SMALL,
                                 fontWeight: 'bold',
-                              }}>
+                              }}
+                            >
                               AUTO-PLAY
                             </Text>
                             <Toggle value={ap} onValueChange={setAp} />
@@ -252,7 +263,7 @@ const StartWorkout: React.FC<{
                             text="End Workout"
                             onPress={() => {
                               Alert.alert('End workout', 'Are you sure?', [
-                                {text: 'No', style: 'cancel'},
+                                { text: 'No', style: 'cancel' },
                                 {
                                   text: 'Yes',
                                   onPress: endWorkout,
@@ -279,7 +290,7 @@ const StartWorkout: React.FC<{
   );
 };
 
-const mapStateToProps = ({exercises, profile}: RootState) => ({
+const mapStateToProps = ({ exercises, profile }: RootState) => ({
   workout: exercises.workout,
   exerciseNotes: exercises.exerciseNotes,
   videos: exercises.videos,

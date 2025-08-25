@@ -1,13 +1,13 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import React, {FunctionComponent, useEffect, useMemo} from 'react';
-import {FlatList, View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
-import {getDifficultyEmoji} from '../../../helpers/exercises';
-import {getSavedQuickRoutines} from '../../../reducers/quickRoutines';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { FlatList, View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
+import { getDifficultyEmoji } from '../../../helpers/exercises';
+import { getSavedQuickRoutines } from '../../../reducers/quickRoutines';
 import QuickRoutine from '../../../types/QuickRoutines';
-import {SavedQuickRoutine} from '../../../types/SavedItem';
+import { SavedQuickRoutine } from '../../../types/SavedItem';
 import AbsoluteSpinner from '../../commons/AbsoluteSpinner';
 import ImageOverlay from '../../commons/ImageOverlay';
 import ListItem from '../../commons/ListItem';
@@ -20,9 +20,9 @@ type SavedItemsNavigationProp = NativeStackNavigationProp<
 
 const SavedQuickRoutines: FunctionComponent<{
   loading: boolean;
-  savedQuickRoutines: {[key: string]: SavedQuickRoutine};
+  savedQuickRoutines: { [key: string]: SavedQuickRoutine };
   getSavedQuickRoutinesAction: () => void;
-  quickRoutines: {[key: string]: QuickRoutine};
+  quickRoutines: { [key: string]: QuickRoutine };
   navigation: SavedItemsNavigationProp;
 }> = ({
   loading,
@@ -48,7 +48,7 @@ const SavedQuickRoutines: FunctionComponent<{
           <FlatList
             data={Object.values(savedQuickRoutines)}
             keyExtractor={item => item.id || ''}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               const quickRoutine = quickRoutines[item.quickRoutineId];
               return (
                 <ListItem
@@ -74,25 +74,26 @@ const SavedQuickRoutines: FunctionComponent<{
                       overlayAlpha={0.4}
                       source={
                         quickRoutine.thumbnail
-                          ? {uri: quickRoutine.thumbnail.src}
+                          ? { uri: quickRoutine.thumbnail.src }
                           : require('../../../images/old_man_stretching.jpeg')
-                      }>
-                      <View style={{alignItems: 'center'}}>
-                        <Text style={{color: '#fff', fontSize: 12}}>
+                      }
+                    >
+                      <View style={{ alignItems: 'center' }}>
+                        <Text style={{ color: '#fff', fontSize: 12 }}>
                           {'Duration '}
                         </Text>
-                        <Text style={{color: '#fff'}}>
+                        <Text style={{ color: '#fff' }}>
                           {moment()
                             .utc()
                             .startOf('day')
-                            .add({seconds: item.seconds})
+                            .add({ seconds: item.seconds })
                             .format('mm:ss')}
                         </Text>
                       </View>
                     </ImageOverlay>
                   }
                   accessoryRight={
-                    <Text style={{fontSize: 30}}>
+                    <Text style={{ fontSize: 30 }}>
                       {getDifficultyEmoji(item.difficulty)}
                     </Text>
                   }
@@ -107,7 +108,7 @@ const SavedQuickRoutines: FunctionComponent<{
   );
 };
 
-const mapStateToProps = ({exercises, quickRoutines}: RootState) => ({
+const mapStateToProps = ({ exercises, quickRoutines }: RootState) => ({
   loading: exercises.loading,
   savedQuickRoutines: quickRoutines.savedQuickRoutines,
   quickRoutines: quickRoutines.quickRoutines,

@@ -1,14 +1,14 @@
-import {RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import React, {useRef, useState} from 'react';
-import {Keyboard, View} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Keyboard, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
 import StepIndicator from 'react-native-step-indicator';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
 import * as api from '../../../helpers/api';
 import {
@@ -19,13 +19,13 @@ import {
   initBiometrics,
   isAvailable,
 } from '../../../helpers/biometrics';
-import {logError} from '../../../helpers/error';
-import {useBackHandler} from '../../../hooks/UseBackHandler';
+import { logError } from '../../../helpers/error';
+import { useBackHandler } from '../../../hooks/UseBackHandler';
 import useInit from '../../../hooks/UseInit';
 import useThrottle from '../../../hooks/UseThrottle';
-import {LoginFullname, signUp} from '../../../reducers/profile';
-import {SettingsState} from '../../../reducers/settings';
-import {Area, Equipment} from '../../../types/QuickRoutines';
+import { LoginFullname, signUp } from '../../../reducers/profile';
+import { SettingsState } from '../../../reducers/settings';
+import { Area, Equipment } from '../../../types/QuickRoutines';
 import {
   CurrentExercise,
   DietaryPreference,
@@ -53,7 +53,7 @@ const SignUpFlow: React.FC<{
   profile: Profile;
   signUp: (payload: SignUpPayload) => void;
   loginFullname?: LoginFullname;
-}> = ({navigation, route, profile, signUp: signUpAction, loginFullname}) => {
+}> = ({ navigation, route, profile, signUp: signUpAction, loginFullname }) => {
   const fromProfile = route.params?.fromProfile;
   const [name, setName] = useState(profile.name || loginFullname?.name || '');
   const [surname, setSurname] = useState(
@@ -177,12 +177,12 @@ const SignUpFlow: React.FC<{
       goNext();
     } else {
       setClientCodeValid(false);
-      Snackbar.show({text: 'Invalid client code'});
+      Snackbar.show({ text: 'Invalid client code' });
     }
     try {
     } catch (e) {
       if (e instanceof Error) {
-        Snackbar.show({text: 'Error validating client code'});
+        Snackbar.show({ text: 'Error validating client code' });
       }
     }
     setLoading(false);
@@ -300,8 +300,8 @@ const SignUpFlow: React.FC<{
   useBackHandler(() => true);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <View style={{marginTop: 10}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.appGrey }}>
+      <View style={{ marginTop: 10 }}>
         <StepIndicator
           stepCount={slides.length}
           currentPosition={index}
@@ -325,10 +325,11 @@ const SignUpFlow: React.FC<{
         }}
         removeClippedSubviews={false}
         scrollEnabled={false}
-        style={{flex: 1}}>
+        style={{ flex: 1 }}
+      >
         {slides.map((slide, i) => {
           return (
-            <View style={{flex: 1}} key={slide.key}>
+            <View style={{ flex: 1 }} key={slide.key}>
               {slide.component}
               <View
                 style={{
@@ -339,7 +340,8 @@ const SignUpFlow: React.FC<{
                   bottom: 0,
                   padding: 20,
                   backgroundColor: colors.appGrey,
-                }}>
+                }}
+              >
                 {i !== 0 && (
                   <Button
                     variant="secondary"
@@ -384,7 +386,7 @@ const SignUpFlow: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
   loginFullname: profile.loginFullname,
 });

@@ -1,4 +1,4 @@
-import {Gender} from '../types/Shared';
+import { Gender } from '../types/Shared';
 
 export const abdominals = (gender?: Gender) =>
   gender === 'female'

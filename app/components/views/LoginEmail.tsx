@@ -1,14 +1,14 @@
-import {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../App';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../App';
 import colors from '../../constants/colors';
-import {signIn} from '../../helpers/api';
-import {handleAuth, setLoginEmail} from '../../reducers/profile';
+import { signIn } from '../../helpers/api';
+import { handleAuth, setLoginEmail } from '../../reducers/profile';
 import Button from '../commons/Button';
 import Header from '../commons/Header';
 import Input from '../commons/Input';
@@ -19,7 +19,7 @@ const LoginEmail: React.FC<{
   handleAuth: (user: FirebaseAuthTypes.User) => void;
   email: string;
   setEmail: (email: string) => void;
-}> = ({navigation, handleAuth: handleAuthAction, email, setEmail}) => {
+}> = ({ navigation, handleAuth: handleAuthAction, email, setEmail }) => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
 
@@ -33,10 +33,11 @@ const LoginEmail: React.FC<{
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.appGrey, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
       <KeyboardAwareScrollView
         enableOnAndroid
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps="always"
+      >
         <Header title="Login" hasBack />
         <Input
           onChangeText={setEmail}
@@ -77,8 +78,9 @@ const LoginEmail: React.FC<{
             alignSelf: 'flex-end',
             marginRight: 20,
             marginTop: 10,
-          }}>
-          <Text style={{color: colors.appWhite}}>Forgot password?</Text>
+          }}
+        >
+          <Text style={{ color: colors.appWhite }}>Forgot password?</Text>
         </TouchableOpacity>
 
         <Button
@@ -93,17 +95,19 @@ const LoginEmail: React.FC<{
         />
 
         <TouchableOpacity
-          style={{marginVertical: 20, alignSelf: 'center'}}
+          style={{ marginVertical: 20, alignSelf: 'center' }}
           onPress={() => {
             navigation.navigate('SignUp');
-          }}>
-          <Text style={{color: 'rgba(255, 255, 255, 0.56)'}}>
+          }}
+        >
+          <Text style={{ color: 'rgba(255, 255, 255, 0.56)' }}>
             {"Don't have an account? "}
             <Text
               style={{
                 color: '#fff',
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               Sign up
             </Text>
           </Text>
@@ -113,7 +117,7 @@ const LoginEmail: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   email: profile.loginEmail,
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, SwitchProps} from 'react-native';
+import { Switch, SwitchProps } from 'react-native';
 import colors from '../../constants/colors';
 
 const Toggle: React.FC<SwitchProps> = props => {
@@ -7,7 +7,7 @@ const Toggle: React.FC<SwitchProps> = props => {
     <Switch
       {...props}
       thumbColor={props.value ? colors.appGrey : colors.appBlue}
-      trackColor={{false: colors.appGrey, true: colors.appBlue}}
+      trackColor={{ false: colors.appGrey, true: colors.appBlue }}
     />
   );
 };

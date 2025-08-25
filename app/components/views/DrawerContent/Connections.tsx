@@ -1,16 +1,16 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as _ from 'lodash';
-import React, {useEffect} from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
-import {RootState, StackParamList} from '../../../App';
+import React, { useEffect } from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
-import {truncate} from '../../../helpers';
-import {getSimplifiedTime} from '../../../helpers/profile';
-import {getConnections} from '../../../reducers/profile';
+import { truncate } from '../../../helpers';
+import { getSimplifiedTime } from '../../../helpers/profile';
+import { getConnections } from '../../../reducers/profile';
 import Message from '../../../types/Message';
-import {Profile} from '../../../types/Shared';
+import { Profile } from '../../../types/Shared';
 import Avatar from '../../commons/Avatar';
 import Divider from '../../commons/Divider';
 import Header from '../../commons/Header';
@@ -19,8 +19,8 @@ import UnreadConnectionCount from '../../commons/unread/UnreadConnectionCount';
 
 export const sortConnections = (
   profiles: Profile[],
-  messages: {[key: string]: {[key: string]: Message}},
-  unread: {[key: string]: number} | undefined,
+  messages: { [key: string]: { [key: string]: Message } },
+  unread: { [key: string]: number } | undefined,
 ) => {
   return profiles.sort((a, b) => {
     const unreadA = unread?.[a.uid] || 0;
@@ -45,12 +45,12 @@ export const sortConnections = (
 
 const Connections: React.FC<{
   profile: Profile;
-  connections: {[key: string]: Profile};
+  connections: { [key: string]: Profile };
   getConnectionsAction: () => void;
   loading: boolean;
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
-  messages: {[key: string]: {[key: string]: Message}};
-  unread: {[key: string]: number} | undefined;
+  messages: { [key: string]: { [key: string]: Message } };
+  unread: { [key: string]: number } | undefined;
 }> = ({
   connections,
   getConnectionsAction,
@@ -66,7 +66,7 @@ const Connections: React.FC<{
 
   const getLastMessage = (
     uid: string,
-  ): {preview: string; italicize?: boolean; createdAt?: number} => {
+  ): { preview: string; italicize?: boolean; createdAt?: number } => {
     const userMessages = messages[uid];
     if (userMessages) {
       const messagesArr = Object.values(userMessages);
@@ -75,7 +75,7 @@ const Connections: React.FC<{
         createdAt: 0,
         type: 'text',
         _id: '',
-        user: {_id: ''},
+        user: { _id: '' },
       };
       messagesArr.forEach(msg => {
         if (msg?.createdAt > message?.createdAt) {
@@ -109,11 +109,11 @@ const Connections: React.FC<{
         createdAt: message?.createdAt as number,
       };
     }
-    return {preview: 'Beginning of chat', italicize: true};
+    return { preview: 'Beginning of chat', italicize: true };
   };
   return (
-    <View style={{flex: 1, backgroundColor: colors.appGrey}}>
-      <SafeAreaView style={{flex: 1}}>
+    <View style={{ flex: 1, backgroundColor: colors.appGrey }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Header
           hasBack
           title="Messaging"
@@ -126,7 +126,8 @@ const Connections: React.FC<{
               padding: 20,
               color: colors.appWhite,
               fontSize: 20,
-            }}>
+            }}
+          >
             No friends yet, you should not be seeing this please contact support
             for help.
           </Text>
@@ -134,20 +135,22 @@ const Connections: React.FC<{
         <FlatList
           keyExtractor={item => item.uid}
           data={sortConnections(Object.values(connections), messages, unread)}
-          renderItem={({item}) => {
-            const {preview, createdAt, italicize} = getLastMessage(item.uid);
+          renderItem={({ item }) => {
+            const { preview, createdAt, italicize } = getLastMessage(item.uid);
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate('Chat', {uid: item.uid})}
+                onPress={() => navigation.navigate('Chat', { uid: item.uid })}
                 style={{
                   padding: 10,
                   flexDirection: 'row',
-                }}>
+                }}
+              >
                 <View
                   style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                  }}>
+                  }}
+                >
                   <Avatar
                     src={item.avatar}
                     name={`${item.name} ${item.surname || ''}`}
@@ -155,8 +158,8 @@ const Connections: React.FC<{
                     uid={item.uid}
                   />
                 </View>
-                <View style={{justifyContent: 'center', margin: 10, flex: 1}}>
-                  <Text style={{fontWeight: 'bold', color: colors.appWhite}}>
+                <View style={{ justifyContent: 'center', margin: 10, flex: 1 }}>
+                  <Text style={{ fontWeight: 'bold', color: colors.appWhite }}>
                     {`${item.name} ${item.surname || ''}`}
                   </Text>
                   <Text
@@ -164,7 +167,8 @@ const Connections: React.FC<{
                       color: colors.appWhite,
                       fontSize: 12,
                       fontStyle: italicize ? 'italic' : 'normal',
-                    }}>
+                    }}
+                  >
                     {preview}
                   </Text>
                 </View>
@@ -172,13 +176,15 @@ const Connections: React.FC<{
                   style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                  }}>
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 10,
                       color: colors.appWhite,
                       marginBottom: 5,
-                    }}>
+                    }}
+                  >
                     {getSimplifiedTime(createdAt || 0)}
                   </Text>
                   <UnreadConnectionCount uid={item.uid} />
@@ -193,7 +199,7 @@ const Connections: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
   connections: profile.connections,
   loading: profile.loading,

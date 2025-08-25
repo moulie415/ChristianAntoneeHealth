@@ -1,19 +1,19 @@
-import {FontAwesome6} from '@react-native-vector-icons/fontawesome6';
-import React, {useMemo, useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {connect} from 'react-redux';
-import {RootState} from '../../App';
-import {navigate} from '../../RootNavigation';
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useMemo, useState } from 'react';
+import { TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
+import { RootState } from '../../App';
+import { navigate } from '../../RootNavigation';
 import colors from '../../constants/colors';
-import {setProfile} from '../../reducers/profile';
-import {Profile} from '../../types/Shared';
+import { setProfile } from '../../reducers/profile';
+import { Profile } from '../../types/Shared';
 import ConnectedAppsModal from './ConnectedAppsModal';
 import Text from './Text';
 
 const ConnectedApps: React.FC<{
   profile: Profile;
   setProfile: (profile: Profile) => void;
-}> = ({profile, setProfile: setProfileAction}) => {
+}> = ({ profile, setProfile: setProfileAction }) => {
   const [showModal, setShowModal] = useState(false);
   const connected: string[] = useMemo(() => {
     const arr = [];
@@ -49,8 +49,9 @@ const ConnectedApps: React.FC<{
           alignItems: 'center',
           marginVertical: 10,
           marginBottom: 20,
-        }}>
-        <View style={{width: 55, alignItems: 'center'}}>
+        }}
+      >
+        <View style={{ width: 55, alignItems: 'center' }}>
           <FontAwesome6
             iconStyle="solid"
             name="mobile"
@@ -61,7 +62,7 @@ const ConnectedApps: React.FC<{
             }}
           />
         </View>
-        <Text style={{color: colors.appWhite, flex: 1}}>
+        <Text style={{ color: colors.appWhite, flex: 1 }}>
           {`Connected apps: ${
             connected.length ? connected.join(', ') : 'none'
           }`}
@@ -79,7 +80,8 @@ const ConnectedApps: React.FC<{
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: colors.appBlue,
-          }}>
+          }}
+        >
           <FontAwesome6
             iconStyle="solid"
             name="gear"
@@ -94,7 +96,7 @@ const ConnectedApps: React.FC<{
   );
 };
 
-const mapStateToProps = ({profile}: RootState) => ({
+const mapStateToProps = ({ profile }: RootState) => ({
   profile: profile.profile,
 });
 

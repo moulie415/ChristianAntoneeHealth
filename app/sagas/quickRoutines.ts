@@ -1,12 +1,19 @@
-import {PayloadAction} from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import Snackbar from 'react-native-snackbar';
-import {call, debounce, fork, put, select, throttle} from 'redux-saga/effects';
-import {RootState} from '../App';
+import {
+  call,
+  debounce,
+  fork,
+  put,
+  select,
+  throttle,
+} from 'redux-saga/effects';
+import { RootState } from '../App';
 import * as api from '../helpers/api';
-import {logError} from '../helpers/error';
-import {sendGoalTargetNotification} from '../helpers/goals';
-import {setLoading} from '../reducers/exercises';
-import {ProfileState} from '../reducers/profile';
+import { logError } from '../helpers/error';
+import { sendGoalTargetNotification } from '../helpers/goals';
+import { setLoading } from '../reducers/exercises';
+import { ProfileState } from '../reducers/profile';
 import {
   GET_QUICK_ROUTINES,
   GET_QUICK_ROUTINES_BY_ID,
@@ -17,14 +24,14 @@ import {
   setSavedQuickRoutines,
 } from '../reducers/quickRoutines';
 import QuickRoutine from '../types/QuickRoutines';
-import {SavedQuickRoutine} from '../types/SavedItem';
-import {incrementWorkoutStreak} from './exercises';
-import {checkStepsCalories} from './leaderboards';
-import {feedbackTrigger} from './profile';
+import { SavedQuickRoutine } from '../types/SavedItem';
+import { incrementWorkoutStreak } from './exercises';
+import { checkStepsCalories } from './leaderboards';
+import { feedbackTrigger } from './profile';
 
 export function* getQuickRoutines() {
   try {
-    const routines: {[key: string]: QuickRoutine} = yield call(
+    const routines: { [key: string]: QuickRoutine } = yield call(
       api.getQuickRoutines,
     );
     yield put(setQuickRoutines(routines));
@@ -35,15 +42,15 @@ export function* getQuickRoutines() {
 
 function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
   try {
-    const {profile, weeklyItems}: ProfileState = yield select(
+    const { profile, weeklyItems }: ProfileState = yield select(
       (state: RootState) => state.profile,
     );
     yield call(api.saveQuickRoutine, action.payload, profile.uid);
     if (action.payload.saved) {
-      yield call(Snackbar.show, {text: 'Workout saved '});
+      yield call(Snackbar.show, { text: 'Workout saved ' });
     }
     if (profile.goal) {
-      const {quickRoutines}: QuickRoutinesState = yield select(
+      const { quickRoutines }: QuickRoutinesState = yield select(
         (state: RootState) => state.quickRoutines,
       );
 
@@ -60,27 +67,24 @@ function* saveQuickRoutine(action: PayloadAction<SavedQuickRoutine>) {
     yield call(feedbackTrigger);
   } catch (e) {
     logError(e);
-    yield call(Snackbar.show, {text: 'Error saving workout'});
+    yield call(Snackbar.show, { text: 'Error saving workout' });
   }
 }
 
 export function* getSavedQuickRoutines(
   action: PayloadAction<Date | undefined>,
 ) {
-  const {profile}: ProfileState = yield select(
+  const { profile }: ProfileState = yield select(
     (state: RootState) => state.profile,
   );
   if (profile.premium) {
     try {
       yield put(setLoading(true));
-      const {uid} = yield select((state: RootState) => state.profile.profile);
-      const savedQuickRoutines: {[key: string]: SavedQuickRoutine} = yield call(
-        api.getSavedQuickRoutines,
-        uid,
-        action.payload,
-      );
+      const { uid } = yield select((state: RootState) => state.profile.profile);
+      const savedQuickRoutines: { [key: string]: SavedQuickRoutine } =
+        yield call(api.getSavedQuickRoutines, uid, action.payload);
       yield put(setSavedQuickRoutines(savedQuickRoutines));
-      const quickRoutines: {[key: string]: QuickRoutine} = yield select(
+      const quickRoutines: { [key: string]: QuickRoutine } = yield select(
         (state: RootState) => state.quickRoutines.quickRoutines,
       );
       const missingRoutines = Object.values(savedQuickRoutines)
@@ -97,7 +101,7 @@ export function* getSavedQuickRoutines(
     } catch (e) {
       logError(e);
       yield put(setLoading(false));
-      Snackbar.show({text: 'Error getting saved workouts'});
+      Snackbar.show({ text: 'Error getting saved workouts' });
     }
   }
 }
@@ -107,7 +111,7 @@ function* getQuickRoutinesById(action: PayloadAction<string[]>) {
     const ids = action.payload;
     yield put(setLoading(true));
     if (ids.length) {
-      const routines: {[key: string]: QuickRoutine} = yield call(
+      const routines: { [key: string]: QuickRoutine } = yield call(
         api.getQuickRoutinesById,
         ids,
       );
@@ -117,7 +121,7 @@ function* getQuickRoutinesById(action: PayloadAction<string[]>) {
   } catch (e) {
     logError(e);
     yield put(setLoading(false));
-    Snackbar.show({text: 'Error fetching workouts'});
+    Snackbar.show({ text: 'Error fetching workouts' });
   }
 }
 
