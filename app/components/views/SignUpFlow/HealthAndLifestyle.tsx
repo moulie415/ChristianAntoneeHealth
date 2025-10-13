@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Picker } from 'react-native-wheel-pick';
+import Picker from '@quidone/react-native-wheel-picker';
 import { FITNESS_RATINGS } from '../../../constants';
 import colors from '../../../constants/colors';
 import {
@@ -181,16 +181,15 @@ const HealthAndLifestyle: React.FC<{
       </Text>
       <Picker
         style={{ height: 200, backgroundColor: 'transparent' }}
-        textColor={colors.appWhite}
-        itemStyle={{ color: colors.appWhite }}
-        selectedValue={String(fitnessRating)}
-        pickerData={FITNESS_RATINGS.map(value => {
+        itemTextStyle={{ color: colors.appWhite }}
+        value={String(fitnessRating)}
+        data={FITNESS_RATINGS.map(value => {
           return {
             label: value.toString(),
             value: String(value),
           };
         })}
-        onValueChange={(val: any) => setFitnessRating(Number(val))}
+        onValueChanged={({item}) => setFitnessRating(Number(item.value))}
       />
     </KeyboardAwareScrollView>
   );

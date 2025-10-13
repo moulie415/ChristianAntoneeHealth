@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Picker } from 'react-native-wheel-pick';
+import Picker, { OnValueChanged, PickerItem } from '@quidone/react-native-wheel-picker';
 import colors from '../../constants/colors';
 import { Gender } from '../../types/Shared';
 import Button from './Button';
@@ -12,7 +12,7 @@ const PickerModal: React.FC<{
   onRequestClose: () => void;
   selectedValue: string | Date | Gender;
   pickerData: any;
-  onValueChange: (val: string | Gender) => void;
+  onValueChange: OnValueChanged<PickerItem<any>>, 
   title?: string;
 }> = ({
   visible,
@@ -46,18 +46,16 @@ const PickerModal: React.FC<{
             {title}
           </Text>
         )}
-        {/*  @ts-ignore */}
         <Picker
           style={{
             height: 200,
             paddingHorizontal: 20,
             backgroundColor: 'transparent',
           }}
-          selectedValue={selectedValue}
-          textColor={colors.appWhite}
-          itemStyle={{ color: colors.appWhite }}
-          pickerData={pickerData}
-          onValueChange={onValueChange}
+          itemTextStyle={{ color: colors.appWhite }}
+          value={selectedValue}
+          data={pickerData}
+          onValueChanged={onValueChange}
         />
         <Button text="Close" style={{ margin: 10 }} onPress={onRequestClose} />
       </View>

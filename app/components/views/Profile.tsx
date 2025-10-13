@@ -490,7 +490,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={val => setHeight(Number(val))}
+            onValueChange={({item}) => setHeight(Number(item.value))}
             onRequestClose={() => setShowHeightModal(false)}
           />
         )}
@@ -524,7 +524,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={val => setBodyFatPercentage(Number(val))}
+            onValueChange={({item}) => setBodyFatPercentage(Number(item.value))}
             onRequestClose={() => setShowBodyFatPercentageModal(false)}
           />
         )}
@@ -550,7 +550,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={val => setMuscleMass(Number(val))}
+            onValueChange={({item}) => setMuscleMass(Number(item.value))}
             onRequestClose={() => setShowMuscleMassModal(false)}
           />
         )}
@@ -576,7 +576,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={val => setBoneMass(Number(val))}
+            onValueChange={({item}) => setBoneMass(Number(item.value))}
             onRequestClose={() => setShowBoneMassModal(false)}
           />
         )}
@@ -601,7 +601,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={val => setVisceralFat(Number(val))}
+            onValueChange={({item}) => setVisceralFat(Number(item.value))}
             onRequestClose={() => setShowVisceralFatModal(false)}
           />
         )}
@@ -626,7 +626,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={val => setMetabolicAge(Number(val))}
+            onValueChange={({item}) => setMetabolicAge(Number(item.value))}
             onRequestClose={() => setShowMetabolicAgeModal(false)}
           />
         )}

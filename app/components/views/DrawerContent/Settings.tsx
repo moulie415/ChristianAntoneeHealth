@@ -497,7 +497,7 @@ const Settings: React.FC<{
             value: String(value),
           };
         })}
-        onValueChange={val => setPrepTime(Number(val))}
+        onValueChange={({item}) => setPrepTime(Number(item.value))}
         onRequestClose={() => setShowPrepTime(false)}
       />
       <Modal

@@ -67,11 +67,12 @@ const ReportProblem: React.FC<{
               onPress={async () => {
                 const sentryId =
                   Sentry.lastEventId() || Sentry.captureMessage(title);
-                Sentry.captureUserFeedback({
+                Sentry.captureFeedback({
                   name: `${profile.name} ${profile.surname || ''}`,
                   email: profile.email,
-                  comments: `${title} - ${problem}`,
-                  event_id: sentryId,
+                  message: `${title} - ${problem}`,
+                  associatedEventId: sentryId,
+                  
                 });
                 navigation.goBack();
                 Snackbar.show({ text: 'Report sent' });

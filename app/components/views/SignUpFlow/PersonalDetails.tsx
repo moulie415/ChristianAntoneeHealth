@@ -450,7 +450,7 @@ const PersonalDetails: React.FC<{
               value: String(value),
             };
           })}
-          onValueChange={val => setHeight(Number(val))}
+          onValueChange={({item}) => setHeight(Number(item.value))}
           onRequestClose={() => setShowHeightModal(false)}
         />
       )}
@@ -473,7 +473,7 @@ const PersonalDetails: React.FC<{
             value,
           };
         })}
-        onValueChange={val => setGender(val as Gender)}
+        onValueChange={({item}) => setGender(item.value as Gender)}
         onRequestClose={() => setShowSexModal(false)}
       />
     </KeyboardAwareScrollView>

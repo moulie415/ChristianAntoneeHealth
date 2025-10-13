@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform, View } from 'react-native';
 import { RulerPicker } from 'react-native-ruler-picker';
-import { Picker } from 'react-native-wheel-pick';
+import Picker from '@quidone/react-native-wheel-picker';
 import { DECIMAL_PLACES, WEIGHTS } from '../../../constants';
 import colors from '../../../constants/colors';
 import Button from '../../commons/Button';
@@ -108,19 +108,18 @@ const SignUpWeightModalAndroid: React.FC<{
             style={{
               height: 200,
               backgroundColor: 'transparent',
-              width: 90,
               alignSelf: 'center',
             }}
-            selectedValue={String(wholeNumber)}
-            textColor={colors.appWhite}
-            itemStyle={{ color: colors.appWhite }}
-            pickerData={WEIGHTS.map(value => {
+            width={100}
+            value={String(wholeNumber)}
+            itemTextStyle={{ color: colors.appWhite }}
+            data={WEIGHTS.map(value => {
               return {
                 label: value.toString(),
                 value: String(value),
               };
             })}
-            onValueChange={(val: string) => setWholeNumber(Number(val))}
+            onValueChanged={({item}) => setWholeNumber(Number(item.value))}
           />
           <Text
             style={{
@@ -136,19 +135,18 @@ const SignUpWeightModalAndroid: React.FC<{
             style={{
               height: 200,
               backgroundColor: 'transparent',
-              width: 90,
               alignSelf: 'center',
             }}
-            selectedValue={String(decimalPart)}
-            textColor={colors.appWhite}
-            itemStyle={{ color: colors.appWhite }}
-            pickerData={DECIMAL_PLACES.map(value => {
+            width={100}
+            value={String(decimalPart)}
+            itemTextStyle={{ color: colors.appWhite }}
+            data={DECIMAL_PLACES.map(value => {
               return {
                 label: value.toString(),
                 value: String(value),
               };
             })}
-            onValueChange={(val: string) => setDecimalPart(Number(val))}
+            onValueChanged={({item}) => setDecimalPart(Number(item.value))}
           />
           <Text
             style={{
