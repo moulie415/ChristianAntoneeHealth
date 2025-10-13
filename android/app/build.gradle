@@ -116,6 +116,7 @@ android {
         versionName "1.0.1"
         multiDexEnabled true
         resConfigs "en", "GB"
+        manifestPlaceholders = [usesCleartextTraffic: "true"]
     }
 
     splits {
