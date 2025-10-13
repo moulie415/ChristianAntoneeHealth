@@ -1524,7 +1524,7 @@ PODS:
     - KTVCocoaHTTPServer
   - leveldb-library (1.22.6)
   - lottie-ios (4.5.0)
-  - lottie-react-native (7.3.2):
+  - lottie-react-native (7.3.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3426,7 +3426,7 @@ PODS:
     - react-native-config/App (= 1.5.9)
   - react-native-config/App (1.5.9):
     - React-Core
-  - react-native-document-picker (10.1.5):
+  - react-native-document-picker (10.1.7):
     - boost
     - DoubleConversion
     - fast_float
@@ -3703,7 +3703,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-skia (2.2.3):
+  - react-native-skia (2.3.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3733,8 +3733,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-spinkit (1.4.1):
-    - React
   - react-native-splash-screen (3.3.0):
     - React-Core
   - react-native-vector-icons-fontawesome6 (12.2.0)
@@ -4488,34 +4486,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNCPicker (2.11.1):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - RNCPushNotificationIOS (1.11.0):
     - React-Core
   - RNDateTimePicker (8.4.4):
@@ -4646,7 +4616,7 @@ PODS:
   - RNPurchases (9.2.2):
     - PurchasesHybridCommon (= 16.2.2)
     - React-Core
-  - RNReanimated (4.0.2):
+  - RNReanimated (4.1.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -4673,11 +4643,11 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 4.0.2)
+    - RNReanimated/reanimated (= 4.1.3)
     - RNWorklets
     - SocketRocket
     - Yoga
-  - RNReanimated/reanimated (4.0.2):
+  - RNReanimated/reanimated (4.1.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -4704,11 +4674,11 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 4.0.2)
+    - RNReanimated/reanimated/apple (= 4.1.3)
     - RNWorklets
     - SocketRocket
     - Yoga
-  - RNReanimated/reanimated/apple (4.0.2):
+  - RNReanimated/reanimated/apple (4.1.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -4920,7 +4890,7 @@ PODS:
     - Yoga
   - RNWatch (1.1.0):
     - React
-  - RNWorklets (0.4.1):
+  - RNWorklets (0.6.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -4936,6 +4906,7 @@ PODS:
     - React-Fabric
     - React-featureflags
     - React-graphics
+    - React-hermes
     - React-ImageManager
     - React-jsi
     - React-NativeModulesApple
@@ -4946,10 +4917,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets (= 0.4.1)
+    - RNWorklets/worklets (= 0.6.1)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets (0.4.1):
+  - RNWorklets/worklets (0.6.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -4965,6 +4936,7 @@ PODS:
     - React-Fabric
     - React-featureflags
     - React-graphics
+    - React-hermes
     - React-ImageManager
     - React-jsi
     - React-NativeModulesApple
@@ -4975,10 +4947,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets/apple (= 0.4.1)
+    - RNWorklets/worklets/apple (= 0.6.1)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets/apple (0.4.1):
+  - RNWorklets/worklets/apple (0.6.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -4994,6 +4966,7 @@ PODS:
     - React-Fabric
     - React-featureflags
     - React-graphics
+    - React-hermes
     - React-ImageManager
     - React-jsi
     - React-NativeModulesApple
@@ -5071,7 +5044,6 @@ DEPENDENCIES:
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
-  - react-native-spinkit (from `../node_modules/react-native-spinkit`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - "react-native-vector-icons-fontawesome6 (from `../node_modules/@react-native-vector-icons/fontawesome6`)"
   - react-native-video (from `../node_modules/react-native-video`)
@@ -5116,7 +5088,6 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
-  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -5316,8 +5287,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-skia:
     :path: "../node_modules/@shopify/react-native-skia"
-  react-native-spinkit:
-    :path: "../node_modules/react-native-spinkit"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-vector-icons-fontawesome6:
@@ -5406,8 +5375,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
-  RNCPicker:
-    :path: "../node_modules/@react-native-picker/picker"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
@@ -5513,7 +5480,7 @@ SPEC CHECKSUMS:
   KTVHTTPCache: 588c3eb16f6bd1e6fde1e230dabfb7bd4e490a4d
   leveldb-library: cc8b8f8e013647a295ad3f8cd2ddf49a6f19be19
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
-  lottie-react-native: 5dae2e15340deda71ee6bc2eb7853b9b5c1d5695
+  lottie-react-native: d2b7601b28c063bde347fac764166b5362037846
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NitroModules: 3ae386167426568412e69a268a2d40eff926c6e1
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -5555,7 +5522,7 @@ SPEC CHECKSUMS:
   react-native-blob-util: 7f71e0af02279ef38a2ba43e8c2fcb79cf927732
   react-native-compressor: 1831c1befc0557e0db16b8d01a5e6207c0b22798
   react-native-config: d08b60865268872495a43e211059b4606131fe01
-  react-native-document-picker: 18ec993bda9ff9c6cf711d8e2592cb43dae35dfc
+  react-native-document-picker: a0f219f1de355c2da4e4a7ce9de5f91e2d9df5a9
   react-native-fbsdk-next: 52f81e60eb3e8e0e06cf9728b4572d3509ca9d01
   react-native-image-picker: 6051cfd030121b880a58f1cc0e5e33e9887804e4
   react-native-in-app-review: 668f4c80d7f95945e0ad7833e98c466cb40d6808
@@ -5565,8 +5532,7 @@ SPEC CHECKSUMS:
   react-native-pdf: 24a7d2ad72dcd3f65ba7c91d487b9c47ed7a1ec5
   react-native-render-html: 5afc4751f1a98621b3009432ef84c47019dcb2bd
   react-native-safe-area-context: 4e673529158bdc17e8af4da63b3eaf99486d8c73
-  react-native-skia: 460f8b0ca6b31f7e3de766445d08a7e014b1d4e9
-  react-native-spinkit: 96a74c3519fab0eded2ab8c285f774aa3f4b7944
+  react-native-skia: 56ca3d70fee1324a7b681b23a401f54e5d27b898
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-vector-icons-fontawesome6: 1b667969bef2f430d1d7515163b980b856f58670
   react-native-video: 6ed94120c73e29c8fbea89ec4e3cedf3528751d6
@@ -5613,7 +5579,6 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: fd44f4b03e007e642e98df6726737bc66e9ba609
   RNCClipboard: e560338bf6cc4656a09ff90610b62ddc0dbdad65
   RNCMaskedView: d707a83784c67099b54b37d056ababb2767ce15e
-  RNCPicker: 70fd0622147f0ca1b9c5e1be2069a4fb2e8ec461
   RNCPushNotificationIOS: 6c4ca3388c7434e4a662b92e4dfeeee858e6f440
   RNDateTimePicker: ca1dc7e24d0b4839877f0ab619e7bca5db715289
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
@@ -5630,7 +5595,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: e1cc4de7646eb557ad62d1271d8eac73c304a896
   RNGoogleSignin: 85c82d6e1494bd4a039804959362e63771f7ad5a
   RNPurchases: 7993b33416e67d5863140b5c62c682b34719f475
-  RNReanimated: 7eea87701ee67c066b67be284ec7ea7c93b02af8
+  RNReanimated: 8f0185df21f0dea34ee8c9611ba88c17a290ed9a
   RNScreens: c5be77a6d6758e892b7f87fc0bb9324a08be47ac
   RNSentry: 8b2743219675fa6d18439a09a0f9664e54ac0b47
   RNSha256: 4d35f112e967f58273d625a19376f4eafc72bd5c
@@ -5639,11 +5604,11 @@ SPEC CHECKSUMS:
   RNSoundPlayer: 7961678d02c7339d9e9cfb78b9f3e8fde17f9df2
   RNSVG: aff81fef09c55ba145246bc41fda6534e886767f
   RNWatch: 28fe1f5e0c6410d45fd20925f4796fce05522e3f
-  RNWorklets: e8335dff9d27004709f58316985769040cd1e8f2
+  RNWorklets: ab618bf7d1c7fd2cb793b9f0f39c3e29274b3ebf
   Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: ce55ebb197c21e22b6700cd36e3f36b7ec26e6f8
 
 PODFILE CHECKSUM: 0349a15d24e40cf78b0353ffc28cddc0ccce987b
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2
