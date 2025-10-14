@@ -14,7 +14,6 @@ import useExerciseEvents from '../../../hooks/UseExerciseEvents';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import { updateProfile } from '../../../reducers/profile';
-import { workoutSong } from '../../../sagas/profile';
 import Exercise from '../../../types/Exercise';
 import {
   PauseEvent,
@@ -29,6 +28,7 @@ import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
+import SoundPlayer from 'react-native-sound-player';
 
 const QuickRoutineView: React.FC<{
   videos: { [key: string]: { src: string; path: string } };
@@ -114,9 +114,7 @@ const QuickRoutineView: React.FC<{
       pauseEvents,
       watchWorkoutData: response,
     });
-    if (workoutSong.isPlaying()) {
-      workoutSong.stop();
-    }
+    SoundPlayer.stop();
   }, 3000);
 
   return (
@@ -134,9 +132,7 @@ const QuickRoutineView: React.FC<{
               onPress: () => {
                 navigation.goBack();
 
-                if (workoutSong.isPlaying()) {
-                  workoutSong.stop();
-                }
+                SoundPlayer.stop();
                 endWatchWorkout();
               },
             },

@@ -12,10 +12,10 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { connect } from 'react-redux';
 import { RootState } from '../../App';
 import colors from '../../constants/colors';
-import { workoutSong } from '../../sagas/profile';
 import Exercise from '../../types/Exercise';
 import { Profile } from '../../types/Shared';
 import Text from './Text';
+import SoundPlayer from 'react-native-sound-player';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -58,9 +58,9 @@ const ExerciseTimer: React.FC<{
     onTimerPaused(!timerPaused);
     if (profile.workoutMusic && !disableWorkoutMusic) {
       if (timerPaused) {
-        workoutSong.play();
+        SoundPlayer.play();
       } else {
-        workoutSong.pause();
+        SoundPlayer.pause();
       }
     }
   };

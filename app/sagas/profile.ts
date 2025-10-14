@@ -26,7 +26,7 @@ import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
-import Sound from 'react-native-sound';
+import SoundPlayer from "react-native-sound-player";
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
@@ -118,26 +118,20 @@ import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
 import { initBiometrics, isAvailable } from '../helpers/biometrics';
 
-const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
-  if (error) {
-    console.log('failed to load the sound', error);
-  }
-});
+// const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
+//   if (error) {
+//     console.log('failed to load the sound', error);
+//   }
+// });
 
-Sound.setCategory('Playback', false);
 
-export const workoutSong = new Sound(
-  'workout_song.mp3',
-  Sound.MAIN_BUNDLE,
-  error => {
-    if (error) {
-      console.log('failed to load the sound', error);
-      return;
-    }
+//Sound.setCategory('Playback', false);
 
-    workoutSong.setNumberOfLoops(-1);
-  },
-);
+
+SoundPlayer.loadSoundFile("workout_song", "mp3");
+
+SoundPlayer.setNumberOfLoops(-1);
+
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
@@ -617,7 +611,7 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
         route.params?.uid === uid &&
         state === 'active'
       ) {
-        notif.play();
+     //   notif.play();
       }
     }
   }
@@ -707,7 +701,7 @@ function* sendMessage(
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
-    notif.play();
+   // notif.play();
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({ text: e.message });

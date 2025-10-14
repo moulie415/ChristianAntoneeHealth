@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import { workoutSong } from '../sagas/profile';
 import sleep from './sleep';
+import SoundPlayer from 'react-native-sound-player';
 
 const playWorkoutSong = async () => {
   const timestamps = [
@@ -10,12 +10,13 @@ const playWorkoutSong = async () => {
 
   const randomTimestamp = _.shuffle(timestamps)[0];
 
-  workoutSong.setCurrentTime(randomTimestamp);
-  workoutSong.setVolume(0);
-  workoutSong.play();
+  SoundPlayer.seek(randomTimestamp);
+  SoundPlayer.setVolume(0);
+  SoundPlayer.play();
+
   for (let i = 0; i < 1; i += 0.1) {
     await sleep(200);
-    workoutSong.setVolume(i);
+    SoundPlayer.setVolume(i)
   }
 };
 

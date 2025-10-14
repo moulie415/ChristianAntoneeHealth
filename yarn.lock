@@ -3551,6 +3551,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/slider@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@react-native-community/slider@npm:5.0.1"
+  checksum: 10c0/b2e712bf97057704ebbd00506de3b6df69b41da111234dfda94926641dd27fdd2186b31b3ba6d8b63e9804411eba7a70b74e293a4eefd3d433561bc61b5b5c3b
+  languageName: node
+  linkType: hard
+
 "@react-native-documents/picker@npm:^10.1.7":
   version: 10.1.7
   resolution: "@react-native-documents/picker@npm:10.1.7"
@@ -5513,7 +5520,6 @@ __metadata:
     prettier-plugin-organize-imports: "npm:^4.1.0"
     react: "npm:19.1.1"
     react-native: "npm:0.82.0"
-    react-native-audio-recorder-player: "npm:^4.3.0"
     react-native-background-fetch: "npm:^4.2.8"
     react-native-background-timer: "npm:^2.4.1"
     react-native-blob-util: "npm:^0.22.2"
@@ -5544,7 +5550,8 @@ __metadata:
     react-native-keyboard-controller: "npm:^1.18.5"
     react-native-linear-gradient: "npm:^2.8.3"
     react-native-multiple-select: "npm:^0.5.12"
-    react-native-nitro-modules: "npm:^0.28.1"
+    react-native-nitro-modules: "npm:^0.30.0"
+    react-native-nitro-sound: "npm:^0.2.8"
     react-native-pager-view: "npm:6.9.1"
     react-native-pdf: "npm:7.0.1"
     react-native-progress: "npm:^5.0.1"
@@ -5558,7 +5565,6 @@ __metadata:
     react-native-screens: "npm:^4.14.1"
     react-native-sha256: "npm:^1.4.10"
     react-native-snackbar: "npm:^2.9.0"
-    react-native-sound: "npm:^0.12.0"
     react-native-sound-player: "npm:^0.14.5"
     react-native-splash-screen: "npm:^3.3.0"
     react-native-star-rating-widget: "npm:^1.9.2"
@@ -11745,17 +11751,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-audio-recorder-player@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "react-native-audio-recorder-player@npm:4.3.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-nitro-modules: "*"
-  checksum: 10c0/7cc43b89309fe1bd77aedb267a24f2bd0f4f7f4be7bb75c908d05867100e74a3789f7d82eecdde9e4054e5f62457aebf4b44b018309d8702b36e4a003629c43b
-  languageName: node
-  linkType: hard
-
 "react-native-background-fetch@npm:^4.2.8":
   version: 4.2.8
   resolution: "react-native-background-fetch@npm:4.2.8"
@@ -12166,13 +12161,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-nitro-modules@npm:^0.28.1":
-  version: 0.28.1
-  resolution: "react-native-nitro-modules@npm:0.28.1"
+"react-native-nitro-modules@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "react-native-nitro-modules@npm:0.30.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10c0/77aa66369b07091b23456136b12466490425b01f4fbfd1f86a164fa6483ddb0ed3a1f41c494ed920a5573cae30aa34122cb8d91767a3a8ae63bdee7cc7cb0db0
+  checksum: 10c0/880f9ca2e71fac3ebbe038aab9f50ee62879583f8f92b4d31adee6e401d60c23e9023f4144ae041ec1e04028fc41a74783f0db02d1d82758ba653efbfbfd8650
+  languageName: node
+  linkType: hard
+
+"react-native-nitro-sound@npm:^0.2.8":
+  version: 0.2.8
+  resolution: "react-native-nitro-sound@npm:0.2.8"
+  dependencies:
+    "@react-native-community/slider": "npm:^5.0.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-modules: "*"
+  checksum: 10c0/297322e9a8ac3da0e8b1c3cae5289249ed75a4bfa102828bed4c24ef492c8d4cc317bf9626d56084491c36a139f12c4246feb3e13d8fa70e7030c05f34614dc0
   languageName: node
   linkType: hard
 
@@ -12360,16 +12368,6 @@ __metadata:
   version: 0.14.5
   resolution: "react-native-sound-player@npm:0.14.5"
   checksum: 10c0/9c1236c9725b5eaef839b9028f046bb59c7531bc0c4bacbb8d584a3197bb3ab5d35e3304f8c96591917914f0a6f04bacd3818cfaf687e5bc65242c23cf223bd0
-  languageName: node
-  linkType: hard
-
-"react-native-sound@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "react-native-sound@npm:0.12.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/9102b81314afe6addb42372d7ffb8b806298f3bca8bb6bd53ec0828a115a4a356a91035b4c77ad9d6d88f785aaa7e1c166ff9a6d93d4b86e3adca71ee27abb7e
   languageName: node
   linkType: hard
 

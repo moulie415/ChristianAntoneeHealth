@@ -12,13 +12,13 @@ import type {
   AudioSet,
   PlayBackType,
   RecordBackType,
-} from 'react-native-audio-recorder-player';
+} from 'react-native-nitro-sound'
 import AudioRecorderPlayer, {
   AVEncoderAudioQualityIOSType,
   AudioEncoderAndroidType,
   AudioSourceAndroidType,
   OutputFormatAndroidType,
-} from 'react-native-audio-recorder-player';
+} from 'react-native-nitro-sound';
 import RNFS from 'react-native-fs';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';

@@ -1,5 +1,39 @@
+diff --git a/node_modules/react-native-video-cache/android/.project b/node_modules/react-native-video-cache/android/.project
+new file mode 100644
+index 0000000..b4f2ec2
+--- /dev/null
++++ b/node_modules/react-native-video-cache/android/.project
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>react-native-video-cache</name>
++	<comment>Project react-native-video-cache created by Buildship.</comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
++	</natures>
++	<filteredResources>
++		<filter>
++			<id>1756054358227</id>
++			<name></name>
++			<type>30</type>
++			<matcher>
++				<id>org.eclipse.core.resources.regexFilterMatcher</id>
++				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
++			</matcher>
++		</filter>
++	</filteredResources>
++</projectDescription>
 diff --git a/node_modules/react-native-video-cache/android/build.gradle b/node_modules/react-native-video-cache/android/build.gradle
-index 8c6410f..f2ce032 100644
+index 8c6410f..2284035 100644
 --- a/node_modules/react-native-video-cache/android/build.gradle
 +++ b/node_modules/react-native-video-cache/android/build.gradle
 @@ -30,7 +30,6 @@ buildscript {
@@ -26,4 +60,34 @@ index 8c6410f..f2ce032 100644
 +        archiveClassifier = 'javadoc'
          from androidJavadoc.destinationDir
      }
+ 
+@@ -129,24 +127,12 @@ afterEvaluate { project ->
+     }
+ 
+     android.libraryVariants.all { variant ->
+-        def name = variant.name.capitalize()
+-        def javaCompileTask = variant.javaCompileProvider.get()
++      def name = variant.name.capitalize()
++      def javaCompileTask = variant.javaCompileProvider.get()
+ 
+-        task "jar${name}"(type: Jar, dependsOn: javaCompileTask) {
+-            from javaCompileTask.destinationDir
+-        }
+-    }
+-
+-    task installArchives(type: Upload) {
+-        configuration = configurations.archives
+-        publishing {
+-            publications {
+-                maven(MavenPublication) {
+-                    artifact androidSourcesJar
+-                    artifact androidJavadocJar
+-                }
+-            }
+-        }
++      task "jar${name}"(type: Jar, dependsOn: javaCompileTask) {
++          from javaCompileTask.destinationDirectory.asFile.get()
++      }
+     }
+ }
  
