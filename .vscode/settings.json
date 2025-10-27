@@ -5,7 +5,7 @@
     "html",
     "typescriptreact"
   ],
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "catppuccin-macchiato",
   "workbench.colorCustomizations": {
     "activityBarBadge.background": "#AB47BC",
     "list.activeSelectionForeground": "#AB47BC",

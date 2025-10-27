@@ -48,6 +48,8 @@
           }
         }
       ],
+      "react-native-health",
+      "react-native-health-connect",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-firebase/messaging",
@@ -58,6 +60,11 @@
           "ios": {
             "useFrameworks": "static",
             "forceStaticLinking": ["RNFBApp", "RNFBAuth", "RNFBFirestore"]
+          },
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 26
           }
         }
       ]
