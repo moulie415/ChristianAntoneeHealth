@@ -1,50 +1,25 @@
-import org.apache.tools.ant.taskdefs.condition.Os
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        buildToolsVersion = "36.0.0"
-        minSdkVersion = 26
-        compileSdkVersion = 36
-        targetSdkVersion = 36
-        ndkVersion = "27.1.12297006"
-        kotlinVersion = "2.1.20"
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle")
-        classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("de.undercouch:gradle-download-task:5.0.1")
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
         classpath 'com.google.gms:google-services:4.4.1'
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
-    }
+    classpath('com.android.tools.build:gradle')
+    classpath('com.facebook.react:react-native-gradle-plugin')
+    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
+  }
 }
 
 allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-        gradlePluginPortal()
-        google()
-
-        all { ArtifactRepository repo ->
-            if (repo.hasProperty("url") && repo.url.toString().startsWith("https://jcenter.bintray.com/")) {
-                project.logger.warn "Repository ${repo.url} removed."
-                remove repo
-                mavenCentral()
-            }
-        }
-
-         maven {
-            url "$rootDir/../node_modules/react-native-video-cache/android/libs"
-        }
-        maven {
-          // react-native-background-fetch
-          url("${project(':react-native-background-fetch').projectDir}/libs")
-       }
-    }
-
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
+  }
 }
 
+apply plugin: "expo-root-project"
 apply plugin: "com.facebook.react.rootproject"

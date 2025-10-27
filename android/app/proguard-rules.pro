@@ -7,10 +7,8 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
+# react-native-reanimated
+-keep class com.swmansion.reanimated.** { *; }
+-keep class com.facebook.react.turbomodule.** { *; }
+
 # Add any project specific keep options here:
-
-
--keep class com.healthandmovement.BuildConfig { *; }
-
-# [react-native-background-fetch]
--keep class com.transistorsoft.rnbackgroundfetch.HeadlessTask { *; }

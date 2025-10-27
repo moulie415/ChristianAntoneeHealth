@@ -5,12 +5,11 @@ import * as Sentry from '@sentry/react-native';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import Config from 'react-native-config';
-import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { IMessage } from 'react-native-gifted-chat';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SplashScreen from 'react-native-splash-screen';
+// import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
@@ -49,7 +48,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer,
-  middleware: [sagaMiddleware],
+  //middleware: [sagaMiddleware],
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: false}).concat(sagaMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -213,7 +213,7 @@ const App: React.FC = () => {
               ref={navigationRef}
               onReady={() => {
                 sagaMiddleware.run(rootSaga);
-                SplashScreen.hide();
+                //SplashScreen.hide();
                 // Register the navigation container with the instrumentation
                 reactNavigationIntegration.registerNavigationContainer(
                   navigationRef,
