@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   StyleProp,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -11,7 +12,7 @@ import Text from './Text';
 
 interface Props {
   wrapperStyle?: StyleProp<ViewStyle>;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   children?: any;
 }
 

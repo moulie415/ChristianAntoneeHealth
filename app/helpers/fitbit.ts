@@ -1,5 +1,4 @@
 import moment from 'moment';
-import Config from 'react-native-config';
 import Snackbar from 'react-native-snackbar';
 import { Sample } from '../types/Shared';
 import { logError } from './error';

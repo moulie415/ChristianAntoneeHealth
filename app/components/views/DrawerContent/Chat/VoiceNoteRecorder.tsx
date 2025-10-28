@@ -8,17 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import type {
-  AudioSet,
-  PlayBackType,
-  RecordBackType,
-} from 'react-native-nitro-sound'
-import AudioRecorderPlayer, {
-  AVEncoderAudioQualityIOSType,
-  AudioEncoderAndroidType,
-  AudioSourceAndroidType,
-  OutputFormatAndroidType,
-} from 'react-native-nitro-sound';
+// @TODO replace with expo audio
+// import type {
+//   AudioSet,
+//   PlayBackType,
+//   RecordBackType,
+// } from 'react-native-nitro-sound'
+// import AudioRecorderPlayer, {
+//   AVEncoderAudioQualityIOSType,
+//   AudioEncoderAndroidType,
+//   AudioSourceAndroidType,
+//   OutputFormatAndroidType,
+// } from 'react-native-nitro-sound';
 import * as FileSystem from 'expo-file-system';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';

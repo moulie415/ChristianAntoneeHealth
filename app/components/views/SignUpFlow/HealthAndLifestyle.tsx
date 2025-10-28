@@ -105,7 +105,6 @@ const HealthAndLifestyle: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      
       extraScrollHeight={Platform.OS === 'ios' ? 0 : 75}
       contentContainerStyle={{ paddingBottom: 100 }}
       style={{
