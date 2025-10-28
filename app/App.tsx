@@ -11,7 +11,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 // @TODO bring back splash screen later
 // import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { navigationRef } from './RootNavigation';
 import { DrawerNavigator } from './Stack';
@@ -50,7 +50,9 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer,
   //middleware: [sagaMiddleware],
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: false}).concat(sagaMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: false,         serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },}).concat(sagaMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -178,24 +180,26 @@ const App: React.FC = () => {
     }, 5500);
   }, []);
 
+  console.log(process.env)
+
   useEffect(() => {
     Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
     Purchases.configure({
       apiKey:
         Platform.OS === 'ios'
-          ? (process.env.REVENUE_CAT_IOS_KEY as string)
-          : (process.env.REVENUE_CAT_ANDROID_KEY as string),
+          ? (process.env.EXPO_PUBLIC_REVENUE_CAT_IOS_KEY as string)
+          : (process.env.EXPO_PUBLIC_REVENUE_CAT_ANDROID_KEY as string),
     });
 
     const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider();
     rnfbProvider.configure({
       android: {
         provider: __DEV__ ? 'debug' : 'playIntegrity',
-        debugToken: process.env.APP_CHECK_DEBUG_TOKEN_ANDROID,
+        debugToken: process.env.EXPO_PUBLIC_APP_CHECK_DEBUG_TOKEN_ANDROID,
       },
       apple: {
         provider: __DEV__ ? 'debug' : 'appAttestWithDeviceCheckFallback',
-        debugToken: process.env.APP_CHECK_DEBUG_TOKEN_IOS,
+        debugToken: process.env.EXPO_PUBLIC_APP_CHECK_DEBUG_TOKEN_IOS,
       },
     });
 
@@ -223,7 +227,7 @@ const App: React.FC = () => {
               }}
             >
               <DrawerNavigator />
-            </NavigationContainer>
+            </NavigationContainer> 
             {showSplash && (
               <View
                 style={{

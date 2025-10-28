@@ -63,7 +63,7 @@ const ConnectedAppsModal: React.FC<{
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${process.env.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
+                `${process.env.EXPO_PUBLIC_ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
               )
             }
           >
@@ -93,7 +93,7 @@ const ConnectedAppsModal: React.FC<{
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${process.env.ROOT_API_URL}auth/polar?uid=${profile.uid}`,
+                `${process.env.EXPO_PUBLIC_ROOT_API_URL}auth/polar?uid=${profile.uid}`,
               )
             }
           >
@@ -122,7 +122,7 @@ const ConnectedAppsModal: React.FC<{
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${process.env.ROOT_API_URL}auth/fitbit?uid=${profile.uid}`,
+                `${process.env.EXPO_PUBLIC_ROOT_API_URL}auth/fitbit?uid=${profile.uid}`,
               )
             }
           >

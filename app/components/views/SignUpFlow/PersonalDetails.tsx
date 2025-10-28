@@ -304,7 +304,7 @@ const PersonalDetails: React.FC<{
             <Text
               onPress={() =>
                 navigation.navigate('WebViewScreen', {
-                  uri: process.env.TERMS_AND_CONDITIONS as string,
+                  uri: process.env.EXPO_PUBLIC_TERMS_AND_CONDITIONS as string,
                   title: 'Terms of Service',
                 })
               }
@@ -338,7 +338,7 @@ const PersonalDetails: React.FC<{
             <Text
               onPress={() =>
                 navigation.navigate('WebViewScreen', {
-                  uri: process.env.PRIVACY_POLICY as string,
+                  uri: process.env.EXPO_PUBLIC_PRIVACY_POLICY as string,
                   title: 'Privacy Policy',
                 })
               }

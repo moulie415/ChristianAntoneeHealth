@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import RNCalendarEvents from 'react-native-calendar-events';
+// import RNCalendarEvents from 'react-native-calendar-events';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
@@ -157,19 +157,19 @@ const Settings: React.FC<{
     try {
       if (plan) {
         if (sync) {
-          const permission = await RNCalendarEvents.requestPermissions();
-          if (permission === 'authorized') {
-            const calendars = await RNCalendarEvents.findCalendars();
-            const list = calendars.filter(c => c.isPrimary);
-            setCalendarList(list);
-            if (list.length && list.length > 1) {
-              setModalVisible(true);
-            } else {
-              setCalendarIdAction(list[0].id);
-              syncPlanWithCalendarAction({ plan, sync });
-              setSyncPlanWithCalendar(sync);
-            }
-          }
+          // const permission = await RNCalendarEvents.requestPermissions();
+          // if (permission === 'authorized') {
+          //   const calendars = await RNCalendarEvents.findCalendars();
+          //   const list = calendars.filter(c => c.isPrimary);
+          //   setCalendarList(list);
+          //   if (list.length && list.length > 1) {
+          //     setModalVisible(true);
+          //   } else {
+          //     setCalendarIdAction(list[0].id);
+          //     syncPlanWithCalendarAction({ plan, sync });
+          //     setSyncPlanWithCalendar(sync);
+          //   }
+          // }
         } else {
           syncPlanWithCalendarAction({ plan, sync });
           setSyncPlanWithCalendar(sync);

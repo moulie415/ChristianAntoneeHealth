@@ -14,9 +14,10 @@ import {
 import db from '@react-native-firebase/firestore';
 import { PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
-import RNCalendarEvents, {
-  CalendarEventWritable,
-} from 'react-native-calendar-events';
+// @TODO re-enable calendar sync
+// import RNCalendarEvents, {
+//   CalendarEventWritable,
+// } from 'react-native-calendar-events';
 // import PushNotification from 'react-native-push-notification';
 import { RootState } from '../App';
 import { scheduleLocalNotification } from '../helpers';
@@ -91,17 +92,17 @@ function* syncPlanWithCalendarWorker(
         const event = events[i];
         let id: string;
         try {
-          id = yield call(
-            RNCalendarEvents.saveEvent,
-            event.title,
-            event.details,
-          );
+          // id = yield call(
+          //   RNCalendarEvents.saveEvent,
+          //   event.title,
+          //   event.details,
+          // );
         } catch (e) {
-          id = yield call(
-            RNCalendarEvents.saveEvent,
-            event.title,
-            _.omit(event.details, ['id']),
-          );
+          // id = yield call(
+          //   RNCalendarEvents.saveEvent,
+          //   event.title,
+          //   _.omit(event.details, ['id']),
+          // );
         }
         yield put(setSyncedPlanEvent({ key, id }));
       }

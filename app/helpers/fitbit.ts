@@ -46,7 +46,7 @@ export const refreshToken = async (
 }> => {
   try {
     const response = await fetch(
-      `${process.env.ROOT_API_URL}auth/fitbit/refresh?uid=${uid}&fitbitRefreshToken=${rToken}`,
+      `${process.env.EXPO_PUBLIC_ROOT_API_URL}auth/fitbit/refresh?uid=${uid}&fitbitRefreshToken=${rToken}`,
     );
 
     const {

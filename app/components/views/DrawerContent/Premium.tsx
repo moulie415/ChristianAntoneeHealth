@@ -375,7 +375,7 @@ const Premium: React.FC<{
                   text="Terms of Service"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: process.env.TERMS_AND_CONDITIONS as string,
+                      uri: process.env.EXPO_PUBLIC_TERMS_AND_CONDITIONS as string,
                       title: 'Terms of Service',
                     })
                   }
@@ -387,7 +387,7 @@ const Premium: React.FC<{
                   text="Privacy Policy"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: process.env.PRIVACY_POLICY as string,
+                      uri: process.env.EXPO_PUBLIC_PRIVACY_POLICY as string,
                       title: 'Privacy Policy',
                     })
                   }

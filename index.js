@@ -1,26 +1,26 @@
 //import './wdyr';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import messaging from '@react-native-firebase/messaging';
-// import * as Sentry from '@sentry/react-native';
-import moment from 'moment';
-import {AppRegistry, Linking, Platform} from 'react-native';
+// import messaging from '@react-native-firebase/messaging';
+// // import * as Sentry from '@sentry/react-native';
+// import moment from 'moment';
+// import {AppRegistry, Linking, Platform} from 'react-native';
 // import BackgroundFetch from 'react-native-background-fetch';
 // @TODO re-enable background fetch and push notifications with expo-background-task and expo-notifications
 // import PushNotification from 'react-native-push-notification';
-import {name as appName} from './app.json';
-import App, {store} from './app/App';
-import {navigate, navigationRef} from './app/RootNavigation';
-import * as api from './app/helpers/api';
-import {getStepSamples} from './app/helpers/biometrics';
-import {logError} from './app/helpers/error';
-import {setUnread} from './app/reducers/profile';
-import {
-  CONNECTION_ID,
-  MESSAGE_CHANNEL_ID,
-  MONTHLY_TEST_REMINDERS_CHANNEL_ID,
-  PLAN_CHANNEL_ID,
-  WORKOUT_REMINDERS_CHANNEL_ID,
-} from './app/sagas/profile';
+import App/*, {store} */ from './app/App';
+// import {navigate, navigationRef} from './app/RootNavigation';
+// import * as api from './app/helpers/api';
+// import {getStepSamples} from './app/helpers/biometrics';
+// import {logError} from './app/helpers/error';
+// import {setUnread} from './app/reducers/profile';
+// import {
+//   CONNECTION_ID,
+//   MESSAGE_CHANNEL_ID,
+//   MONTHLY_TEST_REMINDERS_CHANNEL_ID,
+//   PLAN_CHANNEL_ID,
+//   WORKOUT_REMINDERS_CHANNEL_ID,
+// } from './app/sagas/profile';
+import { registerRootComponent } from 'expo';
 
 // let MyHeadlessTask = async event => {
 //   // Get task id from event {}:
@@ -234,4 +234,5 @@ import {
 //   requestPermissions: true,
 // });
 
-AppRegistry.registerComponent(appName, () => App);
+
+registerRootComponent(App);

@@ -252,7 +252,7 @@ const DrawerContent: React.FC<Props> = ({
           margin: 10,
         }}
       >
-        {`v${Application.nativeApplicationVersion} (${Application.nativeApplicationVersion})`}
+        {`v${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`}
       </Text>
     </SafeAreaView>
   );

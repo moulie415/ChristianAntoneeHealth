@@ -1,5 +1,14 @@
-const { getSentryExpoConfig } = require("@sentry/react-native/metro");
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config');
 
-const config = getSentryExpoConfig(__dirname);
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
+
+config.transformer.getTransformOptions = async () => ({
+    transform: {
+        experimentalImportSupport: true,
+        inlineRequires: true,
+    },
+});
 
 module.exports = config;
