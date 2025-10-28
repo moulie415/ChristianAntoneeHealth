@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Alert, Platform, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Video, { ResizeMode } from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../App';
 import { resetToTabs } from '../../../RootNavigation';
@@ -138,7 +137,7 @@ const Test: React.FC<{
     <View style={{ flex: 1 }}>
       {test.video?.src ? (
         <Video
-          source={{ uri: convertToProxyURL(test.video?.src) }}
+          source={{ uri: test.video?.src }}
           style={{ height: getVideoHeight(), width: '100%' }}
           resizeMode={ResizeMode.COVER}
           repeat

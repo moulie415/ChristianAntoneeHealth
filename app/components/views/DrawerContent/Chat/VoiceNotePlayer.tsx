@@ -3,7 +3,7 @@ import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { IMessage } from 'react-native-gifted-chat';
-import SoundPlayer from 'react-native-sound-player';
+// import SoundPlayer from 'react-native-sound-player';
 import colors from '../../../../constants/colors';
 import mmss from '../../../../helpers/mmss';
 import useInterval from '../../../../hooks/UseInterval';
@@ -18,33 +18,33 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
 
   const onPlay = async () => {
     if (playing === undefined) {
-      SoundPlayer.playUrl(audio);
+     // SoundPlayer.playUrl(audio);
     } else {
-      SoundPlayer.resume();
+    //  SoundPlayer.resume();
     }
     setPlaying(true);
   };
 
   const onPause = async () => {
-    SoundPlayer.pause();
+   // SoundPlayer.pause();
     setPlaying(false);
   };
 
   useEffect(() => {
-    const sub = SoundPlayer.addEventListener('FinishedPlaying', () => {
-      SoundPlayer.seek(0);
-      setPlaying(false);
-    });
-    return () => {
-      sub.remove();
-    };
+    // const sub = SoundPlayer.addEventListener('FinishedPlaying', () => {
+    //   SoundPlayer.seek(0);
+    //   setPlaying(false);
+    // });
+    // return () => {
+    //   sub.remove();
+    // };
   }, []);
 
   useInterval(async () => {
     if (playing) {
-      const { currentTime, duration } = await SoundPlayer.getInfo();
-      setCurrentDurationSec(duration);
-      setCurrentPositionSec(currentTime);
+      // const { currentTime, duration } = await SoundPlayer.getInfo();
+      // setCurrentDurationSec(duration);
+      // setCurrentPositionSec(currentTime);
     }
   }, 100);
   return (
@@ -96,7 +96,7 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
             trackStyle={{ width: 150 }}
             onSlidingComplete={val => {
               if (playing !== undefined) {
-                SoundPlayer.seek(currentDurationSec * val[0]);
+                // SoundPlayer.seek(currentDurationSec * val[0]);
               }
             }}
             renderThumbComponent={() => {

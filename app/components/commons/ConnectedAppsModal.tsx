@@ -1,7 +1,6 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import { Dimensions, Linking, TouchableOpacity, View } from 'react-native';
-import Config from 'react-native-config';
 import { connect } from 'react-redux';
 import { RootState } from '../../App';
 import colors from '../../constants/colors';
@@ -64,7 +63,7 @@ const ConnectedAppsModal: React.FC<{
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${Config.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
+                `${process.env.ROOT_API_URL}auth/garmin?uid=${profile.uid}`,
               )
             }
           >
@@ -94,7 +93,7 @@ const ConnectedAppsModal: React.FC<{
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${Config.ROOT_API_URL}auth/polar?uid=${profile.uid}`,
+                `${process.env.ROOT_API_URL}auth/polar?uid=${profile.uid}`,
               )
             }
           >
@@ -123,7 +122,7 @@ const ConnectedAppsModal: React.FC<{
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `${Config.ROOT_API_URL}auth/fitbit?uid=${profile.uid}`,
+                `${process.env.ROOT_API_URL}auth/fitbit?uid=${profile.uid}`,
               )
             }
           >

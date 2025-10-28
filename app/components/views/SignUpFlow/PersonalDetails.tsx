@@ -5,7 +5,6 @@ import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import Config from 'react-native-config';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackParamList } from '../../../App';
 import { HEIGHTS } from '../../../constants';
@@ -305,7 +304,7 @@ const PersonalDetails: React.FC<{
             <Text
               onPress={() =>
                 navigation.navigate('WebViewScreen', {
-                  uri: Config.TERMS_AND_CONDITIONS as string,
+                  uri: process.env.TERMS_AND_CONDITIONS as string,
                   title: 'Terms of Service',
                 })
               }
@@ -339,7 +338,7 @@ const PersonalDetails: React.FC<{
             <Text
               onPress={() =>
                 navigation.navigate('WebViewScreen', {
-                  uri: Config.PRIVACY_POLICY as string,
+                  uri: process.env.PRIVACY_POLICY as string,
                   title: 'Privacy Policy',
                 })
               }

@@ -6,7 +6,7 @@ import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
 import React, { ReactNode } from 'react';
 import { Alert, FlatList, Share, TouchableOpacity, View } from 'react-native';
-import { getBuildNumber, getVersion } from 'react-native-device-info';
+import * as Application from 'expo-application';
 import { LoginManager } from 'react-native-fbsdk-next';
 import Purchases from 'react-native-purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -252,7 +252,7 @@ const DrawerContent: React.FC<Props> = ({
           margin: 10,
         }}
       >
-        {`v${getVersion()} (${getBuildNumber()})`}
+        {`v${Application.nativeApplicationVersion} (${Application.nativeApplicationVersion})`}
       </Text>
     </SafeAreaView>
   );

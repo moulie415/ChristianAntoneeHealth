@@ -15,7 +15,7 @@ import colors from '../../constants/colors';
 import Exercise from '../../types/Exercise';
 import { Profile } from '../../types/Shared';
 import Text from './Text';
-import SoundPlayer from 'react-native-sound-player';
+// import SoundPlayer from 'react-native-sound-player';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -58,9 +58,9 @@ const ExerciseTimer: React.FC<{
     onTimerPaused(!timerPaused);
     if (profile.workoutMusic && !disableWorkoutMusic) {
       if (timerPaused) {
-        SoundPlayer.play();
+       // SoundPlayer.play();
       } else {
-        SoundPlayer.pause();
+        // SoundPlayer.pause();
       }
     }
   };

@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { NativeModules, Platform } from 'react-native';
-// import {getApiLevel} from 'react-native-device-info';
 import AppleHealthKit from 'react-native-health';
 import {
   RecordingMethod,

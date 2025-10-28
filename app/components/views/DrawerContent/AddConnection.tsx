@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React, { useState } from 'react';
 import { generateLink } from '../../../helpers/api';
@@ -57,8 +57,8 @@ const AddConnection: React.FC<{ profile: Profile }> = ({ profile }) => {
                 <IconButton
                   icon="clipboard"
                   style={{ marginRight: 5 }}
-                  onPress={() => {
-                    Clipboard.setString(link);
+                  onPress={async () => {
+                    await Clipboard.setStringAsync(link);
                     Snackbar.show({ text: 'Link copied to clipboard!' });
                   }}
                 >

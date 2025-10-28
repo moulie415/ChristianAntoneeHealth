@@ -11,7 +11,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { getBuildNumber, getVersion } from 'react-native-device-info';
+import * as Application from 'expo-application'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
@@ -209,7 +209,7 @@ const Login: React.FC<{
             margin: 10,
           }}
         >
-          {`v${getVersion()} (${getBuildNumber()})`}
+          {`v${Application.nativeApplicationVersion} (${Application.nativeApplicationVersion})`}
         </Text>
       </View>
     </ImageBackground>

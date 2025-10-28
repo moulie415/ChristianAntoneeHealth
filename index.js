@@ -5,6 +5,7 @@ import messaging from '@react-native-firebase/messaging';
 import moment from 'moment';
 import {AppRegistry, Linking, Platform} from 'react-native';
 // import BackgroundFetch from 'react-native-background-fetch';
+// @TODO re-enable background fetch and push notifications with expo-background-task and expo-notifications
 // import PushNotification from 'react-native-push-notification';
 import {name as appName} from './app.json';
 import App, {store} from './app/App';

@@ -28,7 +28,7 @@ import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import SoundPlayer from 'react-native-sound-player';
+// import SoundPlayer from 'react-native-sound-player';
 
 const QuickRoutineView: React.FC<{
   videos: { [key: string]: { src: string; path: string } };
@@ -114,7 +114,7 @@ const QuickRoutineView: React.FC<{
       pauseEvents,
       watchWorkoutData: response,
     });
-    SoundPlayer.stop();
+   // SoundPlayer.stop();
   }, 3000);
 
   return (
@@ -132,7 +132,7 @@ const QuickRoutineView: React.FC<{
               onPress: () => {
                 navigation.goBack();
 
-                SoundPlayer.stop();
+                //SoundPlayer.stop();
                 endWatchWorkout();
               },
             },

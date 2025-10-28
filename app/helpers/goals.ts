@@ -1,5 +1,5 @@
 import moment from 'moment';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 import { capitalizeFirstLetter } from '.';
 import { WeeklyItems } from '../reducers/profile';
 import { GOALS_CHANNEL_ID } from '../sagas/profile';
@@ -156,12 +156,12 @@ export const sendGoalTargetNotification = (
         newCalories >= caloriesGoal &&
         newMins >= minsGoal
       ) {
-        PushNotification.localNotification({
-          title: 'Weekly targets complete!',
-          message:
-            'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
-          channelId: GOALS_CHANNEL_ID,
-        });
+        // PushNotification.localNotification({
+        //   title: 'Weekly targets complete!',
+        //   message:
+        //     'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
+        //   channelId: GOALS_CHANNEL_ID,
+        // });
         return;
       }
       // Otherwise check individual targets
@@ -179,13 +179,13 @@ export const sendGoalTargetNotification = (
         completed += 1;
       }
       if (completed > 0) {
-        PushNotification.localNotification({
-          title: 'Well done!',
-          message: `you’ve completed ${completed} of your weekly targets! Only ${
-            3 - completed
-          } more to go!`,
-          channelId: GOALS_CHANNEL_ID,
-        });
+        // PushNotification.localNotification({
+        //   title: 'Well done!',
+        //   message: `you’ve completed ${completed} of your weekly targets! Only ${
+        //     3 - completed
+        //   } more to go!`,
+        //   channelId: GOALS_CHANNEL_ID,
+        // });
       }
     }
   }

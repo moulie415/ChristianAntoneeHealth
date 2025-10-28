@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Config from 'react-native-config';
 import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
   CustomerInfo,
@@ -376,7 +375,7 @@ const Premium: React.FC<{
                   text="Terms of Service"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: Config.TERMS_AND_CONDITIONS as string,
+                      uri: process.env.TERMS_AND_CONDITIONS as string,
                       title: 'Terms of Service',
                     })
                   }
@@ -388,7 +387,7 @@ const Premium: React.FC<{
                   text="Privacy Policy"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: Config.PRIVACY_POLICY as string,
+                      uri: process.env.PRIVACY_POLICY as string,
                       title: 'Privacy Policy',
                     })
                   }

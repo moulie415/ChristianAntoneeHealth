@@ -1,6 +1,7 @@
 import { Timestamp } from '@react-native-firebase/firestore';
 import { PurchasesEntitlementInfo } from 'react-native-purchases';
 import { Area, Equipment as EquipmentLevel } from './QuickRoutines';
+import { DeviceType } from 'expo-device';
 
 export interface Targets {
   calories: number;
@@ -54,11 +55,11 @@ export enum CurrentExercise {
 
 export interface DeviceInfo {
   fontScale: number;
-  buildNumber: string;
-  version: string;
-  brand: string;
-  deviceId: string;
-  deviceType: string;
+  buildNumber: string | null;
+  version: string | null;
+  brand: string | null;
+  deviceId: string | null;
+  deviceType: DeviceType | null;
   isTablet: boolean;
   os: string;
 }

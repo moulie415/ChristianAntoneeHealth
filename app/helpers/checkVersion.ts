@@ -1,6 +1,6 @@
-import { getVersion } from 'react-native-device-info';
 import { navigate } from '../RootNavigation';
 import { logError } from './error';
+import * as Application from 'expo-application';
 
 const compareVersions = (v1: string, v2: string) => {
   const v1Parts = v1.split('.').map(Number);
@@ -29,9 +29,9 @@ export const checkVersion = (minVersion?: string) => {
       return;
     }
 
-    const version = getVersion();
+    const version = Application.nativeApplicationVersion;
 
-    if (!parseFloat(version)) {
+    if (!version || !parseFloat(version)) {
       return;
     }
 

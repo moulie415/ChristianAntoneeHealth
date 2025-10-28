@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import auth from '@react-native-firebase/auth';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
@@ -385,8 +385,8 @@ const Settings: React.FC<{
           </Text>
 
           <SettingsItem
-            onPress={() => {
-              Clipboard.setString(profile.uid);
+            onPress={async () => {
+              await Clipboard.setStringAsync(profile.uid);
               Snackbar.show({ text: 'User ID copied to clipboard' });
             }}
             text="User ID"

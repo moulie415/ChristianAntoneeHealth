@@ -17,7 +17,7 @@ import moment from 'moment';
 import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 import { RootState } from '../App';
 import { scheduleLocalNotification } from '../helpers';
 import { logError } from '../helpers/error';
@@ -114,7 +114,7 @@ function* syncPlanWithCalendarWorker(
 }
 
 export function* schedulePlanReminders() {
-  PushNotification.cancelAllLocalNotifications();
+  // PushNotification.cancelAllLocalNotifications();
   const plan: Plan | undefined = yield select(
     (state: RootState) => state.profile.plan,
   );

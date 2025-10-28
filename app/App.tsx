@@ -4,7 +4,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
-import Config from 'react-native-config';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { IMessage } from 'react-native-gifted-chat';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
@@ -182,19 +181,19 @@ const App: React.FC = () => {
     Purchases.configure({
       apiKey:
         Platform.OS === 'ios'
-          ? (Config.REVENUE_CAT_IOS_KEY as string)
-          : (Config.REVENUE_CAT_ANDROID_KEY as string),
+          ? (process.env.REVENUE_CAT_IOS_KEY as string)
+          : (process.env.REVENUE_CAT_ANDROID_KEY as string),
     });
 
     const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider();
     rnfbProvider.configure({
       android: {
         provider: __DEV__ ? 'debug' : 'playIntegrity',
-        debugToken: Config.APP_CHECK_DEBUG_TOKEN_ANDROID,
+        debugToken: process.env.APP_CHECK_DEBUG_TOKEN_ANDROID,
       },
       apple: {
         provider: __DEV__ ? 'debug' : 'appAttestWithDeviceCheckFallback',
-        debugToken: Config.APP_CHECK_DEBUG_TOKEN_IOS,
+        debugToken: process.env.APP_CHECK_DEBUG_TOKEN_IOS,
       },
     });
 

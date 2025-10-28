@@ -1,5 +1,5 @@
-import Clipboard from '@react-native-clipboard/clipboard';
-import { pick } from '@react-native-documents/picker';
+import * as Clipboard from 'expo-clipboard';
+import * as DocumentPicker from 'expo-document-picker'
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { RouteProp } from '@react-navigation/native';
@@ -49,7 +49,6 @@ import {
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import Video, { ResizeMode } from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
@@ -325,7 +324,7 @@ const Chat: React.FC<ChatProps> = ({
           resizeMode={ResizeMode.COVER}
           paused
           source={{
-            uri: convertToProxyURL(props.currentMessage?.video || ''),
+            uri: props.currentMessage?.video || '',
           }}
         />
         <View
@@ -542,13 +541,10 @@ const Chat: React.FC<ChatProps> = ({
 
   const onPressDocument = async () => {
     try {
-      const [result] = await pick({
-        copyTo: 'cachesDirectory',
-        ...(Platform.OS === 'android'
-          ? { type: ['text/*', 'application/*'] }
-          : {}),
-      });
+      const result = await DocumentPicker.getDocumentAsync({type: ['application/*', 'text/*'], copyToCacheDirectory: true})
 
+      if (!result.canceled) {
+        const asset = result.assets[0];
       const message: Message = {
         user: {
           _id: profile.uid,
@@ -556,16 +552,17 @@ const Chat: React.FC<ChatProps> = ({
           avatar: profile.avatar,
         },
         _id: uuid.v4() as string,
-        document: result.uri,
+        document: asset.uri,
         text: '',
         type: 'document',
         pending: true,
         createdAt: moment().valueOf(),
-        mimeType: result.type || '',
-        filename: result.name || '',
+        mimeType: asset.mimeType || '',
+        filename: asset.name || '',
       };
 
-      sendMessageAction({ message, chatId, uid, size: result.size });
+      sendMessageAction({ message, chatId, uid, size: asset.size });
+    }
     } catch (e: any) {
       if (e?.code !== 'DOCUMENT_PICKER_CANCELED') {
         logError(e);
@@ -599,9 +596,9 @@ const Chat: React.FC<ChatProps> = ({
         options,
         cancelButtonIndex,
       },
-      (buttonIndex: number) => {
+      async (buttonIndex: number) => {
         if (options[buttonIndex] === copyText) {
-          Clipboard.setString(message.text);
+          await Clipboard.setStringAsync(message.text);
           Snackbar.show({ text: 'Text copied to clipboard' });
         } else if (options[buttonIndex] === deleteMessage && msg && messageId) {
           requestMessageDeletion({ chatId, message: msg, uid, messageId });

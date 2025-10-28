@@ -9,24 +9,19 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import _ from 'lodash';
 import moment from 'moment';
-import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native';
+import { Alert, Linking, PermissionsAndroid, PixelRatio, Platform } from 'react-native';
 import { Audio, Image, Video } from 'react-native-compressor';
-import {
-  getBrand,
-  getBuildNumber,
-  getDeviceId,
-  getDeviceType,
-  getFontScale,
-  getVersion,
-  isTablet,
-} from 'react-native-device-info';
+import * as Device from 'expo-device';
+import * as Application from 'expo-application'
 import { openInbox } from 'react-native-email-link';
-import RNFS from 'react-native-fs';
+import * as FileSystem from 'expo-file-system';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
-import PushNotification from 'react-native-push-notification';
+/* @TODO replace react native push notification with expo notifications 
+and place react native soundplayer and other audio modules with expo audio */
+// import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
-import SoundPlayer from "react-native-sound-player";
+// import SoundPlayer from "react-native-sound-player";
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
@@ -107,6 +102,7 @@ import { SettingsState } from '../reducers/settings';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import {
+  DeviceInfo,
   Profile,
   Sample,
   SignUpPayload,
@@ -128,9 +124,9 @@ import { initBiometrics, isAvailable } from '../helpers/biometrics';
 //Sound.setCategory('Playback', false);
 
 
-SoundPlayer.loadSoundFile("workout_song", "mp3");
+// SoundPlayer.loadSoundFile("workout_song", "mp3");
 
-SoundPlayer.setNumberOfLoops(-1);
+// SoundPlayer.setNumberOfLoops(-1);
 
 
 type Snapshot =
@@ -267,7 +263,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       uid: profile.uid || '',
     });
     if (!goalReminders) {
-      PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+      // PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
     }
 
     yield put(setLoading(false));
@@ -429,14 +425,14 @@ const channels: {
 
 function* createChannels() {
   channels.forEach(({ channelId, channelName, channelDescription }) => {
-    PushNotification.createChannel(
-      {
-        channelId,
-        channelName,
-        channelDescription,
-      },
-      created => console.log('channel created', created),
-    );
+    // PushNotification.createChannel(
+    //   {
+    //     channelId,
+    //     channelName,
+    //     channelDescription,
+    //   },
+    //   created => console.log('channel created', created),
+    // );
   });
 }
 
@@ -492,7 +488,7 @@ export function* scheduleGoalReminderNotification() {
 
     if (date.isAfter(moment())) {
       if (completed) {
-        PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+       // PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
       } else if (profile.goalReminders) {
         scheduleLocalNotification(
           'You’ve got just two days to hit your weekly targets',
@@ -661,8 +657,8 @@ function* sendMessage(
       let size = action.payload.size;
       try {
         if (message.type !== 'document') {
-          const read: RNFS.StatResult = yield call(RNFS.stat, compressedUri);
-          size = read.size;
+          const info = new FileSystem.File(compressedUri).info()
+          size = info.size;
         }
       } catch (e) {
         logError(e);
@@ -786,15 +782,16 @@ function* premiumUpdatedWorker() {
 
 function* checkDeviceInfoChanged() {
   try {
-    const fontScale: number = yield call(getFontScale);
-    const deviceInfo = {
+    const fontScale: number = yield call(PixelRatio.getFontScale);
+    const deviceInfo: DeviceInfo = {
       fontScale,
-      buildNumber: getBuildNumber(),
-      version: getVersion(),
-      brand: getBrand(),
-      deviceId: getDeviceId(),
-      deviceType: getDeviceType(),
-      isTablet: isTablet(),
+      buildNumber: Application.nativeBuildVersion,
+      version: Application.nativeApplicationVersion,
+      brand: Device.brand,
+      // @TODO work this out
+      deviceId: Application.applicationId,
+      deviceType: Device.deviceType,
+      isTablet: Device.deviceType === Device.DeviceType.TABLET,
       os: Platform.OS,
     };
 

@@ -3,7 +3,8 @@ import * as Sentry from '@sentry/react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
 import { Platform } from 'react-native';
-import BackgroundFetch from 'react-native-background-fetch';
+// import BackgroundFetch from 'react-native-background-fetch';
+import * as BackgroundTask from 'expo-background-task';
 import {
   Permission,
   getGrantedPermissions,
@@ -232,14 +233,14 @@ function* handleBackgroundFetchEvent(action: {
 }) {
   const { taskId, timeout } = action;
   if (timeout) {
-    BackgroundFetch.finish(taskId);
+    // BackgroundFetch.finish(taskId);
     logError(new Error('Task timed out'));
   } else {
     const { profile } = yield select((state: RootState) => state.profile);
     if (profile.premium && profile.optedInToLeaderboards) {
       yield call(checkStepsCalories, true);
     }
-    BackgroundFetch.finish(taskId);
+   // BackgroundFetch.finish(taskId);
   }
 }
 
@@ -253,18 +254,18 @@ function createBackgroundFetchChannel() {
       emitter({ taskId, timeout: true });
     };
 
-    BackgroundFetch.configure(
-      {
-        minimumFetchInterval: 15,
-        enableHeadless: true,
-        stopOnTerminate: false,
-        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY,
-      },
-      onEvent,
-      onTimeout,
-    ).then(status => {
-      console.log('[BackgroundFetch] configure status: ', status);
-    });
+    // BackgroundFetch.configure(
+    //   {
+    //     minimumFetchInterval: 15,
+    //     enableHeadless: true,
+    //     stopOnTerminate: false,
+    //     requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY,
+    //   },
+    //   onEvent,
+    //   onTimeout,
+    // ).then(status => {
+    //   console.log('[BackgroundFetch] configure status: ', status);
+    // });
 
     return () => {
       // Cleanup function (if needed)
