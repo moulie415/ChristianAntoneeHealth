@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { StackParamList } from '../../App';
 import colors from '../../constants/colors';
 import { appleSignIn, facebookSignIn, googleSignIn } from '../../helpers/api';
-// import GoogleIcon from '../../images/google.svg';
+import GoogleIcon from '../../images/google.svg';
 import {
   LoginFullname,
   handleAuth,
@@ -180,9 +180,9 @@ const Login: React.FC<{
 
           <Button
             onPress={signInGoogle}
-            // icon={
-            //   <GoogleIcon style={{ marginRight: 10 }} height={20} width={20} />
-            // }
+            icon={
+              <GoogleIcon style={{ marginRight: 10 }} height={20} width={20} />
+            }
             disabled={disabled}
             text="Continue with Google"
             overrideCasing
