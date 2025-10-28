@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode, useEffect } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import colors from '../../../constants/colors';
 import Checkbox from '../../commons/Checkbox';
 import Divider from '../../commons/Divider';
@@ -133,7 +133,7 @@ const PhysicalActivityReadiness: React.FC<{
   ];
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
+      
       extraScrollHeight={Platform.OS === 'ios' ? 50 : 75}
       contentContainerStyle={{ paddingBottom: 100 }}
       style={{

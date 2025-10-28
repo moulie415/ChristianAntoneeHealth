@@ -1,5 +1,6 @@
 import DatePicker from '@react-native-community/datetimepicker';
 import storage from '@react-native-firebase/storage';
+import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -15,14 +16,7 @@ import {
   View,
 } from 'react-native';
 import { Image } from 'react-native-compressor';
-import RNFS from 'react-native-fs';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
+import * as FileSystem from 'expo-file-system';
 import ImageView from 'react-native-image-viewing';
 import { ImageSource } from 'react-native-image-viewing/dist/@types';
 import { SafeAreaView } from 'react-native-safe-area-context';

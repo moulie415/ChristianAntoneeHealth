@@ -19,7 +19,7 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
   OutputFormatAndroidType,
 } from 'react-native-nitro-sound';
-import RNFS from 'react-native-fs';
+import * as FileSystem from 'expo-file-system';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import colors from '../../../../constants/colors';

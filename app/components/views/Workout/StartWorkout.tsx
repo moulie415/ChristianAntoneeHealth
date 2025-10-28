@@ -28,7 +28,7 @@ import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import SoundPlayer from 'react-native-sound-player';
+// import SoundPlayer from 'react-native-sound-player';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -88,7 +88,7 @@ const StartWorkout: React.FC<{
       planId,
       watchWorkoutData: response,
     });
-    SoundPlayer.stop();
+   // SoundPlayer.stop();
   }, 3000);
 
   return (
@@ -105,7 +105,7 @@ const StartWorkout: React.FC<{
               text: 'Yes',
               onPress: () => {
                 navigation.goBack();
-                SoundPlayer.stop();
+               // SoundPlayer.stop();
                 endWatchWorkout();
               },
             },

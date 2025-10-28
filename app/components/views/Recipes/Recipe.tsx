@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import React, { useCallback, useEffect } from 'react';
 import { Platform } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import RNFS from 'react-native-fs';
+import * as FileSystem from 'expo-file-system';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Pdf from 'react-native-pdf';
 import { SafeAreaView } from 'react-native-safe-area-context';

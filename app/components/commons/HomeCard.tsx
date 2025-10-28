@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { RootState } from '../../App';
 import colors from '../../constants/colors';

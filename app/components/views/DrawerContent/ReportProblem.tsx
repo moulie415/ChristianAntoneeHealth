@@ -2,7 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Sentry from '@sentry/react-native';
 import React, { useState } from 'react';
 import { Image, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Snackbar from 'react-native-snackbar';
 import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';

@@ -79,10 +79,10 @@
       [
         "react-native-fbsdk-next",
         {
-          "appID": "",
-          "clientToken": "",
+          "appID": "test",
+          "clientToken": "test",
           "displayName": "CA Health",
-          "scheme": ""
+          "scheme": "test"
         }
       ],
       "react-native-email-link",

@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { StackParamList } from '../../../App';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';

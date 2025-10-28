@@ -34,13 +34,7 @@ import {
   MessageTextProps,
   MessageVideoProps,
 } from 'react-native-gifted-chat';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import ImageView from 'react-native-image-viewing';
 import {
   SafeAreaView,

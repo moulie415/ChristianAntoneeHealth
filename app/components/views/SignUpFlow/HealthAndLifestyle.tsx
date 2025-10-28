@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, Text, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Picker from '@quidone/react-native-wheel-picker';
 import { FITNESS_RATINGS } from '../../../constants';
 import colors from '../../../constants/colors';
@@ -105,7 +105,7 @@ const HealthAndLifestyle: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
+      
       extraScrollHeight={Platform.OS === 'ios' ? 0 : 75}
       contentContainerStyle={{ paddingBottom: 100 }}
       style={{

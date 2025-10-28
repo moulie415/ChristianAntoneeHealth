@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import { Dimensions, Platform, TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../../../constants/colors';
 import { useAppSelector } from '../../../hooks/redux';
 import ImageAnimated from '../../commons/ImageAnimated';

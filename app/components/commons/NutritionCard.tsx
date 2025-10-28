@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import { ImageBackground, TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { navigationRef } from '../../RootNavigation';
 import colors from '../../constants/colors';
 import { PlanNutrition } from '../../types/Shared';

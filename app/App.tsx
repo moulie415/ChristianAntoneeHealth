@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { IMessage } from 'react-native-gifted-chat';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+// @TODO bring back splash screen later
 // import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
@@ -21,6 +22,7 @@ import Education from './types/Education';
 import ExerciseType from './types/Exercise';
 import QuickRoutine, { Area, Equipment } from './types/QuickRoutines';
 import { SavedQuickRoutine, SavedWorkout } from './types/SavedItem';
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import {
   CoolDown,
   Equipment as EquipmentItem,
@@ -207,6 +209,7 @@ const App: React.FC = () => {
     <PersistGate persistor={persistor}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
+          <KeyboardProvider>
           <SafeAreaProvider>
             <NavigationContainer
               ref={navigationRef}
@@ -258,6 +261,7 @@ const App: React.FC = () => {
               </View>
             )}
           </SafeAreaProvider>
+          </KeyboardProvider>
         </Provider>
       </GestureHandlerRootView>
     </PersistGate>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Image, View } from 'react-native';
 import { StackParamList } from '../../App';
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Snackbar from 'react-native-snackbar';
 import StarRating from 'react-native-star-rating-widget';
 import colors from '../../constants/colors';

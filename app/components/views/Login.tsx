@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import * as Application from 'expo-application'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { StackParamList } from '../../App';
@@ -101,7 +101,7 @@ const Login: React.FC<{
       />
       <SafeAreaView>
         <KeyboardAwareScrollView
-          enableOnAndroid
+          
           keyboardShouldPersistTaps="always"
         >
           <View
