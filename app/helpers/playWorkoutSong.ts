@@ -10,13 +10,13 @@ const playWorkoutSong = async () => {
 
   const randomTimestamp = _.shuffle(timestamps)[0];
 
-//  SoundPlayer.seek(randomTimestamp);
+  //  SoundPlayer.seek(randomTimestamp);
   // SoundPlayer.setVolume(0);
- // SoundPlayer.play();
+  // SoundPlayer.play();
 
   for (let i = 0; i < 1; i += 0.1) {
     await sleep(200);
-//    SoundPlayer.setVolume(i)
+    //    SoundPlayer.setVolume(i)
   }
 };
 

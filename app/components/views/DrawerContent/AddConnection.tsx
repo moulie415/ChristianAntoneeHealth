@@ -1,5 +1,5 @@
-import * as Clipboard from 'expo-clipboard';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import * as Clipboard from 'expo-clipboard';
 import React, { useState } from 'react';
 import { generateLink } from '../../../helpers/api';
 

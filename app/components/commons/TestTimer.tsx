@@ -79,8 +79,8 @@ const TestTimer: React.FC<{
         test.type === 'untimed'
           ? colors.borderColor
           : finished
-          ? colors.muscleSecondary
-          : colors.appBlue
+            ? colors.muscleSecondary
+            : colors.appBlue
       }
       // tintColorSecondary={colors.appBlueFaded}
       backgroundColor={colors.borderColor}
@@ -119,10 +119,10 @@ const TestTimer: React.FC<{
               {isPrepping
                 ? 'GET READY!'
                 : finished
-                ? 'FINISHED!'
-                : test.type === 'untimed'
-                ? 'NOT TIMED'
-                : 'PRESS START TO BEGIN'}
+                  ? 'FINISHED!'
+                  : test.type === 'untimed'
+                    ? 'NOT TIMED'
+                    : 'PRESS START TO BEGIN'}
             </Text>
           )}
           {complete && (

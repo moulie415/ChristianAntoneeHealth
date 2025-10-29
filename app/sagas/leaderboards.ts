@@ -4,7 +4,6 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import { Platform } from 'react-native';
 // import BackgroundFetch from 'react-native-background-fetch';
-import * as BackgroundTask from 'expo-background-task';
 import {
   Permission,
   getGrantedPermissions,
@@ -240,7 +239,7 @@ function* handleBackgroundFetchEvent(action: {
     if (profile.premium && profile.optedInToLeaderboards) {
       yield call(checkStepsCalories, true);
     }
-   // BackgroundFetch.finish(taskId);
+    // BackgroundFetch.finish(taskId);
   }
 }
 

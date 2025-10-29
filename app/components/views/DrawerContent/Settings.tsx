@@ -1,8 +1,8 @@
-import * as Clipboard from 'expo-clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import auth from '@react-native-firebase/auth';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Clipboard from 'expo-clipboard';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { ReactNode, useEffect, useState } from 'react';
@@ -497,7 +497,7 @@ const Settings: React.FC<{
             value: String(value),
           };
         })}
-        onValueChange={({item}) => setPrepTime(Number(item.value))}
+        onValueChange={({ item }) => setPrepTime(Number(item.value))}
         onRequestClose={() => setShowPrepTime(false)}
       />
       <Modal

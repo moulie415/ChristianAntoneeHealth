@@ -1,9 +1,9 @@
-import * as Clipboard from 'expo-clipboard';
-import * as DocumentPicker from 'expo-document-picker'
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Clipboard from 'expo-clipboard';
+import * as DocumentPicker from 'expo-document-picker';
 import _ from 'lodash';
 import moment from 'moment';
 import React, {
@@ -34,7 +34,6 @@ import {
   MessageTextProps,
   MessageVideoProps,
 } from 'react-native-gifted-chat';
-import * as ImagePicker from 'expo-image-picker';
 import ImageView from 'react-native-image-viewing';
 import {
   SafeAreaView,
@@ -535,28 +534,31 @@ const Chat: React.FC<ChatProps> = ({
 
   const onPressDocument = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({type: ['application/*', 'text/*'], copyToCacheDirectory: true})
+      const result = await DocumentPicker.getDocumentAsync({
+        type: ['application/*', 'text/*'],
+        copyToCacheDirectory: true,
+      });
 
       if (!result.canceled) {
         const asset = result.assets[0];
-      const message: Message = {
-        user: {
-          _id: profile.uid,
-          name: profile.name,
-          avatar: profile.avatar,
-        },
-        _id: uuid.v4() as string,
-        document: asset.uri,
-        text: '',
-        type: 'document',
-        pending: true,
-        createdAt: moment().valueOf(),
-        mimeType: asset.mimeType || '',
-        filename: asset.name || '',
-      };
+        const message: Message = {
+          user: {
+            _id: profile.uid,
+            name: profile.name,
+            avatar: profile.avatar,
+          },
+          _id: uuid.v4() as string,
+          document: asset.uri,
+          text: '',
+          type: 'document',
+          pending: true,
+          createdAt: moment().valueOf(),
+          mimeType: asset.mimeType || '',
+          filename: asset.name || '',
+        };
 
-      sendMessageAction({ message, chatId, uid, size: asset.size });
-    }
+        sendMessageAction({ message, chatId, uid, size: asset.size });
+      }
     } catch (e: any) {
       if (e?.code !== 'DOCUMENT_PICKER_CANCELED') {
         logError(e);

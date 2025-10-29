@@ -58,7 +58,7 @@ const ExerciseTimer: React.FC<{
     onTimerPaused(!timerPaused);
     if (profile.workoutMusic && !disableWorkoutMusic) {
       if (timerPaused) {
-       // SoundPlayer.play();
+        // SoundPlayer.play();
       } else {
         // SoundPlayer.pause();
       }
@@ -180,8 +180,8 @@ const ExerciseTimer: React.FC<{
                 {isPrepping
                   ? 'GET READY!'
                   : finished
-                  ? 'FINISHED!'
-                  : `${index + 1}/${workout.length}`}
+                    ? 'FINISHED!'
+                    : `${index + 1}/${workout.length}`}
               </Text>
             </View>
           );

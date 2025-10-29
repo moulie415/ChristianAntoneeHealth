@@ -72,7 +72,6 @@ const ReportProblem: React.FC<{
                   email: profile.email,
                   message: `${title} - ${problem}`,
                   associatedEventId: sentryId,
-                  
                 });
                 navigation.goBack();
                 Snackbar.show({ text: 'Report sent' });

@@ -1,6 +1,9 @@
+import Picker, {
+  OnValueChanged,
+  PickerItem,
+} from '@quidone/react-native-wheel-picker';
 import React from 'react';
 import { View } from 'react-native';
-import Picker, { OnValueChanged, PickerItem } from '@quidone/react-native-wheel-picker';
 import colors from '../../constants/colors';
 import { Gender } from '../../types/Shared';
 import Button from './Button';
@@ -12,7 +15,7 @@ const PickerModal: React.FC<{
   onRequestClose: () => void;
   selectedValue: string | Date | Gender;
   pickerData: any;
-  onValueChange: OnValueChanged<PickerItem<any>>, 
+  onValueChange: OnValueChanged<PickerItem<any>>;
   title?: string;
 }> = ({
   visible,

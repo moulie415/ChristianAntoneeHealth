@@ -1,7 +1,8 @@
 import { Platform } from 'react-native';
 import AppleHealthKit, { HealthKitPermissions } from 'react-native-health';
 import { Permission } from 'react-native-health-connect';
-const PERMS = Platform.OS === 'ios' ? AppleHealthKit.Constants.Permissions : {} as any
+const PERMS =
+  Platform.OS === 'ios' ? AppleHealthKit.Constants.Permissions : ({} as any);
 
 export default {
   spinner: 'MaterialIndicator',

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { NativeModules, Platform } from 'react-native';
-import AppleHealthKit from 'react-native-health';
+// @TODO lib seems dead need to migrate to react-native-healthkit
+// import AppleHealthKit from 'react-native-health';
 import {
   RecordingMethod,
   SdkAvailabilityStatus,
@@ -23,15 +24,16 @@ const { WatchWorkoutModule } = NativeModules;
 
 export const isAvailable = async () => {
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.isAvailable((err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+    // return new Promise((resolve, reject) => {
+    //   AppleHealthKit.isAvailable((err, result) => {
+    //     if (err) {
+    //       reject(err);
+    //     } else {
+    //       resolve(result);
+    //     }
+    //   });
+    // });
+    return null
   }
   const status = await getSdkStatus();
   return status === SdkAvailabilityStatus.SDK_AVAILABLE;
@@ -43,15 +45,16 @@ const round = (num: number) => {
 
 export const initBiometrics = async () => {
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.initHealthKit(healthKitOptions, (e, result) => {
-        if (e) {
-          reject(e);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+    // return new Promise((resolve, reject) => {
+    //   AppleHealthKit.initHealthKit(healthKitOptions, (e, result) => {
+    //     if (e) {
+    //       reject(e);
+    //     } else {
+    //       resolve(result);
+    //     }
+    //   });
+    // });
+    return null
   }
   const initialized = await initialize();
   if (initialized) {
@@ -65,24 +68,25 @@ export const getHeight = async (): Promise<number | undefined> => {
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<number | undefined>((resolve, reject) => {
-        // @ts-ignore
-        AppleHealthKit.getLatestHeight(null, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            if (result.value && typeof result.value === 'number') {
-              // values is in inches so need to convert to cm
-              resolve(round(result.value * 2.54));
-            } else {
-              resolve(undefined);
-            }
-          }
-        });
-      });
+      // const promise = new Promise<number | undefined>((resolve, reject) => {
+      //   // @ts-ignore
+      //   AppleHealthKit.getLatestHeight(null, (e, result) => {
+      //     if (e) {
+      //       reject(e);
+      //     } else {
+      //       if (result.value && typeof result.value === 'number') {
+      //         // values is in inches so need to convert to cm
+      //         resolve(round(result.value * 2.54));
+      //       } else {
+      //         resolve(undefined);
+      //       }
+      //     }
+      //   });
+      // });
 
-      const height = await promise;
-      return height;
+      // const height = await promise;
+      // return height;
+      return undefined
     }
 
     const { records } = await readRecords('Height', {
@@ -163,24 +167,24 @@ export const getStepSamples = async (
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
-        AppleHealthKit.getDailyStepCountSamples(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(results);
-            }
-          },
-        );
-      });
+      // const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
+      //   AppleHealthKit.getDailyStepCountSamples(
+      //     {
+      //       startDate: startDate.toISOString(),
+      //       endDate: endDate.toISOString(),
+      //     },
+      //     (err, results) => {
+      //       if (err) {
+      //         reject(err);
+      //       } else {
+      //         resolve(results);
+      //       }
+      //     },
+      //   );
+      // });
 
-      const samples = await promise;
-      return samples;
+      // const samples = await promise;
+      // return samples;
     }
 
     const { records } = await readRecords('Steps', {
@@ -219,32 +223,32 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
     const startDate = moment().utc().startOf('isoWeek').toISOString();
     const endDate = moment().utc().endOf('day').toISOString();
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
-        AppleHealthKit.getDailyStepCountSamples(
-          {
-            startDate,
-            endDate,
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(
-                results.map(result => {
-                  return {
-                    startDate: result.startDate,
-                    endDate: result.endDate,
-                    value: result.value,
-                  };
-                }),
-              );
-            }
-          },
-        );
-      });
+      // const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
+      //   AppleHealthKit.getDailyStepCountSamples(
+      //     {
+      //       startDate,
+      //       endDate,
+      //     },
+      //     (err, results) => {
+      //       if (err) {
+      //         reject(err);
+      //       } else {
+      //         resolve(
+      //           results.map(result => {
+      //             return {
+      //               startDate: result.startDate,
+      //               endDate: result.endDate,
+      //               value: result.value,
+      //             };
+      //           }),
+      //         );
+      //       }
+      //     },
+      //   );
+      // });
 
-      const samples = await promise;
-      return samples;
+      // const samples = await promise;
+      // return samples;
     }
 
     const { records } = await readRecords('Steps', {
@@ -275,23 +279,23 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
     }
 
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
-        AppleHealthKit.getSamples(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(results);
-            }
-          },
-        );
-      });
-      const samples = await promise;
-      return samples;
+      // const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
+      //   AppleHealthKit.getSamples(
+      //     {
+      //       startDate: startDate.toISOString(),
+      //       endDate: endDate.toISOString(),
+      //     },
+      //     (err, results) => {
+      //       if (err) {
+      //         reject(err);
+      //       } else {
+      //         resolve(results);
+      //       }
+      //     },
+      //   );
+      // });
+      // const samples = await promise;
+      // return samples;
     }
 
     const { records } = await readRecords('ExerciseSession', {
@@ -339,17 +343,17 @@ export const getDateOfBirth = async (): Promise<string | undefined> => {
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<string | undefined>((resolve, reject) => {
-        AppleHealthKit.getDateOfBirth(null, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result.value);
-          }
-        });
-      });
-      const dob = await promise;
-      return dob;
+      // const promise = new Promise<string | undefined>((resolve, reject) => {
+      //   AppleHealthKit.getDateOfBirth(null, (e, result) => {
+      //     if (e) {
+      //       reject(e);
+      //     } else {
+      //       resolve(result.value);
+      //     }
+      //   });
+      // });
+      // const dob = await promise;
+      // return dob;
     }
   } catch (e) {
     logError(e);
@@ -367,15 +371,15 @@ export const saveWeight = async (uid: string, value?: number) => {
     }
 
     if (Platform.OS === 'ios') {
-      return new Promise((resolve, reject) => {
-        AppleHealthKit.saveWeight({ value: value * 2.20462 }, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+      // return new Promise((resolve, reject) => {
+      //   AppleHealthKit.saveWeight({ value: value * 2.20462 }, (e, result) => {
+      //     if (e) {
+      //       reject(e);
+      //     } else {
+      //       resolve(result);
+      //     }
+      //   });
+      // });
     }
 
     await insertRecords([
@@ -400,15 +404,15 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     if (Platform.OS === 'ios') {
-      return new Promise((resolve, reject) => {
-        AppleHealthKit.saveHeight({ value: value * 0.393701 }, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+      // return new Promise((resolve, reject) => {
+      //   AppleHealthKit.saveHeight({ value: value * 0.393701 }, (e, result) => {
+      //     if (e) {
+      //       reject(e);
+      //     } else {
+      //       resolve(result);
+      //     }
+      //   });
+      // });
     }
 
     await insertRecords([
@@ -432,23 +436,23 @@ export const getHeartRateSamples = async (
       return [];
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[]>((resolve, reject) => {
-        AppleHealthKit.getHeartRateSamples(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(results);
-            }
-          },
-        );
-      });
-      const samples = await promise;
-      return samples;
+      // const promise = new Promise<Sample[]>((resolve, reject) => {
+      //   AppleHealthKit.getHeartRateSamples(
+      //     {
+      //       startDate: startDate.toISOString(),
+      //       endDate: endDate.toISOString(),
+      //     },
+      //     (err, results) => {
+      //       if (err) {
+      //         reject(err);
+      //       } else {
+      //         resolve(results);
+      //       }
+      //     },
+      //   );
+      // });
+      // const samples = await promise;
+      // return samples;
     }
 
     const { records } = await readRecords('HeartRate', {
@@ -486,29 +490,29 @@ export const getCalorieSamples = async (
       return [];
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[]>((resolve, reject) => {
-        AppleHealthKit.getActiveEnergyBurned(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(
-                results.map(res => ({
-                  startDate: res.startDate,
-                  endDate: res.endDate,
-                  value: res.value,
-                })),
-              );
-            }
-          },
-        );
-      });
-      const samples = await promise;
-      return samples;
+      // const promise = new Promise<Sample[]>((resolve, reject) => {
+      //   AppleHealthKit.getActiveEnergyBurned(
+      //     {
+      //       startDate: startDate.toISOString(),
+      //       endDate: endDate.toISOString(),
+      //     },
+      //     (err, results) => {
+      //       if (err) {
+      //         reject(err);
+      //       } else {
+      //         resolve(
+      //           results.map(res => ({
+      //             startDate: res.startDate,
+      //             endDate: res.endDate,
+      //             value: res.value,
+      //           })),
+      //         );
+      //       }
+      //     },
+      //   );
+      // });
+      // const samples = await promise;
+      // return samples;
     }
 
     const { records } = await readRecords('ActiveCaloriesBurned', {
@@ -545,28 +549,28 @@ export const saveWorkout = async (
     const startDate = moment().subtract(seconds, 'seconds').toISOString();
     const endDate = moment().toISOString();
     if (Platform.OS === 'ios') {
-      await new Promise((resolve, reject) => {
-        AppleHealthKit.saveWorkout(
-          {
-            type: AppleHealthKit.Constants.Activities
-              .FunctionalStrengthTraining,
-            startDate,
-            endDate,
-            // @ts-ignore
-            energyBurned: calories,
-            energyBurnedUnit: 'calorie',
-          },
-          (e: Error, res) => {
-            if (e) {
-              logError(e);
-              reject(e);
-              return;
-            }
-            resolve(res);
-            // workout successfully saved
-          },
-        );
-      });
+      // await new Promise((resolve, reject) => {
+      //   AppleHealthKit.saveWorkout(
+      //     {
+      //       type: AppleHealthKit.Constants.Activities
+      //         .FunctionalStrengthTraining,
+      //       startDate,
+      //       endDate,
+      //       // @ts-ignore
+      //       energyBurned: calories,
+      //       energyBurnedUnit: 'calorie',
+      //     },
+      //     (e: Error, res) => {
+      //       if (e) {
+      //         logError(e);
+      //         reject(e);
+      //         return;
+      //       }
+      //       resolve(res);
+      //       // workout successfully saved
+      //     },
+      //   );
+      // });
     }
   } catch (e) {
     logError(e);
@@ -585,15 +589,15 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
       return;
     }
     if (Platform.OS === 'ios') {
-      await new Promise((resolve, reject) => {
-        AppleHealthKit.saveBodyFatPercentage({ value }, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+      // await new Promise((resolve, reject) => {
+      //   AppleHealthKit.saveBodyFatPercentage({ value }, (e, result) => {
+      //     if (e) {
+      //       reject(e);
+      //     } else {
+      //       resolve(result);
+      //     }
+      //   });
+      // });
     }
   } catch (e) {
     logError(e);

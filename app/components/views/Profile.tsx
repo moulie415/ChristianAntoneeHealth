@@ -1,6 +1,5 @@
 import DatePicker from '@react-native-community/datetimepicker';
 import storage from '@react-native-firebase/storage';
-import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -16,7 +15,6 @@ import {
   View,
 } from 'react-native';
 import { Image } from 'react-native-compressor';
-import * as FileSystem from 'expo-file-system';
 import ImageView from 'react-native-image-viewing';
 import { ImageSource } from 'react-native-image-viewing/dist/@types';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -484,7 +482,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setHeight(Number(item.value))}
+            onValueChange={({ item }) => setHeight(Number(item.value))}
             onRequestClose={() => setShowHeightModal(false)}
           />
         )}
@@ -518,7 +516,9 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setBodyFatPercentage(Number(item.value))}
+            onValueChange={({ item }) =>
+              setBodyFatPercentage(Number(item.value))
+            }
             onRequestClose={() => setShowBodyFatPercentageModal(false)}
           />
         )}
@@ -544,7 +544,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setMuscleMass(Number(item.value))}
+            onValueChange={({ item }) => setMuscleMass(Number(item.value))}
             onRequestClose={() => setShowMuscleMassModal(false)}
           />
         )}
@@ -570,7 +570,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setBoneMass(Number(item.value))}
+            onValueChange={({ item }) => setBoneMass(Number(item.value))}
             onRequestClose={() => setShowBoneMassModal(false)}
           />
         )}
@@ -595,7 +595,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setVisceralFat(Number(item.value))}
+            onValueChange={({ item }) => setVisceralFat(Number(item.value))}
             onRequestClose={() => setShowVisceralFatModal(false)}
           />
         )}
@@ -620,7 +620,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setMetabolicAge(Number(item.value))}
+            onValueChange={({ item }) => setMetabolicAge(Number(item.value))}
             onRequestClose={() => setShowMetabolicAgeModal(false)}
           />
         )}

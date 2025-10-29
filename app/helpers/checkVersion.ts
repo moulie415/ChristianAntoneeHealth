@@ -1,6 +1,6 @@
+import * as Application from 'expo-application';
 import { navigate } from '../RootNavigation';
 import { logError } from './error';
-import * as Application from 'expo-application';
 
 const compareVersions = (v1: string, v2: string) => {
   const v1Parts = v1.split('.').map(Number);

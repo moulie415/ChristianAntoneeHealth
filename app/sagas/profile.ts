@@ -7,14 +7,20 @@ import { statusCodes } from '@react-native-google-signin/google-signin';
 import { EventChannel, eventChannel } from '@redux-saga/core';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
+import * as Application from 'expo-application';
+import * as Device from 'expo-device';
+import * as FileSystem from 'expo-file-system';
 import _ from 'lodash';
 import moment from 'moment';
-import { Alert, Linking, PermissionsAndroid, PixelRatio, Platform } from 'react-native';
+import {
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  PixelRatio,
+  Platform,
+} from 'react-native';
 import { Audio, Image, Video } from 'react-native-compressor';
-import * as Device from 'expo-device';
-import * as Application from 'expo-application'
 import { openInbox } from 'react-native-email-link';
-import * as FileSystem from 'expo-file-system';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 /* @TODO replace react native push notification with expo notifications 
@@ -48,6 +54,8 @@ import {
   getBodyFatPercentageSamples,
   getHeightSamples,
   getWeightSamples,
+  initBiometrics,
+  isAvailable,
   saveBodyFatPercentage,
   saveHeight,
   saveWeight,
@@ -112,7 +120,6 @@ import { checkWorkoutStreak, getAllExercises } from './exercises';
 import { checkStepsCalories } from './leaderboards';
 import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
-import { initBiometrics, isAvailable } from '../helpers/biometrics';
 
 // const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
 //   if (error) {
@@ -120,14 +127,11 @@ import { initBiometrics, isAvailable } from '../helpers/biometrics';
 //   }
 // });
 
-
 //Sound.setCategory('Playback', false);
-
 
 // SoundPlayer.loadSoundFile("workout_song", "mp3");
 
 // SoundPlayer.setNumberOfLoops(-1);
-
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
@@ -488,7 +492,7 @@ export function* scheduleGoalReminderNotification() {
 
     if (date.isAfter(moment())) {
       if (completed) {
-       // PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+        // PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
       } else if (profile.goalReminders) {
         scheduleLocalNotification(
           'You’ve got just two days to hit your weekly targets',
@@ -590,7 +594,15 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
   );
   while (true) {
     const snapshot: Snapshot = yield take(channel);
-    yield put(setMessages({ uid, snapshot }));
+    const messages = snapshot.docs.reduce(
+      (acc: { [id: string]: Message }, cur) => {
+        const message: any = cur.data();
+        acc[message ? message._id : cur.id] = { ...message, id: cur.id };
+        return acc;
+      },
+      {},
+    );
+    yield put(setMessages({ uid, messages }));
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') {
         yield put(
@@ -607,7 +619,7 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
         route.params?.uid === uid &&
         state === 'active'
       ) {
-     //   notif.play();
+        //   notif.play();
       }
     }
   }
@@ -657,7 +669,7 @@ function* sendMessage(
       let size = action.payload.size;
       try {
         if (message.type !== 'document') {
-          const info = new FileSystem.File(compressedUri).info()
+          const info = new FileSystem.File(compressedUri).info();
           size = info.size;
         }
       } catch (e) {
@@ -697,7 +709,7 @@ function* sendMessage(
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
-   // notif.play();
+    // notif.play();
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({ text: e.message });
@@ -900,7 +912,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       if (doc.exists() && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
         if (available) {
-        yield call(initBiometrics);
+          yield call(initBiometrics);
         }
 
         resetToTabs();
@@ -1064,9 +1076,8 @@ export default function* profileSaga() {
     fork(tokenWatcher),
   ]);
 
-  const channel: EventChannel<{ user: FirebaseAuthTypes.User }> = yield call(
-    onAuthStateChanged,
-  );
+  const channel: EventChannel<{ user: FirebaseAuthTypes.User }> =
+    yield call(onAuthStateChanged);
   while (true) {
     const { user }: { user: FirebaseAuthTypes.User } = yield take(channel);
     yield put(handleAuth(user));

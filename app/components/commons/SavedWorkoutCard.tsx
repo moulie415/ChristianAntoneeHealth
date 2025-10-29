@@ -183,8 +183,8 @@ const SavedWorkoutCard: React.FC<{
               {quickRoutine && 'exerciseIds' in quickRoutine
                 ? quickRoutine.name
                 : 'planWorkout' in item
-                ? item.planWorkout?.name
-                : ''}
+                  ? item.planWorkout?.name
+                  : ''}
             </Text>
             {/* {quickRoutine && (
               <Text

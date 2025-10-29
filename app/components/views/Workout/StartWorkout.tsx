@@ -88,7 +88,7 @@ const StartWorkout: React.FC<{
       planId,
       watchWorkoutData: response,
     });
-   // SoundPlayer.stop();
+    // SoundPlayer.stop();
   }, 3000);
 
   return (
@@ -105,7 +105,7 @@ const StartWorkout: React.FC<{
               text: 'Yes',
               onPress: () => {
                 navigation.goBack();
-               // SoundPlayer.stop();
+                // SoundPlayer.stop();
                 endWatchWorkout();
               },
             },

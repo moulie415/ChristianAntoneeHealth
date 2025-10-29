@@ -13,7 +13,9 @@ const Policies = () => {
       <SafeAreaView>
         <Header hasBack title="Policies and Terms" />
         <TouchableOpacity
-          onPress={() => Linking.openURL(process.env.EXPO_PUBLIC_PRIVACY_POLICY as string)}
+          onPress={() =>
+            Linking.openURL(process.env.EXPO_PUBLIC_PRIVACY_POLICY as string)
+          }
           style={{
             flexDirection: 'row',
             alignItems: 'center',

@@ -34,10 +34,7 @@ const LoginEmail: React.FC<{
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
-      <KeyboardAwareScrollView
-        
-        keyboardShouldPersistTaps="always"
-      >
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
         <Header title="Login" hasBack />
         <Input
           onChangeText={setEmail}

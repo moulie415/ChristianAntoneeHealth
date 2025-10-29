@@ -32,7 +32,6 @@ const SelectIsClient: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      
       contentContainerStyle={{
         marginHorizontal: 20,
         marginTop: 20,

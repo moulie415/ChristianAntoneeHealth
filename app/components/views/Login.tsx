@@ -3,6 +3,7 @@ import appleAuth, {
 } from '@invertase/react-native-apple-authentication';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Application from 'expo-application';
 import React, { useState } from 'react';
 import {
   Image,
@@ -11,7 +12,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import * as Application from 'expo-application'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
@@ -100,10 +100,7 @@ const Login: React.FC<{
         }}
       />
       <SafeAreaView>
-        <KeyboardAwareScrollView
-          
-          keyboardShouldPersistTaps="always"
-        >
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <View
             style={{
               width: 175,

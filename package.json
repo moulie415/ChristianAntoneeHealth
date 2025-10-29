@@ -48,6 +48,7 @@
     "@wuba/react-native-echarts": "^3.0.1",
     "echarts": "^6.0.0",
     "expo": "~54.0.20",
+    "expo-apple-authentication": "~8.0.7",
     "expo-application": "~7.0.7",
     "expo-audio": "~1.0.13",
     "expo-background-task": "~1.0.8",
@@ -137,6 +138,7 @@
     "eslint-config-expo": "~10.0.0",
     "jest": "~29.7.0",
     "jest-expo": "~54.0.13",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "react-native-svg-transformer": "^1.5.1",
     "typescript": "~5.9.2"
   },

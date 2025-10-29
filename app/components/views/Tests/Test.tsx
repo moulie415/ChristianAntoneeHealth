@@ -172,7 +172,6 @@ const Test: React.FC<{
       >
         {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
         <KeyboardAwareScrollView
-          
           extraScrollHeight={Platform.OS === 'ios' ? 150 : 0}
           contentContainerStyle={{ paddingBottom: 220 }}
         >

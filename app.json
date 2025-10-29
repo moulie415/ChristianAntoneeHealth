@@ -13,12 +13,60 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.HealthAndMovement",
       "entitlements": {
-        "aps-environment": "production"
+        "aps-environment": "production",
+        "com.apple.developer.applesignin": ["Default"],
+        "com.apple.developer.associated-domains": [],
+        "com.apple.developer.devicecheck.appattest-environment": "production",
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.healthkit.access": [],
+        "com.apple.developer.healthkit.background-delivery": true,
+        "keychain-access-groups": ["$(AppIdentifierPrefix)com.HealthAndMovement"]   
       },
       "infoPlist": {
         "UIBackgroundModes": [
           "remote-notification"
-        ]
+        ],
+        "SKAdNetworkItems": [
+          {
+            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+          }
+        ],
+        "LSApplicationQueriesSchemes": [
+          "mailto",
+          "message",
+          "readdle-spark",
+          "airmail",
+          "ms-outlook",
+          "googlegmail",
+          "inbox-gmail",
+          "ymail",
+          "superhuman",
+          "yandexmail",
+          "fastmail",
+          "protonmail",
+          "mailto",
+          "message",
+          "readdle-spark",
+          "airmail",
+          "ms-outlook",
+          "googlegmail",
+          "inbox-gmail",
+          "ymail",
+          "superhuman",
+          "yandexmail",
+          "fastmail",
+          "protonmail"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       },
       "usesAppleSignIn": true
     },
@@ -32,7 +80,16 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "googleServicesFile": "./google-services.json",
-      "package": "com.healthandmovement"
+      "package": "com.healthandmovement",
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "output": "static",
@@ -69,8 +126,8 @@
             ]
           },
           "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
             "minSdkVersion": 26
           }
         }
@@ -98,7 +155,8 @@
       ],
       "expo-audio",
       "@config-plugins/react-native-blob-util",
-      "@config-plugins/react-native-pdf"
+      "@config-plugins/react-native-pdf",
+      "expo-apple-authentication"
     ],
     "experiments": {
       "typedRoutes": true,

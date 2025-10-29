@@ -18,15 +18,15 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
 
   const onPlay = async () => {
     if (playing === undefined) {
-     // SoundPlayer.playUrl(audio);
+      // SoundPlayer.playUrl(audio);
     } else {
-    //  SoundPlayer.resume();
+      //  SoundPlayer.resume();
     }
     setPlaying(true);
   };
 
   const onPause = async () => {
-   // SoundPlayer.pause();
+    // SoundPlayer.pause();
     setPlaying(false);
   };
 

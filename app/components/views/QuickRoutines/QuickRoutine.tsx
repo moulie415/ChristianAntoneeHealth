@@ -114,7 +114,7 @@ const QuickRoutineView: React.FC<{
       pauseEvents,
       watchWorkoutData: response,
     });
-   // SoundPlayer.stop();
+    // SoundPlayer.stop();
   }, 3000);
 
   return (

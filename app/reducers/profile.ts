@@ -1,5 +1,4 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppState, AppStateStatus } from 'react-native';
 import { PurchasesEntitlementInfo } from 'react-native-purchases';
@@ -359,22 +358,16 @@ const profileSlice = createSlice({
         payload,
       }: PayloadAction<{
         uid: string;
-        snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
+        messages: {
+          [id: string]: Message;
+        };
       }>,
     ) => {
-      const messages = payload.snapshot.docs.reduce(
-        (acc: { [id: string]: Message }, cur) => {
-          const message: any = cur.data();
-          acc[message ? message._id : cur.id] = { ...message, id: cur.id };
-          return acc;
-        },
-        {},
-      );
       state.messages = {
         ...state.messages,
         [payload.uid]: {
           ...state.messages[payload.uid],
-          ...messages,
+          ...payload.messages,
         },
       };
     },

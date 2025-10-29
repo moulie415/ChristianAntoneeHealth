@@ -1,7 +1,7 @@
 import { Timestamp } from '@react-native-firebase/firestore';
+import { DeviceType } from 'expo-device';
 import { PurchasesEntitlementInfo } from 'react-native-purchases';
 import { Area, Equipment as EquipmentLevel } from './QuickRoutines';
-import { DeviceType } from 'expo-device';
 
 export interface Targets {
   calories: number;

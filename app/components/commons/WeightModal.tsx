@@ -1,7 +1,7 @@
+import Picker from '@quidone/react-native-wheel-picker';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Dimensions, Platform, Text, View } from 'react-native';
 import { RulerPicker } from 'react-native-ruler-picker';
-import Picker from '@quidone/react-native-wheel-picker';
 import { connect } from 'react-redux';
 import { RootState } from '../../App';
 import { DECIMAL_PLACES, WEIGHTS } from '../../constants';
@@ -181,7 +181,7 @@ const WeightModalAndroid: React.FC<{
                   value: String(value),
                 };
               })}
-              onValueChanged={({item}) => setWholeNumber(Number(item.value))}
+              onValueChanged={({ item }) => setWholeNumber(Number(item.value))}
             />
             <Text
               style={{
@@ -208,7 +208,7 @@ const WeightModalAndroid: React.FC<{
                   value: String(value),
                 };
               })}
-              onValueChanged={({item}) => setDecimalPart(Number(item.value))}
+              onValueChanged={({ item }) => setDecimalPart(Number(item.value))}
             />
             <Text
               style={{

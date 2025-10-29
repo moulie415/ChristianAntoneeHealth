@@ -96,8 +96,8 @@ export const facebookSignIn = async (
     if (Platform.OS === 'ios') {
       const nonce = uuid.v4() as string;
       const nonceSha256 = await Crypto.digestStringAsync(
-        Crypto.CryptoDigestAlgorithm.SHA256,  
-        nonce
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        nonce,
       );
       const result = await LoginManager.logInWithPermissions(
         ['public_profile', 'email'],

@@ -20,7 +20,6 @@ import {
 //   AudioSourceAndroidType,
 //   OutputFormatAndroidType,
 // } from 'react-native-nitro-sound';
-import * as FileSystem from 'expo-file-system';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import colors from '../../../../constants/colors';
