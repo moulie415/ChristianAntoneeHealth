@@ -227,6 +227,9 @@ const StartWorkout: React.FC<{
                             >
                               AUTO-PLAY
                             </Text>
+                            <View>
+                              <Toggle value={ap} onValueChange={setAp} />
+                            </View>
                             <Toggle value={ap} onValueChange={setAp} />
                           </TouchableOpacity>
                         )}
