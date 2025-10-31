@@ -17,6 +17,7 @@ import {
 } from '../../../reducers/profile';
 import Header from '../../commons/Header';
 import Spinner from '../../commons/Spinner';
+import * as FileSystem from 'expo-file-system'
 
 const Recipe: React.FC<{
   route: RouteProp<StackParamList, 'Recipe'>;
@@ -37,7 +38,7 @@ const Recipe: React.FC<{
     try {
       if (
         !downloadedDocuments[recipe.id] ||
-        !(await RNFS.exists(downloadedDocuments[recipe.id]))
+        !(new FileSystem.File(downloadedDocuments[recipe.id]).info().exists)
       ) {
         const result = await ReactNativeBlobUtil.config({
           fileCache: true,

@@ -53,7 +53,6 @@ import {
   requestMessageDeletion,
   sendMessage,
   setChatMessage,
-  setMessages,
   setRead,
 } from '../../../../reducers/profile';
 import { SettingsState } from '../../../../reducers/settings';
@@ -72,13 +71,6 @@ interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
   route: RouteProp<StackParamList, 'Chat'>;
   profile: Profile;
-  setMessagesAction: ({
-    uid,
-    snapshot,
-  }: {
-    uid: string;
-    snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
-  }) => void;
   messagesObj: { [key: string]: Message };
   connection: Profile;
   chatId: string;
@@ -714,7 +706,6 @@ const Chat: React.FC<ChatProps> = ({
           alwaysShowSend
         />
       </SafeAreaView>
-      <SafeAreaView style={{ flex: 0, backgroundColor: colors.appGrey }} />
       <ImageView
         images={images}
         imageIndex={imageIndex}
@@ -743,7 +734,6 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = {
-  setMessagesAction: setMessages,
   sendMessageAction: sendMessage,
   setReadAction: setRead,
   viewWorkoutAction: viewWorkout,

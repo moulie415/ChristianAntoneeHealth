@@ -24,7 +24,9 @@
       },
       "infoPlist": {
         "UIBackgroundModes": [
-          "remote-notification"
+          "remote-notification",
+          "audio",
+          "fetch"
         ],
         "SKAdNetworkItems": [
           {

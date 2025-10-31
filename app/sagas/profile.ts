@@ -26,9 +26,7 @@ import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 /* @TODO replace react native push notification with expo notifications 
 and place react native soundplayer and other audio modules with expo audio */
-// import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
-// import SoundPlayer from "react-native-sound-player";
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
@@ -121,18 +119,13 @@ import { checkWorkoutStreak, getAllExercises } from './exercises';
 import { checkStepsCalories } from './leaderboards';
 import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
+import { createAudioPlayer } from 'expo-audio';
 
-// const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
-//   if (error) {
-//     console.log('failed to load the sound', error);
-//   }
-// });
 
-//Sound.setCategory('Playback', false);
+const audioSource = require('../audio/notif.wav');
 
-// SoundPlayer.loadSoundFile("workout_song", "mp3");
+const notif = createAudioPlayer(audioSource)
 
-// SoundPlayer.setNumberOfLoops(-1);
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
@@ -635,7 +628,7 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
         route.params?.uid === uid &&
         state === 'active'
       ) {
-        //   notif.play();
+          notif.play();
       }
     }
   }
@@ -725,7 +718,7 @@ function* sendMessage(
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
-    // notif.play();
+    notif.play()
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({ text: e.message });

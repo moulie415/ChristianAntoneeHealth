@@ -48,6 +48,7 @@ import ProfileCharts from '../commons/ProfileCharts';
 import Text from '../commons/Text';
 import Tile from '../commons/Tile';
 import WeightModal from '../commons/WeightModal';
+import * as FileSystem from 'expo-file-system'
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -165,10 +166,10 @@ const ProfileComponent: React.FC<{
       let newAvatar = profile.avatar;
       if (avatar !== profile.avatar) {
         const compressed = await Image.compress(avatar || '');
-        const read = await RNFS.stat(compressed);
+          const info = new FileSystem.File(compressed).info();
 
         // file size comes back in bytes so need to divide by 1000000 to get mb
-        if (read.size && read.size / 1000000 < settings.chatMaxFileSizeMb) {
+        if (info.size && info.size / 1000000 < settings.chatMaxFileSizeMb) {
           const imageRef = storage()
             .ref(`images/${profile.uid}`)
             .child('avatar');
