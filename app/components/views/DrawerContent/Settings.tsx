@@ -209,7 +209,11 @@ const Settings: React.FC<{
           <SettingsItem
             onPress={() => setAutoPlay(!autoPlay)}
             text="Auto-play"
-            right={<Toggle value={autoPlay} onValueChange={setAutoPlay} />}
+            right={
+              <View>
+                <Toggle value={autoPlay} onValueChange={setAutoPlay} />
+              </View>
+            }
           />
           <SettingsItem
             onPress={() => setShowPrepTime(true)}
@@ -230,7 +234,9 @@ const Settings: React.FC<{
             onPress={() => setWorkoutMusic(!workoutMusic)}
             text="Workout music"
             right={
-              <Toggle value={workoutMusic} onValueChange={setWorkoutMusic} />
+              <View>
+                <Toggle value={workoutMusic} onValueChange={setWorkoutMusic} />
+              </View>
             }
           />
 
@@ -239,11 +245,13 @@ const Settings: React.FC<{
             onPress={() => toggle(!syncPlan)}
             text="Sync custom plans with native calendar"
             right={
-              <Toggle
-                disabled={!plan}
-                value={syncPlan}
-                onValueChange={toggle}
-              />
+              <View>
+                <Toggle
+                  disabled={!plan}
+                  value={syncPlan}
+                  onValueChange={toggle}
+                />
+              </View>
             }
           />
 
@@ -288,10 +296,12 @@ const Settings: React.FC<{
             onPress={() => setWorkoutReminders(!workoutReminders)}
             text="Workout reminders"
             right={
-              <Toggle
-                value={workoutReminders}
-                onValueChange={setWorkoutReminders}
-              />
+              <View>
+                <Toggle
+                  value={workoutReminders}
+                  onValueChange={setWorkoutReminders}
+                />
+              </View>
             }
           />
 
@@ -351,7 +361,12 @@ const Settings: React.FC<{
             onPress={() => setGoalReminders(!goalReminders)}
             text="Goal reminders"
             right={
-              <Toggle value={goalReminders} onValueChange={setGoalReminders} />
+              <View>
+                <Toggle
+                  value={goalReminders}
+                  onValueChange={setGoalReminders}
+                />
+              </View>
             }
           />
 
@@ -370,7 +385,11 @@ const Settings: React.FC<{
           <SettingsItem
             onPress={() => setMarketing(!marketing)}
             text="Receive offers and info on future updates"
-            right={<Toggle value={marketing} onValueChange={setMarketing} />}
+            right={
+              <View>
+                <Toggle value={marketing} onValueChange={setMarketing} />
+              </View>
+            }
           />
           <Text
             style={{
@@ -445,10 +464,12 @@ const Settings: React.FC<{
                 onPress={() => setOptedInToLeaderboards(!optedInToLeaderboards)}
                 text="Opt in to leaderboards"
                 right={
-                  <Toggle
-                    value={optedInToLeaderboards}
-                    onValueChange={setOptedInToLeaderboards}
-                  />
+                  <View>
+                    <Toggle
+                      value={optedInToLeaderboards}
+                      onValueChange={setOptedInToLeaderboards}
+                    />
+                  </View>
                 }
               />
             </>

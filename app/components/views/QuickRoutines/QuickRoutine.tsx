@@ -241,6 +241,7 @@ const QuickRoutineView: React.FC<{
                               borderRadius: 12,
                               marginLeft: 20,
                               justifyContent: 'space-evenly',
+
                               height: 50,
                             }}
                           >
@@ -253,7 +254,9 @@ const QuickRoutineView: React.FC<{
                             >
                               AUTO-PLAY
                             </Text>
-                            <Toggle value={ap} onValueChange={setAp} />
+                            <View>
+                              <Toggle value={ap} onValueChange={setAp} />
+                            </View>
                           </TouchableOpacity>
                         )}
                         {index !== 0 && (
