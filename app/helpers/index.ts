@@ -20,28 +20,6 @@ export const truncate = (str: string, n: number) => {
   return str.length > n ? str.substr(0, n - 1) + '...' : str;
 };
 
-export const scheduleLocalNotification = (
-  message: string,
-  date: Date,
-  channel: string,
-  title?: string,
-  id?: string | number,
-  repeatType?: 'week' | 'day' | 'hour' | 'minute' | 'time',
-) => {
-  try {
-    // PushNotification.localNotificationSchedule({
-    //   message,
-    //   date,
-    //   channelId: channel,
-    //   id,
-    //   repeatType,
-    //   title,
-    // });
-  } catch (e) {
-    logError(e);
-  }
-};
-
 const findClosestSampleToDate = (
   samples: Sample[],
   day: Moment,

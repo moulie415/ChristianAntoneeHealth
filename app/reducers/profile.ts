@@ -2,7 +2,6 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppState, AppStateStatus } from 'react-native';
 import { PurchasesEntitlementInfo } from 'react-native-purchases';
-// import PushNotification from 'react-native-push-notification';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import { SavedQuickRoutine, SavedTest, SavedWorkout } from '../types/SavedItem';
@@ -425,8 +424,6 @@ const profileSlice = createSlice({
       state: ProfileState,
       { payload }: PayloadAction<{ [key: string]: number }>,
     ) => {
-      const count = Object.values(payload).reduce((acc, cur) => acc + cur, 0);
-      // PushNotification.setApplicationIconBadgeNumber(count);
       state.profile = { ...state.profile, unread: payload };
     },
     setRead: (state: ProfileState, { payload }: PayloadAction<string>) => {

@@ -12,10 +12,7 @@ import {
   requestPermission,
 } from 'react-native-health-connect';
 import { getIsPaired } from 'react-native-watch-connectivity';
-import {
-  healthConnectPermissions,
-  healthKitOptions,
-} from '../constants/strings';
+import { healthConnectPermissions } from '../constants/strings';
 import { Gender, Sample, WatchWorkoutResponse } from '../types/Shared';
 import { getSamples, saveSample } from './api';
 import { logError } from './error';
@@ -33,7 +30,7 @@ export const isAvailable = async () => {
     //     }
     //   });
     // });
-    return null
+    return null;
   }
   const status = await getSdkStatus();
   return status === SdkAvailabilityStatus.SDK_AVAILABLE;
@@ -54,7 +51,7 @@ export const initBiometrics = async () => {
     //     }
     //   });
     // });
-    return null
+    return null;
   }
   const initialized = await initialize();
   if (initialized) {
@@ -86,7 +83,7 @@ export const getHeight = async (): Promise<number | undefined> => {
 
       // const height = await promise;
       // return height;
-      return undefined
+      return undefined;
     }
 
     const { records } = await readRecords('Height', {
@@ -182,7 +179,6 @@ export const getStepSamples = async (
       //     },
       //   );
       // });
-
       // const samples = await promise;
       // return samples;
     }
@@ -246,7 +242,6 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       //     },
       //   );
       // });
-
       // const samples = await promise;
       // return samples;
     }

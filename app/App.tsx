@@ -10,6 +10,7 @@ import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 // @TODO bring back splash screen later
 // import SplashScreen from 'react-native-splash-screen';
+import * as SplashScreen from 'expo-splash-screen';
 import { Timestamp } from '@react-native-firebase/firestore';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Provider } from 'react-redux';
@@ -49,6 +50,8 @@ import {
   WatchWorkoutResponse,
 } from './types/Shared';
 import Test from './types/Test';
+
+SplashScreen.preventAutoHideAsync();
 
 const createSagaMiddleware = require('redux-saga').default;
 
@@ -243,7 +246,7 @@ const App: React.FC = () => {
                 ref={navigationRef}
                 onReady={() => {
                   sagaMiddleware.run(rootSaga);
-                  //SplashScreen.hide();
+                  SplashScreen.hide();
                   // Register the navigation container with the instrumentation
                   reactNavigationIntegration.registerNavigationContainer(
                     navigationRef,

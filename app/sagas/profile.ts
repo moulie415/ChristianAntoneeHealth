@@ -10,6 +10,7 @@ import * as Sentry from '@sentry/react-native';
 import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import * as FileSystem from 'expo-file-system';
+import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -48,7 +49,6 @@ import {
   navigationRef,
   resetToTabs,
 } from '../RootNavigation';
-import { scheduleLocalNotification } from '../helpers';
 import * as api from '../helpers/api';
 import {
   getBodyFatPercentageSamples,
@@ -78,6 +78,7 @@ import {
   SET_CHATS,
   SET_PREMIUM,
   SET_READ,
+  SET_UNREAD,
   SIGN_UP,
   UPDATE_PROFILE,
   WeeklyItems,
@@ -267,7 +268,10 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       uid: profile.uid || '',
     });
     if (!goalReminders) {
-      // PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+      yield call(
+        Notifications.cancelScheduledNotificationAsync,
+        GOAL_REMINDER_KEY,
+      );
     }
 
     yield put(setLoading(false));
@@ -428,16 +432,15 @@ const channels: {
 ];
 
 function* createChannels() {
-  channels.forEach(({ channelId, channelName, channelDescription }) => {
-    // PushNotification.createChannel(
-    //   {
-    //     channelId,
-    //     channelName,
-    //     channelDescription,
-    //   },
-    //   created => console.log('channel created', created),
-    // );
-  });
+  if (Platform.OS == 'android') {
+    channels.forEach(({ channelId, channelName, channelDescription }) => {
+      Notifications.setNotificationChannelAsync(channelId, {
+        name: channelName,
+        importance: Notifications.AndroidImportance.MAX,
+        description: channelDescription,
+      });
+    });
+  }
 }
 
 function* getWeeklyItems() {
@@ -470,7 +473,7 @@ function* getWeeklyItems() {
   }
 }
 
-export const GOAL_REMINDER_KEY = Platform.OS === 'ios' ? 'goalReminder' : 1;
+export const GOAL_REMINDER_KEY = 'GOAL_REMINDER_KEY';
 
 export function* scheduleGoalReminderNotification() {
   const {
@@ -488,20 +491,33 @@ export function* scheduleGoalReminderNotification() {
       quickRoutines,
       profile.targets,
     );
-    const date = moment().set('day', 5).set('hours', 9).set('minutes', 0);
+
+    const WEEKDAY = 5;
+    const HOURS = 9;
+    const MINUTES = 0;
+    const date = moment()
+      .set('day', WEEKDAY)
+      .set('hours', HOURS)
+      .set('minutes', MINUTES);
 
     if (date.isAfter(moment())) {
       if (completed) {
-        // PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+        Notifications.cancelScheduledNotificationAsync(GOAL_REMINDER_KEY);
       } else if (profile.goalReminders) {
-        scheduleLocalNotification(
-          'You’ve got just two days to hit your weekly targets',
-          date.toDate(),
-          GOALS_CHANNEL_ID,
-          'You’re almost there!',
-          GOAL_REMINDER_KEY,
-          'week',
-        );
+        Notifications.scheduleNotificationAsync({
+          identifier: GOAL_REMINDER_KEY,
+          content: {
+            title: 'You’re almost there!',
+            body: 'You’ve got just two days to hit your weekly targets',
+          },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
+            weekday: WEEKDAY,
+            hour: HOURS,
+            minute: MINUTES,
+            channelId: GOALS_CHANNEL_ID,
+          },
+        });
       }
     }
   }
@@ -1028,6 +1044,11 @@ export function* feedbackTrigger() {
   }
 }
 
+function* unreadWatcher({ payload }: PayloadAction<{ [key: string]: number }>) {
+  const count = Object.values(payload).reduce((acc, cur) => acc + cur, 0);
+  yield call(Notifications.setBadgeCountAsync, count);
+}
+
 function* onTokenRefresh() {
   return eventChannel(emitter => {
     const unsubscribe = messaging().onTokenRefresh(token => {
@@ -1065,6 +1086,7 @@ export default function* profileSaga() {
     throttle(3000, REQUEST_MESSAGE_DELETION, requestMessageDeletionWorker),
     debounce(1000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
+    takeLatest(SET_UNREAD, unreadWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
     throttle(3000, GET_WEEKLY_ITEMS, getWeeklyItems),
     throttle(

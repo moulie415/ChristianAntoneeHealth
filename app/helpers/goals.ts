@@ -1,7 +1,8 @@
+import * as Notifications from 'expo-notifications';
 import moment from 'moment';
-// import PushNotification from 'react-native-push-notification';
 import { capitalizeFirstLetter } from '.';
 import { WeeklyItems } from '../reducers/profile';
+import { GOALS_CHANNEL_ID } from '../sagas/profile';
 import QuickRoutine from '../types/QuickRoutines';
 import { SavedQuickRoutine, SavedWorkout } from '../types/SavedItem';
 import { Goal, Level, PlanWorkout, Profile, Targets } from '../types/Shared';
@@ -155,12 +156,13 @@ export const sendGoalTargetNotification = (
         newCalories >= caloriesGoal &&
         newMins >= minsGoal
       ) {
-        // PushNotification.localNotification({
-        //   title: 'Weekly targets complete!',
-        //   message:
-        //     'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
-        //   channelId: GOALS_CHANNEL_ID,
-        // });
+        Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Weekly targets complete!',
+            body: 'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
+          },
+          trigger: null,
+        });
         return;
       }
       // Otherwise check individual targets
@@ -178,13 +180,17 @@ export const sendGoalTargetNotification = (
         completed += 1;
       }
       if (completed > 0) {
-        // PushNotification.localNotification({
-        //   title: 'Well done!',
-        //   message: `you’ve completed ${completed} of your weekly targets! Only ${
-        //     3 - completed
-        //   } more to go!`,
-        //   channelId: GOALS_CHANNEL_ID,
-        // });
+        Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Well done!',
+            body: `you’ve completed ${completed} of your weekly targets! Only ${
+              3 - completed
+            } more to go!`,
+          },
+          trigger: {
+            channelId: GOALS_CHANNEL_ID,
+          },
+        });
       }
     }
   }
