@@ -6,12 +6,13 @@ import { IMessage } from 'react-native-gifted-chat';
 import colors from '../../../../constants/colors';
 import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';
-import { useAudioPlayer } from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 
 const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
 
   const audio = message.audio || '';
-  const player = useAudioPlayer({ uri: audio })
+  const player = useAudioPlayer(audio)
+  const status = useAudioPlayerStatus(player);
 
   return (
     <View
@@ -25,7 +26,7 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ width: 40, marginLeft: 10 }}>
-          {mmss(Math.floor(player.currentTime))}
+          {mmss(Math.floor(status.currentTime))}
         </Text>
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -38,9 +39,12 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
               alignItems: 'center',
             }}
             onPress={() => {
-              if (player.playing) {
+              if (status.playing) {
                 player.pause()
               } else {
+              if (status.currentTime === status.duration) {
+                player.seekTo(0)
+              }
                 player.play()
               }
             }}
@@ -50,7 +54,7 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
             ) : (
               <FontAwesome6
                 iconStyle="solid"
-                name={player.playing ? 'pause' : 'play'}
+                name={status.playing ? 'pause' : 'play'}
                 size={25}
                 color={colors.appBlue}
               />
@@ -58,11 +62,11 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
           </TouchableOpacity>
           <Slider
             disabled={message.pending}
-            value={player.currentTime / player.duration}
+            value={status.currentTime / status.duration}
             trackStyle={{ width: 150 }}
             onSlidingComplete={val => {
-              if (player.isLoaded) {
-                player.seekTo(player.duration * val[0])
+              if (status.isLoaded) {
+                player.seekTo(status.duration * val[0])
               }
             }}
             renderThumbComponent={() => {
