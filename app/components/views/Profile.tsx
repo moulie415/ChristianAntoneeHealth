@@ -3,6 +3,8 @@ import storage from '@react-native-firebase/storage';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -48,8 +50,6 @@ import ProfileCharts from '../commons/ProfileCharts';
 import Text from '../commons/Text';
 import Tile from '../commons/Tile';
 import WeightModal from '../commons/WeightModal';
-import * as FileSystem from 'expo-file-system'
-import * as ImagePicker from 'expo-image-picker'
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -163,7 +163,7 @@ const ProfileComponent: React.FC<{
       let newAvatar = profile.avatar;
       if (avatar !== profile.avatar) {
         const compressed = await Image.compress(avatar || '');
-          const info = new FileSystem.File(compressed).info();
+        const info = new FileSystem.File(compressed).info();
 
         // file size comes back in bytes so need to divide by 1000000 to get mb
         if (info.size && info.size / 1000000 < settings.chatMaxFileSizeMb) {
@@ -272,27 +272,27 @@ const ProfileComponent: React.FC<{
                 const options: AlertButton[] = [
                   {
                     text: 'Upload from image library',
-                    onPress: async() => {
+                    onPress: async () => {
                       const result = await ImagePicker.launchImageLibraryAsync({
                         allowsMultipleSelection: false,
                         allowsEditing: true,
                         quality: 0.8,
-                        mediaTypes: ['images']
-                      })
-                      handlePickerCallback(result)
-                    }
+                        mediaTypes: ['images'],
+                      });
+                      handlePickerCallback(result);
+                    },
                   },
                   {
                     text: 'Take photo',
-                    onPress: async() => {
+                    onPress: async () => {
                       const result = await ImagePicker.launchCameraAsync({
                         allowsMultipleSelection: false,
                         allowsEditing: true,
                         quality: 0.8,
-                        mediaTypes: ['images']
-                      })
-                      handlePickerCallback(result)
-                    }
+                        mediaTypes: ['images'],
+                      });
+                      handlePickerCallback(result);
+                    },
                   },
                   {
                     text: 'Cancel',

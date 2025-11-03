@@ -1,18 +1,16 @@
 import appCheck from '@react-native-firebase/app-check';
+import { Timestamp } from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
 import { configureStore, isPlain } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
+import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { IMessage } from 'react-native-gifted-chat';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-// @TODO bring back splash screen later
-// import SplashScreen from 'react-native-splash-screen';
-import { Timestamp } from '@react-native-firebase/firestore';
-import * as SplashScreen from 'expo-splash-screen';
-import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Provider } from 'react-redux';
 import {
   FLUSH,

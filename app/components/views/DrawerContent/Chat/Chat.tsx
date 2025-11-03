@@ -13,14 +13,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  Alert,
-  FlatList,
-  Image,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, Image, TouchableOpacity, View } from 'react-native';
 import {
   AvatarProps,
   Bubble,
@@ -440,8 +433,8 @@ const Chat: React.FC<ChatProps> = ({
       mediaTypes: ['images', 'videos'],
       allowsEditing: true,
       allowsMultipleSelection: false,
-    })
-    handleResponse(result)
+    });
+    handleResponse(result);
   };
 
   const onSendVoiceNote = (result: string) => {

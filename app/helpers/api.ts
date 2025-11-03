@@ -6,6 +6,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import * as Crypto from 'expo-crypto';
 import moment from 'moment';
 import { Alert, Platform } from 'react-native';
 import { openInbox } from 'react-native-email-link';
@@ -14,8 +15,6 @@ import {
   AuthenticationToken,
   LoginManager,
 } from 'react-native-fbsdk-next';
-// @TODO replace react native snackbar with something else
-import * as Crypto from 'expo-crypto';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import { WeeklyItems } from '../reducers/profile';

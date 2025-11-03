@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { Alert, Platform, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Video, { ResizeMode } from 'react-native-video';
 import { connect } from 'react-redux';
@@ -171,9 +171,7 @@ const Test: React.FC<{
         }}
       >
         {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
-        <KeyboardAwareScrollView
-          contentContainerStyle={{ paddingBottom: 220 }}
-        >
+        <KeyboardAwareScrollView contentContainerStyle={{ paddingBottom: 220 }}>
           <Text
             style={{
               marginTop: 20,

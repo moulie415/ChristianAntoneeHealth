@@ -233,7 +233,7 @@ const QuickRoutineView: React.FC<{
                             if (p) {
                               pause();
                             } else {
-                              resume()
+                              resume();
                             }
                           }
                         }}

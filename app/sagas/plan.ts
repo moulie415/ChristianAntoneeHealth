@@ -19,6 +19,7 @@ import moment from 'moment';
 // import RNCalendarEvents, {
 //   CalendarEventWritable,
 // } from 'react-native-calendar-events';
+import * as Calendar from 'expo-calendar';
 import { RootState } from '../App';
 import { logError } from '../helpers/error';
 import {
@@ -48,9 +49,10 @@ function* syncPlanWithCalendarWorker(
       }
       const events: {
         title: string;
-        details: CalendarEventWritable;
+        id: string;
+        startDate: string;
+        endDate: string;
       }[] = [];
-
       const keys: string[] = [];
 
       const { syncedPlanEvents, profile }: ProfileState = yield select(
@@ -62,24 +64,18 @@ function* syncPlanWithCalendarWorker(
           const title = workout.name || 'CA Health Workout';
           const key = `${plan.id}${title}${date}`;
           const currentId = syncedPlanEvents[key];
-          const event: {
-            title: string;
-            details: CalendarEventWritable;
-          } = {
+          const event = {
             title,
-            details: {
-              ...(currentId ? { id: currentId } : {}),
-              startDate: moment(date)
-                .set('hours', moment(profile.workoutReminderTime).hours())
-                .set('minutes', moment(profile.workoutReminderTime).minutes())
-                .toISOString(),
-              endDate: moment(date)
-                .set('hours', moment(profile.workoutReminderTime).hours())
-                .set('minutes', moment(profile.workoutReminderTime).minutes())
-                .add(1, 'hour')
-                .toISOString(),
-              calendarId,
-            },
+            id: currentId,
+            startDate: moment(date)
+              .set('hours', moment(profile.workoutReminderTime).hours())
+              .set('minutes', moment(profile.workoutReminderTime).minutes())
+              .toISOString(),
+            endDate: moment(date)
+              .set('hours', moment(profile.workoutReminderTime).hours())
+              .set('minutes', moment(profile.workoutReminderTime).minutes())
+              .add(1, 'hour')
+              .toISOString(),
           };
           events.push(event);
           keys.push(key);
@@ -91,17 +87,9 @@ function* syncPlanWithCalendarWorker(
         const event = events[i];
         let id: string;
         try {
-          // id = yield call(
-          //   RNCalendarEvents.saveEvent,
-          //   event.title,
-          //   event.details,
-          // );
+          id = yield call(Calendar.createEventAsync, calendarId, event);
         } catch (e) {
-          // id = yield call(
-          //   RNCalendarEvents.saveEvent,
-          //   event.title,
-          //   _.omit(event.details, ['id']),
-          // );
+          id = yield call(Calendar.updateEventAsync, calendarId, event);
         }
         yield put(setSyncedPlanEvent({ key, id }));
       }

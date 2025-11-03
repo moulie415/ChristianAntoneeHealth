@@ -1,5 +1,5 @@
 import React, { Fragment, ReactNode, useEffect } from 'react';
-import { Platform, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import colors from '../../../constants/colors';
 import Checkbox from '../../commons/Checkbox';

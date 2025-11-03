@@ -2,9 +2,8 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-// @TODO replace with expo calendar
-// import { Calendar } from 'react-native-calendars';
-// import { MarkedDates } from 'react-native-calendars/src/types';
+import { Calendar } from 'react-native-calendars';
+import { MarkedDates } from 'react-native-calendars/src/types';
 import { FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { RootState } from '../../../App';

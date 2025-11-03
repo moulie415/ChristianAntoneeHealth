@@ -207,7 +207,7 @@ const StartWorkout: React.FC<{
                             if (p) {
                               pause();
                             } else {
-                              resume()
+                              resume();
                             }
                           }
                         }}

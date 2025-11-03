@@ -31,7 +31,7 @@ export const usePlayWorkoutSong = () => {
 
   const resume = useCallback(() => {
     player.play();
-  },[])
+  }, []);
 
-  return { play, pause, resume, };
+  return { play, pause, resume };
 };

@@ -26,6 +26,7 @@ import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 /* @TODO replace react native push notification with expo notifications 
 and place react native soundplayer and other audio modules with expo audio */
+import { createAudioPlayer } from 'expo-audio';
 import Snackbar from 'react-native-snackbar';
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
@@ -119,13 +120,10 @@ import { checkWorkoutStreak, getAllExercises } from './exercises';
 import { checkStepsCalories } from './leaderboards';
 import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
-import { createAudioPlayer } from 'expo-audio';
-
 
 const audioSource = require('../audio/notif.wav');
 
-const notif = createAudioPlayer(audioSource)
-
+const notif = createAudioPlayer(audioSource);
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
@@ -628,7 +626,7 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
         route.params?.uid === uid &&
         state === 'active'
       ) {
-          notif.play();
+        notif.play();
       }
     }
   }
@@ -718,7 +716,7 @@ function* sendMessage(
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
-    notif.play()
+    notif.play();
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({ text: e.message });

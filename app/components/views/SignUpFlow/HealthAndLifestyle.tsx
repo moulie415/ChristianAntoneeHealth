@@ -1,6 +1,6 @@
 import Picker from '@quidone/react-native-wheel-picker';
 import React from 'react';
-import { Platform, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { FITNESS_RATINGS } from '../../../constants';
 import colors from '../../../constants/colors';
