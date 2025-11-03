@@ -28,6 +28,7 @@ import {
   Avatar as GiftedAvatar,
   GiftedChat,
   IMessage,
+  Message as GiftedMessage,
   MessageAudioProps,
   MessageImageProps,
   MessageText,
@@ -677,6 +678,10 @@ const Chat: React.FC<ChatProps> = ({
           onInputTextChanged={onInputTextChanged}
           text={text}
           onLongPress={onLongPress}
+          renderMessage={(props) => {
+            const {key, ...rest} = props
+            return <GiftedMessage {...rest} key={key} />
+          }}
           renderMessageVideo={renderMessageVideo}
           renderMessageAudio={renderMessageAudio}
           renderMessageImage={renderMessageImage}
