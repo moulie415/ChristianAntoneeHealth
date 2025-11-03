@@ -15,7 +15,7 @@ import {
 import db from '@react-native-firebase/firestore';
 import { PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
-// @TODO re-enable calendar sync
+// @TODO replace with expo calendar
 // import RNCalendarEvents, {
 //   CalendarEventWritable,
 // } from 'react-native-calendar-events';

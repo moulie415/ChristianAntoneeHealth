@@ -49,6 +49,7 @@ import Text from '../commons/Text';
 import Tile from '../commons/Tile';
 import WeightModal from '../commons/WeightModal';
 import * as FileSystem from 'expo-file-system'
+import * as ImagePicker from 'expo-image-picker'
 
 const ProfileComponent: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'Profile'>;
@@ -119,12 +120,8 @@ const ProfileComponent: React.FC<{
   });
 
   const handlePickerCallback = useCallback(
-    async (response: ImagePickerResponse) => {
-      if (response.errorMessage || response.errorCode) {
-        Snackbar.show({
-          text: `Error: ${response.errorMessage || response.errorCode}`,
-        });
-      } else if (!response.didCancel) {
+    async (response: ImagePicker.ImagePickerResult) => {
+      if (response.assets) {
         const image = response.assets?.[0];
         setAvatar(image?.uri);
       }
@@ -272,27 +269,30 @@ const ProfileComponent: React.FC<{
           >
             <TouchableOpacity
               onPress={() => {
-                const MAX_SIZE = 500;
-                const cameraOptions: CameraOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                const imageLibraryOptions: ImageLibraryOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
                 const options: AlertButton[] = [
                   {
                     text: 'Upload from image library',
-                    onPress: () =>
-                      launchImageLibrary(cameraOptions, handlePickerCallback),
+                    onPress: async() => {
+                      const result = await ImagePicker.launchImageLibraryAsync({
+                        allowsMultipleSelection: false,
+                        allowsEditing: true,
+                        quality: 0.8,
+                        mediaTypes: ['images']
+                      })
+                      handlePickerCallback(result)
+                    }
                   },
                   {
                     text: 'Take photo',
-                    onPress: () =>
-                      launchCamera(imageLibraryOptions, handlePickerCallback),
+                    onPress: async() => {
+                      const result = await ImagePicker.launchCameraAsync({
+                        allowsMultipleSelection: false,
+                        allowsEditing: true,
+                        quality: 0.8,
+                        mediaTypes: ['images']
+                      })
+                      handlePickerCallback(result)
+                    }
                   },
                   {
                     text: 'Cancel',

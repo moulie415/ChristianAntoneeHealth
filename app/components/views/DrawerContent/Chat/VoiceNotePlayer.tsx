@@ -1,17 +1,16 @@
 import { Slider } from '@miblanchard/react-native-slider';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import React from 'react';
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { IMessage } from 'react-native-gifted-chat';
 import colors from '../../../../constants/colors';
 import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';
-import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 
 const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
-
   const audio = message.audio || '';
-  const player = useAudioPlayer(audio)
+  const player = useAudioPlayer(audio);
   const status = useAudioPlayerStatus(player);
 
   return (
@@ -40,12 +39,12 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
             }}
             onPress={() => {
               if (status.playing) {
-                player.pause()
+                player.pause();
               } else {
-              if (status.currentTime === status.duration) {
-                player.seekTo(0)
-              }
-                player.play()
+                if (status.currentTime === status.duration) {
+                  player.seekTo(0);
+                }
+                player.play();
               }
             }}
           >
@@ -66,7 +65,7 @@ const VoiceNotePlayer: React.FC<{ message: IMessage }> = ({ message }) => {
             trackStyle={{ width: 150 }}
             onSlidingComplete={val => {
               if (status.isLoaded) {
-                player.seekTo(status.duration * val[0])
+                player.seekTo(status.duration * val[0]);
               }
             }}
             renderThumbComponent={() => {

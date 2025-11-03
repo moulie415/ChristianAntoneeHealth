@@ -85,7 +85,11 @@ const VoiceNoteRecorder = ({ onClose, onSend }: Props) => {
         ) : (
           <RecordingIcon animate={recorderState.durationMillis > 0} />
         )}
-        {!stopped && <Text style={{width: 40}}>{mmss(Math.floor(audioRecorder.currentTime))}</Text>}
+        {!stopped && (
+          <Text style={{ width: 40 }}>
+            {mmss(Math.floor(audioRecorder.currentTime))}
+          </Text>
+        )}
         {!stopped && <RecordingIndicator metering={recorderState.metering} />}
         {!!recorderState.url && stopped && <Player uri={recorderState.url} />}
         {!stopped && (
@@ -125,7 +129,7 @@ const Player = ({ uri }: { uri: string }) => {
   const status = useAudioPlayerStatus(player);
   return (
     <>
-      <Text style={{width: 40}}>{mmss(Math.floor(status.currentTime))}</Text>
+      <Text style={{ width: 40 }}>{mmss(Math.floor(status.currentTime))}</Text>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity
           style={{
@@ -139,7 +143,7 @@ const Player = ({ uri }: { uri: string }) => {
               player.pause();
             } else {
               if (status.currentTime === status.duration) {
-                player.seekTo(0)
+                player.seekTo(0);
               }
               player.play();
             }

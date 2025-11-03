@@ -133,7 +133,6 @@ const PhysicalActivityReadiness: React.FC<{
   ];
   return (
     <KeyboardAwareScrollView
-      extraScrollHeight={Platform.OS === 'ios' ? 50 : 75}
       contentContainerStyle={{ paddingBottom: 100 }}
       style={{
         flex: 1,

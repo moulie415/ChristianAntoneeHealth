@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
 import { Platform } from 'react-native';
+// @TODO replace with expo background task
 // import BackgroundFetch from 'react-native-background-fetch';
 import {
   Permission,
