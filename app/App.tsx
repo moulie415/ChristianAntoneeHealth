@@ -24,7 +24,9 @@ import {
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { navigationRef } from './RootNavigation';
 import { DrawerNavigator } from './Stack';
+import './backgroundTask';
 import colors from './constants/colors';
+import './notifications';
 import reducer from './reducers';
 import rootSaga from './sagas';
 import Education from './types/Education';
