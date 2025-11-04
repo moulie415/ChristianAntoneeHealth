@@ -8,6 +8,7 @@ import { EventChannel, eventChannel } from '@redux-saga/core';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import * as Application from 'expo-application';
+import { createAudioPlayer } from 'expo-audio';
 import * as Device from 'expo-device';
 import * as FileSystem from 'expo-file-system';
 import * as Notifications from 'expo-notifications';
@@ -24,9 +25,6 @@ import { Audio, Image, Video } from 'react-native-compressor';
 import { openInbox } from 'react-native-email-link';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
-/* @TODO replace react native push notification with expo notifications 
-and place react native soundplayer and other audio modules with expo audio */
-import { createAudioPlayer } from 'expo-audio';
 import Snackbar from 'react-native-snackbar';
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
@@ -423,7 +421,7 @@ const channels: {
 ];
 
 function* createChannels() {
-  if (Platform.OS == 'android') {
+  if (Platform.OS === 'android') {
     channels.forEach(({ channelId, channelName, channelDescription }) => {
       Notifications.setNotificationChannelAsync(channelId, {
         name: channelName,

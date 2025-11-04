@@ -1,8 +1,5 @@
 import { Slider } from '@miblanchard/react-native-slider';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
-import React, { useEffect, useState } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
-// @TODO replace with expo audio
 import {
   AudioModule,
   RecordingPresets,
@@ -12,6 +9,8 @@ import {
   useAudioRecorder,
   useAudioRecorderState,
 } from 'expo-audio';
+import React, { useEffect, useState } from 'react';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import colors from '../../../../constants/colors';
 import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';

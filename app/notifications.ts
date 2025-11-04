@@ -2,6 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { Linking } from 'react-native';
 import { store } from './App';
 import { navigate, navigationRef } from './RootNavigation';
+import { logError } from './helpers/error';
 import { setUnread } from './reducers/profile';
 import {
   CONNECTION_ID,
@@ -12,73 +13,29 @@ import {
 
 Notifications.setNotificationHandler({
   handleNotification: async notification => {
-    console.log('NOTIFICATION:', notification);
-    let shouldShowNotification = true;
+    const { data } = notification.request.content;
     const { unread, premium } = store.getState().profile.profile;
-    if (notification.userInteraction) {
-      if (notification.data.url) {
-        Linking.openURL(notification.data.url);
-      }
-      if (
-        (notification.channelId === WORKOUT_REMINDERS_CHANNEL_ID ||
-          notification.data.channelId === PLAN_CHANNEL_ID) &&
-        navigationRef.current
-      ) {
-        const route = navigationRef.current.getCurrentRoute();
-        if (route.name === 'Plan') {
-          shouldShowNotification = false;
-        } else if (premium) {
-          navigate('Plan');
-        } else {
-          navigate('Premium', {});
-        }
-      }
-      if (
-        (notification.data.channelId === CONNECTION_ID ||
-          notification.data.channelId === MESSAGE_CHANNEL_ID) &&
-        navigationRef.current
-      ) {
-        if (premium) {
-          if (
-            notification.data.channelId === MESSAGE_CHANNEL_ID &&
-            notification.data.uid
-          ) {
-            navigate('Chat', { uid: notification.data.uid });
-          } else {
-            navigate('Connections');
-          }
-        } else {
-          navigate('Premium', {});
-        }
-      }
-    } else if (notification.foreground) {
-      if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
-        if (
-          navigationRef.current &&
-          store.getState().profile.state === 'active'
-        ) {
-          const route = navigationRef.current.getCurrentRoute();
-          if (
-            route.name === 'Chat' &&
-            route.params?.uid === notification.data.uid
-          ) {
-            shouldShowNotification = false;
-          }
-        }
+    let shouldShowNotification = true;
+
+    if (notification.request.content.data.channelId === MESSAGE_CHANNEL_ID) {
+      const route = navigationRef.current?.getCurrentRoute();
+      if (route?.name === 'Chat' && route.params?.uid === data.uid) {
+        shouldShowNotification = false;
       }
     }
-    if (!notification.userInteraction && shouldShowNotification && premium) {
-      if (notification.data.channelId === MESSAGE_CHANNEL_ID) {
-        const { uid } = notification.data;
+
+    if (shouldShowNotification && premium) {
+      if (data.channelId === MESSAGE_CHANNEL_ID) {
+        const uid = data.uid as string;
         const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
         store.dispatch(setUnread({ ...unread, [uid]: newUnread }));
       }
-      if (notification.data.channelId === PLAN_CHANNEL_ID) {
-        const newUnread = unread && unread.plan ? unread.plan + 1 : 1;
-        store.dispatch(setUnread({ ...unread, ['plan']: newUnread }));
+      if (data.channelId === PLAN_CHANNEL_ID) {
+        const newUnread = unread?.plan ? unread.plan + 1 : 1;
+        store.dispatch(setUnread({ ...unread, plan: newUnread }));
       }
     }
-    // TODO revisit what you want to do with this
+
     return {
       shouldShowAlert: shouldShowNotification,
       shouldPlaySound: shouldShowNotification,
@@ -87,4 +44,44 @@ Notifications.setNotificationHandler({
       shouldShowList: shouldShowNotification,
     };
   },
+});
+
+Notifications.addNotificationResponseReceivedListener(response => {
+  try {
+    const { data } = response.notification.request.content;
+    const { premium } = store.getState().profile.profile;
+    const channelId = data.channelId as string;
+    if (data.url) {
+      Linking.openURL(data.url as string);
+      return;
+    }
+
+    if (
+      [WORKOUT_REMINDERS_CHANNEL_ID, PLAN_CHANNEL_ID].includes(channelId) &&
+      navigationRef.current
+    ) {
+      const route = navigationRef.current.getCurrentRoute();
+      if (route?.name === 'Plan') return;
+      if (premium) navigate('Plan');
+      else navigate('Premium', {});
+      return;
+    }
+
+    if (
+      [CONNECTION_ID, MESSAGE_CHANNEL_ID].includes(channelId) &&
+      navigationRef.current
+    ) {
+      if (premium) {
+        if (data.channelId === MESSAGE_CHANNEL_ID && data.uid) {
+          navigate('Chat', { uid: data.uid });
+        } else {
+          navigate('Connections');
+        }
+      } else {
+        navigate('Premium', {});
+      }
+    }
+  } catch (e) {
+    logError(e);
+  }
 });

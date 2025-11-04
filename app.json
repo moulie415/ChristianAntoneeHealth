@@ -26,7 +26,11 @@
         "UIBackgroundModes": [
           "remote-notification",
           "audio",
-          "fetch"
+          "fetch",
+          "processing"
+        ],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "com.transistorsoft.fetch"
         ],
         "SKAdNetworkItems": [
           {
@@ -135,7 +139,6 @@
       ],
       "react-native-email-link",
       "react-native-compressor",
-      "expo-background-task",
       [
         "@sentry/react-native/expo",
         {
@@ -148,7 +151,8 @@
       "@config-plugins/react-native-blob-util",
       "@config-plugins/react-native-pdf",
       "expo-apple-authentication",
-      "@kingstinct/react-native-healthkit"
+      "@kingstinct/react-native-healthkit",
+      "react-native-background-fetch"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -14,12 +14,8 @@ import {
 
 import db from '@react-native-firebase/firestore';
 import { PayloadAction } from '@reduxjs/toolkit';
-import moment from 'moment';
-// @TODO replace with expo calendar
-// import RNCalendarEvents, {
-//   CalendarEventWritable,
-// } from 'react-native-calendar-events';
 import * as Calendar from 'expo-calendar';
+import moment from 'moment';
 import { RootState } from '../App';
 import { logError } from '../helpers/error';
 import {
