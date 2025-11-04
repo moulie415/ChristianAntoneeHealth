@@ -27,6 +27,7 @@ import { Gender, Sample, WatchWorkoutResponse } from '../types/Shared';
 import { getSamples, saveSample } from './api';
 import { logError } from './error';
 
+// @TODO need to fix this https://youtu.be/Z6xRCyhrg1A?si=S_dN9MLAnLEjBJSO
 const { WatchWorkoutModule } = NativeModules;
 
 export const isAvailable = async () => {
