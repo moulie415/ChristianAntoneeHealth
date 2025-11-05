@@ -127,15 +127,6 @@
         }
       ],
       "@react-native-google-signin/google-signin",
-      [
-        "react-native-fbsdk-next",
-        {
-          "appID": "test",
-          "clientToken": "test",
-          "displayName": "CA Health",
-          "scheme": "test"
-        }
-      ],
       "react-native-email-link",
       "react-native-compressor",
       [
