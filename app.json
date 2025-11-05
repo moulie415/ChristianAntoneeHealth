@@ -150,8 +150,12 @@
       "@config-plugins/react-native-blob-util",
       "@config-plugins/react-native-pdf",
       "expo-apple-authentication",
-      "@kingstinct/react-native-healthkit",
-      "react-native-background-fetch"
+      "react-native-background-fetch",
+      ["@kingstinct/react-native-healthkit", {
+        "NSHealthShareUsageDescription": "Read and understand health data.",
+        "NSHealthUpdateUsageDescription": "Track your biometric data within CA Health",
+        "background": true
+      }]
     ],
     "experiments": {
       "typedRoutes": true,
