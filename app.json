@@ -103,7 +103,6 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "react-native-health",
       "react-native-health-connect",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
