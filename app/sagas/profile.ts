@@ -1,7 +1,9 @@
 import { NetInfoState, fetch } from '@react-native-community/netinfo';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import db, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
 import { statusCodes } from '@react-native-google-signin/google-signin';
 import { EventChannel, eventChannel } from '@redux-saga/core';
@@ -238,7 +240,9 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
 
       logError(e);
     }
-    const { profile } = yield select((state: RootState) => state.profile);
+    const { profile }: { profile: Profile } = yield select(
+      (state: RootState) => state.profile,
+    );
     const updateObj: Profile = {
       ...profile,
       ...action.payload,
@@ -800,14 +804,22 @@ function* premiumUpdatedWorker() {
 function* checkDeviceInfoChanged() {
   try {
     const fontScale: number = yield call(PixelRatio.getFontScale);
+
+    const deviceTypeMapping = {
+      [Device.DeviceType.DESKTOP]: 'Desktop',
+      [Device.DeviceType.PHONE]: 'Phone',
+      [Device.DeviceType.TABLET]: 'Tablet',
+      [Device.DeviceType.TV]: 'TV',
+      [Device.DeviceType.UNKNOWN]: 'Unknown',
+    };
     const deviceInfo: DeviceInfo = {
       fontScale,
       buildNumber: Application.nativeBuildVersion,
       version: Application.nativeApplicationVersion,
       brand: Device.brand,
-      // @TODO work this out
-      deviceId: Application.applicationId,
-      deviceType: Device.deviceType,
+      deviceType: Device.deviceType
+        ? deviceTypeMapping[Device.deviceType]
+        : 'Unknown',
       isTablet: Device.deviceType === Device.DeviceType.TABLET,
       os: Platform.OS,
     };
@@ -921,6 +933,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         }
 
         resetToTabs();
+        yield put(updateProfileAction({ lastSeen: new Date() }));
 
         if (settings.promptUpdate && !__DEV__) {
           yield fork(
@@ -950,21 +963,28 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
           'android.permission.POST_NOTIFICATIONS',
         );
       }
-      messaging()
-        .requestPermission()
-        .then(async authStatus => {
-          const enabled =
-            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-          if (enabled) {
-            try {
-              const FCMToken = await messaging().getToken();
-              api.setFCMToken(user.uid, FCMToken);
-            } catch (e) {
-              logError(e);
-            }
-          }
-        });
+
+      try {
+        const authStatus: FirebaseMessagingTypes.AuthorizationStatus =
+          yield call(messaging().requestPermission);
+
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (enabled && Device.isDevice) {
+          const { data }: Notifications.DevicePushToken = yield call(
+            Notifications.getDevicePushTokenAsync,
+          );
+
+          yield call(messaging().setAPNSToken, data);
+
+          const FCMToken: string = yield call(messaging().getToken);
+          api.setFCMToken(user.uid, FCMToken);
+        }
+      } catch (e) {
+        logError(e);
+      }
     } else if (user) {
       Alert.alert(
         'Account not verified',

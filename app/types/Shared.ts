@@ -1,5 +1,4 @@
 import { Timestamp } from '@react-native-firebase/firestore';
-import { DeviceType } from 'expo-device';
 import { PurchasesEntitlementInfo } from 'react-native-purchases';
 import { Area, Equipment as EquipmentLevel } from './QuickRoutines';
 
@@ -58,8 +57,7 @@ export interface DeviceInfo {
   buildNumber: string | null;
   version: string | null;
   brand: string | null;
-  deviceId: string | null;
-  deviceType: DeviceType | null;
+  deviceType: string | null;
   isTablet: boolean;
   os: string;
 }
@@ -136,6 +134,7 @@ export interface Profile {
   deviceInfo?: DeviceInfo;
   optedInToLeaderboards?: boolean;
   client?: boolean;
+  lastSeen?: Date;
 }
 
 export enum Level {
@@ -301,6 +300,7 @@ export interface UpdateProfilePayload {
   dailyCalories?: number;
   weeklySteps?: number;
   weeklyCalories?: number;
+  lastSeen?: Date;
 }
 
 export interface Recipe {

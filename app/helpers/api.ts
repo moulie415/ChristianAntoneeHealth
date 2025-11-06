@@ -10,7 +10,6 @@ import * as Crypto from 'expo-crypto';
 import moment from 'moment';
 import { Alert, Platform } from 'react-native';
 import { openInbox } from 'react-native-email-link';
-// TODO need to inject env vars into app.json or app.config.json for fb login to work
 import {
   AccessToken,
   AuthenticationToken,

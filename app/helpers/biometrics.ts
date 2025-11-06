@@ -137,7 +137,6 @@ export const getHeight = async (): Promise<number | undefined> => {
         'HKQuantityTypeIdentifierHeight',
         'cm',
       );
-      debugger;
       return result?.quantity || 0;
     }
 
@@ -167,7 +166,6 @@ export const getWeight = async (): Promise<number | undefined> => {
         'HKQuantityTypeIdentifierBodyMass',
         'kg',
       );
-      debugger;
       return result?.quantity || 0;
     }
 

@@ -100,10 +100,11 @@
         "expo-splash-screen",
         {
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+          "image": "./app/images/splash_blank.png"
         }
       ],
-      "react-native-health-connect",
+      "expo-health-connect",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-firebase/messaging",

@@ -206,8 +206,6 @@ const App: React.FC = () => {
     }, 5500);
   }, []);
 
-  console.log(process.env);
-
   useEffect(() => {
     Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
     Purchases.configure({
