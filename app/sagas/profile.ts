@@ -933,7 +933,9 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
         }
 
         resetToTabs();
-        yield put(updateProfileAction({ lastSeen: new Date() }));
+        yield put(
+          updateProfileAction({ lastSeen: new Date(), disableSnackbar: true }),
+        );
 
         if (settings.promptUpdate && !__DEV__) {
           yield fork(
