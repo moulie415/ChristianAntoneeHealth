@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "jest",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "clean": "expo prebuild --clean"
   },
   "dependencies": {
     "@config-plugins/react-native-blob-util": "^12.0.0",

@@ -77,6 +77,10 @@
       "usesAppleSignIn": true
     },
     "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/images/ic_launcher_foreground.png",
+        "backgroundColor": "#ffffff"
+      },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "googleServicesFile": "./google-services.json",
@@ -164,6 +168,13 @@
           "NSHealthShareUsageDescription": "Read and understand health data.",
           "NSHealthUpdateUsageDescription": "Track your biometric data within CA Health",
           "background": true
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./app/images/ic_notification.png",
+          "enableBackgroundRemoteNotifications": true
         }
       ]
     ],
