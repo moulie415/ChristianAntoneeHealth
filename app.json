@@ -20,7 +20,9 @@
         "com.apple.developer.healthkit": true,
         "com.apple.developer.healthkit.access": [],
         "com.apple.developer.healthkit.background-delivery": true,
-        "keychain-access-groups": ["$(AppIdentifierPrefix)com.HealthAndMovement"]   
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.HealthAndMovement"
+        ]
       },
       "infoPlist": {
         "UIBackgroundModes": [
@@ -29,9 +31,7 @@
           "fetch",
           "processing"
         ],
-        "BGTaskSchedulerPermittedIdentifiers": [
-          "com.transistorsoft.fetch"
-        ],
+        "BGTaskSchedulerPermittedIdentifiers": ["com.transistorsoft.fetch"],
         "SKAdNetworkItems": [
           {
             "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
@@ -82,13 +82,32 @@
       "googleServicesFile": "./google-services.json",
       "package": "com.healthandmovement",
       "permissions": [
+        "android.permission.WAKE_LOCK",
+        "android.permission.VIBRATE",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "com.android.vending.BILLING",
+        "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.INTERNET",
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
-        "android.permission.ACCESS_NETWORK_STATE"
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.USE_EXACT_ALARM",
+        "android.permission.health.READ_HEART_RATE",
+        "android.permission.health.READ_STEPS",
+        "android.permission.health.READ_ACTIVE_CALORIES_BURNED",
+        "android.permission.health.READ_EXERCISE",
+        "android.permission.health.WRITE_EXERCISE",
+        "android.permission.health.READ_HEIGHT",
+        "android.permission.health.WRITE_HEIGHT",
+        "android.permission.health.READ_WEIGHT",
+        "android.permission.health.WRITE_WEIGHT",
+        "android.permission.health.READ_BODY_FAT",
+        "android.permission.health.WRITE_BODY_FAT",
+        "android.permission.health.READ_BONE_MASS",
+        "android.permission.health.WRITE_BONE_MASS"
       ]
     },
     "web": {
@@ -114,11 +133,7 @@
         {
           "ios": {
             "useFrameworks": "static",
-            "forceStaticLinking": [
-              "RNFBApp",
-              "RNFBAuth",
-              "RNFBFirestore"
-            ]
+            "forceStaticLinking": ["RNFBApp", "RNFBAuth", "RNFBFirestore"]
           },
           "android": {
             "compileSdkVersion": 36,
@@ -143,11 +158,14 @@
       "@config-plugins/react-native-pdf",
       "expo-apple-authentication",
       "react-native-background-fetch",
-      ["@kingstinct/react-native-healthkit", {
-        "NSHealthShareUsageDescription": "Read and understand health data.",
-        "NSHealthUpdateUsageDescription": "Track your biometric data within CA Health",
-        "background": true
-      }]
+      [
+        "@kingstinct/react-native-healthkit",
+        {
+          "NSHealthShareUsageDescription": "Read and understand health data.",
+          "NSHealthUpdateUsageDescription": "Track your biometric data within CA Health",
+          "background": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
