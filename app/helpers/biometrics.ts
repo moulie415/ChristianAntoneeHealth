@@ -561,6 +561,7 @@ export const startWatchWorkout = async () => {
   try {
     if (Platform.OS === 'ios') {
       const paired = await getIsPaired();
+      debugger;
       if (paired) {
         await WatchWorkoutModule.startWatchWorkout();
       }
