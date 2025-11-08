@@ -28,7 +28,8 @@ import { openInbox } from 'react-native-email-link';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
 import Snackbar from 'react-native-snackbar';
-import { updateApplicationContext } from 'react-native-watch-connectivity';
+// @TODO remimplement this
+//import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
   call,
@@ -454,10 +455,10 @@ function* getWeeklyItems() {
     yield put(setWeeklyItems(weeklyItems));
     yield put(setLoading(false));
     yield call(scheduleGoalReminderNotification);
-
-    const goalData = getGoalsData(weeklyItems, quickRoutines, profile.targets);
+    // @TODO reimplement this
+    //const goalData = getGoalsData(weeklyItems, quickRoutines, profile.targets);
     if (Platform.OS === 'ios') {
-      updateApplicationContext({ goalData });
+      //updateApplicationContext({ goalData });
     }
   } catch (e) {
     yield put(setLoading(false));

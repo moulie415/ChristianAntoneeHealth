@@ -1,3 +1,4 @@
+import WatchModule from '@/modules/watch-module/src/WatchModule';
 import {
   BiologicalSex,
   getBiologicalSex,
@@ -12,7 +13,7 @@ import {
   WorkoutActivityType,
 } from '@kingstinct/react-native-healthkit';
 import moment from 'moment';
-import { NativeModules, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import {
   getSdkStatus,
   initialize,
@@ -22,13 +23,11 @@ import {
   requestPermission,
   SdkAvailabilityStatus,
 } from 'react-native-health-connect';
-import { getIsPaired } from 'react-native-watch-connectivity';
-import { Gender, Sample, WatchWorkoutResponse } from '../types/Shared';
+import { Gender, Sample } from '../types/Shared';
 import { getSamples, saveSample } from './api';
 import { logError } from './error';
 
 // @TODO need to fix this https://youtu.be/Z6xRCyhrg1A?si=S_dN9MLAnLEjBJSO
-const { WatchWorkoutModule } = NativeModules;
 
 export const isAvailable = async () => {
   if (Platform.OS === 'ios') {
@@ -560,11 +559,7 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
 export const startWatchWorkout = async () => {
   try {
     if (Platform.OS === 'ios') {
-      const paired = await getIsPaired();
-      debugger;
-      if (paired) {
-        await WatchWorkoutModule.startWatchWorkout();
-      }
+      WatchModule.startWatchWorkout();
     }
   } catch (e) {
     logError(e);
@@ -574,12 +569,7 @@ export const startWatchWorkout = async () => {
 export const endWatchWorkout = async () => {
   try {
     if (Platform.OS === 'ios') {
-      const paired = await getIsPaired();
-      if (paired) {
-        const response: WatchWorkoutResponse =
-          await WatchWorkoutModule.endWatchWorkout();
-        return response;
-      }
+      return WatchModule.endWatchWorkout();
     }
   } catch (e) {
     logError(e);

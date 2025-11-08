@@ -8,7 +8,6 @@ import profileSaga from './profile';
 import quickRoutinesSaga from './quickRoutines';
 import recipesSaga from './recipes';
 import testsSaga from './tests';
-import watchSaga from './watch';
 
 export default function* rootSaga() {
   yield all([
@@ -19,7 +18,8 @@ export default function* rootSaga() {
     fork(educationSaga),
     fork(appStateSaga),
     fork(planSaga),
-    fork(watchSaga),
+    // @TODO reimplement this
+    // fork(watchSaga),
     fork(recipesSaga),
     fork(leaderboardsSaga),
   ]);

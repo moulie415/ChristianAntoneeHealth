@@ -137,7 +137,8 @@
         {
           "ios": {
             "useFrameworks": "static",
-            "forceStaticLinking": ["RNFBApp", "RNFBAuth", "RNFBFirestore"]
+            "forceStaticLinking": ["RNFBApp", "RNFBAuth", "RNFBFirestore"],
+            "deploymentTarget": "17.6"
           },
           "android": {
             "compileSdkVersion": 36,
