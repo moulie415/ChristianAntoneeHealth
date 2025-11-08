@@ -31,7 +31,6 @@ struct WorkoutData: Codable {
 }
 
 
-@available(iOS 17.0, *)
 class WatchWorkout: NSObject, HKWorkoutSessionDelegate {
   private var store: HKHealthStore?
   private var session: HKWorkoutSession?
@@ -39,7 +38,6 @@ class WatchWorkout: NSObject, HKWorkoutSessionDelegate {
   
   override init() {
     super.init()
-    if #available(iOS 17.0, *) {
       self.store = HKHealthStore()
       self.store?.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
         guard let self = self else { return }
@@ -47,11 +45,9 @@ class WatchWorkout: NSObject, HKWorkoutSessionDelegate {
         self.session?.delegate = self
         print("Workout session mirroring started on iOS")
       }
-    }
   }
   
   func startWatchWorkout() {
-    if #available(iOS 17.0, *) {
       let configuration = HKWorkoutConfiguration()
       configuration.activityType = .functionalStrengthTraining
       configuration.locationType = .unknown
@@ -71,11 +67,9 @@ class WatchWorkout: NSObject, HKWorkoutSessionDelegate {
           return;
         }
       }
-    }
   }
   
     func endWatchWorkout() -> [String: Any] {
-      if #available(iOS 17.0, *) {
         guard let session = self.session else {
             return [:]
         }
@@ -83,9 +77,6 @@ class WatchWorkout: NSObject, HKWorkoutSessionDelegate {
         let data = self.workoutData
         self.workoutData = [:]
         return data
-      } else {
-          return[:]
-      }
     }
 
   

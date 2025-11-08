@@ -4,7 +4,7 @@ import { WatchWorkoutResponse } from './WatchModule.types';
 
 declare class WatchModule extends NativeModule {
   startWatchWorkout(): void;
-  endWatchWorkout(): WatchWorkoutResponse;
+  endWatchWorkout(): Promise<WatchWorkoutResponse>;
 }
 
 // This call loads the native module object from the JSI.
