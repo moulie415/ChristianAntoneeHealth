@@ -3,14 +3,14 @@ import 'dotenv/config';
 
 module.exports = ({ config }: ConfigContext) => ({
   ...config,
-  version: process.env.VERSION || '1.0.0',
+  version: process.env.VERSION || '1.21.0',
   ios: {
     ...config.ios,
-    buildNumber: process.env.RUN_NUMBER || 1,
+    buildNumber: String(process.env.RUN_NUMBER) || '500',
   },
   android: {
     ...config.android,
-    versionCode: process.env.RUN_NUMBER || 1,
+    versionCode: Number(process.env.RUN_NUMBER) || 500,
   },
   plugins: [
     ...(config.plugins

@@ -31,11 +31,13 @@ jobs:
         run: npm install -g expo-cli eas-cli
       - name: Install dependencies
         run: npm ci -f
-      - name: Create .env
+      - name: Create env
         env:
           ENV_FILE: ${{ secrets.ENV_FILE }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
           echo $ENV_FILE >> .env
+          echo $GOOGLE_SERVICES_JSON >> google-services.json
       - name: EAS Build Android
         run: |
           eas build --platform android --profile production --non-interactive
