@@ -10,26 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Enable Corepack
-        run: corepack enable
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
-          cache: 'yarn'
-      - uses: actions/cache@v3
-        id: yarn-cache
+          cache: 'npm'
+      - name: Cache node_modules
+        uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ hashFiles('yarn.lock') }}
-      - name: Install npm dependencies
-        run: |
-          yarn
+          path: |
+            node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
       - name: Run tests
         run: |
-          yarn test && npx tsc
+          npm test && npx tsc
       - name: Audit deps
-        run: yarn audit-deps
+        run: npm audit --omit=dev --audit-level=moderate
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4.1.0
         id: semantic-release

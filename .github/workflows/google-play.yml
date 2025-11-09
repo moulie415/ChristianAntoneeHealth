@@ -14,72 +14,34 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: Enable Corepack
-        run: corepack enable
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
-          cache: 'yarn'
-      - uses: actions/cache@v3
-        id: yarn-cache
+          cache: 'npm'
+      - name: Cache node_modules
+        uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ hashFiles('yarn.lock') }}
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+          path: |
+            node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      - name: Install Expo & EAS CLI
+        run: npm install -g expo-cli eas-cli
+      - name: Install dependencies
+        run: npm ci -f
       - name: Create .env
         env:
-          REVENUE_CAT_IOS_KEY: ${{ secrets.REVENUE_CAT_IOS_KEY }}
-          REVENUE_CAT_ANDROID_KEY: ${{ secrets.REVENUE_CAT_ANDROID_KEY }}
-          FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
-          FACEBOOK_CLIENT_TOKEN: ${{ secrets.FACEBOOK_CLIENT_TOKEN }}
-          ROOT_API_URL: ${{ secrets.ROOT_API_URL }}
-          PRIVACY_POLICY: ${{ secrets.PRIVACY_POLICY }}
-          TERMS_AND_CONDITIONS: ${{ secrets.TERMS_AND_CONDITIONS }}
+          ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
-          echo REVENUE_CAT_IOS_KEY=$REVENUE_CAT_IOS_KEY >> .env
-          echo REVENUE_CAT_ANDROID_KEY=$REVENUE_CAT_ANDROID_KEY >> .env
-          echo FACEBOOK_APP_ID=$FACEBOOK_APP_ID >> .env
-          echo INSTABUG_DEV_TOKEN=$INSTABUG_DEV_TOKEN >> .env
-          echo INSTABUG_PROD_TOKEN=$INSTABUG_PROD_TOKEN >> .env
-          echo ROOT_API_URL=$ROOT_API_URL >> .env
-          echo PRIVACY_POLICY=$PRIVACY_POLICY >> .env
-          echo TERMS_AND_CONDITIONS=$TERMS_AND_CONDITIONS >> .env
-          echo -n FACEBOOK_CLIENT_TOKEN=$FACEBOOK_CLIENT_TOKEN >> .env
-      - name: Bump version
-        uses: chkfung/android-version-actions@v1.2
-        with:
-          gradlePath: android/app/build.gradle
-          versionCode: ${{inputs.run_number}}
-          versionName: ${{inputs.version}}
-      - name: Build android aab
+          echo $ENV_FILE >> .env
+      - name: EAS Build Android
+        run: |
+          eas build --platform android --profile production --non-interactive
         env:
-          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-          MYAPP_UPLOAD_KEY_ALIAS: ${{ secrets.MYAPP_UPLOAD_KEY_ALIAS }}
-          MYAPP_UPLOAD_STORE_FILE: ${{ secrets.MYAPP_UPLOAD_STORE_FILE }}
-          MYAPP_UPLOAD_STORE_PASSWORD: ${{ secrets.MYAPP_UPLOAD_STORE_PASSWORD }}
-          MYAPP_UPLOAD_KEY_PASSWORD: ${{ secrets.MYAPP_UPLOAD_KEY_PASSWORD }}
-          KEYSTORE_DATA: ${{ secrets.KEYSTORE_DATA }}
-        run: |
-          cd android/app
-          echo $GOOGLE_SERVICES_JSON >> google-services.json
-          echo $KEYSTORE_DATA | base64 --decode > healthandmovement.keystore
-          cd ..
-          echo "MYAPP_UPLOAD_KEY_ALIAS=$MYAPP_UPLOAD_KEY_ALIAS" >> gradle.properties
-          echo "MYAPP_UPLOAD_STORE_FILE=$MYAPP_UPLOAD_STORE_FILE" >> gradle.properties
-          echo "MYAPP_UPLOAD_STORE_PASSWORD=$MYAPP_UPLOAD_STORE_PASSWORD" >> gradle.properties
-          echo "MYAPP_UPLOAD_KEY_PASSWORD=$MYAPP_UPLOAD_KEY_PASSWORD" >> gradle.properties
-          ./gradlew bundleRelease
-      - name: upload bundle to Google Play
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT_JSON}}
-          packageName: com.healthandmovement
-          releaseFiles: android/app/build/outputs/bundle/release/*.aab
-          track: alpha
-          #userFraction: 0.33
-          whatsNewDirectory: whatsnew
-          #mappingFile: /app/build/outputs/mapping/release/mapping.txt
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          VERSION: ${{ inputs.version }}
+          RUN_NUMBER: ${{ inputs.run_number }}
+          
+      
