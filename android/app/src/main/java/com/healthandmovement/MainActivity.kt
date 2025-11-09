@@ -1,5 +1,5 @@
 package com.healthandmovement
-
+import expo.modules.ReactActivityDelegateWrapper
 import android.os.Bundle
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -36,5 +36,5 @@ class MainActivity : ReactActivity() {
    * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
-      DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+      ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled))
 }

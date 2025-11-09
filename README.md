@@ -15,10 +15,10 @@ Make sure you have your `google-services.json` file in `android/app` and  `Googl
 Next install dependencies and then you can run iOS or Android
 
 ```bash
-yarn
+npm i
 cd ios
 pod install
 cd ..
-yarn ios
-yarn android
+npm run ios
+npm run android
 ```

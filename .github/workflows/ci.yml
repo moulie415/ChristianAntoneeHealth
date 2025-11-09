@@ -8,13 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: Enable Corepack
-        run: corepack enable
       - name: Install npm dependencies
         run: |
-          yarn
+          npm ci
       - name: Run tests
         run: |
-          yarn test && npx tsc
+          npm test && npx tsc
       - name: Audit deps
-        run: yarn audit-deps
+        run: npm run audit-deps
