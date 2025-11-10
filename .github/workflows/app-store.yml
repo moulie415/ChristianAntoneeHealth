@@ -145,6 +145,16 @@ jobs:
             -exportPath . \
             -exportOptionsPlist exportOptions.plist \
             | xcpretty
+      - name: Remove RCTNewArchEnabled from Info.plist files
+        run: |
+          PLIST1="ios/CA Health WatchKit Extension/Info.plist"
+          PLIST2="ios/CA Health/Info.plist"
+
+          echo "Removing RCTNewArchEnabled from $PLIST1 (if it exists)..."
+          /usr/libexec/PlistBuddy -c "Delete :RCTNewArchEnabled" "$PLIST1" || echo "Key not found or already removed in $PLIST1"
+
+          echo "Removing RCTNewArchEnabled from $PLIST2 (if it exists)..."
+          /usr/libexec/PlistBuddy -c "Delete :RCTNewArchEnabled" "$PLIST2" || echo "Key not found or already removed in $PLIST2"
       - name: Upload app to App Store Connect
         env:
           APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
