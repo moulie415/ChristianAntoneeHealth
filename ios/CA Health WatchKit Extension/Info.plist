@@ -30,8 +30,6 @@
 	<string>Read and understand health data.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Track your biometric data within CA Health</string>
-	<key>RCTNewArchEnabled</key>
-	<true/>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>WKBackgroundModes</key>
