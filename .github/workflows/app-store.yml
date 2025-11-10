@@ -131,6 +131,16 @@ jobs:
             -destination "generic/platform=iOS" \
             | xcpretty
 
+          # Remove RCTNewArchEnabled from Info.plist files
+          PLIST1="CA Health WatchKit Extension/Info.plist"
+          PLIST2="CA Health/Info.plist"
+
+          echo "Removing RCTNewArchEnabled from $PLIST1 (if it exists)..."
+          /usr/libexec/PlistBuddy -c "Delete :RCTNewArchEnabled" "$PLIST1" || echo "Key not found or already removed in $PLIST1"
+
+          echo "Removing RCTNewArchEnabled from $PLIST2 (if it exists)..."
+          /usr/libexec/PlistBuddy -c "Delete :RCTNewArchEnabled" "$PLIST2" || echo "Key not found or already removed in $PLIST2"
+
           # Archive
           xcodebuild archive \
             -workspace HealthAndMovement.xcworkspace \
@@ -140,15 +150,7 @@ jobs:
             | xcpretty
 
 
-          # Remove RCTNewArchEnabled from Info.plist files
-          PLIST1="ios/CA Health WatchKit Extension/Info.plist"
-          PLIST2="ios/CA Health/Info.plist"
 
-          echo "Removing RCTNewArchEnabled from $PLIST1 (if it exists)..."
-          /usr/libexec/PlistBuddy -c "Delete :RCTNewArchEnabled" "$PLIST1" || echo "Key not found or already removed in $PLIST1"
-
-          echo "Removing RCTNewArchEnabled from $PLIST2 (if it exists)..."
-          /usr/libexec/PlistBuddy -c "Delete :RCTNewArchEnabled" "$PLIST2" || echo "Key not found or already removed in $PLIST2"
 
           # Export
           xcodebuild -exportArchive \
