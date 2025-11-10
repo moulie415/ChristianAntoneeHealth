@@ -1,38 +1,38 @@
+import {
+  BiologicalSex,
+  getBiologicalSex,
+  getMostRecentQuantitySample,
+  getDateOfBirth as healthKitGetDateOfBirth,
+  isHealthDataAvailable,
+  queryQuantitySamples,
+  queryWorkoutSamples,
+  requestAuthorization,
+  saveQuantitySample,
+  saveWorkoutSample,
+  WorkoutActivityType,
+} from '@kingstinct/react-native-healthkit';
 import moment from 'moment';
 import { NativeModules, Platform } from 'react-native';
-// import {getApiLevel} from 'react-native-device-info';
-import AppleHealthKit from 'react-native-health';
 import {
-  RecordingMethod,
-  SdkAvailabilityStatus,
   getSdkStatus,
   initialize,
   insertRecords,
   readRecords,
+  RecordingMethod,
   requestPermission,
+  SdkAvailabilityStatus,
 } from 'react-native-health-connect';
 import { getIsPaired } from 'react-native-watch-connectivity';
-import {
-  healthConnectPermissions,
-  healthKitOptions,
-} from '../constants/strings';
 import { Gender, Sample, WatchWorkoutResponse } from '../types/Shared';
 import { getSamples, saveSample } from './api';
 import { logError } from './error';
 
+// @TODO need to fix this https://youtu.be/Z6xRCyhrg1A?si=S_dN9MLAnLEjBJSO
 const { WatchWorkoutModule } = NativeModules;
 
 export const isAvailable = async () => {
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.isAvailable((err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+    return isHealthDataAvailable();
   }
   const status = await getSdkStatus();
   return status === SdkAvailabilityStatus.SDK_AVAILABLE;
@@ -44,19 +44,86 @@ const round = (num: number) => {
 
 export const initBiometrics = async () => {
   if (Platform.OS === 'ios') {
-    return new Promise((resolve, reject) => {
-      AppleHealthKit.initHealthKit(healthKitOptions, (e, result) => {
-        if (e) {
-          reject(e);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+    return requestAuthorization(
+      [
+        'HKQuantityTypeIdentifierBodyMass',
+        'HKWorkoutTypeIdentifier',
+        'HKQuantityTypeIdentifierHeight',
+        'HKQuantityTypeIdentifierBodyFatPercentage',
+      ],
+      [
+        'HKCharacteristicTypeIdentifierDateOfBirth',
+        'HKQuantityTypeIdentifierBodyMass',
+        'HKQuantityTypeIdentifierHeight',
+        'HKQuantityTypeIdentifierHeartRate',
+        'HKQuantityTypeIdentifierStepCount',
+        'HKCharacteristicTypeIdentifierBiologicalSex',
+        'HKWorkoutTypeIdentifier',
+        'HKQuantityTypeIdentifierBodyFatPercentage',
+        'HKQuantityTypeIdentifierActiveEnergyBurned',
+      ],
+    );
   }
   const initialized = await initialize();
   if (initialized) {
-    await requestPermission(healthConnectPermissions);
+    await requestPermission([
+      {
+        accessType: 'read',
+        recordType: 'ActiveCaloriesBurned',
+      },
+      {
+        accessType: 'read',
+        recordType: 'Steps',
+      },
+      {
+        accessType: 'read',
+        recordType: 'HeartRate',
+      },
+      {
+        accessType: 'read',
+        recordType: 'ActiveCaloriesBurned',
+      },
+      {
+        accessType: 'read',
+        recordType: 'ExerciseSession',
+      },
+      {
+        accessType: 'write',
+        recordType: 'ExerciseSession',
+      },
+      {
+        accessType: 'read',
+        recordType: 'Height',
+      },
+      {
+        accessType: 'write',
+        recordType: 'Height',
+      },
+      {
+        accessType: 'read',
+        recordType: 'Weight',
+      },
+      {
+        accessType: 'write',
+        recordType: 'Weight',
+      },
+      {
+        accessType: 'read',
+        recordType: 'BodyFat',
+      },
+      {
+        accessType: 'write',
+        recordType: 'BodyFat',
+      },
+      {
+        accessType: 'read',
+        recordType: 'BoneMass',
+      },
+      {
+        accessType: 'write',
+        recordType: 'BoneMass',
+      },
+    ]);
   }
 };
 
@@ -66,24 +133,11 @@ export const getHeight = async (): Promise<number | undefined> => {
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<number | undefined>((resolve, reject) => {
-        // @ts-ignore
-        AppleHealthKit.getLatestHeight(null, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            if (result.value && typeof result.value === 'number') {
-              // values is in inches so need to convert to cm
-              resolve(round(result.value * 2.54));
-            } else {
-              resolve(undefined);
-            }
-          }
-        });
-      });
-
-      const height = await promise;
-      return height;
+      const result = await getMostRecentQuantitySample(
+        'HKQuantityTypeIdentifierHeight',
+        'cm',
+      );
+      return result?.quantity || 0;
     }
 
     const { records } = await readRecords('Height', {
@@ -108,24 +162,11 @@ export const getWeight = async (): Promise<number | undefined> => {
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<number | undefined>((resolve, reject) => {
-        // @ts-ignore
-        AppleHealthKit.getLatestWeight(null, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            if (result.value && typeof result.value === 'number') {
-              // value is in pounds so need to convert to kg
-              resolve(round(result.value * 0.453592));
-            } else {
-              resolve(undefined);
-            }
-          }
-        });
-      });
-
-      const weight = await promise;
-      return weight;
+      const result = await getMostRecentQuantitySample(
+        'HKQuantityTypeIdentifierBodyMass',
+        'kg',
+      );
+      return result?.quantity || 0;
     }
 
     const { records } = await readRecords('Weight', {
@@ -164,24 +205,17 @@ export const getStepSamples = async (
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
-        AppleHealthKit.getDailyStepCountSamples(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(results);
-            }
-          },
-        );
+      const results = await queryQuantitySamples(
+        'HKQuantityTypeIdentifierStepCount',
+        { filter: { startDate, endDate } },
+      );
+      return results.map(result => {
+        return {
+          value: result.quantity,
+          startDate: result.startDate.toISOString(),
+          endDate: result.endDate.toISOString(),
+        };
       });
-
-      const samples = await promise;
-      return samples;
     }
 
     const { records } = await readRecords('Steps', {
@@ -217,42 +251,27 @@ export const getWeeklySteps = async (): Promise<Sample[] | undefined> => {
       return;
     }
 
-    const startDate = moment().utc().startOf('isoWeek').toISOString();
-    const endDate = moment().utc().endOf('day').toISOString();
+    const startDate = moment().utc().startOf('isoWeek').toDate();
+    const endDate = moment().utc().endOf('day').toDate();
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
-        AppleHealthKit.getDailyStepCountSamples(
-          {
-            startDate,
-            endDate,
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(
-                results.map(result => {
-                  return {
-                    startDate: result.startDate,
-                    endDate: result.endDate,
-                    value: result.value,
-                  };
-                }),
-              );
-            }
-          },
-        );
+      const results = await queryQuantitySamples(
+        'HKQuantityTypeIdentifierStepCount',
+        { filter: { startDate, endDate } },
+      );
+      return results.map(result => {
+        return {
+          value: result.quantity,
+          startDate: result.startDate.toISOString(),
+          endDate: result.endDate.toISOString(),
+        };
       });
-
-      const samples = await promise;
-      return samples;
     }
 
     const { records } = await readRecords('Steps', {
       timeRangeFilter: {
         operator: 'between',
-        startTime: startDate,
-        endTime: endDate,
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
       },
     });
 
@@ -276,23 +295,10 @@ export const getActivitySamples = async (startDate: Date, endDate: Date) => {
     }
 
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[] | undefined>((resolve, reject) => {
-        AppleHealthKit.getSamples(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(results);
-            }
-          },
-        );
+      const results = await queryWorkoutSamples({
+        filter: { startDate, endDate },
       });
-      const samples = await promise;
-      return samples;
+      return results;
     }
 
     const { records } = await readRecords('ExerciseSession', {
@@ -315,22 +321,15 @@ export const getSex = async (): Promise<Gender | undefined> => {
     if (!(await isAvailable())) {
       return;
     }
-    const promise = new Promise<Gender | undefined>((resolve, reject) => {
-      // @ts-ignore
-      AppleHealthKit.getBiologicalSex(null, (e, result) => {
-        if (e) {
-          reject(e);
-        }
-        // @ts-ignore
-        if (result.value === 'male' || result.value === 'female') {
-          resolve(result.value);
-        } else {
-          resolve(undefined);
-        }
-      });
-    });
-    const sex = await promise;
-    return sex;
+    const result = getBiologicalSex();
+    switch (result) {
+      case BiologicalSex.female:
+        return 'female';
+      case BiologicalSex.male:
+        return 'male';
+      default:
+        return 'none';
+    }
   }
 };
 
@@ -340,17 +339,8 @@ export const getDateOfBirth = async (): Promise<string | undefined> => {
       return;
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<string | undefined>((resolve, reject) => {
-        AppleHealthKit.getDateOfBirth(null, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result.value);
-          }
-        });
-      });
-      const dob = await promise;
-      return dob;
+      const result = healthKitGetDateOfBirth();
+      return result?.toISOString();
     }
   } catch (e) {
     logError(e);
@@ -368,15 +358,14 @@ export const saveWeight = async (uid: string, value?: number) => {
     }
 
     if (Platform.OS === 'ios') {
-      return new Promise((resolve, reject) => {
-        AppleHealthKit.saveWeight({ value: value * 2.20462 }, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+      await saveQuantitySample(
+        'HKQuantityTypeIdentifierBodyMass',
+        'kg',
+        value,
+        new Date(),
+        new Date(),
+        {},
+      );
     }
 
     await insertRecords([
@@ -401,15 +390,14 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     if (Platform.OS === 'ios') {
-      return new Promise((resolve, reject) => {
-        AppleHealthKit.saveHeight({ value: value * 0.393701 }, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+      await saveQuantitySample(
+        'HKQuantityTypeIdentifierHeight',
+        'cm',
+        value,
+        new Date(),
+        new Date(),
+        {},
+      );
     }
 
     await insertRecords([
@@ -433,23 +421,18 @@ export const getHeartRateSamples = async (
       return [];
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[]>((resolve, reject) => {
-        AppleHealthKit.getHeartRateSamples(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(results);
-            }
-          },
-        );
+      const results = await queryQuantitySamples(
+        'HKQuantityTypeIdentifierHeartRate',
+        { filter: { startDate, endDate } },
+      );
+
+      return results.map(result => {
+        return {
+          value: result.quantity,
+          startDate: result.startDate.toISOString(),
+          endDate: result.endDate.toISOString(),
+        };
       });
-      const samples = await promise;
-      return samples;
     }
 
     const { records } = await readRecords('HeartRate', {
@@ -487,29 +470,17 @@ export const getCalorieSamples = async (
       return [];
     }
     if (Platform.OS === 'ios') {
-      const promise = new Promise<Sample[]>((resolve, reject) => {
-        AppleHealthKit.getActiveEnergyBurned(
-          {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-          },
-          (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(
-                results.map(res => ({
-                  startDate: res.startDate,
-                  endDate: res.endDate,
-                  value: res.value,
-                })),
-              );
-            }
-          },
-        );
+      const results = await queryQuantitySamples(
+        'HKQuantityTypeIdentifierActiveEnergyBurned',
+        { filter: { startDate, endDate } },
+      );
+      return results.map(result => {
+        return {
+          value: result.quantity,
+          startDate: result.startDate.toISOString(),
+          endDate: result.endDate.toISOString(),
+        };
       });
-      const samples = await promise;
-      return samples;
     }
 
     const { records } = await readRecords('ActiveCaloriesBurned', {
@@ -543,31 +514,17 @@ export const saveWorkout = async (
     if (!(await isAvailable())) {
       return;
     }
-    const startDate = moment().subtract(seconds, 'seconds').toISOString();
-    const endDate = moment().toISOString();
+    const startDate = moment().subtract(seconds, 'seconds').toDate();
+    const endDate = moment().toDate();
     if (Platform.OS === 'ios') {
-      await new Promise((resolve, reject) => {
-        AppleHealthKit.saveWorkout(
-          {
-            type: AppleHealthKit.Constants.Activities
-              .FunctionalStrengthTraining,
-            startDate,
-            endDate,
-            // @ts-ignore
-            energyBurned: calories,
-            energyBurnedUnit: 'calorie',
-          },
-          (e: Error, res) => {
-            if (e) {
-              logError(e);
-              reject(e);
-              return;
-            }
-            resolve(res);
-            // workout successfully saved
-          },
-        );
-      });
+      await saveWorkoutSample(
+        WorkoutActivityType.functionalStrengthTraining,
+        [],
+        startDate,
+        endDate,
+        { energyBurned: calories },
+        { name, description },
+      );
     }
   } catch (e) {
     logError(e);
@@ -586,15 +543,14 @@ export const saveBodyFatPercentage = async (value: number, uid: string) => {
       return;
     }
     if (Platform.OS === 'ios') {
-      await new Promise((resolve, reject) => {
-        AppleHealthKit.saveBodyFatPercentage({ value }, (e, result) => {
-          if (e) {
-            reject(e);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+      await saveQuantitySample(
+        'HKQuantityTypeIdentifierBodyFatPercentage',
+        '%',
+        value,
+        new Date(),
+        new Date(),
+        {},
+      );
     }
   } catch (e) {
     logError(e);

@@ -4392,12 +4392,40 @@ PODS:
     - React-perflogger (= 0.82.0)
     - React-utils (= 0.82.0)
     - SocketRocket
+  - ReactNativeHealthkit (11.1.2):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - NitroModules
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - RecaptchaInterop (101.0.0)
   - RevenueCat (5.34.0)
   - RNAppleAuthentication (2.4.1):
     - React-Core
-  - RNAppleHealthKit (1.7.0):
-    - React
   - RNBackgroundFetch (4.2.8):
     - React-Core
   - RNCalendarEvents (2.2.0):
@@ -5053,8 +5081,8 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "ReactNativeHealthkit (from `../node_modules/@kingstinct/react-native-healthkit`)"
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
-  - RNAppleHealthKit (from `../node_modules/react-native-health`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
@@ -5332,10 +5360,10 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeHealthkit:
+    :path: "../node_modules/@kingstinct/react-native-healthkit"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
-  RNAppleHealthKit:
-    :path: "../node_modules/react-native-health"
   RNBackgroundFetch:
     :path: "../node_modules/react-native-background-fetch"
   RNCalendarEvents:
@@ -5539,10 +5567,10 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: c5c4f5280e4ae0f9f4a739c64c4260fe0b3edaf1
   ReactCodegen: 3873d7ac09960375f7845384ff47d53e478462dc
   ReactCommon: f5527f5d97a9957ab46eb5db78875d3579e03b97
+  ReactNativeHealthkit: a6f7035ee7100c6aa605cb4d6b9f904c182d8956
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RevenueCat: eb2aa042789d9c99ad5172bd96e28b96286d6ada
   RNAppleAuthentication: c3dddf5918126c9aae85dc2e2ce9fb87835e9e04
-  RNAppleHealthKit: 86ef7ab70f762b802f5c5289372de360cca701f9
   RNBackgroundFetch: e44c9e85d7fb3122c37d8a806278f62c7682d7ea
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: fd44f4b03e007e642e98df6726737bc66e9ba609
@@ -5579,4 +5607,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0349a15d24e40cf78b0353ffc28cddc0ccce987b
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2
