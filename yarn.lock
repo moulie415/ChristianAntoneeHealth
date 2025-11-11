@@ -6042,9 +6042,11 @@ __metadata:
     expo-document-picker: "npm:^14.0.7"
     expo-image-picker: "npm:^17.0.8"
     expo-linear-gradient: "npm:^15.0.7"
+    expo-navigation-bar: "npm:^5.0.9"
     expo-notifications: "npm:^0.32.12"
     expo-status-bar: "npm:^3.0.8"
     expo-store-review: "npm:^9.0.8"
+    expo-system-ui: "npm:^6.0.8"
     jest: "npm:^29.6.3"
     lodash: "npm:^4.17.21"
     lottie-react-native: "npm:^7.3.4"
@@ -8880,6 +8882,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-navigation-bar@npm:^5.0.9":
+  version: 5.0.9
+  resolution: "expo-navigation-bar@npm:5.0.9"
+  dependencies:
+    "@react-native/normalize-colors": "npm:0.81.5"
+    debug: "npm:^4.3.2"
+    react-native-is-edge-to-edge: "npm:^1.2.1"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/9055f15b49ef533e0aeaeb37c67188881e150a0520b6079d21ebc330cd722944766df8a76cb432dcfd53948798504aaf0cf9a0299b6d8e4fc6f457b81794d41d
+  languageName: node
+  linkType: hard
+
 "expo-notifications@npm:^0.32.12":
   version: 0.32.12
   resolution: "expo-notifications@npm:0.32.12"
@@ -8925,6 +8942,23 @@ __metadata:
     expo: "*"
     react-native: "*"
   checksum: 10c0/fa3dddfbc4275751840e06face078cb847e30702c05d9beb6c4b645f3cd9b85682f524df00e1abc29847fc783b451c7dd59b742eec927d6d39375c525c9e5886
+  languageName: node
+  linkType: hard
+
+"expo-system-ui@npm:^6.0.8":
+  version: 6.0.8
+  resolution: "expo-system-ui@npm:6.0.8"
+  dependencies:
+    "@react-native/normalize-colors": "npm:0.81.5"
+    debug: "npm:^4.3.2"
+  peerDependencies:
+    expo: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 10c0/6b23524592dbe76c8bdfa519c70303d6c7fb7ec038a54bd6f9d98acf5ddb7a0ff41377ed74b1d363137e1f565df318cb74eb9ca26e6eeab5e72f54970c58cefc
   languageName: node
   linkType: hard
 

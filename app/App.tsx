@@ -1,7 +1,6 @@
 import appCheck from '@react-native-firebase/app-check';
-import { Timestamp } from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
-import { configureStore, isPlain } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
@@ -12,13 +11,7 @@ import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
   persistStore,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
 } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { navigationRef } from './RootNavigation';
@@ -51,7 +44,7 @@ import {
 import Test from './types/Test';
 import Config from 'react-native-config'
 import { StatusBar } from 'expo-status-bar';
-
+import * as SystemUI from 'expo-system-ui';
 
 const createSagaMiddleware = require('redux-saga').default;
 
@@ -199,11 +192,15 @@ Sentry.init({
   integrations: [reactNavigationIntegration],
 });
 
+
+
+
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setShowSplash(false);
+      SystemUI.setBackgroundColorAsync(colors.appGrey)
     }, 5500);
   }, []);
 
