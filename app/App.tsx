@@ -44,9 +44,6 @@ import {
 } from './types/Shared';
 import Test from './types/Test';
 
-
-// @TODO Look into reintegrating the expo cli https://docs.expo.dev/bare/installing-expo-modules/#configure-expo-cli-for-bundling-on-android-and-ios
-
 const createSagaMiddleware = require('redux-saga').default;
 
 const { height, width } = Dimensions.get('window');
