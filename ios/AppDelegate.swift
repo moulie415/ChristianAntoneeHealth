@@ -10,7 +10,7 @@ import TSBackgroundFetch
 import FBSDKCoreKit
 
 @main
-class AppDelegate: UIResponder, ExpoAppDelegate {
+class AppDelegate: ExpoAppDelegate {
   var window: UIWindow?
   
   var reactNativeDelegate: ReactNativeDelegate?
@@ -48,14 +48,14 @@ class AppDelegate: UIResponder, ExpoAppDelegate {
     
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-  func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+  override func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
     return ApplicationDelegate.shared.application(application, open: url, options: options) ||
     GIDSignIn.sharedInstance.handle(url) ||
     RCTLinkingManager.application(application, open: url, options: options)
   }
   
   
-  func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+  override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
     return RCTLinkingManager.application(application, continue: userActivity, restorationHandler: restorationHandler)
   }
 }
@@ -64,7 +64,6 @@ class AppDelegate: UIResponder, ExpoAppDelegate {
 
 class ReactNativeDelegate: ExpoReactNativeFactoryDelegate {
   override func sourceURL(for bridge: RCTBridge) -> URL? {
-    self.bundleURL()
     // needed to return the correct URL for expo-dev-client.
     bridge.bundleURL ?? bundleURL()
   }

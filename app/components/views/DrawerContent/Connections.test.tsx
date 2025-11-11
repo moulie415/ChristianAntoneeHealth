@@ -14,6 +14,7 @@ jest.mock('react-redux', () => {
     },
   };
 });
+jest.mock('expo-store-review', () => {})
 jest.mock('@react-native-firebase/analytics', () => {});
 jest.mock('@sentry/react-native', () => {});
 jest.mock('react-native-purchases', () => {});
@@ -21,7 +22,10 @@ jest.mock('@react-native-vector-icons/fontawesome6', () => {});
 jest.mock('@kolking/react-native-avatar', () => {});
 jest.mock('@react-navigation/core', () => {});
 jest.mock('@reduxjs/toolkit', () => ({
-  createSlice: jest.fn(),
+  createSlice: jest.fn(() => ({
+    actions: {},
+    reducer: jest.fn(),
+  })),
 }));
 jest.mock('@react-navigation/native', () => ({
   createNavigationContainerRef: jest.fn(),

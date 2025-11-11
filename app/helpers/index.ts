@@ -1,9 +1,7 @@
 import analytics from '@react-native-firebase/analytics';
 import moment, { Moment } from 'moment';
 import { Dimensions } from 'react-native';
-// import InAppReview from 'react-native-in-app-review';
 import * as StoreReview from 'expo-store-review';
-// import PushNotification from 'react-native-push-notification';
 import { TABLE_HEADER_KEYS } from '../components/commons/Table';
 import colors from '../constants/colors';
 import { Category } from '../types/Education';
