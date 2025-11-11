@@ -1,10 +1,9 @@
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { Alert, Platform, StyleSheet, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Alert, StyleSheet, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Video, { ResizeMode } from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../App';
 import { resetToTabs } from '../../../RootNavigation';
@@ -138,7 +137,7 @@ const Test: React.FC<{
     <View style={{ flex: 1 }}>
       {test.video?.src ? (
         <Video
-          source={{ uri: convertToProxyURL(test.video?.src) }}
+          source={{ uri: test.video?.src }}
           style={{ height: getVideoHeight(), width: '100%' }}
           resizeMode={ResizeMode.COVER}
           repeat
@@ -172,11 +171,7 @@ const Test: React.FC<{
         }}
       >
         {/* <ExerciseVideo paused={!testStarted} path={SAMPLE_VIDEO_LINK} /> */}
-        <KeyboardAwareScrollView
-          enableOnAndroid
-          extraScrollHeight={Platform.OS === 'ios' ? 150 : 0}
-          contentContainerStyle={{ paddingBottom: 220 }}
-        >
+        <KeyboardAwareScrollView contentContainerStyle={{ paddingBottom: 220 }}>
           <Text
             style={{
               marginTop: 20,

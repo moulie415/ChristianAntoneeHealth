@@ -1,32 +1,33 @@
 import { NetInfoState, fetch } from '@react-native-community/netinfo';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import db, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
 import { statusCodes } from '@react-native-google-signin/google-signin';
 import { EventChannel, eventChannel } from '@redux-saga/core';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
+import * as Application from 'expo-application';
+import { createAudioPlayer } from 'expo-audio';
+import * as Device from 'expo-device';
+import * as FileSystem from 'expo-file-system';
+import * as Notifications from 'expo-notifications';
 import _ from 'lodash';
 import moment from 'moment';
-import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native';
-import { Audio, Image, Video } from 'react-native-compressor';
 import {
-  getBrand,
-  getBuildNumber,
-  getDeviceId,
-  getDeviceType,
-  getFontScale,
-  getVersion,
-  isTablet,
-} from 'react-native-device-info';
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  PixelRatio,
+  Platform,
+} from 'react-native';
+import { Audio, Image, Video } from 'react-native-compressor';
 import { openInbox } from 'react-native-email-link';
-import RNFS from 'react-native-fs';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
-import PushNotification from 'react-native-push-notification';
 import Snackbar from 'react-native-snackbar';
-import SoundPlayer from "react-native-sound-player";
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
@@ -47,12 +48,13 @@ import {
   navigationRef,
   resetToTabs,
 } from '../RootNavigation';
-import { scheduleLocalNotification } from '../helpers';
 import * as api from '../helpers/api';
 import {
   getBodyFatPercentageSamples,
   getHeightSamples,
   getWeightSamples,
+  initBiometrics,
+  isAvailable,
   saveBodyFatPercentage,
   saveHeight,
   saveWeight,
@@ -75,6 +77,7 @@ import {
   SET_CHATS,
   SET_PREMIUM,
   SET_READ,
+  SET_UNREAD,
   SIGN_UP,
   UPDATE_PROFILE,
   WeeklyItems,
@@ -107,6 +110,7 @@ import { SettingsState } from '../reducers/settings';
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import {
+  DeviceInfo,
   Profile,
   Sample,
   SignUpPayload,
@@ -116,22 +120,10 @@ import { checkWorkoutStreak, getAllExercises } from './exercises';
 import { checkStepsCalories } from './leaderboards';
 import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
-import { initBiometrics, isAvailable } from '../helpers/biometrics';
 
-// const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
-//   if (error) {
-//     console.log('failed to load the sound', error);
-//   }
-// });
+const audioSource = require('../audio/notif.wav');
 
-
-//Sound.setCategory('Playback', false);
-
-
-SoundPlayer.loadSoundFile("workout_song", "mp3");
-
-SoundPlayer.setNumberOfLoops(-1);
-
+const notif = createAudioPlayer(audioSource);
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
@@ -248,7 +240,9 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
 
       logError(e);
     }
-    const { profile } = yield select((state: RootState) => state.profile);
+    const { profile }: { profile: Profile } = yield select(
+      (state: RootState) => state.profile,
+    );
     const updateObj: Profile = {
       ...profile,
       ...action.payload,
@@ -267,7 +261,10 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       uid: profile.uid || '',
     });
     if (!goalReminders) {
-      PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+      yield call(
+        Notifications.cancelScheduledNotificationAsync,
+        GOAL_REMINDER_KEY,
+      );
     }
 
     yield put(setLoading(false));
@@ -428,16 +425,15 @@ const channels: {
 ];
 
 function* createChannels() {
-  channels.forEach(({ channelId, channelName, channelDescription }) => {
-    PushNotification.createChannel(
-      {
-        channelId,
-        channelName,
-        channelDescription,
-      },
-      created => console.log('channel created', created),
-    );
-  });
+  if (Platform.OS === 'android') {
+    channels.forEach(({ channelId, channelName, channelDescription }) => {
+      Notifications.setNotificationChannelAsync(channelId, {
+        name: channelName,
+        importance: Notifications.AndroidImportance.MAX,
+        description: channelDescription,
+      });
+    });
+  }
 }
 
 function* getWeeklyItems() {
@@ -470,7 +466,7 @@ function* getWeeklyItems() {
   }
 }
 
-export const GOAL_REMINDER_KEY = Platform.OS === 'ios' ? 'goalReminder' : 1;
+export const GOAL_REMINDER_KEY = 'GOAL_REMINDER_KEY';
 
 export function* scheduleGoalReminderNotification() {
   const {
@@ -488,20 +484,33 @@ export function* scheduleGoalReminderNotification() {
       quickRoutines,
       profile.targets,
     );
-    const date = moment().set('day', 5).set('hours', 9).set('minutes', 0);
+
+    const WEEKDAY = 5;
+    const HOURS = 9;
+    const MINUTES = 0;
+    const date = moment()
+      .set('day', WEEKDAY)
+      .set('hours', HOURS)
+      .set('minutes', MINUTES);
 
     if (date.isAfter(moment())) {
       if (completed) {
-        PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+        Notifications.cancelScheduledNotificationAsync(GOAL_REMINDER_KEY);
       } else if (profile.goalReminders) {
-        scheduleLocalNotification(
-          'You’ve got just two days to hit your weekly targets',
-          date.toDate(),
-          GOALS_CHANNEL_ID,
-          'You’re almost there!',
-          GOAL_REMINDER_KEY,
-          'week',
-        );
+        Notifications.scheduleNotificationAsync({
+          identifier: GOAL_REMINDER_KEY,
+          content: {
+            title: 'You’re almost there!',
+            body: 'You’ve got just two days to hit your weekly targets',
+          },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
+            weekday: WEEKDAY,
+            hour: HOURS,
+            minute: MINUTES,
+            channelId: GOALS_CHANNEL_ID,
+          },
+        });
       }
     }
   }
@@ -594,7 +603,15 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
   );
   while (true) {
     const snapshot: Snapshot = yield take(channel);
-    yield put(setMessages({ uid, snapshot }));
+    const messages = snapshot.docs.reduce(
+      (acc: { [id: string]: Message }, cur) => {
+        const message: any = cur.data();
+        acc[message ? message._id : cur.id] = { ...message, id: cur.id };
+        return acc;
+      },
+      {},
+    );
+    yield put(setMessages({ uid, messages }));
     for (const change of snapshot.docChanges()) {
       if (change.type === 'removed') {
         yield put(
@@ -611,7 +628,7 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
         route.params?.uid === uid &&
         state === 'active'
       ) {
-     //   notif.play();
+        notif.play();
       }
     }
   }
@@ -661,8 +678,8 @@ function* sendMessage(
       let size = action.payload.size;
       try {
         if (message.type !== 'document') {
-          const read: RNFS.StatResult = yield call(RNFS.stat, compressedUri);
-          size = read.size;
+          const info = new FileSystem.File(compressedUri).info();
+          size = info.size;
         }
       } catch (e) {
         logError(e);
@@ -701,7 +718,7 @@ function* sendMessage(
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
-   // notif.play();
+    notif.play();
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({ text: e.message });
@@ -786,15 +803,24 @@ function* premiumUpdatedWorker() {
 
 function* checkDeviceInfoChanged() {
   try {
-    const fontScale: number = yield call(getFontScale);
-    const deviceInfo = {
+    const fontScale: number = yield call(PixelRatio.getFontScale);
+
+    const deviceTypeMapping = {
+      [Device.DeviceType.DESKTOP]: 'Desktop',
+      [Device.DeviceType.PHONE]: 'Phone',
+      [Device.DeviceType.TABLET]: 'Tablet',
+      [Device.DeviceType.TV]: 'TV',
+      [Device.DeviceType.UNKNOWN]: 'Unknown',
+    };
+    const deviceInfo: DeviceInfo = {
       fontScale,
-      buildNumber: getBuildNumber(),
-      version: getVersion(),
-      brand: getBrand(),
-      deviceId: getDeviceId(),
-      deviceType: getDeviceType(),
-      isTablet: isTablet(),
+      buildNumber: Application.nativeBuildVersion,
+      version: Application.nativeApplicationVersion,
+      brand: Device.brand,
+      deviceType: Device.deviceType
+        ? deviceTypeMapping[Device.deviceType]
+        : 'Unknown',
+      isTablet: Device.deviceType === Device.DeviceType.TABLET,
       os: Platform.OS,
     };
 
@@ -903,10 +929,13 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       if (doc.exists() && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
         if (available) {
-        yield call(initBiometrics);
+          yield call(initBiometrics);
         }
 
         resetToTabs();
+        yield put(
+          updateProfileAction({ lastSeen: new Date(), disableSnackbar: true }),
+        );
 
         if (settings.promptUpdate && !__DEV__) {
           yield fork(
@@ -936,21 +965,28 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
           'android.permission.POST_NOTIFICATIONS',
         );
       }
-      messaging()
-        .requestPermission()
-        .then(async authStatus => {
-          const enabled =
-            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-          if (enabled) {
-            try {
-              const FCMToken = await messaging().getToken();
-              api.setFCMToken(user.uid, FCMToken);
-            } catch (e) {
-              logError(e);
-            }
-          }
-        });
+
+      try {
+        const authStatus: FirebaseMessagingTypes.AuthorizationStatus =
+          yield call(messaging().requestPermission);
+
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (enabled && Device.isDevice) {
+          const { data }: Notifications.DevicePushToken = yield call(
+            Notifications.getDevicePushTokenAsync,
+          );
+
+          yield call(messaging().setAPNSToken, data);
+
+          const FCMToken: string = yield call(messaging().getToken);
+          api.setFCMToken(user.uid, FCMToken);
+        }
+      } catch (e) {
+        logError(e);
+      }
     } else if (user) {
       Alert.alert(
         'Account not verified',
@@ -1019,6 +1055,11 @@ export function* feedbackTrigger() {
   }
 }
 
+function* unreadWatcher({ payload }: PayloadAction<{ [key: string]: number }>) {
+  const count = Object.values(payload).reduce((acc, cur) => acc + cur, 0);
+  yield call(Notifications.setBadgeCountAsync, count);
+}
+
 function* onTokenRefresh() {
   return eventChannel(emitter => {
     const unsubscribe = messaging().onTokenRefresh(token => {
@@ -1056,6 +1097,7 @@ export default function* profileSaga() {
     throttle(3000, REQUEST_MESSAGE_DELETION, requestMessageDeletionWorker),
     debounce(1000, SET_READ, setRead),
     takeLatest(SET_CHATS, chatsWatcher),
+    takeLatest(SET_UNREAD, unreadWatcher),
     takeLatest(LOAD_EARLIER_MESSAGES, loadEarlierMessages),
     throttle(3000, GET_WEEKLY_ITEMS, getWeeklyItems),
     throttle(

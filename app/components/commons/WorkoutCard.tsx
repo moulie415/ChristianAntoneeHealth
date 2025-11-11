@@ -1,7 +1,7 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useMemo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../constants/colors';
 import { getWorkoutDurationRounded } from '../../helpers/getWorkoutDurationRounded';
 import { useAppSelector } from '../../hooks/redux';

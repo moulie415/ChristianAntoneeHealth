@@ -1,6 +1,7 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -13,7 +14,6 @@ import {
   View,
 } from 'react-native';
 import Config from 'react-native-config';
-import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
   CustomerInfo,
   PurchasesPackage,
@@ -376,7 +376,7 @@ const Premium: React.FC<{
                   text="Terms of Service"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: Config.TERMS_AND_CONDITIONS as string,
+                      uri: process.env.TERMS_AND_CONDITIONS as string,
                       title: 'Terms of Service',
                     })
                   }

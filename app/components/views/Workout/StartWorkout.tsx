@@ -9,8 +9,8 @@ import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
 import { getVideoHeight } from '../../../helpers';
 import { endWatchWorkout } from '../../../helpers/biometrics';
-import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import { usePlayWorkoutSong } from '../../../hooks/UsePlayWorkoutSong';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import { updateProfile } from '../../../reducers/profile';
@@ -28,7 +28,6 @@ import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import SoundPlayer from 'react-native-sound-player';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];
@@ -70,11 +69,13 @@ const StartWorkout: React.FC<{
     }
   }, [ap, updateProfileAction, profile.autoPlay]);
 
+  const { play, pause, resume } = usePlayWorkoutSong();
+
   useEffect(() => {
     if (profile.workoutMusic && !planWorkout.disableWorkoutMusic) {
-      playWorkoutSong();
+      play();
     }
-  }, [profile.workoutMusic, planWorkout.disableWorkoutMusic]);
+  }, [profile.workoutMusic, planWorkout.disableWorkoutMusic, play]);
 
   const endWorkout = useThrottle(async () => {
     const response = await endWatchWorkout();
@@ -88,7 +89,7 @@ const StartWorkout: React.FC<{
       planId,
       watchWorkoutData: response,
     });
-    SoundPlayer.stop();
+    pause();
   }, 3000);
 
   return (
@@ -105,7 +106,7 @@ const StartWorkout: React.FC<{
               text: 'Yes',
               onPress: () => {
                 navigation.goBack();
-                SoundPlayer.stop();
+                pause();
                 endWatchWorkout();
               },
             },
@@ -189,7 +190,6 @@ const StartWorkout: React.FC<{
                         profile={profile}
                         i={i}
                         index={index}
-                        disableWorkoutMusic={planWorkout.disableWorkoutMusic}
                         workout={workout}
                         pagerRef={pagerRef}
                         timerPaused={timerPaused}
@@ -200,6 +200,16 @@ const StartWorkout: React.FC<{
                             { time: new Date(), paused: p },
                           ]);
                           setPaused(p);
+                          if (
+                            profile.workoutMusic &&
+                            !planWorkout.disableWorkoutMusic
+                          ) {
+                            if (p) {
+                              pause();
+                            } else {
+                              resume();
+                            }
+                          }
                         }}
                       />
 

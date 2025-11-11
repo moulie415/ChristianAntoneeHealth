@@ -1,3 +1,4 @@
+import * as Notifications from 'expo-notifications';
 import * as _ from 'lodash';
 import Snackbar from 'react-native-snackbar';
 import { eventChannel, EventChannel } from 'redux-saga';
@@ -13,13 +14,9 @@ import {
 
 import db from '@react-native-firebase/firestore';
 import { PayloadAction } from '@reduxjs/toolkit';
+import * as Calendar from 'expo-calendar';
 import moment from 'moment';
-import RNCalendarEvents, {
-  CalendarEventWritable,
-} from 'react-native-calendar-events';
-import PushNotification from 'react-native-push-notification';
 import { RootState } from '../App';
-import { scheduleLocalNotification } from '../helpers';
 import { logError } from '../helpers/error';
 import {
   GET_PLAN,
@@ -48,9 +45,10 @@ function* syncPlanWithCalendarWorker(
       }
       const events: {
         title: string;
-        details: CalendarEventWritable;
+        id: string;
+        startDate: string;
+        endDate: string;
       }[] = [];
-
       const keys: string[] = [];
 
       const { syncedPlanEvents, profile }: ProfileState = yield select(
@@ -62,24 +60,18 @@ function* syncPlanWithCalendarWorker(
           const title = workout.name || 'CA Health Workout';
           const key = `${plan.id}${title}${date}`;
           const currentId = syncedPlanEvents[key];
-          const event: {
-            title: string;
-            details: CalendarEventWritable;
-          } = {
+          const event = {
             title,
-            details: {
-              ...(currentId ? { id: currentId } : {}),
-              startDate: moment(date)
-                .set('hours', moment(profile.workoutReminderTime).hours())
-                .set('minutes', moment(profile.workoutReminderTime).minutes())
-                .toISOString(),
-              endDate: moment(date)
-                .set('hours', moment(profile.workoutReminderTime).hours())
-                .set('minutes', moment(profile.workoutReminderTime).minutes())
-                .add(1, 'hour')
-                .toISOString(),
-              calendarId,
-            },
+            id: currentId,
+            startDate: moment(date)
+              .set('hours', moment(profile.workoutReminderTime).hours())
+              .set('minutes', moment(profile.workoutReminderTime).minutes())
+              .toISOString(),
+            endDate: moment(date)
+              .set('hours', moment(profile.workoutReminderTime).hours())
+              .set('minutes', moment(profile.workoutReminderTime).minutes())
+              .add(1, 'hour')
+              .toISOString(),
           };
           events.push(event);
           keys.push(key);
@@ -91,17 +83,9 @@ function* syncPlanWithCalendarWorker(
         const event = events[i];
         let id: string;
         try {
-          id = yield call(
-            RNCalendarEvents.saveEvent,
-            event.title,
-            event.details,
-          );
+          id = yield call(Calendar.createEventAsync, calendarId, event);
         } catch (e) {
-          id = yield call(
-            RNCalendarEvents.saveEvent,
-            event.title,
-            _.omit(event.details, ['id']),
-          );
+          id = yield call(Calendar.updateEventAsync, calendarId, event);
         }
         yield put(setSyncedPlanEvent({ key, id }));
       }
@@ -114,7 +98,7 @@ function* syncPlanWithCalendarWorker(
 }
 
 export function* schedulePlanReminders() {
-  PushNotification.cancelAllLocalNotifications();
+  yield call(Notifications.cancelAllScheduledNotificationsAsync);
   const plan: Plan | undefined = yield select(
     (state: RootState) => state.profile.plan,
   );
@@ -129,11 +113,17 @@ export function* schedulePlanReminders() {
             .set('hours', moment(profile.workoutReminderTime).hours())
             .set('minutes', moment(profile.workoutReminderTime).minutes());
           if (date.isAfter(moment())) {
-            scheduleLocalNotification(
-              'Reminder to do your workout for today',
-              date.toDate(),
-              WORKOUT_REMINDERS_CHANNEL_ID,
-            );
+            Notifications.scheduleNotificationAsync({
+              content: {
+                title: 'Workout Reminder',
+                body: `Reminder to do your workout for today: ${workout.name}`,
+              },
+              trigger: {
+                type: Notifications.SchedulableTriggerInputTypes.DATE,
+                date: date.toDate(),
+                channelId: WORKOUT_REMINDERS_CHANNEL_ID,
+              },
+            });
           }
         });
       });
@@ -153,11 +143,18 @@ export function* schedulePlanReminders() {
     //         .set('hours', moment(testReminderTime).hours())
     //         .set('minutes', moment(testReminderTime).minutes());
     //       if (date.isAfter(moment())) {
-    //         scheduleLocalNotification(
-    //           'Reminder to do your fitness test for today',
-    //           date.toDate(),
-    //           TEST_REMINDERS_CHANNEL_ID,
-    //         );
+
+    // Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: 'Test Reminder',
+    //     body: `Reminder to do your fitness test for today`,
+    //   },
+    //   trigger: {
+    //    type: Notifications.SchedulableTriggerInputTypes.DATE,
+    //     date: date.toDate(),
+    //     channelId: WORKOUT_REMINDERS_CHANNEL_ID,
+    //   }
+    // });
     //       }
     //     });
     //   });

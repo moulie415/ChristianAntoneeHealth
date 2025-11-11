@@ -6,7 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
 import { Platform, TouchableOpacity, View } from 'react-native';
 import Config from 'react-native-config';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StackParamList } from '../../../App';
 import { HEIGHTS } from '../../../constants';
 import colors from '../../../constants/colors';
@@ -73,7 +73,6 @@ const PersonalDetails: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
       contentContainerStyle={{
         marginHorizontal: 20,
         marginTop: 20,
@@ -450,7 +449,7 @@ const PersonalDetails: React.FC<{
               value: String(value),
             };
           })}
-          onValueChange={({item}) => setHeight(Number(item.value))}
+          onValueChange={({ item }) => setHeight(Number(item.value))}
           onRequestClose={() => setShowHeightModal(false)}
         />
       )}
@@ -473,7 +472,7 @@ const PersonalDetails: React.FC<{
             value,
           };
         })}
-        onValueChange={({item}) => setGender(item.value as Gender)}
+        onValueChange={({ item }) => setGender(item.value as Gender)}
         onRequestClose={() => setShowSexModal(false)}
       />
     </KeyboardAwareScrollView>

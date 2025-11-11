@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import sleep from './sleep';
 import SoundPlayer from 'react-native-sound-player';
+import sleep from './sleep';
 
 const playWorkoutSong = async () => {
   const timestamps = [
@@ -16,7 +16,7 @@ const playWorkoutSong = async () => {
 
   for (let i = 0; i < 1; i += 0.1) {
     await sleep(200);
-    SoundPlayer.setVolume(i)
+    SoundPlayer.setVolume(i);
   }
 };
 

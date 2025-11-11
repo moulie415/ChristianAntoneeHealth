@@ -3,7 +3,7 @@ function pad(num: number) {
 }
 
 export default function mmss(secs: number) {
-  var minutes = Math.floor(secs / 60);
+  let minutes = Math.floor(secs / 60);
   secs = secs % 60;
   return `${pad(minutes)}:${pad(secs)}`;
 }

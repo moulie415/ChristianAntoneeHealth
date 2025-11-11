@@ -1,4 +1,4 @@
-import { getVersion } from 'react-native-device-info';
+import * as Application from 'expo-application';
 import { navigate } from '../RootNavigation';
 import { logError } from './error';
 
@@ -29,9 +29,9 @@ export const checkVersion = (minVersion?: string) => {
       return;
     }
 
-    const version = getVersion();
+    const version = Application.nativeApplicationVersion;
 
-    if (!parseFloat(version)) {
+    if (!version || !parseFloat(version)) {
       return;
     }
 

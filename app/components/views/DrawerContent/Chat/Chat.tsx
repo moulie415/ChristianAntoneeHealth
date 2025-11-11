@@ -1,9 +1,9 @@
-import Clipboard from '@react-native-clipboard/clipboard';
-import { pick } from '@react-native-documents/picker';
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Clipboard from 'expo-clipboard';
+import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 import _ from 'lodash';
 import moment from 'moment';
 import React, {
@@ -13,14 +13,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  Alert,
-  FlatList,
-  Image,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, Image, TouchableOpacity, View } from 'react-native';
 import {
   AvatarProps,
   Bubble,
@@ -35,13 +28,6 @@ import {
   MessageTextProps,
   MessageVideoProps,
 } from 'react-native-gifted-chat';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
 import {
   SafeAreaView,
@@ -50,7 +36,6 @@ import {
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import Video, { ResizeMode } from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
@@ -62,7 +47,6 @@ import {
   requestMessageDeletion,
   sendMessage,
   setChatMessage,
-  setMessages,
   setRead,
 } from '../../../../reducers/profile';
 import { SettingsState } from '../../../../reducers/settings';
@@ -81,13 +65,6 @@ interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
   route: RouteProp<StackParamList, 'Chat'>;
   profile: Profile;
-  setMessagesAction: ({
-    uid,
-    snapshot,
-  }: {
-    uid: string;
-    snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
-  }) => void;
   messagesObj: { [key: string]: Message };
   connection: Profile;
   chatId: string;
@@ -326,7 +303,7 @@ const Chat: React.FC<ChatProps> = ({
           resizeMode={ResizeMode.COVER}
           paused
           source={{
-            uri: convertToProxyURL(props.currentMessage?.video || ''),
+            uri: props.currentMessage?.video || '',
           }}
         />
         <View
@@ -401,88 +378,50 @@ const Chat: React.FC<ChatProps> = ({
     );
   };
 
-  const handleResponse = async (response: ImagePickerResponse) => {
-    try {
-      setLoading(true);
-      if (response.assets) {
-        const asset = response.assets[0];
+  const handleResponse = (response: ImagePicker.ImagePickerResult) => {
+    if (response.assets) {
+      const asset = response.assets[0];
 
-        let type: MessageType;
-        if (asset.type?.includes('image/')) {
-          type = 'image';
-        } else if (asset.type?.includes('video/')) {
-          type = 'video';
-        } else {
-          throw new Error('Unsupported mime type');
-        }
-
-        const message: Message = {
-          user: {
-            _id: profile.uid,
-            name: profile.name,
-            avatar: profile.avatar,
-          },
-          _id: uuid.v4() as string,
-          ...(type === 'image' ? { image: asset.uri } : {}),
-          ...(type === 'video' ? { video: asset.uri } : {}),
-          text: '',
-          type,
-          pending: true,
-          createdAt: moment().valueOf(),
-          mimeType: asset.type,
-        };
-        sendMessageAction({ message, chatId, uid });
-      } else if (response.errorMessage || response.errorCode) {
-        logError(new Error(response.errorMessage || response.errorCode));
-        Snackbar.show({
-          text: 'Error selecting media',
-        });
+      let type: MessageType;
+      if (asset.type?.includes('image/')) {
+        type = 'image';
+      } else if (asset.type?.includes('video/')) {
+        type = 'video';
+      } else {
+        throw new Error('Unsupported mime type');
       }
-    } catch (e) {
-      logError(e);
-      Snackbar.show({ text: 'Error sending message' });
+
+      const message: Message = {
+        user: {
+          _id: profile.uid,
+          name: profile.name,
+          avatar: profile.avatar,
+        },
+        _id: uuid.v4() as string,
+        ...(type === 'image' ? { image: asset.uri } : {}),
+        ...(type === 'video' ? { video: asset.uri } : {}),
+        text: '',
+        type,
+        pending: true,
+        createdAt: moment().valueOf(),
+        mimeType: asset.type,
+      };
+      sendMessageAction({ message, chatId, uid });
     }
-    setLoading(false);
   };
 
   const ref = useRef<FlatList<IMessage>>(null);
 
   const onPressAttachment = async () => {
-    const options: ImageLibraryOptions = {
-      mediaType: 'mixed',
-      formatAsMp4: true,
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
       quality: 0.8,
-      videoQuality: Platform.OS === 'ios' ? 'medium' : 'low',
-      includeBase64: false,
-    };
-    if (Platform.OS === 'ios') {
-      const result = await launchImageLibrary(options);
-      handleResponse(result);
-    } else {
-      Alert.alert('Select image/video', '', [
-        {
-          text: 'Select image',
-          onPress: async () => {
-            const result = await launchImageLibrary({
-              ...options,
-              mediaType: 'photo',
-            });
-            handleResponse(result);
-          },
-        },
-        {
-          text: 'Select video',
-          onPress: async () => {
-            const result = await launchImageLibrary({
-              ...options,
-              mediaType: 'video',
-            });
-            handleResponse(result);
-          },
-        },
-        { text: 'Cancel', style: 'cancel' },
-      ]);
-    }
+      allowsMultipleSelection: false,
+      videoQuality: ImagePicker.UIImagePickerControllerQualityType.Medium,
+      base64: false,
+    });
+    handleResponse(result);
   };
 
   const onPressVoiceNote = () => {
@@ -490,38 +429,12 @@ const Chat: React.FC<ChatProps> = ({
   };
 
   const onPressCamera = async () => {
-    const options: CameraOptions = {
-      mediaType: 'mixed',
-      formatAsMp4: true,
-    };
-    if (Platform.OS === 'ios') {
-      const result = await launchCamera(options);
-      handleResponse(result);
-    } else {
-      Alert.alert('Take photo/video', '', [
-        {
-          text: 'Take photo',
-          onPress: async () => {
-            const result = await launchCamera({
-              ...options,
-              mediaType: 'photo',
-            });
-            handleResponse(result);
-          },
-        },
-        {
-          text: 'Shoot video',
-          onPress: async () => {
-            const result = await launchCamera({
-              ...options,
-              mediaType: 'video',
-            });
-            handleResponse(result);
-          },
-        },
-        { text: 'Cancel', style: 'cancel' },
-      ]);
-    }
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      allowsMultipleSelection: false,
+    });
+    handleResponse(result);
   };
 
   const onSendVoiceNote = (result: string) => {
@@ -543,30 +456,31 @@ const Chat: React.FC<ChatProps> = ({
 
   const onPressDocument = async () => {
     try {
-      const [result] = await pick({
-        copyTo: 'cachesDirectory',
-        ...(Platform.OS === 'android'
-          ? { type: ['text/*', 'application/*'] }
-          : {}),
+      const result = await DocumentPicker.getDocumentAsync({
+        type: ['application/*', 'text/*'],
+        copyToCacheDirectory: true,
       });
 
-      const message: Message = {
-        user: {
-          _id: profile.uid,
-          name: profile.name,
-          avatar: profile.avatar,
-        },
-        _id: uuid.v4() as string,
-        document: result.uri,
-        text: '',
-        type: 'document',
-        pending: true,
-        createdAt: moment().valueOf(),
-        mimeType: result.type || '',
-        filename: result.name || '',
-      };
+      if (!result.canceled) {
+        const asset = result.assets[0];
+        const message: Message = {
+          user: {
+            _id: profile.uid,
+            name: profile.name,
+            avatar: profile.avatar,
+          },
+          _id: uuid.v4() as string,
+          document: asset.uri,
+          text: '',
+          type: 'document',
+          pending: true,
+          createdAt: moment().valueOf(),
+          mimeType: asset.mimeType || '',
+          filename: asset.name || '',
+        };
 
-      sendMessageAction({ message, chatId, uid, size: result.size });
+        sendMessageAction({ message, chatId, uid, size: asset.size });
+      }
     } catch (e: any) {
       if (e?.code !== 'DOCUMENT_PICKER_CANCELED') {
         logError(e);
@@ -600,9 +514,9 @@ const Chat: React.FC<ChatProps> = ({
         options,
         cancelButtonIndex,
       },
-      (buttonIndex: number) => {
+      async (buttonIndex: number) => {
         if (options[buttonIndex] === copyText) {
-          Clipboard.setString(message.text);
+          await Clipboard.setStringAsync(message.text);
           Snackbar.show({ text: 'Text copied to clipboard' });
         } else if (options[buttonIndex] === deleteMessage && msg && messageId) {
           requestMessageDeletion({ chatId, message: msg, uid, messageId });
@@ -754,7 +668,6 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = {
-  setMessagesAction: setMessages,
   sendMessageAction: sendMessage,
   setReadAction: setRead,
   viewWorkoutAction: viewWorkout,

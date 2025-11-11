@@ -1,9 +1,9 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { RouteProp } from '@react-navigation/native';
+import * as FileSystem from 'expo-file-system';
 import React, { useCallback, useEffect } from 'react';
 import { Platform } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import RNFS from 'react-native-fs';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Pdf from 'react-native-pdf';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -38,7 +38,7 @@ const Recipe: React.FC<{
     try {
       if (
         !downloadedDocuments[recipe.id] ||
-        !(await RNFS.exists(downloadedDocuments[recipe.id]))
+        !new FileSystem.File(downloadedDocuments[recipe.id]).info().exists
       ) {
         const result = await ReactNativeBlobUtil.config({
           fileCache: true,

@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
 
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { FONTS_SIZES } from '../../../constants';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';

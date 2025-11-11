@@ -6,6 +6,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import * as Crypto from 'expo-crypto';
 import moment from 'moment';
 import { Alert, Platform } from 'react-native';
 import { openInbox } from 'react-native-email-link';
@@ -14,7 +15,6 @@ import {
   AuthenticationToken,
   LoginManager,
 } from 'react-native-fbsdk-next';
-import { sha256 } from 'react-native-sha256';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import { WeeklyItems } from '../reducers/profile';
@@ -94,7 +94,10 @@ export const facebookSignIn = async (
     // Attempt login with permissions
     if (Platform.OS === 'ios') {
       const nonce = uuid.v4() as string;
-      const nonceSha256 = await sha256(nonce);
+      const nonceSha256 = await Crypto.digestStringAsync(
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        nonce,
+      );
       const result = await LoginManager.logInWithPermissions(
         ['public_profile', 'email'],
         'limited',
