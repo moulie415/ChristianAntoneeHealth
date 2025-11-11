@@ -128,14 +128,13 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants access to your Music library</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your calendar</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your calendar</string>
-    <key>NSRemindersFullAccessUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your reminders</string>
-    <key>NSRemindersUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your reminders</string>
-    <key>NSUserActivityTypes</key>
+  <string>Allow $(PRODUCT_NAME) to access your calendar</string>
+  <key>NSCalendarsUsageDescription</key>
+  <string>Allow $(PRODUCT_NAME) to access your calendar</string>
+  <key>NSRemindersFullAccessUsageDescription</key>
+  <string>Allow $(PRODUCT_NAME) to access your reminders</string>
+  <key>NSRemindersUsageDescription</key>
+  <string>Allow $(PRODUCT_NAME) to access your reminders</string>
 	<key>NSCameraUsageDescription</key>
 	<string>So you can take a photo for your profile picture</string>
 	<key>NSHealthShareUsageDescription</key>
