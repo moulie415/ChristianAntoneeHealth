@@ -50,6 +50,7 @@ import {
 } from './types/Shared';
 import Test from './types/Test';
 import Config from 'react-native-config'
+import { StatusBar } from 'expo-status-bar';
 
 
 const createSagaMiddleware = require('redux-saga').default;
@@ -60,25 +61,25 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer,
-  //middleware: [sagaMiddleware],
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      thunk: false,
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        isSerializable: (value: any) => {
-          if (value instanceof Timestamp) {
-            return true;
-          }
-          if (value instanceof Date) {
-            return true;
-          }
-          return (
-            typeof value === 'undefined' || value === null || isPlain(value)
-          );
-        },
-      },
-    }).concat(sagaMiddleware),
+  middleware: [sagaMiddleware],
+  // middleware: getDefaultMiddleware =>
+  //   getDefaultMiddleware({
+  //     thunk: false,
+  //     serializableCheck: {
+  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  //       isSerializable: (value: any) => {
+  //         if (value instanceof Timestamp) {
+  //           return true;
+  //         }
+  //         if (value instanceof Date) {
+  //           return true;
+  //         }
+  //         return (
+  //           typeof value === 'undefined' || value === null || isPlain(value)
+  //         );
+  //       },
+  //     },
+  //   }).concat(sagaMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -235,6 +236,7 @@ const App: React.FC = () => {
 
   return (
     <PersistGate persistor={persistor}>
+      <StatusBar style="auto" />
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
           <KeyboardProvider>
