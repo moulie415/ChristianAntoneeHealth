@@ -41,6 +41,11 @@ import {
 } from './types/Shared';
 import Test from './types/Test';
 
+
+import Constants from 'expo-constants';
+console.log(Constants.systemFonts);
+
+
 const createSagaMiddleware = require('redux-saga').default;
 
 const { height, width } = Dimensions.get('window');

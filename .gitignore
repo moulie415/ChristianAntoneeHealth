@@ -81,3 +81,8 @@ GoogleService-Info.plist
 sentry.properties
 
 .env
+
+# Expo
+.expo
+dist/
+web-build/
