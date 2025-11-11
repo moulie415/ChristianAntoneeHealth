@@ -1,9 +1,9 @@
+import notifee from '@notifee/react-native';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppState, AppStateStatus } from 'react-native';
 import { PurchasesEntitlementInfo } from 'react-native-purchases';
-import notifee from '@notifee/react-native'
 import Chat from '../types/Chat';
 import Message from '../types/Message';
 import { SavedQuickRoutine, SavedTest, SavedWorkout } from '../types/SavedItem';
@@ -433,7 +433,7 @@ const profileSlice = createSlice({
       { payload }: PayloadAction<{ [key: string]: number }>,
     ) => {
       const count = Object.values(payload).reduce((acc, cur) => acc + cur, 0);
-      notifee.setBadgeCount(count)
+      notifee.setBadgeCount(count);
       state.profile = { ...state.profile, unread: payload };
     },
     setRead: (state: ProfileState, { payload }: PayloadAction<string>) => {

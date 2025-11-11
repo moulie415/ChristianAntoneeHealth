@@ -1,5 +1,4 @@
 import UIKit
-import RNCPushNotificationIOS
 import GoogleSignIn
 import react_native_splash_screen
 import AVFAudio
@@ -10,7 +9,7 @@ import TSBackgroundFetch
 import FBSDKCoreKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   var reactNativeDelegate: ReactNativeDelegate?
@@ -25,9 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     RNFBAppCheckModule.sharedInstance();
     
     FirebaseApp.configure()
-    
-    let center = UNUserNotificationCenter.current()
-    center.delegate = self
     
     try? AVAudioSession.sharedInstance().setCategory(.ambient)
     
@@ -54,31 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     return ApplicationDelegate.shared.application(application, open: url, options: options) ||
     GIDSignIn.sharedInstance.handle(url) ||
     RCTLinkingManager.application(application, open: url, options: options)
-  }
-  
-  
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    willPresent notification: UNNotification,
-    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-  ) {
-    completionHandler([.alert, .badge, .sound])
-  }
-  
-  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    RNCPushNotificationIOS.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-  }
-  
-  func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-    RNCPushNotificationIOS.didFailToRegisterForRemoteNotificationsWithError(error)
-  }
-  
-  func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    RNCPushNotificationIOS.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
-  }
-  
-  func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-    RNCPushNotificationIOS.didReceive(notification)
   }
   
   func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {

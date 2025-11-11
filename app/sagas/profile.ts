@@ -1,7 +1,10 @@
+import notifee, { RepeatFrequency, TriggerType } from '@notifee/react-native';
 import { NetInfoState, fetch } from '@react-native-community/netinfo';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import db, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import storage from '@react-native-firebase/storage';
 import { statusCodes } from '@react-native-google-signin/google-signin';
 import { EventChannel, eventChannel } from '@redux-saga/core';
@@ -18,13 +21,13 @@ import {
   getDeviceType,
   getFontScale,
   getVersion,
+  isEmulator,
   isTablet,
 } from 'react-native-device-info';
 import { openInbox } from 'react-native-email-link';
 import RNFS from 'react-native-fs';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
-import notifee, { RepeatFrequency, TriggerType } from '@notifee/react-native'
 import Snackbar from 'react-native-snackbar';
 import SoundPlayer from 'react-native-sound-player';
 import { updateApplicationContext } from 'react-native-watch-connectivity';
@@ -264,7 +267,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       uid: profile.uid || '',
     });
     if (!goalReminders) {
-      notifee.cancelNotification(GOAL_REMINDER_KEY)
+      notifee.cancelNotification(GOAL_REMINDER_KEY);
     }
 
     yield put(setLoading(false));
@@ -429,8 +432,8 @@ function* createChannels() {
     notifee.createChannel({
       id: channelId,
       name: channelName,
-      description: channelDescription
-    })
+      description: channelDescription,
+    });
   });
 }
 
@@ -486,20 +489,23 @@ export function* scheduleGoalReminderNotification() {
 
     if (date.isAfter(moment())) {
       if (completed) {
-        notifee.cancelNotification(GOAL_REMINDER_KEY)
+        notifee.cancelNotification(GOAL_REMINDER_KEY);
       } else if (profile.goalReminders) {
-        notifee.createTriggerNotification({
-          title: 'You’re almost there!',
-          body: 'You’ve got just two days to hit your weekly targets',
-          id: GOAL_REMINDER_KEY,
-          android: {
-            channelId: GOALS_CHANNEL_ID
-          }
-        }, {
-          type: TriggerType.TIMESTAMP,
-          timestamp: date.milliseconds(),
-            repeatFrequency: RepeatFrequency.WEEKLY 
-        })
+        notifee.createTriggerNotification(
+          {
+            title: 'You’re almost there!',
+            body: 'You’ve got just two days to hit your weekly targets',
+            id: GOAL_REMINDER_KEY,
+            android: {
+              channelId: GOALS_CHANNEL_ID,
+            },
+          },
+          {
+            type: TriggerType.TIMESTAMP,
+            timestamp: date.milliseconds(),
+            repeatFrequency: RepeatFrequency.WEEKLY,
+          },
+        );
       }
     }
   }
@@ -934,21 +940,23 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
           'android.permission.POST_NOTIFICATIONS',
         );
       }
-      messaging()
-        .requestPermission()
-        .then(async authStatus => {
+      try {
+        const isNotDevice: boolean = yield call(isEmulator);
+        if (!isNotDevice) {
+          const authStatus: FirebaseMessagingTypes.AuthorizationStatus =
+            yield call(messaging().requestPermission);
           const enabled =
             authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
             authStatus === messaging.AuthorizationStatus.PROVISIONAL;
           if (enabled) {
-            try {
-              const FCMToken = await messaging().getToken();
-              api.setFCMToken(user.uid, FCMToken);
-            } catch (e) {
-              logError(e);
-            }
+            yield call(messaging().registerDeviceForRemoteMessages);
+            const FCMToken: string = yield call(messaging().getToken);
+            api.setFCMToken(user.uid, FCMToken);
           }
-        });
+        }
+      } catch (e) {
+        logError(e);
+      }
     } else if (user) {
       Alert.alert(
         'Account not verified',

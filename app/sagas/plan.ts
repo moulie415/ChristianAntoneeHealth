@@ -11,13 +11,13 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 
+import notifee, { TriggerType } from '@notifee/react-native';
 import db from '@react-native-firebase/firestore';
 import { PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
-import notifee, { TriggerType } from '@notifee/react-native'
 import { RootState } from '../App';
 import { logError } from '../helpers/error';
 import {
@@ -113,7 +113,7 @@ function* syncPlanWithCalendarWorker(
 }
 
 export function* schedulePlanReminders() {
-  notifee.cancelAllNotifications()
+  notifee.cancelAllNotifications();
   const plan: Plan | undefined = yield select(
     (state: RootState) => state.profile.plan,
   );
@@ -128,15 +128,18 @@ export function* schedulePlanReminders() {
             .set('hours', moment(profile.workoutReminderTime).hours())
             .set('minutes', moment(profile.workoutReminderTime).minutes());
           if (date.isAfter(moment())) {
-            notifee.createTriggerNotification({
-              body:  'Reminder to do your workout for today',
-              android: {
-                channelId: WORKOUT_REMINDERS_CHANNEL_ID
-              }
-            }, {
-              type: TriggerType.TIMESTAMP,
-              timestamp: date.milliseconds()
-            })
+            notifee.createTriggerNotification(
+              {
+                body: 'Reminder to do your workout for today',
+                android: {
+                  channelId: WORKOUT_REMINDERS_CHANNEL_ID,
+                },
+              },
+              {
+                type: TriggerType.TIMESTAMP,
+                timestamp: date.milliseconds(),
+              },
+            );
           }
         });
       });

@@ -1,3 +1,4 @@
+import notifee from '@notifee/react-native';
 import moment from 'moment';
 import { capitalizeFirstLetter } from '.';
 import { WeeklyItems } from '../reducers/profile';
@@ -5,7 +6,6 @@ import { GOALS_CHANNEL_ID } from '../sagas/profile';
 import QuickRoutine from '../types/QuickRoutines';
 import { SavedQuickRoutine, SavedWorkout } from '../types/SavedItem';
 import { Goal, Level, PlanWorkout, Profile, Targets } from '../types/Shared';
-import notifee from '@notifee/react-native'
 
 interface GenericWorkout {
   level: Level;
@@ -158,12 +158,11 @@ export const sendGoalTargetNotification = (
       ) {
         notifee.displayNotification({
           title: 'Weekly targets complete!',
-          body:
-            'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
+          body: 'Congratulations you’ve hit all of your targets for this week! Keep up the good work and you’ll reach your end goal in no time!',
           android: {
             channelId: GOALS_CHANNEL_ID,
-          }
-        })
+          },
+        });
         return;
       }
       // Otherwise check individual targets
@@ -188,8 +187,8 @@ export const sendGoalTargetNotification = (
           } more to go!`,
           android: {
             channelId: GOALS_CHANNEL_ID,
-          }
-        })
+          },
+        });
       }
     }
   }
