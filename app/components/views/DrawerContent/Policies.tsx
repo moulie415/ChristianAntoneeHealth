@@ -3,8 +3,7 @@ import React from 'react';
 import { Linking, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../constants/colors';
-
-import Config from 'react-native-config';
+import Config from 'react-native-config'
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 
@@ -14,7 +13,9 @@ const Policies = () => {
       <SafeAreaView>
         <Header hasBack title="Policies and Terms" />
         <TouchableOpacity
-          onPress={() => Linking.openURL(Config.PRIVACY_POLICY as string)}
+          onPress={() =>
+            Linking.openURL(Config.PRIVACY_POLICY as string)
+          }
           style={{
             flexDirection: 'row',
             alignItems: 'center',

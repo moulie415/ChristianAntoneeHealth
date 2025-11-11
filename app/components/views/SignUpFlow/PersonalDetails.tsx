@@ -5,8 +5,7 @@ import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import Config from 'react-native-config';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StackParamList } from '../../../App';
 import { HEIGHTS } from '../../../constants';
 import colors from '../../../constants/colors';
@@ -20,6 +19,7 @@ import Modal from '../../commons/Modal';
 import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
 import SignUpWeightModal from './SignUpWeightModal';
+import Config from 'react-native-config'
 
 const PersonalDetails: React.FC<{
   name: string;
@@ -73,7 +73,6 @@ const PersonalDetails: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
       contentContainerStyle={{
         marginHorizontal: 20,
         marginTop: 20,
@@ -450,7 +449,7 @@ const PersonalDetails: React.FC<{
               value: String(value),
             };
           })}
-          onValueChange={({item}) => setHeight(Number(item.value))}
+          onValueChange={({ item }) => setHeight(Number(item.value))}
           onRequestClose={() => setShowHeightModal(false)}
         />
       )}
@@ -473,7 +472,7 @@ const PersonalDetails: React.FC<{
             value,
           };
         })}
-        onValueChange={({item}) => setGender(item.value as Gender)}
+        onValueChange={({ item }) => setGender(item.value as Gender)}
         onRequestClose={() => setShowSexModal(false)}
       />
     </KeyboardAwareScrollView>

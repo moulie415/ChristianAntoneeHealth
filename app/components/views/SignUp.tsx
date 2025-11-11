@@ -2,7 +2,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { Alert, Platform, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../App';
@@ -56,10 +56,7 @@ const SignUp: React.FC<{
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.appGrey, flex: 1 }}>
-      <KeyboardAwareScrollView
-        enableOnAndroid
-        keyboardShouldPersistTaps="always"
-      >
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
         <Header title="Registration" hasBack />
         <Text
           style={{

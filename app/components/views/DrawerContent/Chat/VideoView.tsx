@@ -4,7 +4,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Video from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import { StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
 import Header from '../../../commons/Header';
@@ -21,7 +20,7 @@ const VideoView: React.FC<{
         <Video
           style={{ width: '100%', height: 300, marginTop: -80 }}
           controls
-          source={{ uri: convertToProxyURL(message.video || '') }}
+          source={{ uri: message.video || '' }}
         />
       </View>
     </SafeAreaView>

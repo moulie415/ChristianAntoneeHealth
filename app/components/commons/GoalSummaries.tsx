@@ -139,8 +139,8 @@ const GoalSummaries: React.FC<{
             profile.equipment === 'full'
               ? ['full', 'minimal', 'none']
               : profile.equipment === 'minimal'
-              ? ['minimal', 'none']
-              : ['none'];
+                ? ['minimal', 'none']
+                : ['none'];
 
           return (
             routine.area === profile.area &&

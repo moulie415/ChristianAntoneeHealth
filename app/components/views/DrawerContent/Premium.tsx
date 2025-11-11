@@ -1,6 +1,7 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -12,8 +13,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Config from 'react-native-config';
-import LinearGradient from 'react-native-linear-gradient';
 import Purchases, {
   CustomerInfo,
   PurchasesPackage,
@@ -30,6 +29,7 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
+import Config from 'react-native-config'
 
 const { height } = Dimensions.get('window');
 
@@ -376,7 +376,8 @@ const Premium: React.FC<{
                   text="Terms of Service"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: Config.TERMS_AND_CONDITIONS as string,
+                      uri: process.env
+                        .TERMS_AND_CONDITIONS as string,
                       title: 'Terms of Service',
                     })
                   }

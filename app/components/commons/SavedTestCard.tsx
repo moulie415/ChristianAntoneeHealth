@@ -1,14 +1,13 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { RootState } from '../../App';
+import { RootState, StackParamList } from '../../App';
 import { SavedTest } from '../../types/SavedItem';
 import Test from '../../types/Test';
 
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import { StackParamList } from '../../App';
 import colors from '../../constants/colors';
 import { Profile } from '../../types/Shared';
 import ImageAnimated from './ImageAnimated';

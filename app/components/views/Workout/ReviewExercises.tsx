@@ -5,13 +5,12 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { connect } from 'react-redux';
-import { RootState } from '../../../App';
+import { RootState, StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
 import { truncate } from '../../../helpers';
 import Exercise from '../../../types/Exercise';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParamList } from '../../../App';
 import { setWorkout } from '../../../reducers/exercises';
 import { SettingsState } from '../../../reducers/settings';
 import { Profile } from '../../../types/Shared';

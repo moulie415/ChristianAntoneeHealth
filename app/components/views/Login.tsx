@@ -3,6 +3,7 @@ import appleAuth, {
 } from '@invertase/react-native-apple-authentication';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Application from 'expo-application';
 import React, { useState } from 'react';
 import {
   Image,
@@ -11,8 +12,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { getBuildNumber, getVersion } from 'react-native-device-info';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { StackParamList } from '../../App';
@@ -100,10 +100,7 @@ const Login: React.FC<{
         }}
       />
       <SafeAreaView>
-        <KeyboardAwareScrollView
-          enableOnAndroid
-          keyboardShouldPersistTaps="always"
-        >
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <View
             style={{
               width: 175,
@@ -209,7 +206,7 @@ const Login: React.FC<{
             margin: 10,
           }}
         >
-          {`v${getVersion()} (${getBuildNumber()})`}
+          {`v${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`}
         </Text>
       </View>
     </ImageBackground>

@@ -1,28 +1,37 @@
 import appCheck from '@react-native-firebase/app-check';
+import { Timestamp } from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, isPlain } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
-import Config from 'react-native-config';
-import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { IMessage } from 'react-native-gifted-chat';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { navigationRef } from './RootNavigation';
 import { DrawerNavigator } from './Stack';
 import colors from './constants/colors';
+import { setupNotifications } from './notifications';
 import reducer from './reducers';
 import rootSaga from './sagas';
 import Education from './types/Education';
 import ExerciseType from './types/Exercise';
 import QuickRoutine, { Area, Equipment } from './types/QuickRoutines';
 import { SavedQuickRoutine, SavedWorkout } from './types/SavedItem';
+import SplashScreen from 'react-native-splash-screen'
 import {
   CoolDown,
   Equipment as EquipmentItem,
@@ -40,10 +49,7 @@ import {
   WatchWorkoutResponse,
 } from './types/Shared';
 import Test from './types/Test';
-
-
-import Constants from 'expo-constants';
-console.log(Constants.systemFonts);
+import Config from 'react-native-config'
 
 
 const createSagaMiddleware = require('redux-saga').default;
@@ -54,7 +60,25 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer,
-  middleware: [sagaMiddleware],
+  //middleware: [sagaMiddleware],
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      thunk: false,
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        isSerializable: (value: any) => {
+          if (value instanceof Timestamp) {
+            return true;
+          }
+          if (value instanceof Date) {
+            return true;
+          }
+          return (
+            typeof value === 'undefined' || value === null || isPlain(value)
+          );
+        },
+      },
+    }).concat(sagaMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -213,57 +237,60 @@ const App: React.FC = () => {
     <PersistGate persistor={persistor}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
-          <SafeAreaProvider>
-            <NavigationContainer
-              ref={navigationRef}
-              onReady={() => {
-                sagaMiddleware.run(rootSaga);
-                SplashScreen.hide();
-                // Register the navigation container with the instrumentation
-                reactNavigationIntegration.registerNavigationContainer(
-                  navigationRef,
-                );
-              }}
-            >
-              <DrawerNavigator />
-            </NavigationContainer>
-            {showSplash && (
-              <View
-                style={{
-                  backgroundColor: colors.appWhite,
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+          <KeyboardProvider>
+            <SafeAreaProvider>
+              <NavigationContainer
+                ref={navigationRef}
+                onReady={() => {
+                  sagaMiddleware.run(rootSaga);
+                  SplashScreen.hide();
+                  // Register the navigation container with the instrumentation
+                  reactNavigationIntegration.registerNavigationContainer(
+                    navigationRef,
+                  );
+                  setupNotifications();
                 }}
               >
-                {Platform.OS === 'ios' ? (
-                  <Image
-                    source={require('./images/splash.gif')}
-                    style={{
-                      height,
-                      width: '75%',
-                      backgroundColor: colors.appWhite,
-                      alignSelf: 'center',
-                    }}
-                    resizeMode="contain"
-                  />
-                ) : (
-                  <Image
-                    source={require('./images/splash_fixed.png')}
-                    style={{
-                      height,
-                      width: '75%',
-                      backgroundColor: colors.appWhite,
-                      alignSelf: 'center',
-                    }}
-                    resizeMode="contain"
-                  />
-                )}
-              </View>
-            )}
-          </SafeAreaProvider>
+                <DrawerNavigator />
+              </NavigationContainer>
+              {showSplash && (
+                <View
+                  style={{
+                    backgroundColor: colors.appWhite,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  }}
+                >
+                  {Platform.OS === 'ios' ? (
+                    <Image
+                      source={require('./images/splash.gif')}
+                      style={{
+                        height,
+                        width: '75%',
+                        backgroundColor: colors.appWhite,
+                        alignSelf: 'center',
+                      }}
+                      resizeMode="contain"
+                    />
+                  ) : (
+                    <Image
+                      source={require('./images/splash_fixed.png')}
+                      style={{
+                        height,
+                        width: '75%',
+                        backgroundColor: colors.appWhite,
+                        alignSelf: 'center',
+                      }}
+                      resizeMode="contain"
+                    />
+                  )}
+                </View>
+              )}
+            </SafeAreaProvider>
+          </KeyboardProvider>
         </Provider>
       </GestureHandlerRootView>
     </PersistGate>

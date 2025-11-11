@@ -1,7 +1,6 @@
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import React from 'react';
 import { Dimensions, Linking, TouchableOpacity, View } from 'react-native';
-import Config from 'react-native-config';
 import { connect } from 'react-redux';
 import { RootState } from '../../App';
 import colors from '../../constants/colors';
@@ -10,6 +9,7 @@ import Button from './Button';
 import ImageAnimated from './ImageAnimated';
 import Modal from './Modal';
 import Text from './Text';
+import Config from 'react-native-config'
 
 const ConnectedIcon: React.FC = () => {
   return (

@@ -7,7 +7,6 @@ import { ImageBackground, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Video, { ResizeMode } from 'react-native-video';
-import convertToProxyURL from 'react-native-video-cache';
 import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
 import { capitalizeFirstLetter, getVideoHeight } from '../../../helpers';
@@ -90,7 +89,7 @@ const PreQuickRoutine: React.FC<{
       {preview?.src ? (
         <>
           <Video
-            source={{ uri: convertToProxyURL(preview.src) }}
+            source={{ uri: preview.src }}
             style={{ height: getVideoHeight(), width: '100%' }}
             resizeMode={ResizeMode.COVER}
             repeat

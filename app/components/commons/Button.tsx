@@ -49,12 +49,12 @@ const Button: React.FC<Props> = ({
             variant === 'secondary'
               ? 'transparent'
               : variant === 'danger'
-              ? disabled
-                ? colors.appRedOpacity
-                : colors.appRed
-              : disabled
-              ? colors.appBlueOpacity
-              : colors.appBlue,
+                ? disabled
+                  ? colors.appRedOpacity
+                  : colors.appRed
+                : disabled
+                  ? colors.appBlueOpacity
+                  : colors.appBlue,
           borderWidth: variant === 'secondary' ? 2 : 0,
           borderColor: colors.appBlue,
           flexDirection: 'row',

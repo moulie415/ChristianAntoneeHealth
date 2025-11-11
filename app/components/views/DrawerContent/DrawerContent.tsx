@@ -4,9 +4,9 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
+import * as Application from 'expo-application';
 import React, { ReactNode } from 'react';
 import { Alert, FlatList, Share, TouchableOpacity, View } from 'react-native';
-import { getBuildNumber, getVersion } from 'react-native-device-info';
 import { LoginManager } from 'react-native-fbsdk-next';
 import Purchases from 'react-native-purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -252,7 +252,7 @@ const DrawerContent: React.FC<Props> = ({
           margin: 10,
         }}
       >
-        {`v${getVersion()} (${getBuildNumber()})`}
+        {`v${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`}
       </Text>
     </SafeAreaView>
   );

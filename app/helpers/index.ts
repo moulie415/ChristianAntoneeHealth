@@ -1,8 +1,9 @@
 import analytics from '@react-native-firebase/analytics';
 import moment, { Moment } from 'moment';
 import { Dimensions } from 'react-native';
-import InAppReview from 'react-native-in-app-review';
-import PushNotification from 'react-native-push-notification';
+// import InAppReview from 'react-native-in-app-review';
+import * as StoreReview from 'expo-store-review';
+// import PushNotification from 'react-native-push-notification';
 import { TABLE_HEADER_KEYS } from '../components/commons/Table';
 import colors from '../constants/colors';
 import { Category } from '../types/Education';
@@ -17,28 +18,6 @@ export const truncate = (str: string, n: number) => {
     return '';
   }
   return str.length > n ? str.substr(0, n - 1) + '...' : str;
-};
-
-export const scheduleLocalNotification = (
-  message: string,
-  date: Date,
-  channel: string,
-  title?: string,
-  id?: string | number,
-  repeatType?: 'week' | 'day' | 'hour' | 'minute' | 'time',
-) => {
-  try {
-    PushNotification.localNotificationSchedule({
-      message,
-      date,
-      channelId: channel,
-      id,
-      repeatType,
-      title,
-    });
-  } catch (e) {
-    logError(e);
-  }
 };
 
 const findClosestSampleToDate = (
@@ -270,8 +249,10 @@ const getBMR = (gender: Gender, w: number, h: number, age: number) => {
 
 export const rateApp = async () => {
   try {
-    const success = await InAppReview.RequestInAppReview();
-    analytics().logEvent('user_rating', { success });
+    if (await StoreReview.hasAction()) {
+      await StoreReview.requestReview();
+      await analytics().logEvent('app_review_requested');
+    }
   } catch (e) {
     logError(e);
   }
@@ -498,10 +479,10 @@ export const greetingMessage = () => {
   return currentHour >= 4 && currentHour < 12 // after 4:00AM and before 12:00PM
     ? 'Good morning'
     : currentHour >= 12 && currentHour <= 17 // after 12:00PM and before 6:00pm
-    ? 'Good afternoon'
-    : currentHour > 17 || currentHour < 4 // after 5:59pm or before 4:00AM (to accommodate night owls)
-    ? 'Good evening' // if for some reason the calculation didn't work
-    : 'Welcome';
+      ? 'Good afternoon'
+      : currentHour > 17 || currentHour < 4 // after 5:59pm or before 4:00AM (to accommodate night owls)
+        ? 'Good evening' // if for some reason the calculation didn't work
+        : 'Welcome';
 };
 
 export const objectHasNonEmptyValues = (object?: object) => {

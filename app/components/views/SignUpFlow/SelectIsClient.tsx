@@ -6,7 +6,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import colors from '../../../constants/colors';
 import SelectableButton from '../../commons/SelectableButton';
 import Text from '../../commons/Text';
@@ -32,7 +32,6 @@ const SelectIsClient: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
       contentContainerStyle={{
         marginHorizontal: 20,
         marginTop: 20,

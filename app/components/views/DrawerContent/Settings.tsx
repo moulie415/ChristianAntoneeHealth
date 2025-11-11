@@ -1,8 +1,9 @@
-import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import auth from '@react-native-firebase/auth';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Calendar from 'expo-calendar';
+import * as Clipboard from 'expo-clipboard';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { ReactNode, useEffect, useState } from 'react';
@@ -13,7 +14,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import RNCalendarEvents from 'react-native-calendar-events';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Snackbar from 'react-native-snackbar';
@@ -30,7 +30,6 @@ import {
   updateProfile,
 } from '../../../reducers/profile';
 import {
-  CalendarType,
   Goal,
   Plan,
   Profile,
@@ -113,7 +112,7 @@ const Settings: React.FC<{
   const [loading, setLoading] = useState(false);
   const [goal, setGoal] = useState<Goal>(profile.goal || Goal.STRENGTH);
   const [showPrepTime, setShowPrepTime] = useState(false);
-  const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
+  const [calendarList, setCalendarList] = useState<Calendar.Calendar[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [autoPlay, setAutoPlay] = useState(profile.autoPlay);
   const [prepTime, setPrepTime] = useState(profile.prepTime);
@@ -157,9 +156,9 @@ const Settings: React.FC<{
     try {
       if (plan) {
         if (sync) {
-          const permission = await RNCalendarEvents.requestPermissions();
-          if (permission === 'authorized') {
-            const calendars = await RNCalendarEvents.findCalendars();
+          const permission = await Calendar.getCalendarPermissionsAsync();
+          if (permission.status === 'granted') {
+            const calendars = await Calendar.getCalendarsAsync();
             const list = calendars.filter(c => c.isPrimary);
             setCalendarList(list);
             if (list.length && list.length > 1) {
@@ -404,8 +403,8 @@ const Settings: React.FC<{
           </Text>
 
           <SettingsItem
-            onPress={() => {
-              Clipboard.setString(profile.uid);
+            onPress={async () => {
+              await Clipboard.setStringAsync(profile.uid);
               Snackbar.show({ text: 'User ID copied to clipboard' });
             }}
             text="User ID"
@@ -518,7 +517,7 @@ const Settings: React.FC<{
             value: String(value),
           };
         })}
-        onValueChange={({item}) => setPrepTime(Number(item.value))}
+        onValueChange={({ item }) => setPrepTime(Number(item.value))}
         onRequestClose={() => setShowPrepTime(false)}
       />
       <Modal

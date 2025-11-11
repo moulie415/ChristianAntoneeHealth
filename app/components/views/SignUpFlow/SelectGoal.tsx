@@ -54,7 +54,7 @@ const SelectGoal: React.FC<{
           fontWeight: 'bold',
         }}
       >
-        What's your goal?
+        What&apos;s your goal?
       </Text>
       {goalDetails.map(({ text, secondaryText, goal: g }) => {
         if (g === Goal.OTHER && !client) {

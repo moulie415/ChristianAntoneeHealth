@@ -9,8 +9,8 @@ import { FONTS_SIZES } from '../../../constants';
 import colors from '../../../constants/colors';
 import { getVideoHeight } from '../../../helpers';
 import { endWatchWorkout } from '../../../helpers/biometrics';
-import playWorkoutSong from '../../../helpers/playWorkoutSong';
 import useExerciseEvents from '../../../hooks/UseExerciseEvents';
+import { usePlayWorkoutSong } from '../../../hooks/UsePlayWorkoutSong';
 import useThrottle from '../../../hooks/UseThrottle';
 import useWorkoutTimer from '../../../hooks/UseWorkoutTimer';
 import { updateProfile } from '../../../reducers/profile';
@@ -28,7 +28,6 @@ import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import SoundPlayer from 'react-native-sound-player';
 
 const QuickRoutineView: React.FC<{
   videos: { [key: string]: { src: string; path: string } };
@@ -68,11 +67,13 @@ const QuickRoutineView: React.FC<{
     });
   }, [exercisesObj, routine.exerciseIds]);
 
+  const { play, pause, resume } = usePlayWorkoutSong();
+
   useEffect(() => {
     if (workoutMusic && !routine.disableWorkoutMusic) {
-      playWorkoutSong();
+      play();
     }
-  }, [workoutMusic, routine.disableWorkoutMusic]);
+  }, [workoutMusic, routine.disableWorkoutMusic, play]);
 
   const { seconds, setTimerPaused, timerPaused } = useWorkoutTimer(
     1000,
@@ -114,7 +115,7 @@ const QuickRoutineView: React.FC<{
       pauseEvents,
       watchWorkoutData: response,
     });
-    SoundPlayer.stop();
+    pause();
   }, 3000);
 
   return (
@@ -132,7 +133,7 @@ const QuickRoutineView: React.FC<{
               onPress: () => {
                 navigation.goBack();
 
-                SoundPlayer.stop();
+                pause();
                 endWatchWorkout();
               },
             },
@@ -216,7 +217,6 @@ const QuickRoutineView: React.FC<{
                         i={i}
                         index={index}
                         workout={exercises}
-                        disableWorkoutMusic={routine.disableWorkoutMusic}
                         pagerRef={pagerRef}
                         timerPaused={timerPaused}
                         onTimerPaused={p => {
@@ -226,6 +226,16 @@ const QuickRoutineView: React.FC<{
                             { time: new Date(), paused: p },
                           ]);
                           setPaused(p);
+                          if (
+                            profile.workoutMusic &&
+                            !routine.disableWorkoutMusic
+                          ) {
+                            if (p) {
+                              pause();
+                            } else {
+                              resume();
+                            }
+                          }
                         }}
                       />
 

@@ -3,6 +3,8 @@ import storage from '@react-native-firebase/storage';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -15,14 +17,6 @@ import {
   View,
 } from 'react-native';
 import { Image } from 'react-native-compressor';
-import RNFS from 'react-native-fs';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
 import ImageView from 'react-native-image-viewing';
 import { ImageSource } from 'react-native-image-viewing/dist/@types';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -126,12 +120,8 @@ const ProfileComponent: React.FC<{
   });
 
   const handlePickerCallback = useCallback(
-    async (response: ImagePickerResponse) => {
-      if (response.errorMessage || response.errorCode) {
-        Snackbar.show({
-          text: `Error: ${response.errorMessage || response.errorCode}`,
-        });
-      } else if (!response.didCancel) {
+    async (response: ImagePicker.ImagePickerResult) => {
+      if (response.assets) {
         const image = response.assets?.[0];
         setAvatar(image?.uri);
       }
@@ -173,10 +163,10 @@ const ProfileComponent: React.FC<{
       let newAvatar = profile.avatar;
       if (avatar !== profile.avatar) {
         const compressed = await Image.compress(avatar || '');
-        const read = await RNFS.stat(compressed);
+        const info = new FileSystem.File(compressed).info();
 
         // file size comes back in bytes so need to divide by 1000000 to get mb
-        if (read.size && read.size / 1000000 < settings.chatMaxFileSizeMb) {
+        if (info.size && info.size / 1000000 < settings.chatMaxFileSizeMb) {
           const imageRef = storage()
             .ref(`images/${profile.uid}`)
             .child('avatar');
@@ -279,27 +269,30 @@ const ProfileComponent: React.FC<{
           >
             <TouchableOpacity
               onPress={() => {
-                const MAX_SIZE = 500;
-                const cameraOptions: CameraOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
-                const imageLibraryOptions: ImageLibraryOptions = {
-                  mediaType: 'photo',
-                  maxHeight: MAX_SIZE,
-                  maxWidth: MAX_SIZE,
-                };
                 const options: AlertButton[] = [
                   {
                     text: 'Upload from image library',
-                    onPress: () =>
-                      launchImageLibrary(cameraOptions, handlePickerCallback),
+                    onPress: async () => {
+                      const result = await ImagePicker.launchImageLibraryAsync({
+                        allowsMultipleSelection: false,
+                        allowsEditing: true,
+                        quality: 0.8,
+                        mediaTypes: ['images'],
+                      });
+                      handlePickerCallback(result);
+                    },
                   },
                   {
                     text: 'Take photo',
-                    onPress: () =>
-                      launchCamera(imageLibraryOptions, handlePickerCallback),
+                    onPress: async () => {
+                      const result = await ImagePicker.launchCameraAsync({
+                        allowsMultipleSelection: false,
+                        allowsEditing: true,
+                        quality: 0.8,
+                        mediaTypes: ['images'],
+                      });
+                      handlePickerCallback(result);
+                    },
                   },
                   {
                     text: 'Cancel',
@@ -490,7 +483,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setHeight(Number(item.value))}
+            onValueChange={({ item }) => setHeight(Number(item.value))}
             onRequestClose={() => setShowHeightModal(false)}
           />
         )}
@@ -524,7 +517,9 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setBodyFatPercentage(Number(item.value))}
+            onValueChange={({ item }) =>
+              setBodyFatPercentage(Number(item.value))
+            }
             onRequestClose={() => setShowBodyFatPercentageModal(false)}
           />
         )}
@@ -550,7 +545,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setMuscleMass(Number(item.value))}
+            onValueChange={({ item }) => setMuscleMass(Number(item.value))}
             onRequestClose={() => setShowMuscleMassModal(false)}
           />
         )}
@@ -576,7 +571,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setBoneMass(Number(item.value))}
+            onValueChange={({ item }) => setBoneMass(Number(item.value))}
             onRequestClose={() => setShowBoneMassModal(false)}
           />
         )}
@@ -601,7 +596,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setVisceralFat(Number(item.value))}
+            onValueChange={({ item }) => setVisceralFat(Number(item.value))}
             onRequestClose={() => setShowVisceralFatModal(false)}
           />
         )}
@@ -626,7 +621,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setMetabolicAge(Number(item.value))}
+            onValueChange={({ item }) => setMetabolicAge(Number(item.value))}
             onRequestClose={() => setShowMetabolicAgeModal(false)}
           />
         )}

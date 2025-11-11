@@ -46,7 +46,7 @@ interface LegendItem {
 const WorkoutBreakdown: React.FC<{
   route: RouteProp<StackParamList, 'WorkoutBreakdown'>;
 }> = ({ route }) => {
-  const chartRef = useRef<typeof SkiaChart>(null);
+  const chartRef = useRef<any>(null);
   const { workout } = route.params;
 
   const { quickRoutines } = useAppSelector(state => state.quickRoutines);
@@ -369,9 +369,10 @@ const WorkoutBreakdown: React.FC<{
             >
               Exercises
             </Text>
-            {exerciseList.map(({ name, thumbnail, time, weight }) => {
+            {exerciseList.map(({ name, thumbnail, time, weight, id }) => {
               return (
                 <View
+                  key={id}
                   style={{
                     borderWidth: 1,
                     borderColor: colors.borderColor,

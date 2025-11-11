@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   Dimensions,
@@ -5,7 +6,6 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constants/colors';
 import ImageAnimated from '../../commons/ImageAnimated';
 import Text from '../../commons/Text';

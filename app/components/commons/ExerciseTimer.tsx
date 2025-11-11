@@ -15,7 +15,6 @@ import colors from '../../constants/colors';
 import Exercise from '../../types/Exercise';
 import { Profile } from '../../types/Shared';
 import Text from './Text';
-import SoundPlayer from 'react-native-sound-player';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -28,7 +27,6 @@ const ExerciseTimer: React.FC<{
   timerPaused: boolean;
   onTimerPaused: (paused: boolean) => void;
   profile: Profile;
-  disableWorkoutMusic: boolean;
 }> = ({
   index,
   workout,
@@ -38,7 +36,6 @@ const ExerciseTimer: React.FC<{
   timerPaused,
   onTimerPaused,
   profile,
-  disableWorkoutMusic,
 }) => {
   const [key, setKey] = useState<'prep' | 'exercise'>('prep');
 
@@ -56,13 +53,6 @@ const ExerciseTimer: React.FC<{
 
   const onPress = () => {
     onTimerPaused(!timerPaused);
-    if (profile.workoutMusic && !disableWorkoutMusic) {
-      if (timerPaused) {
-        SoundPlayer.play();
-      } else {
-        SoundPlayer.pause();
-      }
-    }
   };
 
   const isPrepping = key === 'prep';
@@ -180,8 +170,8 @@ const ExerciseTimer: React.FC<{
                 {isPrepping
                   ? 'GET READY!'
                   : finished
-                  ? 'FINISHED!'
-                  : `${index + 1}/${workout.length}`}
+                    ? 'FINISHED!'
+                    : `${index + 1}/${workout.length}`}
               </Text>
             </View>
           );

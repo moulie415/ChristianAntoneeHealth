@@ -1,7 +1,7 @@
-import React from 'react';
-import { Platform, Text, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Picker from '@quidone/react-native-wheel-picker';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { FITNESS_RATINGS } from '../../../constants';
 import colors from '../../../constants/colors';
 import {
@@ -105,8 +105,6 @@ const HealthAndLifestyle: React.FC<{
 
   return (
     <KeyboardAwareScrollView
-      enableOnAndroid
-      extraScrollHeight={Platform.OS === 'ios' ? 0 : 75}
       contentContainerStyle={{ paddingBottom: 100 }}
       style={{
         flex: 1,
@@ -189,7 +187,7 @@ const HealthAndLifestyle: React.FC<{
             value: String(value),
           };
         })}
-        onValueChanged={({item}) => setFitnessRating(Number(item.value))}
+        onValueChanged={({ item }) => setFitnessRating(Number(item.value))}
       />
     </KeyboardAwareScrollView>
   );
