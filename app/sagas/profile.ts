@@ -1109,8 +1109,9 @@ export default function* profileSaga() {
     fork(tokenWatcher),
   ]);
 
-  const channel: EventChannel<{ user: FirebaseAuthTypes.User }> =
-    yield call(onAuthStateChanged);
+  const channel: EventChannel<{ user: FirebaseAuthTypes.User }> = yield call(
+    onAuthStateChanged,
+  );
   while (true) {
     const { user }: { user: FirebaseAuthTypes.User } = yield take(channel);
     yield put(handleAuth(user));

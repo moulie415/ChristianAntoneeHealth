@@ -10,7 +10,7 @@ import {
   useAudioRecorderState,
 } from 'expo-audio';
 import React, { useEffect, useState } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import colors from '../../../../constants/colors';
 import mmss from '../../../../helpers/mmss';
 import Text from '../../../commons/Text';
@@ -40,9 +40,19 @@ const VoiceNoteRecorder = ({ onClose, onSend }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const status = await AudioModule.requestRecordingPermissionsAsync();
-      if (!status.granted) {
-        Alert.alert('Permission to access microphone was denied');
+      const { status } = await AudioModule.getRecordingPermissionsAsync();
+
+      let hasPermission = status === 'granted';
+      if (status !== 'granted') {
+        // Permission not granted, request it
+        const { granted } =
+          await AudioModule.requestRecordingPermissionsAsync();
+        hasPermission = granted;
+      }
+
+      if (!hasPermission) {
+        onClose();
+        return;
       }
 
       await setAudioModeAsync({
@@ -52,7 +62,7 @@ const VoiceNoteRecorder = ({ onClose, onSend }: Props) => {
       await audioRecorder.prepareToRecordAsync();
       audioRecorder.record();
     })();
-  }, [audioRecorder]);
+  }, [audioRecorder, onClose]);
 
   return (
     <View
@@ -86,7 +96,7 @@ const VoiceNoteRecorder = ({ onClose, onSend }: Props) => {
         )}
         {!stopped && (
           <Text style={{ width: 40 }}>
-            {mmss(Math.floor(audioRecorder.currentTime))}
+            {mmss(Math.floor(recorderState.durationMillis / 1000))}
           </Text>
         )}
         {!stopped && <RecordingIndicator metering={recorderState.metering} />}
@@ -138,10 +148,11 @@ const Player = ({ uri }: { uri: string }) => {
             alignItems: 'center',
           }}
           onPress={() => {
+            console.log(status.currentTime, status.duration);
             if (status.playing) {
               player.pause();
             } else {
-              if (status.currentTime === status.duration) {
+              if (status.currentTime >= status.duration) {
                 player.seekTo(0);
               }
               player.play();

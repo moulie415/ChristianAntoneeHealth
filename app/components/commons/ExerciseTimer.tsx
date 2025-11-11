@@ -170,8 +170,8 @@ const ExerciseTimer: React.FC<{
                 {isPrepping
                   ? 'GET READY!'
                   : finished
-                    ? 'FINISHED!'
-                    : `${index + 1}/${workout.length}`}
+                  ? 'FINISHED!'
+                  : `${index + 1}/${workout.length}`}
               </Text>
             </View>
           );

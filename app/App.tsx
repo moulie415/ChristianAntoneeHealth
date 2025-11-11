@@ -2,17 +2,19 @@ import appCheck from '@react-native-firebase/app-check';
 import { NavigationContainer } from '@react-navigation/native';
 import { configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react-native';
+import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
+import Config from 'react-native-config';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { IMessage } from 'react-native-gifted-chat';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
-import {
-  persistStore,
-} from 'redux-persist';
+import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { navigationRef } from './RootNavigation';
 import { DrawerNavigator } from './Stack';
@@ -24,7 +26,6 @@ import Education from './types/Education';
 import ExerciseType from './types/Exercise';
 import QuickRoutine, { Area, Equipment } from './types/QuickRoutines';
 import { SavedQuickRoutine, SavedWorkout } from './types/SavedItem';
-import SplashScreen from 'react-native-splash-screen'
 import {
   CoolDown,
   Equipment as EquipmentItem,
@@ -42,9 +43,6 @@ import {
   WatchWorkoutResponse,
 } from './types/Shared';
 import Test from './types/Test';
-import Config from 'react-native-config'
-import { StatusBar } from 'expo-status-bar';
-import * as SystemUI from 'expo-system-ui';
 
 const createSagaMiddleware = require('redux-saga').default;
 
@@ -192,15 +190,12 @@ Sentry.init({
   integrations: [reactNavigationIntegration],
 });
 
-
-
-
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setShowSplash(false);
-      SystemUI.setBackgroundColorAsync(colors.appGrey)
+      SystemUI.setBackgroundColorAsync(colors.appGrey);
     }, 5500);
   }, []);
 

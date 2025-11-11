@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import Purchases, {
   CustomerInfo,
   PurchasesPackage,
@@ -29,7 +30,6 @@ import Button from '../../commons/Button';
 import Header from '../../commons/Header';
 import PremiumProduct from '../../commons/PremiumProduct';
 import Text from '../../commons/Text';
-import Config from 'react-native-config'
 
 const { height } = Dimensions.get('window');
 
@@ -376,8 +376,7 @@ const Premium: React.FC<{
                   text="Terms of Service"
                   onPress={() =>
                     navigation.navigate('WebViewScreen', {
-                      uri: process.env
-                        .TERMS_AND_CONDITIONS as string,
+                      uri: process.env.TERMS_AND_CONDITIONS as string,
                       title: 'Terms of Service',
                     })
                   }

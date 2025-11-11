@@ -1,8 +1,8 @@
 import moment from 'moment';
+import Config from 'react-native-config';
 import Snackbar from 'react-native-snackbar';
 import { Sample } from '../types/Shared';
 import { logError } from './error';
-import Config from 'react-native-config'
 
 export interface FitbitHeartRateResponse {
   'activities-heart': ActivitiesHeart[];

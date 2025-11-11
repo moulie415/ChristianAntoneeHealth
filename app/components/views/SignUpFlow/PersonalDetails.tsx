@@ -5,6 +5,7 @@ import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
 import { Platform, TouchableOpacity, View } from 'react-native';
+import Config from 'react-native-config';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StackParamList } from '../../../App';
 import { HEIGHTS } from '../../../constants';
@@ -19,7 +20,6 @@ import Modal from '../../commons/Modal';
 import PickerModal from '../../commons/PickerModal';
 import Text from '../../commons/Text';
 import SignUpWeightModal from './SignUpWeightModal';
-import Config from 'react-native-config'
 
 const PersonalDetails: React.FC<{
   name: string;

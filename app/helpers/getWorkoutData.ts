@@ -74,8 +74,8 @@ export const getWorkoutData = async (
   const calorieCalculationType: CalorieCalculationType = shouldUseCalorieSamples
     ? 'sample'
     : caloriesFromHeartRate
-      ? 'heartRate'
-      : 'estimate';
+    ? 'heartRate'
+    : 'estimate';
 
   return {
     heartRateSamples,
@@ -85,7 +85,7 @@ export const getWorkoutData = async (
     calories: shouldUseCalorieSamples
       ? calories
       : caloriesFromHeartRate
-        ? caloriesFromHeartRate
-        : caloriesEstimate,
+      ? caloriesFromHeartRate
+      : caloriesEstimate,
   };
 };
