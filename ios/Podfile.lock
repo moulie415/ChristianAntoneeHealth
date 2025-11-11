@@ -4213,9 +4213,9 @@ PODS:
     - React-debug
     - React-jsi (= 0.81.0)
     - SocketRocket
-  - ReactAppDependencyProvider (0.82.0):
+  - ReactAppDependencyProvider (0.81.0):
     - ReactCodegen
-  - ReactCodegen (0.82.0):
+  - ReactCodegen (0.81.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -5441,8 +5441,8 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 67353cec9918ab05d6cdca74b082ca984207f63f
   React-timing: 0b2e20e7842a85e33d2456986137a99b95a31421
   React-utils: 6cf54d288bcbd10d5cbf1c09eae7ff024c508f77
-  ReactAppDependencyProvider: c5c4f5280e4ae0f9f4a739c64c4260fe0b3edaf1
-  ReactCodegen: 15a08da1affe68ea1cc9a613bc5af784198eb868
+  ReactAppDependencyProvider: c91900fa724baee992f01c05eeb4c9e01a807f78
+  ReactCodegen: 8f2a63b11f0625a7b36d4c8c588d7c89a3086cda
   ReactCommon: 5ee89f5eec706805c432ed5b598adcd4e5aaa088
   ReactNativeHealthkit: 4545d9ee7ad5e5e0e8527c618b98ce7db3242e37
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
@@ -5478,4 +5478,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 51522615c17225441c254e2a3cd715f079487be2
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
