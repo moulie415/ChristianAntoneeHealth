@@ -149,9 +149,6 @@ jobs:
             -archivePath archive.xcarchive \
             | xcpretty
 
-
-
-
           # Export
           xcodebuild -exportArchive \
             -archivePath archive.xcarchive \

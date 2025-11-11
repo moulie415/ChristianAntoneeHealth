@@ -27,6 +27,7 @@ import {
   BubbleProps,
   Avatar as GiftedAvatar,
   GiftedChat,
+  Message as GiftedMessage,
   IMessage,
   MessageAudioProps,
   MessageImageProps,
@@ -692,6 +693,10 @@ const Chat: React.FC<ChatProps> = ({
           onInputTextChanged={onInputTextChanged}
           text={text}
           onLongPress={onLongPress}
+          renderMessage={props => {
+            const { key, ...rest } = props;
+            return <GiftedMessage {...rest} key={key} />;
+          }}
           renderMessageVideo={renderMessageVideo}
           renderMessageAudio={renderMessageAudio}
           renderMessageImage={renderMessageImage}
@@ -721,7 +726,6 @@ const Chat: React.FC<ChatProps> = ({
           alwaysShowSend
         />
       </SafeAreaView>
-      <SafeAreaView style={{ flex: 0, backgroundColor: colors.appGrey }} />
       <ImageView
         images={images}
         imageIndex={imageIndex}
