@@ -2944,6 +2944,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifee/react-native@npm:^9.1.8":
+  version: 9.1.8
+  resolution: "@notifee/react-native@npm:9.1.8"
+  peerDependencies:
+    react-native: "*"
+  checksum: 10c0/a41adf0975e826fafa166d79854b12d6b405181a0e1adc2a8dd251d9a480482148a8104fedc882e1aee7a48573ff46ac8c999ebf83d42b410f05de387c040ec1
+  languageName: node
+  linkType: hard
+
 "@npmcli/agent@npm:^3.0.0":
   version: 3.0.0
   resolution: "@npmcli/agent@npm:3.0.0"
@@ -3439,18 +3448,6 @@ __metadata:
   peerDependencies:
     react-native: ">=0.59"
   checksum: 10c0/118ba6d495bd14c2dab3d228a0c1857620a293ae8592d170d70eaf88a6ac6a4e35c7f84527975a9054e36891a9694aacc8ec053326b5f05961459ed08a70dd35
-  languageName: node
-  linkType: hard
-
-"@react-native-community/push-notification-ios@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@react-native-community/push-notification-ios@npm:1.11.0"
-  dependencies:
-    invariant: "npm:^2.2.4"
-  peerDependencies:
-    react: ">=16.6.3"
-    react-native: ">=0.58.4"
-  checksum: 10c0/dda1052069b196eed2b23bd843f4824ff53e54978b625e016a78203978eae75af0779c398dbf324ae8c82cfd409b781a1273d5f8b05a77249457810c7756fe84
   languageName: node
   linkType: hard
 
@@ -4942,13 +4939,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-push-notification@npm:^8.1.4":
-  version: 8.1.4
-  resolution: "@types/react-native-push-notification@npm:8.1.4"
-  checksum: 10c0/cd5f3f25baa16f8c6e68030b21d62b1f928b6555cbcfff23b74655f72d7aeb4d473e873358dc5a771e3d3745e64d90ec9fe34dc46d427765879e5efec8c86a08
-  languageName: node
-  linkType: hard
-
 "@types/react-native-video@npm:^5.0.20":
   version: 5.0.20
   resolution: "@types/react-native-video@npm:5.0.20"
@@ -5349,6 +5339,7 @@ __metadata:
     "@kingstinct/react-native-healthkit": "npm:^11.1.2"
     "@kolking/react-native-avatar": "npm:^2.1.5"
     "@miblanchard/react-native-slider": "npm:^2.6.0"
+    "@notifee/react-native": "npm:^9.1.8"
     "@quidone/react-native-wheel-picker": "npm:^1.6.1"
     "@react-native-async-storage/async-storage": "npm:^2.2.0"
     "@react-native-clipboard/clipboard": "npm:^1.16.3"
@@ -5357,7 +5348,6 @@ __metadata:
     "@react-native-community/cli-platform-ios": "npm:20.0.0"
     "@react-native-community/datetimepicker": "npm:^8.4.4"
     "@react-native-community/netinfo": "npm:^11.4.1"
-    "@react-native-community/push-notification-ios": "npm:^1.11.0"
     "@react-native-documents/picker": "npm:^10.1.7"
     "@react-native-firebase/analytics": "npm:^23.0.1"
     "@react-native-firebase/app": "npm:^23.0.1"
@@ -5394,7 +5384,6 @@ __metadata:
     "@types/react": "npm:^19.1.1"
     "@types/react-native-background-timer": "npm:^2.0.2"
     "@types/react-native-draggable-flatlist": "npm:^2.0.0"
-    "@types/react-native-push-notification": "npm:^8.1.4"
     "@types/react-native-video": "npm:^5.0.20"
     "@types/react-redux": "npm:^7.1.34"
     "@types/react-test-renderer": "npm:^19.1.0"
@@ -5452,7 +5441,6 @@ __metadata:
     react-native-pdf: "npm:7.0.1"
     react-native-progress: "npm:^5.0.1"
     react-native-purchases: "npm:^9.2.2"
-    react-native-push-notification: "npm:^8.1.1"
     react-native-reanimated: "npm:^4.1.3"
     react-native-reanimated-table: "npm:^0.0.2"
     react-native-render-html: "npm:^6.3.4"
@@ -12066,16 +12054,6 @@ __metadata:
     react-native-web:
       optional: true
   checksum: 10c0/6aff28297ad31ef02aee42ca2a942a80f605c1a040b5da80435ae1c70a9a5bc10af91f76efa44e7df0506415f34be1978a1cdd9b90c5b338a7a3aee75378cf17
-  languageName: node
-  linkType: hard
-
-"react-native-push-notification@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "react-native-push-notification@npm:8.1.1"
-  peerDependencies:
-    "@react-native-community/push-notification-ios": ^1.10.1
-    react-native: ">=0.33"
-  checksum: 10c0/d215a17ce815c65e6a77b1b61ce4e929deead8b969a5133baa5e2b903381b822422d9bbba1cd2c57e36e8aa9a1789c788e47be9fcbc86f6315c6a9de64398c40
   languageName: node
   linkType: hard
 

@@ -3,6 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
+import SoundPlayer from 'react-native-sound-player';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../App';
 import { FONTS_SIZES } from '../../../constants';
@@ -28,7 +29,6 @@ import Spinner from '../../commons/Spinner';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
 import WorkoutTabs from '../../commons/WorkoutTabs';
-import SoundPlayer from 'react-native-sound-player';
 
 const StartWorkout: React.FC<{
   workout: Exercise[];

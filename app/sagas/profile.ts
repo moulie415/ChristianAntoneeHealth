@@ -24,9 +24,9 @@ import { openInbox } from 'react-native-email-link';
 import RNFS from 'react-native-fs';
 import { openHealthConnectSettings } from 'react-native-health-connect';
 import Purchases from 'react-native-purchases';
-import PushNotification from 'react-native-push-notification';
+import notifee, { RepeatFrequency, TriggerType } from '@notifee/react-native'
 import Snackbar from 'react-native-snackbar';
-import SoundPlayer from "react-native-sound-player";
+import SoundPlayer from 'react-native-sound-player';
 import { updateApplicationContext } from 'react-native-watch-connectivity';
 import {
   all,
@@ -47,12 +47,13 @@ import {
   navigationRef,
   resetToTabs,
 } from '../RootNavigation';
-import { scheduleLocalNotification } from '../helpers';
 import * as api from '../helpers/api';
 import {
   getBodyFatPercentageSamples,
   getHeightSamples,
   getWeightSamples,
+  initBiometrics,
+  isAvailable,
   saveBodyFatPercentage,
   saveHeight,
   saveWeight,
@@ -116,7 +117,6 @@ import { checkWorkoutStreak, getAllExercises } from './exercises';
 import { checkStepsCalories } from './leaderboards';
 import { getQuickRoutines } from './quickRoutines';
 import { getSettings } from './settings';
-import { initBiometrics, isAvailable } from '../helpers/biometrics';
 
 // const notif = new Sound('notif.wav', Sound.MAIN_BUNDLE, error => {
 //   if (error) {
@@ -124,14 +124,11 @@ import { initBiometrics, isAvailable } from '../helpers/biometrics';
 //   }
 // });
 
-
 //Sound.setCategory('Playback', false);
 
-
-SoundPlayer.loadSoundFile("workout_song", "mp3");
+SoundPlayer.loadSoundFile('workout_song', 'mp3');
 
 SoundPlayer.setNumberOfLoops(-1);
-
 
 type Snapshot =
   FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
@@ -267,7 +264,7 @@ function* updateProfile(action: PayloadAction<UpdateProfilePayload>) {
       uid: profile.uid || '',
     });
     if (!goalReminders) {
-      PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+      notifee.cancelNotification(GOAL_REMINDER_KEY)
     }
 
     yield put(setLoading(false));
@@ -429,14 +426,11 @@ const channels: {
 
 function* createChannels() {
   channels.forEach(({ channelId, channelName, channelDescription }) => {
-    PushNotification.createChannel(
-      {
-        channelId,
-        channelName,
-        channelDescription,
-      },
-      created => console.log('channel created', created),
-    );
+    notifee.createChannel({
+      id: channelId,
+      name: channelName,
+      description: channelDescription
+    })
   });
 }
 
@@ -470,7 +464,7 @@ function* getWeeklyItems() {
   }
 }
 
-export const GOAL_REMINDER_KEY = Platform.OS === 'ios' ? 'goalReminder' : 1;
+export const GOAL_REMINDER_KEY = 'goalReminder';
 
 export function* scheduleGoalReminderNotification() {
   const {
@@ -492,16 +486,20 @@ export function* scheduleGoalReminderNotification() {
 
     if (date.isAfter(moment())) {
       if (completed) {
-        PushNotification.cancelLocalNotification(GOAL_REMINDER_KEY);
+        notifee.cancelNotification(GOAL_REMINDER_KEY)
       } else if (profile.goalReminders) {
-        scheduleLocalNotification(
-          'You’ve got just two days to hit your weekly targets',
-          date.toDate(),
-          GOALS_CHANNEL_ID,
-          'You’re almost there!',
-          GOAL_REMINDER_KEY,
-          'week',
-        );
+        notifee.createTriggerNotification({
+          title: 'You’re almost there!',
+          body: 'You’ve got just two days to hit your weekly targets',
+          id: GOAL_REMINDER_KEY,
+          android: {
+            channelId: GOALS_CHANNEL_ID
+          }
+        }, {
+          type: TriggerType.TIMESTAMP,
+          timestamp: date.milliseconds(),
+            repeatFrequency: RepeatFrequency.WEEKLY 
+        })
       }
     }
   }
@@ -611,7 +609,7 @@ function* chatWatcher(uid: string, chatsObj: { [key: string]: Chat }) {
         route.params?.uid === uid &&
         state === 'active'
       ) {
-     //   notif.play();
+        //   notif.play();
       }
     }
   }
@@ -701,7 +699,7 @@ function* sendMessage(
       }
     }
     yield call(api.sendMessage, message, chatId, uid);
-   // notif.play();
+    // notif.play();
   } catch (e) {
     if (e instanceof Error) {
       Snackbar.show({ text: e.message });
@@ -903,7 +901,7 @@ function* handleAuthWorker(action: PayloadAction<FirebaseAuthTypes.User>) {
       if (doc.exists() && doc.data()?.signedUp) {
         const available: boolean = yield call(isAvailable);
         if (available) {
-        yield call(initBiometrics);
+          yield call(initBiometrics);
         }
 
         resetToTabs();

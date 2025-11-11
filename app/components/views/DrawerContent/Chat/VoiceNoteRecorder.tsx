@@ -8,18 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RNFS from 'react-native-fs';
 import type {
   AudioSet,
   PlayBackType,
   RecordBackType,
-} from 'react-native-nitro-sound'
+} from 'react-native-nitro-sound';
 import AudioRecorderPlayer, {
   AVEncoderAudioQualityIOSType,
   AudioEncoderAndroidType,
   AudioSourceAndroidType,
   OutputFormatAndroidType,
 } from 'react-native-nitro-sound';
-import RNFS from 'react-native-fs';
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import colors from '../../../../constants/colors';

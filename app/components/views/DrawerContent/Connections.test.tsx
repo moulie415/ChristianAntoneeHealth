@@ -14,7 +14,6 @@ jest.mock('react-redux', () => {
     },
   };
 });
-jest.mock('react-native-push-notification', () => {});
 jest.mock('@react-native-firebase/analytics', () => {});
 jest.mock('@sentry/react-native', () => {});
 jest.mock('react-native-in-app-review', () => {});

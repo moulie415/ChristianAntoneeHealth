@@ -2,7 +2,6 @@ import analytics from '@react-native-firebase/analytics';
 import moment, { Moment } from 'moment';
 import { Dimensions } from 'react-native';
 import InAppReview from 'react-native-in-app-review';
-import PushNotification from 'react-native-push-notification';
 import { TABLE_HEADER_KEYS } from '../components/commons/Table';
 import colors from '../constants/colors';
 import { Category } from '../types/Education';
@@ -19,27 +18,6 @@ export const truncate = (str: string, n: number) => {
   return str.length > n ? str.substr(0, n - 1) + '...' : str;
 };
 
-export const scheduleLocalNotification = (
-  message: string,
-  date: Date,
-  channel: string,
-  title?: string,
-  id?: string | number,
-  repeatType?: 'week' | 'day' | 'hour' | 'minute' | 'time',
-) => {
-  try {
-    PushNotification.localNotificationSchedule({
-      message,
-      date,
-      channelId: channel,
-      id,
-      repeatType,
-      title,
-    });
-  } catch (e) {
-    logError(e);
-  }
-};
 
 const findClosestSampleToDate = (
   samples: Sample[],

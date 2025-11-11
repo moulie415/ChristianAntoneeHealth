@@ -9,13 +9,13 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PagerView from 'react-native-pager-view';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import SoundPlayer from 'react-native-sound-player';
 import { connect } from 'react-redux';
 import { RootState } from '../../App';
 import colors from '../../constants/colors';
 import Exercise from '../../types/Exercise';
 import { Profile } from '../../types/Shared';
 import Text from './Text';
-import SoundPlayer from 'react-native-sound-player';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 

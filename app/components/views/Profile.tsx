@@ -490,7 +490,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setHeight(Number(item.value))}
+            onValueChange={({ item }) => setHeight(Number(item.value))}
             onRequestClose={() => setShowHeightModal(false)}
           />
         )}
@@ -524,7 +524,9 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setBodyFatPercentage(Number(item.value))}
+            onValueChange={({ item }) =>
+              setBodyFatPercentage(Number(item.value))
+            }
             onRequestClose={() => setShowBodyFatPercentageModal(false)}
           />
         )}
@@ -550,7 +552,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setMuscleMass(Number(item.value))}
+            onValueChange={({ item }) => setMuscleMass(Number(item.value))}
             onRequestClose={() => setShowMuscleMassModal(false)}
           />
         )}
@@ -576,7 +578,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setBoneMass(Number(item.value))}
+            onValueChange={({ item }) => setBoneMass(Number(item.value))}
             onRequestClose={() => setShowBoneMassModal(false)}
           />
         )}
@@ -601,7 +603,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setVisceralFat(Number(item.value))}
+            onValueChange={({ item }) => setVisceralFat(Number(item.value))}
             onRequestClose={() => setShowVisceralFatModal(false)}
           />
         )}
@@ -626,7 +628,7 @@ const ProfileComponent: React.FC<{
                 value: String(value),
               };
             })}
-            onValueChange={({item}) => setMetabolicAge(Number(item.value))}
+            onValueChange={({ item }) => setMetabolicAge(Number(item.value))}
             onRequestClose={() => setShowMetabolicAgeModal(false)}
           />
         )}

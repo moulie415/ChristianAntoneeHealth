@@ -17,9 +17,8 @@ import moment from 'moment';
 import RNCalendarEvents, {
   CalendarEventWritable,
 } from 'react-native-calendar-events';
-import PushNotification from 'react-native-push-notification';
+import notifee, { TriggerType } from '@notifee/react-native'
 import { RootState } from '../App';
-import { scheduleLocalNotification } from '../helpers';
 import { logError } from '../helpers/error';
 import {
   GET_PLAN,
@@ -114,7 +113,7 @@ function* syncPlanWithCalendarWorker(
 }
 
 export function* schedulePlanReminders() {
-  PushNotification.cancelAllLocalNotifications();
+  notifee.cancelAllNotifications()
   const plan: Plan | undefined = yield select(
     (state: RootState) => state.profile.plan,
   );
@@ -129,11 +128,15 @@ export function* schedulePlanReminders() {
             .set('hours', moment(profile.workoutReminderTime).hours())
             .set('minutes', moment(profile.workoutReminderTime).minutes());
           if (date.isAfter(moment())) {
-            scheduleLocalNotification(
-              'Reminder to do your workout for today',
-              date.toDate(),
-              WORKOUT_REMINDERS_CHANNEL_ID,
-            );
+            notifee.createTriggerNotification({
+              body:  'Reminder to do your workout for today',
+              android: {
+                channelId: WORKOUT_REMINDERS_CHANNEL_ID
+              }
+            }, {
+              type: TriggerType.TIMESTAMP,
+              timestamp: date.milliseconds()
+            })
           }
         });
       });

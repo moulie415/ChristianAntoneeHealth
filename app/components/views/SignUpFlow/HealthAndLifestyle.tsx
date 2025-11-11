@@ -1,7 +1,7 @@
+import Picker from '@quidone/react-native-wheel-picker';
 import React from 'react';
 import { Platform, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Picker from '@quidone/react-native-wheel-picker';
 import { FITNESS_RATINGS } from '../../../constants';
 import colors from '../../../constants/colors';
 import {
@@ -189,7 +189,7 @@ const HealthAndLifestyle: React.FC<{
             value: String(value),
           };
         })}
-        onValueChanged={({item}) => setFitnessRating(Number(item.value))}
+        onValueChanged={({ item }) => setFitnessRating(Number(item.value))}
       />
     </KeyboardAwareScrollView>
   );
