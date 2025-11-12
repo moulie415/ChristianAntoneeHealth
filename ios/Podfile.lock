@@ -4682,8 +4682,6 @@ PODS:
     - Yoga
   - RNSnackbar (2.9.0):
     - React-Core
-  - RNSoundPlayer (0.14.5):
-    - React-Core
   - RNSVG (15.12.1):
     - boost
     - DoubleConversion
@@ -4971,7 +4969,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
-  - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
   - RNWorklets (from `../node_modules/react-native-worklets`)
@@ -5296,8 +5293,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNSnackbar:
     :path: "../node_modules/react-native-snackbar"
-  RNSoundPlayer:
-    :path: "../node_modules/react-native-sound-player"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNWatch:
@@ -5486,7 +5481,6 @@ SPEC CHECKSUMS:
   RNScreens: c5be77a6d6758e892b7f87fc0bb9324a08be47ac
   RNSentry: 8b2743219675fa6d18439a09a0f9664e54ac0b47
   RNSnackbar: c1b235eb606b03938c693ce769ed3059c31dff9b
-  RNSoundPlayer: 7961678d02c7339d9e9cfb78b9f3e8fde17f9df2
   RNSVG: 94a1be05fab4043354bcf7104f0f9b0e2231ef05
   RNWatch: 28fe1f5e0c6410d45fd20925f4796fce05522e3f
   RNWorklets: ab618bf7d1c7fd2cb793b9f0f39c3e29274b3ebf
