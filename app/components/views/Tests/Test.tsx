@@ -25,6 +25,8 @@ import TestTimer from '../../commons/TestTimer';
 import Text from '../../commons/Text';
 import ViewMore from '../../commons/ViewMore';
 import HistoricalTestsModal from './HistoricalTestsModal';
+import convertToProxyURL from 'react-native-video-cache';
+
 
 export const PREP_TIME = 5;
 
@@ -137,7 +139,7 @@ const Test: React.FC<{
     <View style={{ flex: 1 }}>
       {test.video?.src ? (
         <Video
-          source={{ uri: test.video?.src }}
+          source={{ uri: convertToProxyURL(test.video?.src) }}
           style={{ height: getVideoHeight(), width: '100%' }}
           resizeMode={ResizeMode.COVER}
           repeat

@@ -60,6 +60,8 @@ import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
 import DocumentMessage from './DocumentMessage';
 import VoiceNotePlayer from './VoiceNotePlayer';
+import convertToProxyURL from 'react-native-video-cache';
+
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
@@ -303,7 +305,7 @@ const Chat: React.FC<ChatProps> = ({
           resizeMode={ResizeMode.COVER}
           paused
           source={{
-            uri: props.currentMessage?.video || '',
+            uri: convertToProxyURL(props.currentMessage?.video || ''),
           }}
         />
         <View

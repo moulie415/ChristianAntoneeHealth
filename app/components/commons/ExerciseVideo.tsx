@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { View } from 'react-native';
 import Video, { ResizeMode, VideoRef } from 'react-native-video';
 import { getVideoHeight } from '../../helpers';
-
+import convertToProxyURL from 'react-native-video-cache';
 import colors from '../../constants/colors';
 
 const ExerciseVideo: React.FC<{
@@ -40,7 +40,7 @@ const ExerciseVideo: React.FC<{
       {/* <StatusBar hidden={fullscreen} /> */}
       <Video
         source={{
-          uri: path,
+          uri: convertToProxyURL(path),
           bufferConfig: {
             minBufferMs: 2500,
             maxBufferMs: 5000, // default is 50 000, 50 seconds

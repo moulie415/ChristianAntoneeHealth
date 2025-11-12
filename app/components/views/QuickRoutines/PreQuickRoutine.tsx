@@ -20,6 +20,8 @@ import EquipmentList from '../../commons/EquipmentList';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
+import convertToProxyURL from 'react-native-video-cache';
+
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;
@@ -89,7 +91,7 @@ const PreQuickRoutine: React.FC<{
       {preview?.src ? (
         <>
           <Video
-            source={{ uri: preview.src }}
+            source={{ uri: convertToProxyURL(preview.src) }}
             style={{ height: getVideoHeight(), width: '100%' }}
             resizeMode={ResizeMode.COVER}
             repeat

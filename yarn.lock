@@ -6091,6 +6091,7 @@ __metadata:
     react-native-tab-view: "npm:^4.1.3"
     react-native-uuid: "npm:^2.0.3"
     react-native-video: "npm:6.16.1"
+    react-native-video-cache: "npm:2.7.3"
     react-native-view-more-text: "npm:^2.2.0"
     react-native-watch-connectivity: "npm:^1.1.0"
     react-native-webview: "npm:^13.15.0"
@@ -14011,6 +14012,16 @@ __metadata:
   version: 2.0.3
   resolution: "react-native-uuid@npm:2.0.3"
   checksum: 10c0/d94bccc28936c2dea081ab404f90b0c968092013af4d428b8e74bf407d6098ad5410914f77a903ad1296cce364fc85d27d8dfd70d22ec48d8cf1b7edc8803a8d
+  languageName: node
+  linkType: hard
+
+"react-native-video-cache@npm:2.7.3":
+  version: 2.7.3
+  resolution: "react-native-video-cache@npm:2.7.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/cbc05ed51946c262afe1206bbf151ec37a65ff29023484a551109f745f944b0893c4da18c5077190069192a7912ac87375b89fee53baf0ff3bcb2d3499f66765
   languageName: node
   linkType: hard
 

@@ -7,6 +7,8 @@ import Video from 'react-native-video';
 import { StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
 import Header from '../../../commons/Header';
+import convertToProxyURL from 'react-native-video-cache';
+
 
 const VideoView: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'VideoView'>;
@@ -20,7 +22,7 @@ const VideoView: React.FC<{
         <Video
           style={{ width: '100%', height: 300, marginTop: -80 }}
           controls
-          source={{ uri: message.video || '' }}
+          source={{ uri: convertToProxyURL(message.video || '') }}
         />
       </View>
     </SafeAreaView>
