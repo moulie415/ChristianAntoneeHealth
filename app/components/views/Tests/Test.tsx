@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Video, { ResizeMode } from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../App';
 import { resetToTabs } from '../../../RootNavigation';
@@ -25,8 +26,6 @@ import TestTimer from '../../commons/TestTimer';
 import Text from '../../commons/Text';
 import ViewMore from '../../commons/ViewMore';
 import HistoricalTestsModal from './HistoricalTestsModal';
-import convertToProxyURL from 'react-native-video-cache';
-
 
 export const PREP_TIME = 5;
 

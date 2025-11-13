@@ -202,6 +202,154 @@ const GoalSummaries: React.FC<{
     },
   ];
 
+  const tiles = [
+    <Tile
+      key="goals"
+      style={{
+        // width: Dimensions.get('window').width - 40,
+        marginBottom: 15,
+        alignSelf: 'center',
+        padding: 10,
+        marginHorizontal: 20,
+      }}
+    >
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontWeight: 'bold',
+          fontSize: 16,
+          textAlign: 'center',
+          marginVertical: 10,
+        }}
+      >
+        Weekly Targets
+      </Text>
+      <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap' }}>
+        {connection || profile.targets ? (
+          goals.map(({ goal, score, title, key, icon }) => {
+            return (
+              <GoalCircle
+                title={title}
+                key={key}
+                icon={icon}
+                goal={goal}
+                score={score}
+              />
+            );
+          })
+        ) : (
+          <Text style={{ color: colors.appWhite, textAlign: 'center' }}>
+            Weekly targets will show up here once they have been set by
+            Christian
+          </Text>
+        )}
+      </View>
+    </Tile>
+  ];
+
+  const dailies = (
+    <Tile
+      key="dailies"
+      style={{
+        // width: Dimensions.get('window').width - 40,
+        marginBottom: 20,
+        alignSelf: 'center',
+        padding: 10,
+        marginHorizontal: 20,
+      }}
+    >
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontWeight: 'bold',
+          fontSize: 16,
+          textAlign: 'center',
+          marginVertical: 10,
+        }}
+      >
+        Daily Challenges
+      </Text>
+      <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap' }}>
+        <GoalCircle
+          title="Steps"
+          icon={() => (
+            <FontAwesome6
+              iconStyle="solid"
+              name="shoe-prints"
+              size={25}
+              color={colors.button}
+              style={{
+                marginHorizontal: 15,
+              }}
+            />
+          )}
+          goal={10000}
+          score={dailySteps || 0}
+        />
+        <GoalCircle
+          title="Calories"
+          icon={Fire}
+          goal={caloriesGoal / 7}
+          score={Math.round(dailyCalories || 0)}
+        />
+        <GoalCircle
+          title="Workout streak"
+          icon={() => (
+            <FontAwesome6
+              iconStyle="solid"
+              name="bolt"
+              size={25}
+              color={colors.button}
+              style={{
+                marginHorizontal: 15,
+              }}
+            />
+          )}
+          score={dailyWorkoutStreak || 0}
+          goal={1}
+          hideGoal
+        />
+      </View>
+    </Tile>
+  );
+
+  const recommendedWorkoutTile = (
+    <Tile
+      key="recommendedWorkout"
+      style={{
+        paddingTop: 10,
+        marginHorizontal: 20,
+        marginBottom: 10,
+      }}
+    >
+      <Text
+        style={{
+          color: colors.appWhite,
+          fontWeight: 'bold',
+          fontSize: 16,
+          textAlign: 'center',
+          marginTop: 10,
+          marginBottom: 20,
+        }}
+      >
+        Recommended workout
+      </Text>
+      {recommendedWorkout && (
+        <WorkoutCard
+          item={recommendedWorkout}
+          onPress={() =>
+            navigation.navigate('PreQuickRoutine', {
+              routine: recommendedWorkout,
+            })
+          }
+        />
+      )}
+    </Tile>
+  );
+
+  if (!connection) {
+    tiles.push(dailies, recommendedWorkoutTile);
+  }
   return (
     <>
       <PagerView
@@ -212,145 +360,7 @@ const GoalSummaries: React.FC<{
           height: 215,
         }}
       >
-        <Tile
-          key="goals"
-          style={{
-            // width: Dimensions.get('window').width - 40,
-            marginBottom: 15,
-            alignSelf: 'center',
-            padding: 10,
-            marginHorizontal: 20,
-          }}
-        >
-          <Text
-            style={{
-              color: colors.appWhite,
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-              marginVertical: 10,
-            }}
-          >
-            Weekly Targets
-          </Text>
-          <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap' }}>
-            {connection || profile.targets ? (
-              goals.map(({ goal, score, title, key, icon }) => {
-                return (
-                  <GoalCircle
-                    title={title}
-                    key={key}
-                    icon={icon}
-                    goal={goal}
-                    score={score}
-                  />
-                );
-              })
-            ) : (
-              <Text style={{ color: colors.appWhite, textAlign: 'center' }}>
-                Weekly targets will show up here once they have been set by
-                Christian
-              </Text>
-            )}
-          </View>
-        </Tile>
-        {!connection && (
-          <Tile
-            key="dailies"
-            style={{
-              // width: Dimensions.get('window').width - 40,
-              marginBottom: 20,
-              alignSelf: 'center',
-              padding: 10,
-              marginHorizontal: 20,
-            }}
-          >
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                fontSize: 16,
-                textAlign: 'center',
-                marginVertical: 10,
-              }}
-            >
-              Daily Challenges
-            </Text>
-            <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap' }}>
-              <GoalCircle
-                title="Steps"
-                icon={() => (
-                  <FontAwesome6
-                    iconStyle="solid"
-                    name="shoe-prints"
-                    size={25}
-                    color={colors.button}
-                    style={{
-                      marginHorizontal: 15,
-                    }}
-                  />
-                )}
-                goal={10000}
-                score={dailySteps || 0}
-              />
-              <GoalCircle
-                title="Calories"
-                icon={Fire}
-                goal={caloriesGoal / 7}
-                score={Math.round(dailyCalories || 0)}
-              />
-              <GoalCircle
-                title="Workout streak"
-                icon={() => (
-                  <FontAwesome6
-                    iconStyle="solid"
-                    name="bolt"
-                    size={25}
-                    color={colors.button}
-                    style={{
-                      marginHorizontal: 15,
-                    }}
-                  />
-                )}
-                score={dailyWorkoutStreak || 0}
-                goal={1}
-                hideGoal
-              />
-            </View>
-          </Tile>
-        )}
-        {!connection && (
-          <Tile
-            style={{
-              paddingTop: 10,
-              marginHorizontal: 20,
-              marginBottom: 10,
-            }}
-          >
-            <Text
-              style={{
-                color: colors.appWhite,
-                fontWeight: 'bold',
-                fontSize: 16,
-                textAlign: 'center',
-                marginTop: 10,
-                marginBottom: 20,
-              }}
-            >
-              Recommended workout
-            </Text>
-            {recommendedWorkout && (
-              <WorkoutCard
-                item={recommendedWorkout}
-                onPress={() =>
-                  navigation.navigate('PreQuickRoutine', {
-                    routine: recommendedWorkout,
-                  })
-                }
-              />
-            )}
-          </Tile>
-        )}
+        {tiles}
       </PagerView>
       <View
         style={{

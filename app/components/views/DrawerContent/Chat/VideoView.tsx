@@ -4,11 +4,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Video from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 import { StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
 import Header from '../../../commons/Header';
-import convertToProxyURL from 'react-native-video-cache';
-
 
 const VideoView: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'VideoView'>;

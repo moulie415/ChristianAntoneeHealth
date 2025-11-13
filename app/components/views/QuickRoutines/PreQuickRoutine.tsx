@@ -7,6 +7,7 @@ import { ImageBackground, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Video, { ResizeMode } from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 import { StackParamList } from '../../../App';
 import colors from '../../../constants/colors';
 import { capitalizeFirstLetter, getVideoHeight } from '../../../helpers';
@@ -20,8 +21,6 @@ import EquipmentList from '../../commons/EquipmentList';
 import Header from '../../commons/Header';
 import Text from '../../commons/Text';
 import Toggle from '../../commons/Toggle';
-import convertToProxyURL from 'react-native-video-cache';
-
 
 const PreQuickRoutine: React.FC<{
   navigation: NativeStackNavigationProp<StackParamList, 'PreQuickRoutine'>;

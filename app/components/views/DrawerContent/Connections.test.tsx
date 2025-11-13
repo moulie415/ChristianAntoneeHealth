@@ -14,7 +14,7 @@ jest.mock('react-redux', () => {
     },
   };
 });
-jest.mock('expo-store-review', () => {})
+jest.mock('expo-store-review', () => {});
 jest.mock('@react-native-firebase/analytics', () => {});
 jest.mock('@sentry/react-native', () => {});
 jest.mock('react-native-purchases', () => {});

@@ -1,7 +1,7 @@
 import analytics from '@react-native-firebase/analytics';
+import * as StoreReview from 'expo-store-review';
 import moment, { Moment } from 'moment';
 import { Dimensions } from 'react-native';
-import * as StoreReview from 'expo-store-review';
 import { TABLE_HEADER_KEYS } from '../components/commons/Table';
 import colors from '../constants/colors';
 import { Category } from '../types/Education';

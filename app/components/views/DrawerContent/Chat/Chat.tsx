@@ -36,6 +36,7 @@ import {
 import Snackbar from 'react-native-snackbar';
 import uuid from 'react-native-uuid';
 import Video, { ResizeMode } from 'react-native-video';
+import convertToProxyURL from 'react-native-video-cache';
 import { connect } from 'react-redux';
 import { RootState, StackParamList } from '../../../../App';
 import colors from '../../../../constants/colors';
@@ -60,8 +61,6 @@ import CustomInputToolbar from './CustomInputToolbar';
 import CustomSend from './CustomSend';
 import DocumentMessage from './DocumentMessage';
 import VoiceNotePlayer from './VoiceNotePlayer';
-import convertToProxyURL from 'react-native-video-cache';
-
 
 interface ChatProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Chat'>;
