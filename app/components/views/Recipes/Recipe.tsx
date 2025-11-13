@@ -38,7 +38,7 @@ const Recipe: React.FC<{
     try {
       if (
         !downloadedDocuments[recipe.id] ||
-        !new FileSystem.File(downloadedDocuments[recipe.id]).info().exists
+        !new FileSystem.File(`file://${downloadedDocuments[recipe.id]}`).info().exists
       ) {
         const result = await ReactNativeBlobUtil.config({
           fileCache: true,
