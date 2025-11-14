@@ -358,7 +358,7 @@ export const saveWeight = async (uid: string, value?: number) => {
     }
 
     if (Platform.OS === 'ios') {
-      await saveQuantitySample(
+      return saveQuantitySample(
         'HKQuantityTypeIdentifierBodyMass',
         'kg',
         value,
@@ -390,7 +390,7 @@ export const saveHeight = async (uid: string, value?: number) => {
       return;
     }
     if (Platform.OS === 'ios') {
-      await saveQuantitySample(
+      return saveQuantitySample(
         'HKQuantityTypeIdentifierHeight',
         'cm',
         value,
