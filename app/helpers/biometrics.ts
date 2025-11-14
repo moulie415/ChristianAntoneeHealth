@@ -137,7 +137,7 @@ export const getHeight = async (): Promise<number | undefined> => {
         'HKQuantityTypeIdentifierHeight',
         'cm',
       );
-      return result?.quantity || 0;
+      return round(result?.quantity || 0);
     }
 
     const { records } = await readRecords('Height', {
@@ -166,7 +166,7 @@ export const getWeight = async (): Promise<number | undefined> => {
         'HKQuantityTypeIdentifierBodyMass',
         'kg',
       );
-      return result?.quantity || 0;
+      return round(result?.quantity || 0);
     }
 
     const { records } = await readRecords('Weight', {
